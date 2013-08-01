@@ -70,7 +70,6 @@ class IndexController extends AbstractActionController
     }
 
     public function eventAction() {
-error_log("INSIDE EVENT ACTION");
 	    $path = $this->security("application/index/event.phtml");
 
 		$action = 'listallmedia';
@@ -236,7 +235,7 @@ error_log("INSIDE LOGIN ACTION");
     public function getUserTable() {
         if (!$this->userTable) {
             $sm = $this->getServiceLocator();
-            $this->userTable = $sm->get('Admin\Model\UserTable');
+            $this->userTable = $sm->get('Application\Model\UserTable');
         }
         return $this->userTable;
     }
@@ -260,7 +259,6 @@ error_log("INSIDE LOGIN ACTION");
     }
 
     public function security($path) {
-error_log("INSIDE security\r\n");
     	//if already login do nothing
 		$session = new Container("user");
 	    if(!$session->offsetExists('user_id')){
