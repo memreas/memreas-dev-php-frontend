@@ -2,16 +2,26 @@
 
 [![Latest Stable Version](https://poser.pugx.org/aws/aws-sdk-php/version.png)](https://packagist.org/packages/aws/aws-sdk-php)
 [![Total Downloads](https://poser.pugx.org/aws/aws-sdk-php/d/total.png)](https://packagist.org/packages/aws/aws-sdk-php)
+[![Build Status](https://travis-ci.org/aws/aws-sdk-php.png)](https://travis-ci.org/aws/aws-sdk-php)
 
 The **AWS SDK for PHP** enables PHP developers to easily work with [Amazon Web Services][aws] and build scalable
 solutions with Amazon S3, Amazon DynamoDB, Amazon Glacier, and more. You can get started in minutes by [installing the
 SDK through Composer][docs-installation] or by downloading a single [zip][install-zip] or [phar][install-phar] file.
 
-* **Installation**: [Instructions][docs-installation], [Packagist/Composer][install-packagist], [PEAR][install-pear],
-  [Zip Download][install-zip], [Phar Download][install-phar]
-* **Documentation**: [User Guide][docs-guide], [API Docs][docs-api], [Contribution Guide][docs-contribution],
-  [License][sdk-license]
-* **Communication**: [Blog][sdk-blog], [Forum][sdk-forum], [Issues][sdk-issues]
+* **Install**:
+  * [Instructions][docs-installation]
+  * [Packagist/Composer][install-packagist]
+  * Download [Zip][install-zip] or [Phar][install-phar]
+  * [PEAR Package][install-pear]
+* **Docs**:
+  * [User Guide][docs-guide]
+  * [API Docs][docs-api]
+  * [Apache 2.0 License][sdk-license]
+* **Community**:
+  * [AWS PHP Development Blog][sdk-blog]
+  * [AWS PHP Development Forum][sdk-forum]
+  * [GitHub Issues][sdk-issues]
+  * [Contribution Guide][docs-contribution]
 
 ## Features
 
@@ -22,12 +32,12 @@ SDK through Composer][docs-installation] or by downloading a single [zip][instal
 * Built on [Guzzle][] and utilizes many of its features including persistent connections, parallel requests, events and
   plugins (via [Symfony2 EventDispatcher][symfony2-events]), service descriptions, [over-the-wire
   logging][docs-wire-logging], caching, flexible batching, and request retrying with truncated exponential backoff.
-* Convenience features including [Iterators][docs-iterators], [Waiters][docs-waiters], Enums, [modelled
-  responses][docs-models], and [service-specific exceptions][docs-exceptions].
+* Convenience features including [Iterators][docs-iterators], [Waiters][docs-waiters], and [modelled
+  responses][docs-models].
+* Upload directories to and download directories from Amazon S3.
 * Multipart uploader for Amazon S3 and Amazon Glacier that can be paused and resumed.
 * [DynamoDB Session Handler][docs-ddbsh] for easily scaling sessions.
 * Automatically uses [IAM Instance Profile Credentials][aws-iam-credentials] on configured Amazon EC2 instances.
-* And more!
 
 ## Getting Started
 
@@ -54,7 +64,6 @@ SDK through Composer][docs-installation] or by downloading a single [zip][instal
 require 'vendor/autoload.php';
 
 use Aws\Common\Aws;
-use Aws\S3\Enum\CannedAcl;
 use Aws\S3\Exception\S3Exception;
 
 // Instantiate an S3 client
@@ -66,8 +75,18 @@ try {
         'Bucket' => 'my-bucket',
         'Key'    => 'my-object',
         'Body'   => fopen('/path/to/file', 'r'),
-        'ACL'    => CannedAcl::PUBLIC_READ
+        'ACL'    => 'public-read',
     ));
+} catch (S3Exception $e) {
+    echo "There was an error uploading the file.\n";
+}
+```
+
+You can also use the even easier `upload` method.
+
+```php
+try {
+    $s3->upload('my-bucket', 'my-object', fopen('/path/to/file', 'r'), 'public-read');
 } catch (S3Exception $e) {
     echo "There was an error uploading the file.\n";
 }

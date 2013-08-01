@@ -109,11 +109,8 @@ class Client extends AbstractHasDispatcher implements ClientInterface
      */
     public function setDefaultOption($keyOrPath, $value)
     {
-        if (strpos($keyOrPath, '/')) {
-            $this->config->setPath($keyOrPath, $value);
-        } else {
-            $this->config[$keyOrPath] = $value;
-        }
+        $keyOrPath = self::REQUEST_OPTIONS . '/' . $keyOrPath;
+        $this->config->setPath($keyOrPath, $value);
 
         return $this;
     }
@@ -127,7 +124,9 @@ class Client extends AbstractHasDispatcher implements ClientInterface
      */
     public function getDefaultOption($keyOrPath)
     {
-        return strpos($keyOrPath, '/') ? $this->config->getPath($keyOrPath) : $this->config[$keyOrPath];
+        $keyOrPath = self::REQUEST_OPTIONS . '/' . $keyOrPath;
+
+        return $this->config->getPath($keyOrPath);
     }
 
     final public function setSslVerification($certificateAuthority = true, $verifyPeer = true, $verifyHost = 2)
@@ -244,7 +243,7 @@ class Client extends AbstractHasDispatcher implements ClientInterface
 
     public function head($uri = null, $headers = null, array $options = array())
     {
-        return $this->createRequest('HEAD', $uri, $headers, $options);
+        return $this->createRequest('HEAD', $uri, $headers, null, $options);
     }
 
     public function delete($uri = null, $headers = null, $body = null, array $options = array())

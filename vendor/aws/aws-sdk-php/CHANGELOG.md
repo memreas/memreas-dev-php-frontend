@@ -1,6 +1,41 @@
 CHANGELOG
 =========
 
+2.4.2 (2013-07-25)
+------------------
+
+* Added support for cross-account snapshot access control to the Amazon Redshift client
+* Added support for decoding authorization messages to the AWS STS client
+* Added support for checking for required permissions via the `DryRun` parameter to the Amazon EC2 client
+* Added support for custom Amazon Machine Images (AMIs) and Chef 11 to the AWS OpsWorks client
+* Added an SDK compatibility test to allow users to quickly determine if their system meets the requirements of the SDK
+* Updated the Amazon EC2 client to use the 2013-06-15 API version
+* Fixed an unmarshalling error with the Amazon EC2 `CreateKeyPair` operation
+* Fixed an unmarshalling error with the Amazon S3 `ListMultipartUploads` operation
+* Fixed an issue with the Amazon S3 stream wrapper "x" fopen mode
+* Fixed an issue with `Aws\S3\S3Client::downloadBucket` by removing leading slashes from the passed `$keyPrefix` argument
+
+2.4.1 (2013-06-08)
+------------------
+
+* Added supports for setting watermarks and max framerates to the Amazon Elastic Transcoder client
+* Added the `Aws\DynamoDb\Iterator\ItemIterator` class to make it easier to get items from the results of DynamoDB
+  operations in a simpler form
+* Added support for the `cr1.8xlarge` EC2 instance type. Use `Aws\Ec2\Enum\InstanceType::CR1_8XLARGE`
+* Added support for the suppression list SES mailbox simulator. Use `Aws\Ses\Enum\MailboxSimulator::SUPPRESSION_LIST`
+* [SDK] Fixed an issue with data formats throughout the SDK due to a regression. Dates are now sent over the wire with
+  the correct format. This issue affected the Amazon EC2, Amazon ElastiCache, AWS Elastic Beanstalk, Amazon EMR, and
+  Amazon RDS clients
+* Fixed an issue with the parameter serialization of the `ImportInstance` operation in the Amazon EC2 client
+* Fixed an issue with the Amazon S3 client where the `RoutingRules.Redirect.HostName` parameter of the
+  `PutBucketWebsite` operation was erroneously marked as required
+* Fixed an issue with the Amazon S3 client where the `DeleteObject` operation was missing parameters
+* Fixed an issue with the Amazon S3 client where the `Status` parameter of the `PutBucketVersioning` operation did not
+  properly support the "Suspended" value
+* Fixed an issue with the Amazon Glacier `UploadPartGenerator` class so that an exception is thrown if the provided body
+  to upload is less than 1 byte
+* Added MD5 validation to Amazon SQS ReceiveMessage operations
+
 2.4.0 (2013-06-18)
 ------------------
 

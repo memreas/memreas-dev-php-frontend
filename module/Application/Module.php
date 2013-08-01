@@ -135,71 +135,9 @@ class Module
         		    	        Container::setDefaultManager($sessionManager);
 			                    return $sessionManager;
     	    		        },
-							//Database Tables...
-							//memreas base tables
-			                'Admin\Model\UserTable' => function($sm) {
-			                    $tableGateway = $sm->get('UserTableGateway');
-			                    $table = new UserTable($tableGateway);
-			                    return $table;
-			                },
-			                'UserTableGateway' => function ($sm) {
-			                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-			                    $resultSetPrototype = new \Zend\Db\ResultSet\ResultSet();
-			                    $resultSetPrototype->setArrayObjectPrototype(new User());
-			                    return new TableGateway('user', $dbAdapter, null, $resultSetPrototype);
-			                },
-			                'Admin\Model\MediaTable' => function($sm) {
-			                    $tableGateway = $sm->get('MediaTableGateway');
-			                    $table = new Model\MediaTable($tableGateway);
-			                    return $table;
-			                },
-			                'MediaTableGateway' => function ($sm) {
-			                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-			                    $resultSetPrototype = new \Zend\Db\ResultSet\ResultSet();
-			                    $resultSetPrototype->setArrayObjectPrototype(new Model\Media());
-			                    return new TableGateway('media', $dbAdapter, null, $resultSetPrototype);
-			                },
-			                'Admin\Model\EventTable' => function($sm) {
-			                    $tableGateway = $sm->get('EventTableGateway');
-			                    $table = new Model\EventTable($tableGateway);
-			                    return $table;
-			                },
-			                'EventTableGateway' => function ($sm) {
-			                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-			                    $resultSetPrototype = new \Zend\Db\ResultSet\ResultSet();
-			                    $resultSetPrototype->setArrayObjectPrototype(new Model\Event());
-			                    return new TableGateway('event', $dbAdapter, null, $resultSetPrototype);
-			                },
-			                'Admin\Model\EventMediaTable' => function($sm) {
-			                    $tableGateway = $sm->get('EventMediaTableGateway');
-			                    $table = new Model\EventMediaTable($tableGateway);
-			                    return $table;
-			                },
-			                'EventMediaTableGateway' => function ($sm) {
-			                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-			                    $resultSetPrototype = new \Zend\Db\ResultSet\ResultSet();
-			                    $resultSetPrototype->setArrayObjectPrototype(new Model\EventMedia());
-			                    return new TableGateway('event_media', $dbAdapter, null, $resultSetPrototype);
-			                },
-			                'EventTableGateway' => function ($sm) {
-			                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-			                    $resultSetPrototype = new \Zend\Db\ResultSet\ResultSet();
-			                    $resultSetPrototype->setArrayObjectPrototype(new Model\Event());
-			                    return new TableGateway('event', $dbAdapter, null, $resultSetPrototype);
-			                },
-			                'Admin\Model\FriendMediaTable' => function($sm) {
-			                    $tableGateway = $sm->get('FriendMediaTableGateway');
-			                    $table = new Model\FriendMediaTable($tableGateway);
-			                    return $table;
-			                },
-			                'FriendMediaTableGateway' => function ($sm) {
-			                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-			                    $resultSetPrototype = new \Zend\Db\ResultSet\ResultSet();
-			                    $resultSetPrototype->setArrayObjectPrototype(new Model\FriendMedia());
-			                    return new TableGateway('friend_media', $dbAdapter, null, $resultSetPrototype);
-			                },
-			                'Admin\Model\MyAuthStorage' => function($sm) {
-			                    return new \Admin\Model\MyAuthStorage('eventapp');
+
+			                'Application\Model\MyAuthStorage' => function($sm) {
+			                    return new \Application\Model\MyAuthStorage('memreas');
 			                },
 			                'AuthService' => function($sm) {
 		    	                //My assumption, you've alredy set dbAdapter
@@ -211,78 +149,12 @@ class Module
 
 			                    $authService = new AuthenticationService();
 			                    $authService->setAdapter($dbTableAuthAdapter);
-			                    $authService->setStorage($sm->get('Admin\Model\MyAuthStorage'));
+			                    $authService->setStorage($sm->get('Application\Model\MyAuthStorage'));
 
             		        return $authService;
 			                },							  
 
-							//Paypal related tables
-							'Application\Model\TransactionTable' => function ($sm) {
-									$tableGateway = $sm->get ( 'TransactionTableGateway' );
-									$table = new TransactionTable ( $tableGateway );
-									return $table;
-							}, 
-							'TransactionTableGateway' => function ($sm) {
-									$dbAdapter = $sm->get ( 'Zend\Db\Adapter\Adapter' );
-									$resultSetPrototype = new ResultSet ();
-									$resultSetPrototype->setArrayObjectPrototype ( new Transaction () );
-									return new TableGateway ( 'transaction', $dbAdapter, null, $resultSetPrototype );
-							},
-							'Application\Model\AccountTable' => function ($sm) {
-									$tableGateway = $sm->get ( 'AccountTableGateway' );
-									$table = new AccountTable ( $tableGateway );
-									return $table;
-							},
-							'AccountTableGateway' => function ($sm) {
-									$dbAdapter = $sm->get ( 'Zend\Db\Adapter\Adapter' );
-									$resultSetPrototype = new ResultSet ();
-									$resultSetPrototype->setArrayObjectPrototype ( new Account());
-									return new TableGateway ( 'account', $dbAdapter, null, $resultSetPrototype );
-							},
-							'Application\Model\AccountBalancesTable' => function ($sm) {
-									$tableGateway = $sm->get ( 'AccountBalancesTableGateway' );
-									$table = new AccountBalancesTable( $tableGateway );
-									return $table;
-							},
-							'AccountBalancesTableGateway' => function ($sm) {
-									$dbAdapter = $sm->get ( 'Zend\Db\Adapter\Adapter' );
-									$resultSetPrototype = new ResultSet ();
-									$resultSetPrototype->setArrayObjectPrototype ( new AccountBalances());
-									return new TableGateway ( 'account_balances', $dbAdapter, null, $resultSetPrototype );
-							},
-							'Application\Model\AccountDetailTable' => function ($sm) {
-									$tableGateway = $sm->get ( 'AccountDetailTableGateway' );
-									$table = new AccountDetailTable( $tableGateway );
-									return $table;
-							},
-							'AccountDetailTableGateway' => function ($sm) {
-									$dbAdapter = $sm->get ( 'Zend\Db\Adapter\Adapter' );
-									$resultSetPrototype = new ResultSet ();
-									$resultSetPrototype->setArrayObjectPrototype ( new AccountDetail());
-									return new TableGateway ( 'account_detail', $dbAdapter, null, $resultSetPrototype );
-							},
-							'Application\Model\SubscriptionTable' => function ($sm) {
-									$tableGateway = $sm->get ( 'SubscriptionTableGateway' );
-									$table = new SubscriptionTable( $tableGateway );
-									return $table;
-							},
-							'SubscriptionTableGateway' => function ($sm) {
-									$dbAdapter = $sm->get ( 'Zend\Db\Adapter\Adapter' );
-									$resultSetPrototype = new ResultSet ();
-									$resultSetPrototype->setArrayObjectPrototype ( new Subscription());
-									return new TableGateway ( 'subscription', $dbAdapter, null, $resultSetPrototype );
-							},
-							'Application\Model\TransactionReceiverTable' => function ($sm) {
-									$tableGateway = $sm->get ( 'TransactionReceiverTableGateway' );
-									$table = new SubscriptionTable( $tableGateway );
-									return $table;
-							},
-							'TransactionReceiverTableGateway' => function ($sm) {
-									$dbAdapter = $sm->get ( 'Zend\Db\Adapter\Adapter' );
-									$resultSetPrototype = new ResultSet ();
-									$resultSetPrototype->setArrayObjectPrototype ( new TransactionReceiver());
-									return new TableGateway ( 'transaction_receiver', $dbAdapter, null, $resultSetPrototype );
-							},
+
 						) 
 					);
     }

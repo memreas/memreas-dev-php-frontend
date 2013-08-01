@@ -12,9 +12,9 @@ namespace Application\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\Session\Container;
-use Admin\Model;
-use Admin\Model\UserTable;
-use Admin\Form;
+use Application\Model;
+use Application\Model\UserTable;
+use Application\Form;
 use Zend\Mail\Message;
 use Zend\Mail\Transport\Sendmail as SendmailTransport;
 use Guzzle\Http\Client;
@@ -253,7 +253,7 @@ error_log("INSIDE LOGIN ACTION");
     public function getSessionStorage() {
         if (!$this->storage) {
             $this->storage = $this->getServiceLocator()
-                    ->get('admin\Model\MyAuthStorage');
+                    ->get('application\Model\MyAuthStorage');
         }
 
         return $this->storage;

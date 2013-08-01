@@ -17,6 +17,7 @@
 namespace Aws\DynamoDb\Integration;
 
 use Aws\DynamoDb\DynamoDbClient;
+use Aws\DynamoDb\Iterator\ItemIterator;
 
 /**
  * @group example
@@ -374,9 +375,35 @@ class DynamoDb_20120810_Test extends \Aws\Tests\IntegrationTestCase
     }
 
     /**
-     * Perform a parallel scan of multiple table segments
+     * Get normalized results of a Scan operation using a Scan iterator with an ItemIterator
      *
      * @depends testScan
+     * @example Aws\DynamoDb\DynamoDbClient::scan 2012-08-10
+     * @example Aws\DynamoDb\Iterator\ItemIterator
+     */
+    public function testScanWithItemIterator()
+    {
+        $client = $this->client;
+        // @begin
+
+        $iterator = new ItemIterator($client->getScanIterator(array('TableName' => 'errors')));
+
+        // Each item will contain the attributes we added
+        foreach ($iterator as $item) {
+            // Grab the time number value
+            echo $item['time'] . "\n";
+            // Grab the error string value
+            echo $item->get('error') . "\n";
+        }
+
+        // @end
+        $this->assertNotEmpty($this->getActualOutput());
+    }
+
+    /**
+     * Perform a parallel scan of multiple table segments
+     *
+     * @depends testScanWithItemIterator
      * @example Aws\DynamoDb\DynamoDbClient::scan 2012-08-10
      */
     public function testParallelScan()
@@ -502,6 +529,18 @@ class DynamoDb_20120810_Test extends \Aws\Tests\IntegrationTestCase
         // @end
 
         $this->assertEquals(count($keys), count($items));
+
+        // Also check the iterator to make sure it works the same
+        $iterator = $client->getBatchGetItemIterator(array(
+            'RequestItems' => array(
+                $tableName => array(
+                    'Keys' => $keys
+                )
+            )
+        ));
+        $iteratedItems = iterator_to_array($iterator);
+        print_r($iteratedItems);
+        $this->assertEquals(count($keys), count($iteratedItems));
     }
 
     /**
