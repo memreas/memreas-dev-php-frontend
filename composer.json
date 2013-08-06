@@ -5,7 +5,6 @@
     "keywords": [
         "framework",
         "zf2",
-        "paypal", 
         "php", 
         "sdk"
     ],
@@ -15,9 +14,6 @@
         "zendframework/zendframework": "2.*",
         "ext-curl": "*",
         "ext-json": "*",
-        "paypal/sdk-core-php": "v1.4.1",
-        "paypal/adaptivepayments-sdk-php":"v2.4.103",
-		"paypal/merchant-sdk-php":"*",
         "aws/aws-sdk-php": "2.*",
 		"sybio/image-workshop": "2.0.0"
     }    
