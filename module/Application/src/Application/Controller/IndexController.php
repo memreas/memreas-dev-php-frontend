@@ -21,8 +21,8 @@ use Guzzle\Http\Client;
 
 class IndexController extends AbstractActionController
 {
-	//protected $url = "http://memreasdev.elasticbeanstalk.com/eventapp_zend2.1/webservices/index.php";
-	protected $url = "http://192.168.1.9/eventapp_zend2.1/webservices/index_json.php";
+	protected $url = "http://memreasdev.elasticbeanstalk.com/eventapp_zend2.1/webservices/index.php";
+	//protected $url = "http://192.168.1.9/eventapp_zend2.1/webservices/index_json.php";
     protected $user_id;
     protected $storage;
     protected $authservice;
