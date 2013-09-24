@@ -13,31 +13,31 @@ header('Expires: 0'); // Proxies.
 <title>Memreas</title>
 
 <!--Custom css-->
-<link href="/css/style.css" rel="stylesheet" type="text/css">
-<link href="/css/jquery.mCustomScrollbar.css" rel="stylesheet" />
+<link href="/memreas/css/style.css" rel="stylesheet" type="text/memreas/css">
+<link href="/memreas/css/jquery.mCustomScrollbar.css" rel="stylesheet" />
 
 <!--Bootstrap Css-->
-<link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="/memreas/css/bootstrap.min.css" rel="stylesheet" type="text/memreas/css">
 
 <!--jQuery Lybrary-->
-<script src="/js/jquery.js"></script>
-<script src="/js/modernizr.custom.17475.js"></script>
+<script src="/memreas/js/jquery.js"></script>
+<script src="/memreas/js/modernizr.custom.17475.js"></script>
 
 <!--Bootstrap jQuery-->
-<script src="/js/bootstrap.min.js"></script>
+<script src="/memreas/js/bootstrap.min.js"></script>
 
 <!--Backgound Strecher-->
-<script type="text/javascript" src="js/bgstretcher.js"></script>
+<script type="text/javascript" src="/memreas/js/bgstretcher.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 $(document).bgStretcher({
-			images: ['/img/bg.jpg'],
+			images: ['/memreas/img/bg.jpg'],
 			imageWidth: 1366, imageHeight: 700
 		});
 	});
 </script>
 <!--memreas registration.js-->
-<script type="text/javascript" src="/js/registration.js"></script>
+<script type="text/javascript" src="/memreas/js/registration.js"></script>
 
 <script type="text/javascript">
 /*
@@ -66,7 +66,7 @@ $(document).bgStretcher({
   <!-- End : Header -->
   <!-- Begin : Content -->
   	<div class="row-fluid content">
-    <div class="span6 memreas-big-logo"><img src="/img/memreas_add.png"></div>
+    <div class="span6 memreas-big-logo"><img src="/memreas/img/memreas_add.png"></div>
     <div class="span6">
     <div class="login_contents">
 	<form action="<?php echo $this->url('index',array('action'=>'login'));?>" method="post" name="user" id="user">
