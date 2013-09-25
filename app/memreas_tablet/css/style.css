@@ -369,10 +369,11 @@ footer {
 }
 .medium_tabs li {
 	float: left;
-	margin: 0 1.8em 0 1.8em !important;
+	margin: 0 1.5em 0 1.5em !important;
 }
 .medium_tabs a {
-	padding: .5em 2.5em !important;
+	padding: .3em 1.5em !important;
+	font-size: 16px !important;
 }
 ul.commentpopup {
 	height: 180px;
@@ -1552,10 +1553,11 @@ ul.sync li {
 /************************************start more*****************************************/
 .small_tabs li {
 	float: left;
-	margin: 0 1.8em 0 1.8em !important;
+	margin: 0 1.3em 0 1.3em !important;
 }
 .small_tabs a {
-	padding: .3em 1.4em !important;
+	padding: .3em 1em !important;
+	font-size: 16px !important;
 }
 ul.option li {
 	width: 100%;
@@ -2040,7 +2042,8 @@ ul.right textarea {
 	margin: 0 1.3em 0 1.3em !important;
 }
 .medium_tabs a {
-	padding: .5em 3em !important;
+	padding: .5em 2em !important;
+	font-size: 16px !important;
 }
 
 /******************************login****************************************/

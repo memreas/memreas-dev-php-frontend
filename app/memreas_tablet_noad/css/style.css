@@ -377,6 +377,7 @@ footer {
 }
 .medium_tabs a {
 	padding: .5em 2.5em !important;
+	font-size: 16px !important;
 }
 ul.commentpopup {
 	height: 180px;
@@ -1565,6 +1566,7 @@ ul.sync li {
 }
 .small_tabs a {
 	padding: .3em 1.4em !important;
+	font-size: 16px !important;
 }
 ul.option li {
 	width: 100%;
@@ -1985,7 +1987,7 @@ ul.popupContact2 {
 }
 }
 
-@media only screen and (min-device-width : 1200px) and (max-device-width : 1280px) and (orientation : landscape) {
+@media only screen and (min-device-width : 1024px) and (max-device-width : 1280px) and (orientation : landscape) {
 ul.right li {
 	display: block;
 	margin-bottom: 5px;
