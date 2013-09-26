@@ -21,15 +21,15 @@ use Guzzle\Http\Client;
 
 class IndexController extends AbstractActionController
 {
-	protected $url = "http://memreasdev.elasticbeanstalk.com/eventapp_zend2.1/webservices/index.php";
+	//protected $url = "http://memreasdev.elasticbeanstalk.com/eventapp_zend2.1/webservices/index.php";
 	//protected $url = "http://192.168.1.9/eventapp_zend2.1/webservices/index_json.php";
+    protected $url = "http://test";
     protected $user_id;
     protected $storage;
     protected $authservice;
     protected $userTable;
     protected $eventTable;
     protected $mediaTable;
-    protected $eventmediaTable;
     protected $friendmediaTable;
 
 	public function fetchXML($action, $xml) {
@@ -49,7 +49,8 @@ class IndexController extends AbstractActionController
 	}
 
     public function indexAction() {
-	    $path = $this->security("application/index/event.phtml");
+      
+ 	    $path = $this->security("application/index/event.phtml");
 		$view = new ViewModel();
 		$view->setTemplate($path); // path to phtml file under view folder
 		return $view;			
@@ -126,6 +127,8 @@ error_log("INSIDE LOGIN ACTION");
 		
 		//Guzzle the LoginWeb Service		
 		$result = $this->fetchXML($action, $xml);
+               
+
 		$data = simplexml_load_string($result);
 
 		//ZF2 Authenticate
@@ -151,11 +154,12 @@ error_log("INSIDE LOGIN ACTION");
 
     public function setSession($username) {
 		//Fetch the user's data and store it in the session...
-   	    $user = $this->getUserTable()->getUserByUsername($username);
-        unset($user->password);
-       	unset($user->disable_account);
-   	    unset($user->create_date);
-        unset($user->update_time);
+   	    $user = $this->getUserTable()->findOneBy(array('username' => $username));
+ 
+        $user->password='';
+       	$user->disable_account='';
+   	    $user->create_date='';
+        $user->update_time='';
 		$session = new Container('user');        
 		$session->offsetSet('user_id', $user->user_id);
 		$session->offsetSet('username', $username);
@@ -174,10 +178,13 @@ error_log("INSIDE LOGIN ACTION");
 		$action = 'registration';
 		$xml = "<xml><registration><email>$email</email><username>$username</username><password>$password</password></registration></xml>";
 		$redirect = 'event';
-		
+
 		//Guzzle the Registration Web Service		
 		$result = $this->fetchXML($action, $xml);
+		 
+		
 		$data = simplexml_load_string($result);
+       
 
 		//ZF2 Authenticate
 		if ($data->registrationresponse->status == 'success') {
@@ -197,11 +204,14 @@ error_log("INSIDE LOGIN ACTION");
 //    	 		echo "filesize ----> $filesize<BR>";	
     	 		
 				$url = "http://192.168.1.9/eventapp_zend2.1/webservices/addmediaevent.php";
+                $url=  $this->url;
 				$guzzle = new Client();
 				$session = new Container('user');        
 				$request = $guzzle->post($url)
 								->addPostFields(
 									array(
+                                        			'action' => 'addmediaevent',
+
 										'user_id' => $session->offsetGet('user_id'),
 										'filename' => $fileName,
 										'event_id' => "",
@@ -219,7 +229,7 @@ error_log("INSIDE LOGIN ACTION");
 			$response = $request->send();
 			$data = $response->getBody(true);
 			$xml = simplexml_load_string($result);
-
+            print_r($response);
 			//ZF2 Authenticate
 			error_log("addmediaevent result -----> " . $data);
 			if ($xml->addmediaeventresponse->status == 'success') {
@@ -235,8 +245,9 @@ error_log("INSIDE LOGIN ACTION");
     public function getUserTable() {
         if (!$this->userTable) {
             $sm = $this->getServiceLocator();
-            $this->userTable = $sm->get('Application\Model\UserTable');
-        }
+            $this->dbAdapter = $sm->get('doctrine.entitymanager.orm_default');
+            $this->userTable =  $this->dbAdapter->getRepository('Application\Entity\User');
+         }
         return $this->userTable;
     }
 

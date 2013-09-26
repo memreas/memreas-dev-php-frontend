@@ -39,5 +39,34 @@ return array(
             ),
         ),
     ),
+     'doctrine' => array(
+        'connection' => array(
+            'orm_default' => array(
+                'doctrine_type_mappings' => array(
+                                                'enum' => 'string',
+                                                    'bit' => 'string'),
+                'driverClass' => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
+                'params' => array(
+                    'host' => 'localhost',
+                    'port' => '3306',
+                    'dbname' => 'jhon',
+                    'user'     => 'root',
+					'password' => '',)
+            ),
+            'orm_jhon' => array(
+                'doctrine_type_mappings' => array(
+                                                'enum' => 'string',
+                                                    'bit' => 'string'),
+                'driverClass' => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
+                'params' => array(
+                    'host' => 'localhost',
+                    'port' => '3306',
+                    'dbname' => 'cakephp_133',
+                    'user'     => 'root',
+					'password' => '',)
+            )
+        )
+         
+    ),
 
 );
