@@ -344,7 +344,7 @@ ul.right textarea {
 .menu ul li {
 	display: inline;
 	float: left;
-	margin: 0px 5.1% !important;
+	margin: 0px 4.5% !important;
 }
 .menu ul li a {
 	overflow: hidden;
@@ -706,7 +706,7 @@ ul.event_images li img{
 	float: left;
 }
 .f-center {
-	margin: 20px 0px 0px 40% !important;
+	margin: 20px 0px 0px 30% !important;
 	display: inline-block;
 }
 .f-center2 {
@@ -1049,10 +1049,10 @@ ul.share_friends_contents li {
 	display: block;
 	list-style: none;
 	float: left;
-	width: 40%;
+	width: 42%;
 	height: 56px;
 	border: none;
-	margin: 20px 0px 0px 70px;
+	margin: 20px 0px 0px 40px;
 }
 ul.share_friends_check_box {
 	display: block;
@@ -1063,7 +1063,7 @@ ul.share_friends_check_box {
 	float: left;
 }
 .pro-pic_names2 {
-	width: 70% !important;
+	width: 60% !important;
 	font-family: "Century Gothic";
 	font-size: 15px;
 	color: #FFF;
@@ -1956,7 +1956,7 @@ ul.pics li {
 	width: 40% !important;
 }
 ul.share_friends_contents li {
-	width: 40%;
+	width: 42%;
 	margin: 20px 0px 0px 40px;
 }
 ul.share li {
