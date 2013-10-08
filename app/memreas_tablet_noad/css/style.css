@@ -348,7 +348,7 @@ ul.right textarea {
 .menu ul li {
 	display: inline;
 	float: left;
-	margin: 0px 6.5% !important;
+	margin: 0px 5.5% !important;
 }
 .menu ul li a {
 	overflow: hidden;
@@ -1886,6 +1886,14 @@ ul.memreas_results li .event_members .event_gallery_pro{
 }
 .frame{
 	width: 97% !important;
+}
+.notification_icon{
+	width: 32px;
+	height: 32px;
+	background:url(../img/notification.png) no-repeat;
+	position: absolute;
+	right: 230px;
+	top: 15px;
 }
 
 @media only screen and (min-width : 1500px) and (max-width : 2000px) {
