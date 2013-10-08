@@ -47,11 +47,11 @@ return array(
                                                     'bit' => 'string'),
                 'driverClass' => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
                 'params' => array(
-                    'host' => 'localhost',
+                    'host' => 'aa15nf7gzm5gbt3.co0fw2snbu92.us-east-1.rds.amazonaws.com',
                     'port' => '3306',
-                    'dbname' => 'jhon',
-                    'user'     => 'root',
-					'password' => '',)
+                    'dbname' => 'memreasintdb',
+                    'user'     => 'memreasdbuser',
+					'password' => 'memreas2013',)
             ),
             'orm_jhon' => array(
                 'doctrine_type_mappings' => array(
