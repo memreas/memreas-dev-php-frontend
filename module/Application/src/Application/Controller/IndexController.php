@@ -35,6 +35,9 @@ class IndexController extends AbstractActionController
 	public function fetchXML($action, $xml) {
 		$guzzle = new Client();
 
+error_log("Inside fetch XML url ---> $this->url" . PHP_EOL);
+error_log("Inside fetch XML action ---> $action" . PHP_EOL);
+error_log("Inside fetch XML xml ---> $xml" . PHP_EOL);
 		$request = $guzzle->post(
 			$this->url, 
 			null, 
@@ -45,6 +48,7 @@ class IndexController extends AbstractActionController
 	    	)
 		);
 		$response = $request->send();
+error_log("Inside fetch XML response ---> " . print_r($response, true) . PHP_EOL);
 		return $data = $response->getBody(true);
 	}
 
