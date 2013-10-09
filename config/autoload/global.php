@@ -53,18 +53,6 @@ return array(
                     'user'     => 'memreasdbuser',
 					'password' => 'memreas2013',)
             ),
-            'orm_jhon' => array(
-                'doctrine_type_mappings' => array(
-                                                'enum' => 'string',
-                                                    'bit' => 'string'),
-                'driverClass' => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
-                'params' => array(
-                    'host' => 'localhost',
-                    'port' => '3306',
-                    'dbname' => 'cakephp_133',
-                    'user'     => 'root',
-					'password' => '',)
-            )
         )
          
     ),
