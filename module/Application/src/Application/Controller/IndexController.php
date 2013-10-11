@@ -207,7 +207,6 @@ error_log("INSIDE LOGIN ACTION");
 //     			echo "filetmp_name ----> $filetmp_name<BR>";	 
 //    	 		echo "filesize ----> $filesize<BR>";	
     	 		
-				$url = "http://192.168.1.9/eventapp_zend2.1/webservices/addmediaevent.php";
                 $url=  $this->url;
 				$guzzle = new Client();
 				$session = new Container('user');        
@@ -275,6 +274,7 @@ error_log("INSIDE LOGIN ACTION");
 
     public function security($path) {
     	//if already login do nothing
+		/*
 		$session = new Container("user");
 	    if(!$session->offsetExists('user_id')){
 			error_log("Not there so logout");
@@ -282,6 +282,7 @@ error_log("INSIDE LOGIN ACTION");
     	  return "application/index/index.phtml";
 	    }
 		return $path;			
+		*/
         //return $this->redirect()->toRoute('index', array('action' => 'login'));
     }
 } // end class IndexController
