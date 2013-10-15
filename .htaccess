@@ -1,5 +1,8 @@
 <IfModule mod_php5.c>
 
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^.*$ index.php [NC,L]
+
 #setup for zf2 redirect to public - doesn't work well...
 #RewriteEngine On
 #RewriteRule ^\.htaccess$ - [F]
