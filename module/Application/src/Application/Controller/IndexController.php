@@ -21,9 +21,8 @@ use Guzzle\Http\Client;
 
 class IndexController extends AbstractActionController
 {
-	//protected $url = "http://memreasdev.elasticbeanstalk.com/eventapp_zend2.1/webservices/index.php";
-	//protected $url = "http://192.168.1.9/eventapp_zend2.1/webservices/index_json.php";
-    protected $url = "http://memreasint.elasticbeanstalk.com/app/";
+    //protected $url = "http://memreasint.elasticbeanstalk.com/app/";
+    protected $url = "http://localhost/memreas-dev-php-ws/app/";
     protected $user_id;
     protected $storage;
     protected $authservice;
@@ -35,9 +34,6 @@ class IndexController extends AbstractActionController
 	public function fetchXML($action, $xml) {
 		$guzzle = new Client();
 
-error_log("Inside fetch XML url ---> $this->url" . PHP_EOL);
-error_log("Inside fetch XML action ---> $action" . PHP_EOL);
-error_log("Inside fetch XML xml ---> $xml" . PHP_EOL);
 		$request = $guzzle->post(
 			$this->url, 
 			null, 
@@ -48,7 +44,7 @@ error_log("Inside fetch XML xml ---> $xml" . PHP_EOL);
 	    	)
 		);
 		$response = $request->send();
-error_log("Inside fetch XML response ---> " . print_r($response, true) . PHP_EOL);
+//error_log("Inside fetch XML response ---> " . print_r($response, true) . PHP_EOL);
 		return $data = $response->getBody(true);
 	}
 
@@ -58,6 +54,39 @@ error_log("Inside fetch XML response ---> " . print_r($response, true) . PHP_EOL
 		$view = new ViewModel();
 		$view->setTemplate($path); // path to phtml file under view folder
 		return $view;			
+    }
+
+    public function sampleAjaxAction() {
+
+	    $path = $this->security("application/index/sample-ajax.phtml");
+
+		if (isset($_REQUEST['callback'])) {
+			//Fetch parms
+			$callback = $_REQUEST['callback'];
+			$json = $_REQUEST['json'];
+			$message_data = json_decode($json, true);
+			//Setup the URL and action
+			$ws_action = $message_data['ws_action'];
+			$type = $message_data['type'];
+			$xml = $message_data['json'];
+
+			//Guzzle the LoginWeb Service		
+			$result = $this->fetchXML($ws_action, $xml);
+				
+			$json = json_encode($result);
+			//Return the ajax call...
+			$callback_json = $callback . "(" . $json . ")";
+			$output = ob_get_clean();
+			header("Content-type: plain/text");
+			echo $callback_json;
+			//Need to exit here to avoid ZF2 framework view.
+			exit;
+		} else {
+			$view = new ViewModel();
+			$view->setTemplate($path); // path to phtml file under view folder
+		}
+
+		return $view;		
     }
 
     public function galleryAction() {
@@ -117,7 +146,6 @@ error_log("Inside fetch XML response ---> " . print_r($response, true) . PHP_EOL
     }
 
     public function loginAction() {
-error_log("INSIDE LOGIN ACTION");
 		//Fetch the post data
 		$request = $this->getRequest();
 		$postData = $request->getPost()->toArray();
@@ -202,19 +230,13 @@ error_log("INSIDE LOGIN ACTION");
     		 	$filetmp_name = $file['tmp_name'];
 	     		$filesize = $file['size'];
      	
-//	    	 	echo "filename ----> $fileName<BR>";	 
-//		     	echo "filetype ----> $filetype<BR>";	 
-//     			echo "filetmp_name ----> $filetmp_name<BR>";	 
-//    	 		echo "filesize ----> $filesize<BR>";	
-    	 		
                 $url=  $this->url;
 				$guzzle = new Client();
 				$session = new Container('user');        
 				$request = $guzzle->post($url)
 								->addPostFields(
 									array(
-                                        			'action' => 'addmediaevent',
-
+                                        'action' => 'addmediaevent',
 										'user_id' => $session->offsetGet('user_id'),
 										'filename' => $fileName,
 										'event_id' => "",
@@ -232,9 +254,6 @@ error_log("INSIDE LOGIN ACTION");
 			$response = $request->send();
 			$data = $response->getBody(true);
 			$xml = simplexml_load_string($result);
-            print_r($response);
-			//ZF2 Authenticate
-			error_log("addmediaevent result -----> " . $data);
 			if ($xml->addmediaeventresponse->status == 'success') {
 				//Do nothing even if it fails...
 			}
@@ -274,7 +293,6 @@ error_log("INSIDE LOGIN ACTION");
 
     public function security($path) {
     	//if already login do nothing
-		/*
 		$session = new Container("user");
 	    if(!$session->offsetExists('user_id')){
 			error_log("Not there so logout");
@@ -282,7 +300,6 @@ error_log("INSIDE LOGIN ACTION");
     	  return "application/index/index.phtml";
 	    }
 		return $path;			
-		*/
         //return $this->redirect()->toRoute('index', array('action' => 'login'));
     }
 } // end class IndexController
