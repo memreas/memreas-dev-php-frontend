@@ -21,8 +21,8 @@ use Guzzle\Http\Client;
 
 class IndexController extends AbstractActionController
 {
-    //protected $url = "http://memreasint.elasticbeanstalk.com/app/";
-    protected $url = "http://localhost/memreas-dev-php-ws/app/";
+    protected $url = "http://memreasint.elasticbeanstalk.com/";
+    //protected $url = "http://localhost/memreas-dev-php-ws/app/";
     protected $user_id;
     protected $storage;
     protected $authservice;
