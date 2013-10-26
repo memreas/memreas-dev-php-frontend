@@ -24,6 +24,7 @@ class IndexController extends AbstractActionController
 
 	//Updated....
 	protected $url = "http://memreasint.elasticbeanstalk.com/";
+	protected $test = "Hope this works!";
     //protected $url = "http://localhost/memreas-dev-php-ws/app/";
     protected $user_id;
     protected $storage;
