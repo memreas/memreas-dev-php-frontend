@@ -5,6 +5,7 @@
 
 // google map object
 var location_map = null;
+var geocoder = null;
 
 share_initAkordeon = function() {
      $('#buttons').akordeon();
@@ -72,15 +73,17 @@ share_showGoogleMap = function(div_id) {
 	share_initGoogleMap(div_id);
 }
 
+share_closeGoogleMap = function() {
+	$('#txt_location').val($('#searchTextField').val());
+	disablePopup('locationmap');
+}
+
 share_initGoogleMap = function(div_id) {
 	if (location_map == null || typeof location_map == "undefined") {
          var lat = 44.88623409320778,
              lng = -87.86480712897173,
              latlng = new google.maps.LatLng(lat, lng),
              image = 'http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png';
-
-         //zoomControl: true,
-         //zoomControlOptions: google.maps.ZoomControlStyle.LARGE,
 
          var mapOptions = {
              center: new google.maps.LatLng(lat, lng),
@@ -122,9 +125,6 @@ share_initGoogleMap = function(div_id) {
              }
 
              moveMarker(place.name, place.geometry.location);
-             //alert(place.name);
-             //$('.MapLat').val(place.geometry.location.lat());
-             //$('.MapLon').val(place.geometry.location.lng());
          });
          google.maps.event.addListener(location_map, 'click', function (event) {
              //$('.MapLat').val(event.latLng.lat());
@@ -149,7 +149,6 @@ share_initGoogleMap = function(div_id) {
 
                              moveMarker(placeName, latlng);
                              $("input").val(firstResult);
-                             //alert(firstResult)
                          }
                      });
                  }
@@ -160,7 +159,6 @@ share_initGoogleMap = function(div_id) {
              marker.setIcon(image);
              marker.setPosition(latlng);
              infowindow.setContent(placeName);
-             //infowindow.open(map, marker);
          }
 	}
 	
@@ -174,6 +172,17 @@ share_initGoogleMap = function(div_id) {
 	if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition ( 
 			function(position) {
+				var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+				if (geocoder == null)
+					geocoder = new google.maps.Geocoder();
+				geocoder.geocode({'latLng': latlng}, function(results, status) {
+				  	if (status == google.maps.GeocoderStatus.OK) {
+						if (results[1]) {
+					 	 	$('#searchTextField').val(results[1].formatted_address);
+						}
+				  	} else {
+				  	}
+				});			
 				location_map.setCenter(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
 			}, 
 			function(error) {
@@ -184,16 +193,4 @@ share_initGoogleMap = function(div_id) {
 	} else {
 		alert(err_msg);
 	}
-}
-
-share_searchKeyEvent = function(event) {
-	var key = event.keyCode;
-	
-	if (key == 13) {
-		share_searchGoogleMap();
-	}
-}
-
-share_searchGoogleMap = function(location) {
-	
 }

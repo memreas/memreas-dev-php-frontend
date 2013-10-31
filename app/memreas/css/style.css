@@ -190,7 +190,7 @@ header {
 .search_bar {
 	width: 27%;
 	height: 40px;
-	background: url(../img/search.png) no-repeat 99% center;
+	/*background: url(../img/search.png) no-repeat 99% center;*/
 	float: left;
 	margin-left: 15%;
 	margin-top: 10px;
@@ -1340,7 +1340,7 @@ ul.popupContact2 li {
 .popups2 .search_bar {
 	width: 27%;
 	height: 24px;
-	background: url(../img/search.png) no-repeat 99% center #FFF;
+	/*background: url(../img/search.png) no-repeat 99% center #FFF;*/
 	float: right;
 	margin-right: 20px;
 	border: 1px #576e8a solid !important;
