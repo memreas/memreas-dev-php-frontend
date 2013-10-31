@@ -1,3 +1,16 @@
+<?php 
+/////////////////////////////////
+// Author: David Kang
+// Copyright memreas llc 2013
+/////////////////////////////////
+
+use Guzzle\Http\Client;
+use Zend\Session\Container;
+
+$session = new Container('user');        
+$username = $session->offsetGet('username');
+$domain = "http://d1ckv7o9k6o3x9.cloudfront.net/";
+?>
 
 <!-- Begin : Header -->
 <div class="row-fluid">
@@ -7,7 +20,7 @@
   <a href="notifications.html" class="notification_icon"></a>
   <div class="pro-info">
 	<figure class="pro-pic"><img src="/memreas/img/profile-pic.jpg" alt=""></figure>
-	<div class="pro-name">User Name</div>
+	<div class="pro-name"><?php echo $username; ?></div>
   </div>
 </header>
 </div>

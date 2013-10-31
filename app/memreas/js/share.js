@@ -3,7 +3,10 @@
 // Copyright memreas llc 2013
 /////////////////////////////////
 
-jQuery.initAkordeon = function() {
+// google map object
+var location_map = null;
+
+share_initAkordeon = function() {
      $('#buttons').akordeon();
        $('#button-less').akordeon({ buttons: false, toggle: true, itemsOrder: [2, 0, 1] });
 	 $('#buttons2').akordeon();
@@ -16,7 +19,7 @@ jQuery.initAkordeon = function() {
        $('#button-less').akordeon({ buttons: false, toggle: true, itemsOrder: [2, 0, 1] });
 }
 
-jQuery.customScrollbar = function () {
+share_customScrollbar = function () {
 	$("ul.scrollClass").mCustomScrollbar({
 		scrollButtons:{
 			enable:true
@@ -62,4 +65,135 @@ jQuery.customScrollbar = function () {
 			$("ul.scrollClass").mCustomScrollbar("scrollTo","h2:last",{scrollInertia:2500,scrollEasing:"easeInOutQuad"}); //scroll to appended content
 		});
 	});
+}
+
+share_showGoogleMap = function(div_id) {
+	popup('locationmap');
+	share_initGoogleMap(div_id);
+}
+
+share_initGoogleMap = function(div_id) {
+	if (location_map == null || typeof location_map == "undefined") {
+         var lat = 44.88623409320778,
+             lng = -87.86480712897173,
+             latlng = new google.maps.LatLng(lat, lng),
+             image = 'http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png';
+
+         //zoomControl: true,
+         //zoomControlOptions: google.maps.ZoomControlStyle.LARGE,
+
+         var mapOptions = {
+             center: new google.maps.LatLng(lat, lng),
+             zoom: 13,
+             mapTypeId: google.maps.MapTypeId.ROADMAP,
+             panControl: true,
+             panControlOptions: {
+                 position: google.maps.ControlPosition.TOP_RIGHT
+             },
+             zoomControl: true,
+             zoomControlOptions: {
+                 style: google.maps.ZoomControlStyle.LARGE,
+                 position: google.maps.ControlPosition.TOP_left
+             }
+         },
+         location_map = new google.maps.Map(document.getElementById(div_id), mapOptions),
+             marker = new google.maps.Marker({
+                 position: latlng,
+                 map: location_map,
+                 icon: image
+             });
+
+         var input = document.getElementById('searchTextField');
+         var autocomplete = new google.maps.places.Autocomplete(input, {
+             types: ["geocode"]
+         });
+
+         autocomplete.bindTo('bounds', location_map);
+         var infowindow = new google.maps.InfoWindow();
+
+         google.maps.event.addListener(autocomplete, 'place_changed', function (event) {
+             infowindow.close();
+             var place = autocomplete.getPlace();
+             if (place.geometry.viewport) {
+                 location_map.fitBounds(place.geometry.viewport);
+             } else {
+                 location_map.setCenter(place.geometry.location);
+                 location_map.setZoom(17);
+             }
+
+             moveMarker(place.name, place.geometry.location);
+             //alert(place.name);
+             //$('.MapLat').val(place.geometry.location.lat());
+             //$('.MapLon').val(place.geometry.location.lng());
+         });
+         google.maps.event.addListener(location_map, 'click', function (event) {
+             //$('.MapLat').val(event.latLng.lat());
+             //$('.MapLon').val(event.latLng.lng());
+             //alert(event.latLng.place.name)
+         });
+         $("#searchTextField").focusin(function () {
+             $(document).keypress(function (e) {
+                 if (e.which == 13) {
+                     return false;
+                     infowindow.close();
+                     var firstResult = $(".pac-container .pac-item:first").text();
+                     var geocoder = new google.maps.Geocoder();
+                     geocoder.geocode({
+                         "address": firstResult
+                     }, function (results, status) {
+                         if (status == google.maps.GeocoderStatus.OK) {
+                             var lat = results[0].geometry.location.lat(),
+                                 lng = results[0].geometry.location.lng(),
+                                 placeName = results[0].address_components[0].long_name,
+                                 latlng = new google.maps.LatLng(lat, lng);
+
+                             moveMarker(placeName, latlng);
+                             $("input").val(firstResult);
+                             //alert(firstResult)
+                         }
+                     });
+                 }
+             });
+         });
+
+         function moveMarker(placeName, latlng) {
+             marker.setIcon(image);
+             marker.setPosition(latlng);
+             infowindow.setContent(placeName);
+             //infowindow.open(map, marker);
+         }
+	}
+	
+	var err_msg = "Error while getting location. Device GPS/location may be disabled."
+	var geoPositionOptions = $.extend({
+		enableHighAccuracy: true,
+		timeout: 5000,
+		maximumAge: 300000
+	}, { timeout: 30000 } );
+	
+	if (navigator.geolocation) {
+		navigator.geolocation.getCurrentPosition ( 
+			function(position) {
+				location_map.setCenter(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+			}, 
+			function(error) {
+				alert(err_msg);
+			},
+			geoPositionOptions
+		);	
+	} else {
+		alert(err_msg);
+	}
+}
+
+share_searchKeyEvent = function(event) {
+	var key = event.keyCode;
+	
+	if (key == 13) {
+		share_searchGoogleMap();
+	}
+}
+
+share_searchGoogleMap = function(location) {
+	
 }
