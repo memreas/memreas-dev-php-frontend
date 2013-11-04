@@ -1,4 +1,51 @@
 @charset "utf-8";
+
+#loadingpopup {
+	width: 100%;
+	height: 100%;
+	background: rgba(200,200,200,0.6);
+	z-index: 10000;
+	position: absolute;
+	display: none;
+}
+
+#loadingpopupinner {
+	width: 50%;
+	height: 24%;
+	background: rgba(255,255,255,0.8);
+	z-index: 10000;
+	position:absolute;
+	left: 25%;
+	top: 40%;
+	border-radius: 1rem;
+}
+
+#loadingimg {
+	width: 2rem;
+	height: 2rem;
+	opacity: 0.75;
+	-webkit-border-radius: 1rem;
+	border-radius: 1rem;
+	background-color: black;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -1rem;
+	margin-top: -1rem;
+}
+
+#loadingtext {
+	width: 10rem;
+	height: 2rem;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -5rem;
+	margin-top: 1.2rem;
+	font-size: 1rem;
+	text-align: center;
+}
+
 /* CSS Document */
 /*.....:Reset CSS:.....*/
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
@@ -2474,7 +2521,4 @@ ul.discover_results li p{
 }
 ul.memreas_results{
 	height: 1000px;
-}
-
-
 }

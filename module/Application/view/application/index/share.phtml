@@ -1,3 +1,18 @@
+<?php 
+/////////////////////////////////
+// Author: John Meah
+// Copyright memreas llc 2013
+/////////////////////////////////
+
+use Guzzle\Http\Client;
+use Zend\Session\Container;
+
+$session = new Container('user');        
+$user_id = $session->offsetGet('user_id');
+$domain = "http://d1ckv7o9k6o3x9.cloudfront.net/";
+
+?>
+
 <!doctype html>
 <html>
 <head>
@@ -20,7 +35,6 @@
 <script src="/memreas/js/modernizr.custom.17475.js"></script>
 
 <!--Google Map-->
-<!--<script src="http://maps.google.com/maps/api/js?sensor=false"></script>-->
 <script src="http://maps.google.com/maps/api/js?libraries=places&region=uk&language=en&sensor=true"></script>
 
 <!--Bootstrap jQuery-->
@@ -38,6 +52,8 @@
 <!-- custom swipebox plugin -->    
 <script src="/memreas/js/jquery.swipebox.min.js"></script>
 
+<script src="/memreas/js/base_func.js"></script>
+<script src="/memreas/js/ajax.js"></script>
 <script src="/memreas/js/share.js"></script>
 
 <script type="text/javascript">
@@ -60,10 +76,10 @@
 	});
 	
 	$(function() {
-		$( "#datepicker" ).datepicker();
-		$( "#datepicker-1" ).datepicker();
-		$( "#datepicker-2" ).datepicker();
-		$( "#datepicker-3" ).datepicker();
+		$("#dtp_date").datepicker();
+		$("#dtp_from").datepicker();
+		$("#dtp_to").datepicker();
+		$("#dtp_selfdestruct").datepicker();
 	});
 </script>
 
@@ -72,7 +88,16 @@
 
 </head>
 
+<div id="loadingpopup">
+	<div id="loadingpopupinner">
+		<img id="loadingimg" src="/memreas/img/loading.gif"/>
+		<span id="loadingtext">Please wait...</span>
+	</div>
+</div>
+
 <body>
+	<input id="user_id" val="<?php echo $user_id ?>" hidden></input>
+
 	<?php require 'header.phtml' ?>
 		
 	<!-- Begin : Container -->
@@ -87,12 +112,12 @@
 		  <?php } ?>
 			<div class="row-fluid">
 				<ul id="tabs" class="medium_tabs">
-					<li><a href="#" title="tab1">memreas details</a></li>
-					<li><a href="#" title="tab2">media</a></li>
-					<li><a href="#" title="tab3">friends</a></li>
+					<li><a href="#" title="share_tab1">memreas details</a></li>
+					<li><a href="#" title="share_tab2">media</a></li>
+					<li><a href="#" title="share_tab3">friends</a></li>
 				</ul>
 				<div id="tab-content">
-					<div id="tab1" class="hideCls">
+					<div id="share_tab1" class="hideCls">
 						<div class="required">only name is required</div>
 						<ul id="content_1" class="share_memreas_details scrollClass">
 						<li>
@@ -117,7 +142,7 @@
 						</li>
 						<li>
 						 <input id="ckb_public" class="css-checkbox" type="checkbox" checked="checked"/>
-						 <label for="ckb_public" name="demo_lbl_3" class="css-label margin-none" >public</label>
+						 <label for="ckb_public" name="demo_lbl_3" class="css-label margin-none" >public (anyone can add or post)</label>
 						</li>
 						<li>
 						 <input id="ckb_viewable" class="css-checkbox" type="checkbox" checked="checked"/>
@@ -131,10 +156,10 @@
 						 <input name="input" type="text" id="dtp_selfdestruct" class="share-txtfield-2 date-picker" readonly value="" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == '')this.value = '';"/>       
 						</li>
 						</ul>
-						<a class="black_btn_skin f-center" href="#">next</a> 
-						<a class="black_btn_skin" href="#">cancel</a>
+						<a class="black_btn_skin f-center" href="javascript:share_addEvent();">next</a> 
+						<a class="black_btn_skin" href="javascript:share_clearDetails();">cancel</a>
 					</div>
-					<div id="tab2" class="hideCls">
+					<div id="share_tab2" class="hideCls">
 						<ul id="content_1" class="share scrollClass">
 							<li><a href="/memreas/img/large-pic-1.jpg" class="swipebox" title="photo-1"><img src="/memreas/img/small-pic-1.jpg" alt=""></a></li>
 							<li><a href="/memreas/img/large-pic-2.jpg" class="swipebox" title="photo-2"><img src="/memreas/img/small-pic-2.jpg" alt=""></a></li>
@@ -206,7 +231,7 @@
 						<a class="black_btn_skin f-center" href="#">next</a> 
 						<a class="black_btn_skin f-middle" href="#">cancel</a>
 					</div>
-					<div id="tab3" class="hideCls">
+					<div id="share_tab3" class="hideCls">
 						<div class="styled-select">
 							<select>
 								<option>facebook</option>
