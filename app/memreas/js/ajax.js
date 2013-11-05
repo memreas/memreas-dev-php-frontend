@@ -45,40 +45,41 @@ ajaxRequest = function (action, params, success_func, error_func) {
 }
 
 getXMLStringFromParamArray = function(action, params) {
-	var idx = 0;
+	var i = 0;
+	var action_tag = "";
 	var xml_str = "<xml>";
 
 	switch (action) {
 		case "checkusername":
-			xml_str += "<checkusername>";
-			
-				xml_str += "<username>" + params[idx++] + "</username>";
-			
-			xml_str += "</checkusername>";
+			action_tag = "<checkusername>";
 			break;
 			
 		case "addevent":
-			xml_str += "<addevent>";
+			action_tag = "<addevent>";
+			break;
 			
-				xml_str += "<user_id>" + params[idx++] + "</user_id>";
-				xml_str += "<event_name>" + params[idx++] + "</event_name>";
-				xml_str += "<event_date>" + params[idx++] + "</event_date>";
-				xml_str += "<event_location>" + params[idx++] + "</event_location>";
-				xml_str += "<event_from>" + params[idx++] + "</event_from>";
-				xml_str += "<event_to>" + params[idx++] + "</event_to>";
-				xml_str += "<is_friend_can_add_friend>" + params[idx++] + "</is_friend_can_add_friend>";
-				xml_str += "<is_friend_can_post_media>" + params[idx++] + "</is_friend_can_post_media>";
-				xml_str += "<event_self_destruct>" + params[idx++] + "</event_self_destruct>";
-				xml_str += "<is_public>" + params[idx++] + "</is_public>";
+		case "addcomments":
+			action_tag = "<addcomment>";
+			break;
 			
-			xml_str += "</addevent>";
+		default:
 			break;
 	}
+	
+	xml_str += "<" + action_tag + ">";
+	
+	for (i = 0; i < params.length; i++) {
+		xml_str += "<" + params[i]['tag'] + ">";
+		xml_str += params[i]['value'];
+		xml_str += "</" + params[i]['tag'] + ">";
+	}
+	
+	xml_str += "</" + action_tag + ">";
 	
 	xml_str += "</xml>";
 	//console.log(xml_str);
 	
-	return xml_str
+	return xml_str;
 }
 
 

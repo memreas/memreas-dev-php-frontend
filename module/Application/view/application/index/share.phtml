@@ -157,7 +157,7 @@ $domain = "http://d1ckv7o9k6o3x9.cloudfront.net/";
 						</li>
 						</ul>
 						<a class="black_btn_skin f-center" href="javascript:share_addEvent();">next</a> 
-						<a class="black_btn_skin" href="javascript:share_clearDetails();">cancel</a>
+						<a class="black_btn_skin" href="javascript:share_clearMemreas();">cancel</a>
 					</div>
 					<div id="share_tab2" class="hideCls">
 						<ul id="content_1" class="share scrollClass">
@@ -224,12 +224,12 @@ $domain = "http://d1ckv7o9k6o3x9.cloudfront.net/";
 									<div class="comment-txt <?php if ($show_ad == false) echo("clearfix") ?>">add a comment</div>
 								</li>
 								<li>
-									<input name="input2" type="text" class="comment_txtfield" value="your comments here" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'your comments here')this.value = '';"/>
+									<input name="input2" type="text" id="txt_comment" class="comment_txtfield" value="your comments here" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'your comments here')this.value = '';"/>
 								</li>
 							</ul>    
 						</div>
-						<a class="black_btn_skin f-center" href="#">next</a> 
-						<a class="black_btn_skin f-middle" href="#">cancel</a>
+						<a class="black_btn_skin f-center" href="javascript:share_addComment();">next</a> 
+						<a class="black_btn_skin f-middle" href="javascript:share_clearMedia();">cancel</a>
 					</div>
 					<div id="share_tab3" class="hideCls">
 						<div class="styled-select">

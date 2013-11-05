@@ -3,10 +3,17 @@
 // Copyright memreas llc 2013
 /////////////////////////////////
 
+// MACROS for tab indices.
+var SHAREPAGE_TAB_MEMREAS 	= 1;		// tab index of memreas details on share page
+var SHAREPAGE_TAB_MEDIA 	= 2;		// tab index of media on share page
+var SHAREPAGE_TAB_FRIENDS 	= 3;		// tab index of friends on share page
+
 // google map object
 var location_map = null;
 // geocoder object to get the location address from langtitude and longtitude
 var geocoder = null;
+
+var event_id = "";
 
 // initialize the akordeon.
 share_initAkordeon = function() {
@@ -248,28 +255,30 @@ share_addEvent = function() {
  	var ckb_viewable 	 = ($('#ckb_viewable')[0].checked ? 0 : 1);
 	var ckb_selfdestruct = ($('#ckb_selfdestruct')[0].checked ? 0 : 1);
 	
+	// send the request.
 	ajaxRequest(
 		'addevent',
 		[
-			$('#user_id')[0].getAttribute('val'),
-			name,
-			formatDateToDMY(date),
-			location,
-			formatDateToDMY(date_from),
-			formatDateToDMY(date_to),
-			ckb_canadd,
-			ckb_canpost,
-			formatDateToDMY(date_selfdestruct),
-			ckb_public
+			{ tag: 'user_id', 					value: $('#user_id')[0].getAttribute('val') },
+			{ tag: 'event_name', 				value: name },
+			{ tag: 'event_date', 				value: formatDateToDMY(date) },
+			{ tag: 'event_location', 			value: location },
+			{ tag: 'event_from', 				value: formatDateToDMY(date_from) },
+			{ tag: 'event_to', 					value: formatDateToDMY(date_to) },
+			{ tag: 'is_friend_can_add_friend', 	value: ckb_canadd },
+			{ tag: 'is_friend_can_post_media', 	value: ckb_canpost },
+			{ tag: 'event_self_destruct', 		value: formatDateToDMY(date_selfdestruct) },
+			{ tag: 'is_public', 				value: ckb_public }
 		],
 		function(ret_xml) {
+			// parse the returned xml.
 			var status   = getValueFromXMLTag(ret_xml, 'status');
 			var message  = getValueFromXMLTag(ret_xml, 'message');
 			var event_id = getValueFromXMLTag(ret_xml, 'event_id');
 			
 			if (status.toLowerCase() == 'success') {
 				alert(event_id + ' was registered successfully.');
-				share_gotoPage('media');
+				share_gotoPage(SHAREPAGE_TAB_MEDIA);
 			}
 			else {
 				alert(message);
@@ -279,36 +288,26 @@ share_addEvent = function() {
 }
 
 // clear all fields on details page when click "cancel" button.
-share_clearDetails = function() {
+share_clearMemreas = function() {
 	var i = 0;
 	var text_ids = ['txt_name', 'txt_location', 'dtp_date', 'dtp_from', 'dtp_to', 'dtp_selfdestruct'];
 	var checkbox_ids = ['ckb_canpost', 'ckb_canadd', 'ckb_public', 'ckb_viewable', 'ckb_selfdestruct'];
 
-	for (i = 0; i < text_ids.length; i++) {
-		$('#' + text_ids[i]).val($('#' + text_ids[i])[0].defaultValue);
-	}
-	
-	for (i = 0; i < checkbox_ids.length; i++) {
-		$('#' + checkbox_ids[i]).prop('checked', 'unchecked');
-	}
+	clearTextField(text_ids);
+	clearCheckBox(checkbox_ids);
 }
 
-share_gotoPage = function(page_name) {
-	$('#share_tab1').hide();
-	$('#share_tab2').hide();
-	$('#share_tab3').hide();
-	
-	switch (page_name) {
-		case 'memreas':
-			$('#share_tab1').show();
-			break;
-			
-		case 'media':
-			$('#share_tab2').show();
-			break;
-			
-		case 'friends':
-			$('#share_tab3').show();
-			break;
-	}
+// go to the other page (1: memreas details, 2: media, 3: friends)
+share_gotoPage = function(tab_no) {
+	$('#tabs li:nth-child(' + tab_no + ') a').click();
+}
+
+// add the comment to Media when click "next" button on the Media Page.
+share_addComment = function() {
+
+}
+
+// clear all fields on Media page when click "cancel" button.
+share_clearMedia = function() {
+	clearTextField('txt_comment');
 }
