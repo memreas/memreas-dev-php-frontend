@@ -1,51 +1,4 @@
 @charset "utf-8";
-
-#loadingpopup {
-	width: 100%;
-	height: 100%;
-	background: rgba(200,200,200,0.6);
-	z-index: 10000;
-	position: absolute;
-	display: none;
-}
-
-#loadingpopupinner {
-	width: 50%;
-	height: 24%;
-	background: rgba(255,255,255,0.8);
-	z-index: 10000;
-	position:absolute;
-	left: 25%;
-	top: 40%;
-	border-radius: 1rem;
-}
-
-#loadingimg {
-	width: 2rem;
-	height: 2rem;
-	opacity: 0.75;
-	-webkit-border-radius: 1rem;
-	border-radius: 1rem;
-	background-color: black;
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	margin-left: -1rem;
-	margin-top: -1rem;
-}
-
-#loadingtext {
-	width: 10rem;
-	height: 2rem;
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	margin-left: -5rem;
-	margin-top: 1.2rem;
-	font-size: 1rem;
-	text-align: center;
-}
-
 /* CSS Document */
 /*.....:Reset CSS:.....*/
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
@@ -200,7 +153,7 @@ body {
 	padding: 0;
 	list-style: none;
 }
-/*  Main Style 
+/*  Main Style
 ===================================================*/
 header {
 	width: 100%;
@@ -237,7 +190,7 @@ header {
 .search_bar {
 	width: 27%;
 	height: 40px;
-	/*background: url(../img/search.png) no-repeat 99% center;*/
+	background: url(../img/search.png) no-repeat 99% center;
 	float: left;
 	margin-left: 15%;
 	margin-top: 10px;
@@ -307,7 +260,7 @@ nav ul li a:hover, nav ul li a.active {
 	margin: 0;
 	padding: 0;
 	overflow: auto;
-	height: 370px;	
+	height: 370px;
 }
 .event {
 	-webkit-border-radius: 10px;
@@ -1387,17 +1340,13 @@ ul.popupContact2 li {
 .popups2 .search_bar {
 	width: 27%;
 	height: 24px;
-	/*background: url(../img/search.png) no-repeat 99% center #FFF;*/
+	background: url(../img/search.png) no-repeat 99% center #FFF;
 	float: right;
 	margin-right: 20px;
 	border: 1px #576e8a solid !important;
 	-moz-box-shadow: inset 0 2px 2px #999 !important;
 	-webkit-box-shadow: inset 0 2px 2px #999 !important;
 	box-shadow: inset 0 2px 2px #999 !important;
-	direction: ltr;
-}
-.pac-container{
-	z-index:100000 !important;
 }
 .map_box{
 	width: 100%;
@@ -1990,7 +1939,7 @@ footer {
 .popups {
 	top: 5% !important;
 }
-/******start event-gallery******/	
+/******start event-gallery******/
 .pro-names2 {
 	margin: 20px 0px 0px 20px;
 }
@@ -2227,7 +2176,7 @@ ul.discover_results li p{
 	}
 nav {
 	width: 7%;
-	min-height: 1350px !important; 
+	min-height: 1350px !important;
 }
 .event {
 	width: 600px !important;
@@ -2521,4 +2470,31 @@ ul.discover_results li p{
 }
 ul.memreas_results{
 	height: 1000px;
+}
+ }
+.browse-file{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+.browse-file .marks{
+    position: absolute;
+    width: 97%;
+    height: 93%;
+    background: #FFF;
+    opacity: 0.8;
+    -moz-opacity: 0.8;
+    -webkit-opacity: 0.8;
+    z-index: 1;
+}
+.browse-file .choo-details{
+    position: relative;
+    width: 400px;
+    margin: 0 auto;
+    z-index: 2;
+    text-align: center;
+}
+.browse-file h3{
+    font-size: 14px;
+    text-transform: uppercase !important;
 }
