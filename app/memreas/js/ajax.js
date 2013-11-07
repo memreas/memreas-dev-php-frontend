@@ -51,15 +51,15 @@ getXMLStringFromParamArray = function(action, params) {
 
 	switch (action) {
 		case "checkusername":
-			action_tag = "<checkusername>";
+			action_tag = "checkusername";
 			break;
 			
 		case "addevent":
-			action_tag = "<addevent>";
+			action_tag = "addevent";
 			break;
 			
 		case "addcomments":
-			action_tag = "<addcomment>";
+			action_tag = "addcomment";
 			break;
 			
 		default:

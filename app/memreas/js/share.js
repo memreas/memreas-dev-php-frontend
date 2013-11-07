@@ -17,16 +17,19 @@ var event_id = "";
 
 // initialize the akordeon.
 share_initAkordeon = function() {
-     $('#buttons').akordeon();
-       $('#button-less').akordeon({ buttons: false, toggle: true, itemsOrder: [2, 0, 1] });
-	 $('#buttons2').akordeon();
-       $('#button-less').akordeon({ buttons: false, toggle: true, itemsOrder: [2, 0, 1] });
-	 $('#buttons3').akordeon();
-       $('#button-less').akordeon({ buttons: false, toggle: true, itemsOrder: [2, 0, 1] });
-	 $('#buttons4').akordeon();
-       $('#button-less').akordeon({ buttons: false, toggle: true, itemsOrder: [2, 0, 1] });
-	 $('#buttons5').akordeon();
-       $('#button-less').akordeon({ buttons: false, toggle: true, itemsOrder: [2, 0, 1] });
+	$('#ckb_canpost')[0].checked = false;
+	$('#ckb_canadd')[0].checked = false;
+
+    $('#buttons').akordeon();
+    	$('#button-less').akordeon({ buttons: false, toggle: true, itemsOrder: [2, 0, 1] });
+	$('#buttons2').akordeon();
+       	$('#button-less').akordeon({ buttons: false, toggle: true, itemsOrder: [2, 0, 1] });
+	$('#buttons3').akordeon();
+       	$('#button-less').akordeon({ buttons: false, toggle: true, itemsOrder: [2, 0, 1] });
+	$('#buttons4').akordeon();
+       	$('#button-less').akordeon({ buttons: false, toggle: true, itemsOrder: [2, 0, 1] });
+	$('#buttons5').akordeon();
+    	$('#button-less').akordeon({ buttons: false, toggle: true, itemsOrder: [2, 0, 1] });
 }
 
 // initialize and customize the scroll bar.
@@ -218,37 +221,42 @@ share_addEvent = function() {
 		alert("You have to input the name.");
 		return;
 	}
-	
+
 	var date = $('#dtp_date').val();
 	if (date == "" || date == $('#dtp_date')[0].defaultValue) {
-		alert("You have to input the date.");
-		return;
+		date = "";
+		//alert("You have to input the date.");
+		//return;
 	}
 	
 	var location = $('#txt_location').val();
 	if (location == "" || location == $('#txt_location')[0].defaultValue) {
-		alert("You have to input the address.");
-		return;
+		location = "";
+		//alert("You have to input the address.");
+		//return;
 	}
 	
 	var date_from = $('#dtp_from').val();
 	if (date_from == "" || date_from == $('#dtp_from')[0].defaultValue) {
-		alert("You have to input the viewable from date.");
-		return;
+		date_from = "";
+		//alert("You have to input the viewable from date.");
+		//return;
 	}
 	
 	var date_to = $('#dtp_to').val();
 	if (date_to == "" || date_to == $('#dtp_to')[0].defaultValue) {
-		alert("You have to input the viewable to date.");
-		return;
+		date_to = "";
+		//alert("You have to input the viewable to date.");
+		//return;
 	}
 	
 	var date_selfdestruct = $('#dtp_selfdestruct').val();
 	if (date_selfdestruct == "" || date_selfdestruct == $('#dtp_selfdestruct')[0].defaultValue) {
-		alert("You have to input the date for self destruct.");
-		return;
+		date_selfdestruct = "";
+		//alert("You have to input the date for self destruct.");
+		//return;
 	}
-	
+
 	var ckb_canpost 	 = ($('#ckb_canpost')[0].checked ? 0 : 1);
 	var ckb_canadd 		 = ($('#ckb_canadd')[0].checked ? 0 : 1);
 	var ckb_public 		 = ($('#ckb_public')[0].checked ? 0 : 1);
@@ -295,6 +303,13 @@ share_clearMemreas = function() {
 
 	clearTextField(text_ids);
 	clearCheckBox(checkbox_ids);
+}
+
+share_clickCkbPublic = function() {
+	if ($('#ckb_public')[0].checked == true) {
+		$('#ckb_canpost')[0].checked = false;
+		$('#ckb_canadd')[0].checked = false;
+	}
 }
 
 // go to the other page (1: memreas details, 2: media, 3: friends)

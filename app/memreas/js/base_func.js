@@ -5,6 +5,9 @@
 
 // convert date string from MMDDYYY to DDMMYYYY.
 formatDateToDMY = function(date) {
+	if (date == "")
+		return "";
+		
 	return date.substr(3, 2) + "/" + date.substr(0, 2) + date.substr(5);
 }
 
@@ -17,11 +20,11 @@ getValueFromXMLTag = function(xml, tag) {
 clearTextField = function(elements) {
 	var i = 0, id = "";
 
-	if (typeof elements.length == "undefined") {
+	if (typeof elements == "string") {
 		id = '#' + elements;
 		$(id).val($(id)[0].defaultValue);
 	}
-	else {
+	else if (typeof elements.length != "undefined") {
 		for (i = 0; i < elements.length; i++) {
 			id = '#' + elements[i];
 			$(id).val($(id)[0].defaultValue);
@@ -33,14 +36,14 @@ clearTextField = function(elements) {
 clearCheckBox = function(elements) {
 	var i = 0, id = "";
 
-	if (typeof elements.length == "undefined") {
+	if (typeof elements == "string") {
 		id = '#' + elements;
-		$(id).prop('checked', 'unchecked');
+		$(id)[0].checked = true;
 	}
-	else {
+	else if (typeof elements.length != "undefined") {
 		for (i = 0; i < elements.length; i++) {
 			id = '#' + elements[i];
-			$(id).prop('checked', 'unchecked');
+			$(id)[0].checked = true;
 		}
 	}
 }
