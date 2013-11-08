@@ -3,7 +3,8 @@ use Zend\Session\Container;
 header('Cache-Control: no-cache, no-store, must-revalidate'); // HTTP 1.1.
 header('Pragma: no-cache'); // HTTP 1.0.
 header('Expires: 0'); // Proxies.
-
+$session = new Container('user');
+$user_id = $session->offsetGet('user_id')
 ?>
 <!doctype html>
 <html>
@@ -38,16 +39,20 @@ header('Expires: 0'); // Proxies.
 <script src="/memreas/js/bootstrap.min.js"></script>
 
 <!--Backgound Strecher-->
+<script type="text/javascript" src="/memreas/js/jquery.xml2json.js"></script>
 <script type="text/javascript" src="/memreas/js/fetchLocalMedia.js"></script>
 <script type="text/javascript" src="/memreas/js/bgstretcher.js"></script>
+<script type="text/javascript" src="/memreas/js/serverSide.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
     //Prefetch for image location
-
+    $.fetch_server_media('<?php echo $user_id; ?>');
     $(document).bgStretcher({
             images: ['img/bg.jpg'],
             imageWidth: 1366, imageHeight: 700
     });
+    $(".change-location a.browse-server").click (function(){ $.fetch_server_media($("input[name=current_user_id]").val()); });
+    $(".change-location a.fetch-local").click (function(){ $(".browse-file").fadeIn (500); });
 });
 </script>
 </head>
@@ -93,9 +98,17 @@ $(document).ready(function(){
         </ul>
         <div id="tab-content">
           <div id="tab1" class="hideCls">
+            <input type="hidden" name="current_user_id" value="<?php echo $user_id; ?>">
+            <div class="preload-server">
+                <div class="marks"></div>
+                <div class="choose-details"><img src="/memreas/img/loader.gif" /><br/>Fetching media...</div>
+            </div>
             <div class="browse-file">
                 <div class="marks"></div>
-                <div class="choo-details"><h3>Choose the location which you want to share</h3><input  type="file" id="dir" webkitdirectory=""/></div>
+                <div class="choose-details"><h3>Choose the location which you want to share</h3>
+                    <input  type="file" id="dir" webkitdirectory="" style="display: none;"/>
+                    <a class="btn-browse-file" href="#" onclick="$('#dir').click();">Browse files</a>
+                </div>
             </div>
             <div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/325" data-max-width="100%"  data-allow-full-screen="true"  data-nav="thumbs">
                  <!-- USER RESOURCES WILL BE LOADED HERE -->
@@ -108,7 +121,7 @@ $(document).ready(function(){
             </ul>
           </div>
           <div id="tab3" class="hideCls">
-            <ul class="pics sync scrollClass">		
+            <ul class="pics sync scrollClass">
             </ul>
           </div>
           <div id="tab4" class="hideCls">
@@ -117,6 +130,7 @@ $(document).ready(function(){
               </div>
           </div>
         </div>
+        <div class="change-location"><a class="fetch-local" href="#" style="margin-left: 10px;">Change local directory</a><a class="browse-server" href="#">Browse Server</a></div>
          <!------------------First-pop-up-------------------->
             <div id="popupplayer" class="video_popups">
                     <a id="popupplayerClose" onClick="disablePopup('popupplayer')" class='popupClose'>x</a>

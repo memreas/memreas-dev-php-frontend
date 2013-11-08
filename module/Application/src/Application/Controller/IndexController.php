@@ -35,15 +35,15 @@ class IndexController extends AbstractActionController
     protected $friendmediaTable;
 
 	public function fetchXML($action, $xml) {
-error_log("Enter fetchXML".PHP_EOL);      
+error_log("Enter fetchXML".PHP_EOL);
 		$guzzle = new Client();
 
 error_log("Inside fetch XML request url ---> " . $this->url . PHP_EOL);
 error_log("Inside fetch XML request action ---> " . $action . PHP_EOL);
 error_log("Inside fetch XML request XML ---> " . $xml . PHP_EOL);
 		$request = $guzzle->post(
-			$this->url, 
-			null, 
+			$this->url,
+			null,
 			array(
 			'action' => $action,
 			//'cache_me' => true,
@@ -52,17 +52,42 @@ error_log("Inside fetch XML request XML ---> " . $xml . PHP_EOL);
 		);
 		$response = $request->send();
 error_log("Inside fetch XML response ---> " . print_r($response, true) . PHP_EOL);
-error_log("Exit fetchXML".PHP_EOL);      
+error_log("Exit fetchXML".PHP_EOL);
 		return $data = $response->getBody(true);
 	}
 
     public function indexAction() {
-error_log("Enter indexAction".PHP_EOL);      
+error_log("Enter indexAction".PHP_EOL);
  	    $path = $this->security("application/index/event.phtml");
 		$view = new ViewModel();
 		$view->setTemplate($path); // path to phtml file under view folder
-		return $view;			
-error_log("Exit indexAction".PHP_EOL);      
+		return $view;
+error_log("Exit indexAction".PHP_EOL);
+    }
+
+    public function ApiServerSideAction(){
+       if (isset($_REQUEST['callback'])) {
+            //Fetch parms
+            $callback = $_REQUEST['callback'];
+            $json = $_REQUEST['json'];
+            $message_data = json_decode($json, true);
+            //Setup the URL and action
+            $ws_action = $message_data['ws_action'];
+            $type = $message_data['type'];
+            $xml = $message_data['json'];
+
+            //Guzzle the LoginWeb Service
+            $result = $this->fetchXML($ws_action, $xml);
+
+            $json = json_encode($result);
+            //Return the ajax call...
+            $callback_json = $callback . "(" . $json . ")";
+            $output = ob_get_clean();
+            header("Content-type: plain/text");
+            echo $callback_json;
+            //Need to exit here to avoid ZF2 framework view.
+       }
+       exit;
     }
 
     public function sampleAjaxAction() {
@@ -79,9 +104,9 @@ error_log("Exit indexAction".PHP_EOL);
 			$type = $message_data['type'];
 			$xml = $message_data['json'];
 
-			//Guzzle the LoginWeb Service		
+			//Guzzle the LoginWeb Service
 			$result = $this->fetchXML($ws_action, $xml);
-				
+
 			$json = json_encode($result);
 			//Return the ajax call...
 			$callback_json = $callback . "(" . $json . ")";
@@ -95,20 +120,20 @@ error_log("Exit indexAction".PHP_EOL);
 			$view->setTemplate($path); // path to phtml file under view folder
 		}
 
-		return $view;		
+		return $view;
     }
 
     public function galleryAction() {
 	    $path = $this->security("application/index/gallery.phtml");
 
 		$action = 'listallmedia';
-		$session = new Container('user');        
+		$session = new Container('user');
 		$xml = "<xml><listallmedia><event_id></event_id><user_id>" . $session->offsetGet('user_id') . "</user_id><device_id></device_id><limit>10</limit><page>1</page></listallmedia></xml>";
 		$result = $this->fetchXML($action, $xml);
 
 		$view = new ViewModel(array('xml'=>$result));
 		$view->setTemplate($path); // path to phtml file under view folder
-		return $view;			
+		return $view;
         //return new ViewModel();
     }
 
@@ -116,13 +141,13 @@ error_log("Exit indexAction".PHP_EOL);
 	    $path = $this->security("application/index/event.phtml");
 
 		$action = 'listallmedia';
-		$session = new Container('user');        
+		$session = new Container('user');
 		$xml = "<xml><listallmedia><event_id></event_id><user_id>" . $session->offsetGet('user_id') . "</user_id><device_id></device_id><limit>10</limit><page>1</page></listallmedia></xml>";
 		$result = $this->fetchXML($action, $xml);
 
 		$view = new ViewModel(array('xml'=>$result));
 		$view->setTemplate($path); // path to phtml file under view folder
-		return $view;			
+		return $view;
         //return new ViewModel();
     }
 
@@ -130,28 +155,28 @@ error_log("Exit indexAction".PHP_EOL);
 	    $path = $this->security("application/index/share.phtml");
 		$view = new ViewModel();
 		$view->setTemplate($path); // path to phtml file under view folder
-		return $view;			
+		return $view;
     }
 
     public function queueAction() {
 	    $path = $this->security("application/index/queue.phtml");
 		$view = new ViewModel();
 		$view->setTemplate($path); // path to phtml file under view folder
-		return $view;			
+		return $view;
     }
 
     public function eventGalleryAction() {
 	    $path = $this->security("application/index/event-gallery.phtml");
 		$view = new ViewModel();
 		$view->setTemplate($path); // path to phtml file under view folder
-		return $view;			
+		return $view;
     }
 
     public function memreasMeFriendsAction() {
 	    $path = $this->security("application/index/memreas-me-friends.phtml");
 		$view = new ViewModel();
 		$view->setTemplate($path); // path to phtml file under view folder
-		return $view;		
+		return $view;
     }
 
     public function loginAction() {
@@ -165,10 +190,10 @@ error_log("Exit indexAction".PHP_EOL);
 		$action = 'login';
 		$xml = "<xml><login><username>$username</username><password>$password</password></login></xml>";
 		$redirect = 'gallery';
-		
-		//Guzzle the LoginWeb Service		
+
+		//Guzzle the LoginWeb Service
 		$result = $this->fetchXML($action, $xml);
-               
+
 
 		$data = simplexml_load_string($result);
 
@@ -186,27 +211,27 @@ error_log("Exit indexAction".PHP_EOL);
 		$this->getSessionStorage()->forgetMe();
         $this->getAuthService()->clearIdentity();
         $session = new Container('user');
-        $session->getManager()->destroy(); 
-         
+        $session->getManager()->destroy();
+
         $view = new ViewModel();
 		$view->setTemplate('application/index/index.phtml'); // path to phtml file under view folder
-		return $view;			
+		return $view;
     }
 
     public function setSession($username) {
 		//Fetch the user's data and store it in the session...
    	    $user = $this->getUserTable()->findOneBy(array('username' => $username));
- 
+
         $user->password='';
        	$user->disable_account='';
    	    $user->create_date='';
         $user->update_time='';
-		$session = new Container('user');        
+		$session = new Container('user');
 		$session->offsetSet('user_id', $user->user_id);
 		$session->offsetSet('username', $username);
-        $session->offsetSet('user', json_encode($user));    
+        $session->offsetSet('user', json_encode($user));
     }
-     
+
     public function registrationAction()
     {
 		//Fetch the post data
@@ -220,28 +245,28 @@ error_log("Exit indexAction".PHP_EOL);
 		$xml = "<xml><registration><email>$email</email><username>$username</username><password>$password</password></registration></xml>";
 		$redirect = 'event';
 
-		//Guzzle the Registration Web Service		
+		//Guzzle the Registration Web Service
 		$result = $this->fetchXML($action, $xml);
-		 
-		
+
+
 		$data = simplexml_load_string($result);
-       
+
 
 		//ZF2 Authenticate
 		if ($data->registrationresponse->status == 'success') {
 			$this->setSession($username);
-			
+
 			//If there's a profile pic upload it...
-			if (isset($_FILES['file'])) { 
+			if (isset($_FILES['file'])) {
     	 		$file = $_FILES['file'];
 		     	$fileName = $file['name'];
     	 		$filetype = $file['type'];
     		 	$filetmp_name = $file['tmp_name'];
 	     		$filesize = $file['size'];
-     	
+
                 $url=  $this->url;
 				$guzzle = new Client();
-				$session = new Container('user');        
+				$session = new Container('user');
 				$request = $guzzle->post($url)
 								->addPostFields(
 									array(
@@ -266,7 +291,7 @@ error_log("Exit indexAction".PHP_EOL);
 			if ($xml->addmediaeventresponse->status == 'success') {
 				//Do nothing even if it fails...
 			}
-			
+
             //Redirect here
 			return $this->redirect()->toRoute('index', array('action' => $redirect));
 		} else {
@@ -308,7 +333,7 @@ error_log("Exit indexAction".PHP_EOL);
 	    	$this->logoutAction();
     	  return "application/index/index.phtml";
 	    }
-		return $path;			
+		return $path;
         //return $this->redirect()->toRoute('index', array('action' => 'login'));
     }
 } // end class IndexController
