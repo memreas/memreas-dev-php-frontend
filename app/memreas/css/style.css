@@ -2472,12 +2472,14 @@ ul.memreas_results{
 	height: 1000px;
 }
  }
-.browse-file{
+.browse-file, .preload-server{
     position: absolute;
     width: 100%;
     height: 100%;
+    display: none;
 }
-.browse-file .marks{
+.browse-file .marks,
+.preload-server .marks{
     position: absolute;
     width: 97%;
     height: 93%;
@@ -2487,60 +2489,77 @@ ul.memreas_results{
     -webkit-opacity: 0.8;
     z-index: 1;
 }
-.browse-file .choo-details{
+.browse-file .choose-details, .preload-server .choose-details{
     position: relative;
     width: 400px;
     margin: 0 auto;
     z-index: 2;
     text-align: center;
+    margin-top: 10px;
 }
+.browse-file .choose-details{  background: #21558D; padding-bottom: 10px; z-index: 2000; }
+.preload-server .choose-details{ margin-top: 100px; }
 .browse-file h3{
     font-size: 14px;
     text-transform: uppercase !important;
 }
 
 #loadingpopup {
-	width: 100%; 
-	height: 100%; 
-	background: rgba(200,200,200,0.6); 
-	z-index: 10000; 
-	position:absolute;  
+	width: 100%;
+	height: 100%;
+	background: rgba(200,200,200,0.6);
+	z-index: 10000;
+	position:absolute;
 	display:none;
 }
 
 #loadingpopupinner {
-	width: 50%; 
-	height: 18%; 
-	background: rgba(255,255,255,0.8); 
-	z-index: 10000; 
-	position:absolute; 
-	left: 25%; 
-	top: 40%; 
+	width: 50%;
+	height: 18%;
+	background: rgba(255,255,255,0.8);
+	z-index: 10000;
+	position:absolute;
+	left: 25%;
+	top: 40%;
 	border-radius: 1rem;
 }
 
 #loadingimg {
-	width:2rem; 
-	height: 2rem; 
-	opacity: 0.75; 
-	-webkit-border-radius: 1rem; 
-	border-radius: 1rem; 
-	background-color:black; 
+	width:2rem;
+	height: 2rem;
+	opacity: 0.75;
+	-webkit-border-radius: 1rem;
+	border-radius: 1rem;
+	background-color:black;
 	position:absolute;
 	left:50%;
-	top:50%; 
-	margin-left:-1rem; 
+	top:50%;
+	margin-left:-1rem;
 	margin-top:-1rem;
 }
 
 #loadingtext {
-	width:10rem; 
-	height: 2rem; 
-	position:absolute; 
-	left:50%; 
-	top:50%; 
-	margin-left:-5rem; 
-	margin-top:1.2rem; 
-	font-size: 0.6rem; 
+	width:10rem;
+	height: 2rem;
+	position:absolute;
+	left:50%;
+	top:50%;
+	margin-left:-5rem;
+	margin-top:1.2rem;
+	font-size: 0.6rem;
 	text-align: center;
 }
+.change-location a, a.btn-browse-file{
+    display: block;
+    background: #203058;
+    width: 200px;
+    padding: 7px 2px;
+    text-align: center;
+    color: #FFF;
+    border-radius: 7px;
+    -moz-border-radius: 7px;
+    -webkit-border-radius: 7px;
+    float: right;
+    margin-bottom: 10px;
+}
+a.btn-browse-file{ margin: 0 auto; float: none; }
