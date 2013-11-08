@@ -13,10 +13,14 @@ var location_map = null;
 // geocoder object to get the location address from langtitude and longtitude
 var geocoder = null;
 
+var user_id  = "";
 var event_id = "";
+var media_id = "";
 
 // initialize the akordeon.
 share_initAkordeon = function() {
+	user_id = $('#user_id')[0].getAttribute('val');
+
 	$('#ckb_canpost')[0].checked = false;
 	$('#ckb_canadd')[0].checked = false;
 
@@ -267,7 +271,7 @@ share_addEvent = function() {
 	ajaxRequest(
 		'addevent',
 		[
-			{ tag: 'user_id', 					value: $('#user_id')[0].getAttribute('val') },
+			{ tag: 'user_id', 					value: user_id },
 			{ tag: 'event_name', 				value: name },
 			{ tag: 'event_date', 				value: formatDateToDMY(date) },
 			{ tag: 'event_location', 			value: location },
@@ -282,7 +286,8 @@ share_addEvent = function() {
 			// parse the returned xml.
 			var status   = getValueFromXMLTag(ret_xml, 'status');
 			var message  = getValueFromXMLTag(ret_xml, 'message');
-			var event_id = getValueFromXMLTag(ret_xml, 'event_id');
+			
+			event_id = getValueFromXMLTag(ret_xml, 'event_id');
 			
 			if (status.toLowerCase() == 'success') {
 				alert(event_id + ' was registered successfully.');
@@ -320,6 +325,30 @@ share_gotoPage = function(tab_no) {
 // add the comment to Media when click "next" button on the Media Page.
 share_addComment = function() {
 
+	// send the request.
+	ajaxRequest(
+		'addcomments',
+		[
+			{ tag: 'event_id', 				value: event_id },
+			{ tag: 'media_id', 				value: media_id },
+			{ tag: 'user_id', 				value: user_id },
+			{ tag: 'comments', 				value: comments },
+			{ tag: 'audio_media_id', 		value: audio_media_id }
+		],
+		function(ret_xml) {
+			// parse the returned xml.
+			var status   = getValueFromXMLTag(ret_xml, 'status');
+			var message  = getValueFromXMLTag(ret_xml, 'message');
+			
+			if (status.toLowerCase() == 'success') {
+				alert('comments was added successfully.');
+				share_gotoPage(SHAREPAGE_TAB_FRIENDS);
+			}
+			else {
+				alert(message);
+			}
+		}
+	);
 }
 
 // clear all fields on Media page when click "cancel" button.
