@@ -47,3 +47,47 @@ clearCheckBox = function(elements) {
 		}
 	}
 }
+
+// check if the html5 element is empty.
+isElementEmpty = function(id) {
+	var element = $('#' + id);
+	if (typeof element == "undefined" || typeof element.length == "undefined")
+		return true;
+
+	var value = element.val();
+	if (value == "" || value == element[0].defaultValue)
+		return true;
+		
+	return false;
+}
+
+// return the value of html5 element such as text field or date-time picker.
+getElementValue = function(id) {
+	var element = $('#' + id);
+	if (typeof element == "undefined" || typeof element.length == "undefined")
+		return "";
+
+	var value = element.val();
+	if (value == element[0].defaultValue)
+		value = "";
+
+	return value;	
+}
+
+// return the checkbox value.
+getCheckBoxValue = function(id) {
+	return ($('#' + id)[0].checked ? 0 : 1)
+}
+
+// set the value of checkbox.
+setCheckBoxValue = function(id, value) {
+	$('#' + id)[0].checked = !value;
+}
+
+setDefaultValue = function(id) {
+	var element = $('#' + id);
+	if (typeof element == "undefined" || typeof element.length == "undefined")
+		return "";
+
+	element.val(element[0].defaultValue);
+}

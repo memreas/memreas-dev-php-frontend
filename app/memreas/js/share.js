@@ -13,12 +13,13 @@ var location_map = null;
 // geocoder object to get the location address from langtitude and longtitude
 var geocoder = null;
 
-var user_id  = "";
-var event_id = "";
-var media_id = "";
+var user_id  = "";		// signed user id
+var event_id = "";		// created event id
+var media_id = "";		// selected media id
 
 // initialize the akordeon.
 share_initAkordeon = function() {
+	// Initially get the user id.
 	user_id = $('#user_id')[0].getAttribute('val');
 
 	$('#ckb_canpost')[0].checked = false;
@@ -86,15 +87,24 @@ share_customScrollbar = function () {
 }
 
 // popup the window with google map when focus the location text field.
+// div_id: identifier of div for google map.
 share_showGoogleMap = function(div_id) {
-	popup('locationmap');
+	popup('dlg_locationmap');
 	share_initGoogleMap(div_id);
 }
 
 // close the popup window with google map.
-share_closeGoogleMap = function() {
-	$('#txt_location').val($('#searchTextField').val());
-	disablePopup('locationmap');
+// save_address: variable indicating if the address is saved or not.
+share_closeGoogleMap = function(save_address) {
+	if (save_address == true) {
+		var addr = $('#txt_locationmap_address').val();
+		if (addr != "")
+			$('#txt_location').val(addr);
+		else
+			setDefaultValue('txt_location');
+	}
+	
+	disablePopup('dlg_locationmap');
 }
 
 // initialize the google map.
@@ -128,7 +138,7 @@ share_initGoogleMap = function(div_id) {
              });
 
 		 // set the search text field as auto-complete.
-         var input = document.getElementById('searchTextField');
+         var input = document.getElementById('txt_locationmap_address');
          var autocomplete = new google.maps.places.Autocomplete(input, {
              types: ["geocode"]
          });
@@ -153,7 +163,7 @@ share_initGoogleMap = function(div_id) {
              //$('.MapLon').val(event.latLng.lng());
              //alert(event.latLng.place.name)
          });
-         $("#searchTextField").focusin(function () {
+         $("#txt_locationmap_address").focusin(function () {
              $(document).keypress(function (e) {
                  if (e.which == 13) {
                      return false;
@@ -184,88 +194,61 @@ share_initGoogleMap = function(div_id) {
          }
 	}
 	
-	// get the current location.
-	var err_msg = "Error while getting location. Device GPS/location may be disabled."
-	var geoPositionOptions = $.extend({
-		enableHighAccuracy: true,
-		timeout: 5000,
-		maximumAge: 300000
-	}, { timeout: 30000 } );
-	
-	if (navigator.geolocation) {
-		navigator.geolocation.getCurrentPosition ( 
-			function(position) {
-				var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-				if (geocoder == null)
-					geocoder = new google.maps.Geocoder();
-				geocoder.geocode({'latLng': latlng}, function(results, status) {
-				  	if (status == google.maps.GeocoderStatus.OK) {
-						if (results[1]) {
-					 	 	$('#searchTextField').val(results[1].formatted_address);
+	if (isElementEmpty('txt_location')) {
+		// get the current location.
+		var err_msg = "Error while getting location. Device GPS/location may be disabled."
+		var geoPositionOptions = $.extend({
+			enableHighAccuracy: true,
+			timeout: 10000,
+			maximumAge: 10000
+		}, { timeout: 10000 } );
+		
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition ( 
+				function(position) {
+					var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+					if (geocoder == null)
+						geocoder = new google.maps.Geocoder();
+					geocoder.geocode({'latLng': latlng}, function(results, status) {
+						if (status == google.maps.GeocoderStatus.OK) {
+							if (results[1]) {
+								$('#txt_locationmap_address').val(results[1].formatted_address);
+							}
+						} else {
 						}
-				  	} else {
-				  	}
-				});			
-				location_map.setCenter(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
-			}, 
-			function(error) {
-				alert(err_msg);
-			},
-			geoPositionOptions
-		);	
-	} else {
-		alert(err_msg);
+					});			
+					location_map.setCenter(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+				}, 
+				function(error) {
+					alert(err_msg);
+				},
+				geoPositionOptions
+			);	
+		} else {
+			alert(err_msg);
+		}
 	}
 }
 
 // add the new event by request to the server.
 share_addEvent = function() {
-	var name = $('#txt_name').val();
-	if (name == "" || name == $('#txt_name')[0].defaultValue) {
+	var name = getElementValue('txt_name');
+	if (name == "") {
 		alert("You have to input the name.");
 		return;
 	}
 
-	var date = $('#dtp_date').val();
-	if (date == "" || date == $('#dtp_date')[0].defaultValue) {
-		date = "";
-		//alert("You have to input the date.");
-		//return;
-	}
-	
-	var location = $('#txt_location').val();
-	if (location == "" || location == $('#txt_location')[0].defaultValue) {
-		location = "";
-		//alert("You have to input the address.");
-		//return;
-	}
-	
-	var date_from = $('#dtp_from').val();
-	if (date_from == "" || date_from == $('#dtp_from')[0].defaultValue) {
-		date_from = "";
-		//alert("You have to input the viewable from date.");
-		//return;
-	}
-	
-	var date_to = $('#dtp_to').val();
-	if (date_to == "" || date_to == $('#dtp_to')[0].defaultValue) {
-		date_to = "";
-		//alert("You have to input the viewable to date.");
-		//return;
-	}
-	
-	var date_selfdestruct = $('#dtp_selfdestruct').val();
-	if (date_selfdestruct == "" || date_selfdestruct == $('#dtp_selfdestruct')[0].defaultValue) {
-		date_selfdestruct = "";
-		//alert("You have to input the date for self destruct.");
-		//return;
-	}
+	var date 				= getElementValue('dtp_date');
+	var location 			= getElementValue('txt_location');
+	var date_from 			= getElementValue('dtp_from');
+	var date_to 			= getElementValue('dtp_to');
+	var date_selfdestruct 	= getElementValue('dtp_selfdestruct');
 
-	var ckb_canpost 	 = ($('#ckb_canpost')[0].checked ? 0 : 1);
-	var ckb_canadd 		 = ($('#ckb_canadd')[0].checked ? 0 : 1);
-	var ckb_public 		 = ($('#ckb_public')[0].checked ? 0 : 1);
- 	var ckb_viewable 	 = ($('#ckb_viewable')[0].checked ? 0 : 1);
-	var ckb_selfdestruct = ($('#ckb_selfdestruct')[0].checked ? 0 : 1);
+	var ckb_canpost 	 	= getCheckBoxValue('ckb_canpost');
+	var ckb_canadd 		 	= getCheckBoxValue('ckb_canadd');
+	var ckb_public 		 	= getCheckBoxValue('ckb_public');
+ 	var ckb_viewable 	 	= getCheckBoxValue('ckb_viewable');
+	var ckb_selfdestruct 	= getCheckBoxValue('ckb_selfdestruct');
 	
 	// send the request.
 	ajaxRequest(
@@ -303,17 +286,18 @@ share_addEvent = function() {
 // clear all fields on details page when click "cancel" button.
 share_clearMemreas = function() {
 	var i = 0;
-	var text_ids = ['txt_name', 'txt_location', 'dtp_date', 'dtp_from', 'dtp_to', 'dtp_selfdestruct'];
+	var text_ids 	 = ['txt_name', 'txt_location', 'dtp_date', 'dtp_from', 'dtp_to', 'dtp_selfdestruct'];
 	var checkbox_ids = ['ckb_canpost', 'ckb_canadd', 'ckb_public', 'ckb_viewable', 'ckb_selfdestruct'];
 
 	clearTextField(text_ids);
 	clearCheckBox(checkbox_ids);
 }
 
+// click event function for "public (anyone can add or post)" checkbox.
 share_clickCkbPublic = function() {
-	if ($('#ckb_public')[0].checked == true) {
-		$('#ckb_canpost')[0].checked = false;
-		$('#ckb_canadd')[0].checked = false;
+	if (!getCheckBoxValue('ckb_public')) {
+		setCheckBoxValue('ckb_canpost', true);
+		setCheckBoxValue('ckb_canadd', true);
 	}
 }
 

@@ -130,7 +130,7 @@ $domain = "http://d1ckv7o9k6o3x9.cloudfront.net/";
 						</li>
 						<li>
 						<label class="textfield_names">location :</label>
-						<input name="input3" type="text" id="txt_location" class="share-txtfield" value="address or current location" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'address or current location')this.value = '';" onClick="share_showGoogleMap('map_area');"/>
+						<input name="input3" type="text" id="txt_location" class="share-txtfield" value="address or current location" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'address or current location')this.value = '';" onClick="share_showGoogleMap('div_locationmap_maparea');"/>
 						</li>
 						<li>
 						 <input id="ckb_canpost" class="css-checkbox" type="checkbox" checked="checked"/>
@@ -354,14 +354,15 @@ $domain = "http://d1ckv7o9k6o3x9.cloudfront.net/";
 		  </div>
 		  <?php } ?>
 		  
-		<div id="locationmap" class="popups2">
-		  	<a id="popupContactClose" onClick="share_closeGoogleMap();" class='popupClose'>x</a>
+		<div id="dlg_locationmap" class="popups2">
+		  	<a id="btn_locationmap_close" onClick="javascript:share_closeGoogleMap(false);" class='popupClose'>x</a>
 			<h2>location</h2>
-			<input id="searchTextField" name="input" type="text" class="search_bar" />
+			<a id="btn_locationmap_ok" class="black_btn_skin" href="javascript:share_closeGoogleMap(true);">OK</a>
+			<input id="txt_locationmap_address" name="input" type="text" />
 			<div class="clear"></div>
-			<div id="map_area" class="map_box"></div>
+			<div id="div_locationmap_maparea" class="map_box"></div>
 		</div>
-		<div id="bglocationmap" class="backgroundPopup"></div> 
+		<div id="div_locationmap_back" class="backgroundPopup"></div> 
 		</div>
 	  <!-- End : Content -->
 	</div>

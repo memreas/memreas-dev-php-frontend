@@ -2549,6 +2549,28 @@ ul.memreas_results{
 	font-size: 0.6rem;
 	text-align: center;
 }
+
+#txt_locationmap_address {
+	width: 27%;
+	height: 24px;
+	float: right;
+	margin-right: 10px;
+	border: 1px #576e8a solid !important;
+	-moz-box-shadow: inset 0 2px 2px #999 !important;
+	-webkit-box-shadow: inset 0 2px 2px #999 !important;
+	box-shadow: inset 0 2px 2px #999 !important;
+}
+
+#btn_locationmap_ok {
+	float: right !important;
+	margin: 0 20px 0 0 !important;
+	padding: 6px 10px !important;
+}
+
+.pac-container {
+	z-index: 10000 !important;
+}
+
 .change-location a, a.btn-browse-file{
     display: block;
     background: #203058;
