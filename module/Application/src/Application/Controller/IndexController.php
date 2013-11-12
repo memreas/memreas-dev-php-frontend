@@ -89,6 +89,56 @@ error_log("Exit indexAction".PHP_EOL);
        }
        exit;
     }
+    public function buildvideocacheAction(){
+        if (isset ($_POST['video_url'])){
+            $cache_dir = $_SERVER['DOCUMENT_ROOT'] . '/memreas/js/jwplayer/jwplayer_cache/';
+            $video_name = explode ("/", $_POST['video_url']);
+            $video_name = $video_name[count ($video_name) - 1];
+            $cache_file = $this->generateVideoCacheFile ($cache_dir, $video_name);
+            $file_handle = fopen ($cache_dir . $cache_file, 'w');
+            $content = '<!doctype html>
+                            <html>
+                            <head>
+                            <meta charset="utf-8">
+                            <title>Untitled Document</title>
+                            <script type="text/javascript" src="../jwplayer.js"></script>
+                            <script type="text/javascript" src="../jwplayer.html5.js"></script>
+                            <style>
+                            #myElement_wrapper{
+                                margin:0 auto !important;
+                                width: 100% !important;
+                                min-height: 310px !important;
+                            }
+                            </style>
+                            </head>
+
+                            <body>
+                                    <div id="myElement">Loading the player...</div>
+
+
+                            <script type="text/javascript">
+                                jwplayer("myElement").setup({
+                                    flashplayer: "../jwplayer.flash.swf",
+                                    file: "' . $_POST['video_url'] . '",
+                                    "autostart": "true",
+                                    "width": "100%",
+                                });
+                            </script>
+                            </body>
+                            </html>';
+            fwrite ($file_handle, $content, 5000);
+            fclose ($file_handle);
+            $response = array ('video_link' => $cache_file, 'thumbnail' => $_POST['thumbnail']);
+            echo json_encode ($response);
+        }
+        exit();
+    }
+
+    private function generateVideoCacheFile($cache_dir, $video_name){
+        $cache_file = uniqid('jwcache_') . substr (md5($video_name), 0, 10) . '.html';
+        if (!file_exists ($cache_file)) return $cache_file;
+        else $this->generateVideoCacheFile ($cache_dir, $video_name);
+    }
 
     public function sampleAjaxAction() {
 
