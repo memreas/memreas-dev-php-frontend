@@ -23,7 +23,7 @@ jQuery.fetch_server_media = function (user_id){
     data.type = "jsonp";
     data.json = _request_content;
     var json_data = JSON.stringify(data);
-
+    var _video_extensions = "mp4 wmv";
     $.ajax( {
       type:'post',
       url: _request_url,
@@ -34,12 +34,24 @@ jQuery.fetch_server_media = function (user_id){
           if (json.listallmediaresponse[0].medias[0].status[0].text == "Success") {
               var data = json.listallmediaresponse[0].medias[0].media;
               //console.log(data);  return;
-              var _html = '';
               for (var json_key in data){
-                _html += '<img src="' + data[json_key].main_media_url[0].text + '"/>';
-                $(".scrollClass .mCSB_container").append ('<li><a class="class="swipebox" href="' + data[json_key].main_media_url[0].text + '">' + _html + '</a></li>');
+                 var _media_url = data[json_key].main_media_url[0].text;
+                 var _media_extension = _media_url.substr(_media_url.length - 3);
+                //Build video thumbnail
+                var _found = _video_extensions.indexOf (_media_extension);
+                if (_found > -1){
+
+                        $.post('/index/buildvideocache', {video_url:_media_url, thumbnail:data[json_key].event_media_video_thum[0].text}, function(response_data){
+                            response_data = JSON.parse (response_data);
+                            $(".user-resources").append('<a data-video="true" href="/memreas/js/jwplayer/jwplayer_cache/' + response_data.video_link + '"><img src="' + response_data.thumbnail + '"/></a>');
+                        });
+
+                }
+                else {
+                    $(".user-resources").append('<img src="' + _media_url + '"/>');
+                    $(".scrollClass .mCSB_container").append ('<li><a class="swipebox" href="' + _media_url + '"><img src="' + _media_url + '"/></a></li>');
+                }
               }
-              $(".user-resources").html (_html);
               setTimeout(function(){ $(".user-resources").fotorama(); $(".preload-server").hide(); }, 1000);
           }
           return true;
