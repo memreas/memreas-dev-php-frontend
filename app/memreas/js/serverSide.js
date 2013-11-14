@@ -7,7 +7,7 @@ jQuery.fetch_server_media = function (user_id){
     $("#tab-content #tab1").append ('<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/325" data-max-width="100%"  data-allow-full-screen="true"  data-nav="thumbs"></div>');
     $(".user-resources, .scrollClass .mCSB_container").html('');
     $(".preload-server").show();
-    var _request_url = 'http://memreas-dev-php-frontend.localhost/index/ApiServerSide';
+    var _request_url = '/index/ApiServerSide';
     var _request_content = '<xml>' +
                                 '<listallmedia>' +
                                     '<event_id></event_id>' +
