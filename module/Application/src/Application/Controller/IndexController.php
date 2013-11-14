@@ -35,12 +35,7 @@ class IndexController extends AbstractActionController
     protected $friendmediaTable;
 
 	public function fetchXML($action, $xml) {
-error_log("Enter fetchXML".PHP_EOL);
 		$guzzle = new Client();
-
-error_log("Inside fetch XML request url ---> " . $this->url . PHP_EOL);
-error_log("Inside fetch XML request action ---> " . $action . PHP_EOL);
-error_log("Inside fetch XML request XML ---> " . $xml . PHP_EOL);
 		$request = $guzzle->post(
 			$this->url,
 			null,
@@ -51,18 +46,14 @@ error_log("Inside fetch XML request XML ---> " . $xml . PHP_EOL);
 	    	)
 		);
 		$response = $request->send();
-error_log("Inside fetch XML response ---> " . print_r($response, true) . PHP_EOL);
-error_log("Exit fetchXML".PHP_EOL);
 		return $data = $response->getBody(true);
 	}
 
     public function indexAction() {
-error_log("Enter indexAction".PHP_EOL);
  	    $path = $this->security("application/index/event.phtml");
 		$view = new ViewModel();
 		$view->setTemplate($path); // path to phtml file under view folder
 		return $view;
-error_log("Exit indexAction".PHP_EOL);
     }
 
     public function ApiServerSideAction(){
@@ -243,7 +234,6 @@ error_log("Exit indexAction".PHP_EOL);
 
 		//Guzzle the LoginWeb Service
 		$result = $this->fetchXML($action, $xml);
-
 
 		$data = simplexml_load_string($result);
 
