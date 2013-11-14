@@ -8,6 +8,6 @@ nbproject
 .project
 .settings
 composer.lock
-vendor/bin
+vendor
 data/
 php_errors.log
