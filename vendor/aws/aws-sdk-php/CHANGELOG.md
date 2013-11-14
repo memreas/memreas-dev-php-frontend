@@ -1,6 +1,24 @@
 CHANGELOG
 =========
 
+2.4.9 (2013-11-08)
+------------------
+
+* Added support for [cross-zone load balancing](http://aws.amazon.com/about-aws/whats-new/2013/11/06/elastic-load-balancing-adds-cross-zone-load-balancing/)
+  to the Elastic Load Balancing client.
+* Added support for a [new gateway configuration](http://aws.amazon.com/about-aws/whats-new/2013/11/05/aws-storage-gateway-announces-gateway-virtual-tape-library/),
+  Gateway-Virtual Tape Library, to the AWS Storage Gateway client.
+* Added support for stack policies to the the AWS CloudFormation client.
+* Fixed issue #176 where attempting to upload a direct to Amazon S3 using the UploadBuilder failed when using a custom
+  iterator that needs to be rewound.
+
+2.4.8 (2013-10-31)
+------------------
+
+* Updated the AWS Direct Connect client
+* Updated the Amazon Elastic MapReduce client to add support for new EMR APIs, termination of specific cluster
+  instances, and unlimited EMR steps.
+
 2.4.7 (2013-10-17)
 ------------------
 
@@ -265,7 +283,7 @@ CHANGELOG
 * Added an easier way to disable operation parameter validation by setting `validation` to false when creating clients
 * Added the ability to disable the exponential backoff plugin
 * Added the ability to easily fetch the region name that a client is configured to use via `$client->getRegion()`
-* Added end-user guides available at http://aws-docs.integ.amazon.com/aws-sdk-php-2/guide/latest/
+* Added end-user guides available at http://docs.aws.amazon.com/aws-sdk-php/guide/latest/
 * Fixed issue #48 where signing Amazon S3 requests with null or empty metadata resulted in a signature error
 * Fixed issue #29 where Amazon S3 was intermittently closing a connection
 * Updated the Amazon S3 client to parse the AcceptRanges header for HeadObject and GetObject output

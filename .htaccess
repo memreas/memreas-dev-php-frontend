@@ -10,7 +10,7 @@ RewriteRule ^.*$ app/index.php [NC,L]
 #set app/index.php as the default for directories
 DirectoryIndex app/index.php
 #set index.php as the default for directories
-DirectoryIndex index.php
+#DirectoryIndex index.php
 
 #Limits for file uploads
 php_value memory_limit 200M

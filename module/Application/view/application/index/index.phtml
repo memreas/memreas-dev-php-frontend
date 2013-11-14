@@ -3,7 +3,8 @@ use Zend\Session\Container;
 header('Cache-Control: no-cache, no-store, must-revalidate'); // HTTP 1.1.
 header('Pragma: no-cache'); // HTTP 1.0.
 header('Expires: 0'); // Proxies.
-
+error_log("cwd ----> " . getcwd());
+error_log("dirname ----> " . dirname(__DIR__));
 ?>
  
 <!doctype html>
