@@ -84,6 +84,11 @@ class Module
 								if (isset($session['config'])) {
 									$class = isset($session['config']['class'])  ? $session['config']['class'] : 'Zend\Session\Config\SessionConfig';
 									$options = isset($session['config']['options']) ? $session['config']['options'] : array();
+									
+									//setting this for AWS permissions error
+									//Note: must specify full path
+									$options['save_path'] = getcwd()."/data/sessions/";
+									
 									$sessionConfig = new $class();
 									$sessionConfig->setOptions($options);
 								}

@@ -36,6 +36,10 @@ class IndexController extends AbstractActionController
 
 	public function fetchXML($action, $xml) {
 		$guzzle = new Client();
+
+error_log("Inside fetch XML request url ---> " . $this->url . PHP_EOL);
+error_log("Inside fetch XML request action ---> " . $action . PHP_EOL);
+error_log("Inside fetch XML request XML ---> " . $xml . PHP_EOL);
 		$request = $guzzle->post(
 			$this->url,
 			null,
@@ -46,14 +50,18 @@ class IndexController extends AbstractActionController
 	    	)
 		);
 		$response = $request->send();
+error_log("Inside fetch XML response ---> " . $response->getBody(true) . PHP_EOL);
+error_log("Exit fetchXML".PHP_EOL);
 		return $data = $response->getBody(true);
 	}
 
     public function indexAction() {
+error_log("Enter indexAction".PHP_EOL);
  	    $path = $this->security("application/index/event.phtml");
 		$view = new ViewModel();
 		$view->setTemplate($path); // path to phtml file under view folder
 		return $view;
+error_log("Exit indexAction".PHP_EOL);
     }
 
     public function ApiServerSideAction(){
@@ -239,10 +247,13 @@ class IndexController extends AbstractActionController
 
 		//ZF2 Authenticate
 		if ($data->loginresponse->status == 'success') {
+error_log("Inside loginresponse success...");
 			$this->setSession($username);
             //Redirect here
+error_log("Inside loginresponse success redirect ---> " . $redirect);
 			return $this->redirect()->toRoute('index', array('action' => $redirect));
 		} else {
+error_log("Inside loginresponse else...");
 			return $this->redirect()->toRoute('index', array('action' => "index"));
 		}
     }
@@ -260,6 +271,7 @@ class IndexController extends AbstractActionController
 
     public function setSession($username) {
 		//Fetch the user's data and store it in the session...
+error_log("Inside setSession ...");
    	    $user = $this->getUserTable()->findOneBy(array('username' => $username));
 
         $user->password='';
@@ -267,9 +279,11 @@ class IndexController extends AbstractActionController
    	    $user->create_date='';
         $user->update_time='';
 		$session = new Container('user');
+error_log("Inside setSession got new Container...");
 		$session->offsetSet('user_id', $user->user_id);
 		$session->offsetSet('username', $username);
         $session->offsetSet('user', json_encode($user));
+error_log("Inside setSession set user data...");
     }
 
     public function registrationAction()
