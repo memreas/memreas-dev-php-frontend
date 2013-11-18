@@ -9,6 +9,7 @@ use Zend\Session\Container;
 
 $session = new Container('user');        
 $user_id = $session->offsetGet('user_id');
+print_r ($_SESSION);
 echo "user_id ----> " . $user_id;
 $domain = "http://d1ckv7o9k6o3x9.cloudfront.net/";
 

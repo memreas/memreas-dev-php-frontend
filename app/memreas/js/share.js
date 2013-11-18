@@ -131,11 +131,11 @@ share_initGoogleMap = function(div_id) {
              }
          },
          location_map = new google.maps.Map(document.getElementById(div_id), mapOptions),
-             marker = new google.maps.Marker({
-                 position: latlng,
-                 map: location_map,
-                 icon: image
-             });
+		 marker = new google.maps.Marker({
+			 position: latlng,
+			 map: location_map,
+			 icon: image
+		 });
 
 		 // set the search text field as auto-complete.
          var input = document.getElementById('txt_locationmap_address');
@@ -148,7 +148,11 @@ share_initGoogleMap = function(div_id) {
 
          google.maps.event.addListener(autocomplete, 'place_changed', function (event) {
              infowindow.close();
+             
              var place = autocomplete.getPlace();
+             if (typeof place.geometry == "undefined")
+             	return;
+             	
              if (place.geometry.viewport) {
                  location_map.fitBounds(place.geometry.viewport);
              } else {
@@ -157,34 +161,6 @@ share_initGoogleMap = function(div_id) {
              }
 
              moveMarker(place.name, place.geometry.location);
-         });
-         google.maps.event.addListener(location_map, 'click', function (event) {
-             //$('.MapLat').val(event.latLng.lat());
-             //$('.MapLon').val(event.latLng.lng());
-             //alert(event.latLng.place.name)
-         });
-         $("#txt_locationmap_address").focusin(function () {
-             $(document).keypress(function (e) {
-                 if (e.which == 13) {
-                     return false;
-                     infowindow.close();
-                     var firstResult = $(".pac-container .pac-item:first").text();
-                     var geocoder = new google.maps.Geocoder();
-                     geocoder.geocode({
-                         "address": firstResult
-                     }, function (results, status) {
-                         if (status == google.maps.GeocoderStatus.OK) {
-                             var lat = results[0].geometry.location.lat(),
-                                 lng = results[0].geometry.location.lng(),
-                                 placeName = results[0].address_components[0].long_name,
-                                 latlng = new google.maps.LatLng(lat, lng);
-
-                             moveMarker(placeName, latlng);
-                             $("input").val(firstResult);
-                         }
-                     });
-                 }
-             });
          });
 
          function moveMarker(placeName, latlng) {
@@ -216,8 +192,9 @@ share_initGoogleMap = function(div_id) {
 							}
 						} else {
 						}
-					});			
-					location_map.setCenter(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+					});
+					if (location_map)
+						location_map.setCenter(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
 				}, 
 				function(error) {
 					alert(err_msg);
@@ -304,6 +281,9 @@ share_clickCkbPublic = function() {
 // go to the other page (1: memreas details, 2: media, 3: friends)
 share_gotoPage = function(tab_no) {
 	$('#tabs li:nth-child(' + tab_no + ') a').click();
+	if (tab_no == 3) {
+		facebook_getFriendList();
+	}
 }
 
 // add the comment to Media when click "next" button on the Media Page.
