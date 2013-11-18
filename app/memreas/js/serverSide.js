@@ -23,7 +23,7 @@ jQuery.fetch_server_media = function (user_id){
     data.type = "jsonp";
     data.json = _request_content;
     var json_data = JSON.stringify(data);
-    var _video_extensions = "mp4 wmv";
+    var _video_extensions = "mp4 wmv mov";
     $.ajax( {
       type:'post',
       url: _request_url,
@@ -37,6 +37,7 @@ jQuery.fetch_server_media = function (user_id){
               for (var json_key in data){
                  var _media_url = data[json_key].main_media_url[0].text;
                  var _media_extension = _media_url.substr(_media_url.length - 3);
+                 _media_extension = _media_extension.toLowerCase();
                 //Build video thumbnail
                 var _found = _video_extensions.indexOf (_media_extension);
                 if (_found > -1){

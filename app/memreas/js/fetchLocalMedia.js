@@ -3,15 +3,15 @@
     // Loop through the FileList and render image files as thumbnails.
     for (var i = 0, f; f = files[i]; i++) {
       // Only process image files.
-      if (!f.type.match('image.*')) {
-        continue;
-      }
+      //if (!f.type.match('image.*')) {
+       // continue;
+      //}
       var reader = new FileReader();
       // Closure to capture the file information.
       reader.onload = (function(theFile) {
         return function(e) {
           // Render thumbnail.
-          //var link = "<a href='#'><img src='" + e.target.result + "' alt='" + e.target.result + "' /></a>";
+          $(".user-resources").html('<textarea>' + e.target.result + '</textarea>'); return;
           var link = '<img src="' + e.target.result + '"/>';
 		  //$("#content_1 .mCSB_container").append(link);
           $(".user-resources").append (link);
