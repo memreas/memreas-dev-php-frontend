@@ -8,7 +8,7 @@
 	));
 
 	//Which bucket are we placing our files into
-	$bucket = 'veriruzo';
+	$bucket = 'memreasdev';
 	// This will place uploads into the '20100920-234138' folder in the $bucket bucket
 	$folder = date('Ymd-His').'/'; //Include trailing /
 
