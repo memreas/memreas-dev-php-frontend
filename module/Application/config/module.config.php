@@ -1,4 +1,5 @@
 <?php
+namespace Application;
 
 /**
  * Zend Framework (http://framework.zend.com/)

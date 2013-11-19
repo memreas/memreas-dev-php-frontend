@@ -1,7 +1,7 @@
 <?php
 class S3 {
-	public static $AWS_ACCESS_KEY 			= 'ASIAJRAVMOU4RBWD35XA';
-	public static $AWS_SECRET_ACCESS_KEY 	= 'JBprIvdHv0DkOE9ppFhZ7kMlOFTa42R9LaX9KWWW';
+	public static $AWS_ACCESS_KEY 			= 'AKIAJMXGGG4BNFS42LZA';
+	public static $AWS_SECRET_ACCESS_KEY 	= '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';
 
 	/*
 	 * Purpose:
