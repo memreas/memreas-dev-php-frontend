@@ -2585,3 +2585,7 @@ ul.memreas_results{
     margin-bottom: 10px;
 }
 a.btn-browse-file{ margin: 0 auto; float: none; }
+
+/*Put own css here*/
+@import url("davidstyle.css");
+@import url("transtyle.css");
