@@ -28,7 +28,14 @@
             'multi'            : true,
             'auto'            : true,
             'onError'         : function(errorObj, q, f, err) { console.log(err); },
-            'onComplete'    : function(event, ID, file, response, data) { console.log(file); }
+            'onComplete'    : function(event, ID, file, response, data) {
+                console.log(file);
+                $.post("/index/addmedia", {imageurl:"<?php echo $this->data['folder']; ?>${filename}", filetype:"image/png", filename:"${filename}"}, function(response){
+                    if (response == "Success")
+                        alert ("Media added success");
+                    else alert ("error while add media");
+                });
+            }
         });
     });
 </script>

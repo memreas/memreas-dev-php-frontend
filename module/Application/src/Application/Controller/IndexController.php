@@ -111,11 +111,8 @@ error_log("Exit indexAction".PHP_EOL);
                             }
                             </style>
                             </head>
-
                             <body>
-                                    <div id="myElement">Loading the player...</div>
-
-
+                            <div id="myElement">Loading the player...</div>
                             <script type="text/javascript">
                                 jwplayer("myElement").setup({
                                     flashplayer: "../jwplayer.flash.swf",
@@ -201,6 +198,16 @@ error_log("Exit indexAction".PHP_EOL);
         $path = $this->security("application/index/s3upload.phtml");
         $view->setTemplate($path);
         return $view;
+    }
+
+    public function addmediaAction(){
+         $action = 'addmediaevent';
+         $session = new Container('user');
+         $xml = "<xml><addmediaevent><s3url>" . $_POST['imageurl'] . "</s3url><is_server_image>0</is_server_image><content_type>" . $_POST['filetype'] . "</content_type><s3file_name>" . $_POST['filename'] . "</s3file_name><device_id></device_id><event_id></event_id><media_id></media_id><user_id>" . $session->offsetGet('user_id') . "</user_id><is_profile_pic>0</is_profile_pic></addmediaevent></xml>";
+         $result = $this->fetchXML($action, $xml);
+         $data = simplexml_load_string($result);
+         echo $data->addmediaeventresponse->status;
+         die();
     }
 
     public function eventAction() {

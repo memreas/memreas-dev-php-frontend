@@ -6,7 +6,7 @@ jQuery.addfile = function(){
     var _source_element = ".sync-content .upload";
     var _new_element = jQuery.randomElement();
     jQuery(_source_element).append ('<div class="row-choose-file" id="' + _new_element + '"></div>');
-    jQuery("#" + _new_element).append('<iframe src="' + _source_action + '" height="60"></iframe>');
+    jQuery("#" + _new_element).append('<iframe src="' + _source_action + '" width="350" height="120"></iframe>');
     jQuery("#" + _new_element).append('<div class="addmore" style="position: absolute; right: 1px; top: 10px;"><a href="javascript:addfile();" class="btn-addmore-file"><img src="/memreas/img/cloudadd.png" width="30" border="none"/></a> <a href="#"><img src="/memreas/img/cloudremove.png" width="30" border="none"/></a></div>');
     return false;
 }
@@ -22,5 +22,5 @@ jQuery.randomElement = function(){
 }
 function addfile(){
     //Add more file clicked
-    alert("handled"); jQuery.addfile();
+    jQuery.addfile();
 }
