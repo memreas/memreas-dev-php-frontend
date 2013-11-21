@@ -118,9 +118,12 @@ return array(
                 'paths' => array(__DIR__ . '/../src/Application/Entity')
             ),
             'orm_default' => array(
-                
+
                 'drivers' => array(
                     'Application\Entity' => 'application_entities'
                 )
             ))),
+    'view_helpers' => array(
+                'S3Service' => '\Application\View\Helper\S3Service',
+            ),
 );

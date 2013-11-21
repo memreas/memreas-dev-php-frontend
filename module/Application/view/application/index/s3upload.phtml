@@ -1,0 +1,40 @@
+<link rel="stylesheet" href="/memreas/ajax-s3/files/uploadify/uploadify.css" />
+<script src="/memreas/js/jquery.js"></script>
+<script type='text/javascript' src="/memreas/ajax-s3/files/uploadify/swfobject.js"></script>
+<script type='text/javascript' src="/memreas/ajax-s3/files/uploadify/jquery.uploadify.v2.1.4.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#file_upload").uploadify({
+            'uploader'        : '/memreas/ajax-s3/files/uploadify/uploadify.swf',
+            'buttonText'    : 'Browse',
+            'cancelImg'        : '/memreas/ajax-s3/files/uploadify/cancel.png',
+            'script'        : 'http://s3.amazonaws.com/<?php echo $this->data['bucket']; ?>',
+            'scriptAccess'    : 'always',
+            'method'        : 'post',
+            'scriptData'    : {
+                "AWSAccessKeyId"            : "<?php echo $this->data['ACCESS_KEY']; ?>",
+                "key"                        : "${filename}",
+                "acl"                        : "authenticated-read",
+                "policy"                    : "<?php echo $this->data['policy']; ?>",
+                "signature"                    : "<?php echo $this->data['signature']; ?>",
+                "success_action_status"        : "201",
+                "key"                        : encodeURIComponent(encodeURIComponent("<?= $this->data['folder']; ?>${filename}")),
+                "fileext"                    : encodeURIComponent(encodeURIComponent("")),
+                "Filename"                    : encodeURIComponent(encodeURIComponent(""))
+            },
+            'fileExt'        : '*.*',
+            'fileDataName'     : 'file',
+            'simUploadLimit': 2,
+            'multi'            : true,
+            'auto'            : true,
+            'onError'         : function(errorObj, q, f, err) { console.log(err); },
+            'onComplete'    : function(event, ID, file, response, data) { console.log(file); }
+        });
+    });
+</script>
+<div align='center' style="width: 280px; margin: 0 auto; position: relative;">
+    <div class="upload-result"></div>
+    <div class="upload-process">
+        <input type='file' id='file_upload' name='file_upload' />
+    </div>
+</div>

@@ -14,6 +14,8 @@ $user_id = $session->offsetGet('user_id')
 
 <!--Custom css-->
 <link href="/memreas/css/style.css" rel="stylesheet" type="text/css">
+<link href="/memreas/css/transtyle.css" rel="stylesheet" type="text/css">
+<link href="/memreas/css/davidstyle.css" rel="stylesheet" type="text/css">
 <link href="/memreas/css/jquery.mCustomScrollbar.css" rel="stylesheet" />
 <link href="/memreas/css/fotorama.css" rel="stylesheet">
 <link rel="stylesheet" href="/memreas/css/swipebox.css">
@@ -43,10 +45,12 @@ $user_id = $session->offsetGet('user_id')
 <script type="text/javascript" src="/memreas/js/fetchLocalMedia.js"></script>
 <script type="text/javascript" src="/memreas/js/bgstretcher.js"></script>
 <script type="text/javascript" src="/memreas/js/serverSide.js"></script>
+<script type="text/javascript" src="/memreas/js/syncing.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
     //Prefetch for image location
     $.fetch_server_media('<?php echo $user_id; ?>');
+    $.addfile();
     $(document).bgStretcher({
             images: ['img/bg.jpg'],
             imageWidth: 1366, imageHeight: 700
@@ -67,7 +71,7 @@ $(document).ready(function(){
           <!-- Begin : Nav -->
           <nav>
           <ul>
-              <li><a href="#" class="active"><img src="/memreas/img/gallery.png" alt=""></a></li>
+            <li><a href="#" class="active"><img src="/memreas/img/gallery.png" alt=""></a></li>
             <li><a href="#"><img src="/memreas/img/queue.png" alt=""></a></li>
             <li><a href="#"><img src="/memreas/img/share.png" alt=""></a></li>
             <li><a href="#"><img src="/memreas/img/memreas.png" alt=""></a></li>
@@ -109,8 +113,12 @@ $(document).ready(function(){
             </ul>
           </div>
           <div id="tab3" class="hideCls">
-            <ul class="pics sync scrollClass">
-            </ul>
+            <div class="sync-content">
+                <ul class="pics sync scrollClass" style="display: none;">
+                </ul>
+                <div class="upload"></div>
+            </div>
+            <div class="upload-media"><a href="javascript:;">Back</a> <a href="javascript:;" id="btn-upload">Upload</a></div>
           </div>
           <div id="tab4" class="hideCls">
               <div class="map">
@@ -118,7 +126,7 @@ $(document).ready(function(){
               </div>
           </div>
         </div>
-        <div class="change-location"><a class="fetch-local" href="#" style="margin-left: 10px;">Change local directory</a><a class="browse-server" href="#">Browse Server</a></div>
+        <div class="change-location" style="display: none;"><a class="fetch-local" href="#" style="margin-left: 10px;">Change local directory</a><a class="browse-server" href="#">Browse Server</a></div>
          <!------------------First-pop-up-------------------->
             <div id="popupplayer" class="video_popups">
                     <a id="popupplayerClose" onClick="disablePopup('popupplayer')" class='popupClose'>x</a>
@@ -167,9 +175,6 @@ $(document).ready(function(){
                         enable:true
                     }
                 });
-
-
-
 
             $("#tab-content div.hideCls").hide(); // Initially hide all content
             $("#tabs li:first").attr("id","current"); // Activate first tab

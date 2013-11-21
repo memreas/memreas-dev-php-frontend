@@ -18,6 +18,7 @@ use Application\Form;
 use Zend\Mail\Message;
 use Zend\Mail\Transport\Sendmail as SendmailTransport;
 use Guzzle\Http\Client;
+use Application\View\Helper\S3Service;
 
 class IndexController extends AbstractActionController
 {
@@ -184,6 +185,22 @@ error_log("Exit indexAction".PHP_EOL);
 		$view->setTemplate($path); // path to phtml file under view folder
 		return $view;
         //return new ViewModel();
+    }
+
+    public function s3uploadAction(){
+        $S3Service = new S3Service();
+        $session = new Container('user');
+        $data['bucket'] = 'memreasdev';
+        $data['folder'] = $session->offsetGet('user_id') . '/image/';
+        $data['ACCESS_KEY'] = $S3Service::getAccessKey();
+        list($data['policy'], $data['signature']) = $S3Service::get_policy_and_signature(array(
+            'bucket'         => $data['bucket'],
+            'folder'        => $data['folder'],
+        ));
+        $view = new ViewModel(array('data' => $data));
+        $path = $this->security("application/index/s3upload.phtml");
+        $view->setTemplate($path);
+        return $view;
     }
 
     public function eventAction() {

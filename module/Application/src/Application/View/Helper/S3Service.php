@@ -6,6 +6,8 @@ class S3Service extends AbstractHelper{
     public static $AWS_ACCESS_KEY             = 'AKIAJMXGGG4BNFS42LZA';
     public static $AWS_SECRET_ACCESS_KEY     = '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';
 
+    public static function getAccessKey(){ return self::$AWS_ACCESS_KEY; }
+
     /*
      * Purpose:
      *         Actionscript encodes '+' characters in the signature incorrectly - it makes

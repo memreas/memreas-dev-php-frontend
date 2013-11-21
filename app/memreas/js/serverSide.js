@@ -5,7 +5,7 @@
 jQuery.fetch_server_media = function (user_id){
     $(".user-resources").remove();
     $("#tab-content #tab1").append ('<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/325" data-max-width="100%"  data-allow-full-screen="true"  data-nav="thumbs"></div>');
-    $(".user-resources, .scrollClass .mCSB_container").html('');
+    $(".user-resources, .scrollClass .mCSB_container, .sync .mCSB_container").html('');
     $(".preload-server").show();
     var _request_url = '/index/ApiServerSide';
     var _request_content = '<xml>' +
@@ -41,16 +41,15 @@ jQuery.fetch_server_media = function (user_id){
                 //Build video thumbnail
                 var _found = _video_extensions.indexOf (_media_extension);
                 if (_found > -1){
-
                         $.post('/index/buildvideocache', {video_url:_media_url, thumbnail:data[json_key].event_media_video_thum[0].text}, function(response_data){
                             response_data = JSON.parse (response_data);
                             $(".user-resources").append('<a data-video="true" href="/memreas/js/jwplayer/jwplayer_cache/' + response_data.video_link + '"><img src="' + response_data.thumbnail + '"/></a>');
+                            $(".scrollClass .mCSB_container, .sync .mCSB_container").append ('<li><a class="class="swipebox" href="' + response_data.thumbnail + '"><img src="' + response_data.thumbnail + '"/></a></li>');
                         });
-
                 }
                 else {
                     $(".user-resources").append('<img src="' + _media_url + '"/>');
-                    $(".scrollClass .mCSB_container").append ('<li><a class="swipebox" href="' + _media_url + '"><img src="' + _media_url + '"/></a></li>');
+                    $(".scrollClass .mCSB_container, .sync .mCSB_container").append ('<li><a class="swipebox" href="' + _media_url + '"><img src="' + _media_url + '"/></a></li>');
                 }
               }
               setTimeout(function(){ $(".user-resources").fotorama(); $(".preload-server").hide(); }, 1000);
