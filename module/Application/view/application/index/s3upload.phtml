@@ -30,10 +30,16 @@
             'onError'         : function(errorObj, q, f, err) { console.log(err); },
             'onComplete'    : function(event, ID, file, response, data) {
                 console.log(file);
-                $.post("/index/addmedia", {imageurl:"<?php echo $this->data['folder']; ?>${filename}", filetype:"image/png", filename:"${filename}"}, function(response){
+                var _image_type = 'jpg jpeg png gif bmp';
+                var _response_type = file.type;
+                _response_type = _response_type.replace (".", "");
+                if (_image_type.indexOf(_response_type) > -1)
+                    _file_type = "image/" + _response_type;
+                else _file_type = "image/jpg"; // <=  Correct this
+                $.post("/index/addmedia", {imageurl:"<?php echo $this->data['folder']; ?>" + file.name, filetype:_file_type, filename:file.name}, function(response){
                     if (response == "Success")
                         alert ("Media added success");
-                    else alert ("error while add media");
+                    else alert ("error while adding media");
                 });
             }
         });
