@@ -17,11 +17,21 @@ var user_id  = "";		// signed user id
 var event_id = "";		// created event id
 var media_id = "";		// selected media id
 
-// initialize the akordeon.
-share_initAkordeon = function() {
+var friendList = null;
+
+// initialize the share page objects.
+share_initObjects = function() {
 	// Initially get the user id.
 	user_id = $('#user_id')[0].getAttribute('val');
 
+	$('#tabs li:nth-child(3) a').on('click', function() {
+		facebook_getFriendList();
+		twitter_init();
+	});
+}
+
+// initialize the akordeon.
+share_initAkordeon = function() {
 	$('#ckb_canpost')[0].checked = false;
 	$('#ckb_canadd')[0].checked = false;
 
@@ -281,13 +291,12 @@ share_clickCkbPublic = function() {
 // go to the other page (1: memreas details, 2: media, 3: friends)
 share_gotoPage = function(tab_no) {
 	$('#tabs li:nth-child(' + tab_no + ') a').click();
-	if (tab_no == 3) {
-		facebook_getFriendList();
-	}
 }
 
 // add the comment to Media when click "next" button on the Media Page.
 share_addComment = function() {
+	var comments 	= getElementValue('txt_comment');
+	audio_media_id	= "";
 
 	// send the request.
 	ajaxRequest(
@@ -318,4 +327,38 @@ share_addComment = function() {
 // clear all fields on Media page when click "cancel" button.
 share_clearMedia = function() {
 	clearTextField('txt_comment');
+}
+
+// clear the friend list.
+share_clearFriendsList = function() {
+	if (friendList == null)
+		friendList = $('#share_friendslist .mCSB_container');
+		
+	friendList.empty();
+}
+
+// add friends to the list from social friends information.
+share_addFriends = function(info) {
+	if (friendList == null)
+		friendList = $('#share_friendslist .mCSB_container');
+
+	friendList.empty();
+
+	var i = 0, el;
+
+	for (i = 0; i < info.length; i++) {
+		el = '';
+		el += '<li>';
+		el += '<figure class="pro-pics2"><img src="/memreas/img/profile-pic.jpg" alt=""></figure>';
+		el += '<aside class="pro-pic_names2">' + info[i].name + '</aside>';
+		el += '</li>';
+							
+		friendList.append(el);
+	}
+
+	var imgList = $('#share_friendslist .mCSB_container li img');
+
+	for (i = 0; i < imgList.length; i++) {
+		$(imgList[i]).prop('src', info[i].photo);
+	}
 }

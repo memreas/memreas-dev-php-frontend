@@ -5,7 +5,10 @@
 
 var FACEBOOK_APPID 			= '642983449085789';
 var FACEBOOK_SECRETCODE 	= '47bfc45d191ef7dda0e2ebbf43b70a64';
-var FACEBOOK_FRIENDSLIMIT 	= 99;
+var FACEBOOK_FRIENDSLIMIT 	= 500;
+
+var fb_accountInfo = null;
+var fb_friendsInfo = null;
 
 
 sortMethod = function(a, b) {
@@ -15,7 +18,7 @@ sortMethod = function(a, b) {
 }
 
 facebook_getFriendList = function() {
-	window.fbAsyncInit = function() {
+	//window.fbAsyncInit = function() {
 		FB.init({ appId: FACEBOOK_APPID,
 			status: true, 
 			cookie: true,
@@ -29,31 +32,35 @@ facebook_getFriendList = function() {
 			if (response.authResponse) { // in case if we are logged in
 				var userInfo = document.getElementById('user-info');
 				FB.api('/me', function(response) {
-					console.log(response.name);
-					//userInfo.innerHTML = '<img src="https://graph.facebook.com/' + response.id + '/picture">' + response.name;
-					//button.innerHTML = 'Logout';
+					fb_accountInfo = {
+						'id': 		response.id,
+						'name': 	response.name,
+						'photo': 	'https://graph.facebook.com/' + response.id + '/picture'
+					};
+					$('#profile_picture').prop('src', fb_accountInfo.photo);
 				});
 
 				// get friends
 				FB.api('/me/friends?limit=' + FACEBOOK_FRIENDSLIMIT, function(response) {
-					//var result_holder = document.getElementById('result_friends');
-					var friend_data = response.data.sort(sortMethod);
-
-					var results = '';
-					for (var i = 0; i < friend_data.length; i++) {
-						//results += '<div><img src="https://graph.facebook.com/' + friend_data[i].id + '/picture">' + friend_data[i].name + '</div>';
-						console.log(friend_data[i].name);
+					var i = 0, info = response.data.sort(sortMethod);
+					fb_friendsInfo = [];
+					
+					for (i = 0; i < info.length; i++) {
+						fb_friendsInfo[i] = {
+							'id': 		info[i].id,
+							'name': 	info[i].name,
+							'photo': 	'https://graph.facebook.com/' + info[i].id + '/picture'
+						}
 					}
-
-					// and display them at our holder element
-					//result_holder.innerHTML = '<h2>Result list of your friends:</h2>' + results;
+					
+					share_addFriends(fb_friendsInfo);
 				});
 			}
 		}
 		
 		// run once with current status and whenever the status changes
 		FB.getLoginStatus(getFacebookInfo);
-		FB.Event.subscribe('auth.statusChange', getFacebookInfo);   
+		//FB.Event.subscribe('auth.statusChange', getFacebookInfo);   
 		
 		FB.login(function(response) {
 			if (response.authResponse) {
@@ -61,5 +68,5 @@ facebook_getFriendList = function() {
 			}
 		}, {scope:'email'});
 		
-	};
+	//};
 }

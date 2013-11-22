@@ -43,6 +43,8 @@ $domain = "http://d1ckv7o9k6o3x9.cloudfront.net/";
 
 <!--Social Library-->
 <script src="http://connect.facebook.net/en_US/all.js"></script>
+<script src="/memreas/js/facebook.js"></script>
+<script src="/memreas/js/twitter.js"></script>
 
 <!--Backgound Strecher-->
 <script type="text/javascript" src="/memreas/js/bgstretcher.js"></script>
@@ -60,11 +62,13 @@ $domain = "http://d1ckv7o9k6o3x9.cloudfront.net/";
 <script src="/memreas/js/share.js"></script>
 
 <script type="text/javascript">
+	twitter_init();
     $(document).ready(function () {
 		$(document).bgStretcher({
 			images: ['/memreas/img/bg.jpg'],
 			imageWidth: 1366, imageHeight: 700
 		});
+		share_initObjects();
      	share_initAkordeon();
 	});
 	
@@ -242,7 +246,7 @@ $domain = "http://d1ckv7o9k6o3x9.cloudfront.net/";
 								<option>linkedin</option>
 							</select>
 						</div>
-						<ul id="content_1" class="share_friends_contents scrollClass">
+						<ul id="share_friendslist" class="share_friends_contents scrollClass">
 							<li>
 							  <figure class="pro-pics2"><img src="/memreas/img/profile-pic.jpg" alt=""></figure>
 							  <aside class="pro-pic_names2">Friend Name</aside>
