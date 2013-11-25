@@ -20,10 +20,13 @@ jQuery.randomElement = function(){
     _final_element = _element;
     return _final_element;
 }
-function addfile(){
-    //Add more file clicked
-    jQuery.addfile();
+function addfile(){ jQuery.addfile(); }
+function removeRow(element_id){ jQuery("#" + element_id).remove(); }
+function success_addmedia(response){
+    response = $.xml2json(response, true);
+    response = response.addmediaeventresponse[0].status[0].text;
+    if (response == "Success")
+        alert ("Media added success");
+    else alert ("error while adding media");
 }
-function removeRow(element_id){
-    jQuery("#" + element_id).remove();
-}
+function error_addmedia(){}
