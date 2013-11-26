@@ -58,7 +58,7 @@ error_log("Exit fetchXML".PHP_EOL);
 
     public function indexAction() {
 error_log("Enter indexAction".PHP_EOL);
- 	    $path = $this->security("application/index/event.phtml");
+ 	    $path = $this->security("application/index/index.phtml");
 		$view = new ViewModel();
 		$view->setTemplate($path); // path to phtml file under view folder
 		return $view;

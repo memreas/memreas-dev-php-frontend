@@ -21,7 +21,7 @@
                 "policy"                    : "<?php echo $this->data['policy']; ?>",
                 "signature"                    : "<?php echo $this->data['signature']; ?>",
                 "success_action_status"        : "201",
-                "key"                        : encodeURIComponent(encodeURIComponent("<?= $this->data['folder']; ?>${filename}")),
+                "key"                         :  encodeURIComponent(encodeURIComponent('<?php echo $this->data['folder']; ?>' + "${filename}")),
                 "fileext"                    : encodeURIComponent(encodeURIComponent("")),
                 "Filename"                    : encodeURIComponent(encodeURIComponent(""))
             },
@@ -30,20 +30,36 @@
             'simUploadLimit': 2,
             'multi'            : true,
             'auto'            : true,
+            /*'onSelect'        : function(file){
+               console.log(file);
+                var video_type = 'wmv mp4 avi';
+                var file_type = file.type;
+                file_type = file_type.replace (".", "");
+                
+                if (video_type.indexOf(file_type) > 0)
+                    var target_folder = '<?php echo $this->data['folder']; ?>/media/';
+                else var target_folder = '<?php echo $this->data['folder']; ?>/image/';
+                $("#file_upload").uploadify('settings','key',encodeURIComponent(encodeURIComponent(target_folder + "${filename}")));                
+            },      */           
             'onError'         : function(errorObj, q, f, err) { console.log(err); },
             'onComplete'    : function(event, ID, file, response, data) {
                 console.log(file);                
                 var _image_type = 'jpg jpeg png gif bmp';
                 var _response_type = file.type;
                 _response_type = _response_type.replace (".", "");                
-                if (_image_type.indexOf(_response_type) > -1)
+                if (_image_type.indexOf(_response_type) > -1){
                     _file_type = "image/" + _response_type;
-                else _file_type = "image/jpg"; // <=  Correct this                
+                    var target_folder = '<?php echo $this->data['folder']; ?>/image/';
+                }
+                else{
+                    _file_type = "image/jpg"; // <=  Correct this         
+                    var target_folder = '<?php echo $this->data['folder']; ?>/media/';       
+                } 
                 var addmedia_xmlstring = new Array();                 
                 //Init params for request
                 addmedia_xmlstring[0] = new Array();
                 addmedia_xmlstring[0]['tag'] = 's3url';
-                addmedia_xmlstring[0]['value'] = '<?php echo $this->data['folder']; ?>' + file.name;     
+                addmedia_xmlstring[0]['value'] = target_folder + file.name;     
                            
                 addmedia_xmlstring[1] = new Array();
                 addmedia_xmlstring[1]['tag'] = 'is_server_image';                
