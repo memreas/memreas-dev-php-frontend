@@ -18,55 +18,58 @@ sortMethod = function(a, b) {
 }
 
 facebook_getFriendList = function() {
-	//window.fbAsyncInit = function() {
-		FB.init({ appId: FACEBOOK_APPID,
-			status: true, 
-			cookie: true,
-			xfbml: true,
-			oauth: true
-		});
+	$('#loadingpopup').show();
+	FB.init({ appId: FACEBOOK_APPID,
+		status: true, 
+		cookie: true,
+		xfbml: true,
+		oauth: true
+	});
 
-		function getFacebookInfo(response) {
-			var button = document.getElementById('fb-auth');
+	function getFacebookInfo(response) {
+		var button = document.getElementById('fb-auth');
 
-			if (response.authResponse) { // in case if we are logged in
-				var userInfo = document.getElementById('user-info');
-				FB.api('/me', function(response) {
-					fb_accountInfo = {
-						'id': 		response.id,
-						'name': 	response.name,
-						'photo': 	'https://graph.facebook.com/' + response.id + '/picture'
-					};
-					$('#profile_picture').prop('src', fb_accountInfo.photo);
-				});
+		if (response.authResponse) { // in case if we are logged in
+			var userInfo = document.getElementById('user-info');
+			FB.api('/me', function(response) {
+				fb_accountInfo = {
+					'id': 		response.id,
+					'name': 	response.name,
+					'photo': 	'https://graph.facebook.com/' + response.id + '/picture'
+				};
+				$('#profile_picture').prop('src', fb_accountInfo.photo);
+			});
 
-				// get friends
-				FB.api('/me/friends?limit=' + FACEBOOK_FRIENDSLIMIT, function(response) {
-					var i = 0, info = response.data.sort(sortMethod);
-					fb_friendsInfo = [];
-					
-					for (i = 0; i < info.length; i++) {
-						fb_friendsInfo[i] = {
-							'id': 		info[i].id,
-							'name': 	info[i].name,
-							'photo': 	'https://graph.facebook.com/' + info[i].id + '/picture'
-						}
+			// get friends
+			FB.api('/me/friends?limit=' + FACEBOOK_FRIENDSLIMIT, function(response) {
+				var i = 0, info = response.data.sort(sortMethod);
+				fb_friendsInfo = [];
+				
+				for (i = 0; i < info.length; i++) {
+					fb_friendsInfo[i] = {
+						'id': 		info[i].id,
+						'name': 	info[i].name,
+						'photo': 	'https://graph.facebook.com/' + info[i].id + '/picture'
 					}
-					
-					share_addFriends(fb_friendsInfo);
-				});
-			}
+				}
+				
+				share_addFriends(fb_friendsInfo);
+				$('#loadingpopup').hide();
+			});
 		}
-		
-		// run once with current status and whenever the status changes
-		FB.getLoginStatus(getFacebookInfo);
-		//FB.Event.subscribe('auth.statusChange', getFacebookInfo);   
-		
-		FB.login(function(response) {
-			if (response.authResponse) {
-				//window.location.reload();
-			}
-		}, {scope:'email'});
-		
-	//};
+		else {
+			$('#loadingpopup').hide();
+		}
+	}
+	
+	// run once with current status and whenever the status changes
+	FB.getLoginStatus(getFacebookInfo);
+	
+	FB.login(function(response) {
+		if (response.authResponse) {
+		}
+		else {
+			$('#loadingpopup').hide();
+		}
+	}, {scope:'email'});
 }

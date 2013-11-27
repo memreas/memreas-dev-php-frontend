@@ -62,6 +62,10 @@ getXMLStringFromParamArray = function(action, params) {
 			action_tag = "addcomment";
 			break;
 			
+		case "creategroup":
+			action_tag = "creategroup";
+			break;
+			
 		default:
 			break;
 	}

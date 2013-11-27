@@ -62,7 +62,6 @@ $domain = "http://d1ckv7o9k6o3x9.cloudfront.net/";
 <script src="/memreas/js/share.js"></script>
 
 <script type="text/javascript">
-	twitter_init();
     $(document).ready(function () {
 		$(document).bgStretcher({
 			images: ['/memreas/img/bg.jpg'],
@@ -240,10 +239,9 @@ $domain = "http://d1ckv7o9k6o3x9.cloudfront.net/";
 					</div>
 					<div id="share_tab3" class="hideCls">
 						<div class="styled-select">
-							<select>
-								<option>facebook</option>
-								<option>twitter</option>
-								<option>linkedin</option>
+							<select id="cmb_socialtype">
+								<option value="facebook">facebook</option>
+								<option value="twitter">twitter</option>
 							</select>
 						</div>
 						<ul id="share_friendslist" class="share_friends_contents scrollClass">
@@ -331,19 +329,20 @@ $domain = "http://d1ckv7o9k6o3x9.cloudfront.net/";
 								</div>
 								<div class="akordeon-item-body">
 									<div class="akordeon-item-content" style="padding:0px 10px;">
-									  <input name="input" type="text" class="more-input" value="add your email list here" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'add your email list here')this.value = '';"/>
+									  <input id="txt_emaillist" name="input" type="text" class="more-input" value="add your email list here" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'add your email list here')this.value = '';"/>
 									</div>
 								</div>
 							</div>
 						</div>
 						<ul class="share_friends_check_box">
 							<li>
-								<input id="demo_box_6" class="css-checkbox" type="checkbox" checked="checked" />
-								<label for="demo_box_6" name="demo_lbl_6" class="css-label">make this a group</label>
-								<input name="input" type="text" class="share-txtfield-3" value="group name here" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'group name here')this.value = '';"/>
+								<input id="ckb_makegroup" class="css-checkbox" type="checkbox" checked="checked" />
+								<label for="ckb_makegroup" name="demo_lbl_6" class="css-label">make this a group</label>
+								<input id="txt_groupname" name="input" type="text" class="share-txtfield-3" value="group name here" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'group name here')this.value = '';"/>
 							</li>
 						</ul>
-						<a class="black_btn_skin f-center" href="#">ok</a> <a class="black_btn_skin f-middle" href="#">cancel</a> 
+						<a class="black_btn_skin f-center" href="javascript:share_makeGroup();">ok</a>
+						<a class="black_btn_skin f-middle" href="javascript:share_clearFriends();">cancel</a> 
 					</div>
 				</div>
 			</div>

@@ -25,9 +25,12 @@ share_initObjects = function() {
 	user_id = $('#user_id')[0].getAttribute('val');
 
 	$('#tabs li:nth-child(3) a').on('click', function() {
-		facebook_getFriendList();
-		twitter_init();
+		share_changeSocialType();
 	});
+	
+	$("#cmb_socialtype").change(function(e) {
+		share_changeSocialType();
+    });
 }
 
 // initialize the akordeon.
@@ -45,6 +48,29 @@ share_initAkordeon = function() {
        	$('#button-less').akordeon({ buttons: false, toggle: true, itemsOrder: [2, 0, 1] });
 	$('#buttons5').akordeon();
     	$('#button-less').akordeon({ buttons: false, toggle: true, itemsOrder: [2, 0, 1] });
+}
+
+// change the friend list by social type.
+share_changeSocialType = function() {
+	var socialType = $("#cmb_socialtype option:selected").val();
+	
+	switch (socialType) {
+		case "facebook":
+			if (fb_friendsInfo == null) {
+				facebook_getFriendList();
+			}
+			else
+				share_addFriends(fb_friendsInfo);
+			break;
+			
+		case "twitter":
+			if (tw_friendsInfo == null) {
+				twitter_getFriendList();
+			}
+			else
+				share_addFriends(tw_friendsInfo);
+			break;
+	}
 }
 
 // initialize and customize the scroll bar.
@@ -361,4 +387,42 @@ share_addFriends = function(info) {
 	for (i = 0; i < imgList.length; i++) {
 		$(imgList[i]).prop('src', info[i].photo);
 	}
+	
+	$('#loadingpopup').hide();
+}
+
+// make the group with selected friends and e-mail list.
+share_makeGroup = function() {
+	var emailList 	= splitByDelimeters(getElementValue('txt_emaillist'), [',', ';']);
+	var groupName	= getElementValue('txt_groupname');
+
+	// send the request.
+	ajaxRequest(
+		'creategroup',
+		[
+			{ tag: 'event_id', 				value: event_id },
+			{ tag: 'media_id', 				value: media_id },
+			{ tag: 'user_id', 				value: user_id },
+			{ tag: 'comments', 				value: comments },
+			{ tag: 'audio_media_id', 		value: audio_media_id }
+		],
+		function(ret_xml) {
+			// parse the returned xml.
+			var status   = getValueFromXMLTag(ret_xml, 'status');
+			var message  = getValueFromXMLTag(ret_xml, 'message');
+			
+			if (status.toLowerCase() == 'success') {
+				alert('group was created successfully.');
+			}
+			else {
+				alert(message);
+			}
+		}
+	);
+}
+
+// clear all fields on Friends page when click "cancel" button.
+share_clearFriends = function() {
+	clearTextField(['txt_emaillist', 'txt_groupname']);
+	clearCheckBox('ckb_makegroup');
 }

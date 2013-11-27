@@ -84,10 +84,39 @@ setCheckBoxValue = function(id, value) {
 	$('#' + id)[0].checked = !value;
 }
 
+// set the defailt value to the html5 element.
 setDefaultValue = function(id) {
 	var element = $('#' + id);
 	if (typeof element == "undefined" || typeof element.length == "undefined")
 		return "";
 
 	element.val(element[0].defaultValue);
+}
+
+// split the string by delimeters.
+splitByDelimeters = function(val, delims) {
+	var ret = [];
+	var i, j, count = 0, idx = 0;
+	
+	for (i = 0; i < val.length; i++) {
+		for (j = 0; j < delims.length; j++) {
+			if (val[i] == delims[j])
+				break;
+		}
+		
+		if (j < delims.length) {
+			if (i == idx + 1)
+				idx++;
+			else {
+				ret[count++] = val.substr(idx, i - idx);
+				idx = i + 1;
+			}
+		}
+	}
+	
+	if (idx < val.length - 1) {
+		ret[count++] = val.substr(idx, i - idx);
+	}
+	
+	return ret;
 }
