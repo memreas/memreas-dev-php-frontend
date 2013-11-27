@@ -2,6 +2,9 @@
 <script src="/memreas/js/jquery.js"></script>
 <script type='text/javascript' src="/memreas/ajax-s3/files/uploadify/swfobject.js"></script>
 <script type='text/javascript' src="/memreas/ajax-s3/files/uploadify/jquery.uploadify.v2.1.4.min.js"></script>
+<script type="text/javascript" src="/memreas/js/jquery.xml2json.js"></script>
+<script type="text/javascript" src="/memreas/js/ajax.js"></script>
+<script type="text/javascript" src="/memreas/js/syncing.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
         $("#file_upload").uploadify({
@@ -18,7 +21,7 @@
                 "policy"                    : "<?php echo $this->data['policy']; ?>",
                 "signature"                    : "<?php echo $this->data['signature']; ?>",
                 "success_action_status"        : "201",
-                "key"                        : encodeURIComponent(encodeURIComponent("<?= $this->data['folder']; ?>${filename}")),
+                "key"                         :  encodeURIComponent(encodeURIComponent('<?php echo $this->data['folder']; ?>' + "${filename}")),
                 "fileext"                    : encodeURIComponent(encodeURIComponent("")),
                 "Filename"                    : encodeURIComponent(encodeURIComponent(""))
             },
@@ -26,22 +29,64 @@
             'fileDataName'     : 'file',
             'simUploadLimit': 2,
             'multi'            : true,
-            'auto'            : true,
+            'auto'            : true,           
             'onError'         : function(errorObj, q, f, err) { console.log(err); },
             'onComplete'    : function(event, ID, file, response, data) {
-                console.log(file);
+                console.log(file);                
                 var _image_type = 'jpg jpeg png gif bmp';
                 var _response_type = file.type;
-                _response_type = _response_type.replace (".", "");
-                if (_image_type.indexOf(_response_type) > -1)
+                _response_type = _response_type.replace (".", "");   
+                 var target_folder = '<?php echo $this->data['folder']; ?>';             
+                /*
+                if (_image_type.indexOf(_response_type) > -1){
                     _file_type = "image/" + _response_type;
-                else _file_type = "image/jpg"; // <=  Correct this
-                $.post("/index/addmedia", {imageurl:"<?php echo $this->data['folder']; ?>" + file.name, filetype:_file_type, filename:file.name}, function(response){
-                    if (response == "Success")
-                        alert ("Media added success");
-                    else alert ("error while adding media");
-                });
-            }
+                    var target_folder = '<?php echo $this->data['folder']; ?>/image/';
+                }
+                else{
+                    _file_type = "image/jpg"; // <=  Correct this         
+                    var target_folder = '<?php echo $this->data['folder']; ?>/media/';       
+                } 
+                */
+                var addmedia_xmlstring = new Array();                 
+                //Init params for request
+                addmedia_xmlstring[0] = new Array();
+                addmedia_xmlstring[0]['tag'] = 's3url';
+                addmedia_xmlstring[0]['value'] = target_folder + file.name;     
+                           
+                addmedia_xmlstring[1] = new Array();
+                addmedia_xmlstring[1]['tag'] = 'is_server_image';                
+                addmedia_xmlstring[1]['value'] = 0; 
+                
+                addmedia_xmlstring[2] = new Array();               
+                addmedia_xmlstring[2]['tag'] = 'content_type';
+                addmedia_xmlstring[2]['value'] = _file_type;
+                
+                addmedia_xmlstring[3] = new Array();
+                addmedia_xmlstring[3]['tag'] = 's3file_name';
+                addmedia_xmlstring[3]['value'] = file.name;
+                
+                addmedia_xmlstring[4] = new Array();
+                addmedia_xmlstring[4]['tag'] = 'device_id';
+                addmedia_xmlstring[4]['value'] = '';
+                
+                addmedia_xmlstring[5] = new Array();
+                addmedia_xmlstring[5]['tag'] = 'event_id';
+                addmedia_xmlstring[5]['value'] = '';
+                
+                addmedia_xmlstring[6] = new Array();
+                addmedia_xmlstring[6]['tag'] = 'media_id';
+                addmedia_xmlstring[6]['value'] = '';
+                
+                addmedia_xmlstring[7] = new Array();
+                addmedia_xmlstring[7]['tag'] = 'user_id';
+                addmedia_xmlstring[7]['value'] = '<?php echo $this->data['user_id']; ?>';
+                
+                addmedia_xmlstring[8] = new Array();
+                addmedia_xmlstring[8]['tag'] = 'is_profile_pic';
+                addmedia_xmlstring[8]['value'] = 0;                                
+                var xml_request = getXMLStringFromParamArray('addmediaevent', addmedia_xmlstring);                
+                ajaxRequest ('addmediaevent', addmedia_xmlstring, success_addmedia, error_addmedia);                
+            }               
         });
     });
 </script>

@@ -28,6 +28,7 @@ ajaxRequest = function (action, params, success_func, error_func) {
 	  	dataType: 'jsonp',
 	  	data: 'json=' + json_data,
 	  	success: function(ret_xml) {
+            alert (ret_xml);
 			if (typeof success_func != "undefined")
 				success_func(ret_xml);
 		   	$('#loadingpopup').hide();
@@ -66,6 +67,15 @@ getXMLStringFromParamArray = function(action, params) {
 			action_tag = "creategroup";
 			break;
 			
+        /* Action coded by Tran Tuan - For develop only DELETE THIS COMMENT WHEN GO LIVE */                
+        case "addmediaevent":
+            action_tag = "addmediaevent";
+            break;
+            
+		case "deletephoto":	
+            action_tag = "deletephoto";
+            break;
+            
 		default:
 			break;
 	}

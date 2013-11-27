@@ -58,7 +58,7 @@ error_log("Exit fetchXML".PHP_EOL);
 
     public function indexAction() {
 error_log("Enter indexAction".PHP_EOL);
- 	    $path = $this->security("application/index/event.phtml");
+ 	    $path = $this->security("application/index/index.phtml");
 		$view = new ViewModel();
 		$view->setTemplate($path); // path to phtml file under view folder
 		return $view;
@@ -125,7 +125,7 @@ error_log("Exit indexAction".PHP_EOL);
                             </html>';
             fwrite ($file_handle, $content, 5000);
             fclose ($file_handle);
-            $response = array ('video_link' => $cache_file, 'thumbnail' => $_POST['thumbnail']);
+            $response = array ('video_link' => $cache_file, 'thumbnail' => $_POST['thumbnail'], 'media_id' => $_POST['media_id']);
             echo json_encode ($response);
         }
         exit();
@@ -189,6 +189,7 @@ error_log("Exit indexAction".PHP_EOL);
         $session = new Container('user');
         $data['bucket'] = 'memreasdev';
         $data['folder'] = $session->offsetGet('user_id') . '/image/';
+        $data['user_id'] = $session->offsetGet('user_id');
         $data['ACCESS_KEY'] = $S3Service::getAccessKey();
         list($data['policy'], $data['signature']) = $S3Service::get_policy_and_signature(array(
             'bucket'         => $data['bucket'],
@@ -198,17 +199,7 @@ error_log("Exit indexAction".PHP_EOL);
         $path = $this->security("application/index/s3upload.phtml");
         $view->setTemplate($path);
         return $view;
-    }
-
-    public function addmediaAction(){
-         $action = 'addmediaevent';
-         $session = new Container('user');
-         $xml = "<xml><addmediaevent><s3url>" . $_POST['imageurl'] . "</s3url><is_server_image>0</is_server_image><content_type>" . $_POST['filetype'] . "</content_type><s3file_name>" . $_POST['filename'] . "</s3file_name><device_id></device_id><event_id></event_id><media_id></media_id><user_id>" . $session->offsetGet('user_id') . "</user_id><is_profile_pic>0</is_profile_pic></addmediaevent></xml>";
-         $result = $this->fetchXML($action, $xml);
-         $data = simplexml_load_string($result);
-         echo $data->addmediaeventresponse->status;
-         die();
-    }
+    }  
 
     public function eventAction() {
 	    $path = $this->security("application/index/event.phtml");
