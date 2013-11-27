@@ -29,24 +29,15 @@
             'fileDataName'     : 'file',
             'simUploadLimit': 2,
             'multi'            : true,
-            'auto'            : true,
-            /*'onSelect'        : function(file){
-               console.log(file);
-                var video_type = 'wmv mp4 avi';
-                var file_type = file.type;
-                file_type = file_type.replace (".", "");
-                
-                if (video_type.indexOf(file_type) > 0)
-                    var target_folder = '<?php echo $this->data['folder']; ?>/media/';
-                else var target_folder = '<?php echo $this->data['folder']; ?>/image/';
-                $("#file_upload").uploadify('settings','key',encodeURIComponent(encodeURIComponent(target_folder + "${filename}")));                
-            },      */           
+            'auto'            : true,           
             'onError'         : function(errorObj, q, f, err) { console.log(err); },
             'onComplete'    : function(event, ID, file, response, data) {
                 console.log(file);                
                 var _image_type = 'jpg jpeg png gif bmp';
                 var _response_type = file.type;
-                _response_type = _response_type.replace (".", "");                
+                _response_type = _response_type.replace (".", "");   
+                 var target_folder = '<?php echo $this->data['folder']; ?>';             
+                /*
                 if (_image_type.indexOf(_response_type) > -1){
                     _file_type = "image/" + _response_type;
                     var target_folder = '<?php echo $this->data['folder']; ?>/image/';
@@ -55,6 +46,7 @@
                     _file_type = "image/jpg"; // <=  Correct this         
                     var target_folder = '<?php echo $this->data['folder']; ?>/media/';       
                 } 
+                */
                 var addmedia_xmlstring = new Array();                 
                 //Init params for request
                 addmedia_xmlstring[0] = new Array();
@@ -94,7 +86,7 @@
                 addmedia_xmlstring[8]['value'] = 0;                                
                 var xml_request = getXMLStringFromParamArray('addmediaevent', addmedia_xmlstring);                
                 ajaxRequest ('addmediaevent', addmedia_xmlstring, success_addmedia, error_addmedia);                
-            }
+            }               
         });
     });
 </script>

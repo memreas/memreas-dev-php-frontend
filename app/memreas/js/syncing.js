@@ -30,3 +30,34 @@ function success_addmedia(response){
     else alert ("error while adding media");
 }
 function error_addmedia(){}
+
+/*function for sync tab image */
+function imageChoosed(media_id){    
+    if (jQuery("a#" + media_id + " img").hasClass ('setchoosed')){        
+        jQuery("a#" + media_id + " img").removeClass ('setchoosed');
+    }
+    else jQuery("a#" + media_id + " img").addClass ('setchoosed');
+    return false;
+}
+
+function deleteFiles(){
+    var confirm_box = confirm ("Are you sure want to delete them?");
+    if (confirm_box){
+        $(".sync-content img").each(function(){
+           if ($(this).hasClass("setchoosed")){
+               var media_id = $(this).parent("a").attr ("id");               
+               var xml_data = new Array();
+               xml_data[0] = new Array();
+               xml_data[0]['tag'] = 'mediaid';               
+               xml_data[0]['value'] = media_id.trim();               
+               var xml_request = getXMLStringFromParamArray('deletephoto', xml_data);       
+               $("body").append(xml_request); return;
+               ajaxRequest ('deletephoto', xml_request, success_deletephoto, error_deletephoto); 
+           }
+        });
+    }
+}
+function success_deletephoto(){     
+     $.fetch_server_media($("input[name=user_id]").val());
+}
+function error_deletephoto(){}
