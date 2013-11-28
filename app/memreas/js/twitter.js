@@ -20,24 +20,28 @@ twitter_getFriendList = function() {
 
 twitter_authorization = function() {
 	var tKBase64 =  btoa(TWITTER_KEY + ":" + TWITTER_SECRETCODE);
-		
-	send = $.ajax({
-		beforeSend: function (xhr, settings) {
-			xhr.withCredentials = true;
-			xhr.setRequestHeader('Authorization', 'Basic ' + tKBase64);
-		},
-		type: "POST",
-		data: { "grant_type" : "client_credentials"},
-		url: 'https://api.twitter.com/oauth2/token',
-		success: function(data) {
-			twitterToken = data.access_token;
-			twitter_getAllFriends();
-		},
-		fail: function(data) {
-			console.log(data);
-			$('#loadingpopup').hide();
-		}
-	});
+	
+	try {
+		send = $.ajax({
+			beforeSend: function (xhr, settings) {
+				xhr.withCredentials = true;
+				xhr.setRequestHeader('Authorization', 'Basic ' + tKBase64);
+			},
+			type: "POST",
+			data: { "grant_type" : "client_credentials"},
+			url: 'https://api.twitter.com/oauth2/token',
+			success: function(data) {
+				twitterToken = data.access_token;
+				twitter_getAllFriends();
+			},
+			fail: function(data) {
+				console.log(data);
+				$('#loadingpopup').hide();
+			}
+		});
+	} catch (e) {
+		$('#loadingpopup').hide();
+	}
 }
 		
 twitter_getAllFriends = function() {

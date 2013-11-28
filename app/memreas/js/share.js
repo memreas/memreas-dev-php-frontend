@@ -369,7 +369,7 @@ share_addFriends = function(info) {
 		friendList = $('#share_friendslist .mCSB_container');
 
 	friendList.empty();
-
+	
 	var i = 0, el;
 
 	for (i = 0; i < info.length; i++) {
