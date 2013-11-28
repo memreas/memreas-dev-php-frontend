@@ -1075,6 +1075,8 @@ ul.share_friends_check_box {
 	float: left;
 	margin: 10px 0px 0px 10px;
 	border: 3px #FFF solid;
+	white-space: nowrap;
+	overflow: hidden;
 }
 .groupname_txtfield {
 	height: 30px !important;
