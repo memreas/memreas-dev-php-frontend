@@ -27,8 +27,7 @@ ajaxRequest = function (action, params, success_func, error_func) {
 	  	url: wsurl,
 	  	dataType: 'jsonp',
 	  	data: 'json=' + json_data,
-	  	success: function(ret_xml) {
-            alert (ret_xml);
+	  	success: function(ret_xml) {            
 			if (typeof success_func != "undefined")
 				success_func(ret_xml);
 		   	$('#loadingpopup').hide();

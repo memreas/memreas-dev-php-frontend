@@ -49,15 +49,14 @@ function deleteFiles(){
                var xml_data = new Array();
                xml_data[0] = new Array();
                xml_data[0]['tag'] = 'mediaid';               
-               xml_data[0]['value'] = media_id.trim();               
-               var xml_request = getXMLStringFromParamArray('deletephoto', xml_data);       
-               $("body").append(xml_request); return;
-               ajaxRequest ('deletephoto', xml_request, success_deletephoto, error_deletephoto); 
+               xml_data[0]['value'] = media_id.trim();                              
+               ajaxRequest ('deletephoto', xml_data, success_deletephoto, error_deletephoto); 
            }
         });
     }
 }
-function success_deletephoto(){     
+function success_deletephoto(ret_xml){     
+     alert ("Successfull delete photo");
      $.fetch_server_media($("input[name=user_id]").val());
 }
 function error_deletephoto(){}
