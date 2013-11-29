@@ -13,7 +13,12 @@ formatDateToDMY = function(date) {
 
 // return the text value within the specified xml tag.
 getValueFromXMLTag = function(xml, tag) {
-	return $(xml).find(tag).text();
+	return $(xml).find(tag)[0].innerHTML;
+}
+
+// return the sub xml array from tag.
+getSubXMLFromTag = function(xml, tag) {
+	return $(xml).find(tag);
 }
 
 // clear the value of the text fields.
