@@ -263,7 +263,7 @@ error_log("Exit indexAction".PHP_EOL);
 		//ZF2 Authenticate
 		if ($data->loginresponse->status == 'success') {
 error_log("Inside loginresponse success...");
-			$this->setSession($username);
+//			$this->setSession($username);
             //Redirect here
 error_log("Inside loginresponse success redirect ---> " . $redirect);
 			return $this->redirect()->toRoute('index', array('action' => $redirect));
