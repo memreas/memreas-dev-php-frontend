@@ -396,12 +396,12 @@ error_log("Inside setSession set user data...");
 
     public function security($path) {
     	//if already login do nothing
-		$session = new Container("user");
-	    if(!$session->offsetExists('user_id')){
-			error_log("Not there so logout");
-	    	$this->logoutAction();
-    	  return "application/index/index.phtml";
-	    }
+		//$session = new Container("user");
+	    //if(!$session->offsetExists('user_id')){
+		//	error_log("Not there so logout");
+	    //	$this->logoutAction();
+    	//  return "application/index/index.phtml";
+	    //}
 		return $path;
         //return $this->redirect()->toRoute('index', array('action' => 'login'));
     }
