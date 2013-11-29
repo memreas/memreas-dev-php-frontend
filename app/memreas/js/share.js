@@ -13,9 +13,13 @@ var location_map = null;
 // geocoder object to get the location address from langtitude and longtitude
 var geocoder = null;
 
-var user_id  = "";		// signed user id
-var event_id = "";		// created event id
-var media_id = "";		// selected media id
+var user_id   = "";				// signed user id
+var event_id  = "";				// created event id
+var media_id  = "";				// selected media id
+var device_id = "";				// current device id
+
+var media_page_index  = 1;		// page index number for media
+var media_limit_count = 200;	// limit count of media
 
 var friendList = null;
 
@@ -24,6 +28,12 @@ share_initObjects = function() {
 	// Initially get the user id.
 	user_id = $('#user_id')[0].getAttribute('val');
 
+	// event function when click "media" tab
+	$('#tabs li:nth-child(2) a').on('click', function() {
+		share_getAllMedia();
+	});
+
+	// event function when click "Friends" tab
 	$('#tabs li:nth-child(3) a').on('click', function() {
 		share_changeSocialType();
 	});
@@ -355,6 +365,91 @@ share_clearMedia = function() {
 	clearTextField('txt_comment');
 }
 
+// get all media from user id and event id.
+share_getAllMedia = function() {
+	var _video_extensions = "mp4 wmv mov";
+
+	// send the request.
+	ajaxRequest(
+		'listallmedia',
+		[
+			{ tag: 'event_id', 				value: event_id },
+			{ tag: 'user_id', 				value: user_id },
+			{ tag: 'device_id', 			value: device_id },
+			{ tag: 'limit', 				value: media_page_index },
+			{ tag: 'page', 					value: media_limit_count }
+		],
+		function(ret_xml) {
+			// parse the returned xml.
+			var status   = getValueFromXMLTag(ret_xml, 'status');
+			
+			if (status.toLowerCase() == 'success') {
+				var i, j;
+				var medias  = getSubXMLFromTag(ret_xml, 'medias');
+				
+				for (i = 0; i < medias.length; i++) {
+					var arr_media = getSubXMLFromTag(medias[i], 'media');
+					
+					for (j = 0; j < arr_media.length; j++) {
+						var _media_url = getValueFromXMLTag(arr_media[j], 'main_media_url');
+						var _media_extension = _media_url.substr(_media_url.length - 3);
+						var _media_id = getSubXMLFromTag(arr_media[j], 'media_id');
+						
+						_media_extension = _media_extension.toLowerCase();
+						
+						//Build video thumbnail
+						var _found = _video_extensions.indexOf (_media_extension);
+						if (_found > -1){
+							$.post(
+								'/index/buildvideocache', 
+								{
+									video_url:	_media_url,
+									thumbnail:	getSubXMLFromTag(arr_media[j], 'event_media_video_thum'),
+									media_id:	_media_id
+								},
+								function(response_data) {
+									response_data = JSON.parse(response_data);
+									$(".user-resources").append(
+										'<a data-video="true" href="/memreas/js/jwplayer/jwplayer_cache/' + 
+										response_data.video_link + 
+										'"><img src="' + 
+										response_data.thumbnail + 
+										'"/></a>'
+									);
+									$(".scrollClass .mCSB_container, .sync-content .scrollClass").append (
+										'<li><a class="swipebox" id="' + 
+										response_data.media_id + 
+										'" onclick="return imageChoosed(this.id);" href="' + 
+										response_data.thumbnail + 
+										'"><img src="' + 
+										response_data.thumbnail + 
+										'"/></a></li>'
+									);
+								}
+							);
+						}
+						else {
+							$(".user-resources").append('<img src="' + _media_url + '"/>');
+							$(".scrollClass .mCSB_container, .sync-content .scrollClass").append (
+								'<li><a class="image-sync swipebox" id="' + 
+								_media_id + 
+								'" onclick="return imageChoosed(this.id);" href="' + 
+								_media_url + 
+								'"><img src="' + 
+								_media_url + 
+								'"/></a></li>'
+							);
+						}
+					}
+				}
+			}
+			else {
+				alert(message);
+			}
+		}
+	);
+}
+
 // clear the friend list.
 share_clearFriendsList = function() {
 	if (friendList == null)
@@ -387,8 +482,6 @@ share_addFriends = function(info) {
 	for (i = 0; i < imgList.length; i++) {
 		$(imgList[i]).prop('src', info[i].photo);
 	}
-	
-	$('#loadingpopup').hide();
 }
 
 // make the group with selected friends and e-mail list.
