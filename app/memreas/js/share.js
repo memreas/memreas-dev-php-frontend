@@ -376,75 +376,33 @@ share_getAllMedia = function() {
 			{ tag: 'event_id', 				value: event_id },
 			{ tag: 'user_id', 				value: user_id },
 			{ tag: 'device_id', 			value: device_id },
-			{ tag: 'limit', 				value: media_page_index },
-			{ tag: 'page', 					value: media_limit_count }
+			{ tag: 'limit', 				value: media_limit_count },
+			{ tag: 'page', 					value: media_page_index }
 		],
-		function(ret_xml) {
-			// parse the returned xml.
-			var status   = getValueFromXMLTag(ret_xml, 'status');
-			
-			if (status.toLowerCase() == 'success') {
-				var i, j;
-				var medias  = getSubXMLFromTag(ret_xml, 'medias');
-				
-				for (i = 0; i < medias.length; i++) {
-					var arr_media = getSubXMLFromTag(medias[i], 'media');
-					
-					for (j = 0; j < arr_media.length; j++) {
-						var _media_url = getValueFromXMLTag(arr_media[j], 'main_media_url');
-						var _media_extension = _media_url.substr(_media_url.length - 3);
-						var _media_id = getSubXMLFromTag(arr_media[j], 'media_id');
-						
-						_media_extension = _media_extension.toLowerCase();
-						
-						//Build video thumbnail
-						var _found = _video_extensions.indexOf (_media_extension);
-						if (_found > -1){
-							$.post(
-								'/index/buildvideocache', 
-								{
-									video_url:	_media_url,
-									thumbnail:	getSubXMLFromTag(arr_media[j], 'event_media_video_thum'),
-									media_id:	_media_id
-								},
-								function(response_data) {
-									response_data = JSON.parse(response_data);
-									$(".user-resources").append(
-										'<a data-video="true" href="/memreas/js/jwplayer/jwplayer_cache/' + 
-										response_data.video_link + 
-										'"><img src="' + 
-										response_data.thumbnail + 
-										'"/></a>'
-									);
-									$(".scrollClass .mCSB_container, .sync-content .scrollClass").append (
-										'<li><a class="swipebox" id="' + 
-										response_data.media_id + 
-										'" onclick="return imageChoosed(this.id);" href="' + 
-										response_data.thumbnail + 
-										'"><img src="' + 
-										response_data.thumbnail + 
-										'"/></a></li>'
-									);
-								}
-							);
-						}
-						else {
-							$(".user-resources").append('<img src="' + _media_url + '"/>');
-							$(".scrollClass .mCSB_container, .sync-content .scrollClass").append (
-								'<li><a class="image-sync swipebox" id="' + 
-								_media_id + 
-								'" onclick="return imageChoosed(this.id);" href="' + 
-								_media_url + 
-								'"><img src="' + 
-								_media_url + 
-								'"/></a></li>'
-							);
-						}
+		function(json) {
+			json = $.xml2json(json, true);
+			if (json.listallmediaresponse[0].medias[0].status[0].text == "Success") {
+			  	var data = json.listallmediaresponse[0].medias[0].media;
+			  	var mediaList = $("#share_medialist .mCSB_container");
+			  	mediaList.html('');
+			  	for (var json_key in data) {
+				 	var _media_url = data[json_key].main_media_url[0].text;
+				 	var _media_extension = _media_url.substr(_media_url.length - 3);
+				 	_media_extension = _media_extension.toLowerCase();
+					//Build video thumbnail
+					var _found = _video_extensions.indexOf (_media_extension);
+					if (_found > -1) {
+						$.post('/index/buildvideocache', {video_url:_media_url, thumbnail:data[json_key].event_media_video_thum[0].text, media_id:data[json_key].media_id[0].text}, function(response_data){
+							response_data = JSON.parse(response_data);
+							mediaList.append ('<li><a class="swipebox" id="' + response_data.media_id + '" onclick="return imageChoosed(this.id);" href="' + response_data.thumbnail + '"><img src="' + response_data.thumbnail + '"/></a></li>');
+						});
 					}
-				}
-			}
-			else {
-				alert(message);
+					else {
+						mediaList.append ('<li><a class="image-sync swipebox" id="' + data[json_key].media_id[0].text + '" onclick="return imageChoosed(this.id);" href="' + _media_url + '"><img src="' + _media_url + '"/></a></li>');
+					}
+			  	}
+			  	
+			  	//setTimeout(function(){ $(".user-resources").fotorama(); $(".preload-server").hide(); }, 1000);
 			}
 		}
 	);

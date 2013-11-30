@@ -75,6 +75,9 @@ getXMLStringFromParamArray = function(action, params) {
             action_tag = "deletephoto";
             break;
             
+        case "listallmedia":
+        	action_tag = "listallmedia";
+            
 		default:
 			break;
 	}
