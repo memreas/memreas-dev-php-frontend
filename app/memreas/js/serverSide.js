@@ -53,7 +53,14 @@ jQuery.fetch_server_media = function (user_id){
                     $(".scrollClass .mCSB_container, .sync-content .scrollClass").append ('<li><a class="image-sync swipebox" id="' + data[json_key].media_id[0].text + '" onclick="return imageChoosed(this.id);" href="' + _media_url + '"><img src="' + _media_url + '"/></a></li>');
                 }
               }
-              setTimeout(function(){ $(".user-resources").fotorama(); $(".preload-server").hide(); }, 1000);
+              setTimeout(function(){ 
+                  $(".user-resources").fotorama(); $(".preload-server").hide(); 
+                  $("ul.scrollClass").mCustomScrollbar({
+                        scrollButtons:{
+                            enable:true
+                        }
+                    });
+              }, 1000);
           }
           return true;
       },
