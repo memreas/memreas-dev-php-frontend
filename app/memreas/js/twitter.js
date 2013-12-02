@@ -70,13 +70,19 @@ twitter_getAllFriends = function() {
 						//url: 'https://api.twitter.com/1.1/search/tweets.json',
 						url: appourl,
 						success: function(friend_data) {
-							tw_friendsInfo[tw_friendIndex++] = {
+							tw_friendsInfo[tw_friendIndex] = {
 								'id': 		friend_data[0].id,
+								'div_id':	'tw_' + tw_friendIndex,
 								'name': 	friend_data[0].name,
-								'photo': 	friend_data[0].profile_image_url_https
+								'photo': 	friend_data[0].profile_image_url_https,
+								'selected':	false
 							}
-							if (tw_friendIndex >= tw_friendCount)
+							
+							tw_friendIndex++;
+							if (tw_friendIndex >= tw_friendCount) {
 								share_addFriends(tw_friendsInfo);
+								$('#loadingpopup').hide();
+							}
 						}
 					});
 				}

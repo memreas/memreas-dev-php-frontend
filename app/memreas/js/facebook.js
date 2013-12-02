@@ -48,8 +48,10 @@ facebook_getFriendList = function() {
 				for (i = 0; i < info.length; i++) {
 					fb_friendsInfo[i] = {
 						'id': 		info[i].id,
+						'div_id':	'fb_' + i,
 						'name': 	info[i].name,
-						'photo': 	'https://graph.facebook.com/' + info[i].id + '/picture'
+						'photo': 	'https://graph.facebook.com/' + info[i].id + '/picture',
+						'selected':	false
 					}
 				}
 				

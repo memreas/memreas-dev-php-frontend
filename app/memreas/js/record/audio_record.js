@@ -18,9 +18,6 @@ var audioInput = null,
     realAudioInput = null,
     inputPoint = null,
     audioRecorder = null;
-var rafID = null;
-var analyserContext = null;
-var canvasWidth, canvasHeight;
 var recIndex = 0;
 
 /* TODO:
@@ -62,10 +59,11 @@ function ar_convertToMono( input ) {
     input.connect( splitter );
     splitter.connect( merger, 0, 0 );
     splitter.connect( merger, 0, 1 );
+    
     return merger;
 }
 
-function toggleMono() {
+function ar_changeAudioFormat() {
     if (audioInput != realAudioInput) {
         audioInput.disconnect();
         realAudioInput.disconnect();
@@ -98,10 +96,9 @@ function ar_gotStream(stream) {
     zeroGain.gain.value = 0.0;
     inputPoint.connect( zeroGain );
     zeroGain.connect( audioContext.destination );
-    updateAnalysers();
 }
 
-function initAudio() {
+function ar_initAudio() {
 	if (!navigator.getUserMedia)
 		navigator.getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 	if (!navigator.cancelAnimationFrame)

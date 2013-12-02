@@ -5,6 +5,7 @@
 
 //var base_url = 'http://memreasdev.elasticbeanstalk.com/eventapp_zend2.1/webservices/index.php?';
 var wsurl = 'http://memreas-dev-php-frontend.localhost/index/sampleAjax';
+var xml_str = "";
 
 //////////////////////////////////
 // Input xml and fetch output xml
@@ -47,7 +48,8 @@ ajaxRequest = function (action, params, success_func, error_func) {
 getXMLStringFromParamArray = function(action, params) {
 	var i = 0;
 	var action_tag = "";
-	var xml_str = "<xml>";
+	
+	xml_str = "<xml>";
 
 	switch (action) {
 		case "checkusername":
@@ -84,11 +86,7 @@ getXMLStringFromParamArray = function(action, params) {
 	
 	xml_str += "<" + action_tag + ">";
 	
-	for (i = 0; i < params.length; i++) {
-		xml_str += "<" + params[i]['tag'] + ">";
-		xml_str += params[i]['value'];
-		xml_str += "</" + params[i]['tag'] + ">";
-	}
+	getSubXMLStringFromParamArray(params);
 	
 	xml_str += "</" + action_tag + ">";
 	
@@ -96,6 +94,22 @@ getXMLStringFromParamArray = function(action, params) {
 	//console.log(xml_str);
 	
 	return xml_str;
+}
+
+getSubXMLStringFromParamArray = function(params) {
+	if (typeof params.length == "undefined")
+		return;
+
+	for (var i = 0; i < params.length; i++) {
+		xml_str += "<" + params[i]['tag'] + ">";
+		var val = params[i]['value'];
+		if (typeof val != "string" && typeof val.length != "undefined") {
+			getSubXMLStringFromParamArray(val);
+		}
+		else
+			xml_str += val;
+		xml_str += "</" + params[i]['tag'] + ">";
+	}
 }
 
 
