@@ -13,9 +13,9 @@ var location_map = null;
 // geocoder object to get the location address from langtitude and longtitude
 var geocoder = null;
 
-var user_id   = "";				// signed user id
+var user_id   = "4b2c6d4c-42a7-11e3-85d4-22000a8a1935";				// signed user id
 var event_id  = "";				// created event id
-var media_id  = "";				// selected media id
+var media_ids = [];				// array of selected media id
 var device_id = "";				// current device id
 
 var media_page_index  = 1;		// page index number for media
@@ -26,7 +26,7 @@ var friendList = null;
 // initialize the share page objects.
 share_initObjects = function() {
 	// Initially get the user id.
-	user_id = $('#user_id')[0].getAttribute('val');
+	//user_id = $('#user_id')[0].getAttribute('val');
 
 	// event function when click "media" tab
 	$('#tabs li:nth-child(2) a').on('click', function() {
@@ -41,6 +41,8 @@ share_initObjects = function() {
 	$("#cmb_socialtype").change(function(e) {
 		share_changeSocialType();
     });
+    
+    ar_initAudio();
 }
 
 // initialize the akordeon.
@@ -331,38 +333,97 @@ share_gotoPage = function(tab_no) {
 
 // add the comment to Media when click "next" button on the Media Page.
 share_addComment = function() {
-	var comments 	= getElementValue('txt_comment');
-	audio_media_id	= "";
+	ar_stop();
+	//ar_saveAudio();
 
-	// send the request.
-	ajaxRequest(
-		'addcomments',
-		[
-			{ tag: 'event_id', 				value: event_id },
-			{ tag: 'media_id', 				value: media_id },
-			{ tag: 'user_id', 				value: user_id },
-			{ tag: 'comments', 				value: comments },
-			{ tag: 'audio_media_id', 		value: audio_media_id }
-		],
-		function(ret_xml) {
-			// parse the returned xml.
-			var status   = getValueFromXMLTag(ret_xml, 'status');
-			var message  = getValueFromXMLTag(ret_xml, 'message');
-			
-			if (status.toLowerCase() == 'success') {
-				alert('comments was added successfully.');
-				share_gotoPage(SHAREPAGE_TAB_FRIENDS);
+	share_uploadMedias(function() {
+		var comments 	= getElementValue('txt_comment');
+		var media_id	= "";
+		
+		if (media_ids.length > 0)
+			media_id = media_ids[0];
+		
+		audio_media_id	= "";
+	
+		// send the request.
+		ajaxRequest(
+			'addcomments',
+			[
+				{ tag: 'event_id', 				value: event_id },
+				{ tag: 'media_id', 				value: media_id },
+				{ tag: 'user_id', 				value: user_id },
+				{ tag: 'comments', 				value: comments },
+				{ tag: 'audio_media_id', 		value: audio_media_id }
+			],
+			function(ret_xml) {
+				// parse the returned xml.
+				var status   = getValueFromXMLTag(ret_xml, 'status');
+				var message  = getValueFromXMLTag(ret_xml, 'message');
+				
+				if (status.toLowerCase() == 'success') {
+					alert('comments was added successfully.');
+					share_gotoPage(SHAREPAGE_TAB_FRIENDS);
+				}
+				else {
+					alert(message);
+				}
 			}
-			else {
-				alert(message);
+		);
+	});
+}
+
+share_uploadMedias = function(success) {
+	var count = 0;
+	var selMediaList = $("#share_medialist .mCSB_container li a .setchoosed");
+	
+	for (i = 0; i < selMediaList.length; i++) {
+		var img_url 	 = selMediaList[i].src;
+		var img_filename = img_url.substr(img_url.lastIndexOf("/") + 1)
+	
+		ajaxRequest(
+			'addmediaevent',
+			[
+				{ tag: 's3url', 				value: img_url },
+				{ tag: 'is_server_image', 		value: 0 },
+				{ tag: 'content_type', 			value: 'image/png' },
+				{ tag: 's3file_name', 			value: img_filename },
+				{ tag: 'device_id', 			value: device_id },
+				{ tag: 'event_id', 				value: event_id },
+				{ tag: 'media_id', 				value: '' },
+				{ tag: 'user_id', 				value: user_id },
+				{ tag: 'is_profile_pic', 		value: 0 },
+				{ tag: 'location', 				value: '' }
+			],
+			function(ret_xml) {
+				// parse the returned xml.
+				var status  = getValueFromXMLTag(ret_xml, 'status');
+				var message = getValueFromXMLTag(ret_xml, 'message');
+				var id  	= getValueFromXMLTag(ret_xml, 'media_id');
+				
+				if (status.toLowerCase() == 'success') {
+					media_ids[count++] = id;
+					if (count == selMediaList.length) {
+						if (typeof success != "undefined")
+							success();
+					}
+				}
+				else {
+					console.log(message);
+				}
 			}
-		}
-	);
+		);
+	}
 }
 
 // clear all fields on Media page when click "cancel" button.
 share_clearMedia = function() {
 	clearTextField('txt_comment');
+	
+	var mediaList = $("#share_medialist .mCSB_container li a img");
+	
+	for (i = 0; i < mediaList.length; i++) {
+		$(mediaList[i]).removeClass ('setchoosed');
+	}
 }
 
 // get all media from user id and event id.
@@ -384,7 +445,7 @@ share_getAllMedia = function() {
 			if (json.listallmediaresponse[0].medias[0].status[0].text == "Success") {
 			  	var data = json.listallmediaresponse[0].medias[0].media;
 			  	var mediaList = $("#share_medialist .mCSB_container");
-			  	mediaList.html('');
+			  	mediaList.empty();
 			  	for (var json_key in data) {
 				 	var _media_url = data[json_key].main_media_url[0].text;
 				 	var _media_extension = _media_url.substr(_media_url.length - 3);
@@ -403,6 +464,8 @@ share_getAllMedia = function() {
 			  	}
 			  	
 			  	//setTimeout(function(){ $(".user-resources").fotorama(); $(".preload-server").hide(); }, 1000);
+			  	
+			  	ar_start();
 			}
 		}
 	);
@@ -412,7 +475,7 @@ share_getAllMedia = function() {
 share_clearFriendsList = function() {
 	if (friendList == null)
 		friendList = $('#share_friendslist .mCSB_container');
-		
+	
 	friendList.empty();
 }
 
@@ -428,8 +491,8 @@ share_addFriends = function(info) {
 	for (i = 0; i < info.length; i++) {
 		el = '';
 		el += '<li>';
-		el += '<figure class="pro-pics2"><img src="/memreas/img/profile-pic.jpg" alt=""></figure>';
-		el += '<aside class="pro-pic_names2">' + info[i].name + '</aside>';
+		el += '<figure class="pro-pics2" id="' + info[i].div_id + '" onclick="javascript:share_clickFriends(this.id);"><img src="/memreas/img/profile-pic.jpg" alt="" ' + (info[i].selected ? 'class="setchoosed"' : '') + '></figure>';
+		el += '<aside class="pro-pic_names2" id="a' + info[i].div_id + '" onclick="javascript:share_clickFriends(this.id.substr(1));">' + info[i].name + '</aside>';
 		el += '</li>';
 							
 		friendList.append(el);
@@ -442,20 +505,75 @@ share_addFriends = function(info) {
 	}
 }
 
+share_clickFriends = function(id) {
+	var type = id.substr(0, 2);
+	var idx = parseInt(id.substr(3));
+	
+	if (type == "fb") {
+		fb_friendsInfo[idx].selected = !fb_friendsInfo[idx].selected;
+		if (fb_friendsInfo[idx].selected) {
+			$('#' + id + ' img').addClass('setchoosed');
+		}
+		else {
+			$('#' + id + ' img').removeClass('setchoosed');
+		}
+	}
+	else if (type == "tw") {
+		tw_friendsInfo[idx].selected = !tw_friendsInfo[idx].selected;
+		if (tw_friendsInfo[idx].selected) {
+			$('#' + id + ' img').addClass('setchoosed');
+		}
+		else {
+			$('#' + id + ' img').removeClass('setchoosed');
+		}
+	}
+}
+
 // make the group with selected friends and e-mail list.
 share_makeGroup = function() {
 	var emailList 	= splitByDelimeters(getElementValue('txt_emaillist'), [',', ';']);
 	var groupName	= getElementValue('txt_groupname');
+	var selFriends  = [];
+	var i = 0, count = 0;
+	
+	// get all information of selected friends (facebook and twitter).
+	if (fb_friendsInfo) {
+		for (i = 0; i < fb_friendsInfo.length; i++) {
+			if (fb_friendsInfo[i].selected) {
+				selFriends[count++] = {
+					tag: 'friend',
+					value: [
+								{ tag: 'friend_name', 		value: fb_friendsInfo[i].name },
+								{ tag: 'network_name', 		value: 'facebook' },
+								{ tag: 'profile_pic_url', 	value: fb_friendsInfo[i].photo }
+							]
+				};
+			}
+		}
+	}
+	
+	if (tw_friendsInfo) {
+		for (i = 0; i < tw_friendsInfo.length; i++) {
+			if (tw_friendsInfo[i].selected) {
+				selFriends[count++] = {
+					tag: 'friend',
+					value: [
+								{ tag: 'friend_name', 		value: tw_friendsInfo[i].name },
+								{ tag: 'network_name', 		value: 'twitter' },
+								{ tag: 'profile_pic_url', 	value: tw_friendsInfo[i].photo }
+							]
+				};
+			}
+		}
+	}
 
 	// send the request.
 	ajaxRequest(
 		'creategroup',
 		[
-			{ tag: 'event_id', 				value: event_id },
-			{ tag: 'media_id', 				value: media_id },
-			{ tag: 'user_id', 				value: user_id },
-			{ tag: 'comments', 				value: comments },
-			{ tag: 'audio_media_id', 		value: audio_media_id }
+			{ tag: 'group_name', 	value: groupName },
+			{ tag: 'user_id', 		value: user_id },
+			{ tag: 'friends', 		value: selFriends }
 		],
 		function(ret_xml) {
 			// parse the returned xml.
