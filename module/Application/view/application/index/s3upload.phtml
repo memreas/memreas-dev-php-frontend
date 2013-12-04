@@ -32,11 +32,12 @@
             'auto'            : true,           
             'onError'         : function(errorObj, q, f, err) { console.log(err); },
             'onComplete'    : function(event, ID, file, response, data) {
-                console.log(file);                
+                //console.log(file);                
                 var _image_type = 'jpg jpeg png gif bmp';
                 var _response_type = file.type;
                 _response_type = _response_type.replace (".", "");   
-                 var target_folder = '<?php echo $this->data['folder']; ?>';             
+                 var target_folder = '<?php echo $this->data['folder']; ?>';     
+                _file_type = "image/" + _response_type;        
                 /*
                 if (_image_type.indexOf(_response_type) > -1){
                     _file_type = "image/" + _response_type;
@@ -46,7 +47,7 @@
                     _file_type = "image/jpg"; // <=  Correct this         
                     var target_folder = '<?php echo $this->data['folder']; ?>/media/';       
                 } 
-                */
+                */                
                 var addmedia_xmlstring = new Array();                 
                 //Init params for request
                 addmedia_xmlstring[0] = new Array();
@@ -83,8 +84,7 @@
                 
                 addmedia_xmlstring[8] = new Array();
                 addmedia_xmlstring[8]['tag'] = 'is_profile_pic';
-                addmedia_xmlstring[8]['value'] = 0;                                
-                var xml_request = getXMLStringFromParamArray('addmediaevent', addmedia_xmlstring);                
+                addmedia_xmlstring[8]['value'] = 0;                                                
                 ajaxRequest ('addmediaevent', addmedia_xmlstring, success_addmedia, error_addmedia);                
             }               
         });
