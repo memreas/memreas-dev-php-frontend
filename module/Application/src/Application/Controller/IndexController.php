@@ -200,6 +200,16 @@ error_log("Exit indexAction".PHP_EOL);
         $view->setTemplate($path);
         return $view;
     }  
+    public function addmediaAction(){
+        require_once ($_SERVER['DOCUMENT_ROOT'] . '/memreas/amazon_s3_class.php');        
+        $s3 = new S3('AKIAJMXGGG4BNFS42LZA', 'xQfYNvfT0Ar+Wm/Gc4m6aacPwdT5Ors9YHE/d38H');                
+        $target_path = 'backup/' .$session->offsetGet('user_id') . '/image/' . $_FILES['upl']['name'];        
+        $s3->putBucket('memreasdev', S3::ACL_PUBLIC_READ);
+        if ($s3->putObjectFile($_FILES['upl']['tmp_name'], 'memreasdev', $target_path, S3::ACL_PUBLIC_READ, array(), 'image/jpeg'))
+            echo '{"status":"success"}';
+        else echo '{"status":"error"}';
+        die();
+    }
 
     public function eventAction() {
 	    $path = $this->security("application/index/event.phtml");

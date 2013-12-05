@@ -26,7 +26,9 @@ function success_addmedia(response){
     response = $.xml2json(response, true);
     response = response.addmediaeventresponse[0].status[0].text;
     if (response == "Success")
-        alert ("Media added success");
+        {
+            //alert ("Media added success");
+        }
     else alert ("error while adding media");
 }
 function error_addmedia(){}
@@ -43,6 +45,7 @@ function imageChoosed(media_id){
 function deleteFiles(){
     var confirm_box = confirm ("Are you sure want to delete them?");
     if (confirm_box){
+         $("#loadingpopup").show();
         $(".sync-content img").each(function(){
            if ($(this).hasClass("setchoosed")){
                var media_id = $(this).parent("a").attr ("id");               
@@ -51,12 +54,24 @@ function deleteFiles(){
                xml_data[0]['tag'] = 'mediaid';               
                xml_data[0]['value'] = media_id.trim();                              
                ajaxRequest ('deletephoto', xml_data, success_deletephoto, error_deletephoto); 
-           }
-        });
+           }           
+        });                                                                                    
+        $.fetch_server_media($("input[name=user_id]").val());
     }
 }
 function success_deletephoto(ret_xml){     
-     alert ("Successfull delete photo");
-     $.fetch_server_media($("input[name=user_id]").val());
+     //alert ("Successfull delete photo");     
 }
 function error_deletephoto(){}
+
+jQuery (function(){
+    jQuery ("#btn-upload").click (function(){
+        jQuery(".edit-area").fadeOut(500);
+        jQuery(".upload-container").delay(500).fadeIn(500);
+    });
+    jQuery (".back-edit").click (function(){
+        jQuery(".upload-container").fadeOut(500);
+        jQuery(".edit-area").delay(500).fadeIn(500);    
+    });
+    
+});
