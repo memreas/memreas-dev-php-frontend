@@ -126,6 +126,7 @@ $(document).bgStretcher({
     <input name="username" id="inUserName" class="signup_textfields"type="text" value="User Name" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue; onUserNameFocusOut();" onFocus="if(this.value == 'User Name')this.value = '';"/>
     <input name="password" id="inPassword" type="password" class="signup_textfields" onFocus="if(this.value == 'Password')this.value = '';" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" value="Password"/>
     <input name="verifypassword" id="inVerifyPassword" class="signup_textfields"type="password" value="password" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'password')this.value = '';"/>
+    <input name="invited_by" class="signup_textfields" type="text" value="invited by @person (optional)" onblur="if(!/\S/.test(this.value))this.value=this.defaultValue" onfocus="if(this.value == 'invited by @person (optional)')this.value = '';">
     </li>
     
     <li>

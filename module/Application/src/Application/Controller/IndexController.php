@@ -25,6 +25,7 @@ class IndexController extends AbstractActionController
 
 	//Updated....
 	protected $url = "http://memreasint.elasticbeanstalk.com/";
+    //protected $url = "http://test/";
 	protected $test = "Hope this works!";
     //protected $url = "http://localhost/memreas-dev-php-ws/app/";
     protected $user_id;
@@ -34,20 +35,21 @@ class IndexController extends AbstractActionController
     protected $eventTable;
     protected $mediaTable;
     protected $friendmediaTable;
-
-	public function fetchXML($action, $xml) {
+    
+    public function fetchXML($action, $xml) {
 		$guzzle = new Client();
 
 error_log("Inside fetch XML request url ---> " . $this->url . PHP_EOL);
 error_log("Inside fetch XML request action ---> " . $action . PHP_EOL);
 error_log("Inside fetch XML request XML ---> " . $xml . PHP_EOL);
-		$request = $guzzle->post(
+        $request = $guzzle->post(
 			$this->url,
 			null,
 			array(
 			'action' => $action,
 			//'cache_me' => true,
-    		'xml' => $xml
+    		'xml' => $xml,
+            'PHPSESSID' => empty($_COOKIE[session_name()])?'':$_COOKIE[session_name()],
 	    	)
 		);
 		$response = $request->send();
@@ -170,7 +172,7 @@ error_log("Exit indexAction".PHP_EOL);
 		return $view;
     }
 
-    public function galleryAction() {
+    public function galleryAction() { 
 	    $path = $this->security("application/index/gallery.phtml");
 
 		$action = 'listallmedia';
@@ -273,8 +275,8 @@ error_log("Exit indexAction".PHP_EOL);
 		$result = $this->fetchXML($action, $xml);
 
 		$data = simplexml_load_string($result);
-
-		//ZF2 Authenticate
+        setcookie(session_name(),$data->loginresponse->sid,0,'/');
+ 		//ZF2 Authenticate
 		if ($data->loginresponse->status == 'success') {
 error_log("Inside loginresponse success...");
 //			$this->setSession($username);
@@ -322,10 +324,10 @@ error_log("Inside setSession set user data...");
 		$email = $postData ['email'];
 		$username = $postData ['username'];
 		$password = $postData ['password'];
-
+        $invited_by = $postData ['invited_by'];
 		//Setup the URL and action
 		$action = 'registration';
-		$xml = "<xml><registration><email>$email</email><username>$username</username><password>$password</password></registration></xml>";
+		$xml = "<xml><registration><email>$email</email><username>$username</username><password>$password</password><invited_by>$invited_by</invited_by></registration></xml>";
 		$redirect = 'event';
 
 		//Guzzle the Registration Web Service
