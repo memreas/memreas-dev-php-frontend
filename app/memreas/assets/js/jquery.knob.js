@@ -148,9 +148,9 @@
 
             (!this.o.displayInput) && this.$.hide();
 
-            this.$c = $('<canvas width="' +
+            this.$c = $('<canvas style="display: none;" width="' +
                             this.o.width + 'px" height="' +
-                            this.o.height + 'px"></canvas>');
+                            this.o.height + 'px"></canvas><div class="progress-bar"></div><div class="count-progress"></div>');            
             this.c = this.$c[0].getContext("2d");
 
             this.$

@@ -51,14 +51,17 @@ $(function(){
         progress: function(e, data){
 
             // Calculate the completion percentage of the upload
-            var progress = parseInt(data.loaded / data.total * 100, 10);
+            var progress = parseInt(data.loaded / data.total * 100, 10);            
 
             // Update the hidden input field and trigger a change
             // so that the jQuery knob plugin knows to update the dial
             data.context.find('input').val(progress).change();
+            data.context.find(".progress-bar").css ("width", progress + "%");
+            data.context.find(".count-progress").html (progress + "%");
 
             if(progress == 100){
                 data.context.removeClass('working');
+                data.context.remove('count-progress');                
             }
         },
 

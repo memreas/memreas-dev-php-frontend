@@ -84,8 +84,8 @@
     font-size: 16px;
     font-weight: bold;
     position: absolute;
-    top: 20px;
-    left: 100px;
+    top: 10px;
+    left: 40px;
 }
 
 #upload ul li i{
@@ -106,7 +106,7 @@
     height: 12px;
     background: url('../img/icons.png') no-repeat;
     position: absolute;
-    top: 34px;
+    top: 15px;
     right: 33px;
     cursor:pointer;
 }
