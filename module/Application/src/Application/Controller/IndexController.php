@@ -233,6 +233,13 @@ error_log("Exit indexAction".PHP_EOL);
         //return new ViewModel();
     }
 
+    public function twitterAction() {
+	    $path = $this->security("application/index/twitter.phtml");
+		$view = new ViewModel();
+		$view->setTemplate($path); // path to phtml file under view folder
+		return $view;
+    }
+
     public function shareAction() {
 	    $path = $this->security("application/index/share.phtml");
 		$view = new ViewModel();
