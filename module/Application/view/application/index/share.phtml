@@ -11,6 +11,46 @@ $session = new Container('user');
 $user_id = $session->offsetGet('user_id');
 $domain = "http://d1ckv7o9k6o3x9.cloudfront.net/";
 
+/*
+require_once ('twitter/twitteroauth.php');
+$twitterApi = array(
+					'consumer_key' => 'FzkX9QVI897wluot4Wxtow',
+					'consumer_secret' => 'VgvumJUyHwJSAhoO0rXecTVq0a4ebrmDprc6fHYnSw'
+					);
+//Denied Permittion
+if (isset ($_GET['denied'])){
+	header('Location: /');
+	die();
+}
+if (isset ($_GET['oauth_token'])&& isset ($_GET['oauth_verifier'])){
+	$_oauth_token = $this->session->userdata ('oauth_token');
+	$_oauth_token_secret = $this->session->userdata ('oauth_token_secret');
+	$twitterAuth = new TwitterOAuth ($twitterApi['consumer_key'], $twitterApi['consumer_secret'], $_oauth_token, $_oauth_token_secret);
+	$access_token = $twitterAuth->getAccessToken ($_GET['oauth_verifier']);
+	//$this->session->set_userdata ('access_token', $access_token);
+	$user_info = $twitterAuth->get('account/verify_credentials');            
+	if (isset($user_info->errors)){
+		header('Location: /');
+	}
+	else{
+		$twitter = array('uname' => $user_info->name, 'login_name' => $user_info->screen_name);            
+		$this->session->set_userdata ('twitter', $twitter);
+		redirect ("/?register=twitter");
+	}
+}
+else {
+	$twitterAuth = new TwitterOAuth ($twitterApi['consumer_key'], $twitterApi['consumer_secret']);
+	$twitterToken = $twitterAuth->getRequestToken('http://local.fundfone.com/users/twittersauth');
+
+	//$this->session->set_userdata ('oauth_token', $twitterToken['oauth_token']);
+	//$this->session->set_userdata ('oauth_token_secret', $twitterToken['oauth_token_secret']);
+
+	if($twitterAuth->http_code==200){
+		$url = $twitterAuth->getAuthorizeURL($twitterToken['oauth_token']);
+		header('Location: '. $url);
+	}
+}
+*/
 ?>
 
 <!doctype html>
@@ -46,6 +86,7 @@ $domain = "http://d1ckv7o9k6o3x9.cloudfront.net/";
 <!--Social Library-->
 <script src="http://connect.facebook.net/en_US/all.js"></script>
 <script src="/memreas/js/facebook.js"></script>
+<script src="/memreas/js/jquery.oauthpopup.js"></script>
 <script src="/memreas/js/twitter.js"></script>
 
 <!--Backgound Strecher-->
