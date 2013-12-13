@@ -59,5 +59,4 @@ class S3Service extends AbstractHelper{
         ));
     }
 }
-
 ?>

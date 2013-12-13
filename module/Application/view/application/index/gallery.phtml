@@ -86,114 +86,374 @@ $(document).ready(function(){
   <?php include 'header.phtml'; ?>
   <!-- Begin : Content -->
       <div class="row-fluid content" style="background: #185EB3;">
-      <div class="span1">
+      <div class="span1" id="main-tab">
           <!-- Begin : Nav -->
           <nav>
           <ul>
-            <li><a href="#" class="active"><img src="/memreas/img/gallery.png" alt=""></a></li>
-            <li><a href="#"><img src="/memreas/img/queue.png" alt=""></a></li>
-            <li><a href="#"><img src="/memreas/img/share.png" alt=""></a></li>
-            <li><a href="#"><img src="/memreas/img/memreas.png" alt=""></a></li>
-            <li><a href="#"><img src="/memreas/img/more.png" alt=""></a></li>
+            <li><a href="/index/gallery" class="active" title="gallery" onclick="return false;"><img src="/memreas/img/gallery.png" alt=""></a></li>
+            <li><a href="/index/queue" title="queue" onclick="return false;"><img src="/memreas/img/queue.png" alt=""></a></li>
+            <li><a href="#" title="share"><img src="/memreas/img/share.png" alt=""></a></li>
+            <li><a href="#" title="memreas"><img src="/memreas/img/memreas.png" alt=""></a></li>
+            <li><a href="#" title="more"><img src="/memreas/img/more.png" alt=""></a></li>
           </ul>
         </nav>
         <!-- End : Nav -->
       </div>
-      <div class="span11">
-      <div class="span9">
-        <ul id="tabs" class="medium_tabs">
-          <li><a href="#" title="tab1">view</a></li>
-          <li><a href="#" title="tab2">edit</a></li>
-          <li><a href="#" title="tab3">sync</a></li>
-          <li><a href="#" title="tab4">location</a></li>
-        </ul>
-        <div id="tab-content">
-          <div id="tab1" class="hideCls">
-            <input type="hidden" name="current_user_id" value="<?php echo $user_id; ?>">
-            <div class="preload-server">
-                <div class="marks"></div>
-                <div class="choose-details"><img src="/memreas/img/loader.gif" /><br/>Fetching media...</div>
-            </div>
-            <div class="browse-file">
-                <div class="marks"></div>
-                <div class="choose-details"><h3>Choose the location which you want to share</h3>
-                    <input  type="file" id="dir" webkitdirectory="" style="display: none;"/>
-                    <a class="btn-browse-file" href="#" onclick="$('#dir').click();">Browse files</a>
-                </div>
-            </div>
-            <div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/325" data-max-width="100%"  data-allow-full-screen="true"  data-nav="thumbs">
-                 <!-- USER RESOURCES WILL BE LOADED HERE -->
-            </div>
-          </div>
-          <div id="tab2" class="hideCls">
-            <div class="edit-area">
-                <ul id="content_1" class="pics scrollClass">
-                  <h2>edit</h2>
-                  <div class="mCSB_container"></div>                  
+      <div id="maintab-content">
+          <div class="span11 tabcontent-detail" id="gallery">
+              <div class="span9">
+                <ul id="tabs" class="medium_tabs">
+                  <li><a href="#" title="tab1">view</a></li>
+                  <li><a href="#" title="tab2">edit</a></li>
+                  <li><a href="#" title="tab3">sync</a></li>
+                  <li><a href="#" title="tab4">location</a></li>
                 </ul>
-                <div style="clear: both;"></div>
-                <a class="black_btn_skin" href="javascript:deleteFiles();">Delete</a>&nbsp;<a class="black_btn_skin" href="javascript:;" id="btn-upload">Upload</a>              
-            </div>
-            <div class="upload-container">
-                <h3>Upload Media</h3>
-                <p class="description">Please select file(s) or you can drag and drop file here for upload to your account</p>
-                <form id="upload" method="post" action="/index/addmedia" enctype="multipart/form-data">
-                    <div id="drop">
-                        Drop Here
-
-                        <a>Browse</a>
-                        <input type="file" name="upl" multiple />
+                <div id="tab-content">
+                  <div id="tab1" class="hideCls">
+                    <input type="hidden" name="current_user_id" value="<?php echo $user_id; ?>">
+                    <div class="preload-server">
+                        <div class="marks"></div>
+                        <div class="choose-details"><img src="/memreas/img/loader.gif" /><br/>Fetching media...</div>
                     </div>
+                    <div class="browse-file">
+                        <div class="marks"></div>
+                        <div class="choose-details"><h3>Choose the location which you want to share</h3>
+                            <input  type="file" id="dir" webkitdirectory="" style="display: none;"/>
+                            <a class="btn-browse-file" href="#" onclick="$('#dir').click();">Browse files</a>
+                        </div>
+                    </div>
+                    <div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/325" data-max-width="100%"  data-allow-full-screen="true"  data-nav="thumbs">
+                         <!-- USER RESOURCES WILL BE LOADED HERE -->
+                    </div>
+                  </div>
+                  <div id="tab2" class="hideCls">
+                    <div class="edit-area">
+                        <ul id="content_1" class="pics scrollClass">
+                          <h2>edit</h2>
+                          <div class="mCSB_container"></div>                  
+                        </ul>
+                        <div style="clear: both;"></div>
+                        <a class="black_btn_skin" href="javascript:deleteFiles();">Delete</a>&nbsp;<a class="black_btn_skin" href="javascript:;" id="btn-upload">Upload</a>              
+                    </div>
+                    <div class="upload-container">
+                        <h3>Upload Media</h3>
+                        <p class="description">Please select file(s) or you can drag and drop file here for upload to your account</p>
+                        <form id="upload" method="post" action="/index/addmedia" enctype="multipart/form-data">
+                            <div id="drop">
+                                Drop Here
 
-                    <ul>
-                        <!-- The file uploads will be shown here -->
-                    </ul>
+                                <a>Browse</a>
+                                <input type="file" name="upl" multiple />
+                            </div>
 
-                </form>
-                <a class="black_btn_skin back-edit" href="javascript:;">Back</a>
-              </div>
-          </div>
-          <div id="tab3" class="hideCls">
-            <div class="sync-content">
-                <ul class="pics sync scrollClass">
-                </ul>
-                <div class="upload"></div>
-            </div>
-            <div class="upload-media"> <a class="black_btn_skin" href="javascript:;">Back</a> <a class="black_btn_skin" href="javascript:;" id="btn-upload">Upload</a></div>
-          </div>
-          <div id="tab4" class="hideCls">
-              <div class="map">
-                <iframe width="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.co.in/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=Canada,+KY,+USA&amp;aq=0&amp;oq=Canada,&amp;sll=35.101934,-94.570312&amp;sspn=38.075006,86.572266&amp;t=h&amp;ie=UTF8&amp;hq=&amp;hnear=Canada,+Pike,+Kentucky,+United+States&amp;ll=41.934977,-81.738281&amp;spn=11.438126,18.720703&amp;z=5&amp;iwloc=A&amp;output=embed"></iframe>
-              </div>
-          </div>
-        </div>
-        <div class="change-location" style="display: none;"><a class="fetch-local" href="#" style="margin-left: 10px;">Change local directory</a><a class="browse-server" href="#">Browse Server</a></div>
-         <!------------------First-pop-up-------------------->
-            <div id="popupplayer" class="video_popups">
-                    <a id="popupplayerClose" onClick="disablePopup('popupplayer')" class='popupClose'>x</a>
-                    <div id="myElement">Loading the player...</div>
-                    <script type="text/javascript">
-                        jwplayer("myElement").setup({
-                            file: "http://www.emc2financial.com/jwplayer/trail.mp4",
-                            image: "/memreas/img/large-pic-1.jpg"
-                        });
-                    </script>
+                            <ul>
+                                <!-- The file uploads will be shown here -->
+                            </ul>
+
+                        </form>
+                        <a class="black_btn_skin back-edit" href="javascript:;">Back</a>&nbsp;
+                        <a class="black_btn_skin start-upload" href="javascript:;">Start</a>
+                      </div>
+                  </div>
+                  <div id="tab3" class="hideCls">
+                    <div class="sync-content">
+                        <ul class="pics sync scrollClass">
+                        </ul>
+                        <div class="upload"></div>
+                    </div>
+                    <div class="upload-media"> <a class="black_btn_skin" href="javascript:;">Back</a> <a class="black_btn_skin" href="javascript:;" id="btn-upload">Upload</a></div>
+                  </div>
+                  <div id="tab4" class="hideCls">
+                      <div class="map">
+                        <iframe width="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.co.in/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=Canada,+KY,+USA&amp;aq=0&amp;oq=Canada,&amp;sll=35.101934,-94.570312&amp;sspn=38.075006,86.572266&amp;t=h&amp;ie=UTF8&amp;hq=&amp;hnear=Canada,+Pike,+Kentucky,+United+States&amp;ll=41.934977,-81.738281&amp;spn=11.438126,18.720703&amp;z=5&amp;iwloc=A&amp;output=embed"></iframe>
+                      </div>
+                  </div>
                 </div>
-                <div id="bgpopupplayer" class="backgroundPopup"></div>
-      </div>
-      <div class="span3">
-          <section id="ad">
-          <div class="adbox">Your <br>Advertisement <br>space </div>
-          <div class="adbox">Your <br>Advertisement <br>space </div>
-          <div class="adbox-port">Your <br>Advertisement <br>space </div>
-          <div class="adbox-port">Your <br>Advertisement <br>space </div>
-        </section>
-      </div>
-      <div class="row-fluid"><div class="ad"><img src="/memreas/img/ad.jpg" alt=""></div></div>
-      <div class="row-fluid">
-          <!-- <input type="local_directory" class="hidden-input" webkitdirectory> -->
-          <!-- <input type="file" id="local_directory" webkitdirectory="" directory=""> -->
-      </div>
+                <div class="change-location" style="display: none;"><a class="fetch-local" href="#" style="margin-left: 10px;">Change local directory</a><a class="browse-server" href="#">Browse Server</a></div>
+                 <!------------------First-pop-up-------------------->
+                    <div id="popupplayer" class="video_popups">
+                            <a id="popupplayerClose" onClick="disablePopup('popupplayer')" class='popupClose'>x</a>
+                            <div id="myElement">Loading the player...</div>
+                            <script type="text/javascript">
+                                jwplayer("myElement").setup({
+                                    file: "http://www.emc2financial.com/jwplayer/trail.mp4",
+                                    image: "/memreas/img/large-pic-1.jpg"
+                                });
+                            </script>
+                        </div>
+                        <div id="bgpopupplayer" class="backgroundPopup"></div>
+              </div>
+              <div class="span3">
+                  <section id="ad">
+                  <div class="adbox">Your <br>Advertisement <br>space </div>
+                  <div class="adbox">Your <br>Advertisement <br>space </div>
+                  <div class="adbox-port">Your <br>Advertisement <br>space </div>
+                  <div class="adbox-port">Your <br>Advertisement <br>space </div>
+                </section>
+              </div>
+              <div class="row-fluid"><div class="ad"><img src="/memreas/img/ad.jpg" alt=""></div></div>
+              <div class="row-fluid">
+                  <!-- <input type="local_directory" class="hidden-input" webkitdirectory> -->
+                  <!-- <input type="file" id="local_directory" webkitdirectory="" directory=""> -->
+              </div>
+          </div>
+          <div class="span11 tabcontent-detail" id="queue" style="display: none;">
+            <div class="span9">
+            <div class="row-fluid">
+                <ul id="tabs-queue">
+                    <li><a href="#" title="upload-queue" class="tabs2">uploads</a></li>
+                    <li><a href="#" title="download" class="tabs2">downloads</a></li>
+                    <li><a href="#" title="complete" class="tabs2">completed</a></li>
+                </ul>
+
+                <div id="tab-content-queue"> 
+                    <div id="upload-queue" class="hideCls">
+                              <ul id="content_1" class="image_upload_box">
+                                  <li class="first-upload"></li>                               
+                              </ul>  
+                          <a class="black_btn_skin f-left" href="#">pause</a>
+                          <a class="black_btn_skin f-center2" href="#">resume</a> 
+                          <a class="black_btn_skin f-right clear-upload" href="#">clear</a>  
+                    </div>
+                    <div id="download" class="hideCls">
+                         <ul id="content_1" class="image_upload_box scrollClass">
+                                  <li>
+                                    <div class="upload_progress" id="table12">
+                                        <div class="upload_progress_img">
+                                            <img src="/memreas/img/pic-1.jpg">
+                                        </div>
+                                        <div class="upload_progress_bar">
+                                            <span>80%</span><div class="progress" style="width:80%;"></div>
+                                        </div>
+                                        <div class="close_progress"><a href="#"  onClick="toggleDiv('table12');"><img src="/memreas/img/close.png" alt=""></a></div>
+                                        <div class="clear"></div>
+                                    </div>
+                                  </li>
+                                  <li>
+                                      <div class="upload_progress" id="table13">
+                                        <div class="upload_progress_img">
+                                            <img src="/memreas/img/pic-1.jpg">
+                                        </div>
+                                        <div class="upload_progress_bar">
+                                            <span>60%</span><div class="progress"></div>
+                                        </div>
+                                        <div class="close_progress"><a href="#"    onClick="toggleDiv('table13');"><img src="/memreas/img/close.png" alt=""></a></div>
+                                        <div class="clear"></div>
+                                    </div>
+                                  </li>
+                                  <li>
+                                      <div class="upload_progress" id="table14">
+                                        <div class="upload_progress_img">
+                                            <img src="/memreas/img/pic-1.jpg">
+                                        </div>
+                                        <div class="upload_progress_bar">
+                                            <span>20%</span><div class="progress" style="width:20%;"></div>
+                                        </div>
+                                        <div class="close_progress"><a href="#"    onClick="toggleDiv('table14');"><img src="/memreas/img/close.png" alt=""></a></div>
+                                        <div class="clear"></div>
+                                    </div>
+                                  </li>
+                                  <li>
+                                      <div class="upload_progress" id="table15">
+                                        <div class="upload_progress_img">
+                                            <img src="/memreas/img/pic-1.jpg">
+                                        </div>
+                                        <div class="upload_progress_bar">
+                                            <span>50%</span><div class="progress" style="width:50%;"></div>
+                                        </div>
+                                        <div class="close_progress"><a href="#"    onClick="toggleDiv('table15');"><img src="/memreas/img/close.png" alt=""></a></div>
+                                        <div class="clear"></div>
+                                    </div>
+                                  </li>
+                                  <li>
+                                      <div class="upload_progress" id="table16">
+                                        <div class="upload_progress_img">
+                                            <img src="/memreas/img/pic-1.jpg">
+                                        </div>
+                                        <div class="upload_progress_bar">
+                                            <span>0%</span><div class="progress" style="width:0%;"></div>
+                                        </div>
+                                        <div class="close_progress"><a href="#"    onClick="toggleDiv('table16');"><img src="/memreas/img/close.png" alt=""></a></div>
+                                        <div class="clear"></div>
+                                    </div>
+                                  </li>
+                                  <li>
+                                      <div class="upload_progress" id="table17">
+                                        <div class="upload_progress_img">
+                                            <img src="/memreas/img/pic-1.jpg">
+                                        </div>
+                                        <div class="upload_progress_bar">
+                                            <span>0%</span><div class="progress" style="width:0%;"></div>
+                                        </div>
+                                        <div class="close_progress"><a href="#"    onClick="toggleDiv('table17');"><img src="/memreas/img/close.png" alt=""></a></div>
+                                        <div class="clear"></div>
+                                    </div>
+                                  </li>
+                                  <li>
+                                      <div class="upload_progress" id="table18">
+                                        <div class="upload_progress_img">
+                                            <img src="/memreas/img/pic-1.jpg">
+                                        </div>
+                                        <div class="upload_progress_bar">
+                                            <span>0%</span><div class="progress" style="width:0%;"></div>
+                                        </div>
+                                        <div class="close_progress"><a href="#"    onClick="toggleDiv('table18');"><img src="/memreas/img/close.png" alt=""></a></div>
+                                        <div class="clear"></div>
+                                    </div>
+                                  </li>
+                                  <li>
+                                      <div class="upload_progress" id="table19">
+                                        <div class="upload_progress_img">
+                                            <img src="/memreas/img/pic-1.jpg">
+                                        </div>
+                                        <div class="upload_progress_bar">
+                                            <span>0%</span><div class="progress" style="width:0%;"></div>
+                                        </div>
+                                        <div class="close_progress"><a href="#"    onClick="toggleDiv('table19');"><img src="/memreas/img/close.png" alt=""></a></div>
+                                        <div class="clear"></div>
+                                    </div>
+                                  </li>
+                                  <li>
+                                      <div class="upload_progress" id="table20">
+                                        <div class="upload_progress_img">
+                                            <img src="/memreas/img/pic-1.jpg">
+                                        </div>
+                                        <div class="upload_progress_bar">
+                                            <span>0%</span><div class="progress" style="width:0%;"></div>
+                                        </div>
+                                        <div class="close_progress"><a href="#"    onClick="toggleDiv('table20');"><img src="/memreas/img/close.png" alt=""></a></div>
+                                        <div class="clear"></div>
+                                    </div>
+                                  </li>
+                                  <li>
+                                      <div class="upload_progress" id="table21">
+                                        <div class="upload_progress_img">
+                                            <img src="/memreas/img/pic-1.jpg">
+                                        </div>
+                                        <div class="upload_progress_bar">
+                                            <span>0%</span><div class="progress" style="width:0%;"></div>
+                                        </div>
+                                        <div class="close_progress"><a href="#"    onClick="toggleDiv('table21');"><img src="/memreas/img/close.png" alt=""></a></div>
+                                        <div class="clear"></div>
+                                    </div>
+                                  </li>
+                                  <li>
+                                      <div class="upload_progress" id="table22">
+                                        <div class="upload_progress_img">
+                                            <img src="/memreas/img/pic-1.jpg">
+                                        </div>
+                                        <div class="upload_progress_bar">
+                                            <span>0%</span><div class="progress" style="width:0%;"></div>
+                                        </div>
+                                        <div class="close_progress"><a href="#"    onClick="toggleDiv('table22');"><img src="/memreas/img/close.png" alt=""></a></div>
+                                        <div class="clear"></div>
+                                    </div>
+                                  </li>
+                                  <li>
+                                      <div class="upload_progress" id="table23">
+                                        <div class="upload_progress_img">
+                                            <img src="/memreas/img/pic-1.jpg">
+                                        </div>
+                                        <div class="upload_progress_bar">
+                                            <span>0%</span><div class="progress" style="width:0%;"></div>
+                                        </div>
+                                        <div class="close_progress"><a href="#"    onClick="toggleDiv('table23');"><img src="/memreas/img/close.png" alt=""></a></div>
+                                        <div class="clear"></div>
+                                    </div>
+                                  </li>
+                              </ul>  
+                          <a class="black_btn_skin f-left" href="#">pause</a>
+                          <a class="black_btn_skin f-center2" href="#">resume</a> 
+                          <a class="black_btn_skin f-right" href="#">clear</a> 
+                    </div>
+                    <div id="complete" class="hideCls">
+                        <ul id="content_1" class="pics scrollClass">
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                                <li><img src="/memreas/img/pic-1.jpg" alt=""></li>
+                              </ul>  
+                          <a class="black_btn_skin f-left" href="#">clear</a>
+                    </div>                    
+                </div>
+                        </div>
+                      </div>
+                      <div class="span3">
+                          <section id="ad">
+                          <div class="adbox">Your <br>Advertisement <br>space </div>
+                          <div class="adbox">Your <br>Advertisement <br>space </div>
+                          <div class="adbox-port">Your <br>Advertisement <br>space </div>
+                          <div class="adbox-port">Your <br>Advertisement <br>space </div>
+                        </section>
+                      </div>
+                      <div class="row-fluid"><div class="ad"><img src="/memreas/img/ad.jpg" alt=""></div></div>
+                      </div>
+                      <script type="text/javascript">
+                        $("#tab-content-queue div.hideCls").hide(); // Initially hide all content
+                        $("#tabs-queue li:first").attr("id","current"); // Activate first tab
+                        $("#tab-content-queue div:first").fadeIn(); // Show first tab content*/
+                        
+                        $('#tabs-queue a').click(function(e) {
+                            
+                            e.preventDefault();        
+                            $("#tab-content-queue div.hideCls").hide(); //Hide all content
+                            $("#tabs-queue li").attr("id",""); //Reset id's
+                            $(this).parent().attr("id","current"); // Activate this
+                            $('#' + $(this).attr('title')).fadeIn(); // Show content for current tab
+                        });
+                      </script>
+          </div>
       </div>
     </div>
   <!-- End : Content -->
@@ -216,11 +476,24 @@ $(document).ready(function(){
                         enable:true
                     }
                 });
+            /*
+            $("#main-tab li:first").attr("id","current"); // Activate first tab
+            $("#maintab-content div:first").fadeIn(); // Show first tab content
 
+            
+            $('#main-tab a').click(function(e) {
+
+                e.preventDefault();
+                $("#maintab-content div.span11").hide(); //Hide all content
+                $('#main-tab a').removeClass ("active");
+                $(this).attr("class","active"); // Activate this
+                $('#' + $(this).attr('title')).fadeIn(); // Show content for current tab
+            });    
+                */
             $("#tab-content div.hideCls").hide(); // Initially hide all content
             $("#tabs li:first").attr("id","current"); // Activate first tab
-            $("#tab-content div:first").fadeIn(); // Show first tab content*/
-
+            $("#tab-content div:first").fadeIn(); // Show first tab content
+            
             $('#tabs a').click(function(e) {
 
                 e.preventDefault();
@@ -229,6 +502,7 @@ $(document).ready(function(){
                 $(this).parent().attr("id","current"); // Activate this
                 $('#' + $(this).attr('title')).fadeIn(); // Show content for current tab
             });
+            
 
 
 

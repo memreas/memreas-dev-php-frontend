@@ -111,5 +111,41 @@ getSubXMLStringFromParamArray = function(params) {
 		xml_str += "</" + params[i]['tag'] + ">";
 	}
 }
+/*)
+$(function(){
+    $("#main-tab ul a").click(function(){        
+        var _maintab_content_element = $(this).attr ("title");        
+        if ($("#" + _maintab_content_element).html() == ""){
+            var _ajax_content_url = $(this).attr ("href");
+            $.ajax({
+               url: _ajax_content_url,
+               type: "GET" ,
+               dataType: 'html',
+               success: function(data){                   
+                  $("#main-tab ul a").removeClass ('active');
+                  $(this).addClass ('active');
+                  var _content = $(data).find(".main-content").html();                  
+                  $("#" + _maintab_content_element).html (_content);                 
+               }
+            });
+        }
+         $(".tabcontent-detail").hide();
+         $("#" + _maintab_content_element).fadeIn(500);
+         return false;
+    });
+});
 
-
+*/
+$(function(){
+    $("#main-tab ul a").click(function(){
+        $("#main-tab ul a").removeClass ("active");
+        $(this).addClass ("active");
+        var _active_tab = $(this).attr ("title");
+        $(".tabcontent-detail").hide();
+        $("#" + _active_tab).fadeIn();
+    });
+    $(".clear-upload").click (function(){
+        $("ul.image_upload_box").html("");
+        $("ul.image_upload_box").html('<li class="first-upload"></li>');        
+    });
+});

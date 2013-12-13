@@ -20,7 +20,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
  color:#FFF;
 }
 ::selection {
-	background: ##185EB3;
+	background: #185EB3;
 	color: #FFF;
 }
 ol, ul {
@@ -785,7 +785,8 @@ a.black_btn_skin:hover, a.black_btn_skin:active {
 
 
 /*****************start memreas-me******************/
-#tabs {
+#tabs,
+#tabs-queue {
 	overflow: hidden;
 	width: 100%;
 	margin: 0;
@@ -793,11 +794,13 @@ a.black_btn_skin:hover, a.black_btn_skin:active {
 	list-style: none;
 	padding-left: 10px;
 }
-#tabs li {
+#tabs li,
+#tabs-queue li{
 	float: left;
 	margin: 0 2em 0 2em;
 }
-#tabs a {
+#tabs a,
+#tabs-queue a {
 	position: relative;
 	background: #3b3b3b;
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#747474), to(#3b3b3b));
@@ -822,7 +825,8 @@ a.black_btn_skin:hover, a.black_btn_skin:active {
 .tabs2 {
 	padding: .5em 3em !important;
 }
-#tabs a:hover, #tabs a:hover::after, #tabs a:focus, #tabs a:focus::after, #tabs a:hover::before {
+#tabs a:hover, #tabs a:hover::after, #tabs a:focus, #tabs a:focus::after, #tabs a:hover::before,
+#tabs-queue a:hover, #tabs-queue a:hover::after, #tabs-queue a:focus, #tabs-queue a:focus::after, #tabs-queue a:hover::before {
 	background: #151515;
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#3a3a3a), to(#151515));
 	background-image: -webkit-linear-gradient(top, #3a3a3a, #151515);
@@ -831,10 +835,12 @@ a.black_btn_skin:hover, a.black_btn_skin:active {
 	background-image: -o-linear-gradient(top, #3a3a3a, #151515);
 	background-image: linear-gradient(to bottom, #3a3a3a, #151515);
 }
-#tabs a:focus {
+#tabs a:focus,
+#tabs-queue a:focus {
 	outline: 0;
 }
-#tabs a::after {
+#tabs a::after,
+#tabs-queue a::after {
 	content: '';
 	position: absolute;
 	z-index: 1;
@@ -861,7 +867,8 @@ a.black_btn_skin:hover, a.black_btn_skin:active {
 	-moz-border-radius: 0 10px 0 0;
 	border-radius: 0 10px 0 0;
 }
-#tabs a::before {
+#tabs a::before,
+#tabs-queue a::before {
 	content: '';
 	position: absolute;
 	z-index: 1;
@@ -888,7 +895,8 @@ a.black_btn_skin:hover, a.black_btn_skin:active {
 	-moz-border-radius: 10px 0 0 0;
 	border-radius: 10px 0 0 0;
 }
-#tabs #current a, #tabs #current a::after, #tabs #current a::before {
+#tabs #current a, #tabs #current a::after, #tabs #current a::before, 
+#tabs-queue #current a, #tabs-queue #current a::after, #tabs-queue #current a::before {
 	background: #151515;
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#3a3a3a), to(#151515));
 	background-image: -webkit-linear-gradient(top, #3a3a3a, #151515);
@@ -900,7 +908,8 @@ a.black_btn_skin:hover, a.black_btn_skin:active {
 }
 /* ------------------------------------------------- */
 
-#tab-content {
+#tab-content,
+#tab-content-queue {
 	background: rgba(0,0,0,.5);
 	padding: 1em;
 	position: relative;
@@ -909,7 +918,11 @@ a.black_btn_skin:hover, a.black_btn_skin:active {
 	height: auto;
 	margin-bottom: 10px;
 }
-#tab-content h2, #tab-content h3, #tab-content p {
+#tab-content-queue{
+    background-image: url(/memreas/img/drop-zone.png);
+}
+#tab-content h2, #tab-content h3, #tab-content p,
+#tab-content-queue h2, #tab-content-queue h3, #tab-content-queue p {
 	margin: 0 0 15px 0;
 	color: #fff;
 }

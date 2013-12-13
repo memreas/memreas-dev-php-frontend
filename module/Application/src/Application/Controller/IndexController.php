@@ -19,6 +19,7 @@ use Zend\Mail\Message;
 use Zend\Mail\Transport\Sendmail as SendmailTransport;
 use Guzzle\Http\Client;
 use Application\View\Helper\S3Service;
+use Application\View\Helper\S3;
 
 class IndexController extends AbstractActionController
 {
@@ -202,18 +203,19 @@ error_log("Exit indexAction".PHP_EOL);
         $view->setTemplate($path);
         return $view;
     }  
-    public function addmediaAction(){
-        require_once ($_SERVER['DOCUMENT_ROOT'] . '/memreas/amazon_s3_class.php');        
+    public function addmediaAction(){      
+        $session = new Container('user');          
         $s3 = new S3('AKIAJMXGGG4BNFS42LZA', 'xQfYNvfT0Ar+Wm/Gc4m6aacPwdT5Ors9YHE/d38H');                
         $target_path = '/' .$session->offsetGet('user_id') . '/image/' . $_FILES['upl']['name'];        
         $s3->putBucket('memreasdev', S3::ACL_PUBLIC_READ);
-        if ($s3->putObjectFile($_FILES['upl']['tmp_name'], 'memreasdev', $target_path, S3::ACL_PUBLIC_READ, array(), 'image/jpeg')){
+        echo '{"status":"success"}';
+        /*if ($s3->putObjectFile($_FILES['upl']['tmp_name'], 'memreasdev', $target_path, S3::ACL_PUBLIC_READ, array(), 'image/jpeg')){
             $ws_action = "addmediaevent";
             $xml = "<xml><addmediaevent><s3url>http://s3.amazonaws.com/memreasdev/" . $session->offsetGet('user_id') . '/image/' . $_FILES['upl']['name'] . "</s3url><is_server_image>0</is_server_image><content_type>" . $_FILES['upl']['type'] . "</content_type><s3file_name>" . $_FILES['upl']['name'] . "</s3file_name><device_id></device_id><event_id></event_id><media_id></media_id><user_id>" . $session->offsetGet('user_id') . "</user_id><is_profile_pic>0</is_profile_pic><location></location></addmediaevent></xml>";
             $result = $this->fetchXML($ws_action, $xml);
             echo '{"status":"success"}';            
         }
-        else echo '{"status":"error"}';
+        else echo '{"status":"error"}';*/
         die();
     }
 
