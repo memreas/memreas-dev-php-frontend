@@ -19,7 +19,7 @@ use Zend\Mail\Message;
 use Zend\Mail\Transport\Sendmail as SendmailTransport;
 use Guzzle\Http\Client;
 use Application\View\Helper\S3Service;
-
+use Zend\View\Model\JsonModel;
 class IndexController extends AbstractActionController
 {
 
@@ -392,6 +392,43 @@ error_log("Inside setSession set user data...");
         return $this->userTable;
     }
 
+        public function forgotpasswordAction() {
+         	$request = $this->getRequest();
+		$postData = $request->getPost()->toArray();
+ 		$email = isset($postData ['email'])?$postData ['email']:'';
+	 	//Setup the URL and action
+		$action = 'forgotpassword';
+		$xml = "<xml><forgotpassword><email>$email</email></forgotpassword></xml>";
+		//$redirect = 'gallery';
+
+		//Guzzle the LoginWeb Service
+		$result = $this->fetchXML($action, $xml);
+        
+        $data = simplexml_load_string($result);
+        echo json_encode($data);
+         return '';
+    }
+	public function changepasswordAction() {
+         	$request = $this->getRequest();
+		$postData = $request->getPost()->toArray();
+		
+ 		$new = isset($postData ['new'])?$postData ['new']:'';
+		$retype = isset($postData ['reytpe'])?$postData ['reytpe']:'';
+		$token = isset($postData ['token'])?$postData ['token']:'';
+		
+	 	//Setup the URL and action
+		$action = 'forgotpassword';
+		$xml = "<xml><changepassword><new>$new</new><retype>$retype</retype><token>$token</token></changepassword></xml>";  
+		//$redirect = 'gallery';
+
+		//Guzzle the LoginWeb Service
+		$result = $this->fetchXML($action, $xml);
+        
+        $data = simplexml_load_string($result);
+        echo json_encode($data);
+         return '';
+    }
+
     public function getAuthService() {
         if (!$this->authservice) {
             $this->authservice = $this->getServiceLocator()
@@ -421,4 +458,6 @@ error_log("Inside setSession set user data...");
 		return $path;
         //return $this->redirect()->toRoute('index', array('action' => 'login'));
     }
+
+
 } // end class IndexController
