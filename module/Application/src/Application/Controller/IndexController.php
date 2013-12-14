@@ -234,10 +234,29 @@ error_log("Exit indexAction".PHP_EOL);
     }
 
     public function twitterAction() {
-	    $path = $this->security("application/index/twitter.phtml");
-		$view = new ViewModel();
-		$view->setTemplate($path); // path to phtml file under view folder
-		return $view;
+//            $config['consumer_key'] = '1bqpAfSWfZFuEeY3rbsKrw';
+//            $config['consumer_secret'] = 'wM0gGBCzZKl5dLRB8TQydRDfTD5ocf2hGRKSQwag';
+//            //$config['oauth_token'] = '74094832-mnJlYPt02qpy1jhEYAYPMKAzrLF2jTeMiJue65Zn7';
+//            $config['oauth_token_secret'] = 'zdIrpUzuIs7llt5KLlx1TU1vWUrq28TkSNFUsschaaE4X';
+//            
+//            $config['output_format'] = 'object';
+             $config = new \Application\OAuth\Config();
+    $config->setConsumerKey('1bqpAfSWfZFuEeY3rbsKrw')
+           ->setConsumerSecret('wM0gGBCzZKl5dLRB8TQydRDfTD5ocf2hGRKSQwag')
+           ->setRequestTokenUrl('https://api.twitter.com/oauth/request_token')
+           ->setAuthorizeUrl('https://api.twitter.com/oauth/authenticate')
+           ->setAccessTokenUrl('https://api.twitter.com/oauth/access_token')
+           ->setCallbackUrl('mem2/index/');
+$requestToken = new \Application\OAuth\Token\Request($config, true);
+session_start();
+$_SESSION['twitter_request_token'] = serialize($requestToken);
+
+// redirect to Twitter for authentication
+$targetUrl = $config->getAuthorizeUrl($requestToken['oauth_token']);
+echo $targetUrl ;
+header('Location: ' . $targetUrl);
+
+		//return $view;
     }
 
     public function shareAction() {
