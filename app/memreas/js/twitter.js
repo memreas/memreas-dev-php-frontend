@@ -19,6 +19,15 @@ twitter_getFriendList = function() {
 }
 
 twitter_authorization = function() {
+	$.oauthpopup({
+		path: 'twitter_connect.phtml',
+		callback: function(){
+			window.location.reload();
+		}
+	});
+    
+	return;
+
 	var tKBase64 =  btoa(TWITTER_KEY + ":" + TWITTER_SECRETCODE);
 	
 	try {
@@ -30,6 +39,7 @@ twitter_authorization = function() {
 			type: "POST",
 			data: { "grant_type" : "client_credentials"},
 			url: 'https://api.twitter.com/oauth2/token',
+			//url: 'https://api.twitter.com/oauth/request_token',
 			success: function(data) {
 				twitterToken = data.access_token;
 				twitter_getAllFriends();

@@ -128,5 +128,6 @@ return array(
             ))),
     'view_helpers' => array(
                 'S3Service' => '\Application\View\Helper\S3Service',
+                'S3' => '\Application\View\Helper\S3',
             ),
 );

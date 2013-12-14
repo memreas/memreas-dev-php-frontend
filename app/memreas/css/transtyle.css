@@ -27,3 +27,4 @@
     font-weight: bold;
     font-style: italic;
 }
+.upload_progress_bar .progress{ width: 0%; }
