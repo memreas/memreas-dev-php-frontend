@@ -20,7 +20,7 @@ twitter_getFriendList = function() {
 
 twitter_authorization = function() {
 	$.oauthpopup({
-		path: 'twitter_connect.phtml',
+		path: 'twitter',
 		callback: function(){
 			window.location.reload();
 		}
