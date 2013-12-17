@@ -7,11 +7,14 @@ $(function(){
         // to show the file browser dialog
         $(this).parent().find('input').click();
     });    
+    $(".upload-dropzone").click (function(){
+        $("#upload").find ("input[type=file]").click();
+    });
     // Initialize the jQuery File Upload plugin
     $('#upload').fileupload({
 
         // This element will accept file drag/drop uploading
-        dropZone: $('#drop, #upload-queue'),
+        dropZone: $('#drop, .upload-dropzone'),
 
         // This function is called when a file is added to the queue;
         // either via the browse button, or via drag/drop:
@@ -60,21 +63,20 @@ $(function(){
             });
             
             tpl2.find("a.cancel-upload").click (function(){
-                 if(tpl.hasClass('working')){
+                if(tpl2.hasClass('working-upload')){
                     jqXHR.abort();
                 }
 
-                tpl.fadeOut(function(){
-                    tpl.remove();
+                tpl2.fadeOut(function(){
+                    tpl2.remove();
                 });
             });
             
             // Automatically upload the file once it is added to the queue
-           // var jqXHR = data.submit();
-           data.submit();
+           var jqXHR = data.submit();           
            $(".start-upload").on ('click', function(){
                $("a[title=queue]").trigger ("click");
-                data.submit();
+                var jqXHR = data.submit();
             });
         },        
         progress: function(e, data){
@@ -93,10 +95,13 @@ $(function(){
 
             if(progress == 100){
                 data.context.remove('.working');
-                data.context.remove('count-progress');                
+                data.context2.removeClass('.working-upload');
+                data.context.remove('count-progress');                  
             }
         },
-
+        done: function (e, data) {
+            console.log (data);          
+          },
         fail:function(e, data){
             // Something has gone wrong!
             data.context.addClass('error');

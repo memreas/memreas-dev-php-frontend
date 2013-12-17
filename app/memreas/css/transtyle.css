@@ -28,3 +28,9 @@
     font-style: italic;
 }
 .upload_progress_bar .progress{ width: 0%; }
+.upload-dropzone{
+    width: 100%;
+    height: 100px;
+    background: url(/memreas/img/drop-zone.png) no-repeat top center;
+    cursor: pointer;
+}

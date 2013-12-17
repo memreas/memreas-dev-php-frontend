@@ -918,9 +918,6 @@ a.black_btn_skin:hover, a.black_btn_skin:active {
 	height: auto;
 	margin-bottom: 10px;
 }
-#tab-content-queue{
-    background-image: url(/memreas/img/drop-zone.png);
-}
 #tab-content h2, #tab-content h3, #tab-content p,
 #tab-content-queue h2, #tab-content-queue h3, #tab-content-queue p {
 	margin: 0 0 15px 0;
