@@ -27,7 +27,7 @@ function success_addmedia(response){
     response = response.addmediaeventresponse[0].status[0].text;
     if (response == "Success")
         {
-            //alert ("Media added success");
+            alert ("Media added success");
         }
     else alert ("error while adding media");
 }

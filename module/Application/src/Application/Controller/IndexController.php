@@ -174,25 +174,61 @@ error_log("Exit indexAction".PHP_EOL);
     }
 
     public function galleryAction() { 
+        /*
+        $S3Service = new S3Service();  
+        $data['bucket'] = 'memreasdev';
+        $data['folder'] = '7f84baa8-430c-11e3-85d4-22000a8a1935/image/';
+        //$data['user_id'] = $session->offsetGet('user_id') . '/image';
+        $data['user_id'] = '7f84baa8-430c-11e3-85d4-22000a8a1935';
+        $data['ACCESS_KEY'] = $S3Service::getAccessKey();
+        list($data['policy'], $data['signature']) = $S3Service::get_policy_and_signature(array(
+            'bucket'         => $data['bucket'],
+            'folder'        => $data['folder'],
+        ));
+        */
+        $action = 'getsession';
+        $xml = "<xml><getsession><sid>1</sid></getsession></xml>";
+        
+        //Guzzle the LoginWeb Service
+        $user = $this->fetchXML($action, $xml);
+        $userid = explode ("<userid>", $user);
+        $data['userid'] = explode ("</userid>", $userid['2']);            
+        $data['userid'] = $data['userid'][0];
+        $data['bucket'] = "memreasdev";
+        $data['accesskey'] = "AKIAJMXGGG4BNFS42LZA";
+        $data['secret'] = "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";
+        
+        $data['base64Policy'] = base64_encode($this->getS3Policy($data['bucket']));
+        $data['signature'] = $this->hex2b64($this->hmacsha1($data['secret'], $data['base64Policy']));
+        
 	    $path = $this->security("application/index/gallery.phtml");
 
 		$action = 'listallmedia';
 		$session = new Container('user');
+        
+        /*
+        $action = 'getsession';
+        $xml = "<xml><getsession><sid>1</sid></getsession></xml>";        
+        //Guzzle the LoginWeb Service
+        $result = $this->fetchXML($action, $xml);
+        echo "<pre>"; print_r ($result);    echo "</pre>"; die();
+        */
 		$xml = "<xml><listallmedia><event_id></event_id><user_id>" . $session->offsetGet('user_id') . "</user_id><device_id></device_id><limit>10</limit><page>1</page></listallmedia></xml>";
 		$result = $this->fetchXML($action, $xml);
 
-		$view = new ViewModel(array('xml'=>$result));
+		$view = new ViewModel(array('xml'=>$result, 'data' => $data));
 		$view->setTemplate($path); // path to phtml file under view folder
 		return $view;
         //return new ViewModel();
     }
 
     public function s3uploadAction(){
-        $S3Service = new S3Service();
+        $S3Service = new S3Service();        
         $session = new Container('user');
         $data['bucket'] = 'memreasdev';
         $data['folder'] = $session->offsetGet('user_id') . '/image/';
-        $data['user_id'] = $session->offsetGet('user_id');
+        //$data['user_id'] = $session->offsetGet('user_id');
+        $data['user_id'] = '7f84baa8-430c-11e3-85d4-22000a8a1935';
         $data['ACCESS_KEY'] = $S3Service::getAccessKey();
         list($data['policy'], $data['signature']) = $S3Service::get_policy_and_signature(array(
             'bucket'         => $data['bucket'],
@@ -204,15 +240,16 @@ error_log("Exit indexAction".PHP_EOL);
         return $view;
     }  
     public function addmediaAction(){
-        $session = new Container('user');          
+        $session = new Container('user');                  
         $s3 = new S3('AKIAJMXGGG4BNFS42LZA', 'xQfYNvfT0Ar+Wm/Gc4m6aacPwdT5Ors9YHE/d38H');                
-        $target_path = '/' .$session->offsetGet('user_id') . '/image/' . $_FILES['upl']['name'];        
+        $target_path = '/' . '7f84baa8-430c-11e3-85d4-22000a8a1935' . '/image/' . $_FILES['upl']['name'];                 
         $s3->putBucket('memreasdev', S3::ACL_PUBLIC_READ);        
         if ($s3->putObjectFile($_FILES['upl']['tmp_name'], 'memreasdev', $target_path, S3::ACL_PUBLIC_READ, array(), 'image/jpeg')){
+            echo "run here";
             $ws_action = "addmediaevent";
-            $xml = "<xml><addmediaevent><s3url>http://s3.amazonaws.com/memreasdev/" . $session->offsetGet('user_id') . '/image/' . $_FILES['upl']['name'] . "</s3url><is_server_image>0</is_server_image><content_type>" . $_FILES['upl']['type'] . "</content_type><s3file_name>" . $_FILES['upl']['name'] . "</s3file_name><device_id></device_id><event_id></event_id><media_id></media_id><user_id>" . $session->offsetGet('user_id') . "</user_id><is_profile_pic>0</is_profile_pic><location></location></addmediaevent></xml>";
+            $xml = "<xml><addmediaevent><s3url>http://s3.amazonaws.com/memreasdev/" . '7f84baa8-430c-11e3-85d4-22000a8a1935' . '/image/' . $_FILES['upl']['name'] . "</s3url><is_server_image>0</is_server_image><content_type>" . $_FILES['upl']['type'] . "</content_type><s3file_name>" . $_FILES['upl']['name'] . "</s3file_name><device_id></device_id><event_id></event_id><media_id></media_id><user_id>" . $session->offsetGet('user_id') . "</user_id><is_profile_pic>0</is_profile_pic><location></location></addmediaevent></xml>";
             $result = $this->fetchXML($ws_action, $xml);
-            echo '{"status":"success", "filepath":"http://s3.amazonaws.com/memreasdev/"' . $session->offsetGet('user_id') . '/image/' . $_FILES['upl']['name'] . '}';            
+            echo '{"status":"success", "filepath":"http://s3.amazonaws.com/memreasdev/"' . '7f84baa8-430c-11e3-85d4-22000a8a1935' . '/image/' . $_FILES['upl']['name'] . '}';            
         }
         else echo '{"status":"error"}';
         die();
@@ -484,6 +521,75 @@ error_log("Inside setSession set user data...");
 	    //}
 		return $path;
         //return $this->redirect()->toRoute('index', array('action' => 'login'));
+    }
+    
+    
+    /*For S3*/
+    private function getS3Policy()
+    {
+        $now = strtotime(date("Y-m-d\TG:i:s")); 
+        $expire = date('Y-m-d\TG:i:s\Z', strtotime('+30 minutes', $now));
+        $policy='{
+                    "expiration": "' . $expire . '",
+                    "conditions": [
+                        {
+                            "bucket": "memreasdev"
+                        },
+                        {
+                            "acl": "private"
+                        },
+                        [
+                            "starts-with",
+                            "$key",
+                            ""
+                        ],
+                        {
+                            "success_action_status": "201"
+                        }
+                    ]
+                }';
+        return $policy;
+    }
+
+
+    /*
+     * Calculate HMAC-SHA1 according to RFC2104
+     * See http://www.faqs.org/rfcs/rfc2104.html
+     */
+    private function hmacsha1($key,$data) {
+        $blocksize=64;
+        $hashfunc='sha1';
+        if (strlen($key)>$blocksize)
+            $key=pack('H*', $hashfunc($key));
+        $key=str_pad($key,$blocksize,chr(0x00));
+        $ipad=str_repeat(chr(0x36),$blocksize);
+        $opad=str_repeat(chr(0x5c),$blocksize);
+        $hmac = pack(
+                    'H*',$hashfunc(
+                        ($key^$opad).pack(
+                            'H*',$hashfunc(
+                                ($key^$ipad).$data
+
+                            )
+                        )
+                    )
+                );
+        return bin2hex($hmac);
+    }
+
+
+    /*
+     * Used to encode a field for Amazon Auth
+     * (taken from the Amazon S3 PHP example library)
+     */
+    private function hex2b64($str)
+    {
+        $raw = '';
+        for ($i=0; $i < strlen($str); $i+=2)
+        {
+            $raw .= chr(hexdec(substr($str, $i, 2)));
+        }
+        return base64_encode($raw);
     }
 
 

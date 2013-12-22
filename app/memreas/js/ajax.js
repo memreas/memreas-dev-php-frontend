@@ -13,8 +13,7 @@ var xml_str = "";
 ajaxRequest = function (action, params, success_func, error_func) {
     var data = "";
     var result = "";
-	var xml_input = getXMLStringFromParamArray(action, params);
-    
+	var xml_input = getXMLStringFromParamArray(action, params);    
     var data = new Object();
     data.ws_action = action;
     data.type = "jsonp";
@@ -28,7 +27,7 @@ ajaxRequest = function (action, params, success_func, error_func) {
 	  	url: wsurl,
 	  	dataType: 'jsonp',
 	  	data: 'json=' + json_data,
-	  	success: function(ret_xml) {            
+	  	success: function(ret_xml) {                  
 			if (typeof success_func != "undefined")
 				success_func(ret_xml);
 		   	$('#loadingpopup').hide();
