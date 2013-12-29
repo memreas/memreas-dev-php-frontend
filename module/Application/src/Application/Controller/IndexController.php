@@ -193,7 +193,7 @@ error_log("Exit indexAction".PHP_EOL);
         $user = $this->fetchXML($action, $xml);
         $userid = explode ("<userid>", $user);
         $data['userid'] = explode ("</userid>", $userid['2']);            
-        $data['userid'] = $data['userid'][0];
+        $data['userid'] = trim ($data['userid'][0]);        
         $data['bucket'] = "memreasdev";
         $data['accesskey'] = "AKIAJMXGGG4BNFS42LZA";
         $data['secret'] = "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";

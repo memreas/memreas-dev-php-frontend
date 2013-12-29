@@ -11,12 +11,17 @@ $(document).ready( function() {
     $('.direct-upload').each( function() {
 
         var form = $(this);
-
+                
         $(this).fileupload({
-            dropZone: $('.upload-dropzone'),
-            url: form.attr('action'),
+            dropZone: $('.upload-dropzone'),            
+            url: form.attr('action'),   
+            dataType: 'xml',  
+            crossDomain: true,
             type: 'POST',
             autoUpload: true,
+            /*xhrFields: {
+                withCredentials: true
+            },*/                        
             add: function (event, data) {                
                 // Use XHR, fallback to iframe
                 options = $(this).fileupload('option');
@@ -26,8 +31,13 @@ $(document).ready( function() {
 
                 if (!use_xhr) {
                     using_iframe_transport = true;
-                }
-
+                }  
+                
+                var isChrome = !!window.chrome;
+                if (isChrome) {
+                    using_iframe_transport = true;                
+                    $(this).fileupload('option', {forceIframeTransport:true})
+                } 
                 // Message on unLoad.
                 window.onbeforeunload = function() {
                     return 'You have unsaved changes.';
@@ -75,23 +85,23 @@ $(document).ready( function() {
             fail: function(e, data) {
                 window.onbeforeunload = null;
             },
-            success: function(data) {
+            success: function(data) {              
                 // Here we get the file url on s3 in an xml doc
                 var url = $(data).find('Location').text()
                 $('#real_file_url').val(url) // Update the real input in the other form
                 var userid = $("input[name=user_id]").val();
                 
                 
-                
+                var _media_url = url.replace('http://memreasdev.s3.amazonaws.com', '');
                 var addmedia = new Array();
                 addmedia[0] = new Array();
                 addmedia[0]['tag'] = "s3url";                
-                addmedia[0]['value'] = url;
+                addmedia[0]['value'] = _media_url;
                 addmedia[1] = new Array();
                 addmedia[1]['tag'] = "is_server_image";                
                 addmedia[1]['value'] = 0;
                 addmedia[2] = new Array();
-                var filename = url.split("/");
+                var filename = url.split("%2F");                
                 filename = filename[filename.length - 1];
                 addmedia[2]['tag'] = "content_type";                
                 addmedia[2]['value'] = "image/jpeg";
