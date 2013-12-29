@@ -22,13 +22,15 @@ $(document).ready( function() {
             add: function (event, data) {                
                 console.log (data);
                 var filetype = data.files[0].type;                
+                var filename = data.files[0].name;                
                 var key_value = '${filename}';
                 if (filetype.indexOf ('image') >= 0)
                     var target = 'images';           
                 else target = 'media';  
-                $('input[name=ContentType]').val(filetype);
+                $('input[name=ContentType]').val(filetype);                
                 var userid = $("input[name=user_id]").val();
                 key_value = userid + '/' + target + '/' + key_value;
+                $('input[name=ContentName]').val(userid + '/' + target + '/' + filename);
                 $(this).find('input[name=key]').val(key_value);                
                 // Use XHR, fallback to iframe                
                 options = $(this).fileupload('option');
@@ -94,12 +96,11 @@ $(document).ready( function() {
             },
             success: function(data) {              
                 // Here we get the file url on s3 in an xml doc
-                var url = $(data).find('Location').text();                
-                url = decodeURIComponent(url);                
-                $('#real_file_url').val(url) // Update the real input in the other form
+                var _media_url = $('input[name=ContentName]').val();                   
+                $('#real_file_url').val("https://memreasdev.s3.amazonaws.com/" + _media_url); // Update the real input in the other form
                 var userid = $("input[name=user_id]").val();
                             
-                var _media_url = url.replace('https://memreasdev.s3.amazonaws.com/', '');                
+                //var _media_url = url.replace('https://memreasdev.s3.amazonaws.com/', '');                
                 var addmedia = new Array();
                 addmedia[0] = new Array();
                 addmedia[0]['tag'] = "s3url";                
@@ -108,7 +109,7 @@ $(document).ready( function() {
                 addmedia[1]['tag'] = "is_server_image";                
                 addmedia[1]['value'] = 0;
                 addmedia[2] = new Array();
-                var filename = url.split("/");                
+                var filename = _media_url.split("/");                
                 filename = filename[filename.length - 1];
                 addmedia[2]['tag'] = "content_type";                
                 addmedia[2]['value'] = $('input[name=ContentType]').val();
@@ -134,7 +135,7 @@ $(document).ready( function() {
                 addmedia[9]['tag'] = "location";                
                 addmedia[9]['value'] = "";
                 
-                $(".completed-upload").append ('<li><img src="' + url + '"/></li>');
+                $(".completed-upload").append ('<li><img src="https://memreasdev.s3.amazonaws.com/' + _media_url + '"/></li>');
                 
                 ajaxRequest('addmediaevent', addmedia, success_addmedia, error_addmedia);  
               
