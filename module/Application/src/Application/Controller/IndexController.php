@@ -128,7 +128,7 @@ error_log("Exit indexAction".PHP_EOL);
                             </html>';
             fwrite ($file_handle, $content, 5000);
             fclose ($file_handle);
-            $response = array ('video_link' => $cache_file, 'thumbnail' => $_POST['thumbnail'], 'media_id' => $_POST['media_id']);
+            $response = array ('video_link' => $cache_file, 'thumbnail' => isset ($_POST['thumbnail']) ? $_POST['thumbnail'] : '/memreas/img/large-pic-1.jpg', 'media_id' => $_POST['media_id']);
             echo json_encode ($response);
         }
         exit();

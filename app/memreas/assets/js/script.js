@@ -18,12 +18,19 @@ $(document).ready( function() {
             dataType: 'xml',  
             crossDomain: true,
             type: 'POST',
-            autoUpload: true,
-            /*xhrFields: {
-                withCredentials: true
-            },*/                        
+            autoUpload: true,            
             add: function (event, data) {                
-                // Use XHR, fallback to iframe
+                console.log (data);
+                var filetype = data.files[0].type;                
+                var key_value = '${filename}';
+                if (filetype.indexOf ('image') >= 0)
+                    var target = 'images';           
+                else target = 'media';  
+                $('input[name=ContentType]').val(filetype);
+                var userid = $("input[name=user_id]").val();
+                key_value = userid + '/' + target + '/' + key_value;
+                $(this).find('input[name=key]').val(key_value);                
+                // Use XHR, fallback to iframe                
                 options = $(this).fileupload('option');
                 use_xhr = !options.forceIframeTransport &&
                             ((!options.multipart && $.support.xhrFileUpload) ||
@@ -87,12 +94,12 @@ $(document).ready( function() {
             },
             success: function(data) {              
                 // Here we get the file url on s3 in an xml doc
-                var url = $(data).find('Location').text()
+                var url = $(data).find('Location').text();                
+                url = decodeURIComponent(url);                
                 $('#real_file_url').val(url) // Update the real input in the other form
                 var userid = $("input[name=user_id]").val();
-                
-                
-                var _media_url = url.replace('http://memreasdev.s3.amazonaws.com', '');
+                            
+                var _media_url = url.replace('https://memreasdev.s3.amazonaws.com/', '');                
                 var addmedia = new Array();
                 addmedia[0] = new Array();
                 addmedia[0]['tag'] = "s3url";                
@@ -101,10 +108,10 @@ $(document).ready( function() {
                 addmedia[1]['tag'] = "is_server_image";                
                 addmedia[1]['value'] = 0;
                 addmedia[2] = new Array();
-                var filename = url.split("%2F");                
+                var filename = url.split("/");                
                 filename = filename[filename.length - 1];
                 addmedia[2]['tag'] = "content_type";                
-                addmedia[2]['value'] = "image/jpeg";
+                addmedia[2]['value'] = $('input[name=ContentType]').val();
                 addmedia[3] = new Array();
                 addmedia[3]['tag'] = "s3file_name";                
                 addmedia[3]['value'] = filename;

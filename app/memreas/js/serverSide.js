@@ -43,7 +43,7 @@ jQuery.fetch_server_media = function (user_id){
                 var _found = _video_extensions.indexOf (_media_extension);
                 if (_found > -1){
                         $.post('/index/buildvideocache', {video_url:_media_url, thumbnail:data[json_key].event_media_video_thum[0].text, media_id:data[json_key].media_id[0].text}, function(response_data){
-                            response_data = JSON.parse (response_data);
+                            response_data = JSON.parse (response_data);                            
                             $(".user-resources").append('<a data-video="true" href="/memreas/js/jwplayer/jwplayer_cache/' + response_data.video_link + '"><img src="' + response_data.thumbnail + '"/></a>');
                             $(".scrollClass .mCSB_container, .sync-content .scrollClass").append ('<li><a class="swipebox" id="' + response_data.media_id + '" onclick="return imageChoosed(this.id);" href="' + response_data.thumbnail + '"><img src="' + response_data.thumbnail + '"/></a></li>');
                         });
