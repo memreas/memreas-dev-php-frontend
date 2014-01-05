@@ -23,6 +23,7 @@ $user_id = $data['userid'];
 <link href="/memreas/css/jquery.mCustomScrollbar.css" rel="stylesheet" />
 <link href="/memreas/css/fotorama.css" rel="stylesheet">
 <link rel="stylesheet" href="/memreas/css/swipebox.css">
+<link rel="stylesheet" href="/memreas/css/jNotify.jquery.css">
 
 <!--Bootstrap Css-->
 <link href="/memreas/css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -45,6 +46,7 @@ $user_id = $data['userid'];
 <script src="/memreas/js/bootstrap.min.js"></script>
 
 <!--Backgound Strecher-->
+<script src="/memreas/js/jNotify.jquery.min.js"></script>
 <script type="text/javascript" src="/memreas/js/jquery.xml2json.js"></script>
 <script type="text/javascript" src="/memreas/js/fetchLocalMedia.js"></script>
 <script type="text/javascript" src="/memreas/js/bgstretcher.js"></script>
@@ -72,6 +74,9 @@ $(document).ready(function(){
     });
     $(".change-location a.browse-server").click (function(){ $.fetch_server_media($("input[name=current_user_id]").val()); });
     $(".change-location a.fetch-local").click (function(){ $(".browse-file").fadeIn (500); });
+     $(".image_upload_box, .edit-area-scroll").mCustomScrollbar({scrollButtons:{
+                        enable:true
+                    }});   
 });
 </script>
 </head>
@@ -128,23 +133,16 @@ $(document).ready(function(){
                          <!-- USER RESOURCES WILL BE LOADED HERE -->
                     </div>
                   </div>
-                  <div id="tab2" class="hideCls">
+                  <div id="tab2" class="hideCls hidden-onload">
                     <div class="edit-area">
-                        <ul id="content_1" class="pics scrollClass">
-                          <h2>edit</h2>
-                          <div class="mCSB_container"></div>                  
+                        <ul id="content_1" class="pics edit-area-scroll scroll-area">                          
+                            <div class="first-element"></div>                
                         </ul>
                         <div style="clear: both;"></div>
                         <a class="black_btn_skin" href="javascript:deleteFiles();">Delete</a>&nbsp;<a class="black_btn_skin" href="javascript:;" id="btn-upload">Upload</a>              
-                    </div>
-                    <div class="upload-container">
-                        <h3>Upload Media</h3>
-                        <p class="description">Please select file(s) or you can drag and drop file here for upload to your account</p>                                                
-                        <a class="black_btn_skin back-edit" href="javascript:;">Back</a>&nbsp;
-                        <a class="black_btn_skin start-upload" href="javascript:;">Start</a>
-                      </div>
+                    </div>                   
                   </div>                  
-                  <div id="tab4" class="hideCls">
+                  <div id="tab4" class="hideCls hidden-onload">
                       <div class="map">
                         <iframe width="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.co.in/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=Canada,+KY,+USA&amp;aq=0&amp;oq=Canada,&amp;sll=35.101934,-94.570312&amp;sspn=38.075006,86.572266&amp;t=h&amp;ie=UTF8&amp;hq=&amp;hnear=Canada,+Pike,+Kentucky,+United+States&amp;ll=41.934977,-81.738281&amp;spn=11.438126,18.720703&amp;z=5&amp;iwloc=A&amp;output=embed"></iframe>
                       </div>
@@ -232,7 +230,7 @@ $(document).ready(function(){
                       </div>
                       <script type="text/javascript">
                         $("#tab-content-queue div.hideCls").hide(); // Initially hide all content
-                        $("#tabs-queue li:first").attr("id","current"); // Activate first tab
+                        $("#tabs-queue li:first").attr("id","current"); // Activate first tab                          
                         $("#tab-content-queue div:first").fadeIn(); // Show first tab content*/
                         
                         $('#tabs-queue a').click(function(e) {
@@ -240,8 +238,11 @@ $(document).ready(function(){
                             e.preventDefault();        
                             $("#tab-content-queue div.hideCls").hide(); //Hide all content
                             $("#tabs-queue li").attr("id",""); //Reset id's
-                            $(this).parent().attr("id","current"); // Activate this
+                            $(this).parent().attr("id","current"); // Activate this                            
                             $('#' + $(this).attr('title')).fadeIn(); // Show content for current tab
+                            $('#' + $(this).attr('title')).find('.scroll-area').mCustomScrollbar({scrollButtons:{
+                                enable:true
+                            }});
                         });
                       </script>
           </div>

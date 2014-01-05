@@ -64,7 +64,11 @@ $(document).ready( function() {
                                     '<div class="clear"></div>' +
                                 '</div>' +
                               '</li>');
-                data.context = tpl2.appendTo("li.first-upload");
+                              
+                //data.context = tpl2.appendTo(".image_upload_box");                   
+                data.context = tpl2;                  
+                $(".image_upload_box .mCSB_container").append(tpl2);
+                $(".image_upload_box").mCustomScrollbar("update");
                 // Submit
                 var jqXHR = data.submit();
                 tpl2.find("a.cancel-upload").click (function(){

@@ -34,3 +34,5 @@
     background: url(/memreas/img/drop-zone.png) no-repeat top center;
     cursor: pointer;
 }
+.hidden-onload{ display: none; }
+ul.edit-area-scroll{ height: 270px; }

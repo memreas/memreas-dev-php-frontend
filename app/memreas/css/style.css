@@ -684,6 +684,8 @@ ul.pics {
 	overflow: auto;
 	height: 290px;
 	margin-top: 10px;
+    height: 120px;
+    overflow: hidden;
 }
 ul.pics li {
 	width: 14%;

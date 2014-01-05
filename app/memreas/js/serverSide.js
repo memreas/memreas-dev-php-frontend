@@ -3,8 +3,9 @@
 */
 /*Preload for server media*/
 jQuery.fetch_server_media = function (user_id){
-    $(".user-resources").remove();
+    $(".user-resources, .edit-area").remove();
     $("#tab-content #tab1").append ('<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/325" data-max-width="100%"  data-allow-full-screen="true"  data-nav="thumbs"></div>');
+    $("#tab-content #tab2").append('<div class="edit-area"><ul id="content_1" class="pics edit-area-scroll scroll-area"><div class="first-element"></div></ul><div style="clear: both;"></div><a class="black_btn_skin" href="javascript:deleteFiles();">Delete</a>&nbsp;<a class="black_btn_skin" href="javascript:;" id="btn-upload">Upload</a></div>');
     $(".user-resources, .scrollClass .mCSB_container, .sync .mCSB_container").html('');
     $("#loadingpopup").show();
     var _request_url = '/index/ApiServerSide';
@@ -45,23 +46,48 @@ jQuery.fetch_server_media = function (user_id){
                         $.post('/index/buildvideocache', {video_url:_media_url, thumbnail:data[json_key].event_media_video_thum[0].text, media_id:data[json_key].media_id[0].text}, function(response_data){
                             response_data = JSON.parse (response_data);                            
                             $(".user-resources").append('<a data-video="true" href="/memreas/js/jwplayer/jwplayer_cache/' + response_data.video_link + '"><img src="' + response_data.thumbnail + '"/></a>');
-                            $(".scrollClass .mCSB_container, .sync-content .scrollClass").append ('<li><a class="swipebox" id="' + response_data.media_id + '" onclick="return imageChoosed(this.id);" href="' + response_data.thumbnail + '"><img src="' + response_data.thumbnail + '"/></a></li>');
+                            $(".edit-area-scroll .first-element").append ('<li><a class="swipebox" id="' + response_data.media_id + '" onclick="return imageChoosed(this.id);" href="' + response_data.thumbnail + '"><img src="' + response_data.thumbnail + '"/></a></li>');
                         });
                 }
                 else {
                     $(".user-resources").append('<img src="' + _media_url + '"/>');
-                    $(".scrollClass .mCSB_container, .sync-content .scrollClass").append ('<li><a class="image-sync swipebox" id="' + data[json_key].media_id[0].text + '" onclick="return imageChoosed(this.id);" href="' + _media_url + '"><img src="' + _media_url + '"/></a></li>');
+                    $(".edit-area-scroll .first-element").append ('<li><a class="image-sync swipebox" id="' + data[json_key].media_id[0].text + '" onclick="return imageChoosed(this.id);" href="' + _media_url + '"><img src="' + _media_url + '"/></a></li>');
                 }
               }
               setTimeout(function(){ 
-                  $(".user-resources").fotorama({width: '100%', height: '500px'}); 
-                  $("#loadingpopup").hide(); 
-                  $("ul.scrollClass").mCustomScrollbar({
+                  $(".user-resources").fotorama({width: '100%', height: '500px'});                  
+                  $(".edit-area-scroll").mCustomScrollbar({
                         scrollButtons:{
                             enable:true
                         }
                     });
               }, 1000);
+          }
+          $("#loadingpopup").hide();
+          //If there is no image
+          if ($(".user-resources").html() == ''){               
+               jNotify(
+                'There is no media on your account! Please use upload tab on leftside you can add some resources!',
+                {
+                  autoHide : true, // added in v2.0
+                  clickOverlay : false, // added in v2.0
+                  MinWidth : 250,
+                  TimeShown : 3000,
+                  ShowTimeEffect : 200,
+                  HideTimeEffect : 200,
+                  LongTrip :20,
+                  HorizontalPosition : 'center',
+                  VerticalPosition : 'center',
+                  ShowOverlay : true,
+                  ColorOverlay : '#000',
+                  OpacityOverlay : 0.3,
+                  onClosed : function(){ // added in v2.0
+                   
+                  },
+                  onCompleted : function(){ // added in v2.0
+                   
+                  }
+                });              
           }
           return true;
       },
