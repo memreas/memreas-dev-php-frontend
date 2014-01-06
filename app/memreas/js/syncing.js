@@ -77,7 +77,8 @@ function deleteFiles(){
                xml_data[0]['value'] = media_id.trim();                              
                ajaxRequest ('deletephoto', xml_data, success_deletephoto, error_deletephoto); 
            }           
-        });                                                                                            
+        });   
+        
     }
 }
 function success_deletephoto(ret_xml){     
@@ -103,17 +104,13 @@ function success_deletephoto(ret_xml){
        
       }
     });      
-    $.fetch_server_media($("input[name=user_id]").val());
+    $.fetch_server_media($("input[name=user_id]").val());     
 }
 function error_deletephoto(){ alert ("error delete photo"); }
 
-jQuery (function(){
-    jQuery ("#btn-upload").click (function(){
-        jQuery("a[title=queue]").click();        
-    });
-    jQuery (".back-edit").click (function(){
-        jQuery(".upload-container").fadeOut(500);
-        jQuery(".edit-area").delay(500).fadeIn(500);    
-    });
-    
+$(function(){
+    $("#btn-upload").click (function(){
+        alert ("handled here");
+        $("a[title=queue]").click();        
+    });   
 });

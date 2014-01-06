@@ -683,9 +683,7 @@ ul.pics {
 	padding: 0;
 	overflow: auto;
 	height: 290px;
-	margin-top: 10px;
-    height: 120px;
-    overflow: hidden;
+	margin-top: 10px;    
 }
 ul.pics li {
 	width: 14%;
@@ -693,6 +691,9 @@ ul.pics li {
 	float: left;
 	margin: 10px;
 	position:relative;
+    height: 120px;
+    overflow: hidden;
+    background: #FFF;
 }
 ul.event_images li {
 	width: 17%;

@@ -33,6 +33,8 @@
     height: 100px;
     background: url(/memreas/img/drop-zone.png) no-repeat top center;
     cursor: pointer;
+    border-top: 1px solid #254C77;
+    border-bottom: 1px solid #254C77;
 }
 .hidden-onload{ display: none; }
 ul.edit-area-scroll{ height: 270px; }

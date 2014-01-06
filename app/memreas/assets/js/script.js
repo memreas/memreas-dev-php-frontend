@@ -19,8 +19,34 @@ $(document).ready( function() {
             crossDomain: true,
             type: 'POST',
             autoUpload: true,            
-            add: function (event, data) {                
-                console.log (data);
+            add: function (event, data) {       
+                var checkOneInstance = $("input[name=once_instance]").val();                
+                if (checkOneInstance == 1){
+                    jError(
+                    'Sorry! Just one intance per upload, please wait for upload complete.',
+                    {
+                      autoHide : true, // added in v2.0
+                      clickOverlay : false, // added in v2.0
+                      MinWidth : 250,
+                      TimeShown : 3000,
+                      ShowTimeEffect : 200,
+                      HideTimeEffect : 200,
+                      LongTrip :20,
+                      HorizontalPosition : 'center',
+                      VerticalPosition : 'top',
+                      ShowOverlay : true,
+                         ColorOverlay : '#FFF',
+                      OpacityOverlay : 0.3,
+                      onClosed : function(){ // added in v2.0
+                       
+                      },
+                      onCompleted : function(){ // added in v2.0
+                       
+                      }
+                    });      
+                    return false;
+                }
+                $("input[name=once_instance]").val(1);
                 var filetype = data.files[0].type;                
                 var filename = data.files[0].name;                
                 var key_value = '${filename}';
@@ -69,7 +95,9 @@ $(document).ready( function() {
                 data.context = tpl2;                  
                 $(".image_upload_box .mCSB_container").append(tpl2);
                 $(".image_upload_box").mCustomScrollbar("update");
+                $(".image_upload_box").mCustomScrollbar("scrollTo","last");
                 // Submit
+                var _image_handle = data.context.find(".upload_progress_img img");
                 var jqXHR = data.submit();
                 tpl2.find("a.cancel-upload").click (function(){
                     if(tpl2.hasClass('working-upload')){
@@ -98,13 +126,12 @@ $(document).ready( function() {
             fail: function(e, data) {
                 window.onbeforeunload = null;
             },
-            success: function(data) {              
+            success: function(data, status, jqXHR) {                  
                 // Here we get the file url on s3 in an xml doc
                 var _media_url = $('input[name=ContentName]').val();                   
                 $('#real_file_url').val("https://memreasdev.s3.amazonaws.com/" + _media_url); // Update the real input in the other form
                 var userid = $("input[name=user_id]").val();
-                            
-                //var _media_url = url.replace('https://memreasdev.s3.amazonaws.com/', '');                
+                                            
                 var addmedia = new Array();
                 addmedia[0] = new Array();
                 addmedia[0]['tag'] = "s3url";                
@@ -137,15 +164,19 @@ $(document).ready( function() {
                 addmedia[8]['value'] = 0; 
                 addmedia[9] = new Array();
                 addmedia[9]['tag'] = "location";                
-                addmedia[9]['value'] = "";
+                addmedia[9]['value'] = "";                                       
+                //$(_image_handle).attr ("src", '<img src="https://memreasdev.s3.amazonaws.com/' + _media_url);
                 
-                $(".completed-upload").append ('<li><img src="https://memreasdev.s3.amazonaws.com/' + _media_url + '"/></li>');
+                if ($(".completed-upload").hasClass ('mCSB_container'))
+                    $(".completed-upload .mCSB_container").append ('<li><img src="https://memreasdev.s3.amazonaws.com/' + _media_url + '"/></li>');
+                else $(".completed-upload .first-element").append ('<li><img src="https://memreasdev.s3.amazonaws.com/' + _media_url + '"/></li>');                 
                 
                 ajaxRequest('addmediaevent', addmedia, success_addmedia, error_addmedia);  
+                $("input[name=once_instance]").val(0);
               
             },
             done: function (event, data) {
-
+                
             },
         });
     });

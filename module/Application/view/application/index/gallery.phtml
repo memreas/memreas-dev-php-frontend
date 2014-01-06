@@ -74,9 +74,9 @@ $(document).ready(function(){
     });
     $(".change-location a.browse-server").click (function(){ $.fetch_server_media($("input[name=current_user_id]").val()); });
     $(".change-location a.fetch-local").click (function(){ $(".browse-file").fadeIn (500); });
-     $(".image_upload_box, .edit-area-scroll").mCustomScrollbar({scrollButtons:{
-                        enable:true
-                    }});   
+    $(".image_upload_box").mCustomScrollbar(
+                {scrollButtons:{enable:true }}
+    );      
 });
 </script>
 </head>
@@ -116,7 +116,7 @@ $(document).ready(function(){
                   <li><a href="#" title="tab4">location</a></li>
                 </ul>
                 <div id="tab-content">
-                  <div id="tab1" class="hideCls">
+                  <div id="tab1" class="hideCls hidden-onload">
                     <input type="hidden" name="current_user_id" value="<?php echo $user_id; ?>">
                     <div class="preload-server">
                         <div class="marks"></div>
@@ -204,14 +204,14 @@ $(document).ready(function(){
                                     <input type="file" name="file" hidden="hidden" />
                                     <div class="upload-dropzone"></div>
                                 </form>
-                              
+                                <input type="hidden" name="once_instance" value="0">
                           <a class="black_btn_skin f-right clear-upload" href="#">clear</a>
                           <input type="hidden" name="ContentType" value="" />
                           <input type="hidden" name="ContentName" value="" />
                     </div>                    
                     <div id="complete" class="hideCls">
-                        <ul id="content_1" class="pics completed-upload">
-                                
+                        <ul id="content_1" class="pics completed-upload scroll-area">
+                            <div class="first-element"></div>        
                         </ul>  
                           <a class="black_btn_skin f-left" href="#">clear</a>
                     </div>                    
@@ -240,9 +240,14 @@ $(document).ready(function(){
                             $("#tabs-queue li").attr("id",""); //Reset id's
                             $(this).parent().attr("id","current"); // Activate this                            
                             $('#' + $(this).attr('title')).fadeIn(); // Show content for current tab
-                            $('#' + $(this).attr('title')).find('.scroll-area').mCustomScrollbar({scrollButtons:{
-                                enable:true
-                            }});
+                            if (!($('#' + $(this).attr('title') + " .scroll-area").hasClass('mCustomScrollbar'))){
+                                $('#' + $(this).attr('title') + " .scroll-area").mCustomScrollbar({
+                                    scrollButtons:{
+                                        enable:true
+                                    }
+                                });
+                            }
+                            $('#' + $(this).attr('title') + " .scroll-area").mCustomScrollbar("update");                              
                         });
                       </script>
           </div>
@@ -293,12 +298,16 @@ $(document).ready(function(){
                 $("#tabs li").attr("id",""); //Reset id's
                 $(this).parent().attr("id","current"); // Activate this
                 $('#' + $(this).attr('title')).fadeIn(); // Show content for current tab
+                if (!($('#' + $(this).attr('title') + " .scroll-area").hasClass('mCustomScrollbar'))){
+                    $('#' + $(this).attr('title') + " .scroll-area").mCustomScrollbar({
+                        scrollButtons:{
+                            enable:true
+                        }
+                    });
+                }
+                $('#' + $(this).attr('title') + " .scroll-area").mCustomScrollbar("update");               
             });
             
-
-
-
-
                 //ajax demo fn
                 $("a[rel='load-content']").click(function(e){
 
