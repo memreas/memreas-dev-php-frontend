@@ -38,3 +38,11 @@
 }
 .hidden-onload{ display: none; }
 ul.edit-area-scroll{ height: 270px; }
+
+/* Responsive Device Fixing Layout*/
+@media screen and (max-width: 760px){
+    #maintab-content .span9:first-child{
+        width: 66%;
+        margin-left: 7%;
+    }
+}

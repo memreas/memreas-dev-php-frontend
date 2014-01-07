@@ -29,12 +29,12 @@ share_initObjects = function() {
 	//user_id = $('#user_id')[0].getAttribute('val');
 
 	// event function when click "media" tab
-	$('#tabs li:nth-child(2) a').on('click', function() {
+	$('#tabs-share li:nth-child(2) a').on('click', function() {
 		share_getAllMedia();
 	});
 
 	// event function when click "Friends" tab
-	$('#tabs li:nth-child(3) a').on('click', function() {
+	$('#tabs-share li:nth-child(3) a').on('click', function() {        
 		share_changeSocialType();
 	});
 	
@@ -87,23 +87,26 @@ share_changeSocialType = function() {
 
 // initialize and customize the scroll bar.
 share_customScrollbar = function () {
-	$("ul.scrollClass").mCustomScrollbar({
-		scrollButtons:{
-			enable:true
-		}
-	});
 		
-	$("#tab-content div.hideCls").hide(); // Initially hide all content
-	$("#tabs li:first").attr("id","current"); // Activate first tab
-	$("#tab-content div:first").fadeIn(); // Show first tab content*/
+	$("#tab-content-share div.hideCls").hide(); // Initially hide all content
+	$("#tabs-share li:first").attr("id","current"); // Activate first tab
+	$("#tab-content-share div:first").fadeIn(); // Show first tab content*/
 	
-	$('#tabs a').click(function(e) {
+	$('#tabs-share a').click(function(e) {
 		
 		e.preventDefault();        
-		$("#tab-content div.hideCls").hide(); //Hide all content
-		$("#tabs li").attr("id",""); //Reset id's
+		$("#tab-content-share div.hideCls").hide(); //Hide all content
+		$("#tabs-share li").attr("id",""); //Reset id's
 		$(this).parent().attr("id","current"); // Activate this
 		$('#' + $(this).attr('title')).fadeIn(); // Show content for current tab
+        if (!($('#' + $(this).attr('title') + " .scroll-area").hasClass('mCustomScrollbar'))){
+            $('#' + $(this).attr('title') + " .scroll-area").mCustomScrollbar({
+                scrollButtons:{
+                    enable:true
+                }
+            });
+        }
+        $('#' + $(this).attr('title') + " .scroll-area").mCustomScrollbar("update");  
 	});
 		
 	//ajax demo fn
@@ -444,8 +447,13 @@ share_getAllMedia = function() {
 			json = $.xml2json(json, true);
 			if (json.listallmediaresponse[0].medias[0].status[0].text == "Success") {
 			  	var data = json.listallmediaresponse[0].medias[0].media;
-			  	var mediaList = $("#share_medialist .mCSB_container");
-			  	mediaList.empty();
+               // if ($("#share_medialist").hasClass ('mCSB_container')){
+			  	    var mediaList = $("#share_medialist .mCSB_container");                    
+               /* }
+                else{
+                    var mediaList = $("#share_medialist");                    
+                }*/
+			  	//mediaList.empty();
 			  	for (var json_key in data) {
 				 	var _media_url = data[json_key].main_media_url[0].text;
 				 	var _media_extension = _media_url.substr(_media_url.length - 3);
@@ -454,16 +462,20 @@ share_getAllMedia = function() {
 					var _found = _video_extensions.indexOf (_media_extension);
 					if (_found > -1) {
 						$.post('/index/buildvideocache', {video_url:_media_url, thumbnail:data[json_key].event_media_video_thum[0].text, media_id:data[json_key].media_id[0].text}, function(response_data){
-							response_data = JSON.parse(response_data);
-							mediaList.append ('<li><a class="swipebox" id="' + response_data.media_id + '" onclick="return imageChoosed(this.id);" href="' + response_data.thumbnail + '"><img src="' + response_data.thumbnail + '"/></a></li>');
+							response_data = JSON.parse(response_data);							
+                            mediaList.append ('<li><a class="swipebox" id="' + response_data.media_id + '" onclick="return imageChoosed(this.id);" href="' + response_data.thumbnail + '"><img src="' + response_data.thumbnail + '"/></a></li>');                            
 						});
 					}
 					else {
-						mediaList.append ('<li><a class="image-sync swipebox" id="' + data[json_key].media_id[0].text + '" onclick="return imageChoosed(this.id);" href="' + _media_url + '"><img src="' + _media_url + '"/></a></li>');
+						mediaList.append ('<li><a class="swipebox" id="' + data[json_key].media_id[0].text + '" onclick="return imageChoosed(this.id);" href="' + _media_url + '"><img src="' + _media_url + '"/></a></li>');
 					}
-			  	}
-			  	
-			  	//setTimeout(function(){ $(".user-resources").fotorama(); $(".preload-server").hide(); }, 1000);
+			  	}                
+                if (!($("#share_medialist").hasClass ('mCSB_container'))){
+			  	    mediaList.mCustomScrollbar(
+                                {scrollButtons:{enable:true }}
+                    );                                              
+                }                
+                mediaList.mCustomScrollbar('update');			  	
 			  	
 			  	ar_start();
 			}

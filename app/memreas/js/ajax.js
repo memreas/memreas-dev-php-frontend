@@ -141,7 +141,15 @@ $(function(){
         $(this).addClass ("active");
         var _active_tab = $(this).attr ("title");
         $(".tabcontent-detail").hide();
-        $("#" + _active_tab).fadeIn();
+        $("#" + _active_tab).fadeIn();        
+        if (!($("#tab-content-" + _active_tab).find (".scroll-area:first").hasClass('mCustomScrollbar'))){
+            $("#tab-content-" + _active_tab).find (".scroll-area:first").mCustomScrollbar({
+                scrollButtons:{
+                    enable:true
+                }
+            });
+        }        
+        $("#tab-content-" + _active_tab).find (".scroll-area:first").mCustomScrollbar("update");
     });
     $(".clear-upload").click (function(){
         $("ul.image_upload_box").html("");

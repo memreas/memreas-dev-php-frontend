@@ -47,11 +47,21 @@ jQuery.fetch_server_media = function (user_id){
                             response_data = JSON.parse (response_data);                            
                             $(".user-resources").append('<a data-video="true" href="/memreas/js/jwplayer/jwplayer_cache/' + response_data.video_link + '"><img src="' + response_data.thumbnail + '"/></a>');
                             $(".edit-area-scroll .first-element").append ('<li><a class="swipebox" id="' + response_data.media_id + '" onclick="return imageChoosed(this.id);" href="' + response_data.thumbnail + '"><img src="' + response_data.thumbnail + '"/></a></li>');
+                            
+                            //For memreas tab
+                            if ($("#memreas-tab1 .scroll-area").hasClass ("mCSB_container"))
+                                $("#memreas-tab1 .mCSB_container").append ('<li><a class="swipebox" id="' + response_data.media_id + '" href="' + response_data.thumbnail + '" title="My Gallery"><img src="' + response_data.thumbnail + '"/></a></li>');
+                            else $("#memreas-tab1 .scroll-area").append ('<li><a class="swipebox" id="' + response_data.media_id + '" href="' + response_data.thumbnail + '" title="My Gallery"><img src="' + response_data.thumbnail + '"/></a></li>');
                         });
                 }
                 else {
                     $(".user-resources").append('<img src="' + _media_url + '"/>');
                     $(".edit-area-scroll .first-element").append ('<li><a class="image-sync swipebox" id="' + data[json_key].media_id[0].text + '" onclick="return imageChoosed(this.id);" href="' + _media_url + '"><img src="' + _media_url + '"/></a></li>');
+                    
+                    //For memreas tab
+                    if ($("#memreas-tab1 .scroll-area").hasClass ("mCSB_container"))
+                        $("#memreas-tab1 .mCSB_container").append ('<li><a class="swipebox" id="' + data[json_key].media_id[0].text + '" href="' + _media_url + '" title="My Gallery"><img src="' + _media_url + '"/></a></li>');
+                    else $("#memreas-tab1 .scroll-area").append ('<li><a class="swipebox" id="' + data[json_key].media_id[0].text + '" href="' + _media_url + '" title="My Gallery"><img src="' + _media_url + '"/></a></li>');
                 }
               }
               setTimeout(function(){ 
@@ -62,6 +72,7 @@ jQuery.fetch_server_media = function (user_id){
                         }
                     });
               }, 1000);
+              $(".swipebox").swipebox();
           }
           $("#loadingpopup").hide();
           //If there is no image
