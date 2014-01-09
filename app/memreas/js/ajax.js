@@ -78,6 +78,10 @@ getXMLStringFromParamArray = function(action, params) {
             
         case "listallmedia":
         	action_tag = "listallmedia";
+        
+        case "listnotification":
+            action_tag = "listnotification";
+            break;
             
 		default:
 			break;
@@ -102,7 +106,7 @@ getSubXMLStringFromParamArray = function(params) {
 	for (var i = 0; i < params.length; i++) {
 		xml_str += "<" + params[i]['tag'] + ">";
 		var val = params[i]['value'];
-		if (typeof val != "string" && typeof val.length != "undefined") {
+		if (typeof val != "string" && typeof val != "undefined") {
 			getSubXMLStringFromParamArray(val);
 		}
 		else
@@ -137,6 +141,7 @@ $(function(){
 */
 $(function(){
     $("#main-tab ul a").click(function(){
+        $(".notification-area").hide();
         $("#main-tab ul a").removeClass ("active");
         $(this).addClass ("active");
         var _active_tab = $(this).attr ("title");
@@ -156,3 +161,70 @@ $(function(){
         $("ul.image_upload_box").html('<li class="first-upload"></li>');        
     });
 });
+
+//Notify functions
+function jsuccess (str_msg){
+    jSuccess(
+    str_msg,
+    {
+      autoHide : true, // added in v2.0
+      clickOverlay : false, // added in v2.0
+      MinWidth : 250,
+      TimeShown : 3000,
+      ShowTimeEffect : 200,
+      HideTimeEffect : 200,
+      LongTrip :20,
+      HorizontalPosition : 'center',
+      VerticalPosition : 'top',
+      ShowOverlay : true,
+         ColorOverlay : '#FFF',
+      OpacityOverlay : 0.3,
+      onClosed : function(){ // added in v2.0
+       
+      },
+      onCompleted : function(){ // added in v2.0
+       
+      }
+    }); 
+}
+function jerror (str_msg){
+    jError(
+    str_msg,
+    {
+      autoHide : true, // added in v2.0
+      clickOverlay : false, // added in v2.0
+      MinWidth : 250,
+      TimeShown : 3000,
+      ShowTimeEffect : 200,
+      HideTimeEffect : 200,
+      LongTrip :20,
+      HorizontalPosition : 'center',
+      VerticalPosition : 'top',
+      ShowOverlay : true,
+         ColorOverlay : '#FFF',
+      OpacityOverlay : 0.3,
+      onClosed : function(){ // added in v2.0
+       
+      },
+      onCompleted : function(){ // added in v2.0
+       
+      }
+    }); 
+}
+
+/*
+* Event function
+*/
+function showUploadEvent(){
+    $("#share_medialist, .comment, .add-comment-buttons").hide();
+    $(".event-upload-area, .upload-event-buttons").fadeIn(500);
+}
+function hideUploadEvent(){
+    $(".event-upload-area, .upload-event-buttons").hide();
+    $('#tabs-share li:nth-child(2) a').click();
+    $("#share_medialist, .comment, .add-comment-buttons").fadeIn(500);    
+}
+
+function backToMedia(){
+    $('#tabs-share li:nth-child(2) a').click();
+}

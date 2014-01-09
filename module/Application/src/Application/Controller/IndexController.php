@@ -193,7 +193,7 @@ error_log("Exit indexAction".PHP_EOL);
         $user = $this->fetchXML($action, $xml);
         $userid = explode ("<userid>", $user);
         $data['userid'] = explode ("</userid>", $userid['2']);            
-        $data['userid'] = trim ($data['userid'][0]);        
+        $data['userid'] = trim ($data['userid'][0]);          
         $data['bucket'] = "memreasdev";
         $data['accesskey'] = "AKIAJMXGGG4BNFS42LZA";
         $data['secret'] = "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";
@@ -270,19 +270,20 @@ error_log("Exit indexAction".PHP_EOL);
     }
 
     public function twitterAction() {
-//            $config['consumer_key'] = '1bqpAfSWfZFuEeY3rbsKrw';
-//            $config['consumer_secret'] = 'wM0gGBCzZKl5dLRB8TQydRDfTD5ocf2hGRKSQwag';
+            $configTwitter['consumer_key'] = '1bqpAfSWfZFuEeY3rbsKrw';
+            $configTwitter['consumer_secret'] = 'wM0gGBCzZKl5dLRB8TQydRDfTD5ocf2hGRKSQwag';
+	
 //            //$config['oauth_token'] = '74094832-mnJlYPt02qpy1jhEYAYPMKAzrLF2jTeMiJue65Zn7';
-//            $config['oauth_token_secret'] = 'zdIrpUzuIs7llt5KLlx1TU1vWUrq28TkSNFUsschaaE4X';
+//            $configTwitter['oauth_token_secret'] = 'zdIrpUzuIs7llt5KLlx1TU1vWUrq28TkSNFUsschaaE4X';
 //            
-//            $config['output_format'] = 'object';
+//            $configTwitter['output_format'] = 'object';
              $config = new \Application\OAuth\Config();
-    $config->setConsumerKey('1bqpAfSWfZFuEeY3rbsKrw')
-           ->setConsumerSecret('wM0gGBCzZKl5dLRB8TQydRDfTD5ocf2hGRKSQwag')
+			$config->setConsumerKey($configTwitter['consumer_key'])
+           ->setConsumerSecret( $configTwitter['consumer_secret'])
            ->setRequestTokenUrl('https://api.twitter.com/oauth/request_token')
            ->setAuthorizeUrl('https://api.twitter.com/oauth/authenticate')
            ->setAccessTokenUrl('https://api.twitter.com/oauth/access_token')
-           ->setCallbackUrl('mem2/index/');
+           ->setCallbackUrl('http://memreas-dev-php-frontend.localhost/index/');
 $requestToken = new \Application\OAuth\Token\Request($config, true);
 session_start();
 $_SESSION['twitter_request_token'] = serialize($requestToken);

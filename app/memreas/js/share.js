@@ -13,7 +13,7 @@ var location_map = null;
 // geocoder object to get the location address from langtitude and longtitude
 var geocoder = null;
 
-var user_id   = "4b2c6d4c-42a7-11e3-85d4-22000a8a1935";				// signed user id
+var user_id   = $("input[name=user_id]").val();				// signed user id
 var event_id  = "";				// created event id
 var media_ids = [];				// array of selected media id
 var device_id = "";				// current device id
@@ -30,11 +30,17 @@ share_initObjects = function() {
 
 	// event function when click "media" tab
 	$('#tabs-share li:nth-child(2) a').on('click', function() {
+        if (event_id == ""){
+            return false;
+        }
 		share_getAllMedia();
 	});
 
 	// event function when click "Friends" tab
 	$('#tabs-share li:nth-child(3) a').on('click', function() {        
+        if (event_id == ""){
+            return false;
+        }
 		share_changeSocialType();
 	});
 	
@@ -77,7 +83,7 @@ share_changeSocialType = function() {
 			
 		case "twitter":
 			if (tw_friendsInfo == null) {
-				twitter_getFriendList();
+				twitter_getFriendList();                
 			}
 			else
 				share_addFriends(tw_friendsInfo);
@@ -93,7 +99,9 @@ share_customScrollbar = function () {
 	$("#tab-content-share div:first").fadeIn(); // Show first tab content*/
 	
 	$('#tabs-share a').click(function(e) {
-		
+		if (event_id == ""){
+            return false;
+        }
 		e.preventDefault();        
 		$("#tab-content-share div.hideCls").hide(); //Hide all content
 		$("#tabs-share li").attr("id",""); //Reset id's
@@ -248,12 +256,12 @@ share_initGoogleMap = function(div_id) {
 						location_map.setCenter(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
 				}, 
 				function(error) {
-					alert(err_msg);
+					jerror(err_msg);
 				},
 				geoPositionOptions
 			);	
 		} else {
-			alert(err_msg);
+			jerror(err_msg);
 		}
 	}
 }
@@ -262,7 +270,7 @@ share_initGoogleMap = function(div_id) {
 share_addEvent = function() {
 	var name = getElementValue('txt_name');
 	if (name == "") {
-		alert("You have to input the name.");
+		jerror("You have to input the name.");
 		return;
 	}
 
@@ -301,24 +309,52 @@ share_addEvent = function() {
 			event_id = getValueFromXMLTag(ret_xml, 'event_id');
 			
 			if (status.toLowerCase() == 'success') {
-				alert(event_id + ' was registered successfully.');
+				jsuccess('Event "' + name + '" was registered successfully.');
 				share_gotoPage(SHAREPAGE_TAB_MEDIA);
 			}
 			else {
-				alert(message);
+				jerror(message);
 			}
 		}
 	);
 }
 
 // clear all fields on details page when click "cancel" button.
-share_clearMemreas = function() {
-	var i = 0;
-	var text_ids 	 = ['txt_name', 'txt_location', 'dtp_date', 'dtp_from', 'dtp_to', 'dtp_selfdestruct'];
-	var checkbox_ids = ['ckb_canpost', 'ckb_canadd', 'ckb_public', 'ckb_viewable', 'ckb_selfdestruct'];
+share_clearMemreas = function(confirmed) {
+    if (confirmed){
+	    var i = 0;
+	    var text_ids 	 = ['txt_name', 'txt_location', 'dtp_date', 'dtp_from', 'dtp_to', 'dtp_selfdestruct'];
+	    var checkbox_ids = ['ckb_canpost', 'ckb_canadd', 'ckb_public', 'ckb_viewable', 'ckb_selfdestruct'];
 
-	clearTextField(text_ids);
-	clearCheckBox(checkbox_ids);
+	    clearTextField(text_ids);
+	    clearCheckBox(checkbox_ids);
+        $("#tabs-share li:eq(0) a").click();
+        event_id = "";
+    }
+    else{
+        jNotify(
+        '<div class="notify-box"><p>Are you sure want to restart progress?</p><a href="javascript:;" class="btn" onclick="share_clearMemreas(true);">OK</a>&nbsp;<a href="javascript:;" class="btn" onclick="$.jNotify._close();">Close</a></div>',
+        {
+          autoHide : false, // added in v2.0
+          clickOverlay : true, // added in v2.0
+          MinWidth : 250,
+          TimeShown : 3000,
+          ShowTimeEffect : 200,
+          HideTimeEffect : 0,
+          LongTrip :20,
+          HorizontalPosition : 'center',
+          VerticalPosition : 'top',
+          ShowOverlay : true,
+          ColorOverlay : '#FFF',
+          OpacityOverlay : 0.3,
+          onClosed : function(){ // added in v2.0
+           
+          },
+          onCompleted : function(){ // added in v2.0
+           
+          }
+        });
+    }
 }
 
 // click event function for "public (anyone can add or post)" checkbox.
@@ -331,15 +367,15 @@ share_clickCkbPublic = function() {
 
 // go to the other page (1: memreas details, 2: media, 3: friends)
 share_gotoPage = function(tab_no) {
-	$('#tabs li:nth-child(' + tab_no + ') a').click();
+	$('#tabs-share li:nth-child(' + tab_no + ') a').click();
 }
 
 // add the comment to Media when click "next" button on the Media Page.
 share_addComment = function() {
 	ar_stop();
-	//ar_saveAudio();
-
-	share_uploadMedias(function() {
+	//ar_saveAudio();    
+    if (media_ids.length <= 0) jerror ("There is no media selected");
+	share_uploadMedias(function() {        
 		var comments 	= getElementValue('txt_comment');
 		var media_id	= "";
 		
@@ -358,21 +394,21 @@ share_addComment = function() {
 				{ tag: 'comments', 				value: comments },
 				{ tag: 'audio_media_id', 		value: audio_media_id }
 			],
-			function(ret_xml) {
+			function(ret_xml) {                
 				// parse the returned xml.
 				var status   = getValueFromXMLTag(ret_xml, 'status');
 				var message  = getValueFromXMLTag(ret_xml, 'message');
 				
 				if (status.toLowerCase() == 'success') {
-					alert('comments was added successfully.');
-					share_gotoPage(SHAREPAGE_TAB_FRIENDS);
+					jsuccess('comments was added successfully.');
+					share_gotoPage(SHAREPAGE_TAB_FRIENDS);                    
 				}
-				else {
-					alert(message);
+				else {                    
+					jerror(message);
 				}
 			}
 		);
-	});
+	});    
 }
 
 share_uploadMedias = function(success) {
@@ -406,8 +442,11 @@ share_uploadMedias = function(success) {
 				if (status.toLowerCase() == 'success') {
 					media_ids[count++] = id;
 					if (count == selMediaList.length) {
-						if (typeof success != "undefined")
-							success();
+						if (typeof success != "undefined"){
+							//success();
+                            jsuccess('comments was added successfully.');
+                            share_gotoPage(SHAREPAGE_TAB_FRIENDS);       
+                        }
 					}
 				}
 				else {
@@ -433,7 +472,7 @@ share_clearMedia = function() {
 share_getAllMedia = function() {
 	var _video_extensions = "mp4 wmv mov";
 
-	// send the request.
+	// send the request.    
 	ajaxRequest(
 		'listallmedia',
 		[
@@ -443,8 +482,8 @@ share_getAllMedia = function() {
 			{ tag: 'limit', 				value: media_limit_count },
 			{ tag: 'page', 					value: media_page_index }
 		],
-		function(json) {
-			json = $.xml2json(json, true);
+		function(json) {                       
+			json = $.xml2json(json, true);                   
 			if (json.listallmediaresponse[0].medias[0].status[0].text == "Success") {
 			  	var data = json.listallmediaresponse[0].medias[0].media;
                // if ($("#share_medialist").hasClass ('mCSB_container')){
@@ -453,7 +492,7 @@ share_getAllMedia = function() {
                 else{
                     var mediaList = $("#share_medialist");                    
                 }*/
-			  	//mediaList.empty();
+			  	mediaList.empty();
 			  	for (var json_key in data) {
 				 	var _media_url = data[json_key].main_media_url[0].text;
 				 	var _media_extension = _media_url.substr(_media_url.length - 3);
@@ -479,6 +518,7 @@ share_getAllMedia = function() {
 			  	
 			  	ar_start();
 			}
+            else jerror (json.listallmediaresponse[0].medias[0].message[0].text);
 		}
 	);
 }
@@ -593,10 +633,10 @@ share_makeGroup = function() {
 			var message  = getValueFromXMLTag(ret_xml, 'message');
 			
 			if (status.toLowerCase() == 'success') {
-				alert('group was created successfully.');
+				jsuccess('group was created successfully.');
 			}
 			else {
-				alert(message);
+				jerror(message);
 			}
 		}
 	);

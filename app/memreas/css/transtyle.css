@@ -46,3 +46,12 @@ ul.edit-area-scroll{ height: 270px; }
         margin-left: 7%;
     }
 }
+.notify-box a.btn{
+    padding: 2px 20px;
+    background: #A9C1EC;
+    border-radius: 2px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+}
+.event-upload-image{ height: 320px; }
+.upload-event-buttons{ padding: 25px; }

@@ -1,6 +1,14 @@
 /*
 * Server side
 */
+
+
+//Check if user not logged
+$(function(){
+    if ($("input[name=user_id]").val() == "")
+        document.location.href = "/index";
+});
+
 /*Preload for server media*/
 jQuery.fetch_server_media = function (user_id){
     $(".user-resources, .edit-area").remove();
@@ -33,8 +41,7 @@ jQuery.fetch_server_media = function (user_id){
       success: function(json){
           json = $.xml2json(json, true);
           if (json.listallmediaresponse[0].medias[0].status[0].text == "Success") {
-              var data = json.listallmediaresponse[0].medias[0].media;
-              console.log(data);
+              var data = json.listallmediaresponse[0].medias[0].media;              
               $(".user-resources, .scrollClass .mCSB_container, .sync-content .scrollClass").html('');
               for (var json_key in data){
                  var _media_url = data[json_key].main_media_url[0].text;
@@ -110,4 +117,40 @@ jQuery.fetch_server_media = function (user_id){
       }
     });
     return false;
+}
+
+/* Notification */
+$.loadUserNotification = function(){
+    var user_id = $("input[name=user_id]").val();    
+    //Send request to server
+    ajaxRequest(
+        'listnotification',
+        [
+            { tag: 'user_id',                     value: user_id },          
+        ],
+        function(ret_xml) {
+            // parse the returned xml.
+            var json_parse =  $.xml2json(ret_xml, true);            
+            var notifications = json_parse.listnotificationresponse[0].notifications[0].notification;
+            $(".notificationresults .mCSB_container").empty();
+            for (json_key  in notifications){
+                if ($(".notificationresults").hasClass ("mCustomScrollbar")){                
+                    $(".notificationresults .mCSB_container").append('<div class="notification accept"><div class="notification_pro"><img src="/memreas/img/profile-pic.jpg"></div>' + notifications[json_key].meta[0].text + '</div>');                    
+                }
+                else {
+                    $(".notificationresults").append('<div class="notification accept"><div class="notification_pro"><img src="/memreas/img/profile-pic.jpg"></div>' + notifications[json_key].meta[0].text + '</div>');                     
+                }
+            }
+        }
+    );
+   if (!($(".notificationresults").hasClass("mCustomScrollbar"))){
+       $(".notificationresults").mCustomScrollbar({scrollButtons:{enable:true }});
+   }
+   $(".notificationresults").mCustomScrollbar("update");
+}
+
+function showNotification(){
+    $(".tabcontent-detail").hide();
+    $.loadUserNotification();
+    $(".notification-area").show();
 }

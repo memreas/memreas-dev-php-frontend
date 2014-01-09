@@ -22,11 +22,10 @@ twitter_authorization = function() {
 	$.oauthpopup({
 		path: 'twitter',
 		callback: function(){
-			window.location.reload();
+			//window.location.reload();       
 		}
-	});
-    
-	return;
+	});     
+	//return;
 
 	var tKBase64 =  btoa(TWITTER_KEY + ":" + TWITTER_SECRETCODE);
 	
@@ -35,6 +34,7 @@ twitter_authorization = function() {
 			beforeSend: function (xhr, settings) {
 				xhr.withCredentials = true;
 				xhr.setRequestHeader('Authorization', 'Basic ' + tKBase64);
+                xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
 			},
 			type: "POST",
 			data: { "grant_type" : "client_credentials"},
@@ -43,6 +43,7 @@ twitter_authorization = function() {
 			success: function(data) {
 				twitterToken = data.access_token;
 				twitter_getAllFriends();
+                $('#loadingpopup').hide();
 			},
 			fail: function(data) {
 				console.log(data);
@@ -54,7 +55,7 @@ twitter_authorization = function() {
 	}
 }
 		
-twitter_getAllFriends = function() {
+twitter_getAllFriends = function() {    
 	if (twitterToken != null)
 	{
 		$.ajax({
