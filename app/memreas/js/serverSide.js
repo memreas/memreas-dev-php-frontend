@@ -41,7 +41,7 @@ jQuery.fetch_server_media = function (user_id){
       success: function(json){
           json = $.xml2json(json, true);
           if (json.listallmediaresponse[0].medias[0].status[0].text == "Success") {
-              var data = json.listallmediaresponse[0].medias[0].media;              
+              var data = json.listallmediaresponse[0].medias[0].media;
               $(".user-resources, .scrollClass .mCSB_container, .sync-content .scrollClass").html('');
               for (var json_key in data){
                  var _media_url = data[json_key].main_media_url[0].text;
@@ -51,39 +51,33 @@ jQuery.fetch_server_media = function (user_id){
                 var _found = _video_extensions.indexOf (_media_extension);
                 if (_found > -1){
                         $.post('/index/buildvideocache', {video_url:_media_url, thumbnail:data[json_key].event_media_video_thum[0].text, media_id:data[json_key].media_id[0].text}, function(response_data){
-                            response_data = JSON.parse (response_data);                            
+                            response_data = JSON.parse (response_data);
                             $(".user-resources").append('<a data-video="true" href="/memreas/js/jwplayer/jwplayer_cache/' + response_data.video_link + '"><img src="' + response_data.thumbnail + '"/></a>');
-                            $(".edit-area-scroll .first-element").append ('<li><a class="swipebox" id="' + response_data.media_id + '" onclick="return imageChoosed(this.id);" href="' + response_data.thumbnail + '"><img src="' + response_data.thumbnail + '"/></a></li>');
-                            
-                            //For memreas tab
-                            if ($("#memreas-tab1 .scroll-area").hasClass ("mCSB_container"))
-                                $("#memreas-tab1 .mCSB_container").append ('<li><a class="swipebox" id="' + response_data.media_id + '" href="' + response_data.thumbnail + '" title="My Gallery"><img src="' + response_data.thumbnail + '"/></a></li>');
-                            else $("#memreas-tab1 .scroll-area").append ('<li><a class="swipebox" id="' + response_data.media_id + '" href="' + response_data.thumbnail + '" title="My Gallery"><img src="' + response_data.thumbnail + '"/></a></li>');
+                            $(".edit-area-scroll .first-element").append ('<li><a class="image-sync" id="' + response_data.media_id + '" onclick="return imageChoosed(this.id);" href="' + response_data.thumbnail + '"><img src="' + response_data.thumbnail + '"/></a></li>');
                         });
                 }
                 else {
                     $(".user-resources").append('<img src="' + _media_url + '"/>');
-                    $(".edit-area-scroll .first-element").append ('<li><a class="image-sync swipebox" id="' + data[json_key].media_id[0].text + '" onclick="return imageChoosed(this.id);" href="' + _media_url + '"><img src="' + _media_url + '"/></a></li>');
-                    
-                    //For memreas tab
-                    if ($("#memreas-tab1 .scroll-area").hasClass ("mCSB_container"))
-                        $("#memreas-tab1 .mCSB_container").append ('<li><a class="swipebox" id="' + data[json_key].media_id[0].text + '" href="' + _media_url + '" title="My Gallery"><img src="' + _media_url + '"/></a></li>');
-                    else $("#memreas-tab1 .scroll-area").append ('<li><a class="swipebox" id="' + data[json_key].media_id[0].text + '" href="' + _media_url + '" title="My Gallery"><img src="' + _media_url + '"/></a></li>');
+                    $(".edit-area-scroll .first-element").append ('<li><a class="image-sync" id="' + data[json_key].media_id[0].text + '" onclick="return imageChoosed(this.id);" href="' + _media_url + '"><img src="' + _media_url + '"/></a></li>');
+
                 }
               }
-              setTimeout(function(){ 
-                  $(".user-resources").fotorama({width: '100%', height: '500px'});                  
-                  $(".edit-area-scroll").mCustomScrollbar({
-                        scrollButtons:{
-                            enable:true
-                        }
-                    });
+              setTimeout(function(){
+                  $(".user-resources").fotorama({width: '100%', height: '500px'});
+                  if (!$(".edit-area-scroll").hasClass ('mCustomScrollbar')){
+                      $(".edit-area-scroll").mCustomScrollbar({
+                            scrollButtons:{
+                                enable:true
+                            }
+                        });
+                  }
+                  $(".edit-area-scroll").mCustomScrollbar ('update');
               }, 1000);
               $(".swipebox").swipebox();
           }
           $("#loadingpopup").hide();
           //If there is no image
-          if ($(".user-resources").html() == ''){               
+          if ($(".user-resources").html() == ''){
                jNotify(
                 'There is no media on your account! Please use upload tab on leftside you can add some resources!',
                 {
@@ -100,12 +94,12 @@ jQuery.fetch_server_media = function (user_id){
                   ColorOverlay : '#000',
                   OpacityOverlay : 0.3,
                   onClosed : function(){ // added in v2.0
-                   
+
                   },
                   onCompleted : function(){ // added in v2.0
-                   
+
                   }
-                });              
+                });
           }
           return true;
       },
@@ -120,37 +114,49 @@ jQuery.fetch_server_media = function (user_id){
 }
 
 /* Notification */
-$.loadUserNotification = function(){
-    var user_id = $("input[name=user_id]").val();    
-    //Send request to server
-    ajaxRequest(
-        'listnotification',
-        [
-            { tag: 'user_id',                     value: user_id },          
-        ],
-        function(ret_xml) {
-            // parse the returned xml.
-            var json_parse =  $.xml2json(ret_xml, true);            
-            var notifications = json_parse.listnotificationresponse[0].notifications[0].notification;
-            $(".notificationresults .mCSB_container").empty();
-            for (json_key  in notifications){
-                if ($(".notificationresults").hasClass ("mCustomScrollbar")){                
-                    $(".notificationresults .mCSB_container").append('<div class="notification accept"><div class="notification_pro"><img src="/memreas/img/profile-pic.jpg"></div>' + notifications[json_key].meta[0].text + '</div>');                    
-                }
-                else {
-                    $(".notificationresults").append('<div class="notification accept"><div class="notification_pro"><img src="/memreas/img/profile-pic.jpg"></div>' + notifications[json_key].meta[0].text + '</div>');                     
+$(function(){
+    $("a.notification_icon").click(function(){
+        var user_id = $("input[name=user_id]").val();
+        //Send request to server
+        ajaxRequest(
+            'listnotification',
+            [
+                { tag: 'user_id', value: user_id },
+            ],
+            function(ret_xml) {
+                // parse the returned xml.
+                var json_parse =  $.xml2json(ret_xml, true);
+                var notifications = json_parse.listnotificationresponse[0].notifications[0].notification;
+                if ($(".notificationresults").hasClass ("mCustomScrollbar"))
+                    $(".notificationresults .mCSB_container").empty();
+                for (json_key in notifications){
+                    if ($(".notificationresults").hasClass ("mCustomScrollbar")){
+                        $(".notificationresults .mCSB_container").append('<li class="notification accept"><div class="notification_pro"><img src="/memreas/img/profile-pic.jpg"></div>' + notifications[json_key].meta[0].text + '</li>');
+                    }
+                    else {
+                        $(".notificationresults").append('<li class="notification accept"><div class="notification_pro"><img src="/memreas/img/profile-pic.jpg"></div>' + notifications[json_key].meta[0].text + '</li>');
+                    }
                 }
             }
-        }
-    );
-   if (!($(".notificationresults").hasClass("mCustomScrollbar"))){
-       $(".notificationresults").mCustomScrollbar({scrollButtons:{enable:true }});
-   }
-   $(".notificationresults").mCustomScrollbar("update");
-}
+        );
+       if (!($(".notificationresults").hasClass("mCustomScrollbar"))){
+           $(".notificationresults").mCustomScrollbar({scrollButtons:{enable:true }});
+       }
+       $(".notificationresults").mCustomScrollbar("update");
+       $(".notificationresults").mCustomScrollbar("scrollTo","first");
+       $('#loadingpopup').hide();
+       jsuccess ("Notification loaded");
+       $(".tabcontent-detail").hide();
+       $(".notification-area").show();
+      // if (!($(".notificationresults").find ('.mCSB_scrollTools').is (":visible"))) $("a.notification_icon").click();
+    });
+});
 
-function showNotification(){
-    $(".tabcontent-detail").hide();
-    $.loadUserNotification();
-    $(".notification-area").show();
+function notification_status_to_class(status_code){
+    switch (status_code){
+        case 0: return 'request';
+        case 1: return 'accepted';
+        case 2: return 'ignored';
+        default: return '';
+    }
 }

@@ -683,7 +683,7 @@ ul.pics {
 	padding: 0;
 	overflow: auto;
 	height: 290px;
-	margin-top: 10px;    
+	margin-top: 10px;
 }
 ul.pics li {
 	width: 14%;
@@ -696,7 +696,7 @@ ul.pics li {
     background: #FFF;
 }
 ul.event_images li {
-	width: 17%;
+	width: 120px;
 	border: 1px #d6d6d6 solid;
 	float: left;
 	margin: 10px 10px 30px 10px;
@@ -912,7 +912,7 @@ a.black_btn_skin:hover, a.black_btn_skin:active {
 	-moz-border-radius: 10px 0 0 0;
 	border-radius: 10px 0 0 0;
 }
-#tabs #current a, #tabs #current a::after, #tabs #current a::before, 
+#tabs #current a, #tabs #current a::after, #tabs #current a::before,
 #tabs-queue #current a, #tabs-queue #current a::after, #tabs-queue #current a::before,
 #tabs-share #current a, #tabs-share #current a::after, #tabs-share #current a::before,
 #tabs-memreas #current a, #tabs-memreas #current a::after, #tabs-memreas #current a::before {

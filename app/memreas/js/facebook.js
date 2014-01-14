@@ -20,7 +20,7 @@ sortMethod = function(a, b) {
 facebook_getFriendList = function() {
 	$('#loadingpopup').show();
 	FB.init({ appId: FACEBOOK_APPID,
-		status: true, 
+		status: true,
 		cookie: true,
 		xfbml: true,
 		oauth: true
@@ -44,7 +44,7 @@ facebook_getFriendList = function() {
 			FB.api('/me/friends?limit=' + FACEBOOK_FRIENDSLIMIT, function(response) {
 				var i = 0, info = response.data.sort(sortMethod);
 				fb_friendsInfo = [];
-				
+
 				for (i = 0; i < info.length; i++) {
 					fb_friendsInfo[i] = {
 						'id': 		info[i].id,
@@ -54,7 +54,7 @@ facebook_getFriendList = function() {
 						'selected':	false
 					}
 				}
-				
+
 				share_addFriends(fb_friendsInfo);
 				$('#loadingpopup').hide();
 			});
@@ -63,12 +63,30 @@ facebook_getFriendList = function() {
 			$('#loadingpopup').hide();
 		}
 	}
-	
+
 	// run once with current status and whenever the status changes
 	FB.getLoginStatus(getFacebookInfo);
-	
+
 	FB.login(function(response) {
 		if (response.authResponse) {
+        // get friends
+            FB.api('/me/friends?limit=' + FACEBOOK_FRIENDSLIMIT, function(response) {
+                var i = 0, info = response.data.sort(sortMethod);
+                fb_friendsInfo = [];
+
+                for (i = 0; i < info.length; i++) {
+                    fb_friendsInfo[i] = {
+                        'id':         info[i].id,
+                        'div_id':    'fb_' + i,
+                        'name':     info[i].name,
+                        'photo':     'https://graph.facebook.com/' + info[i].id + '/picture',
+                        'selected':    false
+                    }
+                }
+
+                share_addFriends(fb_friendsInfo);
+                $('#loadingpopup').hide();
+            });
 		}
 		else {
 			$('#loadingpopup').hide();

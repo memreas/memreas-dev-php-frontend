@@ -36,7 +36,7 @@ class IndexController extends AbstractActionController
     protected $eventTable;
     protected $mediaTable;
     protected $friendmediaTable;
-    
+
     public function fetchXML($action, $xml) {
 		$guzzle = new Client();
 
@@ -173,9 +173,9 @@ error_log("Exit indexAction".PHP_EOL);
 		return $view;
     }
 
-    public function galleryAction() { 
+    public function galleryAction() {
         /*
-        $S3Service = new S3Service();  
+        $S3Service = new S3Service();
         $data['bucket'] = 'memreasdev';
         $data['folder'] = '7f84baa8-430c-11e3-85d4-22000a8a1935/image/';
         //$data['user_id'] = $session->offsetGet('user_id') . '/image';
@@ -188,27 +188,27 @@ error_log("Exit indexAction".PHP_EOL);
         */
         $action = 'getsession';
         $xml = "<xml><getsession><sid>1</sid></getsession></xml>";
-        
+
         //Guzzle the LoginWeb Service
         $user = $this->fetchXML($action, $xml);
         $userid = explode ("<userid>", $user);
-        $data['userid'] = explode ("</userid>", $userid['2']);            
-        $data['userid'] = trim ($data['userid'][0]);          
+        $data['userid'] = explode ("</userid>", $userid['2']);
+        $data['userid'] = trim ($data['userid'][0]);
         $data['bucket'] = "memreasdev";
         $data['accesskey'] = "AKIAJMXGGG4BNFS42LZA";
         $data['secret'] = "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";
-        
+
         $data['base64Policy'] = base64_encode($this->getS3Policy($data['bucket']));
         $data['signature'] = $this->hex2b64($this->hmacsha1($data['secret'], $data['base64Policy']));
-        
+
 	    $path = $this->security("application/index/gallery.phtml");
 
 		$action = 'listallmedia';
 		$session = new Container('user');
-        
+
         /*
         $action = 'getsession';
-        $xml = "<xml><getsession><sid>1</sid></getsession></xml>";        
+        $xml = "<xml><getsession><sid>1</sid></getsession></xml>";
         //Guzzle the LoginWeb Service
         $result = $this->fetchXML($action, $xml);
         echo "<pre>"; print_r ($result);    echo "</pre>"; die();
@@ -223,7 +223,7 @@ error_log("Exit indexAction".PHP_EOL);
     }
 
     public function s3uploadAction(){
-        $S3Service = new S3Service();        
+        $S3Service = new S3Service();
         $session = new Container('user');
         $data['bucket'] = 'memreasdev';
         $data['folder'] = $session->offsetGet('user_id') . '/image/';
@@ -238,18 +238,18 @@ error_log("Exit indexAction".PHP_EOL);
         $path = $this->security("application/index/s3upload.phtml");
         $view->setTemplate($path);
         return $view;
-    }  
+    }
     public function addmediaAction(){
-        $session = new Container('user');                  
-        $s3 = new S3('AKIAJMXGGG4BNFS42LZA', 'xQfYNvfT0Ar+Wm/Gc4m6aacPwdT5Ors9YHE/d38H');                
-        $target_path = '/' . '7f84baa8-430c-11e3-85d4-22000a8a1935' . '/image/' . $_FILES['upl']['name'];                 
-        $s3->putBucket('memreasdev', S3::ACL_PUBLIC_READ);        
+        $session = new Container('user');
+        $s3 = new S3('AKIAJMXGGG4BNFS42LZA', 'xQfYNvfT0Ar+Wm/Gc4m6aacPwdT5Ors9YHE/d38H');
+        $target_path = '/' . '7f84baa8-430c-11e3-85d4-22000a8a1935' . '/image/' . $_FILES['upl']['name'];
+        $s3->putBucket('memreasdev', S3::ACL_PUBLIC_READ);
         if ($s3->putObjectFile($_FILES['upl']['tmp_name'], 'memreasdev', $target_path, S3::ACL_PUBLIC_READ, array(), 'image/jpeg')){
             echo "run here";
             $ws_action = "addmediaevent";
             $xml = "<xml><addmediaevent><s3url>http://s3.amazonaws.com/memreasdev/" . '7f84baa8-430c-11e3-85d4-22000a8a1935' . '/image/' . $_FILES['upl']['name'] . "</s3url><is_server_image>0</is_server_image><content_type>" . $_FILES['upl']['type'] . "</content_type><s3file_name>" . $_FILES['upl']['name'] . "</s3file_name><device_id></device_id><event_id></event_id><media_id></media_id><user_id>" . $session->offsetGet('user_id') . "</user_id><is_profile_pic>0</is_profile_pic><location></location></addmediaevent></xml>";
             $result = $this->fetchXML($ws_action, $xml);
-            echo '{"status":"success", "filepath":"http://s3.amazonaws.com/memreasdev/"' . '7f84baa8-430c-11e3-85d4-22000a8a1935' . '/image/' . $_FILES['upl']['name'] . '}';            
+            echo '{"status":"success", "filepath":"http://s3.amazonaws.com/memreasdev/"' . '7f84baa8-430c-11e3-85d4-22000a8a1935' . '/image/' . $_FILES['upl']['name'] . '}';
         }
         else echo '{"status":"error"}';
         die();
@@ -272,10 +272,10 @@ error_log("Exit indexAction".PHP_EOL);
     public function twitterAction() {
             $configTwitter['consumer_key'] = '1bqpAfSWfZFuEeY3rbsKrw';
             $configTwitter['consumer_secret'] = 'wM0gGBCzZKl5dLRB8TQydRDfTD5ocf2hGRKSQwag';
-	
+
 //            //$config['oauth_token'] = '74094832-mnJlYPt02qpy1jhEYAYPMKAzrLF2jTeMiJue65Zn7';
 //            $configTwitter['oauth_token_secret'] = 'zdIrpUzuIs7llt5KLlx1TU1vWUrq28TkSNFUsschaaE4X';
-//            
+//
 //            $configTwitter['output_format'] = 'object';
              $config = new \Application\OAuth\Config();
 			$config->setConsumerKey($configTwitter['consumer_key'])
@@ -283,7 +283,7 @@ error_log("Exit indexAction".PHP_EOL);
            ->setRequestTokenUrl('https://api.twitter.com/oauth/request_token')
            ->setAuthorizeUrl('https://api.twitter.com/oauth/authenticate')
            ->setAccessTokenUrl('https://api.twitter.com/oauth/access_token')
-           ->setCallbackUrl('http://memreas-dev-php-frontend.localhost/index/');
+           ->setCallbackUrl('http://memreas-dev-php-frontend.localhost/index/twitter');
 $requestToken = new \Application\OAuth\Token\Request($config, true);
 session_start();
 $_SESSION['twitter_request_token'] = serialize($requestToken);
@@ -468,7 +468,7 @@ error_log("Inside setSession set user data...");
 
 		//Guzzle the LoginWeb Service
 		$result = $this->fetchXML($action, $xml);
-        
+
         $data = simplexml_load_string($result);
         echo json_encode($data);
          return '';
@@ -476,19 +476,19 @@ error_log("Inside setSession set user data...");
 	public function changepasswordAction() {
          	$request = $this->getRequest();
 		$postData = $request->getPost()->toArray();
-		
+
  		$new = isset($postData ['new'])?$postData ['new']:'';
 		$retype = isset($postData ['reytpe'])?$postData ['reytpe']:'';
 		$token = isset($postData ['token'])?$postData ['token']:'';
-		
+
 	 	//Setup the URL and action
 		$action = 'forgotpassword';
-		$xml = "<xml><changepassword><new>$new</new><retype>$retype</retype><token>$token</token></changepassword></xml>";  
+		$xml = "<xml><changepassword><new>$new</new><retype>$retype</retype><token>$token</token></changepassword></xml>";
 		//$redirect = 'gallery';
 
 		//Guzzle the LoginWeb Service
 		$result = $this->fetchXML($action, $xml);
-        
+
         $data = simplexml_load_string($result);
         echo json_encode($data);
          return '';
@@ -523,12 +523,12 @@ error_log("Inside setSession set user data...");
 		return $path;
         //return $this->redirect()->toRoute('index', array('action' => 'login'));
     }
-    
-    
+
+
     /*For S3*/
     private function getS3Policy()
     {
-        $now = strtotime(date("Y-m-d\TG:i:s")); 
+        $now = strtotime(date("Y-m-d\TG:i:s"));
         $expire = date('Y-m-d\TG:i:s\Z', strtotime('+30 minutes', $now));
         $policy='{
                     "expiration": "' . $expire . '",
