@@ -13,13 +13,13 @@ var location_map = null;
 // geocoder object to get the location address from langtitude and longtitude
 var geocoder = null;
 
-var user_id = '';				// signed user id
+var user_id = $("input[name=user_id]").val();				// signed user id
 var event_id  = "";				// created event id
 var media_ids = [];				// array of selected media id
 var device_id = "";				// current device id
 
-var media_page_index  = 1;		// page index number for media
-var media_limit_count = 200;	// limit count of media
+var media_page_index  = '1';		// page index number for media
+var media_limit_count = '200';	// limit count of media
 
 var friendList = null;
 
@@ -437,15 +437,15 @@ share_addComment = function() {
 function fetch_selected_media(){
     var media_id_list = new Array();
     var count = 0;
-    $("ul#share_medialist img.setchoosed").each (function(){
-        media_id_list[++count] = $(this).parent ('a').attr ('id');
+    $("ul#share_medialist li.setchoosed").each (function(){
+        media_id_list[++count] = $(this).find ('a').attr ('id');
     });
     return media_id_list;
 }
 
 share_uploadMedias = function(success) {
 	var count = 0;
-	var selMediaList = $("#share_medialist .mCSB_container li a .setchoosed");
+	var selMediaList = $("#share_medialist .mCSB_container li.setchoosed img");
 
 	for (i = 0; i < selMediaList.length; i++) {
 		var img_url 	 = selMediaList[i].src;
@@ -509,7 +509,8 @@ share_getAllMedia = function() {
 	ajaxRequest(
 		'listallmedia',
 		[
-			{ tag: 'event_id', 				value: event_id },
+            //{ tag: 'event_id',                 value: event_id },
+			{ tag: 'event_id', 				value: '' },
 			{ tag: 'user_id', 				value: user_id },
 			{ tag: 'device_id', 			value: device_id },
 			{ tag: 'limit', 				value: media_limit_count },
@@ -521,11 +522,11 @@ share_getAllMedia = function() {
 			  	var data = json.listallmediaresponse[0].medias[0].media;
                // if ($("#share_medialist").hasClass ('mCSB_container')){
 			  	    var mediaList = $("#share_medialist .mCSB_container");
-               /* }
-                else{
-                    var mediaList = $("#share_medialist");
-                }*/
-			  	mediaList.empty();
+                //}
+                //else{
+                //    var mediaList = $("#share_medialist");
+               // }
+			  	//mediaList.empty();
 			  	for (var json_key in data) {
 				 	var _media_url = data[json_key].main_media_url[0].text;
 				 	var _media_extension = _media_url.substr(_media_url.length - 3);
@@ -535,11 +536,11 @@ share_getAllMedia = function() {
 					if (_found > -1) {
 						$.post('/index/buildvideocache', {video_url:_media_url, thumbnail:data[json_key].event_media_video_thum[0].text, media_id:data[json_key].media_id[0].text}, function(response_data){
 							response_data = JSON.parse(response_data);
-                            mediaList.append ('<li><a class="swipebox" id="' + response_data.media_id + '" onclick="return imageChoosed(this.id);" href="' + response_data.thumbnail + '"><img src="' + response_data.thumbnail + '"/></a></li>');
+                            mediaList.append ('<li><a class="swipebox" id="share-' + response_data.media_id + '" onclick="return imageChoosed(this.id);" href="' + response_data.thumbnail + '"><img src="' + response_data.thumbnail + '"/></a></li>');
 						});
 					}
 					else {
-						mediaList.append ('<li><a class="swipebox" id="' + data[json_key].media_id[0].text + '" onclick="return imageChoosed(this.id);" href="' + _media_url + '"><img src="' + _media_url + '"/></a></li>');
+						mediaList.append ('<li><a class="swipebox" id="share-' + data[json_key].media_id[0].text + '" onclick="return imageChoosed(this.id);" href="' + _media_url + '"><img src="' + _media_url + '"/></a></li>');
 					}
 			  	}
                 if (!($("#share_medialist").hasClass ('mCSB_container'))){

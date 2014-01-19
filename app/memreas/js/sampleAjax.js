@@ -18,16 +18,16 @@ alert("Inside jQuery.sampleAjax");
     //var json_sampleAjax = JSON.stringify(xml_input, null, '\t');
     var data = "";
     var result = "";
-    
+
     //if () {}
     var data = new Object();
     data.ws_action = ws_action;
     data.type = "jsonp";
     data.json = xml_input;
     var json_data = JSON.stringify(data);
-   
+
 	$.ajax( {
-	  type:'post', 
+	  type:'post',
 	  url: wsurl,
 	  dataType: 'jsonp',
 	  data: 'json=' + json_data,

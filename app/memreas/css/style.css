@@ -691,9 +691,14 @@ ul.pics li {
 	float: left;
 	margin: 10px;
 	position:relative;
-    height: 120px;
+    height: 130px;
     overflow: hidden;
     background: #FFF;
+}
+ul.pics li a{
+    display: inline-block;
+    width: 100%;
+    height: 100%;
 }
 ul.event_images li {
 	width: 120px;
@@ -1807,8 +1812,9 @@ ul.group li {
 	padding: 0px 0px 0px 50px;
 	line-height: 50px;
 	margin: 20px 0px;
-	min-height: 50px;
+	height: 50px;
 }
+.notification img{ width: 55px; height: 55px; }
 .notification_pro{
 	width: 55px;
 	height: 55px;

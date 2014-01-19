@@ -1,6 +1,6 @@
 /*Tran developer will style here*/
 .row-choose-file{ position: relative; margin: 0 auto; width: 590px; }
-.setchoosed{ border: 2px solid yellow; }
+ul.pics li.setchoosed, img.setchoosed{ border: 1px solid #10FA2C; }
 .description{
     font-style: italic;
     font-size: 12px;
@@ -55,3 +55,4 @@ ul.edit-area-scroll{ height: 270px; }
 }
 .event-upload-image{ height: 320px; }
 .upload-event-buttons{ padding: 25px; }
+.event_img img{ widht: 80px; height: 70px; }

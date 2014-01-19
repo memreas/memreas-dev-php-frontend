@@ -142,8 +142,6 @@ error_log("Exit indexAction".PHP_EOL);
 
     public function sampleAjaxAction() {
 
-	    $path = $this->security("application/index/sample-ajax.phtml");
-
 		if (isset($_REQUEST['callback'])) {
 			//Fetch parms
 			$callback = $_REQUEST['callback'];
@@ -153,7 +151,6 @@ error_log("Exit indexAction".PHP_EOL);
 			$ws_action = $message_data['ws_action'];
 			$type = $message_data['type'];
 			$xml = $message_data['json'];
-
 			//Guzzle the LoginWeb Service
 			$result = $this->fetchXML($ws_action, $xml);
 
@@ -166,6 +163,7 @@ error_log("Exit indexAction".PHP_EOL);
 			//Need to exit here to avoid ZF2 framework view.
 			exit;
 		} else {
+            $path = $this->security("application/index/sample-ajax.phtml");
 			$view = new ViewModel();
 			$view->setTemplate($path); // path to phtml file under view folder
 		}
@@ -283,7 +281,7 @@ error_log("Exit indexAction".PHP_EOL);
            ->setRequestTokenUrl('https://api.twitter.com/oauth/request_token')
            ->setAuthorizeUrl('https://api.twitter.com/oauth/authenticate')
            ->setAccessTokenUrl('https://api.twitter.com/oauth/access_token')
-           ->setCallbackUrl('http://memreas-dev-php-frontend.localhost/index/twitter');
+           ->setCallbackUrl('http://memreas-dev-php-frontend.localhost/index/');
 $requestToken = new \Application\OAuth\Token\Request($config, true);
 session_start();
 $_SESSION['twitter_request_token'] = serialize($requestToken);

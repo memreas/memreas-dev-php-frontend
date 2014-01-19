@@ -142,12 +142,13 @@ $(function(){
        if (!($(".notificationresults").hasClass("mCustomScrollbar"))){
            $(".notificationresults").mCustomScrollbar({scrollButtons:{enable:true }});
        }
-       $(".notificationresults").mCustomScrollbar("update");
-       $(".notificationresults").mCustomScrollbar("scrollTo","first");
        $('#loadingpopup').hide();
-       jsuccess ("Notification loaded");
        $(".tabcontent-detail").hide();
        $(".notification-area").show();
+       $(".notificationresults").mCustomScrollbar("update");
+       $(".notificationresults").mCustomScrollbar("scrollTo","first");
+       if ($(".notificationresults").find ('.mcs_no_scrollbar').length > 0)
+            $(".notificationresults").mCustomScrollbar("update");
       // if (!($(".notificationresults").find ('.mCSB_scrollTools').is (":visible"))) $("a.notification_icon").click();
     });
 });

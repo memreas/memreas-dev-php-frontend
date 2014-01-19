@@ -4,7 +4,7 @@
 /////////////////////////////////
 
 //var base_url = 'http://memreasdev.elasticbeanstalk.com/eventapp_zend2.1/webservices/index.php?';
-var wsurl = 'http://memreas-dev-php-frontend.localhost/index/sampleAjax';
+var wsurl = '/index/sampleAjax';
 var xml_str = "";
 
 //////////////////////////////////
@@ -14,13 +14,14 @@ ajaxRequest = function (action, params, success_func, error_func) {
     var data = "";
     var result = "";
 	var xml_input = getXMLStringFromParamArray(action, params);
+    //if (action == 'listallmedia') alert (xml_input);
     var data = new Object();
     data.ws_action = action;
     data.type = "jsonp";
     data.json = xml_input;
+    data.callback = '';
 
     var json_data = JSON.stringify(data);
-
    	$('#loadingpopup').show();
 	$.ajax( {
 	  	type:'post',
@@ -78,6 +79,7 @@ getXMLStringFromParamArray = function(action, params) {
 
         case "listallmedia":
         	action_tag = "listallmedia";
+            break;
 
         case "listnotification":
             action_tag = "listnotification";
@@ -88,6 +90,9 @@ getXMLStringFromParamArray = function(action, params) {
             break;
         case "addfriendtoevent":
             action_tag = "addfriendtoevent";
+            break;
+        case "viewevents":
+            action_tag = "viewevent";
             break;
 
 		default:

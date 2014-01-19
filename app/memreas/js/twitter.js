@@ -22,8 +22,7 @@ twitter_authorization = function() {
 	$.oauthpopup({
 		path: 'twitter',
 		callback: function(){
-            twitter_getAllFriends();
-			//window.location.reload();
+            //twitter_getAllFriends();
 		}
 	});
 	return;
