@@ -26,8 +26,8 @@ class IndexController extends AbstractActionController
 {
 
 	//Updated....
-	//protected $url = "http://memreasint.elasticbeanstalk.com/";
-    protected $url = "http://mem2/index.php/";
+	protected $url = "http://memreasint.elasticbeanstalk.com/";
+    //protected $url = "http://test/";
 	protected $test = "Hope this works!";
     //protected $url = "http://localhost/memreas-dev-php-ws/app/";
     protected $user_id;
@@ -38,6 +38,8 @@ class IndexController extends AbstractActionController
     protected $mediaTable;
     protected $friendmediaTable;
 
+    
+   
     public function fetchXML($action, $xml) {
 		$guzzle = new Client();
 
@@ -61,6 +63,7 @@ error_log("Exit fetchXML".PHP_EOL);
 	}
 
     public function indexAction() {
+       
 error_log("Enter indexAction".PHP_EOL);
  	    $path = $this->security("application/index/index.phtml");
 		$view = new ViewModel();
@@ -142,7 +145,7 @@ error_log("Exit indexAction".PHP_EOL);
     }
 
     public function sampleAjaxAction() {
-
+        
 		if (isset($_REQUEST['callback'])) {
 			//Fetch parms
 			$callback = $_REQUEST['callback'];
@@ -269,14 +272,16 @@ error_log("Exit indexAction".PHP_EOL);
     }
 
     public function twitterAction() {
-
+        $uri = $this->getRequest()->getUri();
+        $base = sprintf('%s://%s', $uri->getScheme(), $uri->getHost());
+       
         $config = new \Application\OAuth\Config();
         $config->setConsumerKey('1bqpAfSWfZFuEeY3rbsKrw')
             ->setConsumerSecret('wM0gGBCzZKl5dLRB8TQydRDfTD5ocf2hGRKSQwag')
             ->setRequestTokenUrl('https://api.twitter.com/oauth/request_token')
             ->setAuthorizeUrl('https://api.twitter.com/oauth/authenticate')
             ->setAccessTokenUrl('https://api.twitter.com/oauth/access_token')
-            ->setCallbackUrl($this->url.'index/twitter');
+            ->setCallbackUrl($base.'/index/twitter');
 
         if(!empty($_GET['oauth_token'])){
             $authorizeToken = new \Application\OAuth\Token\Authorize($_GET);
