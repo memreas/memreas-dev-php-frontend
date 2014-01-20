@@ -1,4 +1,4 @@
-<?php 
+<?php
 /////////////////////////////////
 // Author: John Meah
 // Copyright memreas llc 2013
@@ -7,9 +7,8 @@
 use Guzzle\Http\Client;
 use Zend\Session\Container;
 
-$session = new Container('user');        
+$session = new Container('user');
 $user_id = $session->offsetGet('user_id');
-print_r ($_SESSION);
 echo "user_id ----> " . $user_id;
 $domain = "http://d1ckv7o9k6o3x9.cloudfront.net/";
 
@@ -20,7 +19,7 @@ $domain = "http://d1ckv7o9k6o3x9.cloudfront.net/";
 <meta charset="utf-8">
 <title>memreas</title>
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
-  
+
 <!--jQuery Lybrary-->
 <!--
 <script src="/memreas/js/jquery.js"></script>
@@ -45,7 +44,7 @@ var user_id = "<?php echo $user_id; ?>";
     function onSubmitCallClicked() {
         jQuery.sampleAjax();
     }
-    
+
 </script>
 </head>
 <body>
@@ -92,7 +91,7 @@ var user_id = "<?php echo $user_id; ?>";
 			<td><input id="btnSubmit" type="button" name="ok" value="submit">
 		</tr>
 	</table>
-		
+
   </div>
 
 

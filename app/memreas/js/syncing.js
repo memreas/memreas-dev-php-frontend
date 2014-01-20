@@ -27,18 +27,40 @@ function success_addmedia(response){
     response = response.addmediaeventresponse[0].status[0].text;
     if (response == "Success")
         {
-            alert ("Media added success");
+            jSuccess(
+            'Media successfully added!',
+            {
+              autoHide : true, // added in v2.0
+              clickOverlay : false, // added in v2.0
+              MinWidth : 250,
+              TimeShown : 3000,
+              ShowTimeEffect : 200,
+              HideTimeEffect : 200,
+              LongTrip :20,
+              HorizontalPosition : 'center',
+              VerticalPosition : 'top',
+              ShowOverlay : true,
+                 ColorOverlay : '#FFF',
+              OpacityOverlay : 0.3,
+              onClosed : function(){ // added in v2.0
+
+              },
+              onCompleted : function(){ // added in v2.0
+
+              }
+            });
+            $.fetch_server_media($("input[name=user_id]").val());
         }
     else alert ("error while adding media");
 }
 function error_addmedia(){}
 
 /*function for sync tab image */
-function imageChoosed(media_id){    
-    if (jQuery("a#" + media_id + " img").hasClass ('setchoosed')){        
-        jQuery("a#" + media_id + " img").removeClass ('setchoosed');
+function imageChoosed(media_id){
+    if (jQuery("a#" + media_id).parent('li').hasClass ('setchoosed')){
+        jQuery("a#" + media_id).parent('li').removeClass ('setchoosed');
     }
-    else jQuery("a#" + media_id + " img").addClass ('setchoosed');
+    else jQuery("a#" + media_id).parent('li').addClass ('setchoosed');
     return false;
 }
 
@@ -46,32 +68,49 @@ function deleteFiles(){
     var confirm_box = confirm ("Are you sure want to delete them?");
     if (confirm_box){
          $("#loadingpopup").show();
-        $(".sync-content img").each(function(){
-           if ($(this).hasClass("setchoosed")){
-               var media_id = $(this).parent("a").attr ("id");               
+        $(".edit-area a").each(function(){
+           if ($(this).parent('li').hasClass("setchoosed")){
+               var media_id = $(this).attr ("id");
                var xml_data = new Array();
                xml_data[0] = new Array();
-               xml_data[0]['tag'] = 'mediaid';               
-               xml_data[0]['value'] = media_id.trim();                              
-               ajaxRequest ('deletephoto', xml_data, success_deletephoto, error_deletephoto); 
-           }           
-        });                                                                                    
-        $.fetch_server_media($("input[name=user_id]").val());
+               xml_data[0]['tag'] = 'mediaid';
+               xml_data[0]['value'] = media_id.trim();
+               ajaxRequest ('deletephoto', xml_data, success_deletephoto, error_deletephoto);
+           }
+        });
+
     }
 }
-function success_deletephoto(ret_xml){     
-     //alert ("Successfull delete photo");     
-}
-function error_deletephoto(){}
+function success_deletephoto(ret_xml){
+    jSuccess(
+    'Media deleted',
+    {
+      autoHide : true, // added in v2.0
+      clickOverlay : false, // added in v2.0
+      MinWidth : 250,
+      TimeShown : 3000,
+      ShowTimeEffect : 200,
+      HideTimeEffect : 200,
+      LongTrip :20,
+      HorizontalPosition : 'center',
+      VerticalPosition : 'top',
+      ShowOverlay : true,
+         ColorOverlay : '#FFF',
+      OpacityOverlay : 0.3,
+      onClosed : function(){ // added in v2.0
 
-jQuery (function(){
-    jQuery ("#btn-upload").click (function(){
-        jQuery(".edit-area").fadeOut(500);
-        jQuery(".upload-container").delay(500).fadeIn(500);
+      },
+      onCompleted : function(){ // added in v2.0
+
+      }
     });
-    jQuery (".back-edit").click (function(){
-        jQuery(".upload-container").fadeOut(500);
-        jQuery(".edit-area").delay(500).fadeIn(500);    
+    $.fetch_server_media($("input[name=user_id]").val());
+}
+function error_deletephoto(){ alert ("error delete photo"); }
+
+$(function(){
+    $("#btn-upload").click (function(){
+        alert ("handled here");
+        $("a[title=queue]").click();
     });
-    
 });

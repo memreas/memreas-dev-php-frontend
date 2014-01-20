@@ -13,15 +13,17 @@ var location_map = null;
 // geocoder object to get the location address from langtitude and longtitude
 var geocoder = null;
 
-var user_id   = "4b2c6d4c-42a7-11e3-85d4-22000a8a1935";				// signed user id
+var user_id = $("input[name=user_id]").val();				// signed user id
 var event_id  = "";				// created event id
 var media_ids = [];				// array of selected media id
 var device_id = "";				// current device id
 
-var media_page_index  = 1;		// page index number for media
-var media_limit_count = 200;	// limit count of media
+var media_page_index  = '1';		// page index number for media
+var media_limit_count = '200';	// limit count of media
 
 var friendList = null;
+
+$(function(){ user_id   = $("input[name=user_id]").val(); });
 
 // initialize the share page objects.
 share_initObjects = function() {
@@ -29,19 +31,25 @@ share_initObjects = function() {
 	//user_id = $('#user_id')[0].getAttribute('val');
 
 	// event function when click "media" tab
-	$('#tabs li:nth-child(2) a').on('click', function() {
+	$('#tabs-share li:nth-child(2) a').on('click', function() {
+        if (event_id == ""){
+            return false;
+        }
 		share_getAllMedia();
 	});
 
 	// event function when click "Friends" tab
-	$('#tabs li:nth-child(3) a').on('click', function() {
+	$('#tabs-share li:nth-child(3) a').on('click', function() {
+        if (event_id == ""){
+            return false;
+        }
 		share_changeSocialType();
 	});
-	
+
 	$("#cmb_socialtype").change(function(e) {
 		share_changeSocialType();
     });
-    
+
     ar_initAudio();
 }
 
@@ -65,7 +73,7 @@ share_initAkordeon = function() {
 // change the friend list by social type.
 share_changeSocialType = function() {
 	var socialType = $("#cmb_socialtype option:selected").val();
-	
+
 	switch (socialType) {
 		case "facebook":
 			if (fb_friendsInfo == null) {
@@ -74,7 +82,7 @@ share_changeSocialType = function() {
 			else
 				share_addFriends(fb_friendsInfo);
 			break;
-			
+
 		case "twitter":
 			if (tw_friendsInfo == null) {
 				twitter_getFriendList();
@@ -87,28 +95,33 @@ share_changeSocialType = function() {
 
 // initialize and customize the scroll bar.
 share_customScrollbar = function () {
-	$("ul.scrollClass").mCustomScrollbar({
-		scrollButtons:{
-			enable:true
-		}
-	});
-		
-	$("#tab-content div.hideCls").hide(); // Initially hide all content
-	$("#tabs li:first").attr("id","current"); // Activate first tab
-	$("#tab-content div:first").fadeIn(); // Show first tab content*/
-	
-	$('#tabs a').click(function(e) {
-		
-		e.preventDefault();        
-		$("#tab-content div.hideCls").hide(); //Hide all content
-		$("#tabs li").attr("id",""); //Reset id's
+
+	$("#tab-content-share div.hideCls").hide(); // Initially hide all content
+	$("#tabs-share li:first").attr("id","current"); // Activate first tab
+	$("#tab-content-share div:first").fadeIn(); // Show first tab content*/
+
+	$('#tabs-share a').click(function(e) {
+		if (event_id == ""){
+            return false;
+        }
+		e.preventDefault();
+		$("#tab-content-share div.hideCls").hide(); //Hide all content
+		$("#tabs-share li").attr("id",""); //Reset id's
 		$(this).parent().attr("id","current"); // Activate this
 		$('#' + $(this).attr('title')).fadeIn(); // Show content for current tab
+        if (!($('#' + $(this).attr('title') + " .scroll-area").hasClass('mCustomScrollbar'))){
+            $('#' + $(this).attr('title') + " .scroll-area").mCustomScrollbar({
+                scrollButtons:{
+                    enable:true
+                }
+            });
+        }
+        $('#' + $(this).attr('title') + " .scroll-area").mCustomScrollbar("update");
 	});
-		
+
 	//ajax demo fn
 	$("a[rel='load-content']").click(function(e){
-		
+
 		e.preventDefault();
 		var $this=$(this),
 			url=$this.attr("href");
@@ -151,7 +164,7 @@ share_closeGoogleMap = function(save_address) {
 		else
 			setDefaultValue('txt_location');
 	}
-	
+
 	disablePopup('dlg_locationmap');
 }
 
@@ -196,11 +209,11 @@ share_initGoogleMap = function(div_id) {
 
          google.maps.event.addListener(autocomplete, 'place_changed', function (event) {
              infowindow.close();
-             
+
              var place = autocomplete.getPlace();
              if (typeof place.geometry == "undefined")
              	return;
-             	
+
              if (place.geometry.viewport) {
                  location_map.fitBounds(place.geometry.viewport);
              } else {
@@ -217,7 +230,7 @@ share_initGoogleMap = function(div_id) {
              infowindow.setContent(placeName);
          }
 	}
-	
+
 	if (isElementEmpty('txt_location')) {
 		// get the current location.
 		var err_msg = "Error while getting location. Device GPS/location may be disabled."
@@ -226,9 +239,9 @@ share_initGoogleMap = function(div_id) {
 			timeout: 10000,
 			maximumAge: 10000
 		}, { timeout: 10000 } );
-		
+
 		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition ( 
+			navigator.geolocation.getCurrentPosition (
 				function(position) {
 					var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 					if (geocoder == null)
@@ -243,14 +256,14 @@ share_initGoogleMap = function(div_id) {
 					});
 					if (location_map)
 						location_map.setCenter(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
-				}, 
+				},
 				function(error) {
-					alert(err_msg);
+					jerror(err_msg);
 				},
 				geoPositionOptions
-			);	
+			);
 		} else {
-			alert(err_msg);
+			jerror(err_msg);
 		}
 	}
 }
@@ -259,7 +272,7 @@ share_initGoogleMap = function(div_id) {
 share_addEvent = function() {
 	var name = getElementValue('txt_name');
 	if (name == "") {
-		alert("You have to input the name.");
+		jerror("You have to input the name.");
 		return;
 	}
 
@@ -274,7 +287,7 @@ share_addEvent = function() {
 	var ckb_public 		 	= getCheckBoxValue('ckb_public');
  	var ckb_viewable 	 	= getCheckBoxValue('ckb_viewable');
 	var ckb_selfdestruct 	= getCheckBoxValue('ckb_selfdestruct');
-	
+
 	// send the request.
 	ajaxRequest(
 		'addevent',
@@ -294,28 +307,56 @@ share_addEvent = function() {
 			// parse the returned xml.
 			var status   = getValueFromXMLTag(ret_xml, 'status');
 			var message  = getValueFromXMLTag(ret_xml, 'message');
-			
+
 			event_id = getValueFromXMLTag(ret_xml, 'event_id');
-			
+
 			if (status.toLowerCase() == 'success') {
-				alert(event_id + ' was registered successfully.');
+				jsuccess('Event "' + name + '" was registered successfully.');
 				share_gotoPage(SHAREPAGE_TAB_MEDIA);
 			}
 			else {
-				alert(message);
+				jerror(message);
 			}
 		}
 	);
 }
 
 // clear all fields on details page when click "cancel" button.
-share_clearMemreas = function() {
-	var i = 0;
-	var text_ids 	 = ['txt_name', 'txt_location', 'dtp_date', 'dtp_from', 'dtp_to', 'dtp_selfdestruct'];
-	var checkbox_ids = ['ckb_canpost', 'ckb_canadd', 'ckb_public', 'ckb_viewable', 'ckb_selfdestruct'];
+share_clearMemreas = function(confirmed) {
+    if (confirmed){
+	    var i = 0;
+	    var text_ids 	 = ['txt_name', 'txt_location', 'dtp_date', 'dtp_from', 'dtp_to', 'dtp_selfdestruct'];
+	    var checkbox_ids = ['ckb_canpost', 'ckb_canadd', 'ckb_public', 'ckb_viewable', 'ckb_selfdestruct'];
 
-	clearTextField(text_ids);
-	clearCheckBox(checkbox_ids);
+	    clearTextField(text_ids);
+	    clearCheckBox(checkbox_ids);
+        $("#tabs-share li:eq(0) a").click();
+        event_id = "";
+    }
+    else{
+        jNotify(
+        '<div class="notify-box"><p>Are you sure want to restart progress?</p><a href="javascript:;" class="btn" onclick="share_clearMemreas(true);">OK</a>&nbsp;<a href="javascript:;" class="btn" onclick="$.jNotify._close();">Close</a></div>',
+        {
+          autoHide : false, // added in v2.0
+          clickOverlay : true, // added in v2.0
+          MinWidth : 250,
+          TimeShown : 3000,
+          ShowTimeEffect : 200,
+          HideTimeEffect : 0,
+          LongTrip :20,
+          HorizontalPosition : 'center',
+          VerticalPosition : 'top',
+          ShowOverlay : true,
+          ColorOverlay : '#FFF',
+          OpacityOverlay : 0.3,
+          onClosed : function(){ // added in v2.0
+
+          },
+          onCompleted : function(){ // added in v2.0
+
+          }
+        });
+    }
 }
 
 // click event function for "public (anyone can add or post)" checkbox.
@@ -328,58 +369,89 @@ share_clickCkbPublic = function() {
 
 // go to the other page (1: memreas details, 2: media, 3: friends)
 share_gotoPage = function(tab_no) {
-	$('#tabs li:nth-child(' + tab_no + ') a').click();
+	$('#tabs-share li:nth-child(' + tab_no + ') a').click();
 }
 
 // add the comment to Media when click "next" button on the Media Page.
 share_addComment = function() {
 	ar_stop();
 	//ar_saveAudio();
-
+    media_ids = fetch_selected_media();
+    if (media_ids.length <= 0){
+        jerror ("There is no media selected");
+        return;
+    }
 	share_uploadMedias(function() {
 		var comments 	= getElementValue('txt_comment');
 		var media_id	= "";
-		
+
 		if (media_ids.length > 0)
 			media_id = media_ids[0];
-		
+
 		audio_media_id	= "";
-	
+
 		// send the request.
+
+        //Prepair request params
+        var request_params = new Array();
+        request_params[0] = new Array();
+        request_params[0]['tag'] = 'event_id';
+        request_params[0]['value'] = event_id;
+        request_params[1] = new Array();
+        request_params[1]['tag'] = 'user_id';
+        request_params[1]['value'] = user_id;
+        request_params[2] = new Array();
+        request_params[2]['tag'] = 'comments';
+        request_params[2]['value'] = comments;
+        request_params[3] = new Array();
+        request_params[3]['tag'] = 'audio_media_id';
+        request_params[3]['value'] = audio_media_id;
+
+        var count = 3;
+        for (key in media_ids){
+            request_params[++count] = new Array();
+            request_params[count]['tag'] = 'media_id';
+            request_params[count]['value'] = media_ids[key];
+        }
+
 		ajaxRequest(
 			'addcomments',
-			[
-				{ tag: 'event_id', 				value: event_id },
-				{ tag: 'media_id', 				value: media_id },
-				{ tag: 'user_id', 				value: user_id },
-				{ tag: 'comments', 				value: comments },
-				{ tag: 'audio_media_id', 		value: audio_media_id }
-			],
+            request_params,
 			function(ret_xml) {
 				// parse the returned xml.
 				var status   = getValueFromXMLTag(ret_xml, 'status');
 				var message  = getValueFromXMLTag(ret_xml, 'message');
-				
+
 				if (status.toLowerCase() == 'success') {
-					alert('comments was added successfully.');
+					jsuccess('comments was added successfully.');
 					share_gotoPage(SHAREPAGE_TAB_FRIENDS);
 				}
 				else {
-					alert(message);
+					jerror(message);
 				}
 			}
 		);
 	});
 }
 
+function fetch_selected_media(){
+    var media_id_list = new Array();
+    var count = 0;
+    $("ul#share_medialist li.setchoosed").each (function(){
+        media_id_list[++count] = $(this).find ('a').attr ('id');
+    });
+    return media_id_list;
+}
+
 share_uploadMedias = function(success) {
 	var count = 0;
-	var selMediaList = $("#share_medialist .mCSB_container li a .setchoosed");
-	
+	var selMediaList = $("#share_medialist .mCSB_container li.setchoosed img");
+
 	for (i = 0; i < selMediaList.length; i++) {
 		var img_url 	 = selMediaList[i].src;
 		var img_filename = img_url.substr(img_url.lastIndexOf("/") + 1)
-	
+        img_url = img_url.split (user_id);
+        img_url = user_id + img_url[1];
 		ajaxRequest(
 			'addmediaevent',
 			[
@@ -399,12 +471,15 @@ share_uploadMedias = function(success) {
 				var status  = getValueFromXMLTag(ret_xml, 'status');
 				var message = getValueFromXMLTag(ret_xml, 'message');
 				var id  	= getValueFromXMLTag(ret_xml, 'media_id');
-				
+
 				if (status.toLowerCase() == 'success') {
 					media_ids[count++] = id;
 					if (count == selMediaList.length) {
-						if (typeof success != "undefined")
-							success();
+						if (typeof success != "undefined"){
+							//success();
+                            jsuccess('comments was added successfully.');
+                            share_gotoPage(SHAREPAGE_TAB_FRIENDS);
+                        }
 					}
 				}
 				else {
@@ -418,9 +493,9 @@ share_uploadMedias = function(success) {
 // clear all fields on Media page when click "cancel" button.
 share_clearMedia = function() {
 	clearTextField('txt_comment');
-	
+
 	var mediaList = $("#share_medialist .mCSB_container li a img");
-	
+
 	for (i = 0; i < mediaList.length; i++) {
 		$(mediaList[i]).removeClass ('setchoosed');
 	}
@@ -434,7 +509,8 @@ share_getAllMedia = function() {
 	ajaxRequest(
 		'listallmedia',
 		[
-			{ tag: 'event_id', 				value: event_id },
+            //{ tag: 'event_id',                 value: event_id },
+			{ tag: 'event_id', 				value: '' },
 			{ tag: 'user_id', 				value: user_id },
 			{ tag: 'device_id', 			value: device_id },
 			{ tag: 'limit', 				value: media_limit_count },
@@ -444,8 +520,13 @@ share_getAllMedia = function() {
 			json = $.xml2json(json, true);
 			if (json.listallmediaresponse[0].medias[0].status[0].text == "Success") {
 			  	var data = json.listallmediaresponse[0].medias[0].media;
-			  	var mediaList = $("#share_medialist .mCSB_container");
-			  	mediaList.empty();
+               // if ($("#share_medialist").hasClass ('mCSB_container')){
+			  	    var mediaList = $("#share_medialist .mCSB_container");
+                //}
+                //else{
+                //    var mediaList = $("#share_medialist");
+               // }
+			  	//mediaList.empty();
 			  	for (var json_key in data) {
 				 	var _media_url = data[json_key].main_media_url[0].text;
 				 	var _media_extension = _media_url.substr(_media_url.length - 3);
@@ -455,18 +536,23 @@ share_getAllMedia = function() {
 					if (_found > -1) {
 						$.post('/index/buildvideocache', {video_url:_media_url, thumbnail:data[json_key].event_media_video_thum[0].text, media_id:data[json_key].media_id[0].text}, function(response_data){
 							response_data = JSON.parse(response_data);
-							mediaList.append ('<li><a class="swipebox" id="' + response_data.media_id + '" onclick="return imageChoosed(this.id);" href="' + response_data.thumbnail + '"><img src="' + response_data.thumbnail + '"/></a></li>');
+                            mediaList.append ('<li><a class="swipebox" id="share-' + response_data.media_id + '" onclick="return imageChoosed(this.id);" href="' + response_data.thumbnail + '"><img src="' + response_data.thumbnail + '"/></a></li>');
 						});
 					}
 					else {
-						mediaList.append ('<li><a class="image-sync swipebox" id="' + data[json_key].media_id[0].text + '" onclick="return imageChoosed(this.id);" href="' + _media_url + '"><img src="' + _media_url + '"/></a></li>');
+						mediaList.append ('<li><a class="swipebox" id="share-' + data[json_key].media_id[0].text + '" onclick="return imageChoosed(this.id);" href="' + _media_url + '"><img src="' + _media_url + '"/></a></li>');
 					}
 			  	}
-			  	
-			  	//setTimeout(function(){ $(".user-resources").fotorama(); $(".preload-server").hide(); }, 1000);
-			  	
+                if (!($("#share_medialist").hasClass ('mCSB_container'))){
+			  	    mediaList.mCustomScrollbar(
+                                {scrollButtons:{enable:true }}
+                    );
+                }
+                mediaList.mCustomScrollbar('update');
+
 			  	ar_start();
 			}
+            else jerror (json.listallmediaresponse[0].medias[0].message[0].text);
 		}
 	);
 }
@@ -475,7 +561,7 @@ share_getAllMedia = function() {
 share_clearFriendsList = function() {
 	if (friendList == null)
 		friendList = $('#share_friendslist .mCSB_container');
-	
+
 	friendList.empty();
 }
 
@@ -485,16 +571,16 @@ share_addFriends = function(info) {
 		friendList = $('#share_friendslist .mCSB_container');
 
 	friendList.empty();
-	
+
 	var i = 0, el;
 
 	for (i = 0; i < info.length; i++) {
 		el = '';
 		el += '<li>';
 		el += '<figure class="pro-pics2" id="' + info[i].div_id + '" onclick="javascript:share_clickFriends(this.id);"><img src="/memreas/img/profile-pic.jpg" alt="" ' + (info[i].selected ? 'class="setchoosed"' : '') + '></figure>';
-		el += '<aside class="pro-pic_names2" id="a' + info[i].div_id + '" onclick="javascript:share_clickFriends(this.id.substr(1));">' + info[i].name + '</aside>';
+		el += '<aside class="pro-pic_names2" name="' + info[i].name + '" id="a' + info[i].div_id + '" onclick="javascript:share_clickFriends(this.id.substr(1));">' + info[i].name + '</aside>';
 		el += '</li>';
-							
+
 		friendList.append(el);
 	}
 
@@ -503,12 +589,13 @@ share_addFriends = function(info) {
 	for (i = 0; i < imgList.length; i++) {
 		$(imgList[i]).prop('src', info[i].photo);
 	}
+    $('#share_friendslist').mCustomScrollbar('update');
 }
 
 share_clickFriends = function(id) {
 	var type = id.substr(0, 2);
 	var idx = parseInt(id.substr(3));
-	
+
 	if (type == "fb") {
 		fb_friendsInfo[idx].selected = !fb_friendsInfo[idx].selected;
 		if (fb_friendsInfo[idx].selected) {
@@ -535,7 +622,7 @@ share_makeGroup = function() {
 	var groupName	= getElementValue('txt_groupname');
 	var selFriends  = [];
 	var i = 0, count = 0;
-	
+
 	// get all information of selected friends (facebook and twitter).
 	if (fb_friendsInfo) {
 		for (i = 0; i < fb_friendsInfo.length; i++) {
@@ -551,7 +638,7 @@ share_makeGroup = function() {
 			}
 		}
 	}
-	
+
 	if (tw_friendsInfo) {
 		for (i = 0; i < tw_friendsInfo.length; i++) {
 			if (tw_friendsInfo[i].selected) {
@@ -567,27 +654,52 @@ share_makeGroup = function() {
 		}
 	}
 
-	// send the request.
-	ajaxRequest(
-		'creategroup',
-		[
-			{ tag: 'group_name', 	value: groupName },
-			{ tag: 'user_id', 		value: user_id },
-			{ tag: 'friends', 		value: selFriends }
-		],
-		function(ret_xml) {
-			// parse the returned xml.
-			var status   = getValueFromXMLTag(ret_xml, 'status');
-			var message  = getValueFromXMLTag(ret_xml, 'message');
-			
-			if (status.toLowerCase() == 'success') {
-				alert('group was created successfully.');
-			}
-			else {
-				alert(message);
-			}
-		}
-	);
+    if (groupName != ''){
+	    // send the request.
+	    ajaxRequest(
+		    'creategroup',
+		    [
+			    { tag: 'group_name', 	value: groupName },
+			    { tag: 'user_id', 		value: user_id },
+			    { tag: 'friends', 		value: selFriends }
+		    ],
+		    function(ret_xml) {
+			    // parse the returned xml.
+			    var status   = getValueFromXMLTag(ret_xml, 'status');
+			    var message  = getValueFromXMLTag(ret_xml, 'message');
+
+			    if (status.toLowerCase() == 'success') {
+				    jsuccess('group was created successfully.');
+			    }
+			    else {
+				    jerror(message);
+			    }
+		    }
+	    );
+    }
+
+    //Add friend to event
+    // send the request.
+    ajaxRequest(
+        'addfriendtoevent',
+        [
+            { tag: 'user_id',         value: user_id },
+            { tag: 'event_id',         value: event_id },
+            { tag: 'friends',         value: selFriends }
+        ],
+        function(ret_xml) {
+            // parse the returned xml.
+            var status   = getValueFromXMLTag(ret_xml, 'status');
+            var message  = getValueFromXMLTag(ret_xml, 'message');
+            if (status.toLowerCase() == 'success') {
+                jsuccess('your friends added successfully.');
+                share_clearMemreas(true);
+            }
+            else {
+                jerror(message);
+            }
+        }
+    );
 }
 
 // clear all fields on Friends page when click "cancel" button.

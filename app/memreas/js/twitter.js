@@ -22,27 +22,29 @@ twitter_authorization = function() {
 	$.oauthpopup({
 		path: 'twitter',
 		callback: function(){
-			window.location.reload();
+            //twitter_getAllFriends();
 		}
 	});
-    
 	return;
 
 	var tKBase64 =  btoa(TWITTER_KEY + ":" + TWITTER_SECRETCODE);
-	
+
 	try {
 		send = $.ajax({
 			beforeSend: function (xhr, settings) {
 				xhr.withCredentials = true;
 				xhr.setRequestHeader('Authorization', 'Basic ' + tKBase64);
+                xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
 			},
 			type: "POST",
+            forceIframeTransport: true,
 			data: { "grant_type" : "client_credentials"},
 			url: 'https://api.twitter.com/oauth2/token',
 			//url: 'https://api.twitter.com/oauth/request_token',
 			success: function(data) {
 				twitterToken = data.access_token;
 				twitter_getAllFriends();
+                $('#loadingpopup').hide();
 			},
 			fail: function(data) {
 				console.log(data);
@@ -53,7 +55,7 @@ twitter_authorization = function() {
 		$('#loadingpopup').hide();
 	}
 }
-		
+
 twitter_getAllFriends = function() {
 	if (twitterToken != null)
 	{
@@ -69,7 +71,7 @@ twitter_getAllFriends = function() {
 				tw_friendIndex = 0;
 				tw_friendCount = data.ids.length;
 				for(var i = 0; i < data.ids.length; i++) {
-					var appourl = 'https://api.twitter.com/1.1/users/lookup.json?user_id=' + data.ids[i] + '&include_entities=true'; 
+					var appourl = 'https://api.twitter.com/1.1/users/lookup.json?user_id=' + data.ids[i] + '&include_entities=true';
 					$.ajax({
 						beforeSend: function (xhr, settings) {
 							xhr.withCredentials = true;
@@ -87,7 +89,7 @@ twitter_getAllFriends = function() {
 								'photo': 	friend_data[0].profile_image_url_https,
 								'selected':	false
 							}
-							
+
 							tw_friendIndex++;
 							if (tw_friendIndex >= tw_friendCount) {
 								share_addFriends(tw_friendsInfo);

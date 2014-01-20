@@ -365,7 +365,7 @@ footer {
 	position: fixed;
 	width: 100%;
 	bottom: -2px !important;
-	z-index: 9999;
+	z-index: 0;
 }
 .medium_tabs li {
 	float: left;
@@ -691,9 +691,17 @@ ul.pics li {
 	float: left;
 	margin: 10px;
 	position:relative;
+    height: 130px;
+    overflow: hidden;
+    background: #FFF;
+}
+ul.pics li a{
+    display: inline-block;
+    width: 100%;
+    height: 100%;
 }
 ul.event_images li {
-	width: 17%;
+	width: 120px;
 	border: 1px #d6d6d6 solid;
 	float: left;
 	margin: 10px 10px 30px 10px;
@@ -786,7 +794,9 @@ a.black_btn_skin:hover, a.black_btn_skin:active {
 
 /*****************start memreas-me******************/
 #tabs,
-#tabs-queue {
+#tabs-queue,
+#tabs-memreas,
+#tabs-share {
 	overflow: hidden;
 	width: 100%;
 	margin: 0;
@@ -795,12 +805,16 @@ a.black_btn_skin:hover, a.black_btn_skin:active {
 	padding-left: 10px;
 }
 #tabs li,
-#tabs-queue li{
+#tabs-queue li,
+#tabs-memreas li,
+#tabs-share li{
 	float: left;
 	margin: 0 2em 0 2em;
 }
 #tabs a,
-#tabs-queue a {
+#tabs-queue a ,
+#tabs-memreas a,
+#tabs-share a{
 	position: relative;
 	background: #3b3b3b;
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#747474), to(#3b3b3b));
@@ -826,7 +840,9 @@ a.black_btn_skin:hover, a.black_btn_skin:active {
 	padding: .5em 3em !important;
 }
 #tabs a:hover, #tabs a:hover::after, #tabs a:focus, #tabs a:focus::after, #tabs a:hover::before,
-#tabs-queue a:hover, #tabs-queue a:hover::after, #tabs-queue a:focus, #tabs-queue a:focus::after, #tabs-queue a:hover::before {
+#tabs-queue a:hover, #tabs-queue a:hover::after, #tabs-queue a:focus, #tabs-queue a:focus::after, #tabs-queue a:hover::before,
+#tabs-share a:hover, #tabs-share a:hover::after, #tabs-share a:focus, #tabs-share a:focus::after, #tabs-share a:hover::before,
+#tabs-memreas a:hover, #tabs-memreas a:hover::after, #tabs-memreas a:focus, #tabs-memreas a:focus::after, #tabs-memreas a:hover::before, {
 	background: #151515;
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#3a3a3a), to(#151515));
 	background-image: -webkit-linear-gradient(top, #3a3a3a, #151515);
@@ -836,11 +852,15 @@ a.black_btn_skin:hover, a.black_btn_skin:active {
 	background-image: linear-gradient(to bottom, #3a3a3a, #151515);
 }
 #tabs a:focus,
-#tabs-queue a:focus {
+#tabs-queue a:focus,
+#tabs-share a:focus,
+#tabs-memreas a:focus{
 	outline: 0;
 }
 #tabs a::after,
-#tabs-queue a::after {
+#tabs-queue a::after,
+#tabs-share a::after,
+#tabs-memreas a::after {
 	content: '';
 	position: absolute;
 	z-index: 1;
@@ -868,7 +888,9 @@ a.black_btn_skin:hover, a.black_btn_skin:active {
 	border-radius: 0 10px 0 0;
 }
 #tabs a::before,
-#tabs-queue a::before {
+#tabs-queue a::before,
+#tabs-share a::before,
+#tabs-memreas a::before {
 	content: '';
 	position: absolute;
 	z-index: 1;
@@ -895,8 +917,10 @@ a.black_btn_skin:hover, a.black_btn_skin:active {
 	-moz-border-radius: 10px 0 0 0;
 	border-radius: 10px 0 0 0;
 }
-#tabs #current a, #tabs #current a::after, #tabs #current a::before, 
-#tabs-queue #current a, #tabs-queue #current a::after, #tabs-queue #current a::before {
+#tabs #current a, #tabs #current a::after, #tabs #current a::before,
+#tabs-queue #current a, #tabs-queue #current a::after, #tabs-queue #current a::before,
+#tabs-share #current a, #tabs-share #current a::after, #tabs-share #current a::before,
+#tabs-memreas #current a, #tabs-memreas #current a::after, #tabs-memreas #current a::before {
 	background: #151515;
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#3a3a3a), to(#151515));
 	background-image: -webkit-linear-gradient(top, #3a3a3a, #151515);
@@ -909,7 +933,9 @@ a.black_btn_skin:hover, a.black_btn_skin:active {
 /* ------------------------------------------------- */
 
 #tab-content,
-#tab-content-queue {
+#tab-content-queue,
+#tab-content-share,
+#tab-content-memreas {
 	background: rgba(0,0,0,.5);
 	padding: 1em;
 	position: relative;
@@ -919,7 +945,9 @@ a.black_btn_skin:hover, a.black_btn_skin:active {
 	margin-bottom: 10px;
 }
 #tab-content h2, #tab-content h3, #tab-content p,
-#tab-content-queue h2, #tab-content-queue h3, #tab-content-queue p {
+#tab-content-queue h2, #tab-content-queue h3, #tab-content-queue p,
+#tab-content-share h2, #tab-content-share h3, #tab-content-share p,
+#tab-content-memreas h2, #tab-content-memreas h3, #tab-content-memreas p {
 	margin: 0 0 15px 0;
 	color: #fff;
 }
@@ -1784,8 +1812,9 @@ ul.group li {
 	padding: 0px 0px 0px 50px;
 	line-height: 50px;
 	margin: 20px 0px;
-	min-height: 50px;
+	height: 50px;
 }
+.notification img{ width: 55px; height: 55px; }
 .notification_pro{
 	width: 55px;
 	height: 55px;
