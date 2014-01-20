@@ -20,13 +20,14 @@ use Zend\Mail\Transport\Sendmail as SendmailTransport;
 use Guzzle\Http\Client;
 use Application\View\Helper\S3Service;
 use Application\View\Helper\S3;
+use Application\TwitterOAuth\TwitterOAuth;
 
 class IndexController extends AbstractActionController
 {
 
 	//Updated....
-	protected $url = "http://memreasint.elasticbeanstalk.com/";
-    //protected $url = "http://test/";
+	//protected $url = "http://memreasint.elasticbeanstalk.com/";
+    protected $url = "http://mem2/index.php/";
 	protected $test = "Hope this works!";
     //protected $url = "http://localhost/memreas-dev-php-ws/app/";
     protected $user_id;
@@ -270,27 +271,80 @@ error_log("Exit indexAction".PHP_EOL);
     }
 
     public function twitterAction() {
-//            $config['consumer_key'] = '1bqpAfSWfZFuEeY3rbsKrw';
-//            $config['consumer_secret'] = 'wM0gGBCzZKl5dLRB8TQydRDfTD5ocf2hGRKSQwag';
-//            //$config['oauth_token'] = '74094832-mnJlYPt02qpy1jhEYAYPMKAzrLF2jTeMiJue65Zn7';
-//            $config['oauth_token_secret'] = 'zdIrpUzuIs7llt5KLlx1TU1vWUrq28TkSNFUsschaaE4X';
-//            
-//            $config['output_format'] = 'object';
-             $config = new \Application\OAuth\Config();
-    $config->setConsumerKey('1bqpAfSWfZFuEeY3rbsKrw')
-           ->setConsumerSecret('wM0gGBCzZKl5dLRB8TQydRDfTD5ocf2hGRKSQwag')
-           ->setRequestTokenUrl('https://api.twitter.com/oauth/request_token')
-           ->setAuthorizeUrl('https://api.twitter.com/oauth/authenticate')
-           ->setAccessTokenUrl('https://api.twitter.com/oauth/access_token')
-           ->setCallbackUrl('mem2/index/');
-$requestToken = new \Application\OAuth\Token\Request($config, true);
-session_start();
-$_SESSION['twitter_request_token'] = serialize($requestToken);
+        $config = new \Application\OAuth\Config();
+        $config->setConsumerKey('1bqpAfSWfZFuEeY3rbsKrw')
+            ->setConsumerSecret('wM0gGBCzZKl5dLRB8TQydRDfTD5ocf2hGRKSQwag')
+            ->setRequestTokenUrl('https://api.twitter.com/oauth/request_token')
+            ->setAuthorizeUrl('https://api.twitter.com/oauth/authenticate')
+            ->setAccessTokenUrl('https://api.twitter.com/oauth/access_token')
+            ->setCallbackUrl($this->url.'index/twitter');
 
-// redirect to Twitter for authentication
-$targetUrl = $config->getAuthorizeUrl($requestToken['oauth_token']);
-echo $targetUrl ;
-header('Location: ' . $targetUrl);
+        if(!empty($_GET['oauth_token'])){
+            $authorizeToken = new \Application\OAuth\Token\Authorize($_GET);
+            if (!$authorizeToken->isValid()) {
+                throw new Exception('Authorization failed');
+            }
+
+            // fetch previously stored request token
+            session_start();
+            $requestToken = unserialize($_SESSION['twitter_request_token']);
+            if (!$requestToken instanceof \Application\OAuth\Token\Request) {
+                throw new Exception('Request token not found');
+            }
+
+            // a possible CSRF attack
+            if ($requestToken->getToken() !== $authorizeToken->getToken()) {
+                throw new Exception('Tokens do not match');
+            }
+            
+            $accessToken = new \Application\OAuth\Token\Access($config, $authorizeToken, true);
+            if (!$accessToken->isValid()) {
+                throw new Exception('Could not fetch access token');
+            }
+
+            unset($_SESSION['twitter_request_token']);
+
+            // at this point authentication is successful and you will have the following
+            // two properties available on the access token object if you authenticated on Twitter:
+            $userId = $accessToken['user_id'];
+            $screenName = $accessToken['screen_name'];
+            $config = array();
+            $config['consumer_key'] = '1bqpAfSWfZFuEeY3rbsKrw';
+            $config['consumer_secret'] = 'wM0gGBCzZKl5dLRB8TQydRDfTD5ocf2hGRKSQwag';
+            $config['oauth_token'] = $accessToken['oauth_token'];
+            $config['oauth_token_secret'] = $accessToken['oauth_token_secret'];
+            $config['output_format'] = 'object';
+            $tw = new TwitterOAuth($config);
+
+            
+            $params = array(
+    //'screen_name' => 'kamleshpawar',
+    'cursor'=> -1,
+    'skip_status' => true,
+    'include_user_entities' => false
+);
+
+$response =  $tw->get('friends/list', $params);
+
+        $view = new ViewModel(array('data' => $response));
+        $path = $this->security("application/index/twitter.phtml");
+        $view->setTemplate($path);
+        return $view;
+
+
+            
+           
+        }else{
+            $requestToken = new \Application\OAuth\Token\Request($config, true);
+            session_start();
+            $_SESSION['twitter_request_token'] = serialize($requestToken);
+            // redirect to Twitter for authentication
+            $targetUrl = $config->getAuthorizeUrl($requestToken['oauth_token']);
+            $targetUrl ;
+            header('Location:' . $targetUrl);exit;
+
+        }
+
 
 		//return $view;
     }
