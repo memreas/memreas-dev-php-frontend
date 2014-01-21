@@ -24,10 +24,9 @@ use Application\TwitterOAuth\TwitterOAuth;
 
 class IndexController extends AbstractActionController
 {
-
 	//Updated....
-	//protected $url = "http://memreasint.elasticbeanstalk.com/";
-    protected $url = "http://mem2/index.php/";
+	protected $url = "http://memreasint.elasticbeanstalk.com/";
+    //protected $url = "http://mem2/index.php/";
 	protected $test = "Hope this works!";
     //protected $url = "http://localhost/memreas-dev-php-ws/app/";
     protected $user_id;
@@ -40,10 +39,9 @@ class IndexController extends AbstractActionController
 
     public function fetchXML($action, $xml) {
 		$guzzle = new Client();
-
-error_log("Inside fetch XML request url ---> " . $this->url . PHP_EOL);
-error_log("Inside fetch XML request action ---> " . $action . PHP_EOL);
-error_log("Inside fetch XML request XML ---> " . $xml . PHP_EOL);
+        error_log("Inside fetch XML request url ---> " . $this->url . PHP_EOL);
+        error_log("Inside fetch XML request action ---> " . $action . PHP_EOL);
+        error_log("Inside fetch XML request XML ---> " . $xml . PHP_EOL);
         $request = $guzzle->post(
 			$this->url,
 			null,
@@ -55,18 +53,18 @@ error_log("Inside fetch XML request XML ---> " . $xml . PHP_EOL);
 	    	)
 		);
 		$response = $request->send();
-error_log("Inside fetch XML response ---> " . $response->getBody(true) . PHP_EOL);
-error_log("Exit fetchXML".PHP_EOL);
+        error_log("Inside fetch XML response ---> " . $response->getBody(true) . PHP_EOL);
+        error_log("Exit fetchXML".PHP_EOL);
 		return $data = $response->getBody(true);
 	}
 
     public function indexAction() {
-error_log("Enter indexAction".PHP_EOL);
+        error_log("Enter indexAction".PHP_EOL);
  	    $path = $this->security("application/index/index.phtml");
 		$view = new ViewModel();
 		$view->setTemplate($path); // path to phtml file under view folder
+        error_log("Exit indexAction".PHP_EOL);
 		return $view;
-error_log("Exit indexAction".PHP_EOL);
     }
 
     public function ApiServerSideAction(){
@@ -142,26 +140,29 @@ error_log("Exit indexAction".PHP_EOL);
     }
 
     public function sampleAjaxAction() {
-
 		if (isset($_REQUEST['callback'])) {
+
 			//Fetch parms
 			$callback = $_REQUEST['callback'];
 			$json = $_REQUEST['json'];
 			$message_data = json_decode($json, true);
+
 			//Setup the URL and action
 			$ws_action = $message_data['ws_action'];
 			$type = $message_data['type'];
 			$xml = $message_data['json'];
+
 			//Guzzle the LoginWeb Service
 			$result = $this->fetchXML($ws_action, $xml);
-
 			$json = json_encode($result);
+
 			//Return the ajax call...
 			$callback_json = $callback . "(" . $json . ")";
 			$output = ob_get_clean();
 			header("Content-type: plain/text");
 			echo $callback_json;
-			//Need to exit here to avoid ZF2 framework view.
+
+            //Need to exit here to avoid ZF2 framework view.
 			exit;
 		} else {
             $path = $this->security("application/index/sample-ajax.phtml");
@@ -173,18 +174,6 @@ error_log("Exit indexAction".PHP_EOL);
     }
 
     public function galleryAction() {
-        /*
-        $S3Service = new S3Service();
-        $data['bucket'] = 'memreasdev';
-        $data['folder'] = '7f84baa8-430c-11e3-85d4-22000a8a1935/image/';
-        //$data['user_id'] = $session->offsetGet('user_id') . '/image';
-        $data['user_id'] = '7f84baa8-430c-11e3-85d4-22000a8a1935';
-        $data['ACCESS_KEY'] = $S3Service::getAccessKey();
-        list($data['policy'], $data['signature']) = $S3Service::get_policy_and_signature(array(
-            'bucket'         => $data['bucket'],
-            'folder'        => $data['folder'],
-        ));
-        */
         $action = 'getsession';
         $xml = "<xml><getsession><sid>1</sid></getsession></xml>";
 
@@ -218,40 +207,6 @@ error_log("Exit indexAction".PHP_EOL);
 		$view = new ViewModel(array('xml'=>$result, 'data' => $data));
 		$view->setTemplate($path); // path to phtml file under view folder
 		return $view;
-        //return new ViewModel();
-    }
-
-    public function s3uploadAction(){
-        $S3Service = new S3Service();
-        $session = new Container('user');
-        $data['bucket'] = 'memreasdev';
-        $data['folder'] = $session->offsetGet('user_id') . '/image/';
-        //$data['user_id'] = $session->offsetGet('user_id');
-        $data['user_id'] = '7f84baa8-430c-11e3-85d4-22000a8a1935';
-        $data['ACCESS_KEY'] = $S3Service::getAccessKey();
-        list($data['policy'], $data['signature']) = $S3Service::get_policy_and_signature(array(
-            'bucket'         => $data['bucket'],
-            'folder'        => $data['folder'],
-        ));
-        $view = new ViewModel(array('data' => $data));
-        $path = $this->security("application/index/s3upload.phtml");
-        $view->setTemplate($path);
-        return $view;
-    }
-    public function addmediaAction(){
-        $session = new Container('user');
-        $s3 = new S3('AKIAJMXGGG4BNFS42LZA', 'xQfYNvfT0Ar+Wm/Gc4m6aacPwdT5Ors9YHE/d38H');
-        $target_path = '/' . '7f84baa8-430c-11e3-85d4-22000a8a1935' . '/image/' . $_FILES['upl']['name'];
-        $s3->putBucket('memreasdev', S3::ACL_PUBLIC_READ);
-        if ($s3->putObjectFile($_FILES['upl']['tmp_name'], 'memreasdev', $target_path, S3::ACL_PUBLIC_READ, array(), 'image/jpeg')){
-            echo "run here";
-            $ws_action = "addmediaevent";
-            $xml = "<xml><addmediaevent><s3url>http://s3.amazonaws.com/memreasdev/" . '7f84baa8-430c-11e3-85d4-22000a8a1935' . '/image/' . $_FILES['upl']['name'] . "</s3url><is_server_image>0</is_server_image><content_type>" . $_FILES['upl']['type'] . "</content_type><s3file_name>" . $_FILES['upl']['name'] . "</s3file_name><device_id></device_id><event_id></event_id><media_id></media_id><user_id>" . $session->offsetGet('user_id') . "</user_id><is_profile_pic>0</is_profile_pic><location></location></addmediaevent></xml>";
-            $result = $this->fetchXML($ws_action, $xml);
-            echo '{"status":"success", "filepath":"http://s3.amazonaws.com/memreasdev/"' . '7f84baa8-430c-11e3-85d4-22000a8a1935' . '/image/' . $_FILES['upl']['name'] . '}';
-        }
-        else echo '{"status":"error"}';
-        die();
     }
 
     public function eventAction() {
@@ -265,18 +220,18 @@ error_log("Exit indexAction".PHP_EOL);
 		$view = new ViewModel(array('xml'=>$result));
 		$view->setTemplate($path); // path to phtml file under view folder
 		return $view;
-        //return new ViewModel();
     }
 
     public function twitterAction() {
-
+        $server_url = $this->getRequest()->getServer('HTTP_HOST');
+        $callback_url = (strpos ($server_url, 'localhost')) ? 'http://memreas-dev-php-frontend.localhost/index/twitter' : $this->url . '/index/twitter';
         $config = new \Application\OAuth\Config();
         $config->setConsumerKey('1bqpAfSWfZFuEeY3rbsKrw')
             ->setConsumerSecret('wM0gGBCzZKl5dLRB8TQydRDfTD5ocf2hGRKSQwag')
             ->setRequestTokenUrl('https://api.twitter.com/oauth/request_token')
             ->setAuthorizeUrl('https://api.twitter.com/oauth/authenticate')
             ->setAccessTokenUrl('https://api.twitter.com/oauth/access_token')
-            ->setCallbackUrl($this->url.'index/twitter');
+            ->setCallbackUrl($callback_url);
 
         if(!empty($_GET['oauth_token'])){
             $authorizeToken = new \Application\OAuth\Token\Authorize($_GET);
@@ -295,7 +250,7 @@ error_log("Exit indexAction".PHP_EOL);
             if ($requestToken->getToken() !== $authorizeToken->getToken()) {
                 throw new Exception('Tokens do not match');
             }
-            
+
             $accessToken = new \Application\OAuth\Token\Access($config, $authorizeToken, true);
             if (!$accessToken->isValid()) {
                 throw new Exception('Could not fetch access token');
@@ -315,38 +270,30 @@ error_log("Exit indexAction".PHP_EOL);
             $config['output_format'] = 'object';
             $tw = new TwitterOAuth($config);
 
-            
+
             $params = array(
-    //'screen_name' => 'kamleshpawar',
-    'cursor'=> -1,
-    'skip_status' => true,
-    'include_user_entities' => false
-);
+                //'screen_name' => 'kamleshpawar',
+                'cursor'=> -1,
+                'skip_status' => true,
+                'include_user_entities' => false
+            );
 
-$response =  $tw->get('friends/list', $params);
-
+        $response =  $tw->get('friends/list', $params);
         $view = new ViewModel(array('data' => $response));
         $path = $this->security("application/index/twitter.phtml");
         $view->setTemplate($path);
         return $view;
 
-
-            
-           
         }else{
             $requestToken = new \Application\OAuth\Token\Request($config, true);
             session_start();
             $_SESSION['twitter_request_token'] = serialize($requestToken);
+
             // redirect to Twitter for authentication
             $targetUrl = $config->getAuthorizeUrl($requestToken['oauth_token']);
             $targetUrl ;
             header('Location:' . $targetUrl);exit;
-
         }
-
-
-
-		//return $view;
     }
 
     public function shareAction() {
@@ -396,13 +343,13 @@ $response =  $tw->get('friends/list', $params);
         setcookie(session_name(),$data->loginresponse->sid,0,'/');
  		//ZF2 Authenticate
 		if ($data->loginresponse->status == 'success') {
-error_log("Inside loginresponse success...");
-//			$this->setSession($username);
+            error_log("Inside loginresponse success...");
+            //	$this->setSession($username);
             //Redirect here
-error_log("Inside loginresponse success redirect ---> " . $redirect);
+            error_log("Inside loginresponse success redirect ---> " . $redirect);
 			return $this->redirect()->toRoute('index', array('action' => $redirect));
 		} else {
-error_log("Inside loginresponse else...");
+            error_log("Inside loginresponse else...");
 			return $this->redirect()->toRoute('index', array('action' => "index"));
 		}
     }
@@ -420,7 +367,7 @@ error_log("Inside loginresponse else...");
 
     public function setSession($username) {
 		//Fetch the user's data and store it in the session...
-error_log("Inside setSession ...");
+        error_log("Inside setSession ...");
    	    $user = $this->getUserTable()->findOneBy(array('username' => $username));
 
         $user->password='';
@@ -428,11 +375,11 @@ error_log("Inside setSession ...");
    	    $user->create_date='';
         $user->update_time='';
 		$session = new Container('user');
-error_log("Inside setSession got new Container...");
+        error_log("Inside setSession got new Container...");
 		$session->offsetSet('user_id', $user->user_id);
 		$session->offsetSet('username', $username);
         $session->offsetSet('user', json_encode($user));
-error_log("Inside setSession set user data...");
+        error_log("Inside setSession set user data...");
     }
 
     public function registrationAction()
@@ -443,6 +390,7 @@ error_log("Inside setSession set user data...");
 		$username = $postData ['username'];
 		$password = $postData ['password'];
         $invited_by = $postData ['invited_by'];
+
 		//Setup the URL and action
 		$action = 'registration';
 		$xml = "<xml><registration><email>$email</email><username>$username</username><password>$password</password><invited_by>$invited_by</invited_by></registration></xml>";
@@ -450,10 +398,7 @@ error_log("Inside setSession set user data...");
 
 		//Guzzle the Registration Web Service
 		$result = $this->fetchXML($action, $xml);
-
-
 		$data = simplexml_load_string($result);
-
 
 		//ZF2 Authenticate
 		if ($data->registrationresponse->status == 'success') {
@@ -510,24 +455,25 @@ error_log("Inside setSession set user data...");
         return $this->userTable;
     }
 
-        public function forgotpasswordAction() {
-         	$request = $this->getRequest();
-		$postData = $request->getPost()->toArray();
- 		$email = isset($postData ['email'])?$postData ['email']:'';
-	 	//Setup the URL and action
-		$action = 'forgotpassword';
-		$xml = "<xml><forgotpassword><email>$email</email></forgotpassword></xml>";
-		//$redirect = 'gallery';
+    public function forgotpasswordAction() {
+        $request = $this->getRequest();
+	    $postData = $request->getPost()->toArray();
+ 	    $email = isset($postData ['email']) ? $postData ['email'] : '';
 
-		//Guzzle the LoginWeb Service
-		$result = $this->fetchXML($action, $xml);
+	    //Setup the URL and action
+	    $action = 'forgotpassword';
+	    $xml = "<xml><forgotpassword><email>$email</email></forgotpassword></xml>";
+	    //$redirect = 'gallery';
 
+	    //Guzzle the LoginWeb Service
+	    $result = $this->fetchXML($action, $xml);
         $data = simplexml_load_string($result);
         echo json_encode($data);
-         return '';
+        return '';
     }
+
 	public function changepasswordAction() {
-         	$request = $this->getRequest();
+        $request = $this->getRequest();
 		$postData = $request->getPost()->toArray();
 
  		$new = isset($postData ['new'])?$postData ['new']:'';
@@ -544,7 +490,7 @@ error_log("Inside setSession set user data...");
 
         $data = simplexml_load_string($result);
         echo json_encode($data);
-         return '';
+        return '';
     }
 
     public function getAuthService() {
@@ -552,7 +498,6 @@ error_log("Inside setSession set user data...");
             $this->authservice = $this->getServiceLocator()
                     ->get('AuthService');
         }
-
         return $this->authservice;
     }
 
@@ -561,7 +506,6 @@ error_log("Inside setSession set user data...");
             $this->storage = $this->getServiceLocator()
                     ->get('application\Model\MyAuthStorage');
         }
-
         return $this->storage;
     }
 
@@ -576,7 +520,6 @@ error_log("Inside setSession set user data...");
 		return $path;
         //return $this->redirect()->toRoute('index', array('action' => 'login'));
     }
-
 
     /*For S3*/
     private function getS3Policy()
@@ -605,7 +548,6 @@ error_log("Inside setSession set user data...");
         return $policy;
     }
 
-
     /*
      * Calculate HMAC-SHA1 according to RFC2104
      * See http://www.faqs.org/rfcs/rfc2104.html
@@ -631,13 +573,11 @@ error_log("Inside setSession set user data...");
         return bin2hex($hmac);
     }
 
-
     /*
      * Used to encode a field for Amazon Auth
      * (taken from the Amazon S3 PHP example library)
      */
-    private function hex2b64($str)
-    {
+    private function hex2b64($str){
         $raw = '';
         for ($i=0; $i < strlen($str); $i+=2)
         {
@@ -645,6 +585,4 @@ error_log("Inside setSession set user data...");
         }
         return base64_encode($raw);
     }
-
-
 } // end class IndexController
