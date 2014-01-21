@@ -393,19 +393,12 @@ share_addComment = function() {
 		// send the request.
 
         //Prepair request params
-        var request_params = new Array();
-        request_params[0] = new Array();
-        request_params[0]['tag'] = 'event_id';
-        request_params[0]['value'] = event_id;
-        request_params[1] = new Array();
-        request_params[1]['tag'] = 'user_id';
-        request_params[1]['value'] = user_id;
-        request_params[2] = new Array();
-        request_params[2]['tag'] = 'comments';
-        request_params[2]['value'] = comments;
-        request_params[3] = new Array();
-        request_params[3]['tag'] = 'audio_media_id';
-        request_params[3]['value'] = audio_media_id;
+        var request_params = [
+            {tag: 'event_id',       value: event_id},
+            {tag: 'user_id',        value: user_id},
+            {tag: 'comments',       value: comments},
+            {tag: 'audio_media_id', value: audio_media_id}
+        ];
 
         var count = 3;
         for (key in media_ids){
@@ -543,12 +536,7 @@ share_getAllMedia = function() {
 						mediaList.append ('<li><a class="swipebox" id="share-' + data[json_key].media_id[0].text + '" onclick="return imageChoosed(this.id);" href="' + _media_url + '"><img src="' + _media_url + '"/></a></li>');
 					}
 			  	}
-                if (!($("#share_medialist").hasClass ('mCSB_container'))){
-			  	    mediaList.mCustomScrollbar(
-                                {scrollButtons:{enable:true }}
-                    );
-                }
-                mediaList.mCustomScrollbar('update');
+               ajaxScrollbarElement('#share_medialist');
 
 			  	ar_start();
 			}
@@ -593,7 +581,7 @@ share_addFriends = function(info) {
 }
 
 share_clickFriends = function(id) {
-	var type = id.substr(0, 2);
+    var type = id.substr(0, 2);
 	var idx = parseInt(id.substr(3));
 
 	if (type == "fb") {
@@ -614,6 +602,13 @@ share_clickFriends = function(id) {
 			$('#' + id + ' img').removeClass('setchoosed');
 		}
 	}
+    /*
+    var jElement = $("#" + id);
+    var jImg_profile = jElement.find ('img');
+    if (jImg_profile.hasClass ('setchoosed'))
+        jImg_profile.removeClass ('setchoosed');
+    else jImg_profile.addClass ('setchoosed');
+    */
 }
 
 // make the group with selected friends and e-mail list.

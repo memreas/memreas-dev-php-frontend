@@ -1,14 +1,18 @@
-<!doctype html>
-<html>
-<head>
-<meta charset="utf-8">
-<title>Memreas</title>
-</head>
-<body>
-	<?php
-	 foreach ($data->users as $key => $value) {
-		 echo  $value->screen_name .'<br/>'  ; 
-	}?>
-	
-</body>
-</html>
+<script src="//code.jquery.com/jquery-1.8.3.js"></script>
+<script src="/memreas/js/jquery.cookie.js"></script>
+<?php
+    $friend_list = array();
+    foreach ($data->users as $key => $value){
+        $friend_list[$key]['div_id'] = 'tw_' . $value->id;
+        $friend_list[$key]['name'] = $value->screen_name;
+        $friend_list[$key]['photo'] = $value->profile_image_url;
+	    $friend_list[$key]['selected'] = false;
+    }
+    $friend_list = json_encode ($friend_list);
+?>
+<script type="text/javascript">
+    $(function(){
+        $.cookie ('twitter_friends', '<?php echo $friend_list; ?>', 3600);
+        window.close();
+    });
+</script>

@@ -16,3 +16,16 @@ function ajaxScrollbarElement(element_object){
         setTimeout (function(){ ajaxScrollbarElement(element_object); }, 1000);
     }
 }
+
+/*
+*@ Function Json Parse base on xml respone
+*/
+function jsonValue(jsonSource, jsonKey){
+    if (typeof (jsonSource.jsonKey[1]) != 'undefined'){
+        var object_length = jsonSource.length;
+        var parse_object = new Array();
+        for (i = 0;i < object_length;i++){
+
+        }
+    }
+}

@@ -19,10 +19,11 @@ twitter_getFriendList = function() {
 }
 
 twitter_authorization = function() {
+    $.removeCookie ('twitter_friends');
 	$.oauthpopup({
 		path: 'twitter',
 		callback: function(){
-            //twitter_getAllFriends();
+            twitter_getAllFriends();
 		}
 	});
 	return;
@@ -57,6 +58,17 @@ twitter_authorization = function() {
 }
 
 twitter_getAllFriends = function() {
+    var friend_list = $.cookie ('twitter_friends');
+    if (typeof (friend_list) == 'undefined'){
+        $('#loadingpopup').hide();
+        jerror ('authentication failed! please try again');
+        return false;
+    }
+    friend_list = JSON.parse (friend_list);
+    tw_friendsInfo = friend_list;
+    share_addFriends (friend_list);
+    $('#loadingpopup').hide();
+    return;
 	if (twitterToken != null)
 	{
 		$.ajax({
