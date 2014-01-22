@@ -581,10 +581,10 @@ input[type=checkbox].css-checkbox + label.css-label {
 	min-width: 140px;
 }
 input[type=checkbox].css-checkbox:checked + label.css-label {
-	background: url(../img/check-box.png) no-repeat;
+    background: url(../img/check.png) no-repeat;
 }
 .css-label {
-	background: url(../img/check.png) no-repeat;
+	background: url(../img/check-box.png) no-repeat;
 	margin: 0;
 }
 .legal{
@@ -809,7 +809,7 @@ a.black_btn_skin:hover, a.black_btn_skin:active {
 #tabs-memreas li,
 #tabs-share li{
 	float: left;
-	margin: 0 2em 0 2em;
+	margin: 0 1em 0 2em;
 }
 #tabs a,
 #tabs-queue a ,

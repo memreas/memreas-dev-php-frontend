@@ -3,7 +3,7 @@
 <?php
     $friend_list = array();
     foreach ($data->users as $key => $value){
-        $friend_list[$key]['div_id'] = 'tw_' . $value->id;
+        $friend_list[$key]['div_id'] = 'tw_' . $key;
         $friend_list[$key]['name'] = $value->screen_name;
         $friend_list[$key]['photo'] = $value->profile_image_url;
 	    $friend_list[$key]['selected'] = false;

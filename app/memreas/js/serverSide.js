@@ -50,6 +50,7 @@ jQuery.fetch_server_media = function (user_id){
                 //Build video thumbnail
                 var _found = _video_extensions.indexOf (_media_extension);
                 if (_found > -1){
+                    console.log (json);
                         $.post('/index/buildvideocache', {video_url:_media_url, thumbnail:data[json_key].event_media_video_thum[0].text, media_id:data[json_key].media_id[0].text}, function(response_data){
                             response_data = JSON.parse (response_data);
                             $(".user-resources").append('<a data-video="true" href="/memreas/js/jwplayer/jwplayer_cache/' + response_data.video_link + '"><img src="' + response_data.thumbnail + '"/></a>');

@@ -587,19 +587,23 @@ share_clickFriends = function(id) {
 	if (type == "fb") {
 		fb_friendsInfo[idx].selected = !fb_friendsInfo[idx].selected;
 		if (fb_friendsInfo[idx].selected) {
-			$('#' + id + ' img').addClass('setchoosed');
+            $('#' + id + ' img').addClass('setchoosed');
+			$('#' + id).next ('aside').css('border', '3px solid green');
 		}
 		else {
 			$('#' + id + ' img').removeClass('setchoosed');
+            $('#' + id).next ('aside').css('border', '3px solid #FFF');
 		}
 	}
 	else if (type == "tw") {
 		tw_friendsInfo[idx].selected = !tw_friendsInfo[idx].selected;
 		if (tw_friendsInfo[idx].selected) {
 			$('#' + id + ' img').addClass('setchoosed');
+            $('#' + id).next ('aside').css('border', '3px solid green');
 		}
 		else {
 			$('#' + id + ' img').removeClass('setchoosed');
+            $('#' + id).next ('aside').css('border', '3px solid #FFF');
 		}
 	}
     /*
@@ -688,7 +692,14 @@ share_makeGroup = function() {
             var message  = getValueFromXMLTag(ret_xml, 'message');
             if (status.toLowerCase() == 'success') {
                 jsuccess('your friends added successfully.');
-                share_clearMemreas(true);
+                setTimeout(function(){
+                    var text_ids      = ['txt_name', 'txt_location', 'dtp_date', 'dtp_from', 'dtp_to', 'dtp_selfdestruct'];
+                    var checkbox_ids = ['ckb_canpost', 'ckb_canadd', 'ckb_public', 'ckb_viewable', 'ckb_selfdestruct'];
+                    clearTextField(text_ids);
+                    clearCheckBox(checkbox_ids);
+                    event_id = "";
+                    $("a.memreas").click();   //Send user to memreas page
+                }, 2000);
             }
             else {
                 jerror(message);
@@ -702,3 +713,15 @@ share_clearFriends = function() {
 	clearTextField(['txt_emaillist', 'txt_groupname']);
 	clearCheckBox('ckb_makegroup');
 }
+
+/**
+*Update checkbox when date fill in
+*/
+$(function(){
+    $("#dtp_from").change (function(){
+        var filledin = $(this).val();
+        if (filledin != '')
+            $("#ckb_viewable").attr ('checked', 'checked');
+        else $("#ckb_viewable").attr ('checked', false);
+    });
+});

@@ -60,16 +60,18 @@ function fetchMyMemreas(){
                             if (response.listallmediaresponse[0].medias[0].status[0].text == "Success") {
                                 var target_element = $("#myEvent-" + $('input[name=temp_event]').val());
                                 var data = response.listallmediaresponse[0].medias[0].media;
-                                var event_response = response.listallmediaresponse[0].medias[0].event_id[0].text;
-                                for (var json_key in data) {
-                                    var _media_url = data[json_key].main_media_url[0].text;
-                                    $("#myEvent-" + event_response).append ('<div class="event_img"><img src="' + _media_url + '"/></div>');
-                                    $("#swipebox-comment-" + event_response).append ('<div class="swipebox_comment">' +
-                                      '<div class="event_pro"><img src="/memreas/img/profile-pic.jpg"></div>' +
-                                      '<textarea class="event_textarea" name="your sign or comments here" cols="" rows=""' +
-                                      'onfocus="if(this.value==this.defaultValue)this.value=\'\';"' +
-                                      'onblur="if(this.value=="")this.value=this.defaultValue;">your sign or comments here</textarea>' +
-                                    '</div>');
+                                if (typeof (response.listallmediaresponse[0].medias[0].event_id[0] != 'undefined')){
+                                    var event_response = response.listallmediaresponse[0].medias[0].event_id[0].text;
+                                    for (var json_key in data) {
+                                        var _media_url = data[json_key].main_media_url[0].text;
+                                        $("#myEvent-" + event_response).append ('<div class="event_img"><img src="' + _media_url + '"/></div>');
+                                        $("#swipebox-comment-" + event_response).append ('<div class="swipebox_comment">' +
+                                          '<div class="event_pro"><img src="/memreas/img/profile-pic.jpg"></div>' +
+                                          '<textarea class="event_textarea" name="your sign or comments here" cols="" rows=""' +
+                                          'onfocus="if(this.value==this.defaultValue)this.value=\'\';"' +
+                                          'onblur="if(this.value=="")this.value=this.defaultValue;">your sign or comments here</textarea>' +
+                                        '</div>');
+                                    }
                                 }
                             }
                         }
