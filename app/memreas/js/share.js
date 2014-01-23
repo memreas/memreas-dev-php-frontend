@@ -513,6 +513,7 @@ share_getAllMedia = function() {
 			json = $.xml2json(json, true);
 			if (json.listallmediaresponse[0].medias[0].status[0].text == "Success") {
 			  	var data = json.listallmediaresponse[0].medias[0].media;
+                $("#share_medialist .mCSB_container").empty();
                // if ($("#share_medialist").hasClass ('mCSB_container')){
 			  	    var mediaList = $("#share_medialist .mCSB_container");
                 //}

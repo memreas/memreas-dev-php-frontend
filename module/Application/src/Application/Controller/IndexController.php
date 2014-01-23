@@ -114,13 +114,14 @@ class IndexController extends AbstractActionController
                             </style>
                             </head>
                             <body>
-                            <div id="myElement">Loading the player...</div>
+                            <center><div id="myElement">Loading the player...</div></center>
                             <script type="text/javascript">
                                 jwplayer("myElement").setup({
                                     flashplayer: "../jwplayer.flash.swf",
                                     file: "' . $_POST['video_url'] . '",
                                     "autostart": "true",
-                                    "width": "100%",
+                                    "width": 500,
+                                    "height": 300,
                                 });
                             </script>
                             </body>

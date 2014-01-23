@@ -16,31 +16,17 @@ jQuery.fetch_server_media = function (user_id){
     $("#tab-content #tab2").append('<div class="edit-area"><ul id="content_1" class="pics edit-area-scroll scroll-area"><div class="first-element"></div></ul><div style="clear: both;"></div><a class="black_btn_skin" href="javascript:deleteFiles();">Delete</a>&nbsp;<a class="black_btn_skin" href="javascript:;" id="btn-upload">Upload</a></div>');
     $(".user-resources, .scrollClass .mCSB_container, .sync .mCSB_container").html('');
     $("#loadingpopup").show();
-    var _request_url = '/index/ApiServerSide';
-    var _request_content = '<xml>' +
-                                '<listallmedia>' +
-                                    '<event_id></event_id>' +
-                                    '<user_id>' + user_id + '</user_id>' +
-                                    '<device_id></device_id>' +
-                                    '<limit>200</limit>' +
-                                    '<page>1</page>' +
-                                    '</listallmedia>' +
-                                    '</xml>';
-    var _action = 'listallmedia';
-    var data = new Object();
-    data.ws_action = _action;
-    data.type = "jsonp";
-    data.json = _request_content;
-    var json_data = JSON.stringify(data);
-    var _video_extensions = "mp4 wmv mov";
-    $.ajax( {
-      type:'post',
-      url: _request_url,
-      dataType: 'jsonp',
-      data: 'json=' + json_data,
-      success: function(json){
-          json = $.xml2json(json, true);
-          if (json.listallmediaresponse[0].medias[0].status[0].text == "Success") {
+    ajaxRequest('listallmedia',
+        [
+            {tag: 'event_id', value: ''},
+            {tag: 'user_id', value: user_id},
+            {tag: 'device_id', value : ''},
+            {tag: 'limit', value: '200'},
+            {tag: 'page', value: '1'}
+        ], function (json){
+            json = $.xml2json(json, true);
+            var _video_extensions = "mp4 wmv mov ts";
+            if (json.listallmediaresponse[0].medias[0].status[0].text == "Success") {
               var data = json.listallmediaresponse[0].medias[0].media;
               $(".user-resources, .scrollClass .mCSB_container, .sync-content .scrollClass").html('');
               for (var json_key in data){
@@ -50,6 +36,8 @@ jQuery.fetch_server_media = function (user_id){
                 //Build video thumbnail
                 var _found = _video_extensions.indexOf (_media_extension);
                 if (_found > -1){
+                    var temp_url = _media_url.split ('media');
+                    _media_url = temp_url[0] + 'media/web' + temp_url[1];
                     console.log (json);
                         $.post('/index/buildvideocache', {video_url:_media_url, thumbnail:data[json_key].event_media_video_thum[0].text, media_id:data[json_key].media_id[0].text}, function(response_data){
                             response_data = JSON.parse (response_data);
@@ -64,7 +52,7 @@ jQuery.fetch_server_media = function (user_id){
                 }
               }
               setTimeout(function(){
-                  $(".user-resources").fotorama({width: '100%', height: '500px'});
+                  $(".user-resources").fotorama({width: '800', height: '350', 'max-width': '100%'});
                   if (!$(".edit-area-scroll").hasClass ('mCustomScrollbar')){
                       $(".edit-area-scroll").mCustomScrollbar({
                             scrollButtons:{
@@ -75,10 +63,10 @@ jQuery.fetch_server_media = function (user_id){
                   $(".edit-area-scroll").mCustomScrollbar ('update');
               }, 1000);
               $(".swipebox").swipebox();
-          }
-          $("#loadingpopup").hide();
-          //If there is no image
-          if ($(".user-resources").html() == ''){
+            }
+            $("#loadingpopup").hide();
+            //If there is no image
+            if ($(".user-resources").html() == ''){
                jNotify(
                 'There is no media on your account! Please use upload tab on leftside you can add some resources!',
                 {
@@ -101,15 +89,8 @@ jQuery.fetch_server_media = function (user_id){
 
                   }
                 });
-          }
-          return true;
-      },
-      error: function (jqXHR, textStatus, errorThrown) {
-           alert(jqXHR.responseText);
-           alert(jqXHR.status);
-        //alert(textStatus);
-           //alert(errorThrown);
-      }
-    });
-    return false;
+            }
+            return true;
+        }
+    );
 }
