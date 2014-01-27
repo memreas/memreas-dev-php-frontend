@@ -25,10 +25,8 @@ facebook_getFriendList = function() {
 		xfbml: true,
 		oauth: true
 	});
-
 	function getFacebookInfo(response) {
 		var button = document.getElementById('fb-auth');
-
 		if (response.authResponse) { // in case if we are logged in
 			var userInfo = document.getElementById('user-info');
 			FB.api('/me', function(response) {
@@ -44,7 +42,6 @@ facebook_getFriendList = function() {
 			FB.api('/me/friends?limit=' + FACEBOOK_FRIENDSLIMIT, function(response) {
 				var i = 0, info = response.data.sort(sortMethod);
 				fb_friendsInfo = [];
-
 				for (i = 0; i < info.length; i++) {
 					fb_friendsInfo[i] = {
 						'id': 		info[i].id,
@@ -54,19 +51,15 @@ facebook_getFriendList = function() {
 						'selected':	false
 					}
 				}
-
 				share_addFriends(fb_friendsInfo);
 				$('#loadingpopup').hide();
 			});
 		}
-		else {
-			$('#loadingpopup').hide();
-		}
+		else $('#loadingpopup').hide();
 	}
 
 	// run once with current status and whenever the status changes
 	FB.getLoginStatus(getFacebookInfo);
-
 	FB.login(function(response) {
 		if (response.authResponse) {
         // get friends
@@ -83,13 +76,10 @@ facebook_getFriendList = function() {
                         'selected':    false
                     }
                 }
-
                 share_addFriends(fb_friendsInfo);
                 $('#loadingpopup').hide();
             });
 		}
-		else {
-			$('#loadingpopup').hide();
-		}
+		else $('#loadingpopup').hide();
 	}, {scope:'email'});
 }

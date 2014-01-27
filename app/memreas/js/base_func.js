@@ -7,7 +7,7 @@
 formatDateToDMY = function(date) {
 	if (date == "")
 		return "";
-		
+
 	return date.substr(3, 2) + "/" + date.substr(0, 2) + date.substr(5);
 }
 
@@ -24,7 +24,6 @@ getSubXMLFromTag = function(xml, tag) {
 // clear the value of the text fields.
 clearTextField = function(elements) {
 	var i = 0, id = "";
-
 	if (typeof elements == "string") {
 		id = '#' + elements;
 		$(id).val($(id)[0].defaultValue);
@@ -40,7 +39,6 @@ clearTextField = function(elements) {
 // clear the value of the check box.
 clearCheckBox = function(elements) {
 	var i = 0, id = "";
-
 	if (typeof elements == "string") {
 		id = '#' + elements;
 		$(id)[0].checked = true;
@@ -58,25 +56,20 @@ isElementEmpty = function(id) {
 	var element = $('#' + id);
 	if (typeof element == "undefined" || typeof element.length == "undefined")
 		return true;
-
 	var value = element.val();
 	if (value == "" || value == element[0].defaultValue)
 		return true;
-		
 	return false;
 }
-
 // return the value of html5 element such as text field or date-time picker.
 getElementValue = function(id) {
 	var element = $('#' + id);
 	if (typeof element == "undefined" || typeof element.length == "undefined")
 		return "";
-
 	var value = element.val();
 	if (value == element[0].defaultValue)
 		value = "";
-
-	return value;	
+	return value;
 }
 
 // return the checkbox value.
@@ -94,7 +87,6 @@ setDefaultValue = function(id) {
 	var element = $('#' + id);
 	if (typeof element == "undefined" || typeof element.length == "undefined")
 		return "";
-
 	element.val(element[0].defaultValue);
 }
 
@@ -102,13 +94,11 @@ setDefaultValue = function(id) {
 splitByDelimeters = function(val, delims) {
 	var ret = [];
 	var i, j, count = 0, idx = 0;
-	
 	for (i = 0; i < val.length; i++) {
 		for (j = 0; j < delims.length; j++) {
 			if (val[i] == delims[j])
 				break;
 		}
-		
 		if (j < delims.length) {
 			if (i == idx + 1)
 				idx++;
@@ -118,10 +108,8 @@ splitByDelimeters = function(val, delims) {
 			}
 		}
 	}
-	
 	if (idx < val.length - 1) {
 		ret[count++] = val.substr(idx, i - idx);
 	}
-	
 	return ret;
 }

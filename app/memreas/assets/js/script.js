@@ -7,20 +7,20 @@ $(document).ready( function() {
     $(".upload-dropzone").click (function(){
         $(".direct-upload").find ("input[type=file]").click();
     });
-    
+
     $('.direct-upload').each( function() {
 
         var form = $(this);
-                
+
         $(this).fileupload({
-            dropZone: $('.upload-dropzone, .upload-from-event'),            
-            url: form.attr('action'),   
-            dataType: 'xml',  
+            dropZone: $('.upload-dropzone, .upload-from-event'),
+            url: form.attr('action'),
+            dataType: 'xml',
             crossDomain: true,
             type: 'POST',
-            autoUpload: true,            
-            add: function (event, data) {       
-                var checkOneInstance = $("input[name=once_instance]").val();                
+            autoUpload: true,
+            add: function (event, data) {
+                var checkOneInstance = $("input[name=once_instance]").val();
                 if (checkOneInstance == 1){
                     jError(
                     'Sorry! Just one intance per upload, please wait for upload complete.',
@@ -38,27 +38,27 @@ $(document).ready( function() {
                          ColorOverlay : '#FFF',
                       OpacityOverlay : 0.3,
                       onClosed : function(){ // added in v2.0
-                       
+
                       },
                       onCompleted : function(){ // added in v2.0
-                       
+
                       }
-                    });      
+                    });
                     return false;
                 }
                 $("input[name=once_instance]").val(1);
-                var filetype = data.files[0].type;                
-                var filename = data.files[0].name;                
+                var filetype = data.files[0].type;
+                var filename = data.files[0].name;
                 var key_value = '${filename}';
                 if (filetype.indexOf ('image') >= 0)
-                    var target = 'images';           
-                else target = 'media';  
-                $('input[name=ContentType]').val(filetype);                
+                    var target = 'images';
+                else target = 'media';
+                $('input[name=ContentType]').val(filetype);
                 var userid = $("input[name=user_id]").val();
                 key_value = userid + '/' + target + '/' + key_value;
                 $('input[name=ContentName]').val(userid + '/' + target + '/' + filename);
-                $(this).find('input[name=key]').val(key_value);                
-                // Use XHR, fallback to iframe                
+                $(this).find('input[name=key]').val(key_value);
+                // Use XHR, fallback to iframe
                 options = $(this).fileupload('option');
                 use_xhr = !options.forceIframeTransport &&
                             ((!options.multipart && $.support.xhrFileUpload) ||
@@ -66,17 +66,17 @@ $(document).ready( function() {
 
                 if (!use_xhr) {
                     using_iframe_transport = true;
-                }  
-                
+                }
+
                 var isChrome = !!window.chrome;
                 if (isChrome) {
-                    using_iframe_transport = true;                
+                    using_iframe_transport = true;
                     $(this).fileupload('option', {forceIframeTransport:true})
-                } 
+                }
                 // Message on unLoad.
                 window.onbeforeunload = function() {
                     return 'You have unsaved changes.';
-                };                
+                };
                 //For upload
                 var tpl2 = $('<li class="working-upload">' +
                                 '<div class="upload_progress" id="table">' +
@@ -90,17 +90,17 @@ $(document).ready( function() {
                                     '<div class="clear"></div>' +
                                 '</div>' +
                               '</li>');
-                              
-                //data.context = tpl2.appendTo(".image_upload_box");                   
-                data.context = tpl2;         
-                
+
+                //data.context = tpl2.appendTo(".image_upload_box");
+                data.context = tpl2;
+
                 //Active on share tab
-                if ($("a.share").hasClass ("active")){                    
-                    $(".event-upload-image .mCSB_container").append(tpl2);                                        
+                if ($("a.share").hasClass ("active")){
+                    $(".event-upload-image .mCSB_container").append(tpl2);
                     $(".event-upload-image").mCustomScrollbar("update");
-                    $(".event-upload-image").mCustomScrollbar("scrollTo","last");                            
+                    $(".event-upload-image").mCustomScrollbar("scrollTo","last");
                 }
-                else{                    
+                else{
                     $(".image_upload_box .mCSB_container").append(tpl2);
                     $(".image_upload_box").mCustomScrollbar("update");
                     $(".image_upload_box").mCustomScrollbar("scrollTo","last");
@@ -117,8 +117,8 @@ $(document).ready( function() {
                         tpl2.remove();
                     });
                 });
-                
-                
+
+
             },
             send: function(e, data) {
 
@@ -135,59 +135,59 @@ $(document).ready( function() {
             fail: function(e, data) {
                 window.onbeforeunload = null;
             },
-            success: function(data, status, jqXHR) {                  
+            success: function(data, status, jqXHR) {
                 // Here we get the file url on s3 in an xml doc
-                var _media_url = $('input[name=ContentName]').val();                   
+                var _media_url = $('input[name=ContentName]').val();
                 $('#real_file_url').val("https://memreasdev.s3.amazonaws.com/" + _media_url); // Update the real input in the other form
                 var userid = $("input[name=user_id]").val();
                 if ($("a.share").hasClass ("active"))
-                    var addEvent = event_id;                
+                    var addEvent = event_id;
                 else addEvent = '';
                 var addmedia = new Array();
                 addmedia[0] = new Array();
-                addmedia[0]['tag'] = "s3url";                
+                addmedia[0]['tag'] = "s3url";
                 addmedia[0]['value'] = _media_url;
                 addmedia[1] = new Array();
-                addmedia[1]['tag'] = "is_server_image";                
+                addmedia[1]['tag'] = "is_server_image";
                 addmedia[1]['value'] = 0;
                 addmedia[2] = new Array();
-                var filename = _media_url.split("/");                
+                var filename = _media_url.split("/");
                 filename = filename[filename.length - 1];
-                addmedia[2]['tag'] = "content_type";                
+                addmedia[2]['tag'] = "content_type";
                 addmedia[2]['value'] = $('input[name=ContentType]').val();
                 addmedia[3] = new Array();
-                addmedia[3]['tag'] = "s3file_name";                
+                addmedia[3]['tag'] = "s3file_name";
                 addmedia[3]['value'] = filename;
                 addmedia[4] = new Array();
-                addmedia[4]['tag'] = "device_id";                
+                addmedia[4]['tag'] = "device_id";
                 addmedia[4]['value'] = "";
                 addmedia[5] = new Array();
-                addmedia[5]['tag'] = "event_id";                
+                addmedia[5]['tag'] = "event_id";
                 addmedia[5]['value'] = addEvent;
                 addmedia[6] = new Array();
-                addmedia[6]['tag'] = "media_id";                
+                addmedia[6]['tag'] = "media_id";
                 addmedia[6]['value'] = "";
                 addmedia[7] = new Array();
-                addmedia[7]['tag'] = "user_id";                
+                addmedia[7]['tag'] = "user_id";
                 addmedia[7]['value'] = userid;
                 addmedia[8] = new Array();
-                addmedia[8]['tag'] = "is_profile_pic";                
-                addmedia[8]['value'] = 0; 
+                addmedia[8]['tag'] = "is_profile_pic";
+                addmedia[8]['value'] = 0;
                 addmedia[9] = new Array();
-                addmedia[9]['tag'] = "location";                
-                addmedia[9]['value'] = "";                                       
+                addmedia[9]['tag'] = "location";
+                addmedia[9]['value'] = "";
                 //$(_image_handle).attr ("src", '<img src="https://memreasdev.s3.amazonaws.com/' + _media_url);
-                
+
                 if ($(".completed-upload").hasClass ('mCSB_container'))
                     $(".completed-upload .mCSB_container").append ('<li><img src="https://memreasdev.s3.amazonaws.com/' + _media_url + '"/></li>');
-                else $(".completed-upload .first-element").append ('<li><img src="https://memreasdev.s3.amazonaws.com/' + _media_url + '"/></li>');                 
-                
-                ajaxRequest('addmediaevent', addmedia, success_addmedia, error_addmedia);  
+                else $(".completed-upload .first-element").append ('<li><img src="https://memreasdev.s3.amazonaws.com/' + _media_url + '"/></li>');
+
+                ajaxRequest('addmediaevent', addmedia, success_addmedia, error_addmedia);
                 $("input[name=once_instance]").val(0);
-              
+
             },
             done: function (event, data) {
-                
+
             },
         });
     });
@@ -202,8 +202,8 @@ function XML2JS(xmlDoc, containerTag) {
             oneObject = output[output.length] = new Object();
             for (j = 0; j < oneRecord.childNodes.length; j++) {
                 if (oneRecord.childNodes[j].nodeType == 1) {
-                    oneObject[oneRecord.childNodes[j].tagName] = 
-                        oneRecord.childNodes[j].firstChild.nodeValue;    
+                    oneObject[oneRecord.childNodes[j].tagName] =
+                        oneRecord.childNodes[j].firstChild.nodeValue;
                 }
             }
         }

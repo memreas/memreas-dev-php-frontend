@@ -1,4 +1,3 @@
-
 /* Notification */
 $(function(){
     $("a.notification_icon").click(function(){
@@ -17,18 +16,14 @@ $(function(){
                 if ($(".notificationresults").hasClass ("mCustomScrollbar"))
                     $(".notificationresults .mCSB_container").empty();
                 for (json_key in notifications){
-                    if ($(".notificationresults").hasClass ("mCustomScrollbar")){
+                    if ($(".notificationresults").hasClass ("mCustomScrollbar"))
                         $(".notificationresults .mCSB_container").append('<li class="notification accept"><div class="notification_pro"><img src="/memreas/img/profile-pic.jpg"></div>' + notifications[json_key].meta[0].text + '</li>');
-                    }
-                    else {
-                        $(".notificationresults").append('<li class="notification accept"><div class="notification_pro"><img src="/memreas/img/profile-pic.jpg"></div>' + notifications[json_key].meta[0].text + '</li>');
-                    }
+                    else $(".notificationresults").append('<li class="notification accept"><div class="notification_pro"><img src="/memreas/img/profile-pic.jpg"></div>' + notifications[json_key].meta[0].text + '</li>');
                 }
             }
         );
-       if (!($(".notificationresults").hasClass("mCustomScrollbar"))){
-           $(".notificationresults").mCustomScrollbar({scrollButtons:{enable:true }});
-       }
+       if (!($(".notificationresults").hasClass("mCustomScrollbar")))
+            $(".notificationresults").mCustomScrollbar({scrollButtons:{enable:true }});
        $('#loadingpopup').hide();
        $(".tabcontent-detail").hide();
        $(".notification-area").show();
@@ -36,7 +31,6 @@ $(function(){
        $(".notificationresults").mCustomScrollbar("scrollTo","first");
        if ($(".notificationresults").find ('.mcs_no_scrollbar').length > 0)
             $(".notificationresults").mCustomScrollbar("update");
-      // if (!($(".notificationresults").find ('.mCSB_scrollTools').is (":visible"))) $("a.notification_icon").click();
     });
 });
 

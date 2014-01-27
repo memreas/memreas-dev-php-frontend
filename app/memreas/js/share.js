@@ -667,13 +667,9 @@ share_makeGroup = function() {
 			    // parse the returned xml.
 			    var status   = getValueFromXMLTag(ret_xml, 'status');
 			    var message  = getValueFromXMLTag(ret_xml, 'message');
-
-			    if (status.toLowerCase() == 'success') {
+			    if (status.toLowerCase() == 'success')
 				    jsuccess('group was created successfully.');
-			    }
-			    else {
-				    jerror(message);
-			    }
+			    else jerror(message);
 		    }
 	    );
     }
@@ -702,9 +698,7 @@ share_makeGroup = function() {
                     $("a.memreas").click();   //Send user to memreas page
                 }, 2000);
             }
-            else {
-                jerror(message);
-            }
+            else jerror(message);
         }
     );
 }

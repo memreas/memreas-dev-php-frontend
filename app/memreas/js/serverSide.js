@@ -1,8 +1,6 @@
 /*
 * Server side
 */
-
-
 //Check if user not logged
 $(function(){
     if ($("input[name=user_id]").val() == "")
@@ -23,74 +21,49 @@ jQuery.fetch_server_media = function (user_id){
             {tag: 'device_id', value : ''},
             {tag: 'limit', value: '200'},
             {tag: 'page', value: '1'}
-        ], function (json){
-            json = $.xml2json(json, true);
-            var _video_extensions = "mp4 wmv mov ts";
-            if (json.listallmediaresponse[0].medias[0].status[0].text == "Success") {
-              var data = json.listallmediaresponse[0].medias[0].media;
-              $(".user-resources, .scrollClass .mCSB_container, .sync-content .scrollClass").html('');
-              for (var json_key in data){
-                 var _media_url = data[json_key].main_media_url[0].text;
-                 var _media_extension = _media_url.substr(_media_url.length - 3);
-                 _media_extension = _media_extension.toLowerCase();
-                //Build video thumbnail
-                var _found = _video_extensions.indexOf (_media_extension);
-                if (_found > -1){
-                    var temp_url = _media_url.split ('media');
-                    _media_url = temp_url[0] + 'media/web' + temp_url[1];
-                    console.log (json);
-                        $.post('/index/buildvideocache', {video_url:_media_url, thumbnail:data[json_key].event_media_video_thum[0].text, media_id:data[json_key].media_id[0].text}, function(response_data){
+        ], function (response){
+            json = $.xml2json(response, true);
+            if (getValueFromXMLTag(response, 'status') == "Success") {
+                medias = getSubXMLFromTag(response, 'media');
+                $(".user-resources, .scrollClass .mCSB_container, .sync-content .scrollClass").html('');
+                var count_media = medias.length;
+                for (var json_key = 0;json_key < count_media;json_key++){
+                    var media = medias[json_key].innerHTML;
+                    var _media_type = $(media).filter ('type').html();
+                    var _media_url = $(media).filter ('main_media_url').html();
+                    _media_url = _media_url.replace("<!--[CDATA[", "").replace("]]-->", "");
+                    //Build video thumbnail
+                    if (_media_type == 'video'){
+                        var temp_url = _media_url.split ('media');
+                        _media_url = temp_url[0] + 'media/web' + temp_url[1];
+                        var mediaThumbnail = $(media).filter ('media_url_448x306').html();
+                        mediaThumbnail = mediaThumbnail.replace("<!--[CDATA[", "").replace("]]-->", "");
+                        var mediaId = $(media).filter ('media_id').html();
+                        $.post('/index/buildvideocache', {video_url:_media_url, thumbnail:mediaThumbnail, media_id:mediaId}, function(response_data){
                             response_data = JSON.parse (response_data);
                             $(".user-resources").append('<a data-video="true" href="/memreas/js/jwplayer/jwplayer_cache/' + response_data.video_link + '"><img src="' + response_data.thumbnail + '"/></a>');
                             $(".edit-area-scroll .first-element").append ('<li><a class="image-sync" id="' + response_data.media_id + '" onclick="return imageChoosed(this.id);" href="' + response_data.thumbnail + '"><img src="' + response_data.thumbnail + '"/></a></li>');
                         });
-                }
-                else {
-                    $(".user-resources").append('<img src="' + _media_url + '"/>');
-                    $(".edit-area-scroll .first-element").append ('<li><a class="image-sync" id="' + data[json_key].media_id[0].text + '" onclick="return imageChoosed(this.id);" href="' + _media_url + '"><img src="' + _media_url + '"/></a></li>');
-
-                }
-              }
-              setTimeout(function(){
-                  $(".user-resources").fotorama({width: '800', height: '350', 'max-width': '100%'});
-                  if (!$(".edit-area-scroll").hasClass ('mCustomScrollbar')){
-                      $(".edit-area-scroll").mCustomScrollbar({
-                            scrollButtons:{
-                                enable:true
-                            }
-                        });
+                    }
+                    else {
+                        $(".user-resources").append('<img src="' + _media_url + '"/>');
+                        $(".edit-area-scroll .first-element").append ('<li><a class="image-sync" id="' + mediaId + '" onclick="return imageChoosed(this.id);" href="' + _media_url + '"><img src="' + _media_url + '"/></a></li>');
+                    }
                   }
-                  $(".edit-area-scroll").mCustomScrollbar ('update');
-              }, 1000);
-              $(".swipebox").swipebox();
-            }
-            $("#loadingpopup").hide();
-            //If there is no image
-            if ($(".user-resources").html() == ''){
-               jNotify(
-                'There is no media on your account! Please use upload tab on leftside you can add some resources!',
-                {
-                  autoHide : true, // added in v2.0
-                  clickOverlay : false, // added in v2.0
-                  MinWidth : 250,
-                  TimeShown : 3000,
-                  ShowTimeEffect : 200,
-                  HideTimeEffect : 200,
-                  LongTrip :20,
-                  HorizontalPosition : 'center',
-                  VerticalPosition : 'center',
-                  ShowOverlay : true,
-                  ColorOverlay : '#000',
-                  OpacityOverlay : 0.3,
-                  onClosed : function(){ // added in v2.0
+                  setTimeout(function(){
+                      $(".user-resources").fotorama({width: '800', height: '350', 'max-width': '100%'});
+                      if (!$(".edit-area-scroll").hasClass ('mCustomScrollbar'))
+                          $(".edit-area-scroll").mCustomScrollbar({ scrollButtons:{ enable:true }});
+                      $(".edit-area-scroll").mCustomScrollbar ('update');
+                  }, 1000);
+                  $(".swipebox").swipebox();
+                }
+                $("#loadingpopup").hide();
 
-                  },
-                  onCompleted : function(){ // added in v2.0
-
-                  }
-                });
+                //If there is no image
+                if ($(".user-resources").html() == '')
+                    jerror ('There is no media on your account! Please use upload tab on leftside you can add some resources!');
+                return true;
             }
-            return true;
-        }
     );
 }

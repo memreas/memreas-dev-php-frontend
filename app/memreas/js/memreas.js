@@ -18,15 +18,18 @@ function fetchMyMemreas(){
             {tag: 'page', value: '1'},
             {tag: 'limit', value: '20'}
         ],function (response){
-            var events = $.xml2json(response, true);
-            if (events.viewevents[0].status[0].text == "Success"){
-                events = events.viewevents[0].events[0].event;
+            if (getValueFromXMLTag(response, 'status') == "Success"){
+                events = getSubXMLFromTag(response, 'event');
                 if ($(".myMemreas").hasClass("mCustomScrollbar"))
                     var target_object = ".myMemreas .mCSB_container";
                 else var target_object = ".myMemreas";
-                for (var json_key in events){
+                var event_count = events.length;
+                for (var i = 0;i < event_count;i++){
+                    var event = events[i].innerHTML;
+                    var eventId = $(event).filter ('event_id').html();
+                    var event_name = $(event).filter ('event_name').html();
                     var element = '<div class="event_section">' +
-                    '<aside class="event_name">' + events[json_key].event_name[0].text + '</aside>' +
+                    '<aside class="event_name">' + event_name + '</aside>' +
                     '<div class="event_like"></div>' +
                     '<div class="event_comment"></div>' +
                     '<div class="event_gallery_pro"><img src="/memreas/img/profile-pic.jpg"></div>' +
@@ -36,12 +39,11 @@ function fetchMyMemreas(){
                     '<div class="event_gallery_pro"><img src="/memreas/img/profile-pic.jpg"></div>' +
                     '<div class="clear"></div>' +
                     '<div id="viewport" onselectstart="return false;">' +
-                      '<div id="myEvent-' + events[json_key].event_id[0].text + '" class="swipeclass">' +
+                      '<div id="myEvent-' + eventId + '" class="swipeclass">' +
                       '</div>' +
                     '</div>' +
                     '<div id="viewport" onselectstart="return false;">' +
-                      '<div class="swipeclass" id="swipebox-comment-' + events[json_key].event_id[0].text + '">' +
-
+                      '<div class="swipeclass" id="swipebox-comment-' + eventId + '">' +
                       '</div>' +
                     '</div>' +
                    '</div>';
@@ -50,22 +52,25 @@ function fetchMyMemreas(){
                     ajaxRequest(
                         'listallmedia',
                         [
-                            { tag: 'event_id',                 value: events[json_key].event_id[0].text },
+                            { tag: 'event_id',                 value: eventId },
                             { tag: 'user_id',                 value: user_id },
                             { tag: 'device_id',             value: device_id },
                             { tag: 'limit',                 value: media_limit_count },
                             { tag: 'page',                     value: media_page_index }
                         ], function (response){
-                            response = $.xml2json(response, true);
-                            if (response.listallmediaresponse[0].medias[0].status[0].text == "Success") {
+                            if (getValueFromXMLTag(response, 'status') == "Success") {
                                 var target_element = $("#myEvent-" + $('input[name=temp_event]').val());
-                                var data = response.listallmediaresponse[0].medias[0].media;
-                                if (typeof (response.listallmediaresponse[0].medias[0].event_id[0] != 'undefined')){
-                                    var event_response = response.listallmediaresponse[0].medias[0].event_id[0].text;
-                                    for (var json_key in data) {
-                                        var _media_url = data[json_key].main_media_url[0].text;
-                                        $("#myEvent-" + event_response).append ('<div class="event_img"><img src="' + _media_url + '"/></div>');
-                                        $("#swipebox-comment-" + event_response).append ('<div class="swipebox_comment">' +
+                                var medias = getSubXMLFromTag(response, 'media');
+                                var eventId = getValueFromXMLTag(response, 'event_id');
+                                if (typeof (eventId != 'undefined')){
+                                    var media_count = medias.length;
+                                    for (var i=0;i < media_count;i++) {
+                                        var media = medias[i].innerHTML;
+                                        var _media_url = $(media).filter ('media_url_98x78').html();
+                                        _media_url = _media_url.replace("<!--[CDATA[", "").replace("]]-->", "");
+                                        if (_media_url == '') _media_url = '/memreas/img/small/1.jpg';
+                                        $("#myEvent-" + eventId).append ('<div class="event_img"><img src="' + _media_url + '"/></div>');
+                                        $("#swipebox-comment-" + eventId).append ('<div class="swipebox_comment">' +
                                           '<div class="event_pro"><img src="/memreas/img/profile-pic.jpg"></div>' +
                                           '<textarea class="event_textarea" name="your sign or comments here" cols="" rows=""' +
                                           'onfocus="if(this.value==this.defaultValue)this.value=\'\';"' +
@@ -76,15 +81,8 @@ function fetchMyMemreas(){
                             }
                         }
                     );
-
-                 $("#myEvent-" + events[json_key].event_id[0].text).swipe({
-                        TYPE:'mouseSwipe',
-                        HORIZ: true
-                     });
-                 $("#swipebox-comment-" + events[json_key].event_id[0].text).swipe({
-                        TYPE:'mouseSwipe',
-                        HORIZ: true
-                     });
+                 $("#myEvent-" + eventId).swipe({ TYPE:'mouseSwipe', HORIZ: true });
+                 $("#swipebox-comment-" + eventId).swipe({ TYPE:'mouseSwipe', HORIZ: true });
                 }
             }
         }
@@ -121,55 +119,54 @@ function fetchFriendsMemreas(friendMemreasType){
                 ajaxScrollbarElement('.event_images_public');
                 $(".event_images_public .mCSB_container").empty();
             }
-            //if ($(target_object).html() != '') return false;
             var friendsId = new Array();
             var friends = $.xml2json(response, true);
-            if (friends.viewevents[0].status[0].text == "Success"){
+            if (getValueFromXMLTag(response, 'status') == "Success"){
                 if (typeof (friends.viewevents[0].friends[1]) != "undefined"){
-                    friends = friends.viewevents[0].friends[1].friend;
-                    for (var json_key in friends){
-                        creator_id = friends[json_key].event_creator_user_id[0].text;
+                    friends = getSubXMLFromTag(response, 'friend');
+                    var friend_count = friends.length;
+                    for (var i = 0;i <  friend_count;i++){
+                        var friend = friends[i].innerHTML;
+                        var creator_id = $(friend).filter('event_creator_user_id').html();
                         if (friendMemreasType == 'private'){
                             var friend_row = 'mouseSwipe-' + creator_id;
                         }
                         else var friend_row = 'mouseSwipePublic-' + creator_id;
-                        if (typeof (friends[json_key].profile_pic[0].text) != 'undefined')
-                            profile_img = friends[json_key].profile_pic[0].text;
+                        if (typeof ($(friend).filter('profile_pic')) != 'undefined'){
+                            profile_img = $(friend).filter('profile_pic').html();
+                            profile_img = profile_img.replace("<!--[CDATA[", "").replace("]]-->", "");
+                        }
                         else profile_img = '/memreas/img/profile-pic.jpg';
+                        if (profile_img == '') profile_img = '/memreas/img/profile-pic.jpg';
+                        var event_creator = $(friend).filter ('event_creator').html();
                         $(target_object).append ('<section class="row-fluid clearfix">' +
                                   '<figure class="pro-pics2"><img class="public-profile-img" src="' + profile_img + '" alt=""></figure>' +
-                                  '<aside class="pro-names2">' + friends[json_key].event_creator[0].text + '</aside>' +
-                                '</section><div id="viewport" class="mouse_swip" onselectstart="return false;">' +
+                                  '<aside class="pro-names2">' + event_creator + '</aside>' +
+                                '</section><div id="viewport" onselectstart="return false;">' +
                                                     '<div id="' + friend_row + '" class="swipeclass"></div></div>');
-                        var friend_resources = friends[json_key].events[0].event;
-                        for (var key in friend_resources){
-                            $("#" + friend_row).append ('<div class="event_img"><img src="' + friend_resources[key].event_media_98x78[0].text + '" alt=""><span class="event_name_box">' + friend_resources[key].event_name[0].text + '</span></div>');
+
+                        var friend_resources = $(friend).filter ('events').html();
+                        friend_resources = $(friend_resources).filter ('event');
+                        var friend_resources_count = friend_resources.length;
+                        for (var key =0;key < friend_resources_count;key++){
+                            var friend_resource = friend_resources[key].innerHTML;
+                            var resource_media = $(friend_resource).filter('event_media_98x78').html();
+                            resource_media = resource_media.replace("<!--[CDATA[", "").replace("]]-->", "");
+                            if (resource_media == '') resource_media = '/memreas/img/small/1.jpg';
+                            var event_name = $(friend_resource).filter ('event_name').html();
+                            $("#" + friend_row).append ('<div class="event_img"><img src="' + resource_media + '" alt=""><span class="event_name_box">' + event_name + '</span></div>');
                         }
                         $("#" + friend_row).swipe({
                             TYPE:'mouseSwipe',
                             HORIZ: true
                          });
+
                     }
                     $(".event_images_public").mCustomScrollbar('update');
                 }
             }
         }
     );
-   /*if (friendMemreasType == 'private'){
-        if (!$(".event_images").hasClass("mCustomScrollbar")){
-            $(".event_images").mCustomScrollbar(
-                        {scrollButtons:{enable:true }}
-            );
-        }
-        $(".event_images").mCustomScrollbar ('update');
-    }
-    else{
-        if (!$(".event_images_public").hasClass("mCustomScrollbar")){
-            $(".event_images_public").mCustomScrollbar(
-                        {scrollButtons:{enable:true }});
-        }
-        $(".event_images_public").mCustomScrollbar('update');
-    }*/
     $('#loadingpopup').hide();
 }
 function addMemreas(){

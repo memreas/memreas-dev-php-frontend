@@ -101,7 +101,6 @@ twitter_getAllFriends = function() {
 								'photo': 	friend_data[0].profile_image_url_https,
 								'selected':	false
 							}
-
 							tw_friendIndex++;
 							if (tw_friendIndex >= tw_friendCount) {
 								share_addFriends(tw_friendsInfo);
@@ -117,7 +116,5 @@ twitter_getAllFriends = function() {
 			}
 		});
 	}
-	else {
-		$('#loadingpopup').hide();
-	}
+	else $('#loadingpopup').hide();
 }
