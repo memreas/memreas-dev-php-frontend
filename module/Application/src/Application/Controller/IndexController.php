@@ -209,6 +209,41 @@ class IndexController extends AbstractActionController
 		$view->setTemplate($path); // path to phtml file under view folder
 		return $view;
     }
+     public function testAction() {
+        $action = 'getsession';
+        $xml = "<xml><getsession><sid>1</sid></getsession></xml>";
+
+        //Guzzle the LoginWeb Service
+        $user = $this->fetchXML($action, $xml);
+        $userid = explode ("<userid>", $user);
+        $data['userid'] = explode ("</userid>", $userid['2']);
+        $data['userid'] = trim ($data['userid'][0]);
+        $data['bucket'] = "memreasdev";
+        $data['accesskey'] = "AKIAJMXGGG4BNFS42LZA";
+        $data['secret'] = "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";
+
+        $data['base64Policy'] = base64_encode($this->getS3Policy($data['bucket']));
+        $data['signature'] = $this->hex2b64($this->hmacsha1($data['secret'], $data['base64Policy']));
+
+        $path = $this->security("application/index/gallery1.phtml");
+
+        $action = 'listallmedia';
+        $session = new Container('user');
+
+        /*
+        $action = 'getsession';
+        $xml = "<xml><getsession><sid>1</sid></getsession></xml>";
+        //Guzzle the LoginWeb Service
+        $result = $this->fetchXML($action, $xml);
+        echo "<pre>"; print_r ($result);    echo "</pre>"; die();
+        */
+        $xml = "<xml><listallmedia><event_id></event_id><user_id>" . $session->offsetGet('user_id') . "</user_id><device_id></device_id><limit>10</limit><page>1</page></listallmedia></xml>";
+        $result = $this->fetchXML($action, $xml);
+
+        $view = new ViewModel(array('xml'=>$result, 'data' => $data));
+        $view->setTemplate($path); // path to phtml file under view folder
+        return $view;
+    }
 
     public function eventAction() {
 	    $path = $this->security("application/index/event.phtml");
