@@ -3,9 +3,12 @@ use Zend\Session\Container;
 header('Cache-Control: no-cache, no-store, must-revalidate'); // HTTP 1.1.
 header('Pragma: no-cache'); // HTTP 1.0.
 header('Expires: 0'); // Proxies.
+header('Access-Control-Allow-Origin: *');
+header("Access-Control-Allow-Methods: POST, GET");
+header("Access-Control-Allow-Headers: x-requested-with");
 
 ?>
- 
+
 <!doctype html>
 <html>
 <head>
@@ -13,11 +16,11 @@ header('Expires: 0'); // Proxies.
 <title>Memreas</title>
 
 <!--Custom css-->
-<link href="/memreas/css/style.css" rel="stylesheet" type="text/memreas/css">
+<link href="/memreas/css/style.css" rel="stylesheet" type="text/css">
 <link href="/memreas/css/jquery.mCustomScrollbar.css" rel="stylesheet" />
 
 <!--Bootstrap Css-->
-<link href="/memreas/css/bootstrap.min.css" rel="stylesheet" type="text/memreas/css">
+<link href="/memreas/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 
 <!--jQuery Lybrary-->
 <script src="/memreas/js/jquery.js"></script>
@@ -60,7 +63,7 @@ $(document).bgStretcher({
   <!-- Begin : Header -->
   <div class="row-fluid">
       <header>
-      <div class="center_logo"><h1 id="logo"><a href="index.html">memreas</a></h1></div>
+      <div class="center_logo"><h1 id="logo"><a href="/">memreas</a></h1></div>
       </header>
   </div>
   <!-- End : Header -->
@@ -83,8 +86,8 @@ $(document).bgStretcher({
     </ul>
     </form>
     </div>
-    
-    
+
+
     <!-- Registration Form-->
     <form enctype="multipart/form-data" action="<?php echo $this->url('index',array('action'=>'registration'));?>" method="post" name="register" id="register">
     <div class="signin_contents">
@@ -104,77 +107,77 @@ $(document).bgStretcher({
         var files = evt.target.files;
         var f = files[0];
         var reader = new FileReader();
-        
+
           reader.onload = (function(theFile) {
             return function(e) {
               document.getElementById('list').innerHTML = ['<img src="', e.target.result,'" title="', theFile.name, '" width="75" />'].join('');
             };
           })(f);
-    
+
           reader.readAsDataURL(f);
       }
      } else {
       alert('This browser does not support FileReader');
     }
-    
+
       document.getElementById('file').addEventListener('change', handleFileSelect, false);
     </script>
 <script type="text/javascript" charset="utf-8">
-    jQuery('#file').css('opacity',0);  
+    jQuery('#file').css('opacity',0);
 
 $(document).ready(function(){
     $( "#forgot" ).submit(function( event ) {
        // Stop form from submitting normally
       event.preventDefault();
- 
+
        $.ajax({
         type: "POST",
         dataType: "json",
         url: '/index/forgotpassword',
         data: $('#forgot').serialize()
       }).done(function( resp ) {
-          
-           
+
+
 		 if(resp.forgotpasswordresponse.status == 'success'){
 			 popupStatus=0;
           popup('changePass');
-			 
+
 			 } else{
 				 popupStatus=0;
           popup('changePass');
 				 //alert(resp.forgotpasswordresponse.status + ' :' + resp.forgotpasswordresponse.message);
 				 }
-        
-         
-       
-        
-              
-          
+
+
+
+
+
+
         });
-  
+
 });
     $( "#frmChangepass" ).submit(function( event ) {
        // Stop form from submitting normally
       event.preventDefault();
- 
+
        $.ajax({
         type: "POST",
         dataType: "json",
         url: '/index/changepassword',
         data: $('#frmChangepass').serialize()
       }).done(function( resp ) {
-          
+
         alert(resp.forgotpasswordresponse.status + ' :' + resp.forgotpasswordresponse.message);
 		if(resp.forgotpasswordresponse.status == 'success'){
 			disablePopup('popupContact');
-		} 
-         
-       
-        
-              
-          
+		}
+
+
+
+
+
         });
-  
+
 });
     });
 </script>
@@ -186,7 +189,7 @@ $(document).ready(function(){
     <input name="verifypassword" id="inVerifyPassword" class="signup_textfields" type="password" value="password" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'password')this.value = '';"/>
     <input name="invited_by" class="signup_textfields" type="text" value="invited by @person (optional)" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'invited by @person (optional)')this.value = '';">
     </li>
-    
+
     <li>
         <input id="demo_box_2" class="css-checkbox" type="checkbox" checked="checked" />
         <label for="demo_box_2" name="demo_lbl_2" class="css-label">legal disclaimer </label>
@@ -194,13 +197,13 @@ $(document).ready(function(){
     <li>
     <input type="submit" id="btnCall" class="sign-btn" value="Create an account">
     </li>
-    
+
     </ul>
     </div>
         </form>
     </div>
     </div>
-	
+
     <!------------------first-pop-up-------------------->
           		<div id="popupContact" class="popups">
                   <a id="popupContactClose" onClick="disablePopup('popupContact')" class='popupClose'>x</a>
@@ -210,7 +213,7 @@ $(document).ready(function(){
                 	  <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
                     </ul>
                 </div>
-                <div id="bgpopupContact" class="backgroundPopup"></div> 
+                <div id="bgpopupContact" class="backgroundPopup"></div>
     <!------------------second-pop-up-------------------->
             <div id="forgot" class="popups">
                 <a id="forgotClose" onClick="disablePopup('forgot')" class='popupClose'>x</a>
@@ -219,17 +222,17 @@ $(document).ready(function(){
                     <div class="pop_forgot">
                   <label>Email</label>
     			  <input name="email" type="text"  class="input" value="email" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Password')this.value = ''; " onChange="onEmailFocusOut();"/>
-                  
+
                   <input id="forgotBtn" type="submit" class="submit-btn" value="submit">
                 </div>
-                
-                
-                
+
+
+
                 </form>
-                
-                
+
+
             </div>
-            <div id="bgforgot" class="backgroundPopup"></div> 
+            <div id="bgforgot" class="backgroundPopup"></div>
             <!-- third popup start -->
             <div id="changePass" class="popups">
                 <a id="forgotClose" onClick="disablePopup('changePass')" class='popupClose'>x</a>
@@ -244,16 +247,16 @@ $(document).ready(function(){
                   <input name="token" type="text" class="input" value=""/>
                   <input type="submit" class="submit-btn" value="submit">
                 </div>
-                
-                
-                
+
+
+
                 </form>
-                
-                
+
+
             </div>
-            <div id="bgforgot" class="backgroundPopup"></div> 
+            <div id="bgforgot" class="backgroundPopup"></div>
             <!-- third popup end -->
-            
+
     <!-- End : Content -->
 </div>
 <footer>&copy; 2013 memreas, llc. All rights reserved.</footer>
@@ -265,38 +268,38 @@ $(document).ready(function(){
 <!-- custom scrollbars plugin -->
 	<script src="/memreas/js/jquery.mCustomScrollbar.concat.min.js"></script>
 	<script>
-	
+
 		(function($){
 			$(window).load(function(){
-			
+
 			$("ul.scrollClass").mCustomScrollbar({
 					scrollButtons:{
 						enable:true
 					}
 				});
-				
-				
-				
-				
+
+
+
+
 			$("#tab-content div.hideCls").hide(); // Initially hide all content
 			$("#tabs li:first").attr("id","current"); // Activate first tab
 			$("#tab-content div:first").fadeIn(); // Show first tab content*/
-			
+
 			$('#tabs a').click(function(e) {
-				
-				e.preventDefault();        
+
+				e.preventDefault();
 				$("#tab-content div.hideCls").hide(); //Hide all content
 				$("#tabs li").attr("id",""); //Reset id's
 				$(this).parent().attr("id","current"); // Activate this
 				$('#' + $(this).attr('title')).fadeIn(); // Show content for current tab
 			});
 
-			
-				
-				
+
+
+
 				//ajax demo fn
 				$("a[rel='load-content']").click(function(e){
-					
+
 					e.preventDefault();
 					var $this=$(this),
 						url=$this.attr("href");
