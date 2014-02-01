@@ -25,7 +25,7 @@ use Application\TwitterOAuth\TwitterOAuth;
 class IndexController extends AbstractActionController
 {
 	//Updated....
-	protected $url = "http://memreasint.elasticbeanstalk.com/";
+	protected $url = "http://memreasdev-ws.elasticbeanstalk.com/";
     //protected $url = "http://mem2/index.php/";
 	protected $test = "Hope this works!";
     //protected $url = "http://localhost/memreas-dev-php-ws/app/";
