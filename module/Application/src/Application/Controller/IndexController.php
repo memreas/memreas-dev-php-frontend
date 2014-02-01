@@ -28,7 +28,6 @@ class IndexController extends AbstractActionController
 	protected $url = "http://memreasdev-ws.elasticbeanstalk.com/";
     //protected $url = "http://mem2/index.php/";
 	protected $test = "Hope this works!";
-    //protected $url = "http://localhost/memreas-dev-php-ws/app/";
     protected $user_id;
     protected $storage;
     protected $authservice;
@@ -39,9 +38,9 @@ class IndexController extends AbstractActionController
 
     public function fetchXML($action, $xml) {
 		$guzzle = new Client();
-        error_log("Inside fetch XML request url ---> " . $this->url . PHP_EOL);
-        error_log("Inside fetch XML request action ---> " . $action . PHP_EOL);
-        error_log("Inside fetch XML request XML ---> " . $xml . PHP_EOL);
+error_log("Inside fetch XML request url ---> " . $this->url . PHP_EOL);
+error_log("Inside fetch XML request action ---> " . $action . PHP_EOL);
+error_log("Inside fetch XML request XML ---> " . $xml . PHP_EOL);
         $request = $guzzle->post(
 			$this->url,
 			null,
