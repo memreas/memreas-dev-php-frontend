@@ -29,7 +29,7 @@ function fetchMyMemreas(){
                     var eventId = $(event).filter ('event_id').html();
                     var event_name = $(event).filter ('event_name').html();
                     var element = '<div class="event_section">' +
-                    '<aside class="event_name">' + event_name + '</aside>' +
+                    '<aside class="event_name" onclick="showEventDetail(\'' + eventId + '\');" style="cursor: pointer;">' + event_name + '</aside>' +
                     '<div class="event_like"></div>' +
                     '<div class="event_comment"></div>' +
                     '<div class="event_gallery_pro"><img src="/memreas/img/profile-pic.jpg"></div>' +
@@ -66,9 +66,7 @@ function fetchMyMemreas(){
                                     var media_count = medias.length;
                                     for (var i=0;i < media_count;i++) {
                                         var media = medias[i].innerHTML;
-                                        var _media_url = $(media).filter ('media_url_98x78').html();
-                                        _media_url = _media_url.replace("<!--[CDATA[", "").replace("]]-->", "");
-                                        if (_media_url == '') _media_url = '/memreas/img/small/1.jpg';
+                                        var _media_url = getMediaThumbnail(media, '/memreas/img/small/1.jpg');
                                         $("#myEvent-" + eventId).append ('<div class="event_img"><img src="' + _media_url + '"/></div>');
                                         $("#swipebox-comment-" + eventId).append ('<div class="swipebox_comment">' +
                                           '<div class="event_pro"><img src="/memreas/img/profile-pic.jpg"></div>' +

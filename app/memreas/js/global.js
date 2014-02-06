@@ -3,18 +3,35 @@
 *@ Tran Tuan
 */
 
+var memreasUserId = '';
+var memreasEventId = '';
+
 /*
 *@ Function Scrollbar Secure
 *@ Surely scrollbar element loaded and scroll loaded also
 */
 function ajaxScrollbarElement(element_object){
     var jelement_object = $(element_object);
+    jelement_object.mCustomScrollbar('update');
     if (!jelement_object.hasClass ('mCustomScrollbar'))
         jelement_object.mCustomScrollbar({ scrollButtons:{ enable:true }});
     if (!jelement_object.find ('.mCSB_scrollTools').is(':visible')){
         jelement_object.mCustomScrollbar('update');
         setTimeout (function(){ ajaxScrollbarElement(element_object); }, 1000);
     }
+}
+function getMediaThumbnail(element_object, default_value){
+    jelement_object = $(element_object);
+    var media_response = new Array('media_url_98x78', 'media_url_79x80', 'media_url_448x306', 'main_media_url');
+    var total_media_response = media_response.length;
+    var found_link = '';
+    for (i = 0;i < total_media_response;i++){
+        found_link = jelement_object.filter (media_response[i]).html();
+        found_link = found_link.replace("<!--[CDATA[", "").replace("]]-->", "");
+        if (found_link != '') break;
+    }
+    if (found_link == '') found_link = default_value;
+    return found_link;
 }
 
 /*
@@ -28,4 +45,45 @@ function jsonValue(jsonSource, jsonKey){
 
         }
     }
+}
+//Notify functions
+function jsuccess (str_msg){
+    jSuccess(
+    str_msg,
+    {
+      autoHide : true, // added in v2.0
+      clickOverlay : false, // added in v2.0
+      MinWidth : 250,
+      TimeShown : 3000,
+      ShowTimeEffect : 200,
+      HideTimeEffect : 200,
+      LongTrip :20,
+      HorizontalPosition : 'center',
+      VerticalPosition : 'top',
+      ShowOverlay : true,
+      ColorOverlay : '#FFF',
+      OpacityOverlay : 0.3,
+      onClosed : function(){},
+      onCompleted : function(){}
+    });
+}
+function jerror (str_msg){
+    jError(
+    str_msg,
+    {
+      autoHide : true, // added in v2.0
+      clickOverlay : false, // added in v2.0
+      MinWidth : 250,
+      TimeShown : 3000,
+      ShowTimeEffect : 200,
+      HideTimeEffect : 200,
+      LongTrip :20,
+      HorizontalPosition : 'center',
+      VerticalPosition : 'top',
+      ShowOverlay : true,
+      ColorOverlay : '#FFF',
+      OpacityOverlay : 0.3,
+      onClosed : function(){},
+      onCompleted : function(){}
+    });
 }

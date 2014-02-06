@@ -1,6 +1,6 @@
 /*Tran developer will style here*/
 .row-choose-file{ position: relative; margin: 0 auto; width: 590px; }
-ul.pics li.setchoosed, img.setchoosed{ border: 1px solid #10FA2C; }
+li.setchoosed, img.setchoosed{ border: 1px solid #10FA2C !important; }
 .description{
     font-style: italic;
     font-size: 12px;
@@ -60,3 +60,10 @@ ul.edit-area-scroll{ height: 270px; }
 .upload-event-buttons{ padding: 25px; }
 .event_img img{ widht: 80px; height: 98px; }
 .public-profile-img{ width: 70px; height: 70px; }
+.video-media{ position: relative; }
+.overlay-videoimg{
+    position: absolute;
+    z-index: 1000;
+    top: 1px;
+    left: 1px;
+}

@@ -798,7 +798,8 @@ a.black_btn_skin:hover, a.black_btn_skin:active {
 #tabs,
 #tabs-queue,
 #tabs-memreas,
-#tabs-share {
+#tabs-share,
+#tabs-memreas-detail {
 	overflow: hidden;
 	width: 100%;
 	margin: 0;
@@ -809,14 +810,17 @@ a.black_btn_skin:hover, a.black_btn_skin:active {
 #tabs li,
 #tabs-queue li,
 #tabs-memreas li,
-#tabs-share li{
+#tabs-share li,
+#tabs-memreas-detail{
 	float: left;
 	margin: 0 1em 0 2em;
 }
+#tabs-memreas-detail{ float: none; }
 #tabs a,
 #tabs-queue a ,
 #tabs-memreas a,
-#tabs-share a{
+#tabs-share a,
+#tabs-memreas-detail a{
 	position: relative;
 	background: #3b3b3b;
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#747474), to(#3b3b3b));
@@ -844,7 +848,8 @@ a.black_btn_skin:hover, a.black_btn_skin:active {
 #tabs a:hover, #tabs a:hover::after, #tabs a:focus, #tabs a:focus::after, #tabs a:hover::before,
 #tabs-queue a:hover, #tabs-queue a:hover::after, #tabs-queue a:focus, #tabs-queue a:focus::after, #tabs-queue a:hover::before,
 #tabs-share a:hover, #tabs-share a:hover::after, #tabs-share a:focus, #tabs-share a:focus::after, #tabs-share a:hover::before,
-#tabs-memreas a:hover, #tabs-memreas a:hover::after, #tabs-memreas a:focus, #tabs-memreas a:focus::after, #tabs-memreas a:hover::before, {
+#tabs-memreas a:hover, #tabs-memreas a:hover::after, #tabs-memreas a:focus, #tabs-memreas a:focus::after, #tabs-memreas a:hover::before,
+#tabs-memreas-detail a:hover, #tabs-memreas-detail a:hover::after, #tabs-memreas-detail a:focus, #tabs-memreas-detail a:focus::after, #tabs-memreas-detail a:hover::before {
 	background: #151515;
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#3a3a3a), to(#151515));
 	background-image: -webkit-linear-gradient(top, #3a3a3a, #151515);
@@ -856,13 +861,15 @@ a.black_btn_skin:hover, a.black_btn_skin:active {
 #tabs a:focus,
 #tabs-queue a:focus,
 #tabs-share a:focus,
-#tabs-memreas a:focus{
+#tabs-memreas a:focus,
+#tabs-memreas-detail a:focus{
 	outline: 0;
 }
 #tabs a::after,
 #tabs-queue a::after,
 #tabs-share a::after,
-#tabs-memreas a::after {
+#tabs-memreas a::after,
+#tabs-memreas-detail a::after {
 	content: '';
 	position: absolute;
 	z-index: 1;
@@ -892,7 +899,8 @@ a.black_btn_skin:hover, a.black_btn_skin:active {
 #tabs a::before,
 #tabs-queue a::before,
 #tabs-share a::before,
-#tabs-memreas a::before {
+#tabs-memreas a::before,
+#tabs-memreas-detail a::before {
 	content: '';
 	position: absolute;
 	z-index: 1;
@@ -922,7 +930,8 @@ a.black_btn_skin:hover, a.black_btn_skin:active {
 #tabs #current a, #tabs #current a::after, #tabs #current a::before,
 #tabs-queue #current a, #tabs-queue #current a::after, #tabs-queue #current a::before,
 #tabs-share #current a, #tabs-share #current a::after, #tabs-share #current a::before,
-#tabs-memreas #current a, #tabs-memreas #current a::after, #tabs-memreas #current a::before {
+#tabs-memreas #current a, #tabs-memreas #current a::after, #tabs-memreas #current a::before,
+#tabs-memreas-detail #current a, #tabs-memreas-detail #current a::after, #tabs-memreas-detail #current a::before {
 	background: #151515;
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#3a3a3a), to(#151515));
 	background-image: -webkit-linear-gradient(top, #3a3a3a, #151515);
@@ -937,7 +946,8 @@ a.black_btn_skin:hover, a.black_btn_skin:active {
 #tab-content,
 #tab-content-queue,
 #tab-content-share,
-#tab-content-memreas {
+#tab-content-memreas,
+#tab-content-memreas-detail {
 	background: rgba(0,0,0,.5);
 	padding: 1em;
 	position: relative;
@@ -949,7 +959,8 @@ a.black_btn_skin:hover, a.black_btn_skin:active {
 #tab-content h2, #tab-content h3, #tab-content p,
 #tab-content-queue h2, #tab-content-queue h3, #tab-content-queue p,
 #tab-content-share h2, #tab-content-share h3, #tab-content-share p,
-#tab-content-memreas h2, #tab-content-memreas h3, #tab-content-memreas p {
+#tab-content-memreas h2, #tab-content-memreas h3, #tab-content-memreas p,
+#tab-content-memreas-detail h2, #tab-content-memreas-detail h3, #tab-content-memreas-detail p {
 	margin: 0 0 15px 0;
 	color: #fff;
 }

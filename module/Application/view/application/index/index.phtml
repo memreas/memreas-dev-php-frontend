@@ -21,6 +21,7 @@ header("Access-Control-Allow-Headers: x-requested-with");
 
 <!--Bootstrap Css-->
 <link href="/memreas/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="/memreas/css/jNotify.jquery.css"
 
 <!--jQuery Lybrary-->
 <script src="/memreas/js/jquery.js"></script>
@@ -28,6 +29,8 @@ header("Access-Control-Allow-Headers: x-requested-with");
 
 <!--Bootstrap jQuery-->
 <script src="/memreas/js/bootstrap.min.js"></script>
+<script src="/memreas/js/jNotify.jquery.min.js"></script>
+<script type="text/javascript" src="/memreas/js/global.js"></script>
 
 <!--Backgound Strecher-->
 <script type="text/javascript" src="/memreas/js/bgstretcher.js"></script>
@@ -89,7 +92,7 @@ $(document).bgStretcher({
 
 
     <!-- Registration Form-->
-    <form enctype="multipart/form-data" action="<?php echo $this->url('index',array('action'=>'registration'));?>" method="post" name="register" id="register">
+    <form enctype="multipart/form-data" action="<?php echo $this->url('index',array('action'=>'registration'));?>" method="post" name="register" id="register" onsubmit="return validateRegstration();">
     <div class="signin_contents">
     <div class="optional">(optional)</div>
     <ul>
@@ -191,7 +194,7 @@ $(document).ready(function(){
     </li>
 
     <li>
-        <input id="demo_box_2" class="css-checkbox" type="checkbox" checked="checked" />
+        <input id="demo_box_2" class="css-checkbox" type="checkbox" name="legal_agree" checked="checked" />
         <label for="demo_box_2" name="demo_lbl_2" class="css-label">legal disclaimer </label>
     </li>
     <li>

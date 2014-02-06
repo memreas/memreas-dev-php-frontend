@@ -99,48 +99,6 @@ $(function(){
     });
 });
 
-//Notify functions
-function jsuccess (str_msg){
-    jSuccess(
-    str_msg,
-    {
-      autoHide : true, // added in v2.0
-      clickOverlay : false, // added in v2.0
-      MinWidth : 250,
-      TimeShown : 3000,
-      ShowTimeEffect : 200,
-      HideTimeEffect : 200,
-      LongTrip :20,
-      HorizontalPosition : 'center',
-      VerticalPosition : 'top',
-      ShowOverlay : true,
-      ColorOverlay : '#FFF',
-      OpacityOverlay : 0.3,
-      onClosed : function(){},
-      onCompleted : function(){}
-    });
-}
-function jerror (str_msg){
-    jError(
-    str_msg,
-    {
-      autoHide : true, // added in v2.0
-      clickOverlay : false, // added in v2.0
-      MinWidth : 250,
-      TimeShown : 3000,
-      ShowTimeEffect : 200,
-      HideTimeEffect : 200,
-      LongTrip :20,
-      HorizontalPosition : 'center',
-      VerticalPosition : 'top',
-      ShowOverlay : true,
-      ColorOverlay : '#FFF',
-      OpacityOverlay : 0.3,
-      onClosed : function(){},
-      onCompleted : function(){}
-    });
-}
-
 /*
 * Event function
 */

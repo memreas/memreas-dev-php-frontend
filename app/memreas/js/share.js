@@ -584,6 +584,8 @@ share_addFriends = function(info) {
 share_clickFriends = function(id) {
     var type = id.substr(0, 2);
 	var idx = parseInt(id.substr(3));
+    if (isNaN(idx))
+        idx = (id.substr(10));
 
 	if (type == "fb") {
 		fb_friendsInfo[idx].selected = !fb_friendsInfo[idx].selected;
