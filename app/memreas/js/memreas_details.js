@@ -1,32 +1,6 @@
-// example how to integrate with a previewer
-var current = 0,
-    $preview = $( '#preview' ),
-    $carouselEl = $( '#carousel' ),
-    $carouselItems = $carouselEl.children(),
-    carousel = $carouselEl.elastislide( {
-        current : current,
-        minItems : 3,
-        onClick : function( el, pos, evt ) {
-
-            changeImage( el, pos );
-            evt.preventDefault();
-
-        },
-        onReady : function() {
-
-            changeImage( $carouselItems.eq( current ), current );
-
-        }
-    } );
-
-function changeImage( el, pos ) {
-
-    $preview.attr( 'src', el.data( 'preview' ) );
-    $carouselItems.removeClass( 'current-img' );
-    el.addClass( 'current-img' );
-    carousel.setCurrent( pos );
-
-}
+var eventdetail_id = '';
+var eventdetail_user = '';
+var eventdetail_media_id = '';
 $(function(){
         $("ul.scrollClass").mCustomScrollbar({
                 scrollButtons:{
@@ -47,38 +21,39 @@ $(function(){
         });
         $("a[title=memreas-detail-tab3]").click(function(){
             // example how to integrate with a previewer
-            var current = 0,
-            $preview = $( '#preview' ),
-            $carouselEl = $( '#carousel' ),
-            $carouselItems = $carouselEl.children(),
-            carousel = $carouselEl.elastislide( {
-                current : current,
-                minItems : 3,
-                onClick : function( el, pos, evt ) {
-                    $preview.attr( 'src', el.data( 'preview' ) );
-                    $carouselItems.removeClass( 'current-img' );
-                    el.addClass( 'current-img' );
-                    carousel.setCurrent( pos );
-                    evt.preventDefault();
-
-                },
-                onReady : function() {
-                    el = $carouselItems.eq( current );
-                    pos = current;
-                    //changeImage( $carouselItems.eq( current ), current );
-                    $preview.attr( 'src', el.data( 'preview' ) );
-                    $carouselItems.removeClass( 'current-img' );
-                    el.addClass( 'current-img' );
-                    carousel.setCurrent( pos );
-                }
-            } );
-            $(".memreas-detail-comments").mCustomScrollbar({
-                    scrollButtons:{
-                        enable:true
-                    }
-            });
+            ajaxScrollbarElement(".memreas-detail-comments");
+            updateMemreasMediaDetaisScript();
         });
 });
+function updateMemreasMediaDetaisScript(){
+    if (!$(".elastislide-list").parent (".elastislide-carousel").length > 0){
+        var current = 0,
+        $preview = $( '#preview' ),
+        $carouselEl = $( '#carousel' ),
+        $carouselItems = $carouselEl.children(),
+        carousel = $carouselEl.elastislide( {
+            current : current,
+            minItems : 3,
+            onClick : function( el, pos, evt ) {
+                $preview.attr( 'src', el.data( 'preview' ) );
+                $carouselItems.removeClass( 'current-img' );
+                eventdetail_media_id = el.attr("media-id");
+                el.addClass( 'current-img' );
+                carousel.setCurrent( pos );
+                evt.preventDefault();
+            },
+            onReady : function() {
+                el = $carouselItems.eq( current );
+                eventdetail_media_id = el.attr("media-id");
+                pos = current;
+                $preview.attr( 'src', el.data( 'preview' ) );
+                $carouselItems.removeClass( 'current-img' );
+                el.addClass( 'current-img' );
+                carousel.setCurrent( pos );
+            }
+        } );
+    }
+}
 
 /*
 *@ Memreas detail page
@@ -92,59 +67,118 @@ $(function(){
     });
 });
 
-function showEventDetail(eventId){
-    $('#loadingpopup').show();
-    user_id = $("input[name=user_id]").val();
+function showEventDetail(eventId, userId){
+    eventdetail_id = eventId;
+    eventdetail_user = userId;
+    var jComment_element = $('.memreas-detail-comments');
+    if (jComment_element.hasClass('mCustomScrollbar'))
+        jComment_element = $('.memreas-detail-comments .mCSB_container');
+    jComment_element.empty();
+    jComment_element.html('<li class="clearfix event-owner"><figure class="pro-pics"><img src="/memreas/img/profile-pic-2.jpg" alt=""></figure><div class="pro-names">User Name</div></li>');
+    //Show gallery details
     ajaxRequest(
         'listallmedia',
         [
             { tag: 'event_id',                 value: eventId },
-            { tag: 'user_id',                 value: user_id },
+            { tag: 'user_id',                 value: userId },
             { tag: 'device_id',             value: device_id },
             { tag: 'limit',                 value: media_limit_count },
             { tag: 'page',                     value: media_page_index }
         ], function (response){
             if (getValueFromXMLTag(response, 'status') == "Success") {
+                $('#loadingpopup').show();
                 var target_element = $(".memreas-detail-gallery");
                 if (target_element.hasClass ('mCustomScrollbar'))
                     target_element = $(".memreas-detail-gallery .mCSB_container");
+                target_element.empty();
+                $("#tabs-memreas-detail li:eq(0) a").click();
+
+                /* Update details_tab also */
+                $(".carousel-area").empty();
+                $(".carousel-area").append ('<ul id="carousel" class="elastislide-list"></ul>');
+                var jcarousel_element = $("ul.elastislide-list");
+                jcarousel_element.empty();
+
                 var medias = getSubXMLFromTag(response, 'media');
                 var eventId = getValueFromXMLTag(response, 'event_id');
                 if (typeof (eventId != 'undefined')){
+                    var event_owner_name = getValueFromXMLTag(response, 'username');
+                    var event_owner_pic = getValueFromXMLTag(response, 'profile_pic');
+                    event_owner_pic = event_owner_pic.replace("<!--[CDATA[", "").replace("]]-->", "");
+                    $(".memreas-detail-comments .event-owner .pro-pics img").attr ('src', event_owner_pic);
+                    $(".memreas-detail-comments .pro-names").html(event_owner_name);
+
                     var media_count = medias.length;
                     for (var i=0;i < media_count;i++) {
                         var media = medias[i].innerHTML;
+                        var _main_media = $(media).filter ('main_media_url').html();
+                        _main_media = _main_media.replace("<!--[CDATA[", "").replace("]]-->", "");
+                        if (_main_media.indexOf ('undefined') >= 0) _main_media = '/memreas/img/large/1.jpg';
                         var _media_url = getMediaThumbnail(media, '/memreas/img/small/1.jpg');
                         var _media_type = $(media).filter ('type').html();
 
-                        if (_media_type == 'video'){
-                            var temp_url = _media_url.split ('media');
-                            _media_url = temp_url[0] + 'media/web' + temp_url[1];
-                            var mediaThumbnail = $(media).filter ('media_url_448x306').html();
-                            mediaThumbnail = mediaThumbnail.replace("<!--[CDATA[", "").replace("]]-->", "");
-                            var mediaId = $(media).filter ('media_id').html();
-                            $.post('/index/buildvideocache', {video_url:_media_url, thumbnail:mediaThumbnail, media_id:mediaId}, function(response_data){
-                                response_data = JSON.parse (response_data);
-                                //target_element.append('<li><a data-video="true" href="/memreas/js/jwplayer/jwplayer_cache/' + response_data.video_link + '"><img src="' + response_data.thumbnail + '"/></a></li>');
-                                target_element.append('<li>href="#" id="button" onClick="popup(\'popupplayer\');"><img src="' + response_data.thumbnail + '"/></a></li>');
-                            });
-                        }
-                        else target_element.append ('<li><a href="' + _media_url + '" class="swipebox" title="photo-2"><img src="' + _media_url + '" alt=""></a></li>');
+                        var mediaId = $(media).filter ('media_id').html();
+                        target_element.append ('<li  media-id="' + mediaId + '"><a href="' + _media_url + '" class="swipebox" title="photo-2"><img src="' + _media_url + '" alt=""></a></li>');
+                        jcarousel_element.append ('<li data-preview="' + _main_media + '"  media-id="' + mediaId + '"><a href="#"><img src="' + _media_url + '" alt="image01" /></a></li>');
                     }
                     $(".memreas-addfriend-btn").attr ('href', "javascript:addFriendToEvent('" + eventId + "');");
                 }
+                $('#loadingpopup').hide();
             }
-            ajaxScrollbarElement(".memreas-detail-gallery");
-            $(".memreas-detail-gallery .swipebox").swipebox()
+            $(".memreas-detail-gallery .swipebox").swipebox();
         }
     );
     $("#popupContact a.accept-btn").attr ("href", "javascript:addMemreasPopupGallery('" + eventId + "')");
+
+    //Show event comments
+    ajaxRequest('listcomments',
+                [
+                    {tag: 'event_id', value: eventdetail_id},
+                    {tag: 'limit', value: '100'},
+                    {tag: 'page', value: '1'}
+                ], function(ret_xml){
+                    var jComment_element = $('.memreas-detail-comments');
+                    if (jComment_element.hasClass('mCustomScrollbar'))
+                        jComment_element = $('.memreas-detail-comments .mCSB_container');
+
+                    var jComment_popup = $(".commentpopup");
+                    if (jComment_popup.hasClass('mCustomScrollbar'))
+                        jComment_popup = $(".commentpopup .mCSB_container");
+                    jComment_popup.empty();
+
+                    var event_comments = getSubXMLFromTag(ret_xml, 'comment');
+                    var comment_count = event_comments.length;
+                    for (i = 0;i < comment_count;i++){
+                        var event_comment = event_comments[i].innerHTML;
+                        var comment_owner_pic = $(event_comment).filter('profile_pic').html();
+                        comment_owner_pic = comment_owner_pic.replace("<!--[CDATA[", "").replace("]]-->", "");
+                        var comment_text = $(event_comment).filter('comment_text').html();
+                        var html_str = '<li>' +
+                                            '<figure class="pro-pics"><img src="' + comment_owner_pic + '" alt=""></figure>' +
+                                            '<textarea name="your sign or comments here" cols="" rows=""' +
+                                            'onfocus="if(this.value==this.defaultValue)this.value=\'\';"' +
+                                            'onblur="if(this.value==\'\')this.value=this.defaultValue;" readonly="readonly">' + comment_text + '</textarea>' +
+                                          '</li>';
+                        var html_popup_str = '<li>' +
+                                                '<div class="event_pro"><img src="' + comment_owner_pic + '"></div>' +
+                                                '<textarea name="memreas_popup_comment" cols="" rows=""' +
+                                                'onfocus="if(this.value==this.defaultValue)this.value=\'\';"' +
+                                                'onblur="if(this.value==\'\')this.value=this.defaultValue;" readonly="readonly">' +  comment_text + '</textarea>' +
+                                            '</li>';
+                        jComment_element.append(html_str);
+                        jComment_popup.append(html_popup_str);
+                    }
+                });
     $(".memreas-main").hide();
     $('#loadingpopup').hide();
     $(".memreas-detail").fadeIn(500);
 }
 
 function popupAddMemreasGallery(){
+    if (eventdetail_user != user_id){
+        jerror("Only available on your own event");
+        return;
+    }
     ajaxRequest('listallmedia',
         [
             {tag: 'event_id', value: ''},
@@ -209,6 +243,10 @@ function success_addmemreas_media(){}
 
 $(function(){ $("#memreas-dropfriend").change(function(){ popupMemreasAddfriends(); }); });
 function popupMemreasAddfriends(){
+    if (eventdetail_user != user_id){
+        jerror("Only available on your own event");
+        return;
+    }
     var friend_list = $("#memreas-dropfriend").val();
     switch (friend_list){
         case 'fb': getPopupFacebookFriends(); break;
@@ -429,4 +467,40 @@ function addFriendToEvent(eventId){
             else jerror(message);
         }
     );
+}
+function memreasAddComment(){
+    var current_user = $("input[name=user_id]").val();
+    var comment_txt = $("input[name=comment_txtfield]").val();
+    if (comment_txt == '' || comment_txt == 'group name here'){
+        jerror("Please fill your comment");
+        return;
+    }
+    var params = [
+                    {tag: "event_id", value: eventdetail_id},
+                    {tag: "media_id", value: eventdetail_media_id},
+                    {tag: "user_id", value: current_user},
+                    {tag: "comments", value: comment_txt},
+                    {tag: "audio_media_id", value: ""}
+                 ];
+    ajaxRequest('addcomments', params, function(ret_xml){
+        jsuccess("your comment added");
+        //showEventDetail(eventdetail_id, eventdetail_user);
+        disablePopup('popupcomment');
+    });
+}
+function likeMemreasMedia(){
+    var current_user = $("input[name=user_id]").val();
+    ajaxRequest('likemedia',
+    [
+        {tag: "media_id", value: eventdetail_media_id},
+        {tag: "user_id", value: current_user},
+        {tag: "is_like", value: "1"}
+    ]
+    , function(ret_xml){
+        jsuccess("You liked!");
+    });
+}
+function showPopupComment(){
+    popup('popupcomment');
+    ajaxScrollbarElement('.commentpopup');
 }

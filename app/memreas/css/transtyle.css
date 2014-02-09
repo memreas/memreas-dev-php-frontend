@@ -67,3 +67,19 @@ ul.edit-area-scroll{ height: 270px; }
     top: 1px;
     left: 1px;
 }
+.elastislide-carousel ul li a img{
+    max-width: 110px !important;
+    height: 70px;
+}
+.event_like, .event_comment{ position: relative; }
+.event_like span, .event_comment span{
+    color: #FFFFFF;
+    display: block;
+    font-size: 10px;
+    position: absolute;
+    right: 7px;
+    top: 1px;
+}
+.event_comment span{ top: -1px; }
+.image-preview img{ width: 430px; }
+.memreas-detail-comments .pro-pics img{ width: 85px; }

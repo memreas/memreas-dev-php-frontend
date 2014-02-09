@@ -30,22 +30,15 @@ function getMediaThumbnail(element_object, default_value){
         found_link = found_link.replace("<!--[CDATA[", "").replace("]]-->", "");
         if (found_link != '') break;
     }
-    if (found_link == '') found_link = default_value;
+    if (found_link == '' || found_link.indexOf ('undefined') >= 0) found_link = default_value;
     return found_link;
 }
 
-/*
-*@ Function Json Parse base on xml respone
-*/
-function jsonValue(jsonSource, jsonKey){
-    if (typeof (jsonSource.jsonKey[1]) != 'undefined'){
-        var object_length = jsonSource.length;
-        var parse_object = new Array();
-        for (i = 0;i < object_length;i++){
+//Check if image already exist
+function image_exist(image_url, default_value){
 
-        }
-    }
 }
+
 //Notify functions
 function jsuccess (str_msg){
     jSuccess(
