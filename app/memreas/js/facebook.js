@@ -2,9 +2,14 @@
 // Author: David Kang
 // Copyright memreas llc 2013
 /////////////////////////////////
-
-var FACEBOOK_APPID 			= '642983449085789';
-var FACEBOOK_SECRETCODE 	= '47bfc45d191ef7dda0e2ebbf43b70a64';
+if (GLOBAL_ENV == 'development'){
+    var FACEBOOK_APPID 			= '642983449085789';
+    var FACEBOOK_SECRETCODE 	= '47bfc45d191ef7dda0e2ebbf43b70a64';
+}
+else{
+    var FACEBOOK_APPID          = '1408422936074030';
+    var FACEBOOK_SECRETCODE     = 'ccaa009ff10501d11b57ffae46d5794e';
+}
 var FACEBOOK_FRIENDSLIMIT 	= 500;
 
 var fb_accountInfo = null;

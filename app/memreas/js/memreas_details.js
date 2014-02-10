@@ -22,10 +22,10 @@ $(function(){
         $("a[title=memreas-detail-tab3]").click(function(){
             // example how to integrate with a previewer
             ajaxScrollbarElement(".memreas-detail-comments");
-            updateMemreasMediaDetaisScript();
+            updateMemreasMediaDetailsScript();
         });
 });
-function updateMemreasMediaDetaisScript(){
+function updateMemreasMediaDetailsScript(){
     if (!$(".elastislide-list").parent (".elastislide-carousel").length > 0){
         var current = 0,
         $preview = $( '#preview' ),
@@ -36,20 +36,26 @@ function updateMemreasMediaDetaisScript(){
             minItems : 3,
             onClick : function( el, pos, evt ) {
                 $preview.attr( 'src', el.data( 'preview' ) );
+                $preview.attr( 'data-preview', el.data( 'preview' ) );
+                $preview.parent('a').attr('href', el.data( 'preview' ));
                 $carouselItems.removeClass( 'current-img' );
                 eventdetail_media_id = el.attr("media-id");
                 el.addClass( 'current-img' );
                 carousel.setCurrent( pos );
                 evt.preventDefault();
+                $(".image-preview .swipebox").swipebox();
             },
             onReady : function() {
                 el = $carouselItems.eq( current );
                 eventdetail_media_id = el.attr("media-id");
                 pos = current;
-                $preview.attr( 'src', el.data( 'preview' ) );
+                $preview.attr( 'src', el.data( 'preview' ) )
+                $preview.attr( 'data-preview', el.data( 'preview' ) )
+                $preview.parent('a').attr('href', el.data( 'preview' ));
                 $carouselItems.removeClass( 'current-img' );
                 el.addClass( 'current-img' );
                 carousel.setCurrent( pos );
+                $(".image-preview .swipebox").swipebox();
             }
         } );
     }
@@ -257,9 +263,6 @@ function popupMemreasAddfriends(){
 }
 
 function getPopupFacebookFriends(){
-    var FACEBOOK_APPID             = '642983449085789';
-    var FACEBOOK_SECRETCODE     = '47bfc45d191ef7dda0e2ebbf43b70a64';
-    var FACEBOOK_FRIENDSLIMIT     = 500
     $('#loadingpopup').show();
     FB.init({ appId: FACEBOOK_APPID,
         status: true,
@@ -484,7 +487,7 @@ function memreasAddComment(){
                  ];
     ajaxRequest('addcomments', params, function(ret_xml){
         jsuccess("your comment added");
-        //showEventDetail(eventdetail_id, eventdetail_user);
+        showEventDetail(eventdetail_id, eventdetail_user);
         disablePopup('popupcomment');
     });
 }

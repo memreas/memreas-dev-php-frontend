@@ -2,9 +2,7 @@
 *@Define global function here
 *@ Tran Tuan
 */
-
-var memreasUserId = '';
-var memreasEventId = '';
+var GLOBAL_ENV = 'live'; //development or live
 
 /*
 *@ Function Scrollbar Secure
