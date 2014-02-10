@@ -1,6 +1,6 @@
 /*Tran developer will style here*/
 .row-choose-file{ position: relative; margin: 0 auto; width: 590px; }
-li.setchoosed, img.setchoosed{ border: 1px solid #10FA2C !important; }
+li.setchoosed, img.setchoosed{ border: 1px solid #10FA2C !important; position: relative; }
 .description{
     font-style: italic;
     font-size: 12px;
@@ -83,3 +83,10 @@ ul.edit-area-scroll{ height: 270px; }
 .event_comment span{ top: -1px; }
 .image-preview img{ width: 430px; }
 .memreas-detail-comments .pro-pics img{ width: 85px; }
+img.selected-gallery{
+    bottom: 5px;
+    height: 20px !important;
+    position: absolute;
+    right: 5px;
+    width: 20px !important;
+}
