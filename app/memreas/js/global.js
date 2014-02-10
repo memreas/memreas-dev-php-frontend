@@ -2,7 +2,7 @@
 *@Define global function here
 *@ Tran Tuan
 */
-var GLOBAL_ENV = 'live'; //development or live
+var GLOBAL_ENV = 'development'; //development or live
 
 /*
 *@ Function Scrollbar Secure

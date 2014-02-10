@@ -31,17 +31,17 @@ jQuery.fetch_server_media = function (user_id){
                     var _media_type = $(media).filter ('type').html();
                     var _media_url = $(media).filter ('main_media_url').html();
                     _media_url = _media_url.replace("<!--[CDATA[", "").replace("]]-->", "");
+                    var mediaId = $(media).filter ('media_id').html();
                     //Build video thumbnail
                     if (_media_type == 'video'){
                         var temp_url = _media_url.split ('media');
                         _media_url = temp_url[0] + 'media/web' + temp_url[1];
                         var mediaThumbnail = $(media).filter ('media_url_448x306').html();
                         mediaThumbnail = mediaThumbnail.replace("<!--[CDATA[", "").replace("]]-->", "");
-                        var mediaId = $(media).filter ('media_id').html();
                         $.post('/index/buildvideocache', {video_url:_media_url, thumbnail:mediaThumbnail, media_id:mediaId}, function(response_data){
                             response_data = JSON.parse (response_data);
                             $(".user-resources").append('<a data-video="true" href="/memreas/js/jwplayer/jwplayer_cache/' + response_data.video_link + '"><img src="' + response_data.thumbnail + '"/></a>');
-                            $(".edit-area-scroll .first-element").append ('<li class="video-media"><a class="image-sync" id="' + response_data.media_id + '" onclick="return imageChoosed(this.id);" href="' + response_data.thumbnail + '"><img src="' + response_data.thumbnail + '"/><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a><img src="/memreas/img/gallery-select.png"></li>');
+                            $(".edit-area-scroll .first-element").append ('<li class="video-media"><a class="video-resource image-sync" id="' + response_data.media_id + '" onclick="return imageChoosed(this.id);" href="' + response_data.thumbnail + '"><img src="' + response_data.thumbnail + '"/><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a><img src="/memreas/img/gallery-select.png"></li>');
                         });
                     }
                     else {
