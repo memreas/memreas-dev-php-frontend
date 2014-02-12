@@ -86,6 +86,7 @@ function fetchMyMemreas(){
                                     var media_count = medias.length;
                                     for (var i=0;i < media_count;i++) {
                                         var media = medias[i].innerHTML;
+                                        var media_type = $(media).filter('type').html();
                                         var _media_url = getMediaThumbnail(media, '/memreas/img/small/1.jpg');
                                         $("#myEvent-" + eventId).append ('<div class="event_img"><img src="' + _media_url + '"/></div>');
                                     }

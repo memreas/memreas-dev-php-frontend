@@ -20,7 +20,7 @@ function ajaxScrollbarElement(element_object){
 }
 function getMediaThumbnail(element_object, default_value){
     jelement_object = $(element_object);
-    var media_response = new Array('media_url_98x78', 'media_url_79x80', 'media_url_448x306', 'main_media_url');
+    var media_response = new Array('media_url_98x78', 'media_url_79x80', 'media_url_448x306', 'event_media_video_thum', 'main_media_url');
     var total_media_response = media_response.length;
     var found_link = '';
     for (i = 0;i < total_media_response;i++){
@@ -28,7 +28,8 @@ function getMediaThumbnail(element_object, default_value){
         found_link = found_link.replace("<!--[CDATA[", "").replace("]]-->", "");
         if (found_link != '') break;
     }
-    if (found_link == '' || found_link.indexOf ('undefined') >= 0) found_link = default_value;
+    media_type = jelement_object.filter('type').html();
+    if (found_link == '' || found_link.indexOf ('undefined') >= 0 || (media_type == 'video' && (i == total_media_response - 1))) found_link = default_value;
     return found_link;
 }
 

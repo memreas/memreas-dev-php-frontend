@@ -721,4 +721,12 @@ $(function(){
             $("#ckb_viewable").attr ('checked', 'checked');
         else $("#ckb_viewable").attr ('checked', false);
     });
+    /*fix select date from*/
+    $("input#ckb_viewable").change(function(){
+        if (!$(this).is(":checked")){
+            $("#dtp_from").val('from');
+            $("#dtp_to").val('to');
+        }
+    });
+
 });

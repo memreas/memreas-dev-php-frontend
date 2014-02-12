@@ -54,7 +54,6 @@ function updateMemreasMediaDetailsScript(){
                 $preview.parent('a').attr('href', el.data( 'preview' ));
                 $carouselItems.removeClass( 'current-img' );
                 el.addClass( 'current-img' );
-                carousel.setCurrent( pos );
                 $(".image-preview .swipebox").swipebox();
             }
         } );
