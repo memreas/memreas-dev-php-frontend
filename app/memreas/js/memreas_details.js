@@ -37,7 +37,6 @@ function updateMemreasMediaDetailsScript(){
             onClick : function( el, pos, evt ) {
                 $preview.attr( 'src', el.data( 'preview' ) );
                 $preview.attr( 'data-preview', el.data( 'preview' ) );
-                $preview.parent('a').attr('href', el.data( 'preview' ));
                 $carouselItems.removeClass( 'current-img' );
                 eventdetail_media_id = el.attr("media-id");
                 el.addClass( 'current-img' );
@@ -50,8 +49,7 @@ function updateMemreasMediaDetailsScript(){
                 eventdetail_media_id = el.attr("media-id");
                 pos = current;
                 $preview.attr( 'src', el.data( 'preview' ) )
-                $preview.attr( 'data-preview', el.data( 'preview' ) )
-                $preview.parent('a').attr('href', el.data( 'preview' ));
+                $preview.attr( 'data-preview', el.data( 'preview' ) );
                 $carouselItems.removeClass( 'current-img' );
                 el.addClass( 'current-img' );
                 $(".image-preview .swipebox").swipebox();
@@ -123,7 +121,10 @@ function showEventDetail(eventId, userId){
                         var _media_type = $(media).filter ('type').html();
 
                         var mediaId = $(media).filter ('media_id').html();
-                        target_element.append ('<li  media-id="' + mediaId + '"><a href="' + _media_url + '" class="swipebox" title="photo-2"><img src="' + _media_url + '" alt=""></a></li>');
+                        if (_media_type == 'video'){
+                            target_element.append ('<li class="video-media" id="memreasvideo-' + mediaId + '" media-url="' + _main_media + '"><a href=\'javascript:popupVideoPlayer("memreasvideo-' + mediaId + '");\' id="button"><img src="' + _media_url + '" alt=""><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a></li>');
+                        }
+                        else target_element.append ('<li  media-id="' + mediaId + '"><a href="' + _media_url + '" class="swipebox" title="photo-2"><img src="' + _media_url + '" alt=""></a></li>');
                         jcarousel_element.append ('<li data-preview="' + _main_media + '"  media-id="' + mediaId + '"><a href="#"><img src="' + _media_url + '" alt="image01" /></a></li>');
                     }
                     $(".memreas-addfriend-btn").attr ('href', "javascript:addFriendToEvent('" + eventId + "');");
@@ -178,7 +179,21 @@ function showEventDetail(eventId, userId){
     $('#loadingpopup').hide();
     $(".memreas-detail").fadeIn(500);
 }
-
+function popupVideoPlayer(video_id){
+    var media_video_url = $("#" + video_id).attr ('media-url');
+    $("#popupplayerMemreas").html('');
+    $("#popupplayerMemreas").html('<a id="popupplayerMemreasClose" onClick="disablePopup(\'popupplayerMemreas\')" class=\'popupClose\'>x</a>' +
+            '<div id="myElementMemreas">Loading the player...</div>' +
+            '<script type="text/javascript" src="/memreas/js/jwplayer/jwplayer.js"></script>' +
+            '<script type="text/javascript" src="/memreas/js/jwplayer/jwplayer.html5.js"></script>' +
+            '<script type="text/javascript" id="script-init">' +
+                'jwplayer("myElementMemreas").setup({' +
+                    'file: "' + media_video_url + '",' +
+                    'image: "/memreas/img/large-pic-1.jpg"' +
+                '});' +
+            '</script>');
+    popup('popupplayerMemreas');
+}
 function popupAddMemreasGallery(){
     if (eventdetail_user != user_id){
         jerror("Only available on your own event");
@@ -204,7 +219,12 @@ function popupAddMemreasGallery(){
                     var _media_type = $(media).filter ('type').html();
                     var _media_url = getMediaThumbnail(media, '/memreas/img/small-pic-3.jpg');
                     var _media_id = $(media).filter('media_id').html();
-                    jtarget_element.append('<li><a href="javascript:;" id="memreas-addgallery-' + _media_id + '" onclick="return imageChoosed(this.id);"><img src="' + _media_url + '" alt=""></a></li>');
+                    if (_media_type == 'video'){
+                        var _main_video_media = $(media).filter ('main_media_url').html();
+                        _main_video_media = _main_video_media.replace("<!--[CDATA[", "").replace("]]-->", "");
+                        jtarget_element.append('<li class="video-media" media-url="' + _main_video_media + '"><a href="javascript:;" id="memreas-addgallery-' + _media_id + '" onclick="return imageChoosed(this.id);"><img src="' + _media_url + '" alt=""><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a></li>');
+                    }
+                    else jtarget_element.append('<li><a href="javascript:;" id="memreas-addgallery-' + _media_id + '" onclick="return imageChoosed(this.id);"><img src="' + _media_url + '" alt=""></a></li>');
                 }
             }
         }
@@ -222,14 +242,21 @@ function addMemreasPopupGallery(eventId){
     });
     for (key = 1;key <= i;key++){
         var media_url = $("#" + medias_selected[key]).find ('img').attr('src');
+        var current_instance = $(".popupContact2 li a#" + medias_selected[key]);
+        jParent = current_instance.parent('li');
         var media_name = media_url.split ('/');
         media_name = media_name[(media_name.length) - 1];
         var correct_media_url = media_url.split ('media');
         media_url = user_id + '/media' + correct_media_url[1];
+        if (jParent.hasClass('video-media')){
+            _media_type = 'video';
+            media_url = jParent.attr('media-url')
+        }
+        else _media_type = 'image';
         params = [
             {tag: 's3url', value: media_url},
             {tag: 'is_server_image', value: '0'},
-            {tag: 'content_type', value: 'image/png'},
+            {tag: 'content_type', value: _media_type},
             {tag: 's3file_name', value: media_name},
             {tag: 'device_id', value: ''},
             {tag: 'event_id', value: eventId},

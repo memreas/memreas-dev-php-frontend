@@ -208,6 +208,30 @@ error_log("Inside fetch XML request XML ---> " . $xml . PHP_EOL);
 		$view->setTemplate($path); // path to phtml file under view folder
 		return $view;
     }
+
+    public function memreasAction(){
+        $action = 'getsession';
+        $xml = "<xml><getsession><sid>1</sid></getsession></xml>";
+
+        //Guzzle the LoginWeb Service
+        $user = $this->fetchXML($action, $xml);
+        $userid = explode ("<userid>", $user);
+        $data['userid'] = explode ("</userid>", $userid['2']);
+        $data['userid'] = trim ($data['userid'][0]);
+
+        $data['bucket'] = "memreasdev";
+        $data['accesskey'] = "AKIAJMXGGG4BNFS42LZA";
+        $data['secret'] = "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";
+
+        $data['base64Policy'] = base64_encode($this->getS3Policy($data['bucket']));
+        $data['signature'] = $this->hex2b64($this->hmacsha1($data['secret'], $data['base64Policy']));
+
+        $path = $this->security("application/index/memreas.phtml");
+        $view = new ViewModel(array('data' => $data));
+        $view->setTemplate($path); // path to phtml file under view folder
+        return $view;
+    }
+
      public function testAction() {
         $action = 'getsession';
         $xml = "<xml><getsession><sid>1</sid></getsession></xml>";
@@ -259,7 +283,7 @@ error_log("Inside fetch XML request XML ---> " . $xml . PHP_EOL);
 
     public function twitterAction() {
         $server_url = $this->getRequest()->getServer('HTTP_HOST');
-        $callback_url = (strpos ($server_url, 'localhost')) ? 'http://memreas-dev-php-frontend.localhost/index/twitter' : $this->url . '/index/twitter';
+        $callback_url = (strpos ($server_url, 'localhost')) ? 'http://memreas-dev-php-frontend.localhost/index/twitter' : $this->url . 'index/twitter';
         $config = new \Application\OAuth\Config();
         $config->setConsumerKey('1bqpAfSWfZFuEeY3rbsKrw')
             ->setConsumerSecret('wM0gGBCzZKl5dLRB8TQydRDfTD5ocf2hGRKSQwag')
@@ -369,7 +393,7 @@ error_log("Inside fetch XML request XML ---> " . $xml . PHP_EOL);
 		//Setup the URL and action
 		$action = 'login';
 		$xml = "<xml><login><username>$username</username><password>$password</password></login></xml>";
-		$redirect = 'gallery';
+		$redirect = 'memreas';
 
 		//Guzzle the LoginWeb Service
 		$result = $this->fetchXML($action, $xml);

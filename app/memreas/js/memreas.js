@@ -1,4 +1,32 @@
 /*Memreas Scripts - Tran Tuan*/
+
+(function($){
+    $(window).load(function(){
+        $("#tab-content-memreas div.hideCls").hide(); // Initially hide all content
+        $("#tabs-memreas li:first").attr("id","current"); // Activate first tab
+        $("#tab-content-memreas div:first").fadeIn(); // Show first tab content*/
+
+        $('#tabs-memreas a').click(function(e) {
+
+            e.preventDefault();
+            $("#tab-content-memreas div.hideCls").hide(); //Hide all content
+            $("#tabs-memreas li").attr("id",""); //Reset id's
+            $(this).parent().attr("id","current"); // Activate this
+            $('#' + $(this).attr('title')).fadeIn(); // Show content for current tab
+            $('#' + $(this).attr('title')).fadeIn(); // Show content for current tab
+            if (!($('#' + $(this).attr('title') + " .scroll-area").hasClass('mCustomScrollbar'))){
+                $('#' + $(this).attr('title') + " .scroll-area").mCustomScrollbar({
+                    scrollButtons:{
+                        enable:true
+                    }
+                });
+            }
+            $('#' + $(this).attr('title') + " .scroll-area").mCustomScrollbar("update");
+        });
+
+    });
+})(jQuery);
+
 $(function(){
     $("a.memreas").click (function(){ fetchMyMemreas(); });
     $("#tabs-memreas li:eq(1) a").click (function(){ fetchFriendsMemreas('private'); });

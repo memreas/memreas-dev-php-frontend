@@ -715,6 +715,10 @@ share_clearFriends = function() {
 *Update checkbox when date fill in
 */
 $(function(){
+    $("#dtp_date").datepicker();
+    $("#dtp_from").datepicker();
+    $("#dtp_to").datepicker();
+    $("#dtp_selfdestruct").datepicker();
     $("#dtp_from").change (function(){
         var filledin = $(this).val();
         if (filledin != '')

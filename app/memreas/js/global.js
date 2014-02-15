@@ -3,6 +3,9 @@
 *@ Tran Tuan
 */
 var GLOBAL_ENV = 'development'; //development or live
+var CURRENT_URL = document.URL;
+if (CURRENT_URL.indexOf('localhost') < 0 && GLOBAL_ENV == 'development')
+    GLOBAL_ENV = 'live'; //Force set if URL is not localhost
 
 /*
 *@ Function Scrollbar Secure
