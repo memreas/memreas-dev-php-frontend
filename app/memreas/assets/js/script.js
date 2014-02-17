@@ -21,7 +21,8 @@ $(document).ready( function() {
             autoUpload: true,
             add: function (event, data) {
                 var checkOneInstance = $("input[name=once_instance]").val();
-                if (checkOneInstance == 1){
+                /*
+                if (checkOneInstance == 1 || 0){
                     jError(
                     'Sorry! Just one intance per upload, please wait for upload complete.',
                     {
@@ -46,6 +47,7 @@ $(document).ready( function() {
                     });
                     return false;
                 }
+                */
                 $("input[name=once_instance]").val(1);
                 var filetype = data.files[0].type;
                 var filename = data.files[0].name;
