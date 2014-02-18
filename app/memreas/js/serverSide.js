@@ -36,8 +36,7 @@ jQuery.fetch_server_media = function (user_id){
                     if (_media_type == 'video'){
                         var temp_url = _media_url.split ('media');
                         _media_url = temp_url[0] + 'media/web' + temp_url[1];
-                        var mediaThumbnail = $(media).filter ('media_url_448x306').html();
-                        mediaThumbnail = mediaThumbnail.replace("<!--[CDATA[", "").replace("]]-->", "");
+                        var mediaThumbnail = getMediaThumbnail(media, '/memreas/img/small/1.jpg');
                         $.post('/index/buildvideocache', {video_url:_media_url, thumbnail:mediaThumbnail, media_id:mediaId}, function(response_data){
                             response_data = JSON.parse (response_data);
                             $(".user-resources").append('<a data-video="true" href="/memreas/js/jwplayer/jwplayer_cache/' + response_data.video_link + '"><img src="' + response_data.thumbnail + '"/></a>');

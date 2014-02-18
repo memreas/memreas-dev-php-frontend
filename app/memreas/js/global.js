@@ -7,6 +7,8 @@ var CURRENT_URL = document.URL;
 if (CURRENT_URL.indexOf('localhost') < 0 && GLOBAL_ENV == 'development')
     GLOBAL_ENV = 'live'; //Force set if URL is not localhost
 
+var s3_bucket = 'memreasdev';
+
 /*
 *@ Function Scrollbar Secure
 *@ Surely scrollbar element loaded and scroll loaded also

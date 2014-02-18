@@ -69,12 +69,13 @@ $(document).ready( function() {
                 if (!use_xhr) {
                     using_iframe_transport = true;
                 }
-
+                /*
                 var isChrome = !!window.chrome;
                 if (isChrome) {
                     using_iframe_transport = true;
                     $(this).fileupload('option', {forceIframeTransport:true})
                 }
+                */
                 // Message on unLoad.
                 window.onbeforeunload = function() {
                     return 'You have unsaved changes.';
@@ -145,48 +146,28 @@ $(document).ready( function() {
                 if ($("a.share").hasClass ("active"))
                     var addEvent = event_id;
                 else addEvent = '';
-                var addmedia = new Array();
-                addmedia[0] = new Array();
-                addmedia[0]['tag'] = "s3url";
-                addmedia[0]['value'] = _media_url;
-                addmedia[1] = new Array();
-                addmedia[1]['tag'] = "is_server_image";
-                addmedia[1]['value'] = 0;
-                addmedia[2] = new Array();
+
                 var filename = _media_url.split("/");
                 filename = filename[filename.length - 1];
-                addmedia[2]['tag'] = "content_type";
-                addmedia[2]['value'] = $('input[name=ContentType]').val();
-                addmedia[3] = new Array();
-                addmedia[3]['tag'] = "s3file_name";
-                addmedia[3]['value'] = filename;
-                addmedia[4] = new Array();
-                addmedia[4]['tag'] = "device_id";
-                addmedia[4]['value'] = "";
-                addmedia[5] = new Array();
-                addmedia[5]['tag'] = "event_id";
-                addmedia[5]['value'] = addEvent;
-                addmedia[6] = new Array();
-                addmedia[6]['tag'] = "media_id";
-                addmedia[6]['value'] = "";
-                addmedia[7] = new Array();
-                addmedia[7]['tag'] = "user_id";
-                addmedia[7]['value'] = userid;
-                addmedia[8] = new Array();
-                addmedia[8]['tag'] = "is_profile_pic";
-                addmedia[8]['value'] = 0;
-                addmedia[9] = new Array();
-                addmedia[9]['tag'] = "location";
-                addmedia[9]['value'] = "";
-                //$(_image_handle).attr ("src", '<img src="https://memreasdev.s3.amazonaws.com/' + _media_url);
+                var params = [
+                                {tag: 's3url', value: _media_url},
+                                {tag: 'is_serveer_image', value: '0'},
+                                {tag: 'content_type', value : $('input[name=ContentType]').val()},
+                                {tag: 's3file_name', value: filename},
+                                {tag: 'device_id', value: ''},
+                                {tag: 'event_id', value: addEvent},
+                                {tag: 'media_id', value: ''},
+                                {tag: 'user_id', value: userid},
+                                {tag: 'is_profile_pic', value: '0'},
+                                {tag: 'location', value: ''}
+                            ];
 
                 if ($(".completed-upload").hasClass ('mCSB_container'))
-                    $(".completed-upload .mCSB_container").append ('<li><img src="https://memreasdev.s3.amazonaws.com/' + _media_url + '"/></li>');
-                else $(".completed-upload .first-element").append ('<li><img src="https://memreasdev.s3.amazonaws.com/' + _media_url + '"/></li>');
+                    $(".completed-upload .mCSB_container").append ('<li><img src="https://' + s3_bucket + '.s3.amazonaws.com/' + _media_url + '"/></li>');
+                else $(".completed-upload .first-element").append ('<li><img src="https://' + s3_bucket + '.s3.amazonaws.com/' + _media_url + '"/></li>');
 
-                ajaxRequest('addmediaevent', addmedia, success_addmedia, error_addmedia);
+                ajaxRequest('addmediaevent', params, success_addmedia, error_addmedia);
                 $("input[name=once_instance]").val(0);
-
             },
             done: function (event, data) {
 
