@@ -40,8 +40,11 @@ li.setchoosed, img.setchoosed{ border: 1px solid #10FA2C !important; position: r
 ul.edit-area-scroll{ height: 270px; }
 
 /* Responsive Device Fixing Layout*/
-@media screen and (max-width: 1000px){
+@media screen and (max-width: 1280px){
     #tabs-memreas a{ padding: .4em 3em; }
+}
+@media screen and (max-width: 900px){
+    #tabs-memreas a{ padding: .4em 2em; }
 }
 @media screen and (max-width: 760px){
     #maintab-content .span9:first-child{

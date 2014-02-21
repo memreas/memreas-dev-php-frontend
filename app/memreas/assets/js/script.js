@@ -69,13 +69,12 @@ $(document).ready( function() {
                 if (!use_xhr) {
                     using_iframe_transport = true;
                 }
-                /*
                 var isChrome = !!window.chrome;
                 if (isChrome) {
                     using_iframe_transport = true;
                     $(this).fileupload('option', {forceIframeTransport:true})
                 }
-                */
+
                 // Message on unLoad.
                 window.onbeforeunload = function() {
                     return 'You have unsaved changes.';
@@ -129,8 +128,7 @@ $(document).ready( function() {
             progress: function(e, data){
                 // This is what makes everything really cool, thanks to that callback
                 // you can now update the progress bar based on the upload progress
-                /*var percent = Math.round((data.loaded / data.total) * 100);
-                $('.bar').css('width', percent + '%');*/
+
                 var percent = Math.round((data.loaded / data.total) * 100);
                 data.context.find(".upload_progress_bar .progress").css ("width", percent + "%");
                 data.context.find(".upload_progress_bar span").html (percent + "%");
