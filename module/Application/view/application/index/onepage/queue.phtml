@@ -1,0 +1,49 @@
+<div class="span11 tabcontent-detail" id="queue" style="display: none;">
+    <div class="span9">
+        <div class="row-fluid">
+            <ul id="tabs-queue">
+                <li><a href="#" title="upload-queue" class="tabs2">uploads</a></li>
+                <li><a href="#" title="complete" class="tabs2">completed</a></li>
+            </ul>
+            <div id="tab-content-queue">
+                <div id="upload-queue" class="hideCls">
+                    <ul id="content_1" class="image_upload_box">
+                      <li class="first-upload"></li>
+                    </ul>
+                      <!-- Direct Upload to S3 -->
+                    <form action="https://<?php echo $data['bucket']; ?>.s3.amazonaws.com/" method="POST" enctype="multipart/form-data" class="direct-upload">
+
+                        <!-- We'll specify these variables with PHP -->
+                        <!-- Order of these is Important -->
+                        <input type="hidden" name="key" value="<?php echo $data['userid']; ?>/image/${filename}">
+                        <input type="hidden" name="AWSAccessKeyId" value="<?php echo $data['accesskey']; ?>">
+                        <input type="hidden" name="acl" value="public-read">
+                        <input type="hidden" name="success_action_status" value="201">
+                        <input type="hidden" name="policy" value="<?php echo $data['base64Policy']; ?>">
+                        <input type="hidden" name="signature" value="<?php echo $data['signature']; ?>">
+
+                        <input type="file" name="file" hidden="hidden" />
+                        <div class="upload-dropzone"></div>
+                    </form>
+                    <input type="hidden" name="once_instance" value="0">
+                    <a class="black_btn_skin f-right clear-upload" href="#">clear</a>
+                    <input type="hidden" name="ContentType" value="" />
+                    <input type="hidden" name="ContentName" value="" />
+                </div>
+                <div id="complete" class="hideCls">
+                    <ul id="content_1" class="pics completed-upload scroll-area">
+                        <div class="first-element"></div>
+                    </ul>
+                    <a class="black_btn_skin f-left" href="#">clear</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Ads Section -->
+    <?php include('right_advertising.phtml'); ?>
+    <!-- End Ads Section -->
+
+    <!-- Bottom Ads -->
+    <?php include('bottom_advertising.phtml'); ?>
+    <!-- End Bottom Ads -->
+</div>

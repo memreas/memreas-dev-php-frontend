@@ -59,6 +59,9 @@ getXMLStringFromParamArray = function(action, params) {
         case "viewallfriends":      action_tag = "viewallfriends"; break;
         case "addfriendtoevent":    action_tag = "addfriendtoevent"; break;
         case "viewevents":          action_tag = "viewevent"; break;
+        case "addcomments":         action_tag = "addcomment"; break;
+        case "likemedia":           action_tag = "likemedia"; break;
+        case "listcomments":        action_tag = "listcomments"; break;
 		default: break;
 	}
 	xml_str += "<" + action_tag + ">";
@@ -98,48 +101,6 @@ $(function(){
         $("ul.image_upload_box").html('<li class="first-upload"></li>');
     });
 });
-
-//Notify functions
-function jsuccess (str_msg){
-    jSuccess(
-    str_msg,
-    {
-      autoHide : true, // added in v2.0
-      clickOverlay : false, // added in v2.0
-      MinWidth : 250,
-      TimeShown : 3000,
-      ShowTimeEffect : 200,
-      HideTimeEffect : 200,
-      LongTrip :20,
-      HorizontalPosition : 'center',
-      VerticalPosition : 'top',
-      ShowOverlay : true,
-      ColorOverlay : '#FFF',
-      OpacityOverlay : 0.3,
-      onClosed : function(){},
-      onCompleted : function(){}
-    });
-}
-function jerror (str_msg){
-    jError(
-    str_msg,
-    {
-      autoHide : true, // added in v2.0
-      clickOverlay : false, // added in v2.0
-      MinWidth : 250,
-      TimeShown : 3000,
-      ShowTimeEffect : 200,
-      HideTimeEffect : 200,
-      LongTrip :20,
-      HorizontalPosition : 'center',
-      VerticalPosition : 'top',
-      ShowOverlay : true,
-      ColorOverlay : '#FFF',
-      OpacityOverlay : 0.3,
-      onClosed : function(){},
-      onCompleted : function(){}
-    });
-}
 
 /*
 * Event function

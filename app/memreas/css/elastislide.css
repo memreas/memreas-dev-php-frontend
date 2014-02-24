@@ -36,6 +36,7 @@
 .elastislide-carousel {
 	overflow: hidden;
 	position: relative;
+    height: 80px;
 }
 
 .elastislide-carousel ul {

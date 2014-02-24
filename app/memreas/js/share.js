@@ -584,6 +584,8 @@ share_addFriends = function(info) {
 share_clickFriends = function(id) {
     var type = id.substr(0, 2);
 	var idx = parseInt(id.substr(3));
+    if (isNaN(idx))
+        idx = (id.substr(10));
 
 	if (type == "fb") {
 		fb_friendsInfo[idx].selected = !fb_friendsInfo[idx].selected;
@@ -713,10 +715,22 @@ share_clearFriends = function() {
 *Update checkbox when date fill in
 */
 $(function(){
+    $("#dtp_date").datepicker();
+    $("#dtp_from").datepicker();
+    $("#dtp_to").datepicker();
+    $("#dtp_selfdestruct").datepicker();
     $("#dtp_from").change (function(){
         var filledin = $(this).val();
         if (filledin != '')
             $("#ckb_viewable").attr ('checked', 'checked');
         else $("#ckb_viewable").attr ('checked', false);
     });
+    /*fix select date from*/
+    $("input#ckb_viewable").change(function(){
+        if (!$(this).is(":checked")){
+            $("#dtp_from").val('from');
+            $("#dtp_to").val('to');
+        }
+    });
+
 });

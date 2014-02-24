@@ -9,6 +9,7 @@
 
 namespace Application\Controller;
 
+use Zend\Db\Adapter\Adapter;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\Session\Container;
@@ -28,7 +29,6 @@ class IndexController extends AbstractActionController
 	protected $url = "http://memreasdev-ws.elasticbeanstalk.com/";
     //protected $url = "http://mem2/index.php/";
 	protected $test = "Hope this works!";
-    //protected $url = "http://localhost/memreas-dev-php-ws/app/";
     protected $user_id;
     protected $storage;
     protected $authservice;
@@ -38,21 +38,21 @@ class IndexController extends AbstractActionController
     protected $friendmediaTable;
 
     public function fetchXML($action, $xml) {
-		$guzzle = new Client();
+	    $guzzle = new Client();
         error_log("Inside fetch XML request url ---> " . $this->url . PHP_EOL);
         error_log("Inside fetch XML request action ---> " . $action . PHP_EOL);
         error_log("Inside fetch XML request XML ---> " . $xml . PHP_EOL);
         $request = $guzzle->post(
-			$this->url,
-			null,
-			array(
-			'action' => $action,
-			//'cache_me' => true,
-    		'xml' => $xml,
+		    $this->url,
+		    null,
+		    array(
+		    'action' => $action,
+		    //'cache_me' => true,
+    	    'xml' => $xml,
             'PHPSESSID' => empty($_COOKIE[session_name()])?'':$_COOKIE[session_name()],
-	    	)
-		);
-		$response = $request->send();
+	        )
+	    );
+	    $response = $request->send();
         error_log("Inside fetch XML response ---> " . $response->getBody(true) . PHP_EOL);
         error_log("Exit fetchXML".PHP_EOL);
 		return $data = $response->getBody(true);
@@ -174,15 +174,14 @@ class IndexController extends AbstractActionController
 		return $view;
     }
 
-    public function galleryAction() {
+    public function memreasAction(){
         $action = 'getsession';
         $xml = "<xml><getsession><sid>1</sid></getsession></xml>";
 
         //Guzzle the LoginWeb Service
-        $user = $this->fetchXML($action, $xml);
-        $userid = explode ("<userid>", $user);
-        $data['userid'] = explode ("</userid>", $userid['2']);
-        $data['userid'] = trim ($data['userid'][0]);
+        $user = simplexml_load_string($this->fetchXML($action, $xml));
+        $data['userid'] = $user->getsessionresponse->userid;
+
         $data['bucket'] = "memreasdev";
         $data['accesskey'] = "AKIAJMXGGG4BNFS42LZA";
         $data['secret'] = "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";
@@ -190,34 +189,19 @@ class IndexController extends AbstractActionController
         $data['base64Policy'] = base64_encode($this->getS3Policy($data['bucket']));
         $data['signature'] = $this->hex2b64($this->hmacsha1($data['secret'], $data['base64Policy']));
 
-	    $path = $this->security("application/index/gallery.phtml");
-
-		$action = 'listallmedia';
-		$session = new Container('user');
-
-        /*
-        $action = 'getsession';
-        $xml = "<xml><getsession><sid>1</sid></getsession></xml>";
-        //Guzzle the LoginWeb Service
-        $result = $this->fetchXML($action, $xml);
-        echo "<pre>"; print_r ($result);    echo "</pre>"; die();
-        */
-		$xml = "<xml><listallmedia><event_id></event_id><user_id>" . $session->offsetGet('user_id') . "</user_id><device_id></device_id><limit>10</limit><page>1</page></listallmedia></xml>";
-		$result = $this->fetchXML($action, $xml);
-
-		$view = new ViewModel(array('xml'=>$result, 'data' => $data));
-		$view->setTemplate($path); // path to phtml file under view folder
-		return $view;
+        $path = $this->security("application/index/memreas.phtml");
+        $view = new ViewModel(array('data' => $data));
+        $view->setTemplate($path); // path to phtml file under view folder
+        return $view;
     }
+
      public function testAction() {
         $action = 'getsession';
         $xml = "<xml><getsession><sid>1</sid></getsession></xml>";
 
         //Guzzle the LoginWeb Service
-        $user = $this->fetchXML($action, $xml);
-        $userid = explode ("<userid>", $user);
-        $data['userid'] = explode ("</userid>", $userid['2']);
-        $data['userid'] = trim ($data['userid'][0]);
+        $user = simplexml_load_string($this->fetchXML($action, $xml));
+        $data['userid'] = $user->getsessionresponse->userid;
         $data['bucket'] = "memreasdev";
         $data['accesskey'] = "AKIAJMXGGG4BNFS42LZA";
         $data['secret'] = "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";
@@ -260,7 +244,7 @@ class IndexController extends AbstractActionController
 
     public function twitterAction() {
         $server_url = $this->getRequest()->getServer('HTTP_HOST');
-        $callback_url = (strpos ($server_url, 'localhost')) ? 'http://memreas-dev-php-frontend.localhost/index/twitter' : $this->url . '/index/twitter';
+        $callback_url = (strpos ($server_url, 'localhost')) ? 'http://memreas-dev-php-frontend.localhost/index/twitter' : 'http://memreasdev-frontend.elasticbeanstalk.com/index/twitter';
         $config = new \Application\OAuth\Config();
         $config->setConsumerKey('1bqpAfSWfZFuEeY3rbsKrw')
             ->setConsumerSecret('wM0gGBCzZKl5dLRB8TQydRDfTD5ocf2hGRKSQwag')
@@ -370,7 +354,7 @@ class IndexController extends AbstractActionController
 		//Setup the URL and action
 		$action = 'login';
 		$xml = "<xml><login><username>$username</username><password>$password</password></login></xml>";
-		$redirect = 'gallery';
+		$redirect = 'memreas';
 
 		//Guzzle the LoginWeb Service
 		$result = $this->fetchXML($action, $xml);
@@ -569,7 +553,7 @@ class IndexController extends AbstractActionController
                             "bucket": "memreasdev"
                         },
                         {
-                            "acl": "private"
+                            "acl": "public-read"
                         },
                         [
                             "starts-with",

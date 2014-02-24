@@ -1,6 +1,6 @@
-﻿/***************************/
+/***************************/
 //@website: www.ZwebbieZ.com
-//@license: Feel free to use it, but keep this credits please!					
+//@license: Feel free to use it, but keep this credits please!
 /***************************/
 
 //SETTING UP OUR POPUP
@@ -46,22 +46,22 @@ function centerPopup(id){
 		"left": windowWidth/2-popupWidth/2
 	});
 	//only need force for IE6
-	
+
 	$("#bg"+id).css({
 		"height": windowHeight,
-		
+
 	});
-	
+
 }
 
 
 //CONTROLLING EVENTS IN jQuery
 
 function popup(id){
-//alert(id);	
+//alert(id);
 
-				
-centerPopup(id);	
+
+centerPopup(id);
 loadPopup(id);
 $("ul.scrollpopup").mCustomScrollbar("destroy");
 	$("ul.scrollpopup").mCustomScrollbar({
@@ -74,21 +74,21 @@ $("ul.scrollpopup").mCustomScrollbar("destroy");
 
 
 $(document).ready(function(){
-	
-	
-		
-	
-	
+
+
+
+
+
 
 	//LOADING POPUP
-	//Click the button event!	
+	//Click the button event!
 	/*$("#button").click(function(){
 		//centering with css
 		centerPopup();
 		//load popup
 		loadPopup();
 	});*/
-				
+
 	//CLOSING POPUP
 	//Click the x event!
 	/*$("#popupContactClose").click(function(){

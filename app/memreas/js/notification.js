@@ -10,20 +10,23 @@ $(function(){
                 { tag: 'user_id', value: user_id },
             ],
             function(ret_xml) {
-                // parse the returned xml.
-                var json_parse =  $.xml2json(ret_xml, true);
-                var notifications = json_parse.listnotificationresponse[0].notifications[0].notification;
-                if ($(".notificationresults").hasClass ("mCustomScrollbar"))
-                    $(".notificationresults .mCSB_container").empty();
-                for (json_key in notifications){
+                if (getValueFromXMLTag(ret_xml, 'status') == 'Success'){
+                    var notifications = getSubXMLFromTag(ret_xml, 'notification');
                     if ($(".notificationresults").hasClass ("mCustomScrollbar"))
-                        $(".notificationresults .mCSB_container").append('<li class="notification accept"><div class="notification_pro"><img src="/memreas/img/profile-pic.jpg"></div>' + notifications[json_key].meta[0].text + '</li>');
-                    else $(".notificationresults").append('<li class="notification accept"><div class="notification_pro"><img src="/memreas/img/profile-pic.jpg"></div>' + notifications[json_key].meta[0].text + '</li>');
+                        $(".notificationresults .mCSB_container").empty();
+                    var notification_count = notifications.length;
+                    for (i = 0;i < notification_count;i++){
+                        var notification = $(notifications[i]).html();
+                        if ($(".notificationresults").hasClass ("mCustomScrollbar"))
+                            $(".notificationresults .mCSB_container").append('<li class="notification accept"><div class="notification_pro"><img src="/memreas/img/profile-pic.jpg"></div>' + $(notification).filter('meta').html() + '</li>');
+                        else $(".notificationresults").append('<li class="notification accept"><div class="notification_pro"><img src="/memreas/img/profile-pic.jpg"></div>' + $(notification).filter('meta').html() + '</li>');
+                    }
                 }
+                else jerror('There is no notification');
             }
         );
        if (!($(".notificationresults").hasClass("mCustomScrollbar")))
-            $(".notificationresults").mCustomScrollbar({scrollButtons:{enable:true }});
+            $(".notificationresults").mCustomScrollbar({scrollButtons:{ enable:true }});
        $('#loadingpopup').hide();
        $(".tabcontent-detail").hide();
        $(".notification-area").show();
