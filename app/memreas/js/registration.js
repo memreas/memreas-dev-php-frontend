@@ -33,35 +33,17 @@ jQuery.checkUserName = function () {
 	var data;
 	var xml_register;
 
-	xml_check_username = "<xml><checkusername><username>" + $('#inUserName').val() + "</username></checkusername></xml>";
-	json_check_username = '{"xml": {"checkusername": { "username": "' + $('#inUserName').val() + '" }}}';
-	data = '{"action": "checkusername", "type":"jsonp", "json":{"xml": { "checkusername": {"username": "' + $('#inUserName').val() + '"}}}}';
-
-	$.ajax( {
-	  type:'post',
-	  url: base_url,
-	  dataType: 'jsonp',
-	  data: 'json=' + data,
-	  success: function(json){
-	  	//alert("Success ----> " + JSON.stringify(json));
-	  	//sample json -> {"checkusernameresponse":{"status":"Failure","message":"Username is not taken","isexist":"No"}}
-	  	//alert("json.checkusernameresponse.status ----> " + json.checkusernameresponse.status);
-	  	//alert("json.checkusernameresponse.isexist ----> " + json.checkusernameresponse.isexist);
-	  	if (json.checkusernameresponse.isexist == "No") {
-//	  		alert("Returning true");
-	  		return true;
-	  	} else {
-	  		jerror("Username is taken - please choose another");
-	  		return false;
-	  	}
-	  },
-	  error: function (jqXHR, textStatus, errorThrown) {
-       	alert(jqXHR.responseText);
-       	alert(jqXHR.status);
-    	alert(textStatus);
-       	alert(errorThrown);
-	  }
-	});
+    var params = [
+                    {tag: 'username', value: $('#inUserName').val()},
+                ];
+    ajaxRequest('checkusername', params, function(response){
+        var response_status = getValueFromXMLTag(response, 'Status');
+        if (response_status == 'Success'){
+            var message_response = getValueFromXMLTag(response, 'message');
+            jerror(message_response);
+            $('#inUserName').val('').focus();
+        }
+    });
 	return false;
 }
 
@@ -100,17 +82,17 @@ function validateRegstration(){
     var input_upass = $("#register input[name=password]").val();
     var input_rpass = $("#register input[name=verifypassword]").val();
     var legal_agree = $("#register input[name=legal_agree]");
-    if (input_email == ''){
+    if (input_email == '' || input_email == 'Your Email'){
         jerror ('Please fill email');
         $("#register input[name=email]").focus();
         return false;
     }
-    if (input_uname == ''){
+    if (input_uname == '' || input_uname == 'User Name'){
         jerror ('Please fill your username');
         $("#register input[name=input_upass]").focus();
         return false;
     }
-    if (input_upass == ''){
+    if (input_upass == '' || input_upass == 'Password'){
         jerror ('Please choose your password');
         $("#register input[name=password]").focus();
         return false;
@@ -127,4 +109,16 @@ function validateRegstration(){
     return true;
 }
 
+$(function(){
+    $( "#forgot" ).submit(function( event ) {
+       var user_email = $("input[name=forgot_email]").val();
+       var params = [{tag: 'email', value: user_email}];
+       ajaxRequest('forgotpassword', params, function(response){
+           if (getValueFromXMLTag(response, 'status') == 'success')
+                jsuccess(getValueFromXMLTag(response, 'message'));
+           else jerror(getValueFromXMLTag(response, 'message'));
+       });
+       return false;
+    });
+});
 

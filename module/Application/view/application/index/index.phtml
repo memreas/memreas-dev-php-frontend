@@ -43,6 +43,8 @@ $(document).bgStretcher({
     });
 </script>
 <!--memreas registration.js-->
+<script src="/memreas/js/base_func.js"></script>
+<script type="text/javascript" src="/memreas/js/ajax.js"></script>
 <script type="text/javascript" src="/memreas/js/registration.js"></script>
 
 <script type="text/javascript">
@@ -128,36 +130,7 @@ $(document).bgStretcher({
     jQuery('#file').css('opacity',0);
 
 $(document).ready(function(){
-    $( "#forgot" ).submit(function( event ) {
-       // Stop form from submitting normally
-      event.preventDefault();
 
-       $.ajax({
-        type: "POST",
-        dataType: "json",
-        url: '/index/forgotpassword',
-        data: $('#forgot').serialize()
-      }).done(function( resp ) {
-
-
-		 if(resp.forgotpasswordresponse.status == 'success'){
-			 popupStatus=0;
-          popup('changePass');
-
-			 } else{
-				 popupStatus=0;
-          popup('changePass');
-				 //alert(resp.forgotpasswordresponse.status + ' :' + resp.forgotpasswordresponse.message);
-				 }
-
-
-
-
-
-
-        });
-
-});
     $( "#frmChangepass" ).submit(function( event ) {
        // Stop form from submitting normally
       event.preventDefault();
@@ -223,7 +196,7 @@ $(document).ready(function(){
                 <form enctype="multipart/form-data" action="<?php echo $this->url('index',array('action'=>'forgotpassword'));?>" method="post" name="forgot" id="forgot">
                     <div class="pop_forgot">
                   <label>Email</label>
-    			  <input name="email" type="text"  class="input" value="email" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Password')this.value = ''; " onChange="onEmailFocusOut();"/>
+    			  <input name="forgot_email" type="text"  class="input" value="email" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Password')this.value = ''; " onChange="onEmailFocusOut();"/>
 
                   <input id="forgotBtn" type="submit" class="submit-btn" value="submit">
                 </div>

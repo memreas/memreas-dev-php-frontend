@@ -214,13 +214,6 @@ class IndexController extends AbstractActionController
         $action = 'listallmedia';
         $session = new Container('user');
 
-        /*
-        $action = 'getsession';
-        $xml = "<xml><getsession><sid>1</sid></getsession></xml>";
-        //Guzzle the LoginWeb Service
-        $result = $this->fetchXML($action, $xml);
-        echo "<pre>"; print_r ($result);    echo "</pre>"; die();
-        */
         $xml = "<xml><listallmedia><event_id></event_id><user_id>" . $session->offsetGet('user_id') . "</user_id><device_id></device_id><limit>10</limit><page>1</page></listallmedia></xml>";
         $result = $this->fetchXML($action, $xml);
 

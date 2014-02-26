@@ -132,6 +132,7 @@ function showEventDetail(eventId, userId){
                 $('#loadingpopup').hide();
             }
             $(".memreas-detail-gallery .swipebox").swipebox();
+            ajaxScrollbarElement('.memreas-detail-gallery');
         }
     );
     $("#popupContact a.accept-btn").attr ("href", "javascript:addMemreasPopupGallery('" + eventId + "')");
