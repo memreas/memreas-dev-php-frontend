@@ -176,6 +176,26 @@ function showEventDetail(eventId, userId){
                         jComment_popup.append(html_popup_str);
                     }
                 });
+
+    //Show comment count/event count
+    /*
+     ajaxRequest(
+        'viewevents',
+        [
+            {tag: 'user_id', value: user_id},
+            {tag: 'is_my_event', value : '1'},
+            {tag: 'is_friend_event', value: '0'},
+            {tag: 'is_public_event', value: '0'},
+            {tag: 'page', value: '1'},
+            {tag: 'limit', value: '20'}
+        ],function (response){
+            if (getValueFromXMLTag(response, 'status') == "Success"){
+                var jTargetLikeCount = $(".memreas-detail-likecount span");
+                var jTargetCommentCount = $(".memreas-detail-commentcount span");
+                var like_count = getValueFromXMLTag(response, 'likecount');
+            }
+     });*/
+
     $(".memreas-main").hide();
     $('#loadingpopup').hide();
     $(".memreas-detail").fadeIn(500);

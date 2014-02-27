@@ -239,8 +239,13 @@ class IndexController extends AbstractActionController
         $server_url = $this->getRequest()->getServer('HTTP_HOST');
         $callback_url = (strpos ($server_url, 'localhost')) ? 'http://memreas-dev-php-frontend.localhost/index/twitter' : 'http://memreasdev-frontend.elasticbeanstalk.com/index/twitter';
         $config = new \Application\OAuth\Config();
-        $config->setConsumerKey('1bqpAfSWfZFuEeY3rbsKrw')
-            ->setConsumerSecret('wM0gGBCzZKl5dLRB8TQydRDfTD5ocf2hGRKSQwag')
+        /*
+        *OLD API
+        * APP ID: 1bqpAfSWfZFuEeY3rbsKrw
+        * SECRET: wM0gGBCzZKl5dLRB8TQydRDfTD5ocf2hGRKSQwag
+        */
+        $config->setConsumerKey('maf3MxgUTmBhkXj4xdyujw')
+            ->setConsumerSecret('lGLw3UHoEbgmLF9mwiT3jrBkcDs39vP0fvgpiJXuOA')
             ->setRequestTokenUrl('https://api.twitter.com/oauth/request_token')
             ->setAuthorizeUrl('https://api.twitter.com/oauth/authenticate')
             ->setAccessTokenUrl('https://api.twitter.com/oauth/access_token')
@@ -283,7 +288,6 @@ class IndexController extends AbstractActionController
             $config['output_format'] = 'object';
             $tw = new TwitterOAuth($config);
 
-
             $params = array(
                 //'screen_name' => 'kamleshpawar',
                 'cursor'=> -1,
@@ -291,11 +295,11 @@ class IndexController extends AbstractActionController
                 'include_user_entities' => false
             );
 
-        $response =  $tw->get('friends/list', $params);
-        $view = new ViewModel(array('data' => $response));
-        $path = $this->security("application/index/twitter.phtml");
-        $view->setTemplate($path);
-        return $view;
+            $response =  $tw->get('friends/list', $params);
+            $view = new ViewModel(array('data' => $response));
+            $path = $this->security("application/index/twitter.phtml");
+            $view->setTemplate($path);
+            return $view;
 
         }else{
             $requestToken = new \Application\OAuth\Token\Request($config, true);
