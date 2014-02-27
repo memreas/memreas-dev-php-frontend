@@ -18,3 +18,11 @@ RewriteRule ^(.*)$ %{ENV:BASE}index.php [NC,L]
     Header set Access-Control-Allow-Origin: *
     Header set Access-Control-Allow-Origin: amazonaws.com
 </ifModule>
+
+## BASIC PASSWORD PROTECTION
+AuthType basic
+AuthName "secure-content"
+#AuthUserFile /Users/johnmeah/AWS/memreasgit/memreas-dev-php-frontend/apache_passwords
+AuthUserFile /var/app/current/apache_passwords
+Require valid-user
+
