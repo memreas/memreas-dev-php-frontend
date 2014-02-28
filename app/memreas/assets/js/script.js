@@ -17,6 +17,7 @@ $(document).ready( function() {
             url: form.attr('action'),
             dataType: 'xml',
             crossDomain: true,
+            multiple: true,
             type: 'POST',
             autoUpload: true,
             add: function (event, data) {

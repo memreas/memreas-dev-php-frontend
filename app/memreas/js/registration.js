@@ -106,10 +106,27 @@ function validateRegstration(){
         jerror ('You must agree with legal disclaimer');
         return false;
     }
-    return true;
+
+    var params = [
+                    {tag: 'email', value: input_email},
+                    {tag: 'username', value: input_uname},
+                    {tag: 'password', value: input_upass},
+                    {tag: 'device_token', value: ''},
+                    {tag: 'device_type', value: ''},
+                    {tag: 'invited_by', value: ''}
+                ];
+    ajaxRequest('registration', params, function(response){
+        if (getValueFromXMLTag(response, 'status') == 'Success')
+            jsuccess(getValueFromXMLTag(response, 'message'));
+        else jerror(getValueFromXMLTag(response, 'message'));
+    });
+    return false;
 }
 
 $(function(){
+    /*
+    *Forgot password submit
+    */
     $( "#forgot" ).submit(function( event ) {
        var user_email = $("input[name=forgot_email]").val();
        var params = [{tag: 'email', value: user_email}];

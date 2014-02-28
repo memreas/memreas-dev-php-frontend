@@ -130,7 +130,6 @@ $(document).bgStretcher({
     jQuery('#file').css('opacity',0);
 
 $(document).ready(function(){
-
     $( "#frmChangepass" ).submit(function( event ) {
        // Stop form from submitting normally
       event.preventDefault();
@@ -143,18 +142,12 @@ $(document).ready(function(){
       }).done(function( resp ) {
 
         alert(resp.forgotpasswordresponse.status + ' :' + resp.forgotpasswordresponse.message);
-		if(resp.forgotpasswordresponse.status == 'success'){
-			disablePopup('popupContact');
-		}
-
-
-
-
-
+	    if(resp.forgotpasswordresponse.status == 'success'){
+		    disablePopup('popupContact');
+	    }
         });
-
-});
     });
+});
 </script>
     </li>
     <li>

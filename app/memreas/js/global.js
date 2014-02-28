@@ -84,3 +84,10 @@ function jerror (str_msg){
       onCompleted : function(){}
     });
 }
+function logout(){
+    var user_logged = $("input[name=user_id]").val();
+    var params = [{tag: 'user_id', value: user_logged}];
+    ajaxRequest('logout', params, function(response){
+        window.location.href = "/";
+    });
+}
