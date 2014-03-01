@@ -22,8 +22,8 @@ RewriteRule ^(.*)$ %{ENV:BASE}index.php [NC,L]
 ## BASIC PASSWORD PROTECTION
 AuthType basic
 AuthName "secure-content"
-AuthUserFile /Users/johnmeah/AWS/memreasgit/memreas-dev-php-frontend/apache_passwords
-#AuthUserFile /var/app/current/apache_passwords
+#AuthUserFile /Users/johnmeah/AWS/memreasgit/memreas-dev-php-frontend/apache_passwords
+AuthUserFile /var/app/current/apache_passwords
 Require valid-user
 
 
