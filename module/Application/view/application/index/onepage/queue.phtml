@@ -19,10 +19,10 @@
                         <input type="hidden" name="AWSAccessKeyId" value="<?php echo $data['accesskey']; ?>">
                         <input type="hidden" name="acl" value="public-read">
                         <input type="hidden" name="success_action_status" value="201">
-                        <input type="hidden" name="policy" value="<?php echo $data['base64Policy']; ?>">
-                        <input type="hidden" name="signature" value="<?php echo $data['signature']; ?>">
+                        <input type="hidden" name="policy" value="">
+                        <input type="hidden" name="signature" value="">
 
-                        <input type="file" name="file" hidden="hidden" multiple=""/>
+                        <input type="file" name="file" multiple="" style="opacity: 0; -moz-opacity:0; -webkit-opacity: 0; filter: alpha(opacity = 0);"/>
                         <div class="upload-dropzone"></div>
                     </form>
                     <input type="hidden" name="once_instance" value="0">

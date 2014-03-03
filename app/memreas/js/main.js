@@ -1,6 +1,6 @@
 $(document).ready(function(){
     //Prefetch for image location
-    $.fetch_server_media('<?php echo $user_id; ?>');
+    $.fetch_server_media();
     $.addfile();
     share_initObjects();
     share_initAkordeon();

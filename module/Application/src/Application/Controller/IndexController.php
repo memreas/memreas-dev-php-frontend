@@ -5,6 +5,7 @@
  * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
  * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
+ *
  */
 
 namespace Application\Controller;
@@ -67,30 +68,10 @@ class IndexController extends AbstractActionController
 		return $view;
     }
 
-    public function ApiServerSideAction(){
-       if (isset($_REQUEST['callback'])) {
-            //Fetch parms
-            $callback = $_REQUEST['callback'];
-            $json = $_REQUEST['json'];
-            $message_data = json_decode($json, true);
-            //Setup the URL and action
-            $ws_action = $message_data['ws_action'];
-            $type = $message_data['type'];
-            $xml = $message_data['json'];
-
-            //Guzzle the LoginWeb Service
-            $result = $this->fetchXML($ws_action, $xml);
-
-            $json = json_encode($result);
-            //Return the ajax call...
-            $callback_json = $callback . "(" . $json . ")";
-            $output = ob_get_clean();
-            header("Content-type: plain/text");
-            echo $callback_json;
-            //Need to exit here to avoid ZF2 framework view.
-       }
-       exit;
-    }
+    /*
+    * Prepare cache for video viewing on main Gallery Page
+    * @Return: file with video has been cached
+    */
     public function buildvideocacheAction(){
         if (isset ($_POST['video_url'])){
             $cache_dir = $_SERVER['DOCUMENT_ROOT'] . '/memreas/js/jwplayer/jwplayer_cache/';
@@ -134,6 +115,9 @@ class IndexController extends AbstractActionController
         exit();
     }
 
+    /*
+    * Support sub function for buildvideocache function
+    */
     private function generateVideoCacheFile($cache_dir, $video_name){
         $cache_file = uniqid('jwcache_') . substr (md5($video_name), 0, 10) . '.html';
         if (!file_exists ($cache_file)) return $cache_file;
@@ -174,6 +158,30 @@ class IndexController extends AbstractActionController
 		return $view;
     }
 
+    /*
+    * Generate S3 signatures and credentials
+    * @ Tran Tuan
+    * @ Return: json Object
+    */
+    public function s3signedAction(){
+        $data['bucket'] = "memreasdev";
+        $data['accesskey'] = "AKIAJMXGGG4BNFS42LZA";
+        $data['secret'] = "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";
+
+        $policy = $this->getS3Policy();
+        $hmac = $this->hmacsha1($data['secret'], $policy);
+        $json_object = array(
+                                'policy' => $policy,
+                                'signature' => $this->hex2b64($hmac)
+                            );
+        header ('ContentType: application/json');
+        echo json_encode($json_object); die();
+    }
+
+    /*
+    * Main page for frontend
+    * @ Tran Tuan
+    */
     public function memreasAction(){
         $action = 'getsession';
         $xml = "<xml><getsession><sid>1</sid></getsession></xml>";
@@ -186,7 +194,7 @@ class IndexController extends AbstractActionController
         $data['accesskey'] = "AKIAJMXGGG4BNFS42LZA";
         $data['secret'] = "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";
 
-        $data['base64Policy'] = base64_encode($this->getS3Policy($data['bucket']));
+        $data['base64Policy'] = $this->getS3Policy();
         $data['signature'] = $this->hex2b64($this->hmacsha1($data['secret'], $data['base64Policy']));
 
         $path = $this->security("application/index/memreas.phtml");
@@ -222,19 +230,10 @@ class IndexController extends AbstractActionController
         return $view;
     }
 
-    public function eventAction() {
-	    $path = $this->security("application/index/event.phtml");
-
-		$action = 'listallmedia';
-		$session = new Container('user');
-		$xml = "<xml><listallmedia><event_id></event_id><user_id>" . $session->offsetGet('user_id') . "</user_id><device_id></device_id><limit>10</limit><page>1</page></listallmedia></xml>";
-		$result = $this->fetchXML($action, $xml);
-
-		$view = new ViewModel(array('xml'=>$result));
-		$view->setTemplate($path); // path to phtml file under view folder
-		return $view;
-    }
-
+   /*
+   * Twitter authentication and fetching friends
+   * @Return: friend list after user has been authenticated
+   */
     public function twitterAction() {
         $server_url = $this->getRequest()->getServer('HTTP_HOST');
         $callback_url = (strpos ($server_url, 'localhost')) ? 'http://memreas-dev-php-frontend.localhost/index/twitter' : 'http://memreasdev-frontend.elasticbeanstalk.com/index/twitter';
@@ -313,34 +312,9 @@ class IndexController extends AbstractActionController
         }
     }
 
-    public function shareAction() {
-	    $path = $this->security("application/index/share.phtml");
-		$view = new ViewModel();
-		$view->setTemplate($path); // path to phtml file under view folder
-		return $view;
-    }
-
-    public function queueAction() {
-	    $path = $this->security("application/index/queue.phtml");
-		$view = new ViewModel();
-		$view->setTemplate($path); // path to phtml file under view folder
-		return $view;
-    }
-
-    public function eventGalleryAction() {
-	    $path = $this->security("application/index/event-gallery.phtml");
-		$view = new ViewModel();
-		$view->setTemplate($path); // path to phtml file under view folder
-		return $view;
-    }
-
-    public function memreasMeFriendsAction() {
-	    $path = $this->security("application/index/memreas-me-friends.phtml");
-		$view = new ViewModel();
-		$view->setTemplate($path); // path to phtml file under view folder
-		return $view;
-    }
-
+    /*
+    * Login Action
+    */
     public function loginAction() {
 		//Fetch the post data
 		$request = $this->getRequest();
@@ -399,70 +373,9 @@ class IndexController extends AbstractActionController
         error_log("Inside setSession set user data...");
     }
 
-    public function registrationAction()
-    {
-		//Fetch the post data
-		$postData = $this->getRequest()->getPost()->toArray();
-		$email = $postData ['email'];
-		$username = $postData ['username'];
-		$password = $postData ['password'];
-        $invited_by = $postData ['invited_by'];
-
-		//Setup the URL and action
-		$action = 'registration';
-		$xml = "<xml><registration><email>$email</email><username>$username</username><password>$password</password><invited_by>$invited_by</invited_by></registration></xml>";
-		$redirect = 'event';
-
-		//Guzzle the Registration Web Service
-		$result = $this->fetchXML($action, $xml);
-		$data = simplexml_load_string($result);
-
-		//ZF2 Authenticate
-		if ($data->registrationresponse->status == 'success') {
-			$this->setSession($username);
-
-			//If there's a profile pic upload it...
-			if (isset($_FILES['file'])) {
-    	 		$file = $_FILES['file'];
-		     	$fileName = $file['name'];
-    	 		$filetype = $file['type'];
-    		 	$filetmp_name = $file['tmp_name'];
-	     		$filesize = $file['size'];
-
-                $url=  $this->url;
-				$guzzle = new Client();
-				$session = new Container('user');
-				$request = $guzzle->post($url)
-								->addPostFields(
-									array(
-                                        'action' => 'addmediaevent',
-										'user_id' => $session->offsetGet('user_id'),
-										'filename' => $fileName,
-										'event_id' => "",
-										'device_id' => "",
-										'is_profile_pic' => 1,
-										'is_server_image' => 0,
-									)
-								)
-								->addPostFiles(
-									array(
-										'f' => $filetmp_name,
-									)
-								);
-			}
-			$response = $request->send();
-			$data = $response->getBody(true);
-			$xml = simplexml_load_string($result);
-			if ($xml->addmediaeventresponse->status == 'success') {
-				//Do nothing even if it fails...
-			}
-
-            //Redirect here
-			return $this->redirect()->toRoute('index', array('action' => $redirect));
-		} else {
-			return $this->redirect()->toRoute('index', array('action' => "index"));
-		}
-    }
+    /*
+    * Support for Zend Table Gateway instance model
+    */
     public function getUserTable() {
         if (!$this->userTable) {
             $sm = $this->getServiceLocator();
@@ -470,23 +383,6 @@ class IndexController extends AbstractActionController
             $this->userTable =  $this->dbAdapter->getRepository('Application\Entity\User');
          }
         return $this->userTable;
-    }
-
-    public function forgotpasswordAction() {
-        $request = $this->getRequest();
-	    $postData = $request->getPost()->toArray();
- 	    $email = isset($postData ['email']) ? $postData ['email'] : '';
-
-	    //Setup the URL and action
-	    $action = 'forgotpassword';
-	    $xml = "<xml><forgotpassword><email>$email</email></forgotpassword></xml>";
-	    //$redirect = 'gallery';
-
-	    //Guzzle the LoginWeb Service
-	    $result = $this->fetchXML($action, $xml);
-        $data = simplexml_load_string($result);
-        echo json_encode($data);
-        return '';
     }
 
 	public function changepasswordAction() {
@@ -562,7 +458,7 @@ class IndexController extends AbstractActionController
                         }
                     ]
                 }';
-        return $policy;
+        return base64_encode($policy);
     }
 
     /*

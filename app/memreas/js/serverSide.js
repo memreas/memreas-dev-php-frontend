@@ -8,7 +8,7 @@ $(function(){
 });
 
 /*Preload for server media*/
-jQuery.fetch_server_media = function (user_id){
+jQuery.fetch_server_media = function (){
     $(".user-resources, .edit-area").remove();
     $("#tab-content #tab1").append ('<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/325" data-max-width="100%"  data-allow-full-screen="true"  data-nav="thumbs"></div>');
     $("#tab-content #tab2").append('<div class="edit-area"><ul id="content_1" class="pics edit-area-scroll scroll-area"><div class="first-element"></div></ul><div style="clear: both;"></div><a class="black_btn_skin" href="javascript:deleteFiles();">Delete</a>&nbsp;<a class="black_btn_skin" href="javascript:;" id="btn-upload">Upload</a></div>');

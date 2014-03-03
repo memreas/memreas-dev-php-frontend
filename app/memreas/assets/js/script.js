@@ -5,7 +5,7 @@ $(document).ready( function() {
     var hashName = '';
 
     $(".upload-dropzone").click (function(){
-        $(".direct-upload").find ("input[type=file]").click();
+        $(".direct-upload").find ("input[type=file]").trigger('click');
     });
 
     $('.direct-upload').each( function() {
@@ -21,34 +21,21 @@ $(document).ready( function() {
             type: 'POST',
             autoUpload: true,
             add: function (event, data) {
-                var checkOneInstance = $("input[name=once_instance]").val();
-                /*
-                if (checkOneInstance == 1 || 0){
-                    jError(
-                    'Sorry! Just one intance per upload, please wait for upload complete.',
-                    {
-                      autoHide : true, // added in v2.0
-                      clickOverlay : false, // added in v2.0
-                      MinWidth : 250,
-                      TimeShown : 3000,
-                      ShowTimeEffect : 200,
-                      HideTimeEffect : 200,
-                      LongTrip :20,
-                      HorizontalPosition : 'center',
-                      VerticalPosition : 'top',
-                      ShowOverlay : true,
-                         ColorOverlay : '#FFF',
-                      OpacityOverlay : 0.3,
-                      onClosed : function(){ // added in v2.0
+                //Get signed credentials
+                $.ajax({
+                  url: "/index/s3signed",
+                  type: 'GET',
+                  dataType: 'json',
+                  data: {title: data.files[0].name}, // send the file name to the server so it can generate the key param
+                  async: false,
+                  success: function(data) {
+                    // Now that we have our data, we update the form so it contains all
+                    // the needed data to sign the request
+                    form.find('input[name=policy]').val(data.policy)
+                    form.find('input[name=signature]').val(data.signature)
+                  }
+                })
 
-                      },
-                      onCompleted : function(){ // added in v2.0
-
-                      }
-                    });
-                    return false;
-                }
-                */
                 $("input[name=once_instance]").val(1);
                 var filetype = data.files[0].type;
                 var filename = data.files[0].name;
@@ -69,11 +56,6 @@ $(document).ready( function() {
 
                 if (!use_xhr) {
                     using_iframe_transport = true;
-                }
-                var isChrome = !!window.chrome;
-                if (isChrome) {
-                    using_iframe_transport = true;
-                    $(this).fileupload('option', {forceIframeTransport:true})
                 }
 
                 // Message on unLoad.
@@ -104,8 +86,12 @@ $(document).ready( function() {
                     $(".event-upload-image").mCustomScrollbar("scrollTo","last");
                 }
                 else{
-                    $(".image_upload_box .mCSB_container").append(tpl2);
-                    $(".image_upload_box").mCustomScrollbar("update");
+                    if ($(".image_upload_box").hasClass("mCustomScrollbar"))
+                        $(".image_upload_box .mCSB_container").append(tpl2);
+                    else $(".image_upload_box").append(tpl2);
+                    if ($(".image_upload_box").hasClass("mCustomScrollbar"))
+                        $(".image_upload_box").mCustomScrollbar("update");
+                    else $(".image_upload_box").mCustomScrollbar({scrollButtons:{enable:true }});
                     $(".image_upload_box").mCustomScrollbar("scrollTo","last");
                 }
                 // Submit
