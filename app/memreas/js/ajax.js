@@ -66,6 +66,8 @@ getXMLStringFromParamArray = function(action, params) {
         case "registration":      action_tag = "registration"; break;
         case "logout":      action_tag = "logout"; break;
         case "geteventcount":      action_tag = "geteventcount"; break;
+        case "getuserdetails":      action_tag = "getuserdetails"; break;
+        case "saveuserdetails":      action_tag = "saveuserdetails"; break;
 		default: break;
 	}
 	xml_str += "<" + action_tag + ">";

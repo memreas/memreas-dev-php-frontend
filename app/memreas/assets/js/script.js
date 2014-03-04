@@ -146,10 +146,17 @@ $(document).ready( function() {
                                 {tag: 'is_profile_pic', value: '0'},
                                 {tag: 'location', value: ''}
                             ];
-
-                if ($(".completed-upload").hasClass ('mCSB_container'))
-                    $(".completed-upload .mCSB_container").append ('<li><img src="https://' + s3_bucket + '.s3.amazonaws.com/' + _media_url + '"/></li>');
-                else $(".completed-upload .first-element").append ('<li><img src="https://' + s3_bucket + '.s3.amazonaws.com/' + _media_url + '"/></li>');
+                var file_type = $('input[name=ContentType]').val();
+                if (file_type.indexOf('image') >= 0){
+                    if ($(".completed-upload").hasClass ('mCSB_container'))
+                        $(".completed-upload .mCSB_container").append ('<li><img src="https://' + s3_bucket + '.s3.amazonaws.com/' + _media_url + '"/></li>');
+                    else $(".completed-upload .first-element").append ('<li><img src="https://' + s3_bucket + '.s3.amazonaws.com/' + _media_url + '"/></li>');
+                }
+                else{
+                    if ($(".completed-upload").hasClass ('mCSB_container'))
+                        $(".completed-upload .mCSB_container").append ('<li class="video-media"><img src="/memreas/img/small/1.jpg"/><img src="/memreas/img/video-overlay.png" class="overlay-videoimg"></li>');
+                    else $(".completed-upload .first-element").append ('<li class="video-media"><img src="/memreas/img/small/1.jpg"/><img src="/memreas/img/video-overlay.png" class="overlay-videoimg"></li>');
+                }
 
                 ajaxRequest('addmediaevent', params, success_addmedia, error_addmedia);
                 $("input[name=once_instance]").val(0);

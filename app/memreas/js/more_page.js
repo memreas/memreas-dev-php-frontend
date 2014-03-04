@@ -20,4 +20,37 @@ $(function(){
     $("#tabs-more li a:eq(2)").one ('click', function(){ $('#buttons3-moretab').akordeon(); });
     $("#tabs-more li a:eq(3)").one ('click', function(){ $('#buttons4-moretab').akordeon(); });
     $("#tabs-more li a:eq(4)").one ('click', function(){ $('#buttons5-moretab').akordeon(); });
+
+    /*Action tabs click*/
+    $("a[title=more]").click(function(){ fillUserDetail( $("input[name=user_id]").val()); });
+    $("a[title=tab1-more]").click(function(){ $("a[title=more]").click(); });
 });
+
+/*Fill in current logged user detail*/
+function fillUserDetail(currentUserId){
+    var params = [{tag: 'user_id', value: currentUserId}];
+    ajaxRequest('getuserdetails', params, function(xml_response){
+        if (getValueFromXMLTag(xml_response, 'status') == 'Success'){
+            var username = getValueFromXMLTag(xml_response, 'username');
+            var useremail = getValueFromXMLTag(xml_response, 'email');
+            $("input[name=account_email]").val(useremail);
+        }
+        else jerror (getValueFromXMLTag(xml_response, 'messsage'));
+    });
+}
+
+/*Function Save user detail*/
+function saveUserDetail(){
+    var userId = $("input[name=user_id]").val();
+    var params = [
+                    {tag: 'user_id', value: userId},
+                    {tag: 'email', value: $("input[name=account_email]").val()}
+                ];
+    ajaxRequest('saveuserdetails', params, function(xml_response){
+        if (getValueFromXMLTag(xml_response) == "Success"){
+            jsuccess(getValueFromXMLTag(xml_response, 'message'));
+            fillUserDetail($("input[name=user_id]").val());
+        }
+        else jerror(getValueFromXMLTag(xml_response, 'message'));
+    });
+}

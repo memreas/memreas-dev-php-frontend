@@ -569,6 +569,26 @@ function likeMemreasMedia(){
     ]
     , function(ret_xml){
         jsuccess("You liked!");
+
+        //Update event detail bar
+        ajaxRequest(
+            'geteventcount',
+            [
+                {tag: 'event_id', value: eventdetail_id},
+            ],function (response){
+                var jTargetLikeCount = $(".memreas-detail-likecount span");
+                var jTargetCommentCount = $(".memreas-detail-commentcount span");
+                if (getValueFromXMLTag(response, 'status') == "Success"){
+                    var comment_count = getValueFromXMLTag(response, 'comment_count');
+                    var like_count = getValueFromXMLTag(response, 'like_count');
+                }
+                else{
+                    var comment_count = 0;
+                    var like_count = 0;
+                }
+                jTargetLikeCount.html(like_count)
+                jTargetCommentCount.html(comment_count);
+         });
     });
 }
 function showPopupComment(){
