@@ -302,6 +302,8 @@ function popupMemreasAddfriends(){
         return;
     }
     var friend_list = $("#memreas-dropfriend").val();
+    //Reset friend element
+    friendList = null;
     switch (friend_list){
         case 'fb': getPopupFacebookFriends(); break;
         case 'tw': getPopupTwitterFriends(); break;

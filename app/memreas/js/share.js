@@ -73,7 +73,8 @@ share_initAkordeon = function() {
 // change the friend list by social type.
 share_changeSocialType = function() {
 	var socialType = $("#cmb_socialtype option:selected").val();
-
+    //Reset friend element
+    friendList = null;
 	switch (socialType) {
 		case "facebook":
 			if (fb_friendsInfo == null) {

@@ -185,10 +185,8 @@
                 <div class="akordeon-item-body">
                     <div class="akordeon-item-content">
                        <div class="group-select">
-                         <select>
-                            <option>sample group</option>
-                            <option>group-1</option>
-                            <option>group-2</option>
+                         <select class="account-groups" name="account_groups">
+                            <option value="">-Choose-</option>
                          </select>
                       </div>
                     </div>
@@ -196,7 +194,7 @@
             </div>
             <div class="akordeon-item expanded">
                 <div class="akordeon-item-head">
-                    <div class="akordeon-item-head-container">
+                    <div class="akordeon-item-head-container network-heading">
                         <div class="akordeon-heading">
                             network
                         </div>
@@ -205,77 +203,14 @@
                 <div class="akordeon-item-body">
                     <div class="akordeon-item-content">
                       <div class="more-select">
-                       <select>
-                          <option>memreas</option>
-                          <option>facebook</option>
-                          <option>twitter</option>
+                       <select name="friend_network">
+                          <option value="memreas">memreas</option>
+                          <option value="facebook">facebook</option>
+                          <option value="twitter">twitter</option>
                        </select>
                       </div>
-                      <ul class="group scrollClass">
-                        <li>
-                          <figure class="pro-pics2"><img src="img/profile-pic.jpg" alt=""></figure>
-                          <aside class="pro-pic_names2">Friend Name</aside>
-                        </li>
-                        <li>
-                          <figure class="pro-pics2"><img src="img/profile-pic.jpg" alt=""></figure>
-                          <aside class="pro-pic_names2">Friend Name</aside>
-                        </li>
-                        <li>
-                          <figure class="pro-pics2"><img src="img/profile-pic.jpg" alt=""></figure>
-                          <aside class="pro-pic_names2">Friend Name</aside>
-                        </li>
-                        <li>
-                          <figure class="pro-pics2"><img src="img/profile-pic.jpg" alt=""></figure>
-                          <aside class="pro-pic_names2">Friend Name</aside>
-                        </li>
-                        <li>
-                          <figure class="pro-pics2"><img src="img/profile-pic.jpg" alt=""></figure>
-                          <aside class="pro-pic_names2">Friend Name</aside>
-                        </li>
-                        <li>
-                          <figure class="pro-pics2"><img src="img/profile-pic.jpg" alt=""></figure>
-                          <aside class="pro-pic_names2">Friend Name</aside>
-                        </li>
-                        <li>
-                          <figure class="pro-pics2"><img src="img/profile-pic.jpg" alt=""></figure>
-                          <aside class="pro-pic_names2">Friend Name</aside>
-                        </li>
-                        <li>
-                          <figure class="pro-pics2"><img src="img/profile-pic.jpg" alt=""></figure>
-                          <aside class="pro-pic_names2">Friend Name</aside>
-                        </li>
-                        <li>
-                          <figure class="pro-pics2"><img src="img/profile-pic.jpg" alt=""></figure>
-                          <aside class="pro-pic_names2">Friend Name</aside>
-                        </li>
-                        <li>
-                          <figure class="pro-pics2"><img src="img/profile-pic.jpg" alt=""></figure>
-                          <aside class="pro-pic_names2">Friend Name</aside>
-                        </li>
-                        <li>
-                          <figure class="pro-pics2"><img src="img/profile-pic.jpg" alt=""></figure>
-                          <aside class="pro-pic_names2">Friend Name</aside>
-                        </li>
-                        <li>
-                          <figure class="pro-pics2"><img src="img/profile-pic.jpg" alt=""></figure>
-                          <aside class="pro-pic_names2">Friend Name</aside>
-                        </li>
-                        <li>
-                          <figure class="pro-pics2"><img src="img/profile-pic.jpg" alt=""></figure>
-                          <aside class="pro-pic_names2">Friend Name</aside>
-                        </li>
-                        <li>
-                          <figure class="pro-pics2"><img src="img/profile-pic.jpg" alt=""></figure>
-                          <aside class="pro-pic_names2">Friend Name</aside>
-                        </li>
-                        <li>
-                          <figure class="pro-pics2"><img src="img/profile-pic.jpg" alt=""></figure>
-                          <aside class="pro-pic_names2">Friend Name</aside>
-                        </li>
-                        <li>
-                          <figure class="pro-pics2"><img src="img/profile-pic.jpg" alt=""></figure>
-                          <aside class="pro-pic_names2">Friend Name</aside>
-                        </li>
+                      <ul class="group scrollClass network-friends">
+                        <!-- Friend network will loaded here -->
                       </ul>
                     </div>
                 </div>
@@ -295,7 +230,29 @@
                 </div>
             </div>
         </div>
-         <a class="black_btn_skin f-center" href="#" style="margin-left: 30% !important;">update</a> <a class="black_btn_skin f-middle" href="#">cancel</a>
+         <a class="black_btn_skin f-center" href="javascript:;" onclick="addFriendNetwork();" style="margin-left: 15% !important;">Add friend</a> <a class="black_btn_skin" href="javascript:;" onclick="updateNetworkFriends();">update</a> <a class="black_btn_skin" href="#">cancel</a>
+
+         <!-- POPUP FRIEND HERE -->
+         <div id="popupNetworkFriends" class="popups">
+            <a id="popupNetworkFriendsClose" onClick="disablePopup('popupNetworkFriends')" class='popupClose'>x</a>
+            <h2>select friends</h2>
+            <div class="styled-select">
+                <select style="width: 390px" id="network-dropfriend">
+                  <option value="facebook">facebook</option>
+                  <option value="twitter">twitter</option>
+                </select>
+            </div>
+            <ul id="content_1" class="popupContact popupNetworkFriends_list scrollpopup">
+                <!-- Ajax friend will load here -->
+            </ul>
+            <div style="clear: both;">
+                <h2 id="network-groupname" name="demo_lbl_6">Group: <span></span></h2>
+            </div>
+            <a class="black_btn_skin f-left memreas-addfriend-btn" href="javascript:;" onclick="acceptAddFriendNetwork();">ok</a> <a class="black_btn_skin f-right" href="javascript:;" onClick="disablePopup('popupNetworkFriends')">cancel</a>
+        </div>
+        <div id="bgpopupNetworkFriends" class="backgroundPopup"></div>
+         <!-- END POPUP FRIEND -->
+
     </div>
     <div id="tab3-more" class="hideCls">
          <div class="akordeon" id="buttons3-moretab">
