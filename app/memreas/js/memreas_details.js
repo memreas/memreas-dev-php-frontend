@@ -89,7 +89,6 @@ function showEventDetail(eventId, userId){
             { tag: 'page',                     value: media_page_index }
         ], function (response){
             if (getValueFromXMLTag(response, 'status') == "Success") {
-                $('#loadingpopup').show();
                 var target_element = $(".memreas-detail-gallery");
                 if (target_element.hasClass ('mCustomScrollbar'))
                     target_element = $(".memreas-detail-gallery .mCSB_container");
@@ -129,7 +128,6 @@ function showEventDetail(eventId, userId){
                     }
                     $(".memreas-addfriend-btn").attr ('href', "javascript:addFriendToEvent('" + eventId + "');");
                 }
-                $('#loadingpopup').hide();
             }
             $(".memreas-detail-gallery .swipebox").swipebox();
             ajaxScrollbarElement('.memreas-detail-gallery');

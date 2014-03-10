@@ -72,6 +72,7 @@ getXMLStringFromParamArray = function(action, params) {
         case "getgroupfriends":      action_tag = "getgroupfriends"; break;
         case "addfriendtogroup":      action_tag = "addfriendtogroup"; break;
         case "removefriendgroup":      action_tag = "removefriendgroup"; break;
+        case "geteventpeople":      action_tag = "geteventpeople"; break;
 		default: break;
 	}
 	xml_str += "<" + action_tag + ">";

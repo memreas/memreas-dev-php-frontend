@@ -119,25 +119,29 @@ $(document).ready( function() {
                 var percent = Math.round((data.loaded / data.total) * 100);
                 data.context.find(".upload_progress_bar .progress").css ("width", percent + "%");
                 data.context.find(".upload_progress_bar span").html (percent + "%");
+                if (percent == 100) data.context.fadeOut(500).delay(1000).remove();
             },
             fail: function(e, data) {
                 window.onbeforeunload = null;
             },
             success: function(data, status, jqXHR) {
-                // Here we get the file url on s3 in an xml doc
-                var _media_url = $('input[name=ContentName]').val();
-                $('#real_file_url').val("https://memreasdev.s3.amazonaws.com/" + _media_url); // Update the real input in the other form
+                _media_url = getValueFromXMLTag(jqXHR.responseText, 'Location');
+                var _media_extension = _media_url.split(".");
+                _media_extension = _media_extension[_media_extension.length - 1];
+                if (_media_url.indexOf('image') >= 0)
+                    media_type = 'image/' + _media_extension;
+                else media_type = 'video/' + _media_extension;
                 var userid = $("input[name=user_id]").val();
                 if ($("a.share").hasClass ("active"))
                     var addEvent = event_id;
                 else addEvent = '';
-
                 var filename = _media_url.split("/");
                 filename = filename[filename.length - 1];
+                var server_url = _media_url.replace('https://memreasdev.s3.amazonaws.com/', '');
                 var params = [
-                                {tag: 's3url', value: _media_url},
+                                {tag: 's3url', value: server_url},
                                 {tag: 'is_serveer_image', value: '0'},
-                                {tag: 'content_type', value : $('input[name=ContentType]').val()},
+                                {tag: 'content_type', value : media_type},
                                 {tag: 's3file_name', value: filename},
                                 {tag: 'device_id', value: ''},
                                 {tag: 'event_id', value: addEvent},
@@ -146,11 +150,10 @@ $(document).ready( function() {
                                 {tag: 'is_profile_pic', value: '0'},
                                 {tag: 'location', value: ''}
                             ];
-                var file_type = $('input[name=ContentType]').val();
-                if (file_type.indexOf('image') >= 0){
+                if (media_type.indexOf('image') >= 0){
                     if ($(".completed-upload").hasClass ('mCSB_container'))
-                        $(".completed-upload .mCSB_container").append ('<li><img src="https://' + s3_bucket + '.s3.amazonaws.com/' + _media_url + '"/></li>');
-                    else $(".completed-upload .first-element").append ('<li><img src="https://' + s3_bucket + '.s3.amazonaws.com/' + _media_url + '"/></li>');
+                        $(".completed-upload .mCSB_container").append ('<li><img src="' + _media_url + '"/></li>');
+                    else $(".completed-upload .first-element").append ('<li><img src="' + _media_url + '"/></li>');
                 }
                 else{
                     if ($(".completed-upload").hasClass ('mCSB_container'))

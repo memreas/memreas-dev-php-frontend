@@ -62,11 +62,9 @@ function fetchMyMemreas(){
                     '<aside class="event_name" onclick="showEventDetail(\'' + eventId + '\', \'' + user_id + '\');" style="cursor: pointer;">' + event_name + '</aside>' +
                     '<div class="event_like"><span>' + like_count + '</span></div>' +
                     '<div class="event_comment"><span>' + comment_count + '</span></div>' +
-                    '<div class="event_gallery_pro"><img src="/memreas/img/profile-pic.jpg"></div>' +
-                    '<div class="event_gallery_pro"><img src="/memreas/img/profile-pic.jpg"></div>' +
-                    '<div class="event_gallery_pro"><img src="/memreas/img/profile-pic.jpg"></div>' +
-                    '<div class="event_gallery_pro"><img src="/memreas/img/profile-pic.jpg"></div>' +
-                    '<div class="event_gallery_pro"><img src="/memreas/img/profile-pic.jpg"></div>' +
+                    '<div id="event-people-' + eventId + '">' +
+
+                    '</div>' +
                     '<div class="clear"></div>' +
                     '<div id="viewport" onselectstart="return false;">' +
                       '<div id="myEvent-' + eventId + '" class="swipeclass">' +
@@ -97,6 +95,7 @@ function fetchMyMemreas(){
                         }
                     }
 
+                    //get event medias
                     ajaxRequest(
                         'listallmedia',
                         [
@@ -122,6 +121,26 @@ function fetchMyMemreas(){
                             }
                         }
                     );
+
+                    //Get event people
+                    ajaxRequest(
+                        'geteventpeople',
+                        [{tag: 'event_id', value: eventId}],
+                        function(xml_response){
+                            if (getValueFromXMLTag(xml_response, 'status') == 'Success'){
+                                var response_event_id = getValueFromXMLTag(xml_response, 'event_id');
+                                var jEvent_people = $("#event-people-" + response_event_id);
+                                var friends = getSubXMLFromTag(xml_response, 'friend');
+                                var count_people = friends.length;
+                                for (i = 0;i < count_people;i++){
+                                    friend = friends[i];
+                                    html_str = '<div class="event_gallery_pro"><img src="' + getValueFromXMLTag(friend, 'photo') + '"></div>';
+                                    jEvent_people.append(html_str);
+                                }
+                            }
+                        }
+                    );
+
                  $("#myEvent-" + eventId).swipe({ TYPE:'mouseSwipe', HORIZ: true });
                  $("#swipebox-comment-" + eventId).swipe({ TYPE:'mouseSwipe', HORIZ: true });
                 }
