@@ -313,7 +313,7 @@ share_addEvent = function() {
 
 			if (status.toLowerCase() == 'success') {
 				jsuccess('Event "' + name + '" was registered successfully.');
-				share_gotoPage(SHAREPAGE_TAB_MEDIA);
+			    setTimeout(function(){ share_gotoPage(SHAREPAGE_TAB_MEDIA); }, 2000);
 			}
 			else {
 				jerror(message);
@@ -440,48 +440,26 @@ function fetch_selected_media(){
 share_uploadMedias = function(success) {
 	var count = 0;
 	var selMediaList = $("#share_medialist .mCSB_container li.setchoosed img");
+    media_ids = fetch_selected_media();
+    var media_id_params = [];
+    var increase = 0;
+    for (key in media_ids){
+        var media_id = media_ids[key].replace('share-', '');
+        media_id_params[increase++] = {tag: 'media_id', value: media_id};
+    }
 
-	for (i = 0; i < selMediaList.length; i++) {
-		var img_url 	 = selMediaList[i].src;
-		var img_filename = img_url.substr(img_url.lastIndexOf("/") + 1)
-        img_url = img_url.split (user_id);
-        img_url = user_id + img_url[1];
-		ajaxRequest(
-			'addmediaevent',
-			[
-				{ tag: 's3url', 				value: img_url },
-				{ tag: 'is_server_image', 		value: 0 },
-				{ tag: 'content_type', 			value: 'image/png' },
-				{ tag: 's3file_name', 			value: img_filename },
-				{ tag: 'device_id', 			value: device_id },
-				{ tag: 'event_id', 				value: event_id },
-				{ tag: 'media_id', 				value: '' },
-				{ tag: 'user_id', 				value: user_id },
-				{ tag: 'is_profile_pic', 		value: 0 },
-				{ tag: 'location', 				value: '' }
-			],
-			function(ret_xml) {
-				// parse the returned xml.
-				var status  = getValueFromXMLTag(ret_xml, 'status');
-				var message = getValueFromXMLTag(ret_xml, 'message');
-				var id  	= getValueFromXMLTag(ret_xml, 'media_id');
+    var params = [
+                    {tag: 'event_id', value: event_id},
+                    {tag: 'media_ids', value: media_id_params},
+                ];
 
-				if (status.toLowerCase() == 'success') {
-					media_ids[count++] = id;
-					if (count == selMediaList.length) {
-						if (typeof success != "undefined"){
-							//success();
-                            jsuccess('comments was added successfully.');
-                            share_gotoPage(SHAREPAGE_TAB_FRIENDS);
-                        }
-					}
-				}
-				else {
-					console.log(message);
-				}
-			}
-		);
-	}
+    ajaxRequest('addexistmediatoevent', params, function(xml_response){
+        if (getValueFromXMLTag(xml_response, 'status') == 'Success'){
+            jsuccess(getValueFromXMLTag(xml_response, 'message'))
+            share_gotoPage(SHAREPAGE_TAB_FRIENDS);
+        }
+        else jerror(getValueFromXMLTag(xml_response, 'message'));
+    });
 }
 
 // clear all fields on Media page when click "cancel" button.

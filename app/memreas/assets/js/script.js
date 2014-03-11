@@ -139,7 +139,7 @@ $(document).ready( function() {
                 filename = filename[filename.length - 1];
                 var server_url = _media_url.replace('https://memreasdev.s3.amazonaws.com/', '');
                 var params = [
-                                {tag: 's3url', value: server_url},
+                                {tag: 's3url', value: filename},
                                 {tag: 'is_serveer_image', value: '0'},
                                 {tag: 'content_type', value : media_type},
                                 {tag: 's3file_name', value: filename},
