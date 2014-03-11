@@ -27,7 +27,7 @@ use Application\TwitterOAuth\TwitterOAuth;
 class IndexController extends AbstractActionController
 {
 	//Updated....
-	protected $url = "http://memreasdev-ws.elasticbeanstalk.com/";
+    protected $url = "http://memreasdev-ws.elasticbeanstalk.com/";
     //protected $url = "http://mem2/index.php/";
 	protected $test = "Hope this works!";
     protected $user_id;
@@ -242,9 +242,13 @@ class IndexController extends AbstractActionController
         *OLD API
         * APP ID: 1bqpAfSWfZFuEeY3rbsKrw
         * SECRET: wM0gGBCzZKl5dLRB8TQydRDfTD5ocf2hGRKSQwag
+        *
+        * NEW API
+        *  APP ID : maf3MxgUTmBhkXj4xdyujw
+        *  SECRET : lGLw3UHoEbgmLF9mwiT3jrBkcDs39vP0fvgpiJXuOA
         */
-        $config->setConsumerKey('maf3MxgUTmBhkXj4xdyujw')
-            ->setConsumerSecret('lGLw3UHoEbgmLF9mwiT3jrBkcDs39vP0fvgpiJXuOA')
+        $config->setConsumerKey('1bqpAfSWfZFuEeY3rbsKrw')
+            ->setConsumerSecret('wM0gGBCzZKl5dLRB8TQydRDfTD5ocf2hGRKSQwag')
             ->setRequestTokenUrl('https://api.twitter.com/oauth/request_token')
             ->setAuthorizeUrl('https://api.twitter.com/oauth/authenticate')
             ->setAccessTokenUrl('https://api.twitter.com/oauth/access_token')
@@ -261,16 +265,19 @@ class IndexController extends AbstractActionController
             $requestToken = unserialize($_SESSION['twitter_request_token']);
             if (!$requestToken instanceof \Application\OAuth\Token\Request) {
                 throw new Exception('Request token not found');
+                error_log('Twitter action : Request token not found');
             }
 
             // a possible CSRF attack
             if ($requestToken->getToken() !== $authorizeToken->getToken()) {
                 throw new Exception('Tokens do not match');
+                error_log('Twitter action : Tokens do not match');
             }
 
             $accessToken = new \Application\OAuth\Token\Access($config, $authorizeToken, true);
             if (!$accessToken->isValid()) {
                 throw new Exception('Could not fetch access token');
+                error_log('Twitter action : Could not fetch access token');
             }
 
             unset($_SESSION['twitter_request_token']);
