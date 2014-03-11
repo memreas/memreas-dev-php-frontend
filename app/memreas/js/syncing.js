@@ -71,7 +71,7 @@ function imageChoosed(media_id){
 function deleteFiles(){
     var confirm_box = confirm ("Are you sure want to delete them?");
     if (confirm_box){
-         $("#loadingpopup").show();
+        $("#loadingpopup").show();
         $(".edit-area a").each(function(){
            if ($(this).parent('li').hasClass("setchoosed")){
                var media_id = $(this).attr ("id");
@@ -79,10 +79,9 @@ function deleteFiles(){
                xml_data[0] = new Array();
                xml_data[0]['tag'] = 'mediaid';
                xml_data[0]['value'] = media_id.trim();
-               ajaxRequest ('deletephoto', xml_data, success_deletephoto, error_deletephoto);
            }
         });
-
+        ajaxRequest ('deletephoto', xml_data, success_deletephoto, error_deletephoto);
     }
 }
 function success_deletephoto(ret_xml){
@@ -99,7 +98,7 @@ function success_deletephoto(ret_xml){
       HorizontalPosition : 'center',
       VerticalPosition : 'top',
       ShowOverlay : true,
-         ColorOverlay : '#FFF',
+      ColorOverlay : '#FFF',
       OpacityOverlay : 0.3,
       onClosed : function(){ // added in v2.0
 

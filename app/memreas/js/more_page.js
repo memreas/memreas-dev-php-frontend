@@ -43,6 +43,10 @@ function fillUserDetail(currentUserId){
         if (getValueFromXMLTag(xml_response, 'status') == 'Success'){
             var username = getValueFromXMLTag(xml_response, 'username');
             var useremail = getValueFromXMLTag(xml_response, 'email');
+            var userprofile = getValueFromXMLTag(xml_response, 'profile');
+            $("#setting-username").html(username);
+            if (userprofile != '')
+                $("#setting-userprofile img").attr('src', userprofile);
             $("input[name=account_email]").val(useremail);
         }
         else jerror (getValueFromXMLTag(xml_response, 'messsage'));
@@ -135,7 +139,10 @@ function getGroupFriends(friend_network){
             }
             network_fillFriends(networkfriendsInfo);
         }
-        else jerror(getValueFromXMLTag(xml_response, 'message'));
+        else {
+            jerror(getValueFromXMLTag(xml_response, 'message'));
+            $('.network-friends').empty();
+        }
     });
 }
 

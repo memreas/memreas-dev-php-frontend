@@ -522,7 +522,7 @@ function addFriendToEvent(eventId){
 function memreasAddComment(){
     var current_user = $("input[name=user_id]").val();
     var comment_txt = $("input[name=comment_txtfield]").val();
-    if (comment_txt == '' || comment_txt == 'group name here'){
+    if (comment_txt == '' || comment_txt == 'your comment here'){
         jerror("Please fill your comment");
         return;
     }
