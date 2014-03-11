@@ -39,18 +39,18 @@ php_value post_max_size 0
 
 #Prevent public display of PHP errors via htaccess
 # supress php errors
-php_flag display_startup_errors off
-php_flag display_errors off
-php_flag html_errors off
-php_value docref_root 0
-php_value docref_ext 0
+#php_flag display_startup_errors off
+#php_flag display_errors off
+#php_flag html_errors off
+#php_value docref_root 0
+#php_value docref_ext 0
 
 
 # PHP error handling for development servers
 # php_flag display_startup_errors on
-# php_flag display_errors on
-# php_flag html_errors on
-# php_flag log_errors on
+php_flag display_errors on
+php_flag html_errors on
+php_flag log_errors on
 # php_flag ignore_repeated_errors off
 # php_flag ignore_repeated_source off
 # php_flag report_memleaks on
