@@ -28,6 +28,7 @@ class IndexController extends AbstractActionController
 {
 	//Updated....
     protected $url = "http://memreasdev-ws.elasticbeanstalk.com/";
+	//protected $url = "http://memreas-dev-ws.localhost/"; //Local development
     //protected $url = "http://mem2/index.php/";
 	protected $test = "Hope this works!";
     protected $user_id;
@@ -247,8 +248,8 @@ class IndexController extends AbstractActionController
         *  APP ID : maf3MxgUTmBhkXj4xdyujw
         *  SECRET : lGLw3UHoEbgmLF9mwiT3jrBkcDs39vP0fvgpiJXuOA
         */
-        $config->setConsumerKey('1bqpAfSWfZFuEeY3rbsKrw')
-            ->setConsumerSecret('wM0gGBCzZKl5dLRB8TQydRDfTD5ocf2hGRKSQwag')
+        $config->setConsumerKey('maf3MxgUTmBhkXj4xdyujw')
+            ->setConsumerSecret('lGLw3UHoEbgmLF9mwiT3jrBkcDs39vP0fvgpiJXuOA')
             ->setRequestTokenUrl('https://api.twitter.com/oauth/request_token')
             ->setAuthorizeUrl('https://api.twitter.com/oauth/authenticate')
             ->setAccessTokenUrl('https://api.twitter.com/oauth/access_token')
