@@ -135,13 +135,20 @@ $(document).ready( function() {
                 if ($("a.share").hasClass ("active"))
                     var addEvent = event_id;
                 else addEvent = '';
-                var filename = _media_url.split("/");
-                filename = filename[filename.length - 1];
+                //var filename = _media_url.split("/");
+                var s3_filename = getValueFromXMLTag(jqXHR.responseText, 'Key');
+                var s3_filename_split = s3_filename.split("/");
+                var filename = s3_filename_split[s3_filename_split.length - 1];
+var logstr="filename ---> "+filename; alert(logstr);console.log(logstr);
+                var s3_path_split = s3_filename.split(filename);
+                var s3_path = s3_path_split[0];
+logstr="s3_path ---> "+s3_path; alert(logstr);console.log(logstr);
                 var server_url = _media_url.replace('https://memreasdev.s3.amazonaws.com/', '');
                 var params = [
                                 {tag: 's3url', value: filename},
                                 {tag: 'is_serveer_image', value: '0'},
                                 {tag: 'content_type', value : media_type},
+                                {tag: 's3path', value: s3_path},
                                 {tag: 's3file_name', value: filename},
                                 {tag: 'device_id', value: ''},
                                 {tag: 'event_id', value: addEvent},

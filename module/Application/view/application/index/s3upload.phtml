@@ -32,8 +32,11 @@
             'auto'            : true,           
             'onError'         : function(errorObj, q, f, err) { console.log(err); },
             'onComplete'    : function(event, ID, file, response, data) {
-                //console.log(file);                
-                var _image_type = 'jpg jpeg png gif bmp';
+                console.log("About to log file to console...");
+                alert("About to log file to console...");                
+            	console.log(file);                
+                alert(file);                
+            	var _image_type = 'jpg jpeg png gif bmp';
                 var _response_type = file.type;
                 _response_type = _response_type.replace (".", "");   
                  var target_folder = '<?php echo $this->data['folder']; ?>';     
