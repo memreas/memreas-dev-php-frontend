@@ -70,7 +70,7 @@ class Module
                 ),
             ) );
 	}
-	
+
 	public function getServiceConfig() {
 		return array(
 				'factories' => array (
@@ -84,11 +84,11 @@ class Module
 								if (isset($session['config'])) {
 									$class = isset($session['config']['class'])  ? $session['config']['class'] : 'Zend\Session\Config\SessionConfig';
 									$options = isset($session['config']['options']) ? $session['config']['options'] : array();
-									
+
 									//setting this for AWS permissions error
 									//Note: must specify full path
-									//$options['save_path'] = getcwd()."/data/sessions/";
-									
+									$options['save_path'] = getcwd()."/data/sessions/";
+
 									$sessionConfig = new $class();
 									$sessionConfig->setOptions($options);
 								}
@@ -138,7 +138,7 @@ class Module
 							$authService->setStorage($sm->get('Application\Model\MyAuthStorage'));
 
 						return $authService;
-						},							  
+						},
 
 						//Tables
 						'Application\Model\UserTable' => function($sm) {
@@ -152,11 +152,11 @@ class Module
 							$resultSetPrototype->setArrayObjectPrototype(new User());
 							return new TableGateway('user', $dbAdapter, null, $resultSetPrototype);
 						},
-						
 
 
 
-						) 
+
+						)
 					);
     }
 }
