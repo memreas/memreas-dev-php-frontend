@@ -23,6 +23,7 @@ use Guzzle\Http\Client;
 use Application\View\Helper\S3Service;
 use Application\View\Helper\S3;
 use Application\TwitterOAuth\TwitterOAuth;
+use \Exception;
 
 class IndexController extends AbstractActionController
 {
@@ -187,6 +188,9 @@ class IndexController extends AbstractActionController
         $action = 'getsession';
         $xml = "<xml><getsession><sid>1</sid></getsession></xml>";
 
+        //Configure Ads on page
+        $enableAdvertising = true;
+
         //Guzzle the LoginWeb Service
         $user = simplexml_load_string($this->fetchXML($action, $xml));
         $data['userid'] = $user->getsessionresponse->userid;
@@ -199,34 +203,7 @@ class IndexController extends AbstractActionController
         $data['signature'] = $this->hex2b64($this->hmacsha1($data['secret'], $data['base64Policy']));
 
         $path = $this->security("application/index/memreas.phtml");
-        $view = new ViewModel(array('data' => $data));
-        $view->setTemplate($path); // path to phtml file under view folder
-        return $view;
-    }
-
-     public function testAction() {
-        $action = 'getsession';
-        $xml = "<xml><getsession><sid>1</sid></getsession></xml>";
-
-        //Guzzle the LoginWeb Service
-        $user = simplexml_load_string($this->fetchXML($action, $xml));
-        $data['userid'] = $user->getsessionresponse->userid;
-        $data['bucket'] = "memreasdev";
-        $data['accesskey'] = "AKIAJMXGGG4BNFS42LZA";
-        $data['secret'] = "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";
-
-        $data['base64Policy'] = base64_encode($this->getS3Policy($data['bucket']));
-        $data['signature'] = $this->hex2b64($this->hmacsha1($data['secret'], $data['base64Policy']));
-
-        $path = $this->security("application/index/gallery1.phtml");
-
-        $action = 'listallmedia';
-        $session = new Container('user');
-
-        $xml = "<xml><listallmedia><event_id></event_id><user_id>" . $session->offsetGet('user_id') . "</user_id><device_id></device_id><limit>10</limit><page>1</page></listallmedia></xml>";
-        $result = $this->fetchXML($action, $xml);
-
-        $view = new ViewModel(array('xml'=>$result, 'data' => $data));
+        $view = new ViewModel(array('data' => $data, 'enableAdvertising' => $enableAdvertising));
         $view->setTemplate($path); // path to phtml file under view folder
         return $view;
     }
