@@ -42,7 +42,7 @@ class Module
 
     public function bootstrapSession($e)
     {
-/*        $session = $e->getApplication()
+        $session = $e->getApplication()
                      ->getServiceManager()
                      ->get('Zend\Session\SessionManager');
         $session->start();
@@ -51,7 +51,7 @@ class Module
         if (!isset($container->init)) {
              $session->regenerateId(true);
              $container->init = 1;
-        }*/
+        }
     }
 
 
@@ -87,8 +87,9 @@ class Module
 
 									//setting this for AWS permissions error
 									//Note: must specify full path
-									$options['save_path'] = getcwd()."/data/sessions/";
-
+									$options['save_path'] = getcwd()."/data/session/";
+error_log("save_path ---> ".$options['save_path'].PHP_EOL);
+										
 									$sessionConfig = new $class();
 									$sessionConfig->setOptions($options);
 								}
