@@ -222,11 +222,11 @@ class IndexController extends AbstractActionController
         * SECRET: wM0gGBCzZKl5dLRB8TQydRDfTD5ocf2hGRKSQwag
         *
         * NEW API
-        *  APP ID : maf3MxgUTmBhkXj4xdyujw
-        *  SECRET : lGLw3UHoEbgmLF9mwiT3jrBkcDs39vP0fvgpiJXuOA
+        *  APP ID : vKv8HUdQ4OP2mClSuOqtjA
+        *  SECRET : 0pc7NHkFsCVYn86xLLZAhzU87yY184vhMZFnjKwzwXo
         */
-        $config->setConsumerKey('maf3MxgUTmBhkXj4xdyujw')
-            ->setConsumerSecret('lGLw3UHoEbgmLF9mwiT3jrBkcDs39vP0fvgpiJXuOA')
+        $config->setConsumerKey('vKv8HUdQ4OP2mClSuOqtjA')
+            ->setConsumerSecret('0pc7NHkFsCVYn86xLLZAhzU87yY184vhMZFnjKwzwXo')
             ->setRequestTokenUrl('https://api.twitter.com/oauth/request_token')
             ->setAuthorizeUrl('https://api.twitter.com/oauth/authenticate')
             ->setAccessTokenUrl('https://api.twitter.com/oauth/access_token')
