@@ -397,7 +397,8 @@ function memreas_fillFriends(info){
     var imgList = $('.popupContact .mCSB_container li img');
 
     for (i = 0; i < imgList.length; i++) {
-        $(imgList[i]).prop('src', info[i].photo);
+        if (typeof(info[i]) != 'undefined')
+            $(imgList[i]).prop('src', info[i].photo);
     }
     $('#popupContact').mCustomScrollbar('update');
 }
