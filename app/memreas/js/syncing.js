@@ -79,9 +79,9 @@ function deleteFiles(){
                xml_data[0] = new Array();
                xml_data[0]['tag'] = 'mediaid';
                xml_data[0]['value'] = media_id.trim();
+               ajaxRequest ('deletephoto', xml_data, success_deletephoto, error_deletephoto);
            }
         });
-        ajaxRequest ('deletephoto', xml_data, success_deletephoto, error_deletephoto);
     }
 }
 function success_deletephoto(ret_xml){

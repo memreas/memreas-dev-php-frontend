@@ -28,8 +28,8 @@ use \Exception;
 class IndexController extends AbstractActionController
 {
 	//Updated....
-    protected $url = "http://memreasdev-ws-elastic.elasticbeanstalk.com/";
-	//protected $url = "http://memreas-dev-ws.localhost/"; //Local development
+    //protected $url = "http://memreasdev-ws-elastic.elasticbeanstalk.com/";
+	protected $url = "http://memreas-dev-ws.localhost/"; //Local development
     //protected $url = "http://mem2/index.php/";
 	protected $test = "Hope this works!";
     protected $user_id;
@@ -221,12 +221,22 @@ class IndexController extends AbstractActionController
         * APP ID: 1bqpAfSWfZFuEeY3rbsKrw
         * SECRET: wM0gGBCzZKl5dLRB8TQydRDfTD5ocf2hGRKSQwag
         *
-        * NEW API
+        * NEW API For Online App
         *  APP ID : vKv8HUdQ4OP2mClSuOqtjA
         *  SECRET : 0pc7NHkFsCVYn86xLLZAhzU87yY184vhMZFnjKwzwXo
         */
-        $config->setConsumerKey('vKv8HUdQ4OP2mClSuOqtjA')
-            ->setConsumerSecret('0pc7NHkFsCVYn86xLLZAhzU87yY184vhMZFnjKwzwXo')
+        if (strpos ($server_url, 'localhost')){
+            //Localhost development
+            $appKey = '1bqpAfSWfZFuEeY3rbsKrw';
+            $appSecret = 'wM0gGBCzZKl5dLRB8TQydRDfTD5ocf2hGRKSQwag';
+        }
+        else{
+            //Live development
+            $appKey = 'vKv8HUdQ4OP2mClSuOqtjA';
+            $appSecret = '0pc7NHkFsCVYn86xLLZAhzU87yY184vhMZFnjKwzwXo';
+        }
+        $config->setConsumerKey($appKey)
+            ->setConsumerSecret($appSecret)
             ->setRequestTokenUrl('https://api.twitter.com/oauth/request_token')
             ->setAuthorizeUrl('https://api.twitter.com/oauth/authenticate')
             ->setAccessTokenUrl('https://api.twitter.com/oauth/access_token')
@@ -239,7 +249,6 @@ class IndexController extends AbstractActionController
             }
 
             // fetch previously stored request token
-            session_start();
             $requestToken = unserialize($_SESSION['twitter_request_token']);
             if (!$requestToken instanceof \Application\OAuth\Token\Request) {
                 throw new Exception('Request token not found');
@@ -287,7 +296,6 @@ class IndexController extends AbstractActionController
 
         }else{
             $requestToken = new \Application\OAuth\Token\Request($config, true);
-            session_start();
             $_SESSION['twitter_request_token'] = serialize($requestToken);
 
             // redirect to Twitter for authentication

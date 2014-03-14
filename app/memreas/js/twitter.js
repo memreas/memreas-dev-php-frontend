@@ -4,8 +4,14 @@
 /////////////////////////////////
 
 var TWITTER_USER 		= 'FranzPolar';
-var TWITTER_KEY 		= 'qIPCqlYRHip1chaY1tt0w';
-var TWITTER_SECRETCODE 	= 'ofDFMhBUS12Di6HlB0Cb7rkiKc7X4zpv85m3tXaZ1wY';
+
+if (GLOBAL_ENV == 'development'){
+    var TWITTER_KEY 		= '1bqpAfSWfZFuEeY3rbsKrw';
+    var TWITTER_SECRETCODE 	= 'wM0gGBCzZKl5dLRB8TQydRDfTD5ocf2hGRKSQwag';
+}else{
+    var TWITTER_KEY         = 'vKv8HUdQ4OP2mClSuOqtjA';
+    var TWITTER_SECRETCODE  = '0pc7NHkFsCVYn86xLLZAhzU87yY184vhMZFnjKwzwXo';
+}
 
 var twitterToken = null;
 var tw_friendsInfo = null;

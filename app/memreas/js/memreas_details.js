@@ -43,6 +43,7 @@ function updateMemreasMediaDetailsScript(){
                 carousel.setCurrent( pos );
                 evt.preventDefault();
                 $(".image-preview .swipebox").swipebox();
+                updateMediaLike();
             },
             onReady : function() {
                 el = $carouselItems.eq( current );
@@ -53,6 +54,7 @@ function updateMemreasMediaDetailsScript(){
                 $carouselItems.removeClass( 'current-img' );
                 el.addClass( 'current-img' );
                 $(".image-preview .swipebox").swipebox();
+                updateMediaLike();
             }
         } );
     }
@@ -260,35 +262,24 @@ function addMemreasPopupGallery(eventId){
     $(".popupContact2 li.setchoosed").each(function(){
         medias_selected[++i] = $(this).find ('a').attr ('id');
     });
+    var media_id_params = [];
+    var increase = 0;
     for (key = 1;key <= i;key++){
-        var media_url = $("#" + medias_selected[key]).find ('img').attr('src');
-        var current_instance = $(".popupContact2 li a#" + medias_selected[key]);
-        jParent = current_instance.parent('li');
-        var media_name = media_url.split ('/');
-        media_name = media_name[(media_name.length) - 1];
-        var correct_media_url = media_url.split ('media');
-        media_url = user_id + '/media' + correct_media_url[1];
-        if (jParent.hasClass('video-media')){
-            _media_type = 'video';
-            media_url = jParent.attr('media-url')
-        }
-        else _media_type = 'image';
-        params = [
-            {tag: 's3url', value: media_url},
-            {tag: 'is_server_image', value: '0'},
-            {tag: 'content_type', value: _media_type},
-            {tag: 's3file_name', value: media_name},
-            {tag: 'device_id', value: ''},
-            {tag: 'event_id', value: eventId},
-            {tag: 'media_id', value: medias_selected[i]},
-            {tag: 'user_id', value: user_id},
-            {tag: 'is_profile_pic', value: '0'},
-            {tag: 'location', value: ''}
-        ];
-        ajaxRequest('addmediaevent', params, success_addmemreas_media);
+        var media_id = medias_selected[key].replace('memreas-addgallery-', '');
+        media_id_params[increase++] = {tag: 'media_id', value: media_id};
     }
-    $('#loadingpopup').show();
-    setTimeout(function(){ showEventDetail(eventId); $('#loadingpopup').hide(); disablePopup('popupContact'); jsuccess('Media added successfully'); }, 2000);
+    var params = [
+                    {tag: 'event_id', value: eventId},
+                    {tag: 'media_ids', value: media_id_params},
+                ];
+
+    ajaxRequest('addexistmediatoevent', params, function(xml_response){
+        if (getValueFromXMLTag(xml_response, 'status') == 'Success'){
+            $('#loadingpopup').show();
+            setTimeout(function(){ showEventDetail(eventId); $('#loadingpopup').hide(); disablePopup('popupContact'); jsuccess('Media added successfully'); }, 2000);
+        }
+        else jerror(getValueFromXMLTag(xml_response, 'message'));
+    });
 }
 function success_addmemreas_media(){}
 
@@ -546,17 +537,13 @@ function memreasAddComment(){
         [
             {tag: 'event_id', value: eventdetail_id},
         ],function (response){
-            var jTargetLikeCount = $(".memreas-detail-likecount span");
             var jTargetCommentCount = $(".memreas-detail-commentcount span");
             if (getValueFromXMLTag(response, 'status') == "Success"){
                 var comment_count = getValueFromXMLTag(response, 'comment_count');
-                var like_count = getValueFromXMLTag(response, 'like_count');
             }
             else{
                 var comment_count = 0;
-                var like_count = 0;
             }
-            jTargetLikeCount.html(like_count)
             jTargetCommentCount.html(comment_count);
      });
 }
@@ -569,30 +556,19 @@ function likeMemreasMedia(){
         {tag: "is_like", value: "1"}
     ]
     , function(ret_xml){
-        jsuccess("You liked!");
-
-        //Update event detail bar
-        ajaxRequest(
-            'geteventcount',
-            [
-                {tag: 'event_id', value: eventdetail_id},
-            ],function (response){
-                var jTargetLikeCount = $(".memreas-detail-likecount span");
-                var jTargetCommentCount = $(".memreas-detail-commentcount span");
-                if (getValueFromXMLTag(response, 'status') == "Success"){
-                    var comment_count = getValueFromXMLTag(response, 'comment_count');
-                    var like_count = getValueFromXMLTag(response, 'like_count');
-                }
-                else{
-                    var comment_count = 0;
-                    var like_count = 0;
-                }
-                jTargetLikeCount.html(like_count)
-                jTargetCommentCount.html(comment_count);
-         });
+        jsuccess(getValueFromXMLTag(ret_xml, 'message'));
+        updateMediaLike();
     });
 }
 function showPopupComment(){
     popup('popupcomment');
     ajaxScrollbarElement('.commentpopup');
+}
+
+function updateMediaLike(){
+    //Update media like total
+    var params = [{tag: 'media_id', value: eventdetail_media_id}];
+    ajaxRequest('getmedialike', params, function(xml_response){
+        $(".memreas-detail-likecount span").html(getValueFromXMLTag(xml_response, 'likes'));
+    });
 }
