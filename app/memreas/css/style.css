@@ -1964,7 +1964,7 @@ ul.right li {
 	margin-bottom: 5px;
 }
 .pro-pics {
-	width: 20%;
+	width: 13%;
 }
 .pro-names {
 	width: 70%;
@@ -2655,3 +2655,6 @@ a.btn-browse-file{ margin: 0 auto; float: none; }
 /*Put own css here*/
 @import url("davidstyle.css");
 @import url("transtyle.css");
+.typeahead {
+margin-left: 15%;
+}
