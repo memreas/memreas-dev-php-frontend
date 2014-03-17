@@ -274,8 +274,15 @@ class IndexController extends AbstractActionController
             $userId = $accessToken['user_id'];
             $screenName = $accessToken['screen_name'];
             $config = array();
-            $config['consumer_key'] = '1bqpAfSWfZFuEeY3rbsKrw';
-            $config['consumer_secret'] = 'wM0gGBCzZKl5dLRB8TQydRDfTD5ocf2hGRKSQwag';
+             if (strpos ($server_url, 'localhost')){
+                //Localhost development
+                $config['consumer_key'] = '1bqpAfSWfZFuEeY3rbsKrw';
+                $config['consumer_secret'] = 'wM0gGBCzZKl5dLRB8TQydRDfTD5ocf2hGRKSQwag';
+            }
+            else{
+                $config['consumer_key'] = 'vKv8HUdQ4OP2mClSuOqtjA';
+                $config['consumer_secret'] = '0pc7NHkFsCVYn86xLLZAhzU87yY184vhMZFnjKwzwXo';
+            }
             $config['oauth_token'] = $accessToken['oauth_token'];
             $config['oauth_token_secret'] = $accessToken['oauth_token_secret'];
             $config['output_format'] = 'object';

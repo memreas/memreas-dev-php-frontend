@@ -119,12 +119,8 @@ function validateRegstration(){
         if (getValueFromXMLTag(response, 'status') == 'Success')
             jsuccess(getValueFromXMLTag(response, 'message'));
         else {
-            var response_message = getValueFromXMLTag(response, 'message');
-            if (response_message.toLowerCase() == 'email address is not verified.'){
-                jsuccess ('Your account has been created.');
-                document.register.reset();
-            }
-            else jerror(response_message);
+            jerror(response_message);
+            document.register.reset();
         }
     });
     return false;

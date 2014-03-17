@@ -36,7 +36,6 @@ $(document).ready( function() {
                   }
                 })
 
-                $("input[name=once_instance]").val(1);
                 var filetype = data.files[0].type;
                 var filename = data.files[0].name;
                 var key_value = '${filename}';
@@ -169,7 +168,6 @@ logstr="s3_path ---> "+s3_path; alert(logstr);console.log(logstr);
                 }
 
                 ajaxRequest('addmediaevent', params, success_addmedia, error_addmedia);
-                $("input[name=once_instance]").val(0);
             },
             done: function (event, data) {
 
