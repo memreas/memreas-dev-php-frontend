@@ -13,9 +13,6 @@ onEmailFocusOut = function () {
         jerror("Please check your email address");
     }
 }
-onUserNameFocusOut = function () {
-    jQuery.checkUserName();
-}
 
 function isValidEmail($email) {
   var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
@@ -127,6 +124,7 @@ function validateRegstration(){
 }
 
 $(function(){
+    $("#inUserName").change(function(){ $.checkUserName(); });
     /*
     *Forgot password submit
     */

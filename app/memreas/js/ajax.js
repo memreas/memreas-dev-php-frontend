@@ -75,6 +75,7 @@ getXMLStringFromParamArray = function(action, params) {
         case "geteventpeople":      action_tag = "geteventpeople"; break;
         case "addexistmediatoevent":      action_tag = "addexistmediatoevent"; break;
         case "getmedialike":      action_tag = "getmedialike"; break;
+        case "checkexistmedia":      action_tag = "checkexistmedia"; break;
 		default: break;
 	}
 	xml_str += "<" + action_tag + ">";

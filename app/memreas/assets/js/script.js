@@ -1,3 +1,12 @@
+var uploadFilesInstance = [];
+function removeItem(array, item){
+    for(var i in array){
+        if(array[i]==item){
+            array.splice(i,1);
+            break;
+            }
+    }
+}
 $(document).ready( function() {
 
     var ellipsisCount = 1;
@@ -21,6 +30,17 @@ $(document).ready( function() {
             type: 'POST',
             autoUpload: true,
             add: function (event, data) {
+
+                var currentUploadFileCount = uploadFilesInstance.length;
+                //Check if current file with the same name is currently uploading
+                for (i = 0;i < currentUploadFileCount;i++){
+                    if (uploadFilesInstance[i] == data.files[0].name){
+                        jerror ('not allowed to upload same files at same time');
+                        return false;
+                    }
+                }
+                uploadFilesInstance[currentUploadFileCount] = data.files[0].name;
+
                 //Get signed credentials
                 $.ajax({
                   url: "/index/s3signed",
@@ -39,6 +59,13 @@ $(document).ready( function() {
                 var filetype = data.files[0].type;
                 var filename = data.files[0].name;
                 var key_value = '${filename}';
+
+                //Check if valid type is image or video are allowed
+                if  (!(filetype.indexOf('image') >= 0 || filetype.indexOf('video') >= 0)){
+                    jerror('file type is not allowed');
+                    return false;
+                }
+
                 if (filetype.indexOf ('image') >= 0)
                     var target = 'images';
                 else target = 'media';
@@ -95,7 +122,21 @@ $(document).ready( function() {
                 }
                 // Submit
                 var _image_handle = data.context.find(".upload_progress_img img");
-                var jqXHR = data.submit();
+
+                //Check if media exist or not
+                var params = [
+                    {tag: 'user_id', value: $("input[name=user_id]").val()},
+                    {tag: 'filename', value: data.files[0].name}
+                ];
+                ajaxRequest('checkexistmedia', params, function(xml_response){
+                    if (getValueFromXMLTag(xml_response, 'status') == 'Failure'){
+                        jerror('This media has already existed');
+                        tpl2.remove();
+                        return false;
+                    }
+                    else var jqXHR = data.submit();
+                });
+
                 tpl2.find("a.cancel-upload").click (function(){
                     if(tpl2.hasClass('working-upload')){
                         jqXHR.abort();
@@ -166,7 +207,8 @@ logstr="s3_path ---> "+s3_path; alert(logstr);console.log(logstr);
                         $(".completed-upload .mCSB_container").append ('<li class="video-media"><img src="/memreas/img/small/1.jpg"/><img src="/memreas/img/video-overlay.png" class="overlay-videoimg"></li>');
                     else $(".completed-upload .first-element").append ('<li class="video-media"><img src="/memreas/img/small/1.jpg"/><img src="/memreas/img/video-overlay.png" class="overlay-videoimg"></li>');
                 }
-
+                removeItem(uploadFilesInstance, filename);
+                console.log(uploadFilesInstance);
                 ajaxRequest('addmediaevent', params, success_addmedia, error_addmedia);
             },
             done: function (event, data) {
