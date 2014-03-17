@@ -110,10 +110,3 @@ function success_deletephoto(ret_xml){
     $.fetch_server_media($("input[name=user_id]").val());
 }
 function error_deletephoto(){ alert ("error delete photo"); }
-
-$(function(){
-    $("#btn-upload").click (function(){
-        alert ("handled here");
-        $("a[title=queue]").click();
-    });
-});
