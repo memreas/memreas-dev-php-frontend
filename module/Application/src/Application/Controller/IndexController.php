@@ -64,7 +64,8 @@ class IndexController extends AbstractActionController
     public function indexAction() {
         error_log("Enter indexAction".PHP_EOL);
  	    $path = $this->security("application/index/index.phtml");
-		$view = new ViewModel();
+        $data['bucket'] = "memreasdev";
+		$view = new ViewModel(array('data' => $data));
 		$view->setTemplate($path); // path to phtml file under view folder
         error_log("Exit indexAction".PHP_EOL);
 		return $view;
@@ -173,6 +174,7 @@ class IndexController extends AbstractActionController
         $policy = $this->getS3Policy();
         $hmac = $this->hmacsha1($data['secret'], $policy);
         $json_object = array(
+                                'accessKey' => 'AKIAJMXGGG4BNFS42LZA',
                                 'policy' => $policy,
                                 'signature' => $this->hex2b64($hmac)
                             );

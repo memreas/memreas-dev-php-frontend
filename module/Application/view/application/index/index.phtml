@@ -24,7 +24,7 @@ header("Access-Control-Allow-Headers: x-requested-with");
 <link rel="stylesheet" href="/memreas/css/jNotify.jquery.css"
 
 <!--jQuery Lybrary-->
-<script src="/memreas/js/jquery.js"></script>
+<script src="/memreas/js/jquery-1.8.3.js"></script>
 <script src="/memreas/js/modernizr.custom.17475.js"></script>
 
 <!--Bootstrap jQuery-->
@@ -45,6 +45,9 @@ $(document).bgStretcher({
 <!--memreas registration.js-->
 <script src="/memreas/js/base_func.js"></script>
 <script type="text/javascript" src="/memreas/js/ajax.js"></script>
+<script src="//code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<script src="/memreas/assets/js/jquery.iframe-transport.js"></script>
+<script src="/memreas/assets/js/jquery.fileupload.js"></script>
 <script type="text/javascript" src="/memreas/js/registration.js"></script>
 
 <script type="text/javascript">
@@ -99,6 +102,17 @@ $(document).bgStretcher({
 
 
     <!-- Registration Form-->
+    <div style="clear: both;"></div>
+    <input type="hidden" name="profile_image" value="0">
+    <form name="frm_profile_pic" id="frm-profile-pic" class="direct-upload" enctype="multipart/form-data" action="https://<?php echo $data['bucket']; ?>.s3.amazonaws.com/">
+        <input type="hidden" name="key" value="{$filename}">
+        <input type="hidden" name="AWSAccessKeyId" value="">
+        <input type="hidden" name="acl" value="public-read">
+        <input type="hidden" name="success_action_status" value="201">
+        <input type="hidden" name="policy" value="">
+        <input type="hidden" name="signature" value="">
+        <input type="file" name="file" id="file" style="opacity: 0; -moz-opacity:0; -webkit-opacity: 0; filter: alpha(opacity = 0); margin: 0;width: 1px;height: 1px;">
+    </form>
     <form enctype="multipart/form-data" action="<?php echo $this->url('index',array('action'=>'registration'));?>" method="post" name="register" id="register" onsubmit="return validateRegstration();">
     <div class="signin_contents">
     <div class="optional">(optional)</div>
@@ -110,8 +124,9 @@ $(document).bgStretcher({
     </li>
     <li>
     <figure class="profile_picture"><output id="list"></output></figure>
-    <div class="file_upload">Choose Profile Picture <input id="file" type="file" name="file" /></div>
+    <div class="file_upload">Choose Profile Picture </div>
    <script>
+
     if (window.FileReader) {
       function handleFileSelect(evt) {
         var files = evt.target.files;
@@ -127,13 +142,12 @@ $(document).bgStretcher({
           reader.readAsDataURL(f);
       }
      } else {
-      alert('This browser does not support FileReader');
+      jerror('This browser does not support FileReader! So when you choose profile picture, preview is not ready');
     }
 
       document.getElementById('file').addEventListener('change', handleFileSelect, false);
     </script>
 <script type="text/javascript" charset="utf-8">
-    jQuery('#file').css('opacity',0);
 
 $(document).ready(function(){
     $( "#frmChangepass" ).submit(function( event ) {

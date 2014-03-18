@@ -67,7 +67,7 @@ $(document).ready( function() {
                 }
 
                 if (filetype.indexOf ('image') >= 0)
-                    var target = 'images';
+                    var target = 'image';
                 else target = 'media';
                 $('input[name=ContentType]').val(filetype);
                 var userid = $("input[name=user_id]").val();
@@ -186,7 +186,7 @@ logstr="s3_path ---> "+s3_path; alert(logstr);console.log(logstr);
                 var server_url = _media_url.replace('https://memreasdev.s3.amazonaws.com/', '');
                 var params = [
                                 {tag: 's3url', value: filename},
-                                {tag: 'is_serveer_image', value: '0'},
+                                {tag: 'is_server_image', value: '0'},
                                 {tag: 'content_type', value : media_type},
                                 {tag: 's3path', value: s3_path},
                                 {tag: 's3file_name', value: filename},
