@@ -64,8 +64,6 @@ class IndexController extends AbstractActionController
     public function indexAction() {
         error_log("Enter indexAction".PHP_EOL);
  	    $path = $this->security("application/index/index.phtml");
- 	    
- 	    $this->redirect()->toRoute('index', array('action' => $redirect));
         $data['bucket'] = "memreasdev";
 		$view = new ViewModel(array('data' => $data));
 		$view->setTemplate($path); // path to phtml file under view folder
@@ -206,7 +204,7 @@ class IndexController extends AbstractActionController
         $data['base64Policy'] = $this->getS3Policy();
         $data['signature'] = $this->hex2b64($this->hmacsha1($data['secret'], $data['base64Policy']));
 
-        $path = $this->security("application/index/memreas.phtml");
+        $path = "application/index/memreas.phtml";
         $view = new ViewModel(array('data' => $data, 'enableAdvertising' => $enableAdvertising));
         $view->setTemplate($path); // path to phtml file under view folder
         return $view;

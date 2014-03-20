@@ -48,6 +48,7 @@ getXMLStringFromParamArray = function(action, params) {
 	var action_tag = "";
 	xml_str = "<xml>";
 	switch (action) {
+        case "login":               action_tag = "login"; break;
         case "checkusername":       action_tag = "checkusername"; break;
         case "addevent":            action_tag = "addevent"; break;
         case "addcomments":         action_tag = "addcomment"; break;
@@ -77,7 +78,7 @@ getXMLStringFromParamArray = function(action, params) {
         case "getmedialike":        action_tag = "getmedialike"; break;
         case "findtag":             action_tag = "findtag"; break;
 
-        case "checkexistmedia":      action_tag = "checkexistmedia"; break;
+        case "checkexistmedia":     action_tag = "checkexistmedia"; break;
 		default: break;
 	}
 	xml_str += "<" + action_tag + ">";

@@ -82,6 +82,7 @@ function deleteFiles(){
                ajaxRequest ('deletephoto', xml_data, success_deletephoto, error_deletephoto);
            }
         });
+        $("#loadingpopup").hide();
     }
 }
 function success_deletephoto(ret_xml){
