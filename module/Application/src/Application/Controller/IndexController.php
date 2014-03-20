@@ -64,6 +64,8 @@ class IndexController extends AbstractActionController
     public function indexAction() {
         error_log("Enter indexAction".PHP_EOL);
  	    $path = $this->security("application/index/index.phtml");
+ 	    
+ 	    $this->redirect()->toRoute('index', array('action' => $redirect));
         $data['bucket'] = "memreasdev";
 		$view = new ViewModel(array('data' => $data));
 		$view->setTemplate($path); // path to phtml file under view folder
@@ -337,7 +339,7 @@ class IndexController extends AbstractActionController
  		//ZF2 Authenticate
 		if ($data->loginresponse->status == 'success') {
             error_log("Inside loginresponse success...");
-            //	$this->setSession($username);
+            $this->setSession($username);
             //Redirect here
             error_log("Inside loginresponse success redirect ---> " . $redirect);
 			return $this->redirect()->toRoute('index', array('action' => $redirect));
@@ -426,12 +428,12 @@ class IndexController extends AbstractActionController
 
     public function security($path) {
     	//if already login do nothing
-		//$session = new Container("user");
-	    //if(!$session->offsetExists('user_id')){
-		//	error_log("Not there so logout");
-	    //	$this->logoutAction();
-    	//  return "application/index/index.phtml";
-	    //}
+		$session = new Container("user");
+	    if(!$session->offsetExists('user_id')){
+			error_log("Not there so logout");
+	    	$this->logoutAction();
+    	  return "application/index/index.phtml";
+	    }
 		return $path;
         //return $this->redirect()->toRoute('index', array('action' => 'login'));
     }
