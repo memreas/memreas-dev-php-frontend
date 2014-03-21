@@ -11,7 +11,7 @@ var xml_str = "";
 //////////////////////////////////
 // Input xml and fetch output xml
 //////////////////////////////////
-ajaxRequest = function (action, params, success_func, error_func) {
+ajaxRequest = function (action, params, success_func, error_func, disableLoadingScreen) {
     var data = "";
     var result = "";
 	var xml_input = getXMLStringFromParamArray(action, params);
@@ -22,7 +22,8 @@ ajaxRequest = function (action, params, success_func, error_func) {
     data.callback = '';
 
     var json_data = JSON.stringify(data);
-   	$('#loadingpopup').show();
+    if (!disableLoadingScreen)
+        $('#loadingpopup').show();
 	$.ajax( {
 	  	type:'post',
 	  	url: wsurl,
@@ -31,14 +32,16 @@ ajaxRequest = function (action, params, success_func, error_func) {
 	  	success: function(ret_xml) {
 			if (typeof success_func != "undefined")
 				success_func(ret_xml);
-		   	$('#loadingpopup').hide();
+            if (!disableLoadingScreen)
+                $('#loadingpopup').hide();
 	  	},
 	  	error: function (jqXHR, textStatus, errorThrown) {
        		alert(jqXHR.responseText);
        		alert(jqXHR.status);
 			if (typeof error_func != "undefined")
 				error_func();
-		   	$('#loadingpopup').hide();
+            if (!disableLoadingScreen)
+                $('#loadingpopup').hide();
 	  	}
 	});
 	return false;

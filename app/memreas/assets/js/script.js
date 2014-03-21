@@ -1,4 +1,3 @@
-var uploadFilesInstance = [];
 function removeItem(array, item){
     for(var i in array){
         if(array[i]==item){
@@ -7,6 +6,8 @@ function removeItem(array, item){
             }
     }
 }
+var uploadFilesInstance = [];
+var currentUploadFileCount = 0;
 $(document).ready( function() {
 
     var ellipsisCount = 1;
@@ -31,7 +32,7 @@ $(document).ready( function() {
             autoUpload: true,
             add: function (event, data) {
 
-                var currentUploadFileCount = uploadFilesInstance.length;
+                currentUploadFileCount = uploadFilesInstance.length;
                 //Check if current file with the same name is currently uploading
                 for (i = 0;i < currentUploadFileCount;i++){
                     if (uploadFilesInstance[i] == data.files[0].name){
@@ -96,7 +97,7 @@ $(document).ready( function() {
                                     '</div>' +
                                     '<div class="upload_progress_bar">' +
                                         '<span></span><div class="progress"></div>' +
-                                    '</div>' +
+                                    '</div><div class="progress-text"></div>' +
                                     '<div class="close_progress"><a href="#" class="cancel-upload"><img src="/memreas/img/close.png" alt=""></a></div>' +
                                     '<div class="clear"></div>' +
                                 '</div>' +
@@ -128,14 +129,21 @@ $(document).ready( function() {
                     {tag: 'user_id', value: $("input[name=user_id]").val()},
                     {tag: 'filename', value: data.files[0].name}
                 ];
+
+                var jqXHR = '';
+                data.context.find('.progress-text').html('Checking file exist');
                 ajaxRequest('checkexistmedia', params, function(xml_response){
                     if (getValueFromXMLTag(xml_response, 'status') == 'Failure'){
-                        jerror('This media has already existed');
-                        tpl2.remove();
+                        data.context.find('.progress-text').html('This file has already existed. Uploading will abort!');
+                        removeItem(uploadFilesInstance, data.files[0].name);
+                        setTimeout(function(){ tpl2.remove(); }, 2000);
                         return false;
                     }
-                    else var jqXHR = data.submit();
-                });
+                    else {
+                        data.context.find('.progress-text').html('Ok! Uploading...');
+                         jqXHR = data.submit();
+                    }
+                }, 'undefined', true);
 
                 tpl2.find("a.cancel-upload").click (function(){
                     if(tpl2.hasClass('working-upload')){
@@ -158,12 +166,15 @@ $(document).ready( function() {
                 var percent = Math.round((data.loaded / data.total) * 100);
                 data.context.find(".upload_progress_bar .progress").css ("width", percent + "%");
                 data.context.find(".upload_progress_bar span").html (percent + "%");
-                if (percent == 100) data.context.fadeOut(500).delay(1000).remove();
+                if (percent == 100){
+                    data.context.find('.progress-text').html('Please wait while adding medias to your account.');
+                }
             },
             fail: function(e, data) {
                 window.onbeforeunload = null;
             },
             success: function(data, status, jqXHR) {
+                $("#loadingpopup").show();
                 _media_url = getValueFromXMLTag(jqXHR.responseText, 'Location');
                 var _media_extension = _media_url.split(".");
                 _media_extension = _media_extension[_media_extension.length - 1];
@@ -203,9 +214,18 @@ $(document).ready( function() {
                         $(".completed-upload .mCSB_container").append ('<li class="video-media"><img src="/memreas/img/small/1.jpg"/><img src="/memreas/img/video-overlay.png" class="overlay-videoimg"></li>');
                     else $(".completed-upload .first-element").append ('<li class="video-media"><img src="/memreas/img/small/1.jpg"/><img src="/memreas/img/video-overlay.png" class="overlay-videoimg"></li>');
                 }
-                removeItem(uploadFilesInstance, filename);
-                console.log(uploadFilesInstance);
-                ajaxRequest('addmediaevent', params, success_addmedia, error_addmedia);
+
+                ajaxRequest('addmediaevent', params, function(xml_response){
+                    removeItem(uploadFilesInstance, filename);
+                    currentUploadFileCount = uploadFilesInstance.length;
+                    if (currentUploadFileCount == 0){
+                        $(".image_upload_box .mCSB_container").empty();
+                        $(".image_upload_box").mCustomScrollbar("update");
+                        $("#loadingpopup").hide();
+                        jsuccess('Medias uploaded successfully');
+                    }
+                    console.log(currentUploadFileCount);
+                }, 'undefined', true);
             },
             done: function (event, data) {
 

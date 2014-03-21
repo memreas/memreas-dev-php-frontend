@@ -106,3 +106,14 @@ img.selected-gallery{
 }
 .memreas-detail-commentcount span{ top: 11px; }
 .nw-friend-selected{ border: 3px solid red; }
+li.working-upload{ position: relative; }
+li.working-upload .progress-text{
+    margin-left: 30px;
+    position: absolute;
+    left: 10%;
+    top: 65%;
+    color: #F1FA24;
+    font-style: italic;
+    font-size: 11px;
+    width: 400px;
+}

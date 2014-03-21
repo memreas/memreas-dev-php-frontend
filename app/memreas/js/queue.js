@@ -19,3 +19,7 @@ $(function(){
         $('#' + $(this).attr('title') + " .scroll-area").mCustomScrollbar("update");
     });
 });
+function clearUploadedMedia(){
+    $(".completed-upload .mCSB_container").empty();
+    $(".completed-upload").mCustomScrollbar("update");
+}
