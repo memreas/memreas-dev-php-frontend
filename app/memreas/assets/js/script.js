@@ -155,7 +155,6 @@ $(document).ready( function() {
             progress: function(e, data){
                 // This is what makes everything really cool, thanks to that callback
                 // you can now update the progress bar based on the upload progress
-
                 var percent = Math.round((data.loaded / data.total) * 100);
                 data.context.find(".upload_progress_bar .progress").css ("width", percent + "%");
                 data.context.find(".upload_progress_bar span").html (percent + "%");
@@ -175,14 +174,11 @@ $(document).ready( function() {
                 if ($("a.share").hasClass ("active"))
                     var addEvent = event_id;
                 else addEvent = '';
-                //var filename = _media_url.split("/");
                 var s3_filename = getValueFromXMLTag(jqXHR.responseText, 'Key');
                 var s3_filename_split = s3_filename.split("/");
                 var filename = s3_filename_split[s3_filename_split.length - 1];
-var logstr="filename ---> "+filename; alert(logstr);console.log(logstr);
                 var s3_path_split = s3_filename.split(filename);
                 var s3_path = s3_path_split[0];
-logstr="s3_path ---> "+s3_path; alert(logstr);console.log(logstr);
                 var server_url = _media_url.replace('https://memreasdev.s3.amazonaws.com/', '');
                 var params = [
                                 {tag: 's3url', value: filename},
