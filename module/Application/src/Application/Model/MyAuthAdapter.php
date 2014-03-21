@@ -5,12 +5,12 @@ use Zend\Authentication\Adapter\AdapterInterface;
 use Zend\Authentication\Result;
 use Guzzle\Http\Client;
 use Zend\Session\Container;
-
+use Application\Model\MemreasConstants;
 
 class MyAuthAdapter implements AdapterInterface
 {
    // protected $url = "http://test/";    
-    protected $url = MEMREAS_WS; //Local development
+    protected $url = MemreasConstants::MEMREAS_WS; //Local development
 
     protected $username = '';
     protected $password = '';

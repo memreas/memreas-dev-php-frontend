@@ -24,11 +24,13 @@ use Application\View\Helper\S3Service;
 use Application\View\Helper\S3;
 use Application\TwitterOAuth\TwitterOAuth;
 use \Exception;
+use Application\Model\MemreasConstants;
+
 
 class IndexController extends AbstractActionController
 {
 	//Updated....
-    protected $url = MEMREAS_WS; //Local development
+    protected $url = MemreasConstants::MEMREAS_WS; //Local development
 	//protected $url = "http://memreas-dev-ws.localhost/"; //Local development
     //protected $url = "http://test/";
 	protected $test = "Hope this works!";
