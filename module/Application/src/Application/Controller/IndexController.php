@@ -62,14 +62,13 @@ class IndexController extends AbstractActionController
 	}
 
     public function indexAction() {
-        error_log("Enter indexAction".PHP_EOL);
- 	    $path = $this->security("application/index/index.phtml");
- 	    
- 	    $this->redirect()->toRoute('index', array('action' => $redirect));
+error_log("Enter indexAction".PHP_EOL);
+ 	    //$path = $this->security("application/index/index.phtml");
+ 	    $path = $this->security("application/index/memreas.phtml");
         $data['bucket'] = "memreasdev";
 		$view = new ViewModel(array('data' => $data));
 		$view->setTemplate($path); // path to phtml file under view folder
-        error_log("Exit indexAction".PHP_EOL);
+error_log("Exit indexAction".PHP_EOL);
 		return $view;
     }
 
@@ -427,10 +426,11 @@ class IndexController extends AbstractActionController
     }
 
     public function security($path) {
+error_log("Inside security...");		
     	//if already login do nothing
 		$session = new Container("user");
 	    if(!$session->offsetExists('user_id')){
-			error_log("Not there so logout");
+error_log("session doesn't exist ---> send user to login page.");
 	    	$this->logoutAction();
     	  return "application/index/index.phtml";
 	    }
