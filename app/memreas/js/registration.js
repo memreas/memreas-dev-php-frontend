@@ -255,5 +255,26 @@ $(function(){
         });
     });
 
+    //Login form submit
+    $("#form-user-login").submit(function(){
+        var loginname = $(this).find('input[name=username]').val();
+        var loginpass = $(this).find('input[name=password]').val();
+        if (loginname == '' || loginname == 'username' || loginpass == '' || loginpass == 'password')
+            jerror ('Please complete all fields');
+        else{
+            var params = [
+                            {tag: 'username', value: loginname},
+                            {tag: 'password', value: loginpass},
+                            {tag: 'devicetype', value: 1},
+                            {tag: 'devicetoken', value: ''},
+                            ];
+            ajaxRequest('login', params, function(xml_response){
+                if (getValueFromXMLTag(xml_response, 'status') == 'success')
+                    document.location.href="/index/memreas";
+                else jerror(getValueFromXMLTag(xml_response, 'message'));
+            });
+        }
+        return false;
+    });
 });
 

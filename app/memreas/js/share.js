@@ -32,17 +32,17 @@ share_initObjects = function() {
 
 	// event function when click "media" tab
 	$('#tabs-share li:nth-child(2) a').on('click', function() {
-        if (event_id == ""){
+        /*if (event_id == ""){
             return false;
-        }
+        } */
 		share_getAllMedia();
 	});
 
 	// event function when click "Friends" tab
 	$('#tabs-share li:nth-child(3) a').on('click', function() {
-        if (event_id == ""){
+        /*if (event_id == ""){
             return false;
-        }
+        } */
 		share_changeSocialType();
 	});
 
@@ -91,6 +91,11 @@ share_changeSocialType = function() {
 			else
 				share_addFriends(tw_friendsInfo);
 			break;
+        case "memreas":
+            if (mr_friendsInfo == null)
+                memreas_getFriendList();
+            else share_addFriends(mr_friendsInfo);
+            break;
 	}
 }
 
@@ -588,6 +593,17 @@ share_clickFriends = function(id) {
             $('#' + id).next ('aside').css('border', '3px solid #FFF');
 		}
 	}
+    else if(type == "mr"){
+        mr_friendsInfo[idx].selected = !mr_friendsInfo[idx].selected;
+        if (mr_friendsInfo[idx].selected) {
+            $('#' + id + ' img').addClass('setchoosed');
+            $('#' + id).next ('aside').css('border', '3px solid green');
+        }
+        else {
+            $('#' + id + ' img').removeClass('setchoosed');
+            $('#' + id).next ('aside').css('border', '3px solid #FFF');
+        }
+    }
     /*
     var jElement = $("#" + id);
     var jImg_profile = jElement.find ('img');
@@ -634,6 +650,21 @@ share_makeGroup = function() {
 			}
 		}
 	}
+
+    if (mr_friendsInfo) {
+        for (i = 0; i < mr_friendsInfo.length; i++) {
+            if (mr_friendsInfo[i].selected) {
+                selFriends[count++] = {
+                    tag: 'friend',
+                    value: [
+                                { tag: 'friend_name',         value: mr_friendsInfo[i].name },
+                                { tag: 'network_name',         value: 'memreas' },
+                                { tag: 'profile_pic_url',     value: mr_friendsInfo[i].photo }
+                            ]
+                };
+            }
+        }
+    }
 
     if (groupName != ''){
 	    // send the request.

@@ -30,7 +30,7 @@ use Application\Model\MemreasConstants;
 class IndexController extends AbstractActionController
 {
 	//Updated....
-    protected $url = MemreasConstants::MEMREAS_WS; //Local development
+    protected $url = MemreasConstants::MEMREAS_WS; //Live development
 	//protected $url = "http://memreas-dev-ws.localhost/"; //Local development
     //protected $url = "http://test/";
 	protected $test = "Hope this works!";
@@ -43,9 +43,9 @@ class IndexController extends AbstractActionController
     protected $friendmediaTable;
     protected $session;
 
-    
+
     public function fetchXML($action, $xml) {
-        $session = $this->getAuthService()->getIdentity();   
+        $session = $this->getAuthService()->getIdentity();
 	    $guzzle = new Client();
         error_log("Inside fetch XML request url ---> " . $this->url . PHP_EOL);
         error_log("Inside fetch XML request action ---> " . $action . PHP_EOL);
@@ -74,7 +74,7 @@ class IndexController extends AbstractActionController
 		$view = new ViewModel(array('data' => $data));
 		$view->setTemplate($path); // path to phtml file under view folder
         error_log("Exit indexAction".PHP_EOL);
-         
+
 		return $view;
     }
 
@@ -195,7 +195,7 @@ class IndexController extends AbstractActionController
     */
     public function memreasAction(){
         $action = 'getsession';
-        $xml = '<xml><getsession><sid>'.$this->getToken().'</sid></getsession></xml>';
+        $xml = '<xml><getsession><sid>1</sid></getsession></xml>';
         //Configure Ads on page
         $enableAdvertising = true;
 
@@ -210,7 +210,8 @@ class IndexController extends AbstractActionController
         $data['base64Policy'] = $this->getS3Policy();
         $data['signature'] = $this->hex2b64($this->hmacsha1($data['secret'], $data['base64Policy']));
 
-        $path = $this->security("application/index/memreas.phtml");
+        //$path = $this->security("application/index/memreas.phtml");
+        $path = "application/index/memreas.phtml";
         $view = new ViewModel(array('data' => $data, 'enableAdvertising' => $enableAdvertising));
         $view->setTemplate($path); // path to phtml file under view folder
         return $view;
@@ -329,12 +330,12 @@ class IndexController extends AbstractActionController
 		$postData = $request->getPost()->toArray();
 		$username = $postData ['username'];
 		$password = $postData ['password'];
-                
+
         $this->getAuthService()->getAdapter()->setUsername($username);
         $this->getAuthService()->getAdapter()->setPassword($password);
         $token = empty($this->session->token)?'':$this->session->token;
         $this->getAuthService()->getAdapter()->setToken($token);
-        $result = $this->getAuthService()->authenticate();                      
+        $result = $this->getAuthService()->authenticate();
  		//Setup the URL and action
 		//$action = 'login';
 		//$xml = "<xml><login><username>$username</username><password>$password</password></login></xml>";

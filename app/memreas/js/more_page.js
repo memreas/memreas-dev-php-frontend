@@ -129,11 +129,14 @@ function getGroupFriends(friend_network){
             var count_friend = friend_list.length;
             networkfriendsInfo = [];
             for (i = 0;i < count_friend;i++){
+                if (getValueFromXMLTag(friend_list[i], 'friend_photo') == '' || getValueFromXMLTag(friend_list[i], 'friend_photo') == 'null')
+                    friend_photo = '/memreas/img/profile-pic.jpg';
+                else friend_photo = getValueFromXMLTag(friend_list[i], 'photo');
                 networkfriendsInfo[i] = {
                         'id':         getValueFromXMLTag(friend_list[i], 'friend_id'),
                         'div_id':    getValueFromXMLTag(friend_list[i], 'friend_id'),
                         'name':     getValueFromXMLTag(friend_list[i], 'friend_name'),
-                        'photo':     getValueFromXMLTag(friend_list[i], 'friend_photo'),
+                        'photo':     friend_photo,
                         'selected':    false
                     };
             }
@@ -154,12 +157,38 @@ $(function(){
         switch (network_dropdown_selected){
             case 'facebook': networkPopupFacebookFriends(); break;
             case 'twitter': networkPopupTwitterFriends(); break;
-            default: jerror('Now only support facebook and twitter on this place');
+            case 'memreas': networkPopupMemreasFriends(); break;
+            default: jerror('Error please check back.');
         }
         if (!$("#popupNetworkFriends").is (":visible")) popup('popupNetworkFriends');
         ajaxScrollbarElement(".popupNetworkFriends_list");
     });
 });
+
+function networkPopupMemreasFriends(){
+    var params = [{tag: 'user_id', value: ''}];
+    ajaxRequest('listmemreasfriends', params, function(xml_response){
+        if (getValueFromXMLTag(xml_response, 'status')){
+            var friends = getSubXMLFromTag(xml_response, 'friend');
+            var friendCount = friends.length;
+            mr_friendsInfo = [];
+            for (i = 0;i < friendCount;i++){
+                var friend = friends[i];
+                if (getValueFromXMLTag(friend, 'photo') == '' || getValueFromXMLTag(friend, 'photo') == 'null')
+                    friend_photo = '/memreas/img/profile-pic.jpg';
+                else friend_photo = getValueFromXMLTag(friend, 'photo');
+                mr_friendsInfo[i] = {
+                                        'id': getValueFromXMLTag(friend, 'friend_id'),
+                                        'div_id': 'mr_' + i,
+                                        'name': getValueFromXMLTag(friend, 'friend_name'),
+                                        'photo': friend_photo,
+                                        'selected': false,
+                                    };
+            }
+            network_fillPopupFriends(mr_friendsInfo);
+        }
+    });
+}
 
 function networkPopupFacebookFriends(){
     $('#loadingpopup').show();
@@ -354,6 +383,24 @@ function acceptAddFriendNetwork(){
                         value: [
                                     { tag: 'friend_name',         value: tw_friendsInfo[i].name },
                                     { tag: 'profile_pic_url',     value: tw_friendsInfo[i].photo }
+                                ]
+                    };
+                }
+            }
+            break;
+        case 'memreas':
+            var count_friend = mr_friendsInfo.length;
+            var network_name = 'memreas';
+            for (i = 0;i < count_friend;i++){
+                if (mr_friendsInfo[i].selected){
+                    if (mr_friendsInfo[i].photo == 'null')
+                        friend_photo = '/memreas/img/profile-pic.jpg';
+                    else friend_photo = mr_friendsInfo[i].photo;
+                    selected_friend[increase++] = {
+                        tag: 'friend',
+                        value: [
+                                    { tag: 'friend_name',         value: mr_friendsInfo[i].name },
+                                    { tag: 'profile_pic_url',     value: mr_friendsInfo[i].photo }
                                 ]
                     };
                 }
