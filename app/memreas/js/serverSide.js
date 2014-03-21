@@ -5,6 +5,19 @@
 $(function(){
     if ($("input[name=user_id]").val() == "")
         document.location.href = "/index";
+    else{
+        var params = [{tag: 'user_id', value: $("input[name=user_id]").val()}];
+        ajaxRequest('getuserdetails', params, function(xml_response){
+            if (getValueFromXMLTag(xml_response, 'status') == 'Success'){
+                var username = getValueFromXMLTag(xml_response, 'username');
+                var userprofile = getValueFromXMLTag(xml_response, 'profile');
+                $("header").find(".pro-name").html(username);
+                if (userprofile != '')
+                    $("header").find("#profile_picture").attr('src', userprofile);
+            }
+            else jerror (getValueFromXMLTag(xml_response, 'messsage'));
+        });
+    }
 });
 
 /*Preload for server media*/

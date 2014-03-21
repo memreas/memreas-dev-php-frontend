@@ -124,7 +124,7 @@ function validateRegstration(){
                 var jqXHR = uploadHandle.submit();
             }
         }
-        else jerror(response_message);
+        else jerror(getValueFromXMLTag(response, 'message'));
         document.register.reset();
     });
     return false;
@@ -254,5 +254,6 @@ $(function(){
             },
         });
     });
+
 });
 

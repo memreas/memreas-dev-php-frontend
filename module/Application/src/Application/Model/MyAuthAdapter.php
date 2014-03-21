@@ -9,7 +9,9 @@ use Zend\Session\Container;
 
 class MyAuthAdapter implements AdapterInterface
 {
-    protected $url = "http://test/";
+   // protected $url = "http://test/";    
+    protected $url = MEMREAS_WS; //Local development
+
     protected $username = '';
     protected $password = '';
     protected $token = '';

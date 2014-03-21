@@ -47,8 +47,8 @@ return array(
                                                     'bit' => 'string'),
                 'driverClass' => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
                 'params' => array(
-                    //'host' => 'aa1qhjij4wk4yji.co0fw2snbu92.us-east-1.rds.amazonaws.com',
-                    'host' => 'localhost',
+                    'host' => 'memreasdev-db.co0fw2snbu92.us-east-1.rds.amazonaws.com',
+                    //'host' => 'localhost',
                     'port' => '3306',
                     'dbname' => 'memreasintdb',
                     'user'     => 'memreasdbuser',
