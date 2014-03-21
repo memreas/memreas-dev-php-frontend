@@ -28,9 +28,9 @@ use \Exception;
 class IndexController extends AbstractActionController
 {
 	//Updated....
-    protected $url = "http://memreasdev-ws-elastic.elasticbeanstalk.com"; //Local development
+    //protected $url = "http://memreasdev-ws-elastic.elasticbeanstalk.com"; //Live
 	//protected $url = "http://memreas-dev-ws.localhost/"; //Local development
-    //protected $url = "http://test/";
+    protected $url = "http://test/";
 	protected $test = "Hope this works!";
     protected $user_id;
     protected $storage;
@@ -39,8 +39,11 @@ class IndexController extends AbstractActionController
     protected $eventTable;
     protected $mediaTable;
     protected $friendmediaTable;
+    protected $session;
 
+    
     public function fetchXML($action, $xml) {
+        $session = $this->getAuthService()->getIdentity();   
 	    $guzzle = new Client();
         error_log("Inside fetch XML request url ---> " . $this->url . PHP_EOL);
         error_log("Inside fetch XML request action ---> " . $action . PHP_EOL);
@@ -52,7 +55,7 @@ class IndexController extends AbstractActionController
 		    'action' => $action,
 		    //'cache_me' => true,
     	    'xml' => $xml,
-            'PHPSESSID' => empty($_COOKIE[session_name()])?'':$_COOKIE[session_name()],
+            'PHPSESSID' => $this->getToken(),
 	        )
 	    );
 	    $response = $request->send();
@@ -63,11 +66,13 @@ class IndexController extends AbstractActionController
 
     public function indexAction() {
         error_log("Enter indexAction".PHP_EOL);
- 	    $path = $this->security("application/index/index.phtml");
+
+        $path = $this->security("application/index/index.phtml");
         $data['bucket'] = "memreasdev";
 		$view = new ViewModel(array('data' => $data));
 		$view->setTemplate($path); // path to phtml file under view folder
         error_log("Exit indexAction".PHP_EOL);
+         
 		return $view;
     }
 
@@ -188,8 +193,7 @@ class IndexController extends AbstractActionController
     */
     public function memreasAction(){
         $action = 'getsession';
-        $xml = "<xml><getsession><sid>1</sid></getsession></xml>";
-
+        $xml = '<xml><getsession><sid>'.$this->getToken().'</sid></getsession></xml>';
         //Configure Ads on page
         $enableAdvertising = true;
 
@@ -323,23 +327,29 @@ class IndexController extends AbstractActionController
 		$postData = $request->getPost()->toArray();
 		$username = $postData ['username'];
 		$password = $postData ['password'];
-
-		//Setup the URL and action
-		$action = 'login';
-		$xml = "<xml><login><username>$username</username><password>$password</password></login></xml>";
+                
+        $this->getAuthService()->getAdapter()->setUsername($username);
+        $this->getAuthService()->getAdapter()->setPassword($password);
+        $token = empty($this->session->token)?'':$this->session->token;
+        $this->getAuthService()->getAdapter()->setToken($token);
+        $result = $this->getAuthService()->authenticate();                      
+ 		//Setup the URL and action
+		//$action = 'login';
+		//$xml = "<xml><login><username>$username</username><password>$password</password></login></xml>";
 		$redirect = 'memreas';
 
 		//Guzzle the LoginWeb Service
-		$result = $this->fetchXML($action, $xml);
+		//$result = $this->fetchXML($action, $xml);
 
-		$data = simplexml_load_string($result);
-        setcookie(session_name(),$data->loginresponse->sid,0,'/');
+		//$data = simplexml_load_string($result);
+        //setcookie(session_name(),$data->loginresponse->sid,0,'/');
  		//ZF2 Authenticate
-		if ($data->loginresponse->status == 'success') {
+		if ($result->getIdentity()) {
             error_log("Inside loginresponse success...");
             //	$this->setSession($username);
             //Redirect here
             error_log("Inside loginresponse success redirect ---> " . $redirect);
+            $this->setSession($username);
 			return $this->redirect()->toRoute('index', array('action' => $redirect));
 		} else {
             error_log("Inside loginresponse else...");
@@ -361,12 +371,12 @@ class IndexController extends AbstractActionController
     public function setSession($username) {
 		//Fetch the user's data and store it in the session...
         error_log("Inside setSession ...");
-   	    $user = $this->getUserTable()->findOneBy(array('username' => $username));
+   	    //$user = $this->getUserTable()->findOneBy(array('username' => $username));
 
-        $user->password='';
-       	$user->disable_account='';
-   	    $user->create_date='';
-        $user->update_time='';
+        //$user->password='';
+       	//$user->disable_account='';
+   	    //$user->create_date='';
+        //$user->update_time='';
 		$session = new Container('user');
         error_log("Inside setSession got new Container...");
 		$session->offsetSet('user_id', $user->user_id);
@@ -499,5 +509,11 @@ class IndexController extends AbstractActionController
             $raw .= chr(hexdec(substr($str, $i, 2)));
         }
         return base64_encode($raw);
+    }
+
+    public function getToken()
+    {
+        $session = $this->getAuthService()->getIdentity();
+        return  empty($session['token'])?'':$session['token']; ;
     }
 } // end class IndexController

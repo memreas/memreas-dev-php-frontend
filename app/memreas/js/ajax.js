@@ -4,7 +4,8 @@
 /////////////////////////////////
 
 //var base_url = 'http://memreasdev.elasticbeanstalk.com/eventapp_zend2.1/webservices/index.php?';
-var wsurl = '/index/sampleAjax';//'/index/sampleAjax';
+//var wsurl = '/index/sampleAjax';
+var wsurl = '/index.php/index/sampleAjax';
 var xml_str = "";
 
 //////////////////////////////////

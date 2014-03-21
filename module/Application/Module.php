@@ -25,6 +25,8 @@ use Zend\Db\TableGateway\TableGateway;
 
 use Application\Model\User;
 use Application\Model\UserTable;
+use Application\Model\MyAuthStorage;
+
 use Application\Model;
 
 class Module
@@ -88,7 +90,7 @@ class Module
 									//setting this for AWS permissions error
 									//Note: must specify full path
 									$options['save_path'] = getcwd()."/data/session/";
-error_log("save_path ---> ".$options['save_path'].PHP_EOL);
+									error_log("save_path ---> ".$options['save_path'].PHP_EOL);
 										
 									$sessionConfig = new $class();
 									$sessionConfig->setOptions($options);
@@ -130,12 +132,12 @@ error_log("save_path ---> ".$options['save_path'].PHP_EOL);
 							//My assumption, you've alredy set dbAdapter
 							//and has users table with columns : user_name and pass_word
 							//that password hashed with md5
-							$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-							$dbTableAuthAdapter = new DbTableAuthAdapter($dbAdapter,
-											'user', 'username', 'password', 'MD5(?)');
-
+							//$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+							//$dbTableAuthAdapter = new DbTableAuthAdapter($dbAdapter,
+											//'user', 'username', 'password', 'MD5(?)');
+							$AuthAdapter = new \Application\Model\MyAuthAdapter();
 							$authService = new AuthenticationService();
-							$authService->setAdapter($dbTableAuthAdapter);
+							$authService->setAdapter($AuthAdapter);
 							$authService->setStorage($sm->get('Application\Model\MyAuthStorage'));
 
 						return $authService;
