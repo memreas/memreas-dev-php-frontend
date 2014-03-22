@@ -134,7 +134,8 @@ error_log("Exit indexAction".PHP_EOL);
     }
 
     public function sampleAjaxAction() {
-		if (isset($_REQUEST['callback'])) {
+error_log("Inside sampleAjaxAction...".PHP_EOL);
+    	if (isset($_REQUEST['callback'])) {
 
 			//Fetch parms
 			$callback = $_REQUEST['callback'];
@@ -217,8 +218,8 @@ error_log("returning sample-ajax.phtml...".PHP_EOL);
         $data['base64Policy'] = $this->getS3Policy();
         $data['signature'] = $this->hex2b64($this->hmacsha1($data['secret'], $data['base64Policy']));
 
-        //$path = $this->security("application/index/memreas.phtml");
-        $path = "application/index/memreas.phtml";
+        $path = $this->security("application/index/memreas.phtml");
+        //$path = "application/index/memreas.phtml";
         $view = new ViewModel(array('data' => $data, 'enableAdvertising' => $enableAdvertising));
         $view->setTemplate($path); // path to phtml file under view folder
         return $view;
@@ -332,7 +333,8 @@ error_log("returning sample-ajax.phtml...".PHP_EOL);
     * Login Action
     */
     public function loginAction() {
-		//Fetch the post data
+error_log("Inside loginAction...".PHP_EOL);
+    	//Fetch the post data
 		$request = $this->getRequest();
 		$postData = $request->getPost()->toArray();
 		$username = $postData ['username'];
@@ -351,6 +353,7 @@ error_log("returning sample-ajax.phtml...".PHP_EOL);
 		//Guzzle the LoginWeb Service
 		$result = $this->fetchXML($action, $xml);
 
+error_log("Getting xml from result of login...".PHP_EOL);
 		$data = simplexml_load_string($result);
         setcookie(session_name(),$data->loginresponse->sid,0,'/');
  		//ZF2 Authenticate
@@ -378,12 +381,12 @@ error_log("Inside loginresponse else redirect to index...");
     public function setSession($username) {
 		//Fetch the user's data and store it in the session...
         error_log("Inside setSession ...");
-   	    //$user = $this->getUserTable()->findOneBy(array('username' => $username));
+   	    $user = $this->getUserTable()->findOneBy(array('username' => $username));
 
-        //$user->password='';
-       	//$user->disable_account='';
-   	    //$user->create_date='';
-        //$user->update_time='';
+        $user->password='';
+       	$user->disable_account='';
+   	    $user->create_date='';
+        $user->update_time='';
 		$session = new Container('user');
         error_log("Inside setSession got new Container...");
 		$session->offsetSet('user_id', $user->user_id);
