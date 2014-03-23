@@ -201,7 +201,10 @@ class IndexController extends AbstractActionController
 
         //Guzzle the LoginWeb Service
         $user = simplexml_load_string($this->fetchXML($action, $xml));
-        $data['userid'] = $user->getsessionresponse->userid;
+        $session = new Container('user');
+        $user_id = $session->user_id;
+        if (!$user) return $this->redirect()->toRoute('index', array('action' => "index"));
+        $data['userid'] = $user_id;
 
         $data['bucket'] = "memreasdev";
         $data['accesskey'] = "AKIAJMXGGG4BNFS42LZA";
@@ -337,14 +340,19 @@ class IndexController extends AbstractActionController
         $this->getAuthService()->getAdapter()->setToken($token);
         $result = $this->getAuthService()->authenticate();
  		//Setup the URL and action
-		//$action = 'login';
-		//$xml = "<xml><login><username>$username</username><password>$password</password></login></xml>";
+		$action = 'login';
+		$xml = "<xml><login><username>$username</username><password>$password</password></login></xml>";
 		$redirect = 'memreas';
 
 		//Guzzle the LoginWeb Service
-		//$result = $this->fetchXML($action, $xml);
+		$result = $this->fetchXML($action, $xml);
 
-		//$data = simplexml_load_string($result);
+		$data = simplexml_load_string($result);
+        if ($data->loginresponse->status == 'success'){
+            $this->setSession($username);
+            return $this->redirect()->toRoute('index', array('action' => $redirect));
+        }
+        else return $this->redirect()->toRoute('index', array('action' => "index"));
         //setcookie(session_name(),$data->loginresponse->sid,0,'/');
  		//ZF2 Authenticate
 		if ($result->getIdentity()) {
@@ -374,7 +382,7 @@ class IndexController extends AbstractActionController
     public function setSession($username) {
 		//Fetch the user's data and store it in the session...
         error_log("Inside setSession ...");
-   	    //$user = $this->getUserTable()->findOneBy(array('username' => $username));
+   	    $user = $this->getUserTable()->findOneBy(array('username' => $username));
 
         //$user->password='';
        	//$user->disable_account='';

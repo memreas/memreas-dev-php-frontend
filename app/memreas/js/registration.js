@@ -254,7 +254,7 @@ $(function(){
             },
         });
     });
-
+    /*
     //Login form submit
     $("#form-user-login").submit(function(){
         var loginname = $(this).find('input[name=username]').val();
@@ -276,5 +276,6 @@ $(function(){
         }
         return false;
     });
+    */
 });
 
