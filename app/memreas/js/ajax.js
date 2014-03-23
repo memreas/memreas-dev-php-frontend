@@ -64,7 +64,6 @@ getXMLStringFromParamArray = function(action, params) {
         case "viewallfriends":      action_tag = "viewallfriends"; break;
         case "addfriendtoevent":    action_tag = "addfriendtoevent"; break;
         case "viewevents":          action_tag = "viewevent"; break;
-        case "addcomments":         action_tag = "addcomment"; break;
         case "likemedia":           action_tag = "likemedia"; break;
         case "listcomments":        action_tag = "listcomments"; break;
         case "forgotpassword":      action_tag = "forgotpassword"; break;

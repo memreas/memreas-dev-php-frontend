@@ -13,6 +13,7 @@ namespace Application\Controller;
 use Zend\Db\Adapter\Adapter;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Zend\ViewModel\JsonModel;
 use Zend\Session\Container;
 use Application\Model;
 use Application\Model\UserTable;
@@ -67,17 +68,15 @@ class IndexController extends AbstractActionController
 	}
 
     public function indexAction() {
-        error_log("Enter indexAction".PHP_EOL);
-
-        $path = $this->security("application/index/index.phtml");
+error_log("Enter indexAction".PHP_EOL);
+ 	    $path = $this->security("application/index/memreas.phtml");
         $data['bucket'] = "memreasdev";
 		$view = new ViewModel(array('data' => $data));
 		$view->setTemplate($path); // path to phtml file under view folder
-        error_log("Exit indexAction".PHP_EOL);
-
+error_log("Exit indexAction".PHP_EOL);
 		return $view;
     }
-
+	
     /*
     * Prepare cache for video viewing on main Gallery Page
     * @Return: file with video has been cached
@@ -135,7 +134,8 @@ class IndexController extends AbstractActionController
     }
 
     public function sampleAjaxAction() {
-		if (isset($_REQUEST['callback'])) {
+error_log("Inside sampleAjaxAction...".PHP_EOL);
+    	if (isset($_REQUEST['callback'])) {
 
 			//Fetch parms
 			$callback = $_REQUEST['callback'];
@@ -153,14 +153,22 @@ class IndexController extends AbstractActionController
 
 			//Return the ajax call...
 			$callback_json = $callback . "(" . $json . ")";
-			$output = ob_get_clean();
+			ob_clean();
 			header("Content-type: plain/text");
+			//This should resolve php error in log
+			// makes disable renderer
+			//$this->_helper->viewRenderer->setNoRender();
+			//makes disable layout
+			//$this->_helper->getHelper('layout')->disableLayout();
+				
 			echo $callback_json;
-
+error_log("call back json ---------> ".$callback_json.PHP_EOL);
+				
             //Need to exit here to avoid ZF2 framework view.
 			exit;
 		} else {
-            $path = $this->security("application/index/sample-ajax.phtml");
+error_log("returning sample-ajax.phtml...".PHP_EOL);
+			$path = $this->security("application/index/sample-ajax.phtml");
 			$view = new ViewModel();
 			$view->setTemplate($path); // path to phtml file under view folder
 		}
@@ -213,8 +221,8 @@ class IndexController extends AbstractActionController
         $data['base64Policy'] = $this->getS3Policy();
         $data['signature'] = $this->hex2b64($this->hmacsha1($data['secret'], $data['base64Policy']));
 
-        //$path = $this->security("application/index/memreas.phtml");
-        $path = "application/index/memreas.phtml";
+        $path = $this->security("application/index/memreas.phtml");
+        //$path = "application/index/memreas.phtml";
         $view = new ViewModel(array('data' => $data, 'enableAdvertising' => $enableAdvertising));
         $view->setTemplate($path); // path to phtml file under view folder
         return $view;
@@ -328,7 +336,8 @@ class IndexController extends AbstractActionController
     * Login Action
     */
     public function loginAction() {
-		//Fetch the post data
+error_log("Inside loginAction...".PHP_EOL);
+    	//Fetch the post data
 		$request = $this->getRequest();
 		$postData = $request->getPost()->toArray();
 		$username = $postData ['username'];
@@ -356,14 +365,11 @@ class IndexController extends AbstractActionController
         //setcookie(session_name(),$data->loginresponse->sid,0,'/');
  		//ZF2 Authenticate
 		if ($result->getIdentity()) {
-            error_log("Inside loginresponse success...");
-            //	$this->setSession($username);
-            //Redirect here
-            error_log("Inside loginresponse success redirect ---> " . $redirect);
+error_log("Inside loginresponse success redirect ---> " . $redirect);
             $this->setSession($username);
 			return $this->redirect()->toRoute('index', array('action' => $redirect));
 		} else {
-            error_log("Inside loginresponse else...");
+error_log("Inside loginresponse else redirect to index...");
 			return $this->redirect()->toRoute('index', array('action' => "index"));
 		}
     }
@@ -384,10 +390,10 @@ class IndexController extends AbstractActionController
         error_log("Inside setSession ...");
    	    $user = $this->getUserTable()->findOneBy(array('username' => $username));
 
-        //$user->password='';
-       	//$user->disable_account='';
-   	    //$user->create_date='';
-        //$user->update_time='';
+        $user->password='';
+       	$user->disable_account='';
+   	    $user->create_date='';
+        $user->update_time='';
 		$session = new Container('user');
         error_log("Inside setSession got new Container...");
 		$session->offsetSet('user_id', $user->user_id);
@@ -447,12 +453,12 @@ class IndexController extends AbstractActionController
 
     public function security($path) {
     	//if already login do nothing
-		//$session = new Container("user");
-	    //if(!$session->offsetExists('user_id')){
-		//	error_log("Not there so logout");
-	    //	$this->logoutAction();
-    	//  return "application/index/index.phtml";
-	    //}
+		$session = new Container("user");
+	    if(!$session->offsetExists('user_id')){
+			error_log("Not there so logout");
+	    	$this->logoutAction();
+    	  return "application/index/index.phtml";
+	    }
 		return $path;
         //return $this->redirect()->toRoute('index', array('action' => 'login'));
     }
