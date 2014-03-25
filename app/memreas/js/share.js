@@ -32,17 +32,17 @@ share_initObjects = function() {
 
 	// event function when click "media" tab
 	$('#tabs-share li:nth-child(2) a').on('click', function() {
-        /*if (event_id == ""){
+        if (event_id == ""){
             return false;
-        } */
+        }
 		share_getAllMedia();
 	});
 
 	// event function when click "Friends" tab
 	$('#tabs-share li:nth-child(3) a').on('click', function() {
-        /*if (event_id == ""){
+        if (event_id == ""){
             return false;
-        } */
+        }
 		share_changeSocialType();
 	});
 

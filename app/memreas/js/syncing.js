@@ -69,6 +69,10 @@ function imageChoosed(media_id){
 }
 
 function deleteFiles(){
+    if (!($(".edit-area").find(".setchoosed").length > 0)){
+            jerror ('There is no media selected');
+            return false;
+        }
     var confirm_box = confirm ("Are you sure want to delete them?");
     if (confirm_box){
         $("#loadingpopup").show();
@@ -83,6 +87,7 @@ function deleteFiles(){
            }
         });
     }
+    return false;
 }
 function success_deletephoto(ret_xml){
     $("#loadingpopup").hide();

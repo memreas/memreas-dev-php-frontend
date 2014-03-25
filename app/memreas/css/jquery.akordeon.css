@@ -1,4 +1,4 @@
-﻿.akordeon
+.akordeon
 {
     width: 100%;
     color: White;
@@ -42,7 +42,7 @@
 {
     width: 23px;
     height: 23px;
-    background: #b7b7b7; 
+    background: #b7b7b7;
     border-radius: 50px;
     -moz-border-radius: 50px;
     -webkit-border-radius: 50px; /* position: absolute;     left: -8px;       top:14px;*/
@@ -58,21 +58,21 @@
     padding-left: 15px;
     padding-top: 8px;
     font: bold 17px Arial, Helvetica, sans-serif;
-	
+
 }
 .akordeon-icon span
 {
     color: #FFF;
     font-size: 28px;
     position: absolute;
-	top:7px;
-    right: 4px;
+	top:1px;
+    right: 3px;
     font-weight: bold;
     text-align: center;
 }
 .akordeon-item.expanded .akordeon-icon span
 {
-	top: 5px;
+	top: 0px;
 }
 .akordeon-item-head-container
 {

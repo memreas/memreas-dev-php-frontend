@@ -254,7 +254,7 @@ $(function(){
             },
         });
     });
-    /*
+
     //Login form submit
     $("#form-user-login").submit(function(){
         var loginname = $(this).find('input[name=username]').val();
@@ -270,12 +270,11 @@ $(function(){
                             ];
             ajaxRequest('login', params, function(xml_response){
                 if (getValueFromXMLTag(xml_response, 'status') == 'success')
-                    document.location.href="/index/memreas";
+                    document.user_login_frm.submit();
                 else jerror(getValueFromXMLTag(xml_response, 'message'));
             });
         }
         return false;
     });
-    */
 });
 
