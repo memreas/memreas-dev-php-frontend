@@ -10,16 +10,19 @@ $(function(){
                 { tag: 'user_id', value: user_id },
             ],
             function(ret_xml) {
-                if (getValueFromXMLTag(ret_xml, 'status') == 'Success'){
+                if (getValueFromXMLTag(ret_xml, 'status') == 'success'){
                     var notifications = getSubXMLFromTag(ret_xml, 'notification');
                     if ($(".notificationresults").hasClass ("mCustomScrollbar"))
                         $(".notificationresults .mCSB_container").empty();
                     var notification_count = notifications.length;
                     for (i = 0;i < notification_count;i++){
-                        var notification = $(notifications[i]).html();
+                        var notification = notifications[i].innerHTML;
+                        var meta_text = notification.split('<meta>');
+                        meta_text = meta_text[1].split('<notification_type>');
+                        meta_text = meta_text[0];
                         if ($(".notificationresults").hasClass ("mCustomScrollbar"))
-                            $(".notificationresults .mCSB_container").append('<li class="notification accept"><div class="notification_pro"><img src="/memreas/img/profile-pic.jpg"></div>' + $(notification).filter('meta').html() + '</li>');
-                        else $(".notificationresults").append('<li class="notification accept"><div class="notification_pro"><img src="/memreas/img/profile-pic.jpg"></div>' + $(notification).filter('meta').html() + '</li>');
+                            $(".notificationresults .mCSB_container").append('<li class="notification accept"><div class="notification_pro"><img src="/memreas/img/profile-pic.jpg"></div>' + meta_text + '</li>');
+                        else $(".notificationresults").append('<li class="notification accept"><div class="notification_pro"><img src="/memreas/img/profile-pic.jpg"></div>' + meta_text + '</li>');
                     }
                 }
                 else jerror('There is no notification');
