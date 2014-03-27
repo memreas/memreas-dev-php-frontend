@@ -87,7 +87,7 @@ function validateRegstration(){
     }
     if (input_uname == '' || input_uname == 'User Name'){
         jerror ('Please fill your username');
-        $("#register input[name=input_upass]").focus();
+        $("#register input[name=username]").focus();
         return false;
     }
     if (input_upass == '' || input_upass == 'Password'){
@@ -104,6 +104,8 @@ function validateRegstration(){
         jerror ('You must agree with legal disclaimer');
         return false;
     }
+
+    if (!validateRegisterForm(input_uname, input_upass)) return false;
 
     var params = [
                     {tag: 'email', value: input_email},
@@ -123,11 +125,34 @@ function validateRegstration(){
                 $("#frm-profile-pic").find('input[name=key]').val(current_key);
                 var jqXHR = uploadHandle.submit();
             }
+            document.register.reset();
         }
         else jerror(getValueFromXMLTag(response, 'message'));
-        document.register.reset();
     });
     return false;
+}
+function validateRegisterForm(input_uname, input_upass){
+    if (input_uname.length < 4){
+        jerror ('Username must greater than 4 charaters');
+        $("#register input[name=username]").focus();
+        return false;
+    }
+    if (input_uname.length > 32){
+        jerror ('Username is not allowed more than 32 characters');
+        $("#register input[name=username]").focus();
+        return false;
+    }
+    if (input_upass.length < 6){
+        jerror ('Password length minium 6 charaters');
+        $("#register input[name=password]").focus();
+        return false;
+    }
+    if (input_upass.length > 32){
+        jerror ('Password length maxinum 32 charaters');
+        $("#register input[name=password]").focus();
+        return false;
+    }
+    return true;
 }
 
 $(function(){
@@ -139,8 +164,10 @@ $(function(){
        var user_email = $("input[name=forgot_email]").val();
        var params = [{tag: 'email', value: user_email}];
        ajaxRequest('forgotpassword', params, function(response){
-           if (getValueFromXMLTag(response, 'status') == 'success')
+           if (getValueFromXMLTag(response, 'status') == 'success'){
                 jsuccess(getValueFromXMLTag(response, 'message'));
+                $("input[name=forgot_email]").val('');
+           }
            else jerror(getValueFromXMLTag(response, 'message'));
        });
        return false;
@@ -276,5 +303,86 @@ $(function(){
         }
         return false;
     });
+
+    //Change password form
+    $("#frmChangepass").submit(function(){
+        var new_password = $(this).find('input[name=new]').val();
+        var retype_password = $(this).find('input[name=retype]').val();
+        var token_code = $(this).find('input[name=token]').val();
+        if (new_password == '' || retype_password == '' || token_code == ''){
+            jerror('Please complete all fields');
+            return false;
+        }
+        if (new_password != retype_password){
+            jerror('Password confirm did not match');
+            return false;
+        }
+
+        var params = [
+                        {tag: 'token', value: token_code},
+                        {tag: 'new', value: new_password},
+                        {tag: 'retype', value: retype_password},
+                        {tag: 'username', value: ''},
+                        {tag: 'password', value: ''},
+                    ];
+        ajaxRequest('changepassword', params, function(xml_response){
+            if (getValueFromXMLTag(xml_response, 'status') == 'failure')
+                jerror (getValueFromXMLTag(xml_response, 'message'));
+            else {
+                jsuccess (getValueFromXMLTag(xml_response, 'message'));
+                document.reset_pwd_frm.reset();
+                disablePopup('changePass');
+            }
+        }, 'undefined', false);
+        return false;
+    });
 });
 
+function popupResetPassword(){
+    disablePopup('forgot');
+    popup('changePass');
+}
+
+function checkStrength(password)
+{
+    //initial strength
+    var strength = 0
+
+    //if the password length is less than 6, return message.
+    if (password.length < 6) {
+        return '<b style="color: white;">Too short</b>';
+    }
+
+    //length is ok, lets continue.
+
+    //if length is 8 characters or more, increase strength value
+    if (password.length > 7) strength += 1
+
+    //if password contains both lower and uppercase characters, increase strength value
+    if (password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/))  strength += 1
+
+    //if it has numbers and characters, increase strength value
+    if (password.match(/([a-zA-Z])/) && password.match(/([0-9])/))  strength += 1
+
+    //if it has one special character, increase strength value
+    if (password.match(/([!,%,&,@,#,$,^,*,?,_,~])/))  strength += 1
+
+    //if it has two special characters, increase strength value
+    if (password.match(/(.*[!,%,&,@,#,$,^,*,?,_,~].*[!,%,&,@,#,$,^,*,?,_,~])/)) strength += 1
+
+    //now we have calculated strength value, we can return messages
+
+    //if value is less than 2
+    if (strength < 2 )
+    {
+        return '<b style="color: yellow;">Weak</b>';
+    }
+    else if (strength == 2 )
+    {
+        return '<b style="color: green;">Medium</b>';
+    }
+    else
+    {
+        return '<b style="color: blue;">Strong</b>';
+    }
+}

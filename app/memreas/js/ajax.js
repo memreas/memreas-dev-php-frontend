@@ -36,8 +36,8 @@ ajaxRequest = function (action, params, success_func, error_func, disableLoading
                 $('#loadingpopup').hide();
 	  	},
 	  	error: function (jqXHR, textStatus, errorThrown) {
-       		alert(jqXHR.responseText);
-       		alert(jqXHR.status);
+       		//alert(jqXHR.responseText);
+       		//alert(jqXHR.status);
 			if (typeof error_func != "undefined")
 				error_func();
             if (!disableLoadingScreen)
@@ -81,6 +81,7 @@ getXMLStringFromParamArray = function(action, params) {
         case "getmedialike":        action_tag = "getmedialike"; break;
         case "findtag":             action_tag = "findtag"; break;
         case "listmemreasfriends":  action_tag = "listmemreasfriends"; break;
+        case "changepassword":  action_tag = "changepassword"; break;
 
         case "checkexistmedia":     action_tag = "checkexistmedia"; break;
 		default: break;

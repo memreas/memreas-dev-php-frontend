@@ -147,28 +147,6 @@ $(document).bgStretcher({
 
       document.getElementById('file').addEventListener('change', handleFileSelect, false);
     </script>
-<script type="text/javascript" charset="utf-8">
-
-$(document).ready(function(){
-    $( "#frmChangepass" ).submit(function( event ) {
-       // Stop form from submitting normally
-      event.preventDefault();
-
-       $.ajax({
-        type: "POST",
-        dataType: "json",
-        url: '/index/changepassword',
-        data: $('#frmChangepass').serialize()
-      }).done(function( resp ) {
-
-        alert(resp.forgotpasswordresponse.status + ' :' + resp.forgotpasswordresponse.message);
-	    if(resp.forgotpasswordresponse.status == 'success'){
-		    disablePopup('popupContact');
-	    }
-        });
-    });
-});
-</script>
     </li>
     <li>
     <input name="email" id="inEmail" class="signup_textfields" type="text" value="Your Email" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue;  onEmailFocusOut();" onFocus="if(this.value == 'Your Email')this.value = '';"/>
@@ -212,6 +190,9 @@ $(document).ready(function(){
     			  <input name="forgot_email" type="text"  class="input" value="email" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Password')this.value = ''; "/>
 
                   <input id="forgotBtn" type="submit" class="submit-btn" value="submit">
+                  <div style="clear: both;"></div>
+                    <p>After receive activation code, use it to reset your account's password</p>
+                    <a href="javascript:;" class="submit-btn" onclick="popupResetPassword();">Enter code</a>
                 </div>
 
 
@@ -225,7 +206,7 @@ $(document).ready(function(){
             <div id="changePass" class="popups">
                 <a id="forgotClose" onClick="disablePopup('changePass')" class='popupClose'>x</a>
                 <h2>forgot password</h2>
-                <form enctype="multipart/form-data" action="<?php echo $this->url('index',array('action'=>'changepassword'));?>" method="post" name="forgot" id="frmChangepass">
+                <form enctype="multipart/form-data" action="<?php echo $this->url('index',array('action'=>'changepassword'));?>" method="post" name="reset_pwd_frm" id="frmChangepass">
                     <div class="pop_forgot">
                   <label>new password</label>
     			  <input name="new" type="password"  class="input" value="Password" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Password')this.value = '';"/>
@@ -242,7 +223,7 @@ $(document).ready(function(){
 
 
             </div>
-            <div id="bgforgot" class="backgroundPopup"></div>
+            <div id="bgchangePass" class="backgroundPopup"></div>
             <!-- third popup end -->
 
     <!-- End : Content -->
