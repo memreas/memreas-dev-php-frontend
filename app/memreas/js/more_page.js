@@ -79,7 +79,7 @@ $(function(){
             if (filetype.indexOf ('image') >= 0)
                 var target = 'image';
             else target = 'media';
-            key_value = target + '/' + key_value;
+            key_value = user_id + '/' + target + '/' + key_value;
             $(this).find('input[name=key]').val(key_value);
             // Use XHR, fallback to iframe
             options = $(this).fileupload('option');
