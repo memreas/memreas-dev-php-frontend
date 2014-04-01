@@ -48,9 +48,9 @@ class IndexController extends AbstractActionController
     public function fetchXML($action, $xml) {
         $session = $this->getAuthService()->getIdentity();
 	    $guzzle = new Client();
-        error_log("Inside fetch XML request url ---> " . $this->url . PHP_EOL);
-        error_log("Inside fetch XML request action ---> " . $action . PHP_EOL);
-        error_log("Inside fetch XML request XML ---> " . $xml . PHP_EOL);
+//error_log("Inside fetch XML request url ---> " . $this->url . PHP_EOL);
+//error_log("Inside fetch XML request action ---> " . $action . PHP_EOL);
+//error_log("Inside fetch XML request XML ---> " . $xml . PHP_EOL);
         $request = $guzzle->post(
 		    $this->url,
 		    null,
@@ -62,15 +62,15 @@ class IndexController extends AbstractActionController
 	        )
 	    );
 	    $response = $request->send();
-        error_log("Inside fetch XML response ---> " . $response->getBody(true) . PHP_EOL);
-        error_log("Exit fetchXML".PHP_EOL);
+error_log("Inside fetch XML response ---> " . $response->getBody(true) . PHP_EOL);
+//error_log("Exit fetchXML".PHP_EOL);
 		return $data = $response->getBody(true);
 	}
 
     public function indexAction() {
 error_log("Enter indexAction".PHP_EOL);
-        //$path = $this->security("application/index/memreas.phtml");
- 	    $path = "application/index/index.phtml";
+        $path = $this->security("application/index/memreas.phtml");
+ 	    //$path = "application/index/index.phtml";
         $data['bucket'] = "memreasdev";
 		$view = new ViewModel(array('data' => $data));
 		$view->setTemplate($path); // path to phtml file under view folder
