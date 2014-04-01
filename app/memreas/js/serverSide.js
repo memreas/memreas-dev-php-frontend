@@ -69,11 +69,9 @@ jQuery.fetch_server_media = function (){
                   }, 1000);
                   $(".swipebox").swipebox();
                 }
-                $("#loadingpopup").hide();
-
-                //If there is no image
-                if ($(".user-resources").html() == '')
+                else
                     jerror ('There is no media on your account! Please use upload tab on leftside you can add some resources!');
+                $("#loadingpopup").hide();
                 return true;
             }
     );

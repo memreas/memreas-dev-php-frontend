@@ -210,8 +210,8 @@ $(function(){
                 var key_value = '${filename}';
 
                 //Check if valid type is image or video are allowed
-                if  (!(filetype.indexOf('image') >= 0 || filetype.indexOf('video') >= 0)){
-                    jerror('file type is not allowed');
+                if  (!(filetype.indexOf('image') >= 0)){
+                    jerror('Only image type is allowed');
                     $("input[name=profile_image]").val(0);
                     return false;
                 }
@@ -307,6 +307,16 @@ $(function(){
     //Change password form
     $("#frmChangepass").submit(function(){
         var new_password = $(this).find('input[name=new]').val();
+
+        if (new_password.length < 6){
+            jerror('Password length at least 6 characters');
+            return false;
+        }
+        if (new_password.length > 32){
+            jerror('Password length can not take more than 32 characters');
+            return false;
+        }
+
         var retype_password = $(this).find('input[name=retype]').val();
         var token_code = $(this).find('input[name=token]').val();
         if (new_password == '' || retype_password == '' || token_code == ''){

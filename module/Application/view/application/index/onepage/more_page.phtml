@@ -13,6 +13,16 @@
     <div id="tab1-more" class="hideCls account">
           <figure class="pro-pics" id="setting-userprofile"><img src="/memreas/img/profile-pic.jpg" alt=""></figure>
           <div class="pro-names2" id="setting-username">User Name</div>
+          <form name="frm_profile_pic" id="frm-profile-pic" enctype="multipart/form-data" action="https://<?php echo $data['bucket']; ?>.s3.amazonaws.com/">
+            <input type="hidden" name="key" value="{$filename}">
+            <input type="hidden" name="AWSAccessKeyId" value="">
+            <input type="hidden" name="acl" value="public-read">
+            <input type="hidden" name="success_action_status" value="201">
+            <input type="hidden" name="policy" value="">
+            <input type="hidden" name="signature" value="">
+            <input type="file" name="file" id="file" style="opacity: 0; -moz-opacity:0; -webkit-opacity: 0; filter: alpha(opacity = 0); margin: 0;width: 1px;height: 1px;">
+        </form>
+          <a class="black_btn_skin f-center change-profile-btn" href="javascript:;">Change Picture</a>
           <div class="clear"></div>
           <div class="akordeon" id="buttons-moretab" style="margin-top: 10px;">
               <div class="akordeon-item expanded">

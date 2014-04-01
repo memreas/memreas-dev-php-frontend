@@ -2658,4 +2658,5 @@ a.btn-browse-file{ margin: 0 auto; float: none; }
 .typeahead {
 margin-left: 15%;
 }
-#setting-userprofile img{ width: 70px; }
+#setting-userprofile img{ width: 70px; height: 55px; }
+#profile_picture{ height: 100%; }
