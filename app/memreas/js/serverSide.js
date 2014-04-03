@@ -38,6 +38,8 @@ jQuery.fetch_server_media = function (){
             {tag: 'event_id', value: ''},
             {tag: 'user_id', value: user_id},
             {tag: 'device_id', value : ''},
+            //Added jmeah - checking jwplayer rtmp - 2-APR-2014
+            {tag: 'rtmp', value : 'true'},
             {tag: 'limit', value: '200'},
             {tag: 'page', value: '1'}
         ], function (response){

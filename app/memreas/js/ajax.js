@@ -4,8 +4,7 @@
 /////////////////////////////////
 
 //var base_url = 'http://memreasdev.elasticbeanstalk.com/eventapp_zend2.1/webservices/index.php?';
-//var wsurl = '/index/sampleAjax';
-var wsurl = '/index.php/index/sampleAjax';
+var wsurl = '/index/sampleAjax';
 var xml_str = "";
 
 //////////////////////////////////
@@ -84,6 +83,8 @@ getXMLStringFromParamArray = function(action, params) {
         case "changepassword":  action_tag = "changepassword"; break;
 
         case "checkexistmedia":     action_tag = "checkexistmedia"; break;
+        case "findevent":     action_tag = "findevent"; break;
+
 		default: break;
 	}
 	xml_str += "<" + action_tag + ">";

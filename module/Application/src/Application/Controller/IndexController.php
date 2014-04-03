@@ -31,8 +31,9 @@ use Application\Model\MemreasConstants;
 class IndexController extends AbstractActionController
 {
 	//Updated....
-    protected $url = MemreasConstants::MEMREAS_WS; //Live development
+    protected $url = MemreasConstants::MEMREAS_WS; //Local development
 	//protected $url = "http://memreas-dev-ws.localhost/"; //Local development
+    //protected $url = "http://test/";
     //protected $url = "http://test/";
 	protected $test = "Hope this works!";
     protected $user_id;
@@ -48,9 +49,9 @@ class IndexController extends AbstractActionController
     public function fetchXML($action, $xml) {
         $session = $this->getAuthService()->getIdentity();
 	    $guzzle = new Client();
-        error_log("Inside fetch XML request url ---> " . $this->url . PHP_EOL);
-        error_log("Inside fetch XML request action ---> " . $action . PHP_EOL);
-        error_log("Inside fetch XML request XML ---> " . $xml . PHP_EOL);
+//error_log("Inside fetch XML request url ---> " . $this->url . PHP_EOL);
+//error_log("Inside fetch XML request action ---> " . $action . PHP_EOL);
+//error_log("Inside fetch XML request XML ---> " . $xml . PHP_EOL);
         $request = $guzzle->post(
 		    $this->url,
 		    null,
@@ -62,19 +63,20 @@ class IndexController extends AbstractActionController
 	        )
 	    );
 	    $response = $request->send();
-        error_log("Inside fetch XML response ---> " . $response->getBody(true) . PHP_EOL);
-        error_log("Exit fetchXML".PHP_EOL);
+error_log("Inside fetch XML response ---> " . $response->getBody(true) . PHP_EOL);
+//error_log("Exit fetchXML".PHP_EOL);
 		return $data = $response->getBody(true);
 	}
 
     public function indexAction() {
 error_log("Enter indexAction".PHP_EOL);
-        //$path = $this->security("application/index/memreas.phtml");
- 	    $path = "application/index/index.phtml";
+
+        $path = $this->security("application/index/index.phtml");
         $data['bucket'] = "memreasdev";
 		$view = new ViewModel(array('data' => $data));
 		$view->setTemplate($path); // path to phtml file under view folder
-error_log("Exit indexAction".PHP_EOL);
+        error_log("Exit indexAction".PHP_EOL);
+
 		return $view;
     }
 
@@ -135,8 +137,7 @@ error_log("Exit indexAction".PHP_EOL);
     }
 
     public function sampleAjaxAction() {
-error_log("Inside sampleAjaxAction...".PHP_EOL);
-    	if (isset($_REQUEST['callback'])) {
+		if (isset($_REQUEST['callback'])) {
 
 			//Fetch parms
 			$callback = $_REQUEST['callback'];
@@ -154,22 +155,14 @@ error_log("Inside sampleAjaxAction...".PHP_EOL);
 
 			//Return the ajax call...
 			$callback_json = $callback . "(" . $json . ")";
-			ob_clean();
+			$output = ob_get_clean();
 			header("Content-type: plain/text");
-			//This should resolve php error in log
-			// makes disable renderer
-			//$this->_helper->viewRenderer->setNoRender();
-			//makes disable layout
-			//$this->_helper->getHelper('layout')->disableLayout();
-
 			echo $callback_json;
-error_log("call back json ---------> ".$callback_json.PHP_EOL);
 
             //Need to exit here to avoid ZF2 framework view.
 			exit;
 		} else {
-error_log("returning sample-ajax.phtml...".PHP_EOL);
-			$path = $this->security("application/index/sample-ajax.phtml");
+            $path = $this->security("application/index/sample-ajax.phtml");
 			$view = new ViewModel();
 			$view->setTemplate($path); // path to phtml file under view folder
 		}
@@ -222,6 +215,7 @@ error_log("returning sample-ajax.phtml...".PHP_EOL);
         $data['base64Policy'] = $this->getS3Policy();
         $data['signature'] = $this->hex2b64($this->hmacsha1($data['secret'], $data['base64Policy']));
 
+        //$path = $this->security("application/index/memreas.phtml");
         $path = "application/index/memreas.phtml";
         $view = new ViewModel(array('data' => $data, 'enableAdvertising' => $enableAdvertising));
         $view->setTemplate($path); // path to phtml file under view folder
@@ -336,13 +330,12 @@ error_log("returning sample-ajax.phtml...".PHP_EOL);
     * Login Action
     */
     public function loginAction() {
-error_log("Inside loginAction...".PHP_EOL);
-    	//Fetch the post data
+		//Fetch the post data
 		$request = $this->getRequest();
 		$postData = $request->getPost()->toArray();
 		$username = $postData ['username'];
 		$password = $postData ['password'];
-
+                
         $this->getAuthService()->getAdapter()->setUsername($username);
         $this->getAuthService()->getAdapter()->setPassword($password);
         $token = empty($this->session->token)?'':$this->session->token;
@@ -365,11 +358,14 @@ error_log("Inside loginAction...".PHP_EOL);
         //setcookie(session_name(),$data->loginresponse->sid,0,'/');
  		//ZF2 Authenticate
 		if ($result->getIdentity()) {
-error_log("Inside loginresponse success redirect ---> " . $redirect);
+            error_log("Inside loginresponse success...");
+            //	$this->setSession($username);
+            //Redirect here
+            error_log("Inside loginresponse success redirect ---> " . $redirect);
             $this->setSession($username);
 			return $this->redirect()->toRoute('index', array('action' => $redirect));
 		} else {
-error_log("Inside loginresponse else redirect to index...");
+            error_log("Inside loginresponse else...");
 			return $this->redirect()->toRoute('index', array('action' => "index"));
 		}
     }
@@ -390,10 +386,10 @@ error_log("Inside loginresponse else redirect to index...");
         error_log("Inside setSession ...");
    	    $user = $this->getUserTable()->findOneBy(array('username' => $username));
 
-        $user->password='';
-       	$user->disable_account='';
-   	    $user->create_date='';
-        $user->update_time='';
+        //$user->password='';
+       	//$user->disable_account='';
+   	    //$user->create_date='';
+        //$user->update_time='';
 		$session = new Container('user');
         error_log("Inside setSession got new Container...");
 		$session->offsetSet('user_id', $user->user_id);
@@ -453,12 +449,12 @@ error_log("Inside loginresponse else redirect to index...");
 
     public function security($path) {
     	//if already login do nothing
-		$session = new Container("user");
-	    if(!$session->offsetExists('user_id')){
-			error_log("Not there so logout");
-	    	$this->logoutAction();
-    	  return "application/index/index.phtml";
-	    }
+		//$session = new Container("user");
+	    //if(!$session->offsetExists('user_id')){
+		//	error_log("Not there so logout");
+	    //	$this->logoutAction();
+    	//  return "application/index/index.phtml";
+	    //}
 		return $path;
         //return $this->redirect()->toRoute('index', array('action' => 'login'));
     }

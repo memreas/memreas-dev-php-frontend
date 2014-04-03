@@ -65,6 +65,11 @@ return array (
             'https' => true,
             'hostname' => 'sts.amazonaws.com',
         ),
+        'cn-north-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'sts.cn-north-1.amazonaws.com.cn',
+        ),
         'us-gov-west-1' => array(
             'http' => false,
             'https' => true,
@@ -120,6 +125,18 @@ return array (
                     'location' => 'aws.query',
                     'minLength' => 2,
                     'maxLength' => 96,
+                ),
+                'SerialNumber' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 9,
+                    'maxLength' => 256,
+                ),
+                'TokenCode' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                    'minLength' => 6,
+                    'maxLength' => 6,
                 ),
             ),
             'errorResponses' => array(
