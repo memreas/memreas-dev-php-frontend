@@ -10,7 +10,7 @@ use Application\Model\MemreasConstants;
 class MyAuthAdapter implements AdapterInterface
 {
     //protected $url = "http://test/";    
-    protected $url = MEMREAS_WS; //Local development
+    protected $url = MemreasConstants::MEMREAS_WS;
 
     protected $username = '';
     protected $password = '';
