@@ -214,6 +214,7 @@ header {
 	float: left;
 	overflow: hidden;
 }
+.pro-pic img{ height: 50px; }
 .pro-name {
 	font-family: "Century Gothic";
 	font-size: 15px;
@@ -2659,10 +2660,10 @@ a.btn-browse-file{ margin: 0 auto; float: none; }
 margin-left: 15%;
 }
 /* Typeahead seach */
-#setting-userprofile img{ width: 70px; }
+#setting-userprofile img{ width: 70px; height: 60px; }
 .bond img {width: 56px;vertical-align: middle;
  }
  .bond strong {padding-left: 5px;
  }
- 
+
 .dropdown-menu {width:27%;}

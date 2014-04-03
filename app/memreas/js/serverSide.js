@@ -9,6 +9,7 @@ $(function(){
         var params = [{tag: 'user_id', value: $("input[name=user_id]").val()}];
         ajaxRequest('getuserdetails', params, function(xml_response){
             if (getValueFromXMLTag(xml_response, 'status') == 'Success'){
+                var useremail = getValueFromXMLTag(xml_response, 'email');
                 var username = getValueFromXMLTag(xml_response, 'username');
                 var userprofile = getValueFromXMLTag(xml_response, 'profile');
                 var username_length = username.length;
@@ -17,9 +18,11 @@ $(function(){
                 }
                 $("header").find(".pro-name").html(username);
                 $("#setting-username").html(username);
-                if (userprofile != '')
+                if (userprofile != ''){
                     $("header").find("#profile_picture").attr('src', userprofile);
                     $("#setting-userprofile img").attr('src', userprofile);
+                }
+                $("input[name=account_email]").val(useremail);
             }
             else jerror (getValueFromXMLTag(xml_response, 'messsage'));
         });
