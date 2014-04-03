@@ -20,7 +20,7 @@ return array (
     'serviceFullName' => 'Amazon ElastiCache',
     'serviceType' => 'query',
     'resultWrapped' => true,
-    'signatureVersion' => 'v2',
+    'signatureVersion' => 'v4',
     'namespace' => 'ElastiCache',
     'regions' => array(
         'us-east-1' => array(
@@ -62,6 +62,11 @@ return array (
             'http' => false,
             'https' => true,
             'hostname' => 'elasticache.sa-east-1.amazonaws.com',
+        ),
+        'cn-north-1' => array(
+            'http' => false,
+            'https' => true,
+            'hostname' => 'elasticache.cn-north-1.amazonaws.com.cn',
         ),
     ),
     'operations' => array(
@@ -148,17 +153,14 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'NumCacheNodes' => array(
-                    'required' => true,
                     'type' => 'numeric',
                     'location' => 'aws.query',
                 ),
                 'CacheNodeType' => array(
-                    'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
                 'Engine' => array(
-                    'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
@@ -676,6 +678,11 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
+                'RetainPrimaryCluster' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'aws.query',
+                ),
             ),
             'errorResponses' => array(
                 array(
@@ -1033,12 +1040,6 @@ return array (
                 'SourceType' => array(
                     'type' => 'string',
                     'location' => 'aws.query',
-                    'enum' => array(
-                        'cache-cluster',
-                        'cache-parameter-group',
-                        'cache-security-group',
-                        'cache-subnet-group',
-                    ),
                 ),
                 'StartTime' => array(
                     'type' => array(
@@ -3128,73 +3129,71 @@ return array (
         ),
     ),
     'iterators' => array(
-        'operations' => array(
-            'DescribeCacheClusters' => array(
-                'token_param' => 'Marker',
-                'token_key' => 'Marker',
-                'limit_key' => 'MaxRecords',
-                'result_key' => 'CacheClusters',
-            ),
-            'DescribeCacheEngineVersions' => array(
-                'token_param' => 'Marker',
-                'token_key' => 'Marker',
-                'limit_key' => 'MaxRecords',
-                'result_key' => 'CacheEngineVersions',
-            ),
-            'DescribeCacheParameterGroups' => array(
-                'token_param' => 'Marker',
-                'token_key' => 'Marker',
-                'limit_key' => 'MaxRecords',
-                'result_key' => 'CacheParameterGroups',
-            ),
-            'DescribeCacheParameters' => array(
-                'token_param' => 'Marker',
-                'token_key' => 'Marker',
-                'limit_key' => 'MaxRecords',
-                'result_key' => 'Parameters',
-            ),
-            'DescribeCacheSecurityGroups' => array(
-                'token_param' => 'Marker',
-                'token_key' => 'Marker',
-                'limit_key' => 'MaxRecords',
-                'result_key' => 'CacheSecurityGroups',
-            ),
-            'DescribeCacheSubnetGroups' => array(
-                'token_param' => 'Marker',
-                'token_key' => 'Marker',
-                'limit_key' => 'MaxRecords',
-                'result_key' => 'CacheSubnetGroups',
-            ),
-            'DescribeEngineDefaultParameters' => array(
-                'token_param' => 'Marker',
-                'token_key' => 'Marker',
-                'limit_key' => 'MaxRecords',
-                'result_key' => 'Parameters',
-            ),
-            'DescribeEvents' => array(
-                'token_param' => 'Marker',
-                'token_key' => 'Marker',
-                'limit_key' => 'MaxRecords',
-                'result_key' => 'Events',
-            ),
-            'DescribeReplicationGroups' => array(
-                'token_param' => 'Marker',
-                'token_key' => 'Marker',
-                'limit_key' => 'MaxRecords',
-                'result_key' => 'ReplicationGroups',
-            ),
-            'DescribeReservedCacheNodes' => array(
-                'token_param' => 'Marker',
-                'token_key' => 'Marker',
-                'limit_key' => 'MaxRecords',
-                'result_key' => 'ReservedCacheNodes',
-            ),
-            'DescribeReservedCacheNodesOfferings' => array(
-                'token_param' => 'Marker',
-                'token_key' => 'Marker',
-                'limit_key' => 'MaxRecords',
-                'result_key' => 'ReservedCacheNodesOfferings',
-            ),
+        'DescribeCacheClusters' => array(
+            'input_token' => 'Marker',
+            'output_token' => 'Marker',
+            'limit_key' => 'MaxRecords',
+            'result_key' => 'CacheClusters',
+        ),
+        'DescribeCacheEngineVersions' => array(
+            'input_token' => 'Marker',
+            'output_token' => 'Marker',
+            'limit_key' => 'MaxRecords',
+            'result_key' => 'CacheEngineVersions',
+        ),
+        'DescribeCacheParameterGroups' => array(
+            'input_token' => 'Marker',
+            'output_token' => 'Marker',
+            'limit_key' => 'MaxRecords',
+            'result_key' => 'CacheParameterGroups',
+        ),
+        'DescribeCacheParameters' => array(
+            'input_token' => 'Marker',
+            'output_token' => 'Marker',
+            'limit_key' => 'MaxRecords',
+            'result_key' => 'Parameters',
+        ),
+        'DescribeCacheSecurityGroups' => array(
+            'input_token' => 'Marker',
+            'output_token' => 'Marker',
+            'limit_key' => 'MaxRecords',
+            'result_key' => 'CacheSecurityGroups',
+        ),
+        'DescribeCacheSubnetGroups' => array(
+            'input_token' => 'Marker',
+            'output_token' => 'Marker',
+            'limit_key' => 'MaxRecords',
+            'result_key' => 'CacheSubnetGroups',
+        ),
+        'DescribeEngineDefaultParameters' => array(
+            'input_token' => 'Marker',
+            'output_token' => 'Marker',
+            'limit_key' => 'MaxRecords',
+            'result_key' => 'Parameters',
+        ),
+        'DescribeEvents' => array(
+            'input_token' => 'Marker',
+            'output_token' => 'Marker',
+            'limit_key' => 'MaxRecords',
+            'result_key' => 'Events',
+        ),
+        'DescribeReservedCacheNodes' => array(
+            'input_token' => 'Marker',
+            'output_token' => 'Marker',
+            'limit_key' => 'MaxRecords',
+            'result_key' => 'ReservedCacheNodes',
+        ),
+        'DescribeReservedCacheNodesOfferings' => array(
+            'input_token' => 'Marker',
+            'output_token' => 'Marker',
+            'limit_key' => 'MaxRecords',
+            'result_key' => 'ReservedCacheNodesOfferings',
+        ),
+        'DescribeReplicationGroups' => array(
+            'input_token' => 'Marker',
+            'output_token' => 'Marker',
+            'limit_key' => 'MaxRecords',
+            'result_key' => 'ReplicationGroups',
         ),
     ),
 );

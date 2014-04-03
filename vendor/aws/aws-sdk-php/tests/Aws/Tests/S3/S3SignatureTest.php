@@ -17,6 +17,7 @@
 namespace Aws\Tests\S3;
 
 use Aws\S3\S3Signature;
+use Guzzle\Http\Message\Request;
 
 /**
  * @covers Aws\S3\S3Signature
@@ -51,7 +52,7 @@ class S3SignatureTest extends \Guzzle\Tests\GuzzleTestCase
             array(
                 array(
                     'verb' => 'PUT',
-                    'path' => '/key?versionId=1234&acl=_guzzle_blank_',
+                    'path' => '/key?versionId=1234&acl=',
                     'headers' => array(
                         'Host' => 'test.s3.amazonaws.com',
                         'Date' => 'Tue, 27 Mar 2007 21:06:08 +0000',
@@ -87,7 +88,7 @@ class S3SignatureTest extends \Guzzle\Tests\GuzzleTestCase
             array(
                 array(
                     'verb' => 'GET',
-                    'path' => '/?acl=_guzzle_blank_',
+                    'path' => '/?acl=',
                     'headers' => array(
                         'Host' => 'johnsmith.s3.amazonaws.com',
                         'Date' => 'Tue, 27 Mar 2007 19:44:46 +0000'
@@ -134,7 +135,7 @@ class S3SignatureTest extends \Guzzle\Tests\GuzzleTestCase
             array(
                 array(
                     'verb' => 'PUT',
-                    'path' => '/photos/puppy.jpg?acl=_guzzle_blank_',
+                    'path' => '/photos/puppy.jpg?acl=',
                     'headers' => array(
                         'Host' => 'johnsmith.s3.amazonaws.com',
                         'Date' => 'Tue, 27 Mar 2007 19:36:42 +0000'
@@ -145,7 +146,7 @@ class S3SignatureTest extends \Guzzle\Tests\GuzzleTestCase
             array(
                 array(
                     'verb' => 'PUT',
-                    'path' => '/photos/puppy?acl=_guzzle_blank_',
+                    'path' => '/photos/puppy?acl=',
                     'headers' => array(
                         'Host' => 'johnsmith.s3.amazonaws.com',
                         'Date' => 'Tue, 27 Mar 2007 19:36:42 +0000'
@@ -156,7 +157,7 @@ class S3SignatureTest extends \Guzzle\Tests\GuzzleTestCase
             array(
                 array(
                     'verb' => 'PUT',
-                    'path' => '/johnsmith/photos/puppy?acl=_guzzle_blank_',
+                    'path' => '/johnsmith/photos/puppy?acl=',
                     'headers' => array(
                         'Host' => 's3.amazonaws.com',
                         'Date' => 'Tue, 27 Mar 2007 19:36:42 +0000'
@@ -167,7 +168,7 @@ class S3SignatureTest extends \Guzzle\Tests\GuzzleTestCase
             array(
                 array(
                     'verb' => 'PUT',
-                    'path' => '/johnsmith?acl=_guzzle_blank_',
+                    'path' => '/johnsmith?acl=',
                     'headers' => array(
                         'Host' => 's3.amazonaws.com',
                         'Date' => 'Tue, 27 Mar 2007 19:36:42 +0000'
@@ -178,7 +179,7 @@ class S3SignatureTest extends \Guzzle\Tests\GuzzleTestCase
             array(
                 array(
                     'verb' => 'PUT',
-                    'path' => '/johnsmith?acl=_guzzle_blank_',
+                    'path' => '/johnsmith?acl=',
                     'headers' => array(
                         'Host' => 's3.amazonaws.com',
                         'Date' => 'Tue, 27 Mar 2007 19:36:42 +0000'
@@ -267,5 +268,27 @@ class S3SignatureTest extends \Guzzle\Tests\GuzzleTestCase
         } else {
             $this->assertFalse($request->hasHeader('x-amz-security-token'));
         }
+    }
+
+    public function testCreatesPreSignedUrlWithXAmzHeaders()
+    {
+        $signature = new S3Signature();
+        $request = new Request('GET', 'https://s3.amazonaws.com', array(
+            'X-Amz-Acl' => 'public-read'
+        ));
+        $c = $this->getServiceBuilder()->get('s3');
+        $request->setClient($c);
+        $this->assertContains(
+            'x-amz-acl:public-read',
+            $signature->createCanonicalizedString($request, time())
+        );
+        $this->assertContains(
+            '&x-amz-acl=public-read',
+            $signature->createPresignedUrl(
+                $request,
+                $c->getCredentials(),
+                time()
+            )
+        );
     }
 }

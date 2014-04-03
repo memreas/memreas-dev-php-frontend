@@ -18,6 +18,7 @@ namespace Aws\Tests\S3\Sync;
 
 use Aws\S3\Sync\KeyConverter;
 use Aws\S3\Sync\UploadSync;
+use Symfony\Component\EventDispatcher\Event;
 
 /**
  * @covers Aws\S3\Sync\UploadSync
@@ -25,6 +26,20 @@ use Aws\S3\Sync\UploadSync;
  */
 class UploadSyncTest extends \Guzzle\Tests\GuzzleTestCase
 {
+    private $tmpFile;
+
+    public function setUp()
+    {
+        $this->tmpFile = null;
+    }
+
+    public function tearDown()
+    {
+        if ($this->tmpFile) {
+            unlink($this->tmpFile);
+        }
+    }
+
     /**
      * @expectedException \PHPUnit_Framework_Error_Warning
      * @expectedExceptionMessage failed to open stream
@@ -48,7 +63,7 @@ class UploadSyncTest extends \Guzzle\Tests\GuzzleTestCase
 
     public function testCreatesSimpleCommand()
     {
-        $result = $this->getAction(1000, $this->getServiceBuilder()->get('s3', true));
+        $result = $this->getAction($this->getUploadSync(1000, $this->getServiceBuilder()->get('s3', true)));
         $this->assertEquals('foo', $result['Bucket']);
         $this->assertNotNull($result['Key']);
         $this->assertEquals('test', (string) $result['Body']);
@@ -58,18 +73,34 @@ class UploadSyncTest extends \Guzzle\Tests\GuzzleTestCase
     {
         $client = $this->getServiceBuilder()->get('s3', true);
         $this->setMockResponse($client, 's3/initiate_multipart_upload');
-        $result = $this->getAction(2, $client);
+        $result = $this->getAction($this->getUploadSync(2, $client));
         $this->assertInstanceOf('Aws\S3\Model\MultipartUpload\AbstractTransfer', $result);
+    }
+
+    public function testEmitsBeforeMultipartUpload()
+    {
+        $client = $this->getServiceBuilder()->get('s3', true);
+        $this->setMockResponse($client, 's3/initiate_multipart_upload');
+        $builder = $this->getUploadSync(2, $client);
+        $ev = null;
+        $builder->getEventDispatcher()->addListener(UploadSync::BEFORE_MULTIPART_BUILD, function (Event $event) use (&$ev) {
+            $ev = $event;
+        });
+        $result = $this->getAction($builder);
+        $this->assertInstanceOf('Aws\S3\Model\MultipartUpload\AbstractTransfer', $result);
+        $this->assertInstanceOf('Symfony\Component\EventDispatcher\Event', $ev);
+        $this->assertInstanceOf('Aws\S3\Model\MultipartUpload\UploadBuilder', $ev['builder']);
+        $this->assertInstanceOf('SplFileInfo', $ev['file']);
     }
 
     protected function getSplFile($filename, $size = 4)
     {
         $file = $this->getMockBuilder('SplFileInfo')
-            ->setMethods(array('getPathName', 'getSize'))
+            ->setMethods(array('getPathName', 'getRealPath', 'getSize'))
             ->disableOriginalConstructor()
             ->getMock();
         $file->expects($this->once())
-            ->method('getPathName')
+            ->method('getRealPath')
             ->will($this->returnValue($filename));
         $file->expects($this->any())
             ->method('getSize')
@@ -78,26 +109,25 @@ class UploadSyncTest extends \Guzzle\Tests\GuzzleTestCase
         return $file;
     }
 
-    protected function getAction($size, $client)
+    protected function getUploadSync($size, $client)
     {
-        $sync = $this->getMockBuilder('Aws\S3\Sync\UploadSync')
-            ->setConstructorArgs(array(
-                array(
-                    'client' => $client,
-                    'bucket' => 'foo',
-                    'iterator' => null,
-                    'source_converter' => new KeyConverter(),
-                    'multipart_upload_size' => $size
-                )
-            ))
-            ->getMock();
+        return new UploadSync(array(
+            'client' => $client,
+            'bucket' => 'foo',
+            'iterator' => null,
+            'source_converter' => new KeyConverter(),
+            'multipart_upload_size' => $size
+        ));
+    }
 
+    protected function getAction($sync)
+    {
         $path = tempnam('/tmp', 'test_simple');
         file_put_contents($path, 'test');
         $ref = new \ReflectionMethod($sync, 'createTransferAction');
         $ref->setAccessible(true);
         $result = $ref->invoke($sync, $this->getSplFile($path));
-        unlink($path);
+        $this->tmpFile = $path;
 
         return $result;
     }

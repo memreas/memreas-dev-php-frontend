@@ -63,6 +63,11 @@ return array (
             'https' => true,
             'hostname' => 'elasticloadbalancing.sa-east-1.amazonaws.com',
         ),
+        'cn-north-1' => array(
+            'http' => true,
+            'https' => true,
+            'hostname' => 'elasticloadbalancing.cn-north-1.amazonaws.com.cn',
+        ),
         'us-gov-west-1' => array(
             'http' => true,
             'https' => true,
@@ -1086,7 +1091,7 @@ return array (
             'httpMethod' => 'POST',
             'uri' => '/',
             'class' => 'Aws\\Common\\Command\\QueryCommand',
-            'responseClass' => 'EmptyOutput',
+            'responseClass' => 'ModifyLoadBalancerAttributesOutput',
             'responseType' => 'model',
             'parameters' => array(
                 'Action' => array(
@@ -1116,6 +1121,38 @@ return array (
                                     'required' => true,
                                     'type' => 'boolean',
                                     'format' => 'boolean-string',
+                                ),
+                            ),
+                        ),
+                        'AccessLog' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'Enabled' => array(
+                                    'required' => true,
+                                    'type' => 'boolean',
+                                    'format' => 'boolean-string',
+                                ),
+                                'S3BucketName' => array(
+                                    'type' => 'string',
+                                ),
+                                'EmitInterval' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'S3BucketPrefix' => array(
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                        'ConnectionDraining' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'Enabled' => array(
+                                    'required' => true,
+                                    'type' => 'boolean',
+                                    'format' => 'boolean-string',
+                                ),
+                                'Timeout' => array(
+                                    'type' => 'numeric',
                                 ),
                             ),
                         ),
@@ -1486,6 +1523,34 @@ return array (
                                 ),
                             ),
                         ),
+                        'AccessLog' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'Enabled' => array(
+                                    'type' => 'boolean',
+                                ),
+                                'S3BucketName' => array(
+                                    'type' => 'string',
+                                ),
+                                'EmitInterval' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'S3BucketPrefix' => array(
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                        'ConnectionDraining' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'Enabled' => array(
+                                    'type' => 'boolean',
+                                ),
+                                'Timeout' => array(
+                                    'type' => 'numeric',
+                                ),
+                            ),
+                        ),
                     ),
                 ),
             ),
@@ -1836,6 +1901,58 @@ return array (
                 ),
             ),
         ),
+        'ModifyLoadBalancerAttributesOutput' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'LoadBalancerName' => array(
+                    'type' => 'string',
+                    'location' => 'xml',
+                ),
+                'LoadBalancerAttributes' => array(
+                    'type' => 'object',
+                    'location' => 'xml',
+                    'properties' => array(
+                        'CrossZoneLoadBalancing' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'Enabled' => array(
+                                    'type' => 'boolean',
+                                ),
+                            ),
+                        ),
+                        'AccessLog' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'Enabled' => array(
+                                    'type' => 'boolean',
+                                ),
+                                'S3BucketName' => array(
+                                    'type' => 'string',
+                                ),
+                                'EmitInterval' => array(
+                                    'type' => 'numeric',
+                                ),
+                                'S3BucketPrefix' => array(
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
+                        'ConnectionDraining' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'Enabled' => array(
+                                    'type' => 'boolean',
+                                ),
+                                'Timeout' => array(
+                                    'type' => 'numeric',
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ),
         'RegisterEndPointsOutput' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -1858,21 +1975,19 @@ return array (
         ),
     ),
     'iterators' => array(
-        'operations' => array(
-            'DescribeInstanceHealth' => array(
-                'result_key' => 'InstanceStates',
-            ),
-            'DescribeLoadBalancerPolicies' => array(
-                'result_key' => 'PolicyDescriptions',
-            ),
-            'DescribeLoadBalancerPolicyTypes' => array(
-                'result_key' => 'PolicyTypeDescriptions',
-            ),
-            'DescribeLoadBalancers' => array(
-                'token_param' => 'Marker',
-                'token_key' => 'NextMarker',
-                'result_key' => 'LoadBalancerDescriptions',
-            ),
+        'DescribeInstanceHealth' => array(
+            'result_key' => 'InstanceStates',
+        ),
+        'DescribeLoadBalancerPolicies' => array(
+            'result_key' => 'PolicyDescriptions',
+        ),
+        'DescribeLoadBalancerPolicyTypes' => array(
+            'result_key' => 'PolicyTypeDescriptions',
+        ),
+        'DescribeLoadBalancers' => array(
+            'input_token' => 'Marker',
+            'output_token' => 'NextMarker',
+            'result_key' => 'LoadBalancerDescriptions',
         ),
     ),
 );
