@@ -32,7 +32,7 @@ $(function(){
     $("#tabs-more li a:eq(4)").one ('click', function(){ $('#buttons5-moretab').akordeon(); });
 
     /*Action tabs click*/
-    $("a[title=more]").click(function(){ fillUserDetail( $("input[name=user_id]").val()); });
+    //$("a[title=more]").click(function(){ fillUserDetail( $("input[name=user_id]").val()); });
     $("a[title=tab1-more]").click(function(){ $("a[title=more]").click(); });
 
     /* Change profile picture*/

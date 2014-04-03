@@ -2,28 +2,27 @@ var eventdetail_id = '';
 var eventdetail_user = '';
 var eventdetail_media_id = '';
 $(function(){
-        $("ul.scrollClass").mCustomScrollbar({
-                scrollButtons:{
-                    enable:true
-                }
-        });
-        $("#tab-content-memreas-detail div.hideCls").hide(); // Initially hide all content
-        $("#tabs-memreas-detail li:first").attr("id","current"); // Activate first tab
-        $("#tab-content-memreas-detail div:first").fadeIn(); // Show first tab content*/
+    $("ul.scrollClass").mCustomScrollbar({
+            scrollButtons:{
+                enable:true
+            }
+    });
+    $("#tab-content-memreas-detail div.hideCls").hide(); // Initially hide all content
+    $("#tabs-memreas-detail li:first").attr("id","current"); // Activate first tab
+    $("#tab-content-memreas-detail div:first").fadeIn(); // Show first tab content*/
 
-        $('#tabs-memreas-detail a').click(function(e) {
+    $('#tabs-memreas-detail a').click(function(e) {
 
-            e.preventDefault();
-            $("#tab-content-memreas-detail div.hideCls").hide(); //Hide all content
-            $("#tabs-memreas-detail li").attr("id",""); //Reset id's
-            $(this).parent().attr("id","current"); // Activate this
-            $('#' + $(this).attr('title')).fadeIn(); // Show content for current tab
-        });
-        $("a[title=memreas-detail-tab3]").click(function(){
-            // example how to integrate with a previewer
-            ajaxScrollbarElement(".memreas-detail-comments");
-            updateMemreasMediaDetailsScript();
-        });
+        e.preventDefault();
+        $("#tab-content-memreas-detail div.hideCls").hide(); //Hide all content
+        $("#tabs-memreas-detail li").attr("id",""); //Reset id's
+        $(this).parent().attr("id","current"); // Activate this
+        $('#' + $(this).attr('title')).fadeIn(); // Show content for current tab
+    });
+    $("a[title=memreas-detail-tab3]").click(function(){
+        // example how to integrate with a previewer
+        ajaxScrollbarElement(".memreas-detail-comments");
+    });
 });
 function updateMemreasMediaDetailsScript(){
     if (!$(".elastislide-list").parent (".elastislide-carousel").length > 0){
@@ -133,6 +132,7 @@ function showEventDetail(eventId, userId){
             }
             $(".memreas-detail-gallery .swipebox").swipebox();
             ajaxScrollbarElement('.memreas-detail-gallery');
+            updateMemreasMediaDetailsScript();
         }
     );
     $("#popupContact a.accept-btn").attr ("href", "javascript:addMemreasPopupGallery('" + eventId + "')");

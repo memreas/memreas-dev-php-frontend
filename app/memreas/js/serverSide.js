@@ -11,9 +11,15 @@ $(function(){
             if (getValueFromXMLTag(xml_response, 'status') == 'Success'){
                 var username = getValueFromXMLTag(xml_response, 'username');
                 var userprofile = getValueFromXMLTag(xml_response, 'profile');
+                var username_length = username.length;
+                if (username_length > 10){
+                    username = username.substring(0, 10) + '...';
+                }
                 $("header").find(".pro-name").html(username);
+                $("#setting-username").html(username);
                 if (userprofile != '')
                     $("header").find("#profile_picture").attr('src', userprofile);
+                    $("#setting-userprofile img").attr('src', userprofile);
             }
             else jerror (getValueFromXMLTag(xml_response, 'messsage'));
         });

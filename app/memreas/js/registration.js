@@ -25,7 +25,13 @@ function isValidEmail($email) {
 }
 
 jQuery.checkUserName = function () {
-	var url_check_username = base_url + "action=checkusername";
+    if (!isValid($('#inUserName').val())){
+        jerror ('Username is not allowed special characters');
+        $("#register input[name=username]").val('');
+        $("#register input[name=username]").focus();
+        return false;
+    }
+    var url_check_username = base_url + "action=checkusername";
 	var xml_check_username;
 	var json_check_username;
 	var data;
@@ -395,4 +401,14 @@ function checkStrength(password)
     {
         return '<b style="color: blue;">Strong</b>';
     }
+}
+function isValid(str) {
+    var iChars = "~`!#$%^&*+=-[]\\\';,/{}|\":<>?";
+
+    for (var i = 0; i < str.length; i++) {
+       if (iChars.indexOf(str.charAt(i)) != -1) {
+           return false;
+       }
+    }
+    return true;
 }
