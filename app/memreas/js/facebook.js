@@ -40,7 +40,6 @@ facebook_getFriendList = function() {
 					'name': 	response.name,
 					'photo': 	'https://graph.facebook.com/' + response.id + '/picture'
 				};
-				$('#profile_picture').prop('src', fb_accountInfo.photo);
 			});
 
 			// get friends

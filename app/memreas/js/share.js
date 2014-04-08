@@ -50,7 +50,7 @@ share_initObjects = function() {
 		share_changeSocialType();
     });
 
-    ar_initAudio();
+    //ar_initAudio();
 }
 
 // initialize the akordeon.
@@ -380,7 +380,7 @@ share_gotoPage = function(tab_no) {
 
 // add the comment to Media when click "next" button on the Media Page.
 share_addComment = function() {
-	ar_stop();
+	//ar_stop();
 	//ar_saveAudio();
     media_ids = fetch_selected_media();
     if (media_ids.length <= 0){
@@ -523,7 +523,7 @@ share_getAllMedia = function() {
 			  	}
                ajaxScrollbarElement('#share_medialist');
 
-			  	ar_start();
+			  	//ar_start();
 			}
             else jerror (json.listallmediaresponse[0].medias[0].message[0].text);
 		}

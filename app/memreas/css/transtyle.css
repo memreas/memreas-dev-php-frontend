@@ -117,3 +117,5 @@ li.working-upload .progress-text{
     font-size: 11px;
     width: 400px;
 }
+#tab-content-share .hideCls{ display: none; }
+#tab-content-share #tab1-share{ display: block; }

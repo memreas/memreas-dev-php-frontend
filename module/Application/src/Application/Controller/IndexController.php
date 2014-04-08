@@ -335,7 +335,7 @@ error_log("Enter indexAction".PHP_EOL);
 		$postData = $request->getPost()->toArray();
 		$username = $postData ['username'];
 		$password = $postData ['password'];
-                
+
         $this->getAuthService()->getAdapter()->setUsername($username);
         $this->getAuthService()->getAdapter()->setPassword($password);
         $token = empty($this->session->token)?'':$this->session->token;
@@ -376,9 +376,7 @@ error_log("Enter indexAction".PHP_EOL);
         $session = new Container('user');
         $session->getManager()->destroy();
 
-        $view = new ViewModel();
-		$view->setTemplate('application/index/index.phtml'); // path to phtml file under view folder
-		return $view;
+        return $this->redirect()->toRoute('index', array('action' => "index"));
     }
 
     public function setSession($username) {

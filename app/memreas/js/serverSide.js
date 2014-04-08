@@ -14,7 +14,7 @@ $(function(){
                 var userprofile = getValueFromXMLTag(xml_response, 'profile');
                 var username_length = username.length;
                 if (username_length > 10){
-                    username = username.substring(0, 10) + '...';
+                    username = username.substring(0, 7) + '...';
                 }
                 $("header").find(".pro-name").html(username);
                 $("#setting-username").html(username);
@@ -86,4 +86,26 @@ jQuery.fetch_server_media = function (){
                 return true;
             }
     );
+}
+
+var featherEditor = new Aviary.Feather({
+   apiKey: '057e9da017baf0f8',
+   apiVersion: 3,
+   theme: 'dark', // Check out our new 'light' and 'dark' themes!
+   tools: 'crop,resize',
+   appendTo: '',
+   onSave: function(imageID, newURL) {
+       var img = document.getElementById(imageID);
+       img.src = newURL;
+   },
+   onError: function(errorObj) {
+       alert(errorObj.message);
+   }
+});
+function launchEditor(id, src) {
+   featherEditor.launch({
+       image: id,
+       url: src
+   });
+  return false;
 }
