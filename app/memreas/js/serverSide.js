@@ -69,7 +69,8 @@ jQuery.fetch_server_media = function (){
                     }
                     else {
                         $(".user-resources").append('<img src="' + _media_url + '"/>');
-                        $(".edit-area-scroll .first-element").append ('<li><a class="image-sync" id="' + mediaId + '" onclick="return imageChoosed(this.id);" href="' + _media_url + '"><img src="' + _media_url + '"/></a></li>');
+                        //$(".edit-area-scroll .first-element").append ('<li><a class="image-sync" id="' + mediaId + '" onclick="return imageChoosed(this.id);" href="' + _media_url + '"><img src="' + _media_url + '"/></a></li>');
+                        $(".edit-area-scroll .first-element").append ('<li><img id="edit' + mediaId + '" src="' + _media_url + '" onclick="launchEditor(this.id, \'' + _media_url + '\');"/></li>');
                     }
                   }
                   setTimeout(function(){
@@ -86,26 +87,4 @@ jQuery.fetch_server_media = function (){
                 return true;
             }
     );
-}
-
-var featherEditor = new Aviary.Feather({
-   apiKey: '057e9da017baf0f8',
-   apiVersion: 3,
-   theme: 'dark', // Check out our new 'light' and 'dark' themes!
-   tools: 'crop,resize',
-   appendTo: '',
-   onSave: function(imageID, newURL) {
-       var img = document.getElementById(imageID);
-       img.src = newURL;
-   },
-   onError: function(errorObj) {
-       alert(errorObj.message);
-   }
-});
-function launchEditor(id, src) {
-   featherEditor.launch({
-       image: id,
-       url: src
-   });
-  return false;
 }
