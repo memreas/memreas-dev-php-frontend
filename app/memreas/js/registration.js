@@ -162,6 +162,14 @@ function validateRegisterForm(input_uname, input_upass){
 }
 
 $(function(){
+    $("form#register input[name=password]").keyup(function(){
+        var password_val = $(this).val();
+        var jDisplayLevel = $("span.password-level");
+        if (password_val == '') jDisplayLevel.html('');
+        else{
+            jDisplayLevel.html(checkStrength(password_val));
+        }
+    });
     $("#inUserName").change(function(){ $.checkUserName(); });
     /*
     *Forgot password submit
@@ -366,7 +374,7 @@ function checkStrength(password)
 
     //if the password length is less than 6, return message.
     if (password.length < 6) {
-        return '<b style="color: white;">Too short</b>';
+        return '<b style="color: white;"><img src="/memreas/img/lock.png" width="20" /> Too short</b>';
     }
 
     //length is ok, lets continue.
@@ -391,15 +399,15 @@ function checkStrength(password)
     //if value is less than 2
     if (strength < 2 )
     {
-        return '<b style="color: yellow;">Weak</b>';
+        return '<b style="color: white;"><img src="/memreas/img/lock.png" width="20" /> Weak</b>';
     }
     else if (strength == 2 )
     {
-        return '<b style="color: green;">Medium</b>';
+        return '<b style="color: white;"><img src="/memreas/img/lock.png" width="20" /> Medium</b>';
     }
     else
     {
-        return '<b style="color: blue;">Strong</b>';
+        return '<b style="color: white;"><img src="/memreas/img/lock.png" width="20" /> Strong</b>';
     }
 }
 function isValid(str) {

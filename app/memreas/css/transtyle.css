@@ -119,3 +119,4 @@ li.working-upload .progress-text{
 }
 #tab-content-share .hideCls{ display: none; }
 #tab-content-share #tab1-share{ display: block; }
+.password-level{ font-style: italic; margin-left: 5px; }

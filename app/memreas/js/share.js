@@ -23,7 +23,15 @@ var media_limit_count = '200';	// limit count of media
 
 var friendList = null;
 
-$(function(){ user_id   = $("input[name=user_id]").val(); });
+$(function(){
+    $("a[title=share]").click(function(){
+        event_id = -1;
+        $('#tabs-share li:nth-child(1) a').click();
+        event_id = '';
+
+    });
+    user_id   = $("input[name=user_id]").val();
+});
 
 // initialize the share page objects.
 share_initObjects = function() {
@@ -281,50 +289,52 @@ share_addEvent = function() {
 		jerror("You have to input the name.");
 		return;
 	}
+    if (checkValidDateFromTo(true)){
 
-	var date 				= getElementValue('dtp_date');
-	var location 			= getElementValue('txt_location');
-	var date_from 			= getElementValue('dtp_from');
-	var date_to 			= getElementValue('dtp_to');
-	var date_selfdestruct 	= getElementValue('dtp_selfdestruct');
+	    var date 				= getElementValue('dtp_date');
+	    var location 			= getElementValue('txt_location');
+	    var date_from 			= getElementValue('dtp_from');
+	    var date_to 			= getElementValue('dtp_to');
+	    var date_selfdestruct 	= getElementValue('dtp_selfdestruct');
 
-	var ckb_canpost 	 	= getCheckBoxValue('ckb_canpost');
-	var ckb_canadd 		 	= getCheckBoxValue('ckb_canadd');
-	var ckb_public 		 	= getCheckBoxValue('ckb_public');
- 	var ckb_viewable 	 	= getCheckBoxValue('ckb_viewable');
-	var ckb_selfdestruct 	= getCheckBoxValue('ckb_selfdestruct');
+	    var ckb_canpost 	 	= getCheckBoxValue('ckb_canpost');
+	    var ckb_canadd 		 	= getCheckBoxValue('ckb_canadd');
+	    var ckb_public 		 	= getCheckBoxValue('ckb_public');
+ 	    var ckb_viewable 	 	= getCheckBoxValue('ckb_viewable');
+	    var ckb_selfdestruct 	= getCheckBoxValue('ckb_selfdestruct');
 
-	// send the request.
-	ajaxRequest(
-		'addevent',
-		[
-			{ tag: 'user_id', 					value: user_id },
-			{ tag: 'event_name', 				value: name },
-			{ tag: 'event_date', 				value: formatDateToDMY(date) },
-			{ tag: 'event_location', 			value: location },
-			{ tag: 'event_from', 				value: formatDateToDMY(date_from) },
-			{ tag: 'event_to', 					value: formatDateToDMY(date_to) },
-			{ tag: 'is_friend_can_add_friend', 	value: ckb_canadd },
-			{ tag: 'is_friend_can_post_media', 	value: ckb_canpost },
-			{ tag: 'event_self_destruct', 		value: formatDateToDMY(date_selfdestruct) },
-			{ tag: 'is_public', 				value: ckb_public }
-		],
-		function(ret_xml) {
-			// parse the returned xml.
-			var status   = getValueFromXMLTag(ret_xml, 'status');
-			var message  = getValueFromXMLTag(ret_xml, 'message');
+	    // send the request.
+	    ajaxRequest(
+		    'addevent',
+		    [
+			    { tag: 'user_id', 					value: user_id },
+			    { tag: 'event_name', 				value: name },
+			    { tag: 'event_date', 				value: formatDateToDMY(date) },
+			    { tag: 'event_location', 			value: location },
+			    { tag: 'event_from', 				value: formatDateToDMY(date_from) },
+			    { tag: 'event_to', 					value: formatDateToDMY(date_to) },
+			    { tag: 'is_friend_can_add_friend', 	value: ckb_canadd },
+			    { tag: 'is_friend_can_post_media', 	value: ckb_canpost },
+			    { tag: 'event_self_destruct', 		value: formatDateToDMY(date_selfdestruct) },
+			    { tag: 'is_public', 				value: ckb_public }
+		    ],
+		    function(ret_xml) {
+			    // parse the returned xml.
+			    var status   = getValueFromXMLTag(ret_xml, 'status');
+			    var message  = getValueFromXMLTag(ret_xml, 'message');
 
-			event_id = getValueFromXMLTag(ret_xml, 'event_id');
+			    event_id = getValueFromXMLTag(ret_xml, 'event_id');
 
-			if (status.toLowerCase() == 'success') {
-				jsuccess('Event "' + name + '" was registered successfully.');
-			    setTimeout(function(){ share_gotoPage(SHAREPAGE_TAB_MEDIA); }, 2000);
-			}
-			else {
-				jerror(message);
-			}
-		}
-	);
+			    if (status.toLowerCase() == 'success') {
+				    jsuccess('Event "' + name + '" was registered successfully.');
+			        setTimeout(function(){ share_gotoPage(SHAREPAGE_TAB_MEDIA); }, 2000);
+			    }
+			    else {
+				    jerror(message);
+			    }
+		    }
+	    );
+    }
 }
 
 // clear all fields on details page when click "cancel" button.
@@ -336,8 +346,7 @@ share_clearMemreas = function(confirmed) {
 
 	    clearTextField(text_ids);
 	    clearCheckBox(checkbox_ids);
-        $("#tabs-share li:eq(0) a").click();
-        event_id = "";
+        $("a[title=share]").click();
     }
     else{
         jNotify(
@@ -706,7 +715,6 @@ share_makeGroup = function() {
                     var checkbox_ids = ['ckb_canpost', 'ckb_canadd', 'ckb_public', 'ckb_viewable', 'ckb_selfdestruct'];
                     clearTextField(text_ids);
                     clearCheckBox(checkbox_ids);
-                    event_id = "";
                     $("a.memreas").click();   //Send user to memreas page
                 }, 2000);
             }
@@ -742,5 +750,50 @@ $(function(){
             $("#dtp_to").val('to');
         }
     });
-
+    $("#dtp_from").change(function(){ checkValidDateFromTo(); });
+    $("#dtp_to").change(function(){
+        var cdate = new Date();
+        var current_date = ("0" + (cdate.getMonth() + 1)).slice(-2) + '/' + ("0" + cdate.getDate()).slice(-2) + '/' + cdate.getFullYear();
+        current_date = new Date(current_date);
+        var date_to = new Date($(this).val());
+        if (date_to < current_date){
+            jerror('Date to can not less than today.');
+            $("#dtp_to").val('').focus();
+        }
+        else checkValidDateFromTo();
+    });
 });
+function checkValidDateFromTo(isSubmit){
+    var date_viewable_from = $("#dtp_from").val();
+    var date_viewable_to = $("#dtp_to").val();
+    if (date_viewable_from != 'from' && date_viewable_to != 'to'){
+        var date_from = new Date(date_viewable_from);
+        var date_to = new Date(date_viewable_to);
+        var cdate = new Date();
+        var current_date = ("0" + (cdate.getMonth() + 1)).slice(-2) + '/' + ("0" + cdate.getDate()).slice(-2) + '/' + cdate.getFullYear();
+        current_date = new Date(current_date);
+        if (date_from > date_to){
+            jerror('Viewable date must valid. From date must less then to date.');
+            $("#dtp_to").val('').focus();
+            return false;
+        }
+        if (date_to < current_date){
+            jerror('Date to can not less than today.');
+            $("#dtp_to").val('').focus();
+            return false;
+        }
+    }
+    if (isSubmit){
+        if (date_viewable_from != 'from' && (date_viewable_to == 'to' || date_viewable_to == '')){
+            jerror('Please specify date to');
+            $("#dtp_to").focus();
+            return false;
+        }
+        else if (date_viewable_to != 'to' && (date_viewable_from == 'from' || date_viewable_from == '')){
+            jerror('Please specify date from.');
+            $("#dtp_from").focus();
+            return false;
+        }
+        return true;
+    }
+}
