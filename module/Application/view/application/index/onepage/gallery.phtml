@@ -2,7 +2,8 @@
     <div class="<?php echo ($this->enableAdvertising) ? 'span9' : 'span11';?>">
         <ul id="tabs" class="medium_tabs">
           <li><a href="#" title="tab1">view</a></li>
-          <li><a href="#" title="tab2">edit</a></li>
+          <li><a href="#" title="tab2">delete</a></li>
+          <li><a href="#" title="tab3">edit</a></li>
           <li><a href="#" title="tab4">location</a></li>
         </ul>
         <div id="tab-content">
@@ -30,6 +31,13 @@
                 </ul>
                 <div style="clear: both;"></div>
                 <a class="black_btn_skin" href="javascript:;" onclick="deleteFiles();">Delete</a>&nbsp;<a class="black_btn_skin" href="javascript:;" id="btn-upload" onclick="$('a[title=queue]').click();">Upload</a>
+            </div>
+          </div>
+          <div id="tab3" class="hideCls hidden-onload">
+            <div class="edit-mediaarea">
+                <ul id="content_1" class="pics edit-areamedia-scroll scroll-area">
+                    <div class="first-element"></div>
+                </ul>
             </div>
           </div>
           <div id="tab4" class="hideCls hidden-onload">

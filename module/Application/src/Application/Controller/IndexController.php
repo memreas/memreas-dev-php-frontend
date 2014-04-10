@@ -527,4 +527,30 @@ error_log("Enter indexAction".PHP_EOL);
         $session = $this->getAuthService()->getIdentity();
         return  empty($session['token'])?'':$session['token']; ;
     }
+
+    public function editmediaAction(){
+        $target_dir = getcwd() . '/app/memreas/temps_media_edit/';
+        $s3Object = new S3('AKIAJMXGGG4BNFS42LZA', 'xQfYNvfT0Ar+Wm/Gc4m6aacPwdT5Ors9YHE/d38H');
+        $file_source = $_POST['file_source'];
+        $file_remote = $_POST['file_url'];
+
+        $source_filename = explode('/', $file_source);
+        $source_filename = $source_filename[count($source_filename) - 1];
+
+        $remote_filename = explode('/', $file_remote);
+        $remote_filename = $remote_filename[count($remote_filename) - 1];
+
+        $file_content = file_get_contents($file_remote);
+        file_put_contents($target_dir . $remote_filename, $file_content);
+
+        $server_source_file = $target_dir . $remote_filename;
+        $target_file = $_POST['user_id'] . '/image/' . $source_filename;
+
+        $s3Object->putBucket('memreasdev', $s3Object::ACL_PUBLIC_READ_WRITE);
+
+        $result = $s3Object->putObjectFile($server_source_file, 'memreasdev', $target_file, $s3Object::ACL_PUBLIC_READ_WRITE, array(), 'image/jpeg');
+        echo 'Media updated';
+        die(); // For ajax calling only
+    }
+
 } // end class IndexController
