@@ -3,7 +3,7 @@ var featherEditor = new Aviary.Feather({
    apiVersion: 3,
    theme: 'dark', // Check out our new 'light' and 'dark' themes!
    tools: 'enhance,effects,frames,stickers,orientation,focus,resize,crop,warmth,brightness,contrast,saturation,sharpness,colorsplash,draw,text,redeye,whiten,blemish',
-   appendTo: '',
+   appendTo: 'aviary',
    onSave: function(imageID, newURL) {
 
        //Edit completed and save by user
@@ -16,7 +16,7 @@ var featherEditor = new Aviary.Feather({
 
        $("#loadingpopup").show();
        $.post('/index/editmedia', {file_source:s3_source_file, file_url:remote_file, user_id:from_user}, function(response){
-           jerror(response);
+           jsuccess(response);
            $("#loadingpopup").hide();
        });
    },
@@ -30,4 +30,8 @@ function launchEditor(id, src) {
        url: src
    });
   return false;
+}
+function openEditMedia(id, src){
+    $("#aviary").empty();
+    launchEditor(id, src);
 }

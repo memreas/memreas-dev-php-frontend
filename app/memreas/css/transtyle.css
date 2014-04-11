@@ -120,3 +120,8 @@ li.working-upload .progress-text{
 #tab-content-share .hideCls{ display: none; }
 #tab-content-share #tab1-share{ display: block; }
 .password-level{ font-style: italic; margin-left: 5px; }
+.aviary-edit-wrapper{ height: 400px; position: relative; }
+.aviary-thumbs li{
+    margin-left: 10px !important;
+    margin-right: 10px !important;
+}

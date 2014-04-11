@@ -695,7 +695,7 @@ ul.pics li {
     overflow: hidden;
     background: #112A4B;
 }
-ul.pics li img{
+ul.pics li img, .aviary-thumbs img{
     height: 98px;
 }
 ul.pics li a{

@@ -534,8 +534,10 @@ error_log("Enter indexAction".PHP_EOL);
         $file_source = $_POST['file_source'];
         $file_remote = $_POST['file_url'];
 
+        /*
         $source_filename = explode('/', $file_source);
         $source_filename = $source_filename[count($source_filename) - 1];
+        */
 
         $remote_filename = explode('/', $file_remote);
         $remote_filename = $remote_filename[count($remote_filename) - 1];
@@ -544,12 +546,37 @@ error_log("Enter indexAction".PHP_EOL);
         file_put_contents($target_dir . $remote_filename, $file_content);
 
         $server_source_file = $target_dir . $remote_filename;
-        $target_file = $_POST['user_id'] . '/image/' . $source_filename;
+
+        //$target_file = $_POST['user_id'] . '/image/' . $source_filename;
+        $target_file = $_POST['user_id'] . '/image/' . $remote_filename;
 
         $s3Object->putBucket('memreasdev', $s3Object::ACL_PUBLIC_READ_WRITE);
 
         $result = $s3Object->putObjectFile($server_source_file, 'memreasdev', $target_file, $s3Object::ACL_PUBLIC_READ_WRITE, array(), 'image/jpeg');
-        echo 'Media updated';
+
+        //Add this edited media as a new media
+        $action = 'addmediaevent';
+        $xml = "<xml>";
+        $xml .= "<addmediaevent>";
+        $xml .= "<s3url>" . $remote_filename . "</s3url>";
+        $xml .= "<is_server_image>0</is_server_image>";
+        $xml .= "<content_type>image/jpeg</content_type>";
+        $xml .= "<s3path>" . $_POST['user_id'] . "image/</s3path>";
+        $xml .= "<s3file_name>" .$remote_filename . "</s3file_name>";
+        $xml .= "<device_id></device_id>";
+        $xml .= "<event_id></event_id>";
+        $xml .= "<media_id></media_id>";
+        $xml .= "<user_id>" . $_POST['user_id'] . "</user_id>";
+        $xml .= "<is_profile_pic>0</is_profile_pic>";
+        $xml .= "<location></location>";
+        $xml .= "</addmediaevent>";
+        $xml .= "</xml>";
+        $result = $this->fetchXML($action, $xml);
+
+        $data = simplexml_load_string($result);
+        if ($data->addmediaeventresponse->status == 'Success')
+            echo 'Media updated';
+        else echo 'Error while saving your media please try again';
         die(); // For ajax calling only
     }
 
