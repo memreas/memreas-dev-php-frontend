@@ -45,17 +45,20 @@ $(document).ready(function() {
             var action = 'findtag';
             var param = [{tag: "tag", value: this.query}];
             var q = this.query;
-            var page = 1;
-            var totalPage = 1;
+            
+            
             switch (item.charAt(0)) {
                 case '@':
+                var page = 1;var totalPage = 1;
                     var reqhandler = function(data) {
+
                         $(".tabcontent-detail").hide();
                         $("#search-result").show();
                         $(target).empty();
 
                         var objs = jQuery.parseJSON(data);
                         $('#search-count').text(objs.count);
+                        totalPage = objs.totalPage;
                         $.each(objs.search, function(i, obj) {
                             personalSearchLi(target, obj);
                         });
@@ -64,14 +67,17 @@ $(document).ready(function() {
                         });
                         $('#search-result ul').removeClass().addClass('personresults scrollClass');
                         ajaxScrollbarElement(".mCSB_container");
+                        paginationlink();
 
 
                     }
                     break;
                 case '!':
+                    var page = 1;var totalPage = 1;
                     var action = 'findevent';
                     //  var param  = [{tag: "tag", value: this.query}]; 
                     var reqhandler = function(data) {
+                        
                         $(".tabcontent-detail").hide();
                         $("#search-result").show();
                         $(target).empty();
@@ -83,27 +89,54 @@ $(document).ready(function() {
                         });
                         $('#search-result ul').removeClass().addClass('memreas_results scrollClass');
                         ajaxScrollbarElement(".mCSB_container");
+                        paginationlink();
                     }
                     break;
                 case '#':
-                    var action = 'findevent';
+                    var page = 1;var totalPage = 1;
+                    var action = 'getDiscover';
                     var param = [{tag: "tag", value: this.query}];
                     var reqhandler = function(data) {
+                        $(".tabcontent-detail").hide();
+                        $("#search-result").show();
+                        $(target).empty();
+                        
                         var objs = jQuery.parseJSON(data);
+                        $('#search-count').text(objs.count);
+                        totalPage = objs.totalPage;
                         $.each(objs.search, function(i, obj) {
-                            showSearchResult(target, obj);
+                            discoverSearchLi(target, obj);
                         });
+                        $('#search-result ul').removeClass().addClass('discover_results scrollClass');
+                        ajaxScrollbarElement(".mCSB_container");
+                        paginationlink();
                     }
 
                     break;
             }
 
+            var paginationlink = function() {
 
+                if(totalPage == 1){
+                   $(".btn-event-n").hide();
+                   $(".btn-event-p").hide();
+                   return;
+                }
+                        if (page == totalPage) {
+                            $(".btn-event-n").hide();
+                            $(".btn-event-p").show();
+                
+                        } else if(page == 1) {
+                            $(".btn-event-p").hide();
+                             $(".btn-event-n").show();
+                        } else {
+                             $(".btn-event-n").show();
+                              $(".btn-event-p").show();   
+                        }
+            }
 
-
-            ajaxRequest(action, param, reqhandler);
-            $(".btn-event-n").click(function() {
-
+var nextbtn=function() {
+                
                 page = page + 1;
                 var param = [{tag: "tag", value: q},
                     {tag: "page", value: page.toString()},
@@ -113,33 +146,23 @@ $(document).ready(function() {
 
 
 
-                if (page > totalPage - 1) {
-                    $(".btn-event-n").hide();
-                    $(".btn-event-p").show();
-                    return;
-                } else {
-                    $(".btn-event-p").show();
-                }
+               
 
-            });
-
-
-
-            $(".btn-event-p").click(function() {
+            };
+var prevbtn = function() {
                 page = page - 1;
                 var param = [{tag: "tag", value: q},
                     {tag: "page", value: page.toString()},
                 ];
                 ajaxRequest(action, param, reqhandler);
-                if (page == 1) {
-                    $(".btn-event-p").hide();
-                    $(".btn-event-n").show();
-                } else {
-                    $(".btn-event-n").show();
-                }
-            });
+                
+            };
 
-            $(".btn-event-p").hide();
+            ajaxRequest(action, param, reqhandler);
+            
+            $( ".btn-event-n" ).unbind('click').bind( "click", nextbtn );
+            $(".btn-event-p").unbind('click').bind( "click",prevbtn);
+                                         
 
             return item;
         },
@@ -160,19 +183,21 @@ var h = function(item) {
             var photo = map[item].event_photo;
             var name = map[item].name;
             break;
+        case '#':
+            var photo = map[item].event_photo;
+            var name = map[item].event_name;
+                //html = '<div class="bond"><img src="' + photo + '"><strong>' + name + '</strong><strong>' + map[item].event_name + '</strong></div>';
+                html ='<div class="swipebox_comment" style="float: left;"><div class="event_pro"><img src="' + photo + '"></div>'+ name +'<div class="event_textarea" >' + map[item].comment + '</div></div><div class="event_gallery_pro"><img src="' + map[item].commenter_photo + '"></div>';
+                return html;
+            break;
     }
-    html = '<div class="typeahead">';
-    html += '<div class="sd-pic"><a class="pull-left" href="#"><img src=' + photo + ' /></a>'
-    html += '<div class="sd-title">';
-    html += '<p class="sd-heading">' + name + '</p>';
-    html += '</div>';
-    html += '</div>';
     html = '<div class="bond"><img src="' + photo + '"><strong>' + name + '</strong></div>';
     return html;
 
 
 
 }
+
 function personalSearchLi(target, item) {
 
 
@@ -242,6 +267,26 @@ function addFriend(name) {
 
 
 
+}
+
+function discoverSearchLi(target, item) {
+    //var event_img = item.event_photo;
+    //var name = $.trim(item.name);
+    /*
+     input- tag
+     event- image,name 
+     commented person photo
+     comment-text
+     tags in ancor 
+    */
+    var op = '<li>'
+        op +=  '<div class="event_img"><img src="' 
+                + item.event_photo + '" alt=""><span class="event_name_box">' 
+                + item.event_name + '</span></div>';
+        op +=  '<p>' + item.comment + '</p>';
+           
+    op += '</li>';
+    $(target).append(op);
 }
 
 
