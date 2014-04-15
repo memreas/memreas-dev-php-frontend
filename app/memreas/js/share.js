@@ -794,6 +794,63 @@ function checkValidDateFromTo(isSubmit){
             $("#dtp_from").focus();
             return false;
         }
+        else{
+            //Check if date created and viewable
+            var event_create_date = $("#dtp_date").val();
+            if (event_create_date != '' || event_create_date != 'from'){
+                if (date_viewable_from != '' || date_viewable_from != 'from'){
+                    var date_from = new Date(date_viewable_from);
+                    var date_create = new Date(event_create_date);
+                    if (date_from < date_create){
+                        jerror('Viewable date must greater than event date create.');
+                        return false;
+                    }
+                }
+            }
+        }
+
+        //Check destruct date
+        var seftdestruct_date = $("#dtp_selfdestruct").val();
+        var jDestructElement = $("#dtp_seftdestruct");
+        if (seftdestruct_date != ''){
+            destruct_date = new Date(seftdestruct_date);
+            var event_create_date = $("#dtp_date").val();
+            if (event_create_date != '' || event_create_date != 'from'){
+
+                //Check if destruct date less than creating date
+                var event_create_date = $("#dtp_date").val();
+                if (event_create_date != '' || event_create_date != 'from'){
+                    var date_from = new Date(event_create_date);
+                    if (destruct_date < date_from){
+                        jerror('Destruct date must larger date create.');
+                        jDestructElement.focus();
+                        return false;
+                    }
+                }
+
+                //Check if destruct date less than viewable from and to
+                var date_viewable_from = $("#dtp_from").val();
+                var date_viewable_to = $("#dtp_to").val();
+
+                if (date_viewable_from != 'from' || date_viewable_from != ''){
+                    var date_from = new Date(date_viewable_from);
+                    if (destruct_date < date_from){
+                        jerror('Destruct date must larger than viewable date from');
+                        jDestructElement.focus();
+                        return false;
+                    }
+                }
+
+                if (date_viewable_to != 'to' || date_viewablt_to != ''){
+                    var date_to = new Date(date_viewable_to);
+                    if (destruct_date < date_to){
+                        jerror('Destruct date must larger than viewable date to');
+                        jDestructElement.focus();
+                        return false;
+                    }
+                }
+            }
+        }
         return true;
     }
 }

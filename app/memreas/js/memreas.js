@@ -85,6 +85,8 @@ function fetchMyMemreas(){
                             if (typeof (event_comment) == 'undefined') continue;
                             var comment_owner_pic = $(event_comment).filter('profile_pic').html();
                             comment_owner_pic = comment_owner_pic.replace("<!--[CDATA[", "").replace("]]-->", "");
+                            if (comment_owner_pic == '')
+                                comment_owner_pic = '/memreas/img/profile-pic.jpg';
                             var comment_text = $(event_comment).filter('comment_text').html();
                             $("#swipebox-comment-" + eventId).append ('<div class="swipebox_comment">' +
                                           '<div class="event_pro"><img src="' + comment_owner_pic + '"></div>' +

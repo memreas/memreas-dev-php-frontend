@@ -29,7 +29,8 @@ $(function(){
     }
 
     $(".aviary-tab").click(function(){
-        $('.aviary-thumbs').elastislide();
+        if (!($(".aviary-thumbs").parent(".elastislide-carousel").length > 0))
+            $('.aviary-thumbs').elastislide();
         $('.aviary-thumbs').find('li:eq(0) img').trigger("click");
     });
 });

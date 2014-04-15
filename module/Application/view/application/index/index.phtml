@@ -134,21 +134,23 @@ $(document).bgStretcher({
         var filetype = f.type;
         if (filetype.indexOf ('image') >= 0){
             var reader = new FileReader();
-
               reader.onload = (function(theFile) {
                 return function(e) {
                   document.getElementById('list').innerHTML = ['<img src="', e.target.result,'" title="', theFile.name, '" width="75" />'].join('');
                 };
               })(f);
-
               reader.readAsDataURL(f);
         }
       }
      } else {
       jerror('This browser does not support FileReader! So when you choose profile picture, preview is not ready');
     }
-
-      document.getElementById('file').addEventListener('change', handleFileSelect, false);
+    document.getElementById('file').addEventListener('change', handleFileSelect, false);
+      $(function(){
+          $("input[type=file]").change(function(){
+            document.getElementById('file').addEventListener('change', handleFileSelect, false);
+          });
+      });
     </script>
     </li>
     <li>
@@ -265,8 +267,6 @@ $(document).bgStretcher({
 				$(this).parent().attr("id","current"); // Activate this
 				$('#' + $(this).attr('title')).fadeIn(); // Show content for current tab
 			});
-
-
 
 
 				//ajax demo fn

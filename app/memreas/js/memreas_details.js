@@ -22,10 +22,11 @@ $(function(){
     $("a[title=memreas-detail-tab3]").click(function(){
         // example how to integrate with a previewer
         ajaxScrollbarElement(".memreas-detail-comments");
+        updateMemreasMediaDetailsScript();
     });
 });
 function updateMemreasMediaDetailsScript(){
-    if (!$(".elastislide-list").parent (".elastislide-carousel").length > 0){
+    if (!$("#carousel").parent (".elastislide-carousel").length > 0){
         var current = 0,
         $preview = $( '#preview' ),
         $carouselEl = $( '#carousel' ),
@@ -45,6 +46,7 @@ function updateMemreasMediaDetailsScript(){
                 updateMediaLike();
             },
             onReady : function() {
+                alert ('run into 2');
                 el = $carouselItems.eq( current );
                 eventdetail_media_id = el.attr("media-id");
                 pos = current;
@@ -108,7 +110,8 @@ function showEventDetail(eventId, userId){
                     var event_owner_name = getValueFromXMLTag(response, 'username');
                     var event_owner_pic = getValueFromXMLTag(response, 'profile_pic');
                     event_owner_pic = event_owner_pic.replace("<!--[CDATA[", "").replace("]]-->", "");
-                    $(".memreas-detail-comments .event-owner .pro-pics img").attr ('src', event_owner_pic);
+                    //$(".memreas-detail-comments .event-owner .pro-pics img").attr ('src', event_owner_pic);
+                    $(".memreas-detail-comments .event-owner .pro-pics img").attr ('src', $("header").find("#profile_picture").attr('src'));
                     $(".memreas-detail-comments .pro-names").html(event_owner_name);
 
                     var media_count = medias.length;
@@ -132,7 +135,7 @@ function showEventDetail(eventId, userId){
             }
             $(".memreas-detail-gallery .swipebox").swipebox();
             ajaxScrollbarElement('.memreas-detail-gallery');
-            updateMemreasMediaDetailsScript();
+            //updateMemreasMediaDetailsScript();
         }
     );
     $("#popupContact a.accept-btn").attr ("href", "javascript:addMemreasPopupGallery('" + eventId + "')");
@@ -159,12 +162,12 @@ function showEventDetail(eventId, userId){
                         var event_comment = event_comments[i].innerHTML;
                         var comment_owner_pic = $(event_comment).filter('profile_pic').html();
                         comment_owner_pic = comment_owner_pic.replace("<!--[CDATA[", "").replace("]]-->", "");
+                        if (comment_owner_pic == '')
+                            comment_owner_pic = '/memreas/img/profile-pic.jpg';
                         var comment_text = $(event_comment).filter('comment_text').html();
                         var html_str = '<li>' +
                                             '<figure class="pro-pics"><img src="' + comment_owner_pic + '" alt=""></figure>' +
-                                            '<textarea name="your sign or comments here" cols="" rows=""' +
-                                            'onfocus="if(this.value==this.defaultValue)this.value=\'\';"' +
-                                            'onblur="if(this.value==\'\')this.value=this.defaultValue;" readonly="readonly">' + comment_text + '</textarea>' +
+                                            '<textarea readonly="readonly">' + comment_text + '</textarea>' +
                                           '</li>';
                         var html_popup_str = '<li>' +
                                                 '<div class="event_pro"><img src="' + comment_owner_pic + '"></div>' +
