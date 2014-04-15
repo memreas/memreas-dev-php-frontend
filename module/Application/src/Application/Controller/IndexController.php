@@ -31,8 +31,8 @@ use Application\Model\MemreasConstants;
 class IndexController extends AbstractActionController
 {
 	//Updated....
-    protected $url = MemreasConstants::MEMREAS_WS; //Local development
-   // protected $url = "http://test/";//"http://memreas-dev-ws.localhost/"; //Local development
+   // protected $url = MemreasConstants::MEMREAS_WS; //Local development
+    protected $url = "http://test/";//"http://memreas-dev-ws.localhost/"; //Local development
     protected $test = "Hope this works!";
     protected $user_id;
     protected $storage;
@@ -67,7 +67,7 @@ error_log("Inside fetch XML response ---> " . $response->getBody(true) . PHP_EOL
 	}
 
     public function indexAction() {
-error_log("Enter indexAction".PHP_EOL);
+error_log("Enter FE indexAction".PHP_EOL);
 
         $path = $this->security("application/index/index.phtml");
         $data['bucket'] = "memreasdev";
@@ -340,9 +340,9 @@ error_log("Enter indexAction".PHP_EOL);
         $this->getAuthService()->getAdapter()->setToken($token);
         $result = $this->getAuthService()->authenticate();
  		//Setup the URL and action
-		$action = 'login';
+		/*$action = 'login';
 		$xml = "<xml><login><username>$username</username><password>$password</password></login></xml>";
-		$redirect = 'memreas';
+		
 
 		//Guzzle the LoginWeb Service
 		$result = $this->fetchXML($action, $xml);
@@ -354,7 +354,10 @@ error_log("Enter indexAction".PHP_EOL);
         }
         else return $this->redirect()->toRoute('index', array('action' => "index"));
         //setcookie(session_name(),$data->loginresponse->sid,0,'/');
+
  		//ZF2 Authenticate
+        */
+         $redirect = 'memreas';
 		if ($result->getIdentity()) {
             error_log("Inside loginresponse success...");
             //	$this->setSession($username);
