@@ -34,7 +34,7 @@ $(function(){
         $('.aviary-thumbs').find('li:eq(0) img').trigger("click");
     });
 });
-
+var checkHasImage = false;
 /*Preload for server media*/
 jQuery.fetch_server_media = function (){
     $(".user-resources").remove();
@@ -62,7 +62,6 @@ jQuery.fetch_server_media = function (){
                     var _media_url = $(media).filter ('main_media_url').html();
                     _media_url = _media_url.replace("<!--[CDATA[", "").replace("]]-->", "");
                     var mediaId = $(media).filter ('media_id').html();
-                    var checkHasImage = false;
                     //Build video thumbnail
                     if (_media_type == 'video'){
                         var temp_url = _media_url.split ('media');

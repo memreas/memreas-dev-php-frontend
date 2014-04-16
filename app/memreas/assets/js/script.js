@@ -6,8 +6,9 @@ function removeItem(array, item){
             }
     }
 }
-var uploadFilesInstance = [];
-var currentUploadFileCount = 0;
+
+var uploadFilesInstance = []; //Used for store all file name for uploading
+var currentUploadFileCount = 0; //Count for all current files selected for upload
 $(document).ready( function() {
 
     var ellipsisCount = 1;
@@ -31,8 +32,11 @@ $(document).ready( function() {
             type: 'POST',
             autoUpload: true,
             add: function (event, data) {
-
                 currentUploadFileCount = uploadFilesInstance.length;
+                if (currentUploadFileCount > 10){
+                    jerror("Only allow to upload limited 10 files per session.");
+                    return false;
+                }
                 //Check if current file with the same name is currently uploading
                 for (i = 0;i < currentUploadFileCount;i++){
                     if (uploadFilesInstance[i] == data.files[0].name){
@@ -140,8 +144,10 @@ $(document).ready( function() {
                         return false;
                     }
                     else {
-                        data.context.find('.progress-text').html('Ok! Uploading...');
                          jqXHR = data.submit();
+                         data.context.find('.progress-text').html('Ok! Uploading...');
+                         //data.context.find('.progress-text').html('Queued');
+                         //putObjectUploadToQueue(data);
                     }
                 }, 'undefined', true);
 
@@ -224,7 +230,7 @@ $(document).ready( function() {
                         $("#loadingpopup").hide();
                         jsuccess('Medias uploaded successfully');
                     }
-                    console.log(currentUploadFileCount);
+                    //progressUpload();
                 }, 'undefined', true);
             },
             done: function (event, data) {
@@ -251,3 +257,27 @@ function XML2JS(xmlDoc, containerTag) {
     }
     return output;
 }
+
+/* Testing environment for upload handle - Not stable yet*/
+
+var objectHandleUpload = []; //Used for put object upload handle to stack
+var currentUploadIndex = 0;
+var isUploading = false; //Check if now uploading or not
+var nextelement = 0;
+function putObjectUploadToQueue(objectElement){
+    objectHandleUpload[currentUploadIndex++] = objectElement;
+    if ((currentUploadIndex) == 1);
+       progressUpload();
+}
+
+function progressUpload(){
+    var indexHandle = nextelement++;
+    if (indexHandle <= currentUploadIndex){
+        objectHandleUpload[indexHandle].context.find('.progress-text').html('Ok! Uploading...');
+        objectHandleUpload[indexHandle].submit();
+        removeItem(objectHandleUpload, objectHandleUpload[indexHandle]);
+        currentUploadIndex--;
+    }
+}
+
+/****/

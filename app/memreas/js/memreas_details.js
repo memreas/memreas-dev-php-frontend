@@ -33,7 +33,7 @@ function updateMemreasMediaDetailsScript(){
         $carouselItems = $carouselEl.children(),
         carousel = $carouselEl.elastislide( {
             current : current,
-            minItems : 3,
+            minItems : 1,
             onClick : function( el, pos, evt ) {
                 $preview.attr( 'src', el.data( 'preview' ) );
                 $preview.attr( 'data-preview', el.data( 'preview' ) );
@@ -46,7 +46,6 @@ function updateMemreasMediaDetailsScript(){
                 updateMediaLike();
             },
             onReady : function() {
-                alert ('run into 2');
                 el = $carouselItems.eq( current );
                 eventdetail_media_id = el.attr("media-id");
                 pos = current;
@@ -101,7 +100,7 @@ function showEventDetail(eventId, userId){
                 /* Update details_tab also */
                 $(".carousel-area").empty();
                 $(".carousel-area").append ('<ul id="carousel" class="elastislide-list"></ul>');
-                var jcarousel_element = $("ul.elastislide-list");
+                var jcarousel_element = $("ul#carousel");
                 jcarousel_element.empty();
 
                 var medias = getSubXMLFromTag(response, 'media');
