@@ -62,6 +62,7 @@ jQuery.fetch_server_media = function (){
                     var _media_url = $(media).filter ('main_media_url').html();
                     _media_url = _media_url.replace("<!--[CDATA[", "").replace("]]-->", "");
                     var mediaId = $(media).filter ('media_id').html();
+                    var checkHasImage = false;
                     //Build video thumbnail
                     if (_media_type == 'video'){
                         var temp_url = _media_url.split ('media');
@@ -77,6 +78,7 @@ jQuery.fetch_server_media = function (){
                         $(".user-resources").append('<img src="' + _media_url + '"/>');
                         $(".edit-area-scroll").append ('<li><a class="image-sync" id="' + mediaId + '" onclick="return imageChoosed(this.id);" href="' + _media_url + '"><img src="' + _media_url + '"/></a></li>');
                         $(".aviary-thumbs").append('<li><img id="edit' + mediaId + '" src="' + _media_url + '" onclick="openEditMedia(this.id, \'' + _media_url + '\');"/></li>');
+                        checkHasImage = true;
                     }
                   }
                   setTimeout(function(){
@@ -90,9 +92,26 @@ jQuery.fetch_server_media = function (){
                       $(".edit-areamedia-scroll").mCustomScrollbar ('update');
                   }, 1000);
                   $(".swipebox").swipebox();
+
+                  //Show edit and delete tabs
+                  $("a[title=tab2], a[title=tab3]").show();
+
+                  //If there is no image media => disable edit tab
+                  if (!checkHasImage)
+                    $("a[title=tab3]").hide();
                 }
-                else
+                else{
                     jerror ('There is no media on your account! Please use upload tab on leftside you can add some resources!');
+
+                    //If there is no media hide edit & delete tabs
+                    $("a[title=tab2], a[title=tab3]").hide();
+                    $("#gallery #tabs").find("li").removeClass('current');
+                    $("#gallery #tabs").find("li:eq(0)").addClass('current');
+
+                    $("#gallery #tab-content").find(".hideCls").hide();
+                    $("#gallery #tab-content").find(".hideCls:eq(0)").show();
+
+                }
                 $("#loadingpopup").hide();
                 return true;
             }
