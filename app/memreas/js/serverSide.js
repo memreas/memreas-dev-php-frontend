@@ -97,7 +97,8 @@ jQuery.fetch_server_media = function (){
                   $("a[title=tab2], a[title=tab3]").show();
 
                   //If there is no image media => disable edit tab
-                  $("a[title=tab3]").hide();
+                  if (!checkHasImage)
+                    $("a[title=tab3]").hide();
                 }
                 else{
                     jerror ('There is no media on your account! Please use upload tab on leftside you can add some resources!');
