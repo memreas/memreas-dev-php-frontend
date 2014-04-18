@@ -180,7 +180,7 @@ $(document).ready( function() {
                 window.onbeforeunload = null;
             },
             success: function(data, status, jqXHR) {
-                $("#loadingpopup").show();
+                //$("#loadingpopup").show();
                 _media_url = getValueFromXMLTag(jqXHR.responseText, 'Location');
                 var _media_extension = _media_url.split(".");
                 _media_extension = _media_extension[_media_extension.length - 1];
@@ -227,7 +227,7 @@ $(document).ready( function() {
                     if (currentUploadFileCount == 0){
                         $(".image_upload_box .mCSB_container").empty();
                         $(".image_upload_box").mCustomScrollbar("update");
-                        $("#loadingpopup").hide();
+                        //$("#loadingpopup").hide();
                         jsuccess('Medias uploaded successfully');
                     }
                     //progressUpload();

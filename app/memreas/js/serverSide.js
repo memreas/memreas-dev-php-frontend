@@ -28,6 +28,8 @@ $(function(){
         });
     }
 
+    $("a[title=gallery]").click(function(){ $("#gallery #tabs a[title=tab1]").click(); });
+
     $(".aviary-tab").click(function(){
         if (!($(".aviary-thumbs").parent(".elastislide-carousel").length > 0))
             $('.aviary-thumbs').elastislide();

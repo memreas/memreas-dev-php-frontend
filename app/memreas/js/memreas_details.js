@@ -27,10 +27,10 @@ $(function(){
 });
 function updateMemreasMediaDetailsScript(){
     if (!$("#carousel").parent (".elastislide-carousel").length > 0){
-        var current = 0,
-        $preview = $( '#preview' ),
-        $carouselEl = $( '#carousel' ),
-        $carouselItems = $carouselEl.children(),
+        var current = 0;
+        $preview = $( '#preview' );
+        $carouselEl = $( '#carousel' );
+        $carouselItems = $carouselEl.children();
         carousel = $carouselEl.elastislide( {
             current : current,
             minItems : 1,
@@ -134,7 +134,7 @@ function showEventDetail(eventId, userId){
             }
             $(".memreas-detail-gallery .swipebox").swipebox();
             ajaxScrollbarElement('.memreas-detail-gallery');
-            //updateMemreasMediaDetailsScript();
+            updateMemreasMediaDetailsScript();
         }
     );
     $("#popupContact a.accept-btn").attr ("href", "javascript:addMemreasPopupGallery('" + eventId + "')");
@@ -171,8 +171,7 @@ function showEventDetail(eventId, userId){
                         var html_popup_str = '<li>' +
                                                 '<div class="event_pro"><img src="' + comment_owner_pic + '"></div>' +
                                                 '<textarea name="memreas_popup_comment" cols="" rows=""' +
-                                                'onfocus="if(this.value==this.defaultValue)this.value=\'\';"' +
-                                                'onblur="if(this.value==\'\')this.value=this.defaultValue;" readonly="readonly">' +  comment_text + '</textarea>' +
+                                                ' readonly="readonly">' +  comment_text + '</textarea>' +
                                             '</li>';
                         jComment_element.append(html_str);
                         jComment_popup.append(html_popup_str);

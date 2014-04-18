@@ -90,9 +90,7 @@ function fetchMyMemreas(){
                             var comment_text = $(event_comment).filter('comment_text').html();
                             $("#swipebox-comment-" + eventId).append ('<div class="swipebox_comment">' +
                                           '<div class="event_pro"><img src="' + comment_owner_pic + '"></div>' +
-                                          '<textarea class="event_textarea" name="your sign or comments here" cols="" rows=""' +
-                                          'onfocus="if(this.value==this.defaultValue)this.value=\'\';"' +
-                                          'onblur="if(this.value=="")this.value=this.defaultValue;" readonly="readonly">' + comment_text + '</textarea>' +
+                                          '<textarea class="event_textarea" readonly="readonly">' + comment_text + '</textarea>' +
                                         '</div>');
                         }
                     }
