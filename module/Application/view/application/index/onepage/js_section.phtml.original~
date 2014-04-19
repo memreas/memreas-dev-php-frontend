@@ -75,7 +75,7 @@
 <script src="/memreas/js/search.js"></script>
 
 <script src="/memreas/js/bootstrap-typeahead.js"></script>
-<script src="/memreas/js/underscore-min.js"></script>
+<script src="//underscorejs.org/underscore-min.js"></script>
 
 <script type="text/javascript" src="http://feather.aviary.com/js/feather.js"></script>
 <script type="text/javascript" src="/memreas/js/media_edit.js"></script>

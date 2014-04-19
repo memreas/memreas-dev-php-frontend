@@ -186,12 +186,8 @@ var h = function(item) {
         case '#':
             var photo = map[item].event_photo;
             var name = map[item].event_name;
-            var comment =map[item].comment;
                 //html = '<div class="bond"><img src="' + photo + '"><strong>' + name + '</strong><strong>' + map[item].event_name + '</strong></div>';
-                if(comment.length > 25) {
-    comment = comment.substring(0,24)+"...";
-}
-                html ='<div class="swipebox_comment" style="float: left;"><div class="event_pro"><img src="' + photo + '"></div>'+ name +'<div class="event_textarea" >' + comment + '</div></div><div class="event_gallery_pro"><img src="' + map[item].commenter_photo + '"></div>';
+                html ='<div class="swipebox_comment" style="float: left;"><div class="event_pro"><img src="' + photo + '"></div>'+ name +'<div class="event_textarea" >' + map[item].comment + '</div></div><div class="event_gallery_pro"><img src="' + map[item].commenter_photo + '"></div>';
                 return html;
             break;
     }
