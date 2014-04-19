@@ -98,8 +98,8 @@ function showEventDetail(eventId, userId){
                 $("#tabs-memreas-detail li:eq(0) a").click();
 
                 /* Update details_tab also */
-                $(".carousel-area").empty();
-                $(".carousel-area").append ('<ul id="carousel" class="elastislide-list"></ul>');
+                $(".carousel-memrease-area").empty();
+                $(".carousel-memrease-area").append ('<ul id="carousel" class="elastislide-list"></ul>');
                 var jcarousel_element = $("ul#carousel");
                 jcarousel_element.empty();
 
@@ -134,7 +134,7 @@ function showEventDetail(eventId, userId){
             }
             $(".memreas-detail-gallery .swipebox").swipebox();
             ajaxScrollbarElement('.memreas-detail-gallery');
-            updateMemreasMediaDetailsScript();
+            //updateMemreasMediaDetailsScript();
         }
     );
     $("#popupContact a.accept-btn").attr ("href", "javascript:addMemreasPopupGallery('" + eventId + "')");
