@@ -20,9 +20,10 @@
           , callback: function(){ window.location.reload(); }
         }, options);
 
+        window.open(options.path, options.windowName, options.windowOptions);
         var oauthWindow   = window.open(options.path, options.windowName, options.windowOptions);
         var oauthInterval = window.setInterval(function(){
-            if (oauthWindow.closed) {
+            if (oauthWindow == '') {
                 window.clearInterval(oauthInterval);
                 options.callback();
             }

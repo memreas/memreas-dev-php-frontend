@@ -25,6 +25,7 @@ twitter_getFriendList = function() {
 }
 
 twitter_authorization = function() {
+
     $.removeCookie ('twitter_friends');
 	$.oauthpopup({
 		path: 'twitter',

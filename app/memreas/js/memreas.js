@@ -134,10 +134,11 @@ function fetchMyMemreas(){
                                 var count_people = friends.length;
                                 for (i = 0;i < count_people;i++){
                                     friend = friends[i];
-                                    if (getValueFromXMLTag(friend, 'photo') != '' || getValueFromXMLTag(friend, 'photo') != 'null')
+                                    if (getValueFromXMLTag(friend, 'photo') == '' || getValueFromXMLTag(friend, 'photo') == 'null')
                                         friend_photo = '/memreas/img/profile-pic.jpg';
                                     else friend_photo = getValueFromXMLTag(friend, 'photo');
-                                    html_str = '<div class="event_gallery_pro"><img src="' + friend_photo + '"></div>';
+                                    friend_name = getValueFromXMLTag(friend, 'friend_name');
+                                    html_str = '<div class="event_gallery_pro"><img src="' + friend_photo + '" alt="' + friend_name + '" title="' + friend_name + '"></div>';
                                     jEvent_people.append(html_str);
                                 }
                             }

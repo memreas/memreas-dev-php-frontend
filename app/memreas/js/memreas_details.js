@@ -438,6 +438,7 @@ function addFriendToEvent(eventId){
                     tag: 'friend',
                     value: [
                                 { tag: 'friend_name',         value: fb_friendsInfo[i].name },
+                                { tag: 'friend_id',         value: fb_friendsInfo[i].id },
                                 { tag: 'network_name',         value: 'facebook' },
                                 { tag: 'profile_pic_url',     value: fb_friendsInfo[i].photo }
                             ]
@@ -453,6 +454,7 @@ function addFriendToEvent(eventId){
                     tag: 'friend',
                     value: [
                                 { tag: 'friend_name',         value: tw_friendsInfo[i].name },
+                                { tag: 'friend_id',         value: tw_friendsInfo[i].id },
                                 { tag: 'network_name',         value: 'twitter' },
                                 { tag: 'profile_pic_url',     value: tw_friendsInfo[i].photo }
                             ]
