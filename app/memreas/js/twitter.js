@@ -20,19 +20,56 @@ var tw_friendIndex = 0;
 
 
 twitter_getFriendList = function() {
-	$('#loadingpopup').show();
 	twitter_authorization();
 }
+
+$("a.twSafariPopup").click(function(){
+    $.oauthpopup({
+        path: 'http://google.com',
+        callback: function(){
+            twitter_getAllFriends();
+        }
+    });
+});
 
 twitter_authorization = function() {
 
     $.removeCookie ('twitter_friends');
-	$.oauthpopup({
-		path: 'twitter',
-		callback: function(){
-            twitter_getAllFriends();
-		}
-	});
+
+    var isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
+    if (isSafari) {
+        jNotify(
+        '<div class="notify-box"><p>Click to begin Twitter Authentication </p><br/><a href="javascript:;" class="btn btnPopupTw" onclick="return popupAuthTw(\'share\');">Authorize</a>&nbsp;<a href="javascript:;" class="btn" onclick="$.jNotify._close();">Close</a></div>',
+        {
+          autoHide : false, // added in v2.0
+          clickOverlay : true, // added in v2.0
+          MinWidth : 250,
+          TimeShown : 3000,
+          ShowTimeEffect : 200,
+          HideTimeEffect : 0,
+          LongTrip :20,
+          HorizontalPosition : 'center',
+          VerticalPosition : 'top',
+          ShowOverlay : true,
+          ColorOverlay : '#FFF',
+          OpacityOverlay : 0.3,
+          onClosed : function(){ // added in v2.0
+
+          },
+          onCompleted : function(){ // added in v2.0
+
+          }
+        });
+    }
+    else{
+        $('#loadingpopup').show();
+	    $.oauthpopup({
+		    path: 'twitter',
+		    callback: function(){
+                twitter_getAllFriends();
+		    }
+	    });
+    }
 	return;
 
 	var tKBase64 =  btoa(TWITTER_KEY + ":" + TWITTER_SECRETCODE);

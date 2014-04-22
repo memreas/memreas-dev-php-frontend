@@ -677,7 +677,6 @@ share_makeGroup = function() {
             }
         }
     }
-    console.log(selFriends); return;
     if (groupName != ''){
 	    // send the request.
 	    ajaxRequest(

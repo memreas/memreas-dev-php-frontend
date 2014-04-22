@@ -19,11 +19,9 @@
           , windowOptions: 'location=0,status=0,width=800,height=400'
           , callback: function(){ window.location.reload(); }
         }, options);
-
-        window.open(options.path, options.windowName, options.windowOptions);
         var oauthWindow   = window.open(options.path, options.windowName, options.windowOptions);
         var oauthInterval = window.setInterval(function(){
-            if (oauthWindow == '') {
+            if (oauthWindow.closed) {
                 window.clearInterval(oauthInterval);
                 options.callback();
             }
@@ -37,3 +35,24 @@
     };
 })(jQuery);
 
+/*
+* This function only for Safari browser hack - because of its popup security
+*/
+function popupAuthTw(network_type){
+    $('#loadingpopup').show();
+    var oauthWindow = window.open('/index/twitter','Authentication Twitter','location=0,status=0,width=800,height=400');
+    var oauthInterval = window.setInterval(function(){
+        if (oauthWindow.closed) {
+            window.clearInterval(oauthInterval);
+            switch(network_type){
+                case 'share':
+                    twitter_getAllFriends();
+                    break;
+                case 'memreas_detail':
+                    memreas_TwFriends();
+                    break;
+            }
+        }
+    }, 1000);
+    return false;
+}
