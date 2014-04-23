@@ -32,8 +32,7 @@ class IndexController extends AbstractActionController
 {
 	//Updated....
     protected $url = MemreasConstants::MEMREAS_WS; //Local development
-    //
-.protected $url = "http://memreas-dev-ws.localhost/"; //Local development
+    //protected $url = "http://memreas-dev-ws.localhost/"; //Local development
     protected $test = "Hope this works!";
     protected $user_id;
     protected $storage;
