@@ -7,6 +7,6 @@ namespace Application\Model;
 
 class MemreasConstants {
 	
-	const MEMREAS_WS = "http://memreasdev-ws-etc.elasticbeanstalk.com";
+	const MEMREAS_WS = "http://memreasdev-ws-elastic.elasticbeanstalk.com";
 	
 }
