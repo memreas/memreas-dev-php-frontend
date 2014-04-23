@@ -173,7 +173,7 @@ $(document).ready( function() {
                 data.context.find(".upload_progress_bar .progress").css ("width", percent + "%");
                 data.context.find(".upload_progress_bar span").html (percent + "%");
                 if (percent == 100){
-                    data.context.find('.progress-text').html('Please wait while adding medias to your account.');
+                    data.context.find('.progress-text').html('Please wait while adding media to your account.');
                 }
             },
             fail: function(e, data) {

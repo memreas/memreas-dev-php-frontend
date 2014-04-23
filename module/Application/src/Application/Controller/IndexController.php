@@ -32,7 +32,8 @@ class IndexController extends AbstractActionController
 {
 	//Updated....
     protected $url = MemreasConstants::MEMREAS_WS; //Local development
-    //protected $url = "http://test/";//"http://memreas-dev-ws.localhost/"; //Local development
+    //
+.protected $url = "http://memreas-dev-ws.localhost/"; //Local development
     protected $test = "Hope this works!";
     protected $user_id;
     protected $storage;
@@ -134,7 +135,7 @@ error_log("Enter FE indexAction".PHP_EOL);
         else $this->generateVideoCacheFile ($cache_dir, $video_name);
     }
 
-    public function sampleAjaxAction() {
+    public function execAjaxAction() {
 		if (isset($_REQUEST['callback'])) {
 
 			//Fetch parms
@@ -342,7 +343,7 @@ error_log("Enter FE indexAction".PHP_EOL);
  		//Setup the URL and action
 		/*$action = 'login';
 		$xml = "<xml><login><username>$username</username><password>$password</password></login></xml>";
-		
+
 
 		//Guzzle the LoginWeb Service
 		$result = $this->fetchXML($action, $xml);
