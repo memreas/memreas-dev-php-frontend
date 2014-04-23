@@ -1,7 +1,16 @@
 $(document).ready(function() {
-    var throttledRequest = _.debounce(function(query, process)
+ 
+     var throttledRequest = _.debounce(function(query, process)
     {
-        var users;
+        
+         if(typeof users !== 'undefined'){
+               for (var i in users) {
+                if(users[i].search(query) !== -1){
+                   return process(users);
+                }
+            }
+        }
+
         ajaxRequest('findtag', [{tag: "tag", value: query}]
                 , function(data) {
                     var q = $('#search').val();
@@ -31,7 +40,7 @@ $(document).ready(function() {
                             break;
 
                     }
-                    process(users);
+                   return process(users);
                 });
     }, 300);
 
@@ -135,28 +144,22 @@ $(document).ready(function() {
                         }
             }
 
-var nextbtn=function() {
-                
-                page = page + 1;
-                var param = [{tag: "tag", value: q},
-                    {tag: "page", value: page.toString()},
-                ];
-                ajaxRequest(action, param, reqhandler);
-
-
-
-
-               
-
-            };
-var prevbtn = function() {
-                page = page - 1;
-                var param = [{tag: "tag", value: q},
-                    {tag: "page", value: page.toString()},
-                ];
-                ajaxRequest(action, param, reqhandler);
-                
-            };
+            var nextbtn=function() {
+                            
+                            page = page + 1;
+                            var param = [{tag: "tag", value: q},
+                                {tag: "page", value: page.toString()},
+                            ];
+                            ajaxRequest(action, param, reqhandler);
+                        };
+            var prevbtn = function() {
+                            page = page - 1;
+                            var param = [{tag: "tag", value: q},
+                                {tag: "page", value: page.toString()},
+                            ];
+                            ajaxRequest(action, param, reqhandler);
+                            
+                        };
 
             ajaxRequest(action, param, reqhandler);
             
@@ -168,7 +171,8 @@ var prevbtn = function() {
         },
         highlighter: function(item) {
             return h(item);
-        }
+        },
+
     });
 });
 
