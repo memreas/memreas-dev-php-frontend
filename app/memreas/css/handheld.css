@@ -1,0 +1,50 @@
+/*
+*@ Ipad  768x1280 - Portrait Layout
+*@ Tran Tuan - Memreas
+*/
+@media screen and (min-width: 640px) and (max-width: 768px){
+    .signin_contents ul{
+        margin: 0 0 10px 0px;
+    }
+    .signin_contents ul li{ margin: 0px 0px 0px 7px; }
+    .profile_picture{ margin-left: 30px; }
+    .signin_contents input[type="text"],
+    .signin_contents input[type="email"],
+    .signin_contents input[type="password"]{
+        margin-left: 30px;
+        width: 260px;
+    }
+    .password-level{
+        display: block;
+        margin-left: 30px;
+        margin-bottom: 10px;
+    }
+    .medium_tabs a{ padding: .2em .8em !important; }
+    input.search_bar{ margin-left: -10px; }
+    ul.pics li,
+    ul.pics li img{ height: 70px; }
+    .tabs2{ padding: .5em 2em !important; }
+    .share-txtfield{ width: 60% !important; }
+    label[for="ckb_viewable"]{ display: block; float: none; }
+    input#dtp_from{ margin-left: 80px; }
+    input#dtp_selfdestruct{ margin-left: 100px; }
+    .f-center{ margin: 20px 0px 0px 10% !important; }
+    ul.share_friends_contents li{ width: 60%; }
+    #tabs-memreas a{ padding: .4em 1.3em; }
+    .memreas-detail-comments .pro-pics img{ width: 60px; }
+    .memreas-detail-comments textarea{ width: 50% !important; }
+    .memreas-detail-comments .pro-names{ width: 50%; margin-top: 0px; }
+    a.black_btn_skin{ padding: 8px 45px; }
+    .menu ul li{ margin: 0px 0% !important; }
+    .account .pro-names2{ width: 130px !important; }
+    .account .f-center{ margin: 5px 0px 5px 0% !important; }
+    .account .f-center.change-profile-btn{
+        width: 130px;
+        padding: 10px;
+        text-align: center;
+        float: right;
+    }
+    #tab2-more a.black_btn_skin{
+        padding: 8px 20px;
+    }
+}
