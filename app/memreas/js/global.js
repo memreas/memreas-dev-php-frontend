@@ -91,3 +91,13 @@ function logout(){
         window.location.href = "/";
     });
 }
+
+//Remove item from an array
+function removeItem(array, item){
+    for(var i in array){
+        if(array[i]==item){
+            array.splice(i,1);
+            break;
+            }
+    }
+}

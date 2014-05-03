@@ -84,7 +84,7 @@ ul.edit-area-scroll{ height: 270px; }
     top: 1px;
 }
 .event_comment span{ top: -1px; }
-.image-preview img{ width: 430px; }
+.image-preview img{ width: 430px; height: 280px; }
 .memreas-detail-comments .pro-pics img{ width: 85px; }
 img.selected-gallery{
     bottom: 5px;

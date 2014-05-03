@@ -68,51 +68,79 @@ function imageChoosed(media_id){
     return false;
 }
 
-function deleteFiles(){
+var deleteMediasChecked = 0;
+function deleteFiles(confirmed){
     if (!($(".edit-area").find(".setchoosed").length > 0)){
             jerror ('There is no media selected');
             return false;
         }
-    var confirm_box = confirm ("Are you sure want to delete them?");
-    if (confirm_box){
+    if (!confirmed){
+        //Confirm to delete
+        jNotify(
+            '<div class="notify-box"><p>Are you sure want to delete them?</p><a href="javascript:;" class="btn" onclick="deleteFiles(true);">OK</a>&nbsp;<a href="javascript:;" class="btn" onclick="$.jNotify._close();">Close</a></div>',
+            {
+              autoHide : false, // added in v2.0
+              clickOverlay : true, // added in v2.0
+              MinWidth : 250,
+              TimeShown : 3000,
+              ShowTimeEffect : 200,
+              HideTimeEffect : 0,
+              LongTrip :20,
+              HorizontalPosition : 'center',
+              VerticalPosition : 'top',
+              ShowOverlay : true,
+              ColorOverlay : '#FFF',
+              OpacityOverlay : 0.3,
+              onClosed : function(){ // added in v2.0
+
+              },
+              onCompleted : function(){ // added in v2.0
+
+              }
+            });
+    }
+    if (confirmed){
+        $.jNotify._close();
         $("#loadingpopup").show();
+
+        //Store data to javascript
         $(".edit-area a").each(function(){
-           if ($(this).parent('li').hasClass("setchoosed")){
+            if ($(this).parent('li').hasClass("setchoosed")){
                var media_id = $(this).attr ("id");
                var xml_data = new Array();
                xml_data[0] = new Array();
                xml_data[0]['tag'] = 'mediaid';
                xml_data[0]['value'] = media_id.trim();
+
+               //Put to management object
+               ++deleteMediasChecked;
+           }
+        });
+
+        //Delete medias
+        $(".edit-area a").each(function(){
+            if ($(this).parent('li').hasClass("setchoosed")){
+               var media_id = $(this).attr ("id");
+               var xml_data = new Array();
+               xml_data[0] = new Array();
+               xml_data[0]['tag'] = 'mediaid';
+               xml_data[0]['value'] = media_id.trim();
+
                ajaxRequest ('deletephoto', xml_data, success_deletephoto, error_deletephoto);
            }
         });
     }
     return false;
 }
-function success_deletephoto(ret_xml){
-    $("#loadingpopup").hide();
-    jSuccess(
-    'Media deleted',
-    {
-      autoHide : true, // added in v2.0
-      clickOverlay : false, // added in v2.0
-      MinWidth : 250,
-      TimeShown : 3000,
-      ShowTimeEffect : 200,
-      HideTimeEffect : 200,
-      LongTrip :20,
-      HorizontalPosition : 'center',
-      VerticalPosition : 'top',
-      ShowOverlay : true,
-      ColorOverlay : '#FFF',
-      OpacityOverlay : 0.3,
-      onClosed : function(){ // added in v2.0
+function success_deletephoto(xml_response){
 
-      },
-      onCompleted : function(){ // added in v2.0
-
-      }
-    });
-    $.fetch_server_media($("input[name=user_id]").val());
+    //If there is no more medias to be deleted, reload resources
+    --deleteMediasChecked;
+    console.log(deleteMediasChecked);
+    if (deleteMediasChecked == 0){
+        $("#loadingpopup").hide();
+        jsuccess('Media deleted');
+        $.fetch_server_media($("input[name=user_id]").val());
+    }
 }
-function error_deletephoto(){ alert ("error delete photo"); }
+function error_deletephoto(){ jerror ("error delete photo"); }

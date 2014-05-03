@@ -1,11 +1,3 @@
-function removeItem(array, item){
-    for(var i in array){
-        if(array[i]==item){
-            array.splice(i,1);
-            break;
-            }
-    }
-}
 
 var uploadFilesInstance = []; //Used for store all file name for uploading
 var currentUploadFileCount = 0; //Count for all current files selected for upload
@@ -148,20 +140,16 @@ $(document).ready( function() {
                          data.context.find('.progress-text').html('Ok! Uploading...');
                          //data.context.find('.progress-text').html('Queued');
                          //putObjectUploadToQueue(data);
+                         data.context.find("a.cancel-upload").click (function(){
+                            if(data.context.hasClass('working-upload')){
+                                jqXHR.abort();
+                            }
+                            data.context.fadeOut(function(){
+                                data.context.remove();
+                            });
+                        });
                     }
                 }, 'undefined', true);
-
-                tpl2.find("a.cancel-upload").click (function(){
-                    if(tpl2.hasClass('working-upload')){
-                        jqXHR.abort();
-                    }
-
-                    tpl2.fadeOut(function(){
-                        tpl2.remove();
-                    });
-                });
-
-
             },
             send: function(e, data) {
 

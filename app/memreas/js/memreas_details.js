@@ -20,6 +20,18 @@ $(function(){
         $('#' + $(this).attr('title')).fadeIn(); // Show content for current tab
     });
     $("a[title=memreas-detail-tab3]").click(function(){
+
+        //prevent this tab active if there is no media on this event
+        var target_element = $(".memreas-detail-gallery");
+        if (target_element.hasClass ('mCustomScrollbar'))
+            target_element = $(".memreas-detail-gallery .mCSB_container");
+        var checkEmpty = target_element.html();
+        if (checkEmpty.trim() == ''){
+            jerror('There is no media on this event. Please try adding some first.');
+            $("a[title=memreas-detail-tab1]").click();
+            return false;
+        }
+
         // example how to integrate with a previewer
         ajaxScrollbarElement(".memreas-detail-comments");
         updateMemreasMediaDetailsScript();
