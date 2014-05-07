@@ -203,7 +203,7 @@ error_log("Enter FE indexAction".PHP_EOL);
         $user = simplexml_load_string($this->fetchXML($action, $xml));
         $session = new Container('user');
         $user_id = $session->user_id;
-        if (!$user) return $this->redirect()->toRoute('index', array('action' => "index"));
+        //if (!$user) return $this->redirect()->toRoute('index', array('action' => "index"));
         $data['userid'] = $user_id;
 
         $data['bucket'] = "memreasdev";
@@ -301,7 +301,6 @@ error_log("Enter FE indexAction".PHP_EOL);
             $tw = new TwitterOAuth($config);
 
             $params = array(
-                //'screen_name' => 'kamleshpawar',
                 'cursor'=> -1,
                 'skip_status' => true,
                 'include_user_entities' => false
@@ -333,14 +332,24 @@ error_log("Enter FE indexAction".PHP_EOL);
 		$postData = $request->getPost()->toArray();
 		$username = $postData ['username'];
 		$password = $postData ['password'];
-
+        $status_user_id = $postData['status_user_id'];
+        if (empty ($status_user_id)){
+           return $this->redirect()->toRoute('index', array('action' => "index"));
+        }
+        else{
+            $session = new Container('user');
+            $session->offsetSet('user_id', $status_user_id);
+            $session->offsetSet('username', $username);
+            return $this->redirect()->toRoute('index', array('action' => 'memreas'));
+        }
+        /* OLD
         $this->getAuthService()->getAdapter()->setUsername($username);
         $this->getAuthService()->getAdapter()->setPassword($password);
         $token = empty($this->session->token)?'':$this->session->token;
         $this->getAuthService()->getAdapter()->setToken($token);
         $result = $this->getAuthService()->authenticate();
  		//Setup the URL and action
-		/*$action = 'login';
+		$action = 'login';
 		$xml = "<xml><login><username>$username</username><password>$password</password></login></xml>";
 
 
@@ -356,7 +365,6 @@ error_log("Enter FE indexAction".PHP_EOL);
         //setcookie(session_name(),$data->loginresponse->sid,0,'/');
 
  		//ZF2 Authenticate
-        */
          $redirect = 'memreas';
 		if ($result->getIdentity()) {
             error_log("Inside loginresponse success...");
@@ -369,6 +377,7 @@ error_log("Enter FE indexAction".PHP_EOL);
             error_log("Inside loginresponse else...");
 			return $this->redirect()->toRoute('index', array('action' => "index"));
 		}
+        */
     }
 
     public function logoutAction() {

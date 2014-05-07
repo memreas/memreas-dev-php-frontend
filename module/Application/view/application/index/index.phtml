@@ -92,6 +92,7 @@ $(document).bgStretcher({
     <li>
     <input name="username" type="text" class="input" value="username" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'username')this.value = '';"/>
     <input name="password" type="password"  class="input" value="password" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'password')this.value = '';"/>
+    <input type="hidden" name="status_user_id" value="" />
     </li>
     <li>
     <input type="submit" class="login-btn" value="login">

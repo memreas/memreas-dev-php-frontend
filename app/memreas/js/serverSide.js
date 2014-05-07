@@ -62,12 +62,17 @@ jQuery.fetch_server_media = function (){
                     var media = medias[json_key].innerHTML;
                     var _media_type = $(media).filter ('type').html();
                     var _media_url = $(media).filter ('main_media_url').html();
-                    _media_url = _media_url.replace("<!--[CDATA[", "").replace("]]-->", "");
                     var mediaId = $(media).filter ('media_id').html();
                     //Build video thumbnail
                     if (_media_type == 'video'){
+                        userBrowser = detectBrowser();
+
+                        //Check if ios device
+                        if (userBrowser[0].ios == 1)
+                            _media_url = $(media).filter('media_url_hls').html();
+                        else _media_url = $(media).filter('media_url_1080p').html();
+                        _media_url = _media_url.replace("<!--[CDATA[", "").replace("]]-->", "");
                         var temp_url = _media_url.split ('media');
-                        _media_url = temp_url[0] + 'media/web' + temp_url[1];
                         var mediaThumbnail = getMediaThumbnail(media, '/memreas/img/small/1.jpg');
                         $.post('/index/buildvideocache', {video_url:_media_url, thumbnail:mediaThumbnail, media_id:mediaId}, function(response_data){
                             response_data = JSON.parse (response_data);
@@ -117,4 +122,33 @@ jQuery.fetch_server_media = function (){
                 return true;
             }
     );
+}
+function detectBrowser(){
+    if(navigator.vendor != null && navigator.vendor.match(/Apple Computer, Inc./) && navigator.userAgent.match(/iPhone/i) || (navigator.userAgent.match(/iPod/i)))
+    {
+        return [{'ios':1},{'browser':'Ipod or Iphone'}];
+    }
+else if (navigator.vendor != null && navigator.vendor.match(/Apple Computer, Inc./) && navigator.userAgent.match(/iPad/i))
+    {
+        return [{'ios':1},{'browser':'Ipad'}];
+    }
+else if (navigator.vendor != null && navigator.vendor.match(/Apple Computer, Inc./) && navigator.userAgent.indexOf('Safari') != -1)
+    {
+        return [{'ios':1},{'browser':'Safari'}];
+    }
+
+else if (navigator.vendor == null || navigator.vendor != null)
+    {
+        var isOpera = !!window.opera || navigator.userAgent.indexOf('Opera') >= 0;
+        var isFirefox = typeof InstallTrigger !== 'undefined';   // Firefox 1.0+
+        var isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
+        var isChrome = !!window.chrome;                          // Chrome 1+
+        var isIE = /*@cc_on!@*/false;                            // At least IE6
+
+        if (isFirefox) return [{'ios':0},{'browser':'Firefox'}];
+        if (isChrome) return [{'ios':0},{'browser':'Chrome'}];
+        if (isSafari) return [{'ios':0},{'browser':'Safari'}];
+        if (isSafari) return [{'ios':0},{'browser':'Opera'}];
+        if (isIE) return [{'ios':0},{'browser':'IE'}];
+    }
 }
