@@ -1,10 +1,14 @@
+<?php
+    $date = new DateTime();
+    $datestring = $date->getTimestamp();  //for non cache files
+?>
 <!-- JW Player plugin -->
 <script type="text/javascript" src="/memreas/js/jwplayer/jwplayer.js"></script>
 <script type="text/javascript" src="/memreas/js/jwplayer/jwplayer.html5.js"></script>
 
 <!--jQuery Lybrary-->
 <script src="/memreas/js/jquery-1.8.3.js"></script>
-<script type="text/javascript" src="/memreas/js/global.js"></script>
+<script type="text/javascript" src="/memreas/js/global.js?ver=<?php echo $datestring; ?>"></script>
 <script src="/memreas/js/modernizr.custom.17475.js"></script>
 <script src="/memreas/js/jquery.cookie.js"></script>
 
@@ -20,10 +24,10 @@
 
 <!--Social Library-->
 <script src="http://connect.facebook.net/en_US/all.js"></script>
-<script src="/memreas/js/facebook.js"></script>
+<script src="/memreas/js/facebook.js?ver=<?php echo $datestring; ?>"></script>
 <script src="/memreas/js/jquery.oauthpopup.js"></script>
-<script src="/memreas/js/twitter.js"></script>
-<script src="/memreas/js/friend_memreas.js"></script>
+<script src="/memreas/js/twitter.js?ver=<?php echo $datestring; ?>"></script>
+<script src="/memreas/js/friend_memreas.js?ver=<?php echo $datestring; ?>"></script>
 
 <!-- akordeon -->
 <script src="/memreas/js/jquery.akordeon.js" type="text/javascript"></script>
@@ -47,14 +51,14 @@
 <script type="text/javascript" src="/memreas/js/jquery.xml2json.js"></script>
 <script type="text/javascript" src="/memreas/js/fetchLocalMedia.js"></script>
 <script type="text/javascript" src="/memreas/js/bgstretcher.js"></script>
-<script type="text/javascript" src="/memreas/js/serverSide.js"></script>
-<script src="/memreas/js/base_func.js"></script>
-<script type="text/javascript" src="/memreas/js/ajax.js"></script>
-<script src="/memreas/js/share.js"></script>
-<script type="text/javascript" src="/memreas/js/syncing.js"></script>
+<script type="text/javascript" src="/memreas/js/serverSide.js?ver=<?php echo $datestring; ?>"></script>
+<script src="/memreas/js/base_func.js?ver=<?php echo $datestring; ?>"></script>
+<script type="text/javascript" src="/memreas/js/ajax.js?ver=<?php echo $datestring; ?>s"></script>
+<script src="/memreas/js/share.js?ver=<?php echo $datestring; ?>"></script>
+<script type="text/javascript" src="/memreas/js/syncing.js?ver=<?php echo $datestring; ?>"></script>
 
 <!-- Our main JS file -->
-<script src="/memreas/assets/js/script.js"></script>
+<script src="/memreas/assets/js/script.js?ver=<?php echo $datestring; ?>"></script>
 
 <!-- <script src="/memreas/js/record/AudioContextMonkeyPatch.js"></script> -->
 <!-- <script src="/memreas/js/record/recorder.js"></script> -->
@@ -62,20 +66,20 @@
 
 <!-- Memreas -->
 <script src="/memreas/js/jquery.mouseSwipe.js" type="text/javascript"></script>
-<script type="text/javascript" src="/memreas/js/queue.js"></script>
-<script type="text/javascript" src="/memreas/js/memreas.js"></script>
+<script type="text/javascript" src="/memreas/js/queue.js?ver=<?php echo $datestring; ?>"></script>
+<script type="text/javascript" src="/memreas/js/memreas.js?ver=<?php echo $datestring; ?>"></script>
 <script type="text/javascript" src="/memreas/js/jquerypp.custom.js"></script>
 <script type="text/javascript" src="/memreas/js/jquery.elastislide.js"></script>
-<script type="text/javascript" src="/memreas/js/memreas_details.js"></script>
-<script type="text/javascript" src="/memreas/js/notification.js"></script>
-<script type="text/javascript" src="/memreas/js/more_page.js"></script>
+<script type="text/javascript" src="/memreas/js/memreas_details.js?ver=<?php echo $datestring; ?>"></script>
+<script type="text/javascript" src="/memreas/js/notification.js?ver=<?php echo $datestring; ?>"></script>
+<script type="text/javascript" src="/memreas/js/more_page.js?ver=<?php echo $datestring; ?>"></script>
 <script src="/memreas/js/jquery.swipebox.min.js"></script>
 
 <!--Bootstrap Typeahead -->
-<script src="/memreas/js/search.js"></script>
+<script src="/memreas/js/search.js?ver=<?php echo $datestring; ?>"></script>
 
 <script src="/memreas/js/bootstrap-typeahead.js"></script>
 <script src="/memreas/js/underscore-min.js"></script>
 
 <script type="text/javascript" src="http://feather.aviary.com/js/feather.js"></script>
-<script type="text/javascript" src="/memreas/js/media_edit.js"></script>
+<script type="text/javascript" src="/memreas/js/media_edit.js?ver=<?php echo $datestring; ?>"></script>

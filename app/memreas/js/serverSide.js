@@ -66,19 +66,22 @@ jQuery.fetch_server_media = function (){
                     //Build video thumbnail
                     if (_media_type == 'video'){
                         userBrowser = detectBrowser();
-
                         //Check if ios device
                         if (userBrowser[0].ios == 1)
                             _media_url = $(media).filter('media_url_hls').html();
                         else _media_url = $(media).filter('media_url_1080p').html();
-                        _media_url = _media_url.replace("<!--[CDATA[", "").replace("]]-->", "");
-                        var temp_url = _media_url.split ('media');
-                        var mediaThumbnail = getMediaThumbnail(media, '/memreas/img/small/1.jpg');
-                        $.post('/index/buildvideocache', {video_url:_media_url, thumbnail:mediaThumbnail, media_id:mediaId}, function(response_data){
-                            response_data = JSON.parse (response_data);
-                            $(".user-resources").append('<a data-video="true" href="/memreas/js/jwplayer/jwplayer_cache/' + response_data.video_link + '"><img src="' + response_data.thumbnail + '"/></a>');
-                            $(".edit-area-scroll").append ('<li class="video-media"><a class="video-resource image-sync" id="' + response_data.media_id + '" onclick="return imageChoosed(this.id);" href="' + response_data.thumbnail + '"><img src="' + response_data.thumbnail + '"/><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a><img src="/memreas/img/gallery-select.png"></li>');
-                        });
+
+                        //Ignore if has no enough info or media is corrupted
+                        if (typeof (_media_url) != 'undefined'){
+                            _media_url = _media_url.replace("<!--[CDATA[", "").replace("]]-->", "");
+                            var temp_url = _media_url.split ('media');
+                            var mediaThumbnail = getMediaThumbnail(media, '/memreas/img/small/1.jpg');
+                            $.post('/index/buildvideocache', {video_url:_media_url, thumbnail:mediaThumbnail, media_id:mediaId}, function(response_data){
+                                response_data = JSON.parse (response_data);
+                                $(".user-resources").append('<a data-video="true" href="/memreas/js/jwplayer/jwplayer_cache/' + response_data.video_link + '"><img src="' + response_data.thumbnail + '"/></a>');
+                                $(".edit-area-scroll").append ('<li class="video-media"><a class="video-resource image-sync" id="' + response_data.media_id + '" onclick="return imageChoosed(this.id);" href="' + response_data.thumbnail + '"><img src="' + response_data.thumbnail + '"/><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a><img src="/memreas/img/gallery-select.png"></li>');
+                            });
+                        }
                     }
                     else {
                         $(".user-resources").append('<img src="' + _media_url + '"/>');
