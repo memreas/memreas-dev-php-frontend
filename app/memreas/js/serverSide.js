@@ -62,6 +62,7 @@ jQuery.fetch_server_media = function (){
                     var media = medias[json_key].innerHTML;
                     var _media_type = $(media).filter ('type').html();
                     var _media_url = $(media).filter ('main_media_url').html();
+                    _media_url = _media_url.replace("<!--[CDATA[", "").replace("]]-->", "");
                     var mediaId = $(media).filter ('media_id').html();
                     //Build video thumbnail
                     if (_media_type == 'video'){
