@@ -124,18 +124,25 @@ function validateRegstration(){
     ajaxRequest('registration', params, function(response){
         if (getValueFromXMLTag(response, 'status') == 'Success'){
             jsuccess(getValueFromXMLTag(response, 'message'));
+            user_id = getValueFromXMLTag(response, 'userid');
             if ($("input[name=profile_image]").val() == 1){
-                user_id = getValueFromXMLTag(response, 'userid');
                 var current_key = $("#frm-profile-pic").find('input[name=key]').val();
                 current_key = user_id + '/' + current_key;
                 $("#frm-profile-pic").find('input[name=key]').val(current_key);
                 var jqXHR = uploadHandle.submit();
             }
-            document.register.reset();
+            else setTimeout(function(){ autoLogin(input_uname, user_id); }, 2000);
         }
         else jerror(getValueFromXMLTag(response, 'message'));
     });
     return false;
+}
+function autoLogin(handle_username, handle_user_id){
+    $("#form-user-login").find('input[name=username]').val(handle_username);
+    $("#form-user-login").find('input[name=password]').val(Math.random());
+    $("#form-user-login").find('input[name=status_user_id]').val(handle_user_id);
+    document.register.reset();
+    document.user_login_frm.submit();
 }
 function validateRegisterForm(input_uname, input_upass){
     if (input_uname.length < 4){
@@ -288,6 +295,7 @@ $(function(){
                                 ];
                 ajaxRequest('addmediaevent', params, function(){
                     jsuccess('Your profile picture updated');
+                    setTimeout(function(){ autoLogin($("#register input[name=username]").val(), user_id); })
                 });
             },
             done: function (event, data) {
