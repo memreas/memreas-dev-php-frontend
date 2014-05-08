@@ -7,8 +7,8 @@ if (GLOBAL_ENV == 'development'){
     var FACEBOOK_SECRETCODE 	= '47bfc45d191ef7dda0e2ebbf43b70a64';
 }
 else{
-    var FACEBOOK_APPID          = '1408422936074030';
-    var FACEBOOK_SECRETCODE     = 'ccaa009ff10501d11b57ffae46d5794e';
+    var FACEBOOK_APPID          = '462180953876554';
+    var FACEBOOK_SECRETCODE     = '23dcd2db19b17f449f39bfe9e93176e6';
 }
 var FACEBOOK_FRIENDSLIMIT 	= 500;
 
