@@ -85,10 +85,33 @@ error_log("Enter FE indexAction".PHP_EOL);
     public function buildvideocacheAction(){
         if (isset ($_POST['video_url'])){
             $cache_dir = $_SERVER['DOCUMENT_ROOT'] . '/memreas/js/jwplayer/jwplayer_cache/';
+            $hls_media = $_POST['hls_media'];
             $video_name = explode ("/", $_POST['video_url']);
             $video_name = $video_name[count ($video_name) - 1];
+            if ($hls_media) $video_name .= $hls_media;
             $cache_file = $this->generateVideoCacheFile ($cache_dir, $video_name);
             $file_handle = fopen ($cache_dir . $cache_file, 'w');
+            if ($hls_media){
+                $flashPlayerContent = 'playlist:[
+                                        {image:"",
+                                        sources:[
+                                        {file:"' . $_POST['video_url'] . '"},
+                                        {file:"' . $_POST['mp4_media'] . '"},
+                                        ]
+                                        }],
+                                        width: 500,
+                                        height: 300,
+                                        aspectratio: "16:9",
+                                        primary:"flash",
+                                        ';
+            }
+            else{
+                $flashPlayerContent = ' flashplayer: "../jwplayer.flash.swf",
+                                    file: "' . $_POST['video_url'] . '",
+                                    "autostart": "true",
+                                    "width": 500,
+                                    "height": 300,';
+            }
             $content = '<!doctype html>
                             <html>
                             <head>
@@ -108,11 +131,7 @@ error_log("Enter FE indexAction".PHP_EOL);
                             <center><div id="myElement">Loading the player...</div></center>
                             <script type="text/javascript">
                                 jwplayer("myElement").setup({
-                                    flashplayer: "../jwplayer.flash.swf",
-                                    file: "' . $_POST['video_url'] . '",
-                                    "autostart": "true",
-                                    "width": 500,
-                                    "height": 300,
+                                   ' . $flashPlayerContent . '
                                 });
                             </script>
                             </body>
