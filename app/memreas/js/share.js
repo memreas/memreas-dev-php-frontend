@@ -22,6 +22,7 @@ var media_page_index  = '1';		// page index number for media
 var media_limit_count = '200';	// limit count of media
 
 var friendList = null;
+var current_sharefriendnw_selected = '';
 
 $(function(){
     $("a[title=share]").click(function(){

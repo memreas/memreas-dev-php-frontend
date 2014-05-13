@@ -149,6 +149,9 @@ function fetchMyMemreas(){
                  $("#swipebox-comment-" + eventId).swipe({ TYPE:'mouseSwipe', HORIZ: true });
                 }
             }
+            else{
+                jerror('You have no event at this time. Try add some event at share tab');
+            }
         }
     );
     $(".myMemreas").mCustomScrollbar('update');

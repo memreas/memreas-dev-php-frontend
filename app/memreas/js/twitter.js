@@ -106,11 +106,13 @@ twitter_getAllFriends = function() {
     if (typeof (friend_list) == 'undefined'){
         $('#loadingpopup').hide();
         jerror ('authentication failed! please try again');
+        $("#cmb_socialtype").val(current_sharefriendnw_selected);
         return false;
     }
     friend_list = JSON.parse (friend_list);
     tw_friendsInfo = friend_list;
     share_addFriends (friend_list);
+    current_sharefriendnw_selected = 'twitter';
     $('#loadingpopup').hide();
     return;
 	if (twitterToken != null)

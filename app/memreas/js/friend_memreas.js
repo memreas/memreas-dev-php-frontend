@@ -2,7 +2,7 @@ var mr_friendsInfo = null;
 memreas_getFriendList = function(){
     var params = [{tag: 'user_id', value: ''}];
     ajaxRequest('listmemreasfriends', params, function(xml_response){
-        if (getValueFromXMLTag(xml_response, 'status')){
+        if (getValueFromXMLTag(xml_response, 'status') == 'Success'){
             var friends = getSubXMLFromTag(xml_response, 'friend');
             var friendCount = friends.length;
             mr_friendsInfo = [];
@@ -20,6 +20,11 @@ memreas_getFriendList = function(){
                                     };
             }
             share_addFriends(mr_friendsInfo);
+            current_sharefriendnw_selected = 'memreas';
+        }
+        else {
+            jerror('You have no friend on this network');
+            $("#cmb_socialtype").val(current_sharefriendnw_selected);
         }
     });
 }

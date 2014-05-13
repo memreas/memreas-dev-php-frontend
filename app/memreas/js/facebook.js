@@ -56,6 +56,7 @@ facebook_getFriendList = function() {
 					}
 				}
 				share_addFriends(fb_friendsInfo);
+                current_sharefriendnw_selected = 'facebook';
 				$('#loadingpopup').hide();
 			});
 		}
@@ -81,6 +82,7 @@ facebook_getFriendList = function() {
                     }
                 }
                 share_addFriends(fb_friendsInfo);
+                current_sharefriendnw_selected = 'fb';
                 $('#loadingpopup').hide();
             });
 		}

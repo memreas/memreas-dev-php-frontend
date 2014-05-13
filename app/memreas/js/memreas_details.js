@@ -1,6 +1,7 @@
 var eventdetail_id = '';
 var eventdetail_user = '';
 var eventdetail_media_id = '';
+var current_friendnw_selected = '';
 $(function(){
     $("ul.scrollClass").mCustomScrollbar({
             scrollButtons:{
@@ -317,9 +318,9 @@ function popupMemreasAddfriends(){
 
 function getPopupMemreasFriends(){
     $('#loadingpopup').show();
-    var params = [{tag: 'user_id', value: ''}];
+    var params = [{tag: 'user_id', value: user_id}];
     ajaxRequest('listmemreasfriends', params, function(xml_response){
-        if (getValueFromXMLTag(xml_response, 'status')){
+        if (getValueFromXMLTag(xml_response, 'status') == 'Success'){
             var friends = getSubXMLFromTag(xml_response, 'friend');
             var friendCount = friends.length;
             mr_friendsInfo = [];
@@ -337,6 +338,12 @@ function getPopupMemreasFriends(){
                                     };
             }
             memreas_fillFriends(mr_friendsInfo);
+            current_friendnw_selected = 'mr';
+        }
+        //There is no friend
+        else {
+            jerror("You have no friend on this network.");
+            $("#memreas-dropfriend").val(current_friendnw_selected);
         }
     });
 }
@@ -375,6 +382,7 @@ function getPopupFacebookFriends(){
                     }
                 }
                 memreas_fillFriends(fb_friendsInfo);
+                current_friendnw_selected = 'fb';
                 $('#loadingpopup').hide();
             });
         }
@@ -400,6 +408,7 @@ function getPopupFacebookFriends(){
                     }
                 }
                 memreas_fillFriends(fb_friendsInfo);
+                current_friendnw_selected = 'fb';
                 $('#loadingpopup').hide();
             });
         }
@@ -441,7 +450,7 @@ function getPopupTwitterFriends(){
     var isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
     if (isSafari) {
         jNotify(
-        '<div class="notify-box"><p>Click to begin Twitter Authentication </p><br/><a href="javascript:;" class="btn btnPopupTw" onclick="return popupAuthTw(\'memreas_detail\');">Authorize</a>&nbsp;<a href="javascript:;" class="btn" onclick="$.jNotify._close();">Close</a></div>',
+        '<div class="notify-box"><p>Click to begin Twitter Authentication </p><br/><a href="javascript:;" class="btn btnPopupTw" onclick="return popupAuthTw(\'memreas_detail\');">Authorize</a>&nbsp;<a href="javascript:;" class="btn" onclick="cancelTwitterFriend();">Close</a></div>',
         {
           autoHide : false, // added in v2.0
           clickOverlay : true, // added in v2.0
@@ -473,11 +482,17 @@ function getPopupTwitterFriends(){
     }
 }
 
+function cancelTwitterFriend(){
+    $.jNotify._close();
+    $("#memreas-dropfriend").val(current_friendnw_selected);
+}
+
 function memreas_TwFriends(){
     var friend_list = $.cookie ('twitter_friends');
     if (typeof (friend_list) == 'undefined'){
         $('#loadingpopup').hide();
         jerror ('authentication failed! please try again');
+        $("#memreas-dropfriend").val(current_friendnw_selected);
         return false;
     }
     friend_list = JSON.parse (friend_list);
@@ -489,6 +504,7 @@ function memreas_TwFriends(){
     }
     tw_friendsInfo = friend_list;
     memreas_fillFriends (friend_list);
+    current_friendnw_selected = 'tw';
     $('#loadingpopup').hide();
 }
 
