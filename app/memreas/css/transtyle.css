@@ -126,3 +126,10 @@ li.working-upload .progress-text{
     margin-right: 10px !important;
 }
 .change-profile-btn{ float: right; }
+.exit-aviary-fullscreen{
+    position: fixed;
+    right: 1px;
+    bottom: -15px;
+    z-index: 10000;
+    display: none;
+}
