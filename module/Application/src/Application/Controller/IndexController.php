@@ -216,7 +216,7 @@ error_log("Enter FE indexAction".PHP_EOL);
         $action = 'getsession';
         $xml = '<xml><getsession><sid>1</sid></getsession></xml>';
         //Configure Ads on page
-        $enableAdvertising = true;
+        $enableAdvertising = MemreasConstants::MEMREAS_ADS;
 
         //Guzzle the LoginWeb Service
         $user = simplexml_load_string($this->fetchXML($action, $xml));
