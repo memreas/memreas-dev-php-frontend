@@ -115,7 +115,9 @@ function fetchMyMemreas(){
                                         var media = medias[i].innerHTML;
                                         var media_type = $(media).filter('type').html();
                                         var _media_url = getMediaThumbnail(media, '/memreas/img/small/1.jpg');
-                                        $("#myEvent-" + eventId).append ('<div class="event_img"><img src="' + _media_url + '"/></div>');
+                                        if (media_type == 'video')
+                                            $("#myEvent-" + eventId).append ('<div class="event_img video-media"><img src="' + _media_url + '"/><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></div>');
+                                        else $("#myEvent-" + eventId).append ('<div class="event_img"><img src="' + _media_url + '"/></div>');
                                     }
                                 }
                             }

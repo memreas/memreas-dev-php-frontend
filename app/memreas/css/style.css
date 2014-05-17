@@ -214,7 +214,7 @@ header {
 	float: left;
 	overflow: hidden;
 }
-.pro-pic img{ height: 50px; }
+.pro-pic img{ width: 70px;height: 60px; }
 .pro-name {
 	font-family: "Century Gothic";
 	font-size: 15px;

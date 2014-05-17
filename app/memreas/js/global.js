@@ -101,3 +101,32 @@ function removeItem(array, item){
             }
     }
 }
+function detectBrowser(){
+    if(navigator.vendor != null && navigator.vendor.match(/Apple Computer, Inc./) && navigator.userAgent.match(/iPhone/i) || (navigator.userAgent.match(/iPod/i)))
+    {
+        return [{'ios':1},{'browser':'Ipod or Iphone'}];
+    }
+else if (navigator.vendor != null && navigator.vendor.match(/Apple Computer, Inc./) && navigator.userAgent.match(/iPad/i))
+    {
+        return [{'ios':1},{'browser':'Ipad'}];
+    }
+else if (navigator.vendor != null && navigator.vendor.match(/Apple Computer, Inc./) && navigator.userAgent.indexOf('Safari') != -1)
+    {
+        return [{'ios':1},{'browser':'Safari'}];
+    }
+
+else if (navigator.vendor == null || navigator.vendor != null)
+    {
+        var isOpera = !!window.opera || navigator.userAgent.indexOf('Opera') >= 0;
+        var isFirefox = typeof InstallTrigger !== 'undefined';   // Firefox 1.0+
+        var isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
+        var isChrome = !!window.chrome;                          // Chrome 1+
+        var isIE = /*@cc_on!@*/false;                            // At least IE6
+
+        if (isFirefox) return [{'ios':0},{'browser':'Firefox'}];
+        if (isChrome) return [{'ios':0},{'browser':'Chrome'}];
+        if (isSafari) return [{'ios':0},{'browser':'Safari'}];
+        if (isSafari) return [{'ios':0},{'browser':'Opera'}];
+        if (isIE) return [{'ios':0},{'browser':'IE'}];
+    }
+}

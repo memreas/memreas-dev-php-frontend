@@ -490,52 +490,43 @@ share_clearMedia = function() {
 
 // get all media from user id and event id.
 share_getAllMedia = function() {
-	var _video_extensions = "mp4 wmv mov";
 
 	// send the request.
 	ajaxRequest(
 		'listallmedia',
 		[
-            //{ tag: 'event_id',                 value: event_id },
 			{ tag: 'event_id', 				value: '' },
 			{ tag: 'user_id', 				value: user_id },
 			{ tag: 'device_id', 			value: device_id },
 			{ tag: 'limit', 				value: media_limit_count },
 			{ tag: 'page', 					value: media_page_index }
 		],
-		function(json) {
-			json = $.xml2json(json, true);
-			if (json.listallmediaresponse[0].medias[0].status[0].text == "Success") {
-			  	var data = json.listallmediaresponse[0].medias[0].media;
-                $("#share_medialist .mCSB_container").empty();
-               // if ($("#share_medialist").hasClass ('mCSB_container')){
-			  	    var mediaList = $("#share_medialist .mCSB_container");
-                //}
-                //else{
-                //    var mediaList = $("#share_medialist");
-               // }
-			  	//mediaList.empty();
-			  	for (var json_key in data) {
-				 	var _media_url = data[json_key].main_media_url[0].text;
-				 	var _media_extension = _media_url.substr(_media_url.length - 3);
-				 	_media_extension = _media_extension.toLowerCase();
-					//Build video thumbnail
-					var _found = _video_extensions.indexOf (_media_extension);
-					if (_found > -1) {
-						$.post('/index/buildvideocache', {video_url:_media_url, thumbnail:data[json_key].event_media_video_thum[0].text, media_id:data[json_key].media_id[0].text}, function(response_data){
-							response_data = JSON.parse(response_data);
-                            mediaList.append ('<li><a class="swipebox" id="share-' + response_data.media_id + '" onclick="return imageChoosed(this.id);" href="' + response_data.thumbnail + '"><img src="' + response_data.thumbnail + '"/></a></li>');
-						});
-					}
-					else {
-						mediaList.append ('<li><a class="swipebox" id="share-' + data[json_key].media_id[0].text + '" onclick="return imageChoosed(this.id);" href="' + _media_url + '"><img src="' + _media_url + '"/></a></li>');
-					}
-			  	}
+		function(response) {
+			if (getValueFromXMLTag(response, 'status') == "Success") {
+                medias = getSubXMLFromTag(response, 'media');
+                var count_media = medias.length;
+                var jtarget_element = $('#share_medialist');
+                if (jtarget_element.hasClass('mCustomScrollbar'))
+                    jtarget_element = $('#share_medialist .mCSB_container');
+                jtarget_element.empty();
+                for (var json_key = 0;json_key < count_media;json_key++){
+                    var media = medias[json_key].innerHTML;
+                    var _media_type = $(media).filter ('type').html();
+                    var _media_url = getMediaThumbnail(media, '/memreas/img/small-pic-3.jpg');
+                    var _media_id = $(media).filter('media_id').html();
+                    if (_media_type == 'video'){
+                        var _main_video_media = $(media).filter ('main_media_url').html();
+                        _main_video_media = _main_video_media.replace("<!--[CDATA[", "").replace("]]-->", "");
+                        jtarget_element.append('<li class="video-media" media-url="' + _main_video_media + '"><a href="javascript:;" id="share-' + _media_id + '" onclick="return imageChoosed(this.id);"><img src="' + _media_url + '" alt=""><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a></li>');
+                    }
+                    else jtarget_element.append('<li><a href="javascript:;" id="share-' + _media_id + '" onclick="return imageChoosed(this.id);"><img src="' + _media_url + '" alt=""></a></li>');
+                }
+
                ajaxScrollbarElement('#share_medialist');
 
 			  	//ar_start();
 			}
-            else jerror (json.listallmediaresponse[0].medias[0].message[0].text);
+            else jerror("This is no media");
 		}
 	);
 }
@@ -678,6 +669,13 @@ share_makeGroup = function() {
             }
         }
     }
+
+    //Check if friends are chose or not
+    if (selFriends.length == 0){
+        jerror("Please choose friend for adding to event.");
+        return false;
+    }
+
     if (groupName != ''){
 	    // send the request.
 	    ajaxRequest(
