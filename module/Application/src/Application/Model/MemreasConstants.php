@@ -8,6 +8,6 @@ namespace Application\Model;
 class MemreasConstants {
 	
 	const MEMREAS_WS = "http://memreasdev-wsa.elasticbeanstalk.com";
-	const MEMREAS_ADS = false;
+	const MEMREAS_ADS = true;
 	
 }

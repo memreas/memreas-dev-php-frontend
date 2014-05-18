@@ -208,7 +208,7 @@ $(document).ready( function() {
                         $(".completed-upload .mCSB_container").append ('<li class="video-media"><img src="/memreas/img/small/1.jpg"/><img src="/memreas/img/video-overlay.png" class="overlay-videoimg"></li>');
                     else $(".completed-upload .first-element").append ('<li class="video-media"><img src="/memreas/img/small/1.jpg"/><img src="/memreas/img/video-overlay.png" class="overlay-videoimg"></li>');
                 }
-
+alert("about to call addmediaevent...");
                 ajaxRequest('addmediaevent', params, function(xml_response){
                     removeItem(uploadFilesInstance, filename);
                     currentUploadFileCount = uploadFilesInstance.length;
