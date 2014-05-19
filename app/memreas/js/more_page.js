@@ -239,7 +239,7 @@ function getGroupFriends(friend_network){
             for (i = 0;i < count_friend;i++){
                 if (getValueFromXMLTag(friend_list[i], 'friend_photo') == '' || getValueFromXMLTag(friend_list[i], 'friend_photo') == 'null')
                     friend_photo = '/memreas/img/profile-pic.jpg';
-                else friend_photo = getValueFromXMLTag(friend_list[i], 'photo');
+                else friend_photo = getValueFromXMLTag(friend_list[i], 'friend_photo');
                 networkfriendsInfo[i] = {
                         'id':         getValueFromXMLTag(friend_list[i], 'friend_id'),
                         'div_id':    getValueFromXMLTag(friend_list[i], 'friend_id'),
@@ -266,7 +266,7 @@ $(function(){
             case 'facebook': networkPopupFacebookFriends(); break;
             case 'twitter': networkPopupTwitterFriends(); break;
             case 'memreas': networkPopupMemreasFriends(); break;
-            default: jerror('Error please check back.');
+            default: jerror('Please choose friend network');
         }
         if (!$("#popupNetworkFriends").is (":visible")) popup('popupNetworkFriends');
         ajaxScrollbarElement(".popupNetworkFriends_list");
@@ -555,6 +555,12 @@ function network_clickFriends(selected_friend_id){
 //Update network friends
 function updateNetworkFriends(){
     var network_friend_count = networkfriendsInfo.length;
+
+    if (network_friend_count == 0){
+        jerror('There is no friend selected to remove');
+        return false;
+    }
+
     networkFriendsSelected = [];
     increase = 0;
     for (i = 0;i < network_friend_count;i++){
