@@ -31,10 +31,19 @@ $(function(){
     $("a[title=gallery]").click(function(){ $("#gallery #tabs a[title=tab1]").click(); });
 
     $(".aviary-tab").click(function(){
+        if (userBrowser[0].ios == 1)
+            aviarySpace('get');
         if (!($(".aviary-thumbs").parent(".elastislide-carousel").length > 0))
             $('.aviary-thumbs').elastislide();
         $('.aviary-thumbs').find('li:eq(0) img').trigger("click");
     });
+
+    //Return space for ads area
+    if (userBrowser[0].ios == 1){
+        $("#gallery").find("#tabs").find("a").not(".aviary-tab").click(function(){ aviarySpace('return'); });
+        $("#main-tab").find("a").click(function(){ aviarySpace('return'); });
+    }
+
 });
 var checkHasImage = false;
 /*Preload for server media*/
@@ -137,4 +146,21 @@ jQuery.fetch_server_media = function (){
                 return true;
             }
     );
+}
+
+
+//Funtion for aviary edit tab space
+function aviarySpace(updateMode){   //updateMode is get or return
+    if ($(".right-ads").length > 0){ //Run only advertising enabled
+        if (updateMode == 'get'){
+            $("#gallery div:eq(0)").removeClass("span9").addClass("span11");
+            $(".right-ads").hide();
+        }
+        else{
+            if (updateMode == "return"){
+                $("#gallery div:eq(0)").removeClass("span11").addClass("span9");
+                $(".right-ads").show();
+            }
+        }
+    }
 }

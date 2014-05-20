@@ -3,6 +3,11 @@ var uploadFilesInstance = []; //Used for store all file name for uploading
 var currentUploadFileCount = 0; //Count for all current files selected for upload
 $(document).ready( function() {
 
+    //Check if IOS only allow 1 file per upload
+    if (userBrowser[0].ios == 1){
+        $(".direct-upload").find("input[type=file]").removeAttr('multiple');
+    }
+
     var ellipsisCount = 1;
     var name = '';
     var hashName = '';
@@ -208,7 +213,6 @@ $(document).ready( function() {
                         $(".completed-upload .mCSB_container").append ('<li class="video-media"><img src="/memreas/img/small/1.jpg"/><img src="/memreas/img/video-overlay.png" class="overlay-videoimg"></li>');
                     else $(".completed-upload .first-element").append ('<li class="video-media"><img src="/memreas/img/small/1.jpg"/><img src="/memreas/img/video-overlay.png" class="overlay-videoimg"></li>');
                 }
-alert("about to call addmediaevent...");
                 ajaxRequest('addmediaevent', params, function(xml_response){
                     removeItem(uploadFilesInstance, filename);
                     currentUploadFileCount = uploadFilesInstance.length;

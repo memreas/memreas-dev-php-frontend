@@ -23,15 +23,15 @@
                     <input name="input3" type="text" id="txt_location" class="share-txtfield" value="address or current location" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'address or current location')this.value = '';" onClick="share_showGoogleMap('div_locationmap_maparea');"/>
                     </li>
                     <li>
-                     <input id="ckb_canpost" class="css-checkbox" type="checkbox" checked="checked"/>
+                     <input id="ckb_canpost" class="css-checkbox" type="checkbox" checked="checked" name="ckb_canpost"/>
                      <label for="ckb_canpost" name="demo_lbl_1" class="css-label margin-none" >friends can post pics/videos</label>
                     </li>
                     <li>
-                     <input id="ckb_canadd" class="css-checkbox" type="checkbox" checked="checked"/>
+                     <input id="ckb_canadd" class="css-checkbox" type="checkbox" checked="checked" name="ckb_canadd"/>
                      <label for="ckb_canadd" name="demo_lbl_2" class="css-label margin-none" >friends can add Friends</label>
                     </li>
                     <li>
-                     <input id="ckb_public" class="css-checkbox" type="checkbox" checked="checked"/>
+                     <input id="ckb_public" class="css-checkbox" type="checkbox" name="ckb_public"/>
                      <label for="ckb_public" name="demo_lbl_3" class="css-label margin-none" onClick="javascript:share_clickCkbPublic();" >public (anyone can add or post)</label>
                     </li>
                     <li>
@@ -41,7 +41,7 @@
                      <input name="input" type="text" id="dtp_to" class="date-picker" readonly value="to" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'to')this.value = '';"/>
                     </li>
                     <li>
-                     <input id="ckb_selfdestruct" class="css-checkbox" type="checkbox" checked="checked"/>
+                     <input id="ckb_selfdestruct" class="css-checkbox" type="checkbox" />
                      <label for="ckb_selfdestruct" name="demo_lbl_5" class="css-label margin-none" >self destruct :</label>
                      <input name="input" type="text" id="dtp_selfdestruct" class="share-txtfield-2 date-picker" readonly value="" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == '')this.value = '';"/>
                     </li>
@@ -142,3 +142,8 @@
     <div id="div_locationmap_maparea" class="map_box"></div>
 </div>
 <div id="div_locationmap_back" class="backgroundPopup"></div>
+<script type="text/javascript">
+    $(function(){
+        $("input[type=checkbox].css-checkbox:checked").next("label.css-label").css("background", "url(/memreas/img/check.png) no-repeat");
+    });
+</script>
