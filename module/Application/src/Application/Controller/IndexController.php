@@ -187,6 +187,13 @@ error_log("Enter FE indexAction".PHP_EOL);
 		return $view;
     }
 
+    private function getS3Key(){
+        $action = 'memreas_tvm';
+        $xml = '<xml><memreas_tvm></memreas_tvm></xml>';
+        $s3Authenticate = $this->fetchXML($action, $xml);
+        return json_decode($s3Authenticate);
+    }
+
     /*
     * Generate S3 signatures and credentials
     * @ Tran Tuan
@@ -194,8 +201,13 @@ error_log("Enter FE indexAction".PHP_EOL);
     */
     public function s3signedAction(){
         $data['bucket'] = "memreasdev";
+
         $data['accesskey'] = "AKIAJMXGGG4BNFS42LZA";
         $data['secret'] = "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";
+
+        /*$s3Authenticate = json_decode($this->getS3Key());
+        $data['accessKey'] = $s3Authenticate['AccessKeyId'];
+        $data['secret'] = $s3Authenticate['SecretAccessKey'];*/
 
         $policy = $this->getS3Policy();
         $hmac = $this->hmacsha1($data['secret'], $policy);

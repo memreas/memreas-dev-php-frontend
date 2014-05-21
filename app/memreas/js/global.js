@@ -8,6 +8,7 @@ if (CURRENT_URL.indexOf('localhost') < 0 && GLOBAL_ENV == 'development')
     GLOBAL_ENV = 'live'; //Force set if URL is not localhost
 
 var s3_bucket = 'memreasdev';
+var userBrowser = detectBrowser();
 
 /*
 *@ Function Scrollbar Secure
