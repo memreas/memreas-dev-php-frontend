@@ -31,7 +31,7 @@ $(function(){
     $("a[title=gallery]").click(function(){ $("#gallery #tabs a[title=tab1]").click(); });
 
     $(".aviary-tab").click(function(){
-        if (userBrowser[0].ios == 1)
+        if (detectHandheldIOSDevice())
             aviarySpace('get');
         if (!($(".aviary-thumbs").parent(".elastislide-carousel").length > 0))
             $('.aviary-thumbs').elastislide();
@@ -39,7 +39,7 @@ $(function(){
     });
 
     //Return space for ads area
-    if (userBrowser[0].ios == 1){
+    if (detectHandheldIOSDevice()){
         $("#gallery").find("#tabs").find("a").not(".aviary-tab").click(function(){ aviarySpace('return'); });
         $("#main-tab").find("a").click(function(){ aviarySpace('return'); });
     }

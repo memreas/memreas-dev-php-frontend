@@ -47,42 +47,42 @@ function image_exist(image_url, default_value){
 //Notify functions
 function jsuccess (str_msg){
     jSuccess(
-    str_msg,
-    {
-      autoHide : true, // added in v2.0
-      clickOverlay : false, // added in v2.0
-      MinWidth : 250,
-      TimeShown : 3000,
-      ShowTimeEffect : 200,
-      HideTimeEffect : 200,
-      LongTrip :20,
-      HorizontalPosition : 'center',
-      VerticalPosition : 'top',
-      ShowOverlay : true,
-      ColorOverlay : '#FFF',
-      OpacityOverlay : 0.3,
-      onClosed : function(){},
-      onCompleted : function(){}
+        str_msg,
+        {
+            autoHide : true, // added in v2.0
+            clickOverlay : false, // added in v2.0
+            MinWidth : 250,
+            TimeShown : 3000,
+            ShowTimeEffect : 200,
+            HideTimeEffect : 200,
+            LongTrip :20,
+            HorizontalPosition : 'center',
+            VerticalPosition : 'top',
+            ShowOverlay : true,
+            ColorOverlay : '#FFF',
+            OpacityOverlay : 0.3,
+            onClosed : function(){},
+            onCompleted : function(){}
     });
 }
 function jerror (str_msg){
     jError(
-    str_msg,
-    {
-      autoHide : true, // added in v2.0
-      clickOverlay : false, // added in v2.0
-      MinWidth : 250,
-      TimeShown : 3000,
-      ShowTimeEffect : 200,
-      HideTimeEffect : 200,
-      LongTrip :20,
-      HorizontalPosition : 'center',
-      VerticalPosition : 'top',
-      ShowOverlay : true,
-      ColorOverlay : '#FFF',
-      OpacityOverlay : 0.3,
-      onClosed : function(){},
-      onCompleted : function(){}
+        str_msg,
+        {
+            autoHide : true, // added in v2.0
+            clickOverlay : false, // added in v2.0
+            MinWidth : 250,
+            TimeShown : 3000,
+            ShowTimeEffect : 200,
+            HideTimeEffect : 200,
+            LongTrip :20,
+            HorizontalPosition : 'center',
+            VerticalPosition : 'top',
+            ShowOverlay : true,
+            ColorOverlay : '#FFF',
+            OpacityOverlay : 0.3,
+            onClosed : function(){},
+            onCompleted : function(){}
     });
 }
 function logout(){
@@ -99,7 +99,7 @@ function removeItem(array, item){
         if(array[i]==item){
             array.splice(i,1);
             break;
-            }
+        }
     }
 }
 function detectBrowser(){
@@ -107,16 +107,16 @@ function detectBrowser(){
     {
         return [{'ios':1},{'browser':'Ipod or Iphone'}];
     }
-else if (navigator.vendor != null && navigator.vendor.match(/Apple Computer, Inc./) && navigator.userAgent.match(/iPad/i))
+    else if (navigator.vendor != null && navigator.vendor.match(/Apple Computer, Inc./) && navigator.userAgent.match(/iPad/i))
     {
         return [{'ios':1},{'browser':'Ipad'}];
     }
-else if (navigator.vendor != null && navigator.vendor.match(/Apple Computer, Inc./) && navigator.userAgent.indexOf('Safari') != -1)
+    else if (navigator.vendor != null && navigator.vendor.match(/Apple Computer, Inc./) && navigator.userAgent.indexOf('Safari') != -1)
     {
         return [{'ios':1},{'browser':'Safari'}];
     }
 
-else if (navigator.vendor == null || navigator.vendor != null)
+    else if (navigator.vendor == null || navigator.vendor != null)
     {
         var isOpera = !!window.opera || navigator.userAgent.indexOf('Opera') >= 0;
         var isFirefox = typeof InstallTrigger !== 'undefined';   // Firefox 1.0+
@@ -131,3 +131,40 @@ else if (navigator.vendor == null || navigator.vendor != null)
         if (isIE) return [{'ios':0},{'browser':'IE'}];
     }
 }
+
+function detectHandheldIOSDevice(){
+    if (userBrowser[0].ios == 1 && (userBrowser[1].browser == 'Ipod or Iphone' || userBrowser[1].browser == 'Ipad'))
+        return true;
+    else return false;
+}
+
+//Lock to landscape if using smaller than 7' ipad
+$(function(){
+    $(window).bind('orientationchange resize', function(event){
+        if (event.orientation) {
+            if (event.orientation == 'landscape') {
+                if (window.rotation == 90) {
+                    rotate(this, -90);
+                } else {
+                    rotate(this, 90);
+                }
+            }
+        }
+    });
+
+    function rotate(el, degs) {
+        iedegs = degs/90;
+        if (iedegs < 0) iedegs += 4;
+        transform = 'rotate('+degs+'deg)';
+        iefilter = 'progid:DXImageTransform.Microsoft.BasicImage(rotation='+iedegs+')';
+        styles = {
+            transform: transform,
+            '-webkit-transform': transform,
+            '-moz-transform': transform,
+            '-o-transform': transform,
+            filter: iefilter,
+            '-ms-filter': iefilter
+        };
+        $(el).css(styles);
+    }
+});

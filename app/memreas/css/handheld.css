@@ -4,6 +4,11 @@
 */
 @media screen and (max-width: 1024px){
     .menu ul li a{ padding: 5px 5px; }
+    li.working-upload .progress-text{ top: 70%; }
+    .password-level{
+        display: block;
+        margin-bottom: 10px;
+    }
 }
 @media screen and (min-width: 640px) and (max-width: 768px){
     .signin_contents ul{
@@ -16,11 +21,6 @@
     .signin_contents input[type="password"]{
         margin-left: 30px;
         width: 260px;
-    }
-    .password-level{
-        display: block;
-        margin-left: 30px;
-        margin-bottom: 10px;
     }
     .medium_tabs a{ padding: .2em .8em !important; }
     input.search_bar{ margin-left: -10px; }
