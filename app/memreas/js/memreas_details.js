@@ -543,7 +543,7 @@ function addFriendToEvent(eventId){
                     tag: 'friend',
                     value: [
                                 { tag: 'friend_name',         value: tw_friendsInfo[i].name },
-                                { tag: 'friend_id',         value: tw_friendsInfo[i].id },
+                                { tag: 'friend_id',         value: tw_friendsInfo[i].id.toString() },
                                 { tag: 'network_name',         value: 'twitter' },
                                 { tag: 'profile_pic_url',     value: tw_friendsInfo[i].photo }
                             ]
