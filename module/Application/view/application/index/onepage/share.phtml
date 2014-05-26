@@ -64,8 +64,15 @@
                             <li>
                                 <div class="comment-txt clearfix">add a comment</div>
                             </li>
-                            <li>
+                            <li style="position: relative;">
                                 <input name="input2" accept="audio/*;capture=microphone" type="text" id="txt_comment" class="comment_txtfield" value="your comments here" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'your comments here')this.value = '';"/>
+                                <a href="javascript:voiceComment();" class="voice-icon"></a>
+                                <!--
+                                <a class="button" href="javascript:ar_start();">Record</a>
+                                <a class="button" href="javascript:ar_stop();">Stop</a>
+                                -->
+                                <a class="button" id="download-audio" href="javascript:ar_saveAudio();" style="display: none;">Download Audio</a>
+
                             </li>
                         </ul>
 
@@ -95,7 +102,7 @@
                         </li>
                         -->
                     </ul>
-                    <div class="akordeon" id="buttons">
+                    <div id="buttons-sharefriend">
                         <div class="akordeon-item expanded">
                             <div class="akordeon-item-head">
                                 <div class="akordeon-item-head-container">
@@ -111,6 +118,7 @@
                             </div>
                         </div>
                     </div>
+                    <div class="clear"></div>
                     <ul class="share_friends_check_box">
                         <li>
                             <input id="ckb_makegroup" class="css-checkbox" type="checkbox" />

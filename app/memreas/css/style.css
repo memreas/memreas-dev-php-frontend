@@ -1184,9 +1184,17 @@ ul.share li img{
 }
 .comment_txtfield {
 	margin: 0px 0px 0px 10px;
-	background: url(../img/speaker.png) right no-repeat;
 	height: 30px !important;
 	width: 370px;
+}
+.voice-icon{
+    background: url(../img/speaker.png) right no-repeat;
+    display: inline-block;
+    width: 80px;
+    height: 30px;
+    position: absolute;
+    left: 306px;
+    top: 5px;
 }
 .voice_comment {
 	margin: 0px 0px 0px 0px;
@@ -2571,7 +2579,7 @@ ul.memreas_results{
     text-transform: uppercase !important;
 }
 
-#loadingpopup {
+#loadingpopup, .overlay {
 	width: 100%;
 	height: 100%;
 	background: rgba(200,200,200,0.6);
@@ -2590,6 +2598,14 @@ ul.memreas_results{
 	top: 40%;
 	border-radius: 1rem;
 }
+.overlay .overlay-inner{
+    z-index: 10000;
+    position:absolute;
+    left: 35%;
+    top: 25%;
+    text-align: center;
+}
+.voice-comment-load img{ width: 200px; }
 
 #loadingimg {
 	width:2rem;

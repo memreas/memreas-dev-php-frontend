@@ -59,7 +59,7 @@ share_initObjects = function() {
 		share_changeSocialType();
     });
 
-    //ar_initAudio();
+    ar_initAudio();
 }
 
 // initialize the akordeon.
@@ -617,6 +617,16 @@ share_clickFriends = function(id) {
 // make the group with selected friends and e-mail list.
 share_makeGroup = function() {
 	var emailList 	= splitByDelimeters(getElementValue('txt_emaillist'), [',', ';']);
+    var emailTags = [];
+    if (emailList.length > 0){
+        var counter = 0;
+        for (i = 0;i < emailList.length;i++){
+            emailTags[counter++] = {
+                tag: 'email',
+                value: emailList[i]
+            };
+        }
+    }
 	var groupName	= getElementValue('txt_groupname');
 	var selFriends  = [];
 	var i = 0, count = 0;
@@ -702,6 +712,7 @@ share_makeGroup = function() {
         'addfriendtoevent',
         [
             { tag: 'user_id',         value: user_id },
+            { tag: 'emails', value: emailTags },
             { tag: 'event_id',         value: event_id },
             { tag: 'friends',         value: selFriends }
         ],
