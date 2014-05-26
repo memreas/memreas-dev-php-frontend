@@ -25,4 +25,5 @@ AuthName "secure-content"
 AuthUserFile /var/app/current/apache_passwords
 Require valid-user
 
-
+## Favicon.ico
+RewriteRule ^(.*)favicon\.ico /favicon.ico [L]
