@@ -1,83 +1,90 @@
 <?php
-use Zend\Session\Container;
-header('Cache-Control: no-cache, no-store, must-revalidate'); // HTTP 1.1.
-header('Pragma: no-cache'); // HTTP 1.0.
-header('Expires: 0'); // Proxies.
-header('Access-Control-Allow-Origin: *');
-header("Access-Control-Allow-Methods: POST, GET");
-header("Access-Control-Allow-Headers: x-requested-with");
-$session = new Container('user');
-//$user_id = $session->offsetGet('user_id');
-$user_id = $data['userid'];
+    use Zend\Session\Container;
+    header('Cache-Control: no-cache, no-store, must-revalidate'); // HTTP 1.1.
+    header('Pragma: no-cache'); // HTTP 1.0.
+    header('Expires: 0'); // Proxies.
+    header('Access-Control-Allow-Origin: *');
+    header("Access-Control-Allow-Methods: POST, GET");
+    header("Access-Control-Allow-Headers: x-requested-with");
+    $session = new Container('user');
+    //$user_id = $session->offsetGet('user_id');
+    $user_id = $data['userid'];
 ?>
 <!doctype html>
 <html>
-<head>
-<meta charset="utf-8">
-<title>Memreas</title>
+    <head>
+        <meta charset="utf-8">
+        <title>Memreas</title>
 
-<?php include('onepage/css_section.phtml'); ?>
-<?php include('onepage/js_section.phtml'); ?>
+        <?php include('onepage/css_section.phtml'); ?>
+        <?php include('onepage/js_section.phtml'); ?>
 
-</head>
+    </head>
 
-<body>
-<div id="loadingpopup">
-    <div id="loadingpopupinner">
-        <img id="loadingimg" src="/memreas/img/loading.gif">
-        <span id="loadingtext">Please wait...</span>
-    </div>
-</div>
-<input type="hidden" name="user_id" value="<?php echo $data['userid']; ?>">
-<!-- Begin : Container -->
-<div class="container">
-  <?php include 'header.phtml'; ?>
-
-  <!-- Begin : Content - For Tab-->
-        <div class="row-fluid content" style="background: #185EB3;">
-        <?php include('nav.phtml'); ?>
-
-          <!-- Main Tab Content -->
-          <div id="maintab-content">
-               <!-- Begin : Content - For search -->
-              <?php include('onepage/search.phtml'); ?>
-              <!-- End : search -->
-
-              <!-- Begin : Content - For notification -->
-              <?php include('onepage/notification.phtml'); ?>
-              <!-- End : Notification -->
-
-              <!-- Gallery Main Tab -->
-              <?php include('onepage/gallery.phtml'); ?>
-              <!-- End: Gallery Main Tab -->
-
-              <!-- Queue Main Tab -->
-              <?php include ('onepage/queue.phtml'); ?>
-              <!-- End: Queue Main Tab -->
-
-              <!-- Share Main Tab -->
-              <?php include ('onepage/share.phtml'); ?>
-              <!-- End : Share Main Tab -->
-
-              <!-- Memreas Main Tab -->
-              <?php include ('onepage/memreas.phtml'); ?>
-              <?php include ('onepage/memreas_detail.phtml'); ?>
-              <!-- End : Memreas Main Tab -->
-
-              <!-- More Tab -->
-              <?php include ('onepage/more_page.phtml'); ?>
-              <!-- End : More Tab -->
-          </div>
-          <!-- End: Main Tab Content -->
+    <body>
+        <div id="loadingpopup">
+            <div id="loadingpopupinner">
+                <img id="loadingimg" src="/memreas/img/loading.gif">
+                <span id="loadingtext">Please wait...</span>
+            </div>
         </div>
+        <div class="overlay voice-comment-load">
+            <div class="overlay-inner">
+                <img src="/memreas/img/speaking-icon.gif" /><br/>
+                <a class="black_btn_skin process-voice" href="javascript:voiceCommentStart();">Start</a> &nbsp;
+                <a class="black_btn_skin" href="javascript:voiceCommentCancel();">Cancel</a>
+            </div>
+        </div>
+        <input type="hidden" name="user_id" value="<?php echo $data['userid']; ?>">
+        <!-- Begin : Container -->
+        <div class="container">
+            <?php include 'header.phtml'; ?>
 
-          </div>
-      </div>
-    </div>
-  <!-- End : Content -->
-</div>
-<?php include 'footer.phtml'; ?>
-<!-- End : Container -->
-<script src="/memreas/js/main.js"></script>
-</body>
+            <!-- Begin : Content - For Tab-->
+            <div class="row-fluid content" style="background: #185EB3;">
+                <?php include('nav.phtml'); ?>
+
+                <!-- Main Tab Content -->
+                <div id="maintab-content">
+                    <!-- Begin : Content - For search -->
+                    <?php include('onepage/search.phtml'); ?>
+                    <!-- End : search -->
+
+                    <!-- Begin : Content - For notification -->
+                    <?php include('onepage/notification.phtml'); ?>
+                    <!-- End : Notification -->
+
+                    <!-- Gallery Main Tab -->
+                    <?php include('onepage/gallery.phtml'); ?>
+                    <!-- End: Gallery Main Tab -->
+
+                    <!-- Queue Main Tab -->
+                    <?php include ('onepage/queue.phtml'); ?>
+                    <!-- End: Queue Main Tab -->
+
+                    <!-- Share Main Tab -->
+                    <?php include ('onepage/share.phtml'); ?>
+                    <!-- End : Share Main Tab -->
+
+                    <!-- Memreas Main Tab -->
+                    <?php include ('onepage/memreas.phtml'); ?>
+                    <?php include ('onepage/memreas_detail.phtml'); ?>
+                    <!-- End : Memreas Main Tab -->
+
+                    <!-- More Tab -->
+                    <?php include ('onepage/more_page.phtml'); ?>
+                    <!-- End : More Tab -->
+                </div>
+                <!-- End: Main Tab Content -->
+            </div>
+
+        </div>
+        </div>
+        </div>
+        <!-- End : Content -->
+        </div>
+        <?php include 'footer.phtml'; ?>
+        <!-- End : Container -->
+        <script src="/memreas/js/main.js"></script>
+    </body>
 </html>

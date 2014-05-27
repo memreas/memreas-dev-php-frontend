@@ -695,8 +695,9 @@ ul.pics li {
     overflow: hidden;
     background: #112A4B;
 }
-ul.pics li img, .aviary-thumbs img{
+ul.pics li img, .aviary-thumbs img, .galleries-location img{
     height: 98px;
+    cursor: pointer;
 }
 ul.pics li a{
     display: inline-block;

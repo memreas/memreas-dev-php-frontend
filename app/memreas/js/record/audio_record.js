@@ -38,16 +38,19 @@ function ar_doneEncoding( blob ) {
 }
 
 function ar_stop() {
-	if (!audioRecorder)
+    if (!audioRecorder){
+        jerror('your browser is not supported or you must allow to accesss your microphone');
 		return;
-		
+    }
 	audioRecorder.stop();
+    //ar_saveAudio();
 }
 
 function ar_start() {
-	if (!audioRecorder)
+    if (!audioRecorder){
+        jerror('your browser is not supported or you must allow to accesss your microphone');
 		return;
-		
+    }
 	audioRecorder.clear();
 	audioRecorder.record();
 }
@@ -59,7 +62,7 @@ function ar_convertToMono( input ) {
     input.connect( splitter );
     splitter.connect( merger, 0, 0 );
     splitter.connect( merger, 0, 1 );
-    
+
     return merger;
 }
 
@@ -110,4 +113,42 @@ function ar_initAudio() {
 		alert('Error getting audio');
 		console.log(e);
 	});
+}
+
+function voiceComment(){
+    if (!audioRecorder){
+        jerror('your browser is not supported or you must allow to accesss your microphone');
+        return;
+    }
+    $("a.process-voice").attr("href", "javascript:voiceCommentStart();");
+    $("a.process-voice").html('Start');
+    audioRecorder.clear();
+    $(".voice-comment-load").show();
+}
+function voiceCommentStart(){
+    ar_start();
+    $("a.process-voice").attr("href", "javascript:voiceCommentStop();");
+    $("a.process-voice").html('Stop');
+}
+function voiceCommentStop(){
+    $("a.process-voice").attr("href", "javascript:voiceCommentStart();");
+    $("a.process-voice").html('Start');
+    ar_stop();
+    ar_saveAudio();
+}
+function voiceCommentCancel(){
+    if (audioRecorder){
+        audioRecorder.stop();
+        audioRecorder.clear();
+    }
+    $(".voice-comment-load").fadeOut(500);
+}
+
+function uploadAudio(blobObject){
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/index/audiocomment', true);
+    xhr.onload = function(e){
+        var result = e.target.result;
+    }
+    xhr.send(blobObject);
 }

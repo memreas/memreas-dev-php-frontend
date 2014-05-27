@@ -38,11 +38,19 @@ $(function(){
         $('.aviary-thumbs').find('li:eq(0) img').trigger("click");
     });
 
+    $(".location-tab").click(function(){
+        if (!($(".galleries-location").parent(".elastislide-carousel").length > 0))
+            $('.galleries-location').elastislide();
+        //$('.galleries-location').find('li:eq(0) img').trigger("click");
+    });
+
     //Return space for ads area
     if (detectHandheldIOSDevice()){
         $("#gallery").find("#tabs").find("a").not(".aviary-tab").click(function(){ aviarySpace('return'); });
         $("#main-tab").find("a").click(function(){ aviarySpace('return'); });
     }
+
+    gallery_initGoogleMap("gallery-location");
 
 });
 var checkHasImage = false;
@@ -50,7 +58,7 @@ var checkHasImage = false;
 jQuery.fetch_server_media = function (){
     $(".user-resources").remove();
     $("#tab-content #tab1").append('<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/325" data-max-width="100%"  data-allow-full-screen="true"  data-nav="thumbs"></div>');
-    $(".edit-area-scroll, .aviary-thumbs").empty();
+    $(".edit-area-scroll, .aviary-thumbs, .galleries-location").empty();
     $(".user-resources, .scrollClass .mCSB_container, .sync .mCSB_container").html('');
     $("#loadingpopup").show();
     ajaxRequest('listallmedia',
@@ -108,6 +116,7 @@ jQuery.fetch_server_media = function (){
                         $(".user-resources").append('<img src="' + _media_url + '"/>');
                         $(".edit-area-scroll").append ('<li><a class="image-sync" id="' + mediaId + '" onclick="return imageChoosed(this.id);" href="' + _media_url + '"><img src="' + _media_url + '"/></a></li>');
                         $(".aviary-thumbs").append('<li><img id="edit' + mediaId + '" src="' + _media_url + '" onclick="openEditMedia(this.id, \'' + _media_url + '\');"/></li>');
+                        $(".galleries-location").append('<li><img id="location' + mediaId + '" src="' + _media_url + '" onclick="openMediaLocation(this.id);"/></li>');
                         checkHasImage = true;
                     }
                   }
