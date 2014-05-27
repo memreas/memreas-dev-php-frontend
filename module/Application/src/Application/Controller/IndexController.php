@@ -275,7 +275,7 @@ error_log("Enter FE indexAction".PHP_EOL);
         }
         else{
             //Live development
-            $appKey = 'XjWz7d8AIh0hq6mDqjR7mA';
+            $appKey = '9jwg1vX4MgH7rfBzxqkcjI90f';
             $appSecret = 'wlF52rzjDCtrFNzZ8lJRgMU9Fd4aOagkqLclomXOYg';
         }
         $config->setConsumerKey($appKey)
