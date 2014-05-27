@@ -323,7 +323,7 @@ error_log("Enter FE indexAction".PHP_EOL);
                 $config['consumer_secret'] = 'wM0gGBCzZKl5dLRB8TQydRDfTD5ocf2hGRKSQwag';
             }
             else{
-                $config['consumer_key'] = 'XjWz7d8AIh0hq6mDqjR7mA';
+                $config['consumer_key'] = '9jwg1vX4MgH7rfBzxqkcjI90f';
                 $config['consumer_secret'] = 'wlF52rzjDCtrFNzZ8lJRgMU9Fd4aOagkqLclomXOYg';
             }
             $config['oauth_token'] = $accessToken['oauth_token'];
