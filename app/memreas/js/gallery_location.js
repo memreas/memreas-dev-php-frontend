@@ -8,8 +8,8 @@ gallery_showGoogleMap = function(div_id) {
 // initialize the google map.
 gallery_initGoogleMap = function(div_id, mediaLat, mediaLng) {
     if (location_map == null || typeof location_map == "undefined") {
-         var lat = mediaLat,
-             lng = mediaLng,
+         var lat = parseFloat(mediaLat),
+             lng = parseFloat(mediaLng),
              latlng = new google.maps.LatLng(lat, lng),
              image = 'http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png';
 
@@ -17,7 +17,7 @@ gallery_initGoogleMap = function(div_id, mediaLat, mediaLng) {
          var mapOptions = {
              center: new google.maps.LatLng(lat, lng),
              zoom: 13,
-             mapTypeId: google.maps.MapTypeId.SATELLITE,
+             mapTypeId: google.maps.MapTypeId.ROADMAP,
              panControl: true,
              panControlOptions: {
                  position: google.maps.ControlPosition.TOP_RIGHT

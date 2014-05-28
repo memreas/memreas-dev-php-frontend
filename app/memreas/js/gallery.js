@@ -41,6 +41,7 @@ $(function(){
     $(".location-tab").click(function(){
         if (!($(".galleries-location").parent(".elastislide-carousel").length > 0))
             $('.galleries-location').elastislide();
+        //gallery_initGoogleMap("gallery-location");
         //$('.galleries-location').find('li:eq(0) img').trigger("click");
     });
 
@@ -49,8 +50,6 @@ $(function(){
         $("#gallery").find("#tabs").find("a").not(".aviary-tab").click(function(){ aviarySpace('return'); });
         $("#main-tab").find("a").click(function(){ aviarySpace('return'); });
     }
-
-    gallery_initGoogleMap("gallery-location");
 
 });
 var checkHasImage = false;

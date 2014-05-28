@@ -276,7 +276,7 @@ error_log("Enter FE indexAction".PHP_EOL);
         else{
             //Live development
             $appKey = '9jwg1vX4MgH7rfBzxqkcjI90f';
-            $appSecret = 'wlF52rzjDCtrFNzZ8lJRgMU9Fd4aOagkqLclomXOYg';
+            $appSecret = 'bDqOeHkJ7OIQ4QPNnT1PA9oz55gf51YW0REBo12aazGA0CBrbY';
         }
         $config->setConsumerKey($appKey)
             ->setConsumerSecret($appSecret)
@@ -324,7 +324,7 @@ error_log("Enter FE indexAction".PHP_EOL);
             }
             else{
                 $config['consumer_key'] = '9jwg1vX4MgH7rfBzxqkcjI90f';
-                $config['consumer_secret'] = 'wlF52rzjDCtrFNzZ8lJRgMU9Fd4aOagkqLclomXOYg';
+                $config['consumer_secret'] = 'bDqOeHkJ7OIQ4QPNnT1PA9oz55gf51YW0REBo12aazGA0CBrbY';
             }
             $config['oauth_token'] = $accessToken['oauth_token'];
             $config['oauth_token_secret'] = $accessToken['oauth_token_secret'];
