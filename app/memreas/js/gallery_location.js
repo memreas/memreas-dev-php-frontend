@@ -8,8 +8,8 @@ gallery_showGoogleMap = function(div_id) {
 // initialize the google map.
 gallery_initGoogleMap = function(div_id, mediaLat, mediaLng) {
     if (location_map == null || typeof location_map == "undefined") {
-         var lat = parseFloat(mediaLat),
-             lng = parseFloat(mediaLng),
+         var lat = mediaLat,
+             lng = mediaLng,
              latlng = new google.maps.LatLng(lat, lng),
              image = 'http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png';
 
@@ -44,6 +44,9 @@ gallery_initGoogleMap = function(div_id, mediaLat, mediaLng) {
          autocomplete.bindTo('bounds', location_map);
          var infowindow = new google.maps.InfoWindow();
 
+        location_map.setCenter(new google.maps.LatLng(lat, lng));
+        location_map.setZoom(17);
+
          google.maps.event.addListener(autocomplete, 'place_changed', function (event) {
              infowindow.close();
 
@@ -58,9 +61,10 @@ gallery_initGoogleMap = function(div_id, mediaLat, mediaLng) {
                  location_map.setZoom(17);
              }
              newLocation = [
-                                {tag: 'lat', value: place.geometry.location.k},
-                                {tag: 'lng', value: place.geometry.location.A}
+                                {tag: 'lat', value: place.geometry.location.A},
+                                {tag: 'lng', value: place.geometry.location.k}
                             ];
+                            console.log(place.geometry.location);
              moveMarker(place.name, place.geometry.location);
          });
 
@@ -84,28 +88,31 @@ gallery_initGoogleMap = function(div_id, mediaLat, mediaLng) {
                   onCompleted : function(){ }});
          });
 
+         $(".img-gallery").click(function(){
+             var selected_id = $(this).attr("id").replace('location', '');
+             location_media_id = selected_id;
+
+            //Get media detail location data
+            var params = [{tag: 'media_id', value: selected_id}];
+            ajaxRequest('viewmediadetails', params, function(response){
+                var mediaLocationLat = getValueFromXMLTag(response, 'latitude');
+                var mediaLocationLng = getValueFromXMLTag(response, 'longtitude');
+                if (mediaLocationLat == '' || mediaLocationLng == '')
+                    jerror('This media has no location, you can set it by typing it\'s address and hit update');
+                else{
+                    var newPosition = new google.maps.LatLng(mediaLocationLat, mediaLocationLng);
+                    marker.setPosition(newPosition);
+                    //location_map.setZoom(17);
+                }
+            });
+         });
+
          function moveMarker(placeName, latlng) {
              marker.setIcon(image);
              marker.setPosition(latlng);
              infowindow.setContent(placeName);
          }
     }
-}
-
-function openMediaLocation(locationGalleryId){
-    var selected_id = locationGalleryId.replace('location', '');
-    location_media_id = selected_id;
-
-    //Get media detail location data
-    var params = [{tag: 'media_id', value: selected_id}];
-    ajaxRequest('viewmediadetails', params, function(response){
-        var mediaLocation = getValueFromXMLTag(response, 'location');
-        var mediaLocationLat = $(mediaLocation).wrap('latitude')[0].innerHTML;
-        var mediaLocationLng = $(mediaLocation).wrap('longitude')[0].innerHTML;
-        if (mediaLocationLat == '' || mediaLocationLng == '')
-            jerror('This media has no location, you can set it by typing it\' address and hit update');
-        else gallery_initGoogleMap("gallery-location", mediaLocationLat, mediaLocationLng);
-    });
 }
 
 function gallery_updateLocation(galleryId, latitude, longtitude){

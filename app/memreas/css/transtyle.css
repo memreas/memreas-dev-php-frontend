@@ -71,9 +71,10 @@ ul.edit-area-scroll{ height: 270px; }
     left: 1px;
 }
 .elastislide-carousel ul li a img{
-    max-width: 110px !important;
+    width: 110px !important;
     height: 70px;
 }
+.carousel-memrease-area .elastislide-carousel ul li{ margin-left: 10px; }
 .event_like, .event_comment{ position: relative; }
 .event_like span, .event_comment span{
     color: #FFFFFF;
@@ -81,11 +82,11 @@ ul.edit-area-scroll{ height: 270px; }
     font-size: 10px;
     position: absolute;
     right: 7px;
-    top: 1px;
+    top: 4px;
 }
-.event_comment span{ top: -1px; }
+.event_comment span{ top: 3px; }
 .image-preview img{ width: 430px; height: 280px; }
-.memreas-detail-comments .pro-pics img{ width: 85px; }
+.memreas-detail-comments .pro-pics img{ width: 85px; height: 65px; }
 img.selected-gallery{
     bottom: 5px;
     height: 20px !important;

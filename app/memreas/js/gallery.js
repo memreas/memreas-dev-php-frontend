@@ -41,7 +41,7 @@ $(function(){
     $(".location-tab").click(function(){
         if (!($(".galleries-location").parent(".elastislide-carousel").length > 0))
             $('.galleries-location').elastislide();
-        //gallery_initGoogleMap("gallery-location");
+        gallery_initGoogleMap("gallery-location");
         //$('.galleries-location').find('li:eq(0) img').trigger("click");
     });
 
@@ -115,7 +115,7 @@ jQuery.fetch_server_media = function (){
                         $(".user-resources").append('<img src="' + _media_url + '"/>');
                         $(".edit-area-scroll").append ('<li><a class="image-sync" id="' + mediaId + '" onclick="return imageChoosed(this.id);" href="' + _media_url + '"><img src="' + _media_url + '"/></a></li>');
                         $(".aviary-thumbs").append('<li><img id="edit' + mediaId + '" src="' + _media_url + '" onclick="openEditMedia(this.id, \'' + _media_url + '\');"/></li>');
-                        $(".galleries-location").append('<li><img id="location' + mediaId + '" src="' + _media_url + '" onclick="openMediaLocation(this.id);"/></li>');
+                        $(".galleries-location").append('<li><img id="location' + mediaId + '" class="img-gallery" src="' + _media_url + '" /></li>');
                         checkHasImage = true;
                     }
                   }

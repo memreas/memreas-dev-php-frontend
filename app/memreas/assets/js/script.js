@@ -4,7 +4,7 @@ var currentUploadFileCount = 0; //Count for all current files selected for uploa
 $(document).ready( function() {
 
     //Check if IOS only allow 1 file per upload
-    if (detectHandheldIOSDevice()){
+    if (userBrowser[0].ios){
         $(".direct-upload").find("input[type=file]").removeAttr('multiple');
     }
 

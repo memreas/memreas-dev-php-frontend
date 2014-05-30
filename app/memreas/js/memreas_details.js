@@ -36,6 +36,7 @@ $(function(){
         // example how to integrate with a previewer
         ajaxScrollbarElement(".memreas-detail-comments");
         updateMemreasMediaDetailsScript();
+        checkMemreasDetailCarousel();
     });
 });
 function updateMemreasMediaDetailsScript(){
@@ -681,3 +682,18 @@ function updateMediaLike(){
         $(".memreas-detail-likecount span").html(getValueFromXMLTag(xml_response, 'likes'));
     });
 }
+
+/*Additions fixing*/
+
+//Prevent clicking on carousel on detail tab if not enough media with full width
+function checkMemreasDetailCarousel(){
+    var jDetailMediaScroll = $(".carousel-memrease-area");
+    var detailCarouselWidth = jDetailMediaScroll.find('ul#carousel').width();
+    var numberOfChild = jDetailMediaScroll.find("ul#carousel li").length;
+    var elementWidth = (numberOfChild * 110) + (numberOfChild * 10); //110 is base width, 10 is margin space
+    if (elementWidth <= detailCarouselWidth){
+        $("body").append('<style type="text/css">.carousel-memrease-area navs{ display: none; }</style>');
+    }
+
+}
+

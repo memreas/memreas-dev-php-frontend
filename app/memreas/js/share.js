@@ -59,7 +59,8 @@ share_initObjects = function() {
 		share_changeSocialType();
     });
 
-    ar_initAudio();
+    if (!userBrowser[0].ios)
+        ar_initAudio();
 }
 
 // initialize the akordeon.

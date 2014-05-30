@@ -12,8 +12,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-
-var audioContext = new AudioContext();
+if (!userBrowser[0].ios){
+    var audioContext = new AudioContext();
+}
 var audioInput = null,
     realAudioInput = null,
     inputPoint = null,
