@@ -111,7 +111,6 @@ function ar_initAudio() {
 		navigator.requestAnimationFrame = navigator.webkitRequestAnimationFrame || navigator.mozRequestAnimationFrame;
 
     navigator.getUserMedia({audio:true}, ar_gotStream, function(e) {
-		alert('Error getting audio');
 		console.log(e);
 	});
 }

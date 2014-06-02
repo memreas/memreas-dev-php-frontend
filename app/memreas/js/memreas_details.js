@@ -671,6 +671,7 @@ function likeMemreasMedia(){
     });
 }
 function showPopupComment(){
+    $(".comment_txtfield").val('');
     popup('popupcomment');
     ajaxScrollbarElement('.commentpopup');
 }

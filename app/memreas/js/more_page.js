@@ -555,6 +555,10 @@ function network_clickFriends(selected_friend_id){
 //Update network friends
 function updateNetworkFriends(){
     var network_friend_count = networkfriendsInfo.length;
+    if (network_friend_count == 0){
+        jerror('Please select friend(s) to remove.');
+        return;
+    }
 
     if (network_friend_count == 0){
         jerror('There is no friend selected to remove');
