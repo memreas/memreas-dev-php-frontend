@@ -58,6 +58,7 @@ class IndexController extends AbstractActionController
 		    //'cache_me' => true,
     	    'xml' => $xml,
             'PHPSESSID' => $this->getToken(),
+            'user_id' => empty($_SESSION['user']['user_id'])?'':$_SESSION['user']['user_id']
 	        )
 	    );
 	    $response = $request->send();
