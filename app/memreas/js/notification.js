@@ -3,6 +3,9 @@ $(function(){
     $("a.notification_icon").click(function(){
         var user_id = $("input[name=user_id]").val();
         ajaxScrollbarElement(".notificationresults");
+        if ($(".notificationresults").hasClass ("mCustomScrollbar"))
+            $(".notificationresults .mCSB_container").empty();
+        else $(".notificationresults").empty();
         //Send request to server
         $("#loadingpopup").show();
         ajaxRequest(
@@ -13,8 +16,6 @@ $(function(){
             function(ret_xml) {
                 if (getValueFromXMLTag(ret_xml, 'status') == 'success'){
                     var notifications = getSubXMLFromTag(ret_xml, 'notification');
-                    if ($(".notificationresults").hasClass ("mCustomScrollbar"))
-                        $(".notificationresults .mCSB_container").empty();
                     var notification_count = notifications.length;
                     for (i = 0;i < notification_count;i++){
                         var notification = notifications[i].innerHTML;
@@ -29,7 +30,7 @@ $(function(){
                         var notification_status = getValueFromXMLTag(notifications[i], 'notification_status');
                         if (user_profile_pic == '') user_profile_pic = '/memreas/img/profile-pic.jpg';
                         if (notification_status == '0')
-                            var link_action = '<a class="black_btn_skin" href="javascript:;" onclick="updateNotification(\'' + notification_id + '\', \'accept\');">accept</a> <a class="black_btn_skin" href="javascript:;" onclick="updateNotification(\'' + notification_id + '\', \'ignore\');">Ignore</a>'
+                            var link_action = '<a class="black_btn_skin" href="javascript:;" onclick="updateNotification(\'' + notification_id + '\', \'accept\');">Ok</a> <a class="black_btn_skin" href="javascript:;" onclick="updateNotification(\'' + notification_id + '\', \'ignore\');">Ignore</a>'
                         else var link_action = '';
                         if ($(".notificationresults").hasClass ("mCustomScrollbar"))
                             $(".notificationresults .mCSB_container").append('<li class="notification ' + notification_status_to_class(notification_status) + '"><div class="notification_pro"><img src="' + user_profile_pic + '"></div>' + meta_text + ' ' + link_action + '</li>');
@@ -80,7 +81,7 @@ function updateNotification(notification_id, update_status){
                     setTimeout(function(){
                         //Reload notification
                         $("a.notification_icon").click();
-                    }, 2000);
+                    }, 1000);
                 }
                 else jerror(getValueFromXMLTag(response, 'message'));
             });
@@ -100,7 +101,7 @@ function updateNotification(notification_id, update_status){
                     setTimeout(function(){
                         //Reload notification
                         $("a.notification_icon").click();
-                    }, 2000);
+                    }, 1000);
                 }
                 else jerror(getValueFromXMLTag(response, 'message'));
             });
