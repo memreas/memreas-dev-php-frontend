@@ -17,7 +17,7 @@ $(function(){
                     username = username.substring(0, 7) + '...';
                 }
                 $("header").find(".pro-name").html(username);
-                $("#setting-username").html(username);
+                $("#setting-username").html(getValueFromXMLTag(xml_response, 'username'));
                 if (userprofile != ''){
                     $("header").find("#profile_picture").attr('src', userprofile);
                     $("#setting-userprofile img").attr('src', userprofile);
