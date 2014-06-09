@@ -1,6 +1,5 @@
 var location_media_id = '';
 gallery_showGoogleMap = function(div_id) {
-
     //For default map loading
     gallery_initGoogleMap(div_id, 44.88623409320778, -87.86480712897173);
 }
@@ -32,7 +31,9 @@ gallery_initGoogleMap = function(div_id, mediaLat, mediaLng) {
          marker = new google.maps.Marker({
              position: latlng,
              map: location_map,
-             icon: image
+             icon: image,
+             draggable: true,
+             animation: google.maps.Animation.DROP,
          });
 
          // set the search text field as auto-complete.
@@ -47,7 +48,12 @@ gallery_initGoogleMap = function(div_id, mediaLat, mediaLng) {
         location_map.setCenter(new google.maps.LatLng(lat, lng));
         location_map.setZoom(17);
 
-         google.maps.event.addListener(autocomplete, 'place_changed', function (event) {
+        var newLocation = [
+                                {tag: 'lat', value: mediaLat},
+                                {tag: 'lng', value: mediaLng}
+                            ];;
+
+        google.maps.event.addListener(autocomplete, 'place_changed', function (event) {
              infowindow.close();
 
              var place = autocomplete.getPlace();
@@ -64,8 +70,14 @@ gallery_initGoogleMap = function(div_id, mediaLat, mediaLng) {
                                 {tag: 'lat', value: place.geometry.location.A},
                                 {tag: 'lng', value: place.geometry.location.k}
                             ];
-                            console.log(place.geometry.location);
              moveMarker(place.name, place.geometry.location);
+         });
+
+         google.maps.event.addListener(marker, 'dragend', function(event){
+             newLocation = [
+                                {tag: 'lat', value: event.latLng.A},
+                                {tag: 'lng', value: event.latLng.k}
+                            ];
          });
 
          $("#btn_gallerymap_ok").bind("click", function(){
@@ -100,9 +112,8 @@ gallery_initGoogleMap = function(div_id, mediaLat, mediaLng) {
                 if (mediaLocationLat == '' || mediaLocationLng == '')
                     jerror('This media has no location, you can set it by typing it\'s address and hit update');
                 else{
-                    var newPosition = new google.maps.LatLng(mediaLocationLat, mediaLocationLng);
-                    marker.setPosition(newPosition);
-                    //location_map.setZoom(17);
+                    $("#gallery-location").empty();
+                    gallery_initGoogleMap("gallery-location", Number(mediaLocationLng), Number(mediaLocationLat));
                 }
             });
          });
@@ -116,6 +127,11 @@ gallery_initGoogleMap = function(div_id, mediaLat, mediaLng) {
 }
 
 function gallery_updateLocation(galleryId, latitude, longtitude){
+    if (galleryId == ''){
+        $.jNotify._close();
+        jerror('Please choose gallery');
+        return false;
+    }
     var params = [
                     {tag: 'media_id', value: galleryId},
                     {tag: 'location', value: [
