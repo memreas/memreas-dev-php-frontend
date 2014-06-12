@@ -1,8 +1,8 @@
 $(document).ready(function() {
- 
+
      var throttledRequest = _.debounce(function(query, process)
     {
-        
+
          if(typeof users !== 'undefined'){
                for (var i in users) {
                 if(users[i].search(query) !== -1){
@@ -54,8 +54,8 @@ $(document).ready(function() {
             var action = 'findtag';
             var param = [{tag: "tag", value: this.query}];
             var q = this.query;
-            
-            
+
+
             switch (item.charAt(0)) {
                 case '@':
                 var page = 1;var totalPage = 1;
@@ -84,9 +84,9 @@ $(document).ready(function() {
                 case '!':
                     var page = 1;var totalPage = 1;
                     var action = 'findevent';
-                    //  var param  = [{tag: "tag", value: this.query}]; 
+                    //  var param  = [{tag: "tag", value: this.query}];
                     var reqhandler = function(data) {
-                        
+
                         $(".tabcontent-detail").hide();
                         $("#search-result").show();
                         $(target).empty();
@@ -109,7 +109,7 @@ $(document).ready(function() {
                         $(".tabcontent-detail").hide();
                         $("#search-result").show();
                         $(target).empty();
-                        
+
                         var objs = jQuery.parseJSON(data);
                         $('#search-count').text(objs.count);
                         totalPage = objs.totalPage;
@@ -134,18 +134,18 @@ $(document).ready(function() {
                         if (page == totalPage) {
                             $(".btn-event-n").hide();
                             $(".btn-event-p").show();
-                
+
                         } else if(page == 1) {
                             $(".btn-event-p").hide();
                              $(".btn-event-n").show();
                         } else {
                              $(".btn-event-n").show();
-                              $(".btn-event-p").show();   
+                              $(".btn-event-p").show();
                         }
             }
 
             var nextbtn=function() {
-                            
+
                             page = page + 1;
                             var param = [{tag: "tag", value: q},
                                 {tag: "page", value: page.toString()},
@@ -158,14 +158,14 @@ $(document).ready(function() {
                                 {tag: "page", value: page.toString()},
                             ];
                             ajaxRequest(action, param, reqhandler);
-                            
+
                         };
 
             ajaxRequest(action, param, reqhandler);
-            
+
             $( ".btn-event-n" ).unbind('click').bind( "click", nextbtn );
             $(".btn-event-p").unbind('click').bind( "click",prevbtn);
-                                         
+
 
             return item;
         },
@@ -207,15 +207,16 @@ var h = function(item) {
 }
 
 function personalSearchLi(target, item) {
-
-
-    var photo = item.profile_photo;
-    var name = $.trim(item.username);
-    var op = '<li><figure class="pro-pics"><img src="'
-            + photo + '" alt=""></figure><div class="user-names">'
-            + name + '</div><button class="btn-friends" id="'
-            + name + '">add friend</button></li>';
-    $(target).append(op);
+    //Prevent yourself listing
+    if (('@' + $("input[name=username]").val()) != item.username){
+        var photo = item.profile_photo;
+        var name = $.trim(item.username);
+        var op = '<li><figure class="pro-pics"><img src="'
+                + photo + '" alt=""></figure><div class="user-names">'
+                + name + '</div><a href="javascript:;" class="btn-friends black_btn_skin" id="'
+                + name + '">add friend</a></li>';
+        $(target).append(op);
+    }
 }
 function eventSearchLi(target, item) {
     var event_img = item.event_photo;
@@ -264,7 +265,8 @@ function addFriend(name) {
                 var message = getValueFromXMLTag(ret_xml, 'message');
                 if (status.toLowerCase() == 'success') {
 
-                    jsuccess('your friends added successfully.');
+                    //jsuccess('your friends added successfully.');
+                    jsuccess(message);
                     //$(".popupContact li").each (function(){ $(this).removeClass ('setchoosed');});
                 }
                 else
@@ -282,20 +284,20 @@ function discoverSearchLi(target, item) {
     //var name = $.trim(item.name);
     /*
      input- tag
-     event- image,name 
+     event- image,name
      commented person photo
      comment-text
-     tags in ancor 
+     tags in ancor
     */
     var op = '<li>'
-        op +=  '<div class="event_img"><img src="' 
-                + item.event_photo + '" alt=""><span class="event_name_box">' 
+        op +=  '<div class="event_img"><img src="'
+                + item.event_photo + '" alt=""><span class="event_name_box">'
                 + item.event_name + '</span></div>';
         op +=  '<p>' + item.comment + '</p>';
-           
+
     op += '</li>';
     $(target).append(op);
 }
 
 
-	
+

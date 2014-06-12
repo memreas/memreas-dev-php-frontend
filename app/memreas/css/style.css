@@ -1889,7 +1889,13 @@ ul.personresults{
 ul.personresults li{
 	float: left;
 	width: 50%;
-	margin: 5px 0px;
+	margin: 20px 0px;
+    height: 75px;
+}
+a.black_btn_skin.btn-friends{
+    margin-top: 9px;
+    display: inline-block;
+    margin-left: 25px;
 }
 .user-names{
 	width: 60% !important;

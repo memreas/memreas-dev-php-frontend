@@ -106,6 +106,10 @@ share_changeSocialType = function() {
                 memreas_getFriendList();
             else share_addFriends(mr_friendsInfo);
             break;
+        default:
+            $("#cmb_socialtype").val('memreas');
+            share_changeSocialType();
+            break;
 	}
 }
 

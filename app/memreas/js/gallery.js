@@ -11,6 +11,7 @@ $(function(){
             if (getValueFromXMLTag(xml_response, 'status') == 'Success'){
                 var useremail = getValueFromXMLTag(xml_response, 'email');
                 var username = getValueFromXMLTag(xml_response, 'username');
+                $("input[name=username]").val(username);
                 var userprofile = getValueFromXMLTag(xml_response, 'profile');
                 var username_length = username.length;
                 if (username_length > 10){

@@ -40,7 +40,7 @@ function ar_doneEncoding( blob ) {
 
 function ar_stop() {
     if (!audioRecorder){
-        jerror('your browser is not supported or you must allow to accesss your microphone');
+        jerror('your browser is not supported or you must allow to access your microphone');
 		return;
     }
 	audioRecorder.stop();
@@ -49,7 +49,7 @@ function ar_stop() {
 
 function ar_start() {
     if (!audioRecorder){
-        jerror('your browser is not supported or you must allow to accesss your microphone');
+        jerror('your browser is not supported or you must allow to access your microphone');
 		return;
     }
 	audioRecorder.clear();
