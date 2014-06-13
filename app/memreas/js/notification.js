@@ -2,6 +2,8 @@
 $(function(){
     $("a.notification_icon").click(function(){
         var user_id = $("input[name=user_id]").val();
+        $("#search-result").hide();
+        $(".notification-area").show();
         ajaxScrollbarElement(".notificationresults");
         if ($(".notificationresults").hasClass ("mCustomScrollbar"))
             $(".notificationresults .mCSB_container").empty();

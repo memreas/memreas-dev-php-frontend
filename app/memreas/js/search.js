@@ -41,7 +41,7 @@ $(document).ready(function() {
 
                     }
                    return process(users);
-                });
+                }, 'undefined', true);
     }, 300);
 
 
@@ -57,7 +57,8 @@ $(document).ready(function() {
             var param = [{tag: "tag", value: this.query}];
             var q = this.query;
 
-
+            $("#search-result").show();
+            $(".notification-area").hide();
             switch (item.charAt(0)) {
                 case '@':
                 var page = 1;var totalPage = 1;

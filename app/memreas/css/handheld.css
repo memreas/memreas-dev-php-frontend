@@ -9,10 +9,6 @@
         display: block;
         margin-bottom: 10px;
     }
-    .notification{ height: auto; }
-    .notification span{
-        display: block;
-    }
 }
 @media screen and (min-width: 640px) and (max-width: 768px){
     .signin_contents ul{

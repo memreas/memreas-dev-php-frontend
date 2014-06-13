@@ -1,6 +1,6 @@
 var mr_friendsInfo = null;
 memreas_getFriendList = function(){
-    var params = [{tag: 'user_id', value: ''}];
+    var params = [{tag: 'user_id', value: $("input[name=user_id]").val()}];
     ajaxRequest('listmemreasfriends', params, function(xml_response){
         if (getValueFromXMLTag(xml_response, 'status') == 'Success'){
             var friends = getSubXMLFromTag(xml_response, 'friend');
