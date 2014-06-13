@@ -39,7 +39,7 @@ $(document).bgStretcher({
   <div class="row-fluid">
   	<header>
       <h1 id="logo"><a href="index.html">memreas</a></h1>
-      <input name="input"type="text" class="search_bar" value="@person, #discover" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == '@person, #discover')this.value = '';"/>
+      <input name="input"type="text" class="search_bar" value="@person, #discover, !memreas" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == '@person, #discover, !memreas')this.value = '';"/>
       <div class="pro-info">
       	<figure class="pro-pic"><img src="img/profile-pic.jpg" alt=""></figure>
         <div class="pro-name">User Name</div>
@@ -157,14 +157,14 @@ $(document).bgStretcher({
 			});
 		})(jQuery);
 	</script>
-<!-- custom swipebox plugin -->    
+<!-- custom swipebox plugin -->
 	<script src="js/jquery.swipebox.min.js"></script>
 	<script type="text/javascript">
 		jQuery(function($) {
 			$(".swipebox").swipebox();
 		});
 	</script>
-<!-- custom slideshow plugin -->     
+<!-- custom slideshow plugin -->
     <script type="text/javascript">
             $(function() {
 				var interval			= 4000;
@@ -177,9 +177,9 @@ $(document).bgStretcher({
 				* start the slideshow
 				*/
 				play();
-				
+
 				/**
-				* show the controls when 
+				* show the controls when
 				* mouseover the main container
 				*/
 				slideshowMouseEvent();
@@ -190,7 +190,7 @@ $(document).bgStretcher({
 									   .unbind('mouseleave')
 									   .bind('mouseleave',hideControls);
 					}
-				
+
 				/**
 				* clicking the grid icon,
 				* shows the thumbs view, pauses the slideshow, and hides the controls
@@ -202,7 +202,7 @@ $(document).bgStretcher({
 					$('#msg_thumbs').stop().animate({'top':'0px'},500);
 					e.preventDefault();
 				});
-				
+
 				/**
 				* closing the thumbs view,
 				* shows the controls
@@ -213,7 +213,7 @@ $(document).bgStretcher({
 					$('#msg_thumbs').stop().animate({'top':'0px'},500);
 					e.preventDefault();
 				});
-				
+
 				/**
 				* pause or play icons
 				*/
@@ -223,12 +223,12 @@ $(document).bgStretcher({
 						play();
 					else
 						pause();
-					e.preventDefault();	
+					e.preventDefault();
 				});
-				
+
 				/**
 				* click controls next or prev,
-				* pauses the slideshow, 
+				* pauses the slideshow,
 				* and displays the next or prevoius image
 				*/
 				$('#msg_next').bind('click',function(e){
@@ -241,7 +241,7 @@ $(document).bgStretcher({
 					prev();
 					e.preventDefault();
 				});
-				
+
 				/**
 				* show and hide controls functions
 				*/
@@ -251,7 +251,7 @@ $(document).bgStretcher({
 				function hideControls(){
 					$('#msg_controls').stop().animate({'right':'0px'},500);
 				}
-				
+
 				/**
 				* start the slideshow
 				*/
@@ -260,7 +260,7 @@ $(document).bgStretcher({
 					$('#msg_pause_play').addClass('msg_pause').removeClass('msg_play');
 					playtime = setInterval(next,interval)
 				}
-				
+
 				/**
 				* stops the slideshow
 				*/
@@ -268,7 +268,7 @@ $(document).bgStretcher({
 					$('#msg_pause_play').addClass('msg_play').removeClass('msg_pause');
 					clearTimeout(playtime);
 				}
-				
+
 				/**
 				* show the next image
 				*/
@@ -276,7 +276,7 @@ $(document).bgStretcher({
 					++current;
 					showImage('r');
 				}
-				
+
 				/**
 				* shows the previous image
 				*/
@@ -284,18 +284,18 @@ $(document).bgStretcher({
 					--current;
 					showImage('l');
 				}
-				
+
 				/**
 				* shows an image
 				* dir : right or left
 				*/
 				function showImage(dir){
 					/**
-					* the thumbs wrapper being shown, is always 
+					* the thumbs wrapper being shown, is always
 					* the one containing the current image
 					*/
 					alternateThumbs();
-					
+
 					/**
 					* the thumb that will be displayed in full mode
 					*/
@@ -324,20 +324,20 @@ $(document).bgStretcher({
 									$('#msg_wrapper').empty().append($image.fadeIn());
 							}).attr('src',source);
 						}
-								
+
 					}
 					else{ //this is actually not necessary since we have a circular slideshow
 						if(dir == 'r')
 							--current;
 						else if(dir == 'l')
-							++current;	
+							++current;
 						alternateThumbs();
 						return;
 					}
 				}
-				
+
 				/**
-				* the thumbs wrapper being shown, is always 
+				* the thumbs wrapper being shown, is always
 				* the one containing the current image
 				*/
 				function alternateThumbs(){
@@ -350,19 +350,19 @@ $(document).bgStretcher({
 					if(current_thumb > nmb_thumb_wrappers){
 						current_thumb 	= 1;
 						current 		= 1;
-					}	
+					}
 					/**
 					* if we are at the beggining, go to the end
-					*/					
+					*/
 					else if(current_thumb == 0){
 						current_thumb 	= nmb_thumb_wrappers;
 						current 		= current_thumb*nmb_images_wrapper;
 					}
-					
+
 					$('#msg_thumbs').find('.msg_thumb_wrapper:nth-child('+current_thumb+')')
-									.show();	
+									.show();
 				}
-				
+
 				/**
 				* click next or previous on the thumbs wrapper
 				*/
@@ -380,7 +380,7 @@ $(document).bgStretcher({
 						$('#msg_thumbs').find('.msg_thumb_wrapper:nth-child('+current_thumb+')')
 										.fadeOut(function(){
 											++current_thumb;
-											$next_wrapper.fadeIn();									
+											$next_wrapper.fadeIn();
 										});
 					}
 				}
@@ -390,11 +390,11 @@ $(document).bgStretcher({
 						$('#msg_thumbs').find('.msg_thumb_wrapper:nth-child('+current_thumb+')')
 										.fadeOut(function(){
 											--current_thumb;
-											$prev_wrapper.fadeIn();									
+											$prev_wrapper.fadeIn();
 										});
-					}				
+					}
 				}
-				
+
 				/**
 				* clicking on a thumb, displays the image (alt attribute of the thumb)
 				*/
@@ -410,10 +410,10 @@ $(document).bgStretcher({
 					var $this 		= $(this);
 					$this.stop().animate({'opacity':1});
 				}).bind('mouseleave',function(){
-					var $this 		= $(this);	
+					var $this 		= $(this);
 					$this.stop().animate({'opacity':0.5});
 				});
-				
+
 				/**
 				* resize the image to fit in the container (400 x 400)
 				*/
@@ -422,10 +422,10 @@ $(document).bgStretcher({
 					theImage.src 	= $image.attr("src");
 					var imgwidth 	= theImage.width;
 					var imgheight 	= theImage.height;
-					
+
 					var containerwidth  = 400;
 					var containerheight = 400;
-                
+
 					if(imgwidth	> containerwidth){
 						var newwidth = containerwidth;
 						var ratio = imgwidth / containerwidth;

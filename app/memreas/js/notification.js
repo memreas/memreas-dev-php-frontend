@@ -24,6 +24,7 @@ $(function(){
                         var meta_text = $(notifications[i]).wrap('meta')
                                         .html().split('<meta>')[1]
                                         .split('<notification_type>')[0];
+                        meta_text = '<span>' + meta_text + '</span>';
                         var user_profile_pic = getValueFromXMLTag(notifications[i], 'profile_pic')
                                                 .replace("<!--[CDATA[", "")
                                                 .replace("]]-->", "");

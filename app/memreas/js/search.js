@@ -50,7 +50,9 @@ $(document).ready(function() {
             throttledRequest(query, process);
         },
         updater: function(item) {
-            var target = '#search-result ul .mCSB_container';
+            if ($("#searchi-result ul").hasClass("mCustomScrollbar"))
+                var target = '#search-result ul .mCSB_container';
+            else target = '#search-result ul';
             var action = 'findtag';
             var param = [{tag: "tag", value: this.query}];
             var q = this.query;
@@ -74,8 +76,8 @@ $(document).ready(function() {
                         $('.btn-friends').click(function() {
                             addFriend($(this).attr('id'));
                         });
-                        $('#search-result ul').removeClass().addClass('personresults scrollClass');
-                        ajaxScrollbarElement(".mCSB_container");
+                        $('#search-result ul').removeClass().addClass('personresults');
+                        ajaxScrollbarElement(".personresults");
                         paginationlink();
 
 
@@ -96,8 +98,8 @@ $(document).ready(function() {
                         $.each(objs.search, function(i, obj) {
                             eventSearchLi(target, obj);
                         });
-                        $('#search-result ul').removeClass().addClass('memreas_results scrollClass');
-                        ajaxScrollbarElement(".mCSB_container");
+                        $('#search-result ul').removeClass().addClass('memreas_results');
+                        ajaxScrollbarElement(".memreas_results");
                         paginationlink();
                     }
                     break;
@@ -116,8 +118,8 @@ $(document).ready(function() {
                         $.each(objs.search, function(i, obj) {
                             discoverSearchLi(target, obj);
                         });
-                        $('#search-result ul').removeClass().addClass('discover_results scrollClass');
-                        ajaxScrollbarElement(".mCSB_container");
+                        $('#search-result ul').removeClass().addClass('discover_results');
+                        ajaxScrollbarElement(".discover_results");
                         paginationlink();
                     }
 
