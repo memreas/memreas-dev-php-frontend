@@ -163,10 +163,25 @@ function fillUserDetail(currentUserId){
 
 /*Function Save user detail*/
 function saveUserDetail(){
+    var account_password = $("input[name=account_password]").val();
+
+    if (account_password != 'password' || account_password != ''){
+        var retype_account_password = $("input[name=account_repassword]").val();
+        if (account_password != retype_account_password){
+            jerror('password is not matched');
+            return false;
+        }
+    }
+    else {
+        if (account_password == 'password')
+            account_password = '';
+    }
+
     var userId = $("input[name=user_id]").val();
     var params = [
                     {tag: 'user_id', value: userId},
-                    {tag: 'email', value: $("input[name=account_email]").val()}
+                    {tag: 'email', value: $("input[name=account_email]").val()},
+                    {tag: 'password', value: account_password},
                 ];
     ajaxRequest('saveuserdetails', params, function(xml_response){
         if (getValueFromXMLTag(xml_response, 'status') == "Success"){

@@ -1,64 +1,64 @@
 <div class="span11 tabcontent-detail" id="gallery">
     <div class="<?php echo ($this->enableAdvertising) ? 'span9' : 'span11';?>">
         <ul id="tabs" class="medium_tabs">
-          <li><a href="#" title="tab1">view</a></li>
-          <li><a href="#" title="tab2">delete</a></li>
-          <li><a href="#" title="tab3" class="aviary-tab">edit</a></li>
-          <li><a href="#" title="tab4" class="location-tab">location</a></li>
+            <li><a href="#" title="tab1">view</a></li>
+            <li><a href="#" title="tab2">delete</a></li>
+            <li><a href="#" title="tab3" class="aviary-tab">edit</a></li>
+            <li><a href="#" title="tab4" class="location-tab">location</a></li>
         </ul>
         <div id="tab-content">
-          <div id="tab1" class="hideCls hidden-onload">
-            <input type="hidden" name="current_user_id" value="<?php echo $user_id; ?>">
-            <div class="preload-server">
-                <div class="marks"></div>
-                <div class="choose-details"><img src="/memreas/img/loader.gif" /><br/>Fetching media...</div>
-            </div>
-            <div class="browse-file">
-                <div class="marks"></div>
-                <div class="choose-details"><h3>Choose the location which you want to share</h3>
-                    <input  type="file" id="dir" webkitdirectory="" style="display: none;"/>
-                    <a class="btn-browse-file" href="#" onclick="$('#dir').click();">Browse files</a>
+            <div id="tab1" class="hideCls hidden-onload">
+                <input type="hidden" name="current_user_id" value="<?php echo $user_id; ?>">
+                <div class="preload-server">
+                    <div class="marks"></div>
+                    <div class="choose-details"><img src="/memreas/img/loader.gif" /><br/>Fetching media...</div>
+                </div>
+                <div class="browse-file">
+                    <div class="marks"></div>
+                    <div class="choose-details"><h3>Choose the location which you want to share</h3>
+                        <input  type="file" id="dir" webkitdirectory="" style="display: none;"/>
+                        <a class="btn-browse-file" href="#" onclick="$('#dir').click();">Browse files</a>
+                    </div>
+                </div>
+                <div class="user-resources fotorama" data-click="false" data-swipe="true" data-ratio="800/325" data-max-width="100%"  data-allow-full-screen="true"  data-nav="thumbs">
+                    <!-- USER RESOURCES WILL BE LOADED HERE -->
                 </div>
             </div>
-            <div class="user-resources fotorama" data-click="false" data-swipe="true" data-ratio="800/325" data-max-width="100%"  data-allow-full-screen="true"  data-nav="thumbs">
-                 <!-- USER RESOURCES WILL BE LOADED HERE -->
-            </div>
-          </div>
-          <div id="tab2" class="hideCls hidden-onload">
-            <div class="edit-area">
-                <ul id="content_1" class="pics edit-area-scroll scroll-area">
-                </ul>
-                <div style="clear: both;"></div>
-                <a class="black_btn_skin" href="javascript:;" onclick="deleteFiles(false);">Delete</a>&nbsp;<a class="black_btn_skin" href="javascript:;" id="btn-upload" onclick="$('a[title=queue]').click();">Upload</a>
-            </div>
-          </div>
-          <div id="tab3" class="hideCls hidden-onload">
-            <div class="aviary-edit-wrapper">
-                <div class="aviary" id="aviary">
-                    <!-- AVIARY ELEMENT WILL LOAD HERE -->
+            <div id="tab2" class="hideCls hidden-onload">
+                <div class="edit-area">
+                    <ul id="content_1" class="pics edit-area-scroll scroll-area">
+                    </ul>
+                    <div style="clear: both;"></div>
+                    <a class="black_btn_skin" href="javascript:;" onclick="deleteFiles(false);">Delete</a>&nbsp;<a class="black_btn_skin" href="javascript:;" id="btn-upload" onclick="$('a[title=queue]').click();">Upload</a>
                 </div>
             </div>
+            <div id="tab3" class="hideCls hidden-onload">
+                <div class="aviary-edit-wrapper">
+                    <div class="aviary" id="aviary">
+                        <!-- AVIARY ELEMENT WILL LOAD HERE -->
+                    </div>
+                </div>
 
-            <div class="clearfix"></div>
-            <div class="row-fluid carousel-area">
-              <ul class="elastislide-list aviary-thumbs">
-                 <!-- Gallery detail will load here -->
-              </ul>
+                <div class="clearfix"></div>
+                <div class="row-fluid carousel-area">
+                    <ul class="elastislide-list aviary-thumbs">
+                        <!-- Gallery detail will load here -->
+                    </ul>
+                </div>
+                <div class="clearfix"></div>
+                <div><a class="black_btn_skin" href="javascript:;" onclick="switch_mode();" style="display: none;">Fullscreen</a></div>
             </div>
-            <div class="clearfix"></div>
-            <div><a class="black_btn_skin" href="javascript:;" onclick="switch_mode();">Fullscreen</a></div>
-          </div>
-          <div id="tab4" class="hideCls hidden-onload">
-            <div class="gallery-address-box">
-                <input id="txt_gallery_address" name="input" type="text" /><a id="btn_gallerymap_ok" class="black_btn_skin" href="javascript:;">Update</a>
+            <div id="tab4" class="hideCls hidden-onload">
+                <div class="gallery-address-box">
+                    <input id="txt_gallery_address" name="input" type="text" /><a id="btn_gallerymap_ok" class="black_btn_skin" href="javascript:;">Update</a>
+                </div>
+                <div id="gallery-location">
+                    <!-- <iframe width="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.co.in/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=Canada,+KY,+USA&amp;aq=0&amp;oq=Canada,&amp;sll=35.101934,-94.570312&amp;sspn=38.075006,86.572266&amp;t=h&amp;ie=UTF8&amp;hq=&amp;hnear=Canada,+Pike,+Kentucky,+United+States&amp;ll=41.934977,-81.738281&amp;spn=11.438126,18.720703&amp;z=5&amp;iwloc=A&amp;output=embed"></iframe> -->
+                </div>
+                <div class="row-fluid carousel-area">
+                    <ul class="elastislide-list galleries-location"></ul>
+                </div>
             </div>
-              <div id="gallery-location">
-                <!-- <iframe width="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.co.in/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=Canada,+KY,+USA&amp;aq=0&amp;oq=Canada,&amp;sll=35.101934,-94.570312&amp;sspn=38.075006,86.572266&amp;t=h&amp;ie=UTF8&amp;hq=&amp;hnear=Canada,+Pike,+Kentucky,+United+States&amp;ll=41.934977,-81.738281&amp;spn=11.438126,18.720703&amp;z=5&amp;iwloc=A&amp;output=embed"></iframe> -->
-              </div>
-              <div class="row-fluid carousel-area">
-                <ul class="elastislide-list galleries-location"></ul>
-              </div>
-          </div>
         </div>
         <div class="change-location" style="display: none;"><a class="fetch-local" href="#" style="margin-left: 10px;">Change local directory</a><a class="browse-server" href="#">Browse Server</a></div>
         <!------------------First-pop-up-------------------->
@@ -84,8 +84,8 @@
     <!-- End Bottom Ads -->
 
     <div class="row-fluid">
-      <!-- <input type="local_directory" class="hidden-input" webkitdirectory> -->
-      <!-- <input type="file" id="local_directory" webkitdirectory="" directory=""> -->
+        <!-- <input type="local_directory" class="hidden-input" webkitdirectory> -->
+        <!-- <input type="file" id="local_directory" webkitdirectory="" directory=""> -->
     </div>
 </div>
 <a class="black_btn_skin exit-aviary-fullscreen" href="javascript:;" onclick="switch_mode();">Exit fullscreen</a>

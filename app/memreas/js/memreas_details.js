@@ -57,6 +57,11 @@ function updateMemreasMediaDetailsScript(){
                 carousel.setCurrent( pos );
                 evt.preventDefault();
                 $(".image-preview .swipebox").swipebox();
+
+                //Set download button
+                var download_url = el.find('img').attr('src');
+                $(".memreas-detail-download").attr("href", download_url);
+
                 updateMediaLike();
             },
             onReady : function() {
@@ -68,6 +73,11 @@ function updateMemreasMediaDetailsScript(){
                 $carouselItems.removeClass( 'current-img' );
                 el.addClass( 'current-img' );
                 $(".image-preview .swipebox").swipebox();
+
+                //Set download button
+                var download_url = el.find('img').attr('src');
+                $(".memreas-detail-download").attr("href", download_url);
+
                 updateMediaLike();
             }
         } );

@@ -144,15 +144,16 @@ $(document).bgStretcher({
               reader.readAsDataURL(f);
         }
       }
-     } else {
-      jerror('This browser does not support FileReader! So when you choose profile picture, preview is not ready');
-    }
-    document.getElementById('file').addEventListener('change', handleFileSelect, false);
+      document.getElementById('file').addEventListener('change', handleFileSelect, false);
       $(function(){
           $("input[type=file]").change(function(){
             document.getElementById('file').addEventListener('change', handleFileSelect, false);
           });
       });
+    } else {
+      jerror('This browser does not support FileReader! So when you choose profile picture, preview is not ready');
+    }
+
     </script>
     </li>
     <li>

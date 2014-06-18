@@ -145,3 +145,66 @@ li.working-upload .progress-text{
 .notification span{
     display: block;
 }
+
+/* Aviary page */
+
+#avpw_controls, #avpw_tool_content_header, #avpw_tool_content_wrapper, #avpw_canvas_embed,
+#avpw_footer, #avpw_tool_content_header, #avpw_rghtArrow{
+    border-radius: none !important;
+    border: none !important;
+    -webkit-border-radius: none !important;
+    background: none !important;
+    box-shadow: none;
+    -moz-box-shadow:none;
+}
+.avpw .avpw_icon{
+    padding-left: 30px;
+}
+.avpw_tool_icon_inner{
+    background-image: url('../img/aviary-toolbar.png') !important;
+    width: 95px !important;
+    height: 80px !important;
+}
+#avpw_footer, .avpw_close_button, #avpw_tool_content_header{ display: none !important; }
+.avpw_tool_icon{ height: 100px !important; }
+.avpw .avpw_icon_label{ left: 41px !important; bottom: 21px !important; font-size: 10px !important;}
+.avpw_tool_icon_inner:before{ display: none !important; }
+#avpw_main_enhance .avpw_tool_icon_inner{
+    background-position: -1165px -686px !important;
+}
+#avpw_main_effects .avpw_tool_icon_inner{
+    background-position: -1165px -600px !important;
+}
+#avpw_main_frames .avpw_tool_icon_inner{
+    background-position: -1435px -172px !important;
+}
+#avpw_main_overlay .avpw_tool_icon_inner{
+    background-position: -2696px 0px !important;
+}
+#avpw_main_orientation .avpw_tool_icon_inner{
+    background-position: -1886px -955px !important;
+}
+#avpw_main_focus .avpw_tool_icon_inner{
+    background-position: -1527px -773px !important;
+}
+#avpw_main_brightness .avpw_tool_icon_inner{
+    background-position: -86px -173px !important;
+}
+#avpw_main_saturation .avpw_tool_icon_inner{
+    background-position: -2606px -1223px !important;
+}
+#avpw_main_sharpness .avpw_tool_icon_inner{
+    background-position: -2516px -864px !important;
+}
+#avpw_main_contrast .avpw_tool_icon_inner{
+    background-position: -445px -343px !important;
+}
+#avpw_main_colorsplash .avpw_tool_icon_inner {
+    background-position: -445px -259px !important;
+}
+#avpw_main_drawing .avpw_tool_icon_inner {
+    background-position: -806px -515px !important;
+}
+#avpw_main_blemish .avpw_tool_icon_inner {
+    background-position: -88px -85px !important;
+}

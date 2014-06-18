@@ -46,6 +46,10 @@ $(function(){
         //$('.galleries-location').find('li:eq(0) img').trigger("click");
     });
 
+    $(".testaviary-tab").click(function(){
+        aviaryScroll();
+    });
+
     //Return space for ads area
     if (detectHandheldIOSDevice()){
         $("#gallery").find("#tabs").find("a").not(".aviary-tab").click(function(){ aviarySpace('return'); });
