@@ -23,7 +23,7 @@
                     <input name="input3" type="text" id="txt_location" class="share-txtfield" value="address or current location" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'address or current location')this.value = '';" onClick="share_showGoogleMap('div_locationmap_maparea');"/>
                     </li>
                     <li>
-                     <input id="ckb_canpost" class="css-checkbox" type="checkbox" checked="checked" name="ckb_canpost"/>
+                     <input id="ckb_canpost" class="css-checkbox" type="checkbox" checked name="ckb_canpost"/>
                      <label for="ckb_canpost" name="demo_lbl_1" class="css-label margin-none" >friends can post pics/videos</label>
                     </li>
                     <li>
@@ -150,8 +150,3 @@
     <div id="div_locationmap_maparea" class="map_box"></div>
 </div>
 <div id="div_locationmap_back" class="backgroundPopup"></div>
-<script type="text/javascript">
-    $(function(){
-        $("input[type=checkbox].css-checkbox:checked").next("label.css-label").css("background", "url(/memreas/img/check.png) no-repeat");
-    });
-</script>

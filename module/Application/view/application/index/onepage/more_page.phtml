@@ -7,6 +7,7 @@
                 <li><a href="#" title="tab3-more">network</a></li>
                 <li><a href="#" title="tab4-more">notification</a></li>
                 <li><a href="#" title="tab5-more">help</a></li>
+                <li><a href="#" title="tab6-more">memreas</a></li>
             </ul>
 
 <div id="tab-content-more">
@@ -518,6 +519,92 @@
                 <div class="akordeon-item-body">
                     <div class="akordeon-item-content">
                         <p><strong>Application Version: </strong>0.987</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="tab6-more" class="hideCls">
+       <div class="akordeon" id="buttons6-moretab">
+            <div class="akordeon-item expanded">
+                <div class="akordeon-item-head">
+                    <div class="akordeon-item-head-container">
+                        <div class="akordeon-heading">
+                            memreas detail
+                        </div>
+                    </div>
+                </div>
+                <div class="akordeon-item-body"  style="padding-bottom: 10px;">
+                    <div class="akordeon-item-content">
+                        <ul id="content_1" class="share_memreas_details">
+                            <li>
+                                <label class="textfield_names">name :</label>
+                                <div class="styled-select">
+                                    <select id="cmd_MorepageEvents"></select>
+                                </div>
+                            </li>
+                            <li>
+                                <label class="textfield_names">date :</label>
+                                <input name="input" type="text" id="morepage_eventDate" class="share-txtfield date-picker" readonly value="from" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'from')this.value = '';"/>
+                            </li>
+                            <li>
+                                <label class="textfield_names">location :</label>
+                                <input name="input3" type="text" id="morepage_eventLocation" class="share-txtfield" value="address or current location" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'address or current location')this.value = '';" onClick="share_showGoogleMap('div_locationmap_maparea');"/>
+                            </li>
+                            <li>
+                                <input id="" class="css-checkbox" type="checkbox" name="ckb_canpost"/>
+                                <label for="ckb_canpost" name="demo_lbl_1" class="css-label margin-none" >friends can post pics/videos</label>
+                            </li>
+                            <li>
+                                <input id="" class="css-checkbox" type="checkbox" name="ckb_canadd"/>
+                                <label for="ckb_canadd" name="demo_lbl_2" class="css-label margin-none" >friends can add Friends</label>
+                            </li>
+                            <li>
+                                <input id="" class="css-checkbox" type="checkbox" name="ckb_public"/>
+                                <label for="ckb_public" name="demo_lbl_3" class="css-label margin-none" onClick="javascript:share_clickCkbPublic();" >public (anyone can add or post)</label>
+                            </li>
+                            <li>
+                                <input id="" class="css-checkbox" type="checkbox" />
+                                <label for="ckb_viewable" name="demo_lbl_4" class="css-label margin-none" >viewable :</label>
+                                <input name="input" type="text" id="moredate_eventDateFrom" class="date-picker" readonly value="from" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'from')this.value = '';"/>
+                                <input name="input" type="text" id="moredate_eventDateTo" class="date-picker" readonly value="to" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'to')this.value = '';"/>
+                            </li>
+                            <li>
+                                <input id="" class="css-checkbox" type="checkbox" />
+                                <label for="ckb_selfdestruct" name="demo_lbl_5" class="css-label margin-none" >self destruct :</label>
+                                <input name="input" type="text" id="morepage_eventSelfDestruct" class="share-txtfield-2 date-picker" readonly value="" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == '')this.value = '';"/>
+                            </li>
+                        </ul>
+                        <a class="black_btn_skin f-center" href="javascript:;" onclick="morepage_saveEvent();">Save</a>
+                        <a class="black_btn_skin" href="javascript:;">cancel</a>
+                    </div>
+                </div>
+            </div>
+            <div class="akordeon-item">
+                <div class="akordeon-item-head">
+                    <div class="akordeon-item-head-container memreas-media-header">
+                        <div class="akordeon-heading">
+                            media
+                        </div>
+                    </div>
+                </div>
+                <div class="akordeon-item-body" style="height: 300px;">
+                    <div class="akordeon-item-content">
+                        <ul class="memreasEventMedia"></ul>
+                    </div>
+                </div>
+            </div>
+             <div class="akordeon-item">
+                <div class="akordeon-item-head">
+                    <div class="akordeon-item-head-container memreas-friend-header">
+                        <div class="akordeon-heading">
+                            Friends
+                        </div>
+                    </div>
+                </div>
+                <div class="akordeon-item-body" style="height: 300px;">
+                    <div class="akordeon-item-content">
+                        <ul class="memreasMorepageFriends"></ul>
                     </div>
                 </div>
             </div>

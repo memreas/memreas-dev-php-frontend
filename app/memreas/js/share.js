@@ -32,6 +32,8 @@ $(function(){
 
     });
     user_id   = $("input[name=user_id]").val();
+    setCheckBoxValue('ckb_canpost', true);
+    setCheckBoxValue('ckb_canadd', true);
 });
 
 // initialize the share page objects.

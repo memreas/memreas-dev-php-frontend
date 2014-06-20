@@ -1,21 +1,26 @@
 networkfriendsInfo = [];
 $(function(){
+    $("#morepage_eventDate").datepicker();
+    $("#moredate_eventDateFrom").datepicker();
+    $("#moredate_eventDateTo").datepicker();
+    $("#morepage_eventSelfDestruct").datepicker();
+
     $("#tab-content-more div.hideCls").hide(); // Initially hide all content
-        $("#tabs-more li:first").attr("id","current"); // Activate first tab
-        $("#tab-content-more div:first").fadeIn(); // Show first tab content*/
+    $("#tabs-more li:first").attr("id","current"); // Activate first tab
+    $("#tab-content-more div:first").fadeIn(); // Show first tab content*/
 
-        $('#tabs-more a').click(function(e) {
+    $('#tabs-more a').click(function(e) {
 
-            e.preventDefault();
-            $("#tab-content-more div.hideCls").hide(); //Hide all content
-            $("#tabs-more li").attr("id",""); //Reset id's
-            $(this).parent().attr("id","current"); // Activate this
-            $('#' + $(this).attr('title')).fadeIn(); // Show content for current tab
-        });
+        e.preventDefault();
+        $("#tab-content-more div.hideCls").hide(); //Hide all content
+        $("#tabs-more li").attr("id",""); //Reset id's
+        $(this).parent().attr("id","current"); // Activate this
+        $('#' + $(this).attr('title')).fadeIn(); // Show content for current tab
+    });
 
     $("a[title=more]").one ('click', function(){
-         $('#buttons-moretab').akordeon();
-         $('#button-less').akordeon({ buttons: false, toggle: true, itemsOrder: [2, 0, 1] });
+        $('#buttons-moretab').akordeon();
+        $('#button-less').akordeon({ buttons: false, toggle: true, itemsOrder: [2, 0, 1] });
     });
 
     //Group tab
@@ -51,18 +56,18 @@ $(function(){
 
             //Get signed credentials
             $.ajax({
-              url: "/index/s3signed",
-              type: 'GET',
-              dataType: 'json',
-              data: {title: data.files[0].name}, // send the file name to the server so it can generate the key param
-              async: false,
-              success: function(data) {
-                // Now that we have our data, we update the form so it contains all
-                // the needed data to sign the request
-                form.find('input[name=AWSAccessKeyId]').val(data.accessKey);
-                form.find('input[name=policy]').val(data.policy)
-                form.find('input[name=signature]').val(data.signature)
-              }
+                url: "/index/s3signed",
+                type: 'GET',
+                dataType: 'json',
+                data: {title: data.files[0].name}, // send the file name to the server so it can generate the key param
+                async: false,
+                success: function(data) {
+                    // Now that we have our data, we update the form so it contains all
+                    // the needed data to sign the request
+                    form.find('input[name=AWSAccessKeyId]').val(data.accessKey);
+                    form.find('input[name=policy]').val(data.policy)
+                    form.find('input[name=signature]').val(data.signature)
+                }
             })
 
             var filetype = data.files[0].type;
@@ -84,8 +89,8 @@ $(function(){
             // Use XHR, fallback to iframe
             options = $(this).fileupload('option');
             use_xhr = !options.forceIframeTransport &&
-                        ((!options.multipart && $.support.xhrFileUpload) ||
-                        $.support.xhrFormDataFileUpload);
+            ((!options.multipart && $.support.xhrFileUpload) ||
+                $.support.xhrFormDataFileUpload);
 
             if (!use_xhr) {
                 using_iframe_transport = true;
@@ -121,18 +126,18 @@ $(function(){
             var s3_path_split = s3_filename.split(filename);
             var s3_path = s3_path_split[0];
             var params = [
-                            {tag: 's3url', value: filename},
-                            {tag: 'is_server_image', value: '0'},
-                            {tag: 'content_type', value : media_type},
-                            {tag: 's3path', value: s3_path},
-                            {tag: 's3file_name', value: filename},
-                            {tag: 'device_id', value: ''},
-                            {tag: 'event_id', value: ''},
-                            {tag: 'media_id', value: ''},
-                            {tag: 'user_id', value: user_id},
-                            {tag: 'is_profile_pic', value: '1'},
-                            {tag: 'location', value: ''}
-                            ];
+                {tag: 's3url', value: filename},
+                {tag: 'is_server_image', value: '0'},
+                {tag: 'content_type', value : media_type},
+                {tag: 's3path', value: s3_path},
+                {tag: 's3file_name', value: filename},
+                {tag: 'device_id', value: ''},
+                {tag: 'event_id', value: ''},
+                {tag: 'media_id', value: ''},
+                {tag: 'user_id', value: user_id},
+                {tag: 'is_profile_pic', value: '1'},
+                {tag: 'location', value: ''}
+            ];
             ajaxRequest('addmediaevent', params, function(){
                 jsuccess('Your profile picture updated');
                 $("#setting-userprofile img, img#profile_picture").attr ('src', _media_url);
@@ -179,10 +184,10 @@ function saveUserDetail(){
 
     var userId = $("input[name=user_id]").val();
     var params = [
-                    {tag: 'user_id', value: userId},
-                    {tag: 'email', value: $("input[name=account_email]").val()},
-                    {tag: 'password', value: account_password},
-                ];
+        {tag: 'user_id', value: userId},
+        {tag: 'email', value: $("input[name=account_email]").val()},
+        {tag: 'password', value: account_password},
+    ];
     ajaxRequest('saveuserdetails', params, function(xml_response){
         if (getValueFromXMLTag(xml_response, 'status') == "Success"){
             jsuccess(getValueFromXMLTag(xml_response, 'message'));
@@ -243,9 +248,9 @@ function getGroupFriends(friend_network){
         return false;
     }
     var params = [
-                    {tag: 'group_id', value: $("select[name=account_groups]").val()},
-                    {tag: 'network', value: friend_network}
-                ];
+        {tag: 'group_id', value: $("select[name=account_groups]").val()},
+        {tag: 'network', value: friend_network}
+    ];
     ajaxRequest('getgroupfriends', params, function(xml_response){
         if (getValueFromXMLTag(xml_response, 'status') == 'Success'){
             var friend_list = getSubXMLFromTag(xml_response, 'friend');
@@ -256,12 +261,12 @@ function getGroupFriends(friend_network){
                     friend_photo = '/memreas/img/profile-pic.jpg';
                 else friend_photo = getValueFromXMLTag(friend_list[i], 'friend_photo');
                 networkfriendsInfo[i] = {
-                        'id':         getValueFromXMLTag(friend_list[i], 'friend_id'),
-                        'div_id':    getValueFromXMLTag(friend_list[i], 'friend_id'),
-                        'name':     getValueFromXMLTag(friend_list[i], 'friend_name'),
-                        'photo':     friend_photo,
-                        'selected':    false
-                    };
+                    'id':         getValueFromXMLTag(friend_list[i], 'friend_id'),
+                    'div_id':    getValueFromXMLTag(friend_list[i], 'friend_id'),
+                    'name':     getValueFromXMLTag(friend_list[i], 'friend_name'),
+                    'photo':     friend_photo,
+                    'selected':    false
+                };
             }
             network_fillFriends(networkfriendsInfo);
         }
@@ -301,12 +306,12 @@ function networkPopupMemreasFriends(){
                     friend_photo = '/memreas/img/profile-pic.jpg';
                 else friend_photo = getValueFromXMLTag(friend, 'photo');
                 mr_friendsInfo[i] = {
-                                        'id': getValueFromXMLTag(friend, 'friend_id'),
-                                        'div_id': 'mr_' + i,
-                                        'name': getValueFromXMLTag(friend, 'friend_name'),
-                                        'photo': friend_photo,
-                                        'selected': false,
-                                    };
+                    'id': getValueFromXMLTag(friend, 'friend_id'),
+                    'div_id': 'mr_' + i,
+                    'name': getValueFromXMLTag(friend, 'friend_name'),
+                    'photo': friend_photo,
+                    'selected': false,
+                };
             }
             network_fillPopupFriends(mr_friendsInfo);
         }
@@ -357,7 +362,7 @@ function networkPopupFacebookFriends(){
     FB.getLoginStatus(getFacebookInfo);
     FB.login(function(response) {
         if (response.authResponse) {
-        // get friends
+            // get friends
             FB.api('/me/friends?limit=' + FACEBOOK_FRIENDSLIMIT, function(response) {
                 var i = 0, info = response.data.sort(sortMethod);
                 fb_friendsInfo = [];
@@ -376,7 +381,7 @@ function networkPopupFacebookFriends(){
             });
         }
         else $('#loadingpopup').hide();
-    }, {scope:'email'});
+        }, {scope:'email'});
 }
 
 function networkPopupTwitterFriends(){
@@ -489,9 +494,9 @@ function acceptAddFriendNetwork(){
                     selected_friend[increase++] = {
                         tag: 'friend',
                         value :[
-                                    { tag: 'friend_name',         value: fb_friendsInfo[i].name },
-                                    { tag: 'profile_pic_url',     value: fb_friendsInfo[i].photo }
-                                ]
+                            { tag: 'friend_name',         value: fb_friendsInfo[i].name },
+                            { tag: 'profile_pic_url',     value: fb_friendsInfo[i].photo }
+                        ]
                     };
                 }
             }
@@ -504,9 +509,9 @@ function acceptAddFriendNetwork(){
                     selected_friend[increase++] = {
                         tag: 'friend',
                         value: [
-                                    { tag: 'friend_name',         value: tw_friendsInfo[i].name },
-                                    { tag: 'profile_pic_url',     value: tw_friendsInfo[i].photo }
-                                ]
+                            { tag: 'friend_name',         value: tw_friendsInfo[i].name },
+                            { tag: 'profile_pic_url',     value: tw_friendsInfo[i].photo }
+                        ]
                     };
                 }
             }
@@ -522,9 +527,9 @@ function acceptAddFriendNetwork(){
                     selected_friend[increase++] = {
                         tag: 'friend',
                         value: [
-                                    { tag: 'friend_name',         value: mr_friendsInfo[i].name },
-                                    { tag: 'profile_pic_url',     value: mr_friendsInfo[i].photo }
-                                ]
+                            { tag: 'friend_name',         value: mr_friendsInfo[i].name },
+                            { tag: 'profile_pic_url',     value: mr_friendsInfo[i].photo }
+                        ]
                     };
                 }
             }
@@ -534,10 +539,10 @@ function acceptAddFriendNetwork(){
             return false;
     }
     var params = [
-                    {tag: 'group_id', value: $("select[name=account_groups]").val()},
-                    {tag: 'network', value: network_name},
-                    {tag: 'friends', value : selected_friend},
-                ];
+        {tag: 'group_id', value: $("select[name=account_groups]").val()},
+        {tag: 'network', value: network_name},
+        {tag: 'friends', value : selected_friend},
+    ];
     ajaxRequest('addfriendtogroup', params, function(xml_response){
         if (getValueFromXMLTag(xml_response, 'status') == 'Success'){
             jsuccess(getValueFromXMLTag(xml_response, 'message'));
@@ -547,7 +552,7 @@ function acceptAddFriendNetwork(){
             disablePopup('popupNetworkFriends');
             setTimeout(function(){
                 $("select[name=friend_network]").trigger('change');
-            }, 2000);
+                }, 2000);
         }
         else jerror(getValueFromXMLTag(xml_response, 'message'));
     });
@@ -585,13 +590,166 @@ function updateNetworkFriends(){
     }
 
     var params = [
-                    {tag: 'group_id', value: $("select[name=account_groups]").val()},
-                    {tag: 'friends', value: networkFriendsSelected}
-                  ];
+        {tag: 'group_id', value: $("select[name=account_groups]").val()},
+        {tag: 'friends', value: networkFriendsSelected}
+    ];
     ajaxRequest('removefriendgroup', params, function(xml_response){
         jsuccess(getValueFromXMLTag(xml_response, 'message'));
         setTimeout(function(){
-                $("select[name=friend_network]").trigger('change');
+            $("select[name=friend_network]").trigger('change');
             }, 2000);
     });
+}
+
+/*
+* Morepage memreas management
+*/
+var currentMorepageEventId = '';
+$(function(){
+    $("#tabs-more li a:eq(5)").one ('click', function(){
+        $('#buttons6-moretab').akordeon();
+        getAccountMemreas();
+    });
+
+    $(".memreas-media-header").click(function(){
+        getMemreasEventMedia();
+    });
+    $(".memreas-friend-header").click(function(){
+        getMorepageEventFriends();
+    });
+});
+function getAccountMemreas(){
+    var jSelectEventName = $("#cmd_MorepageEvents");
+
+    if (jSelectEventName.html() == ''){
+        ajaxRequest(
+            'viewevents',
+            [
+                {tag: 'user_id', value: user_id},
+                {tag: 'is_my_event', value : '1'},
+                {tag: 'is_friend_event', value: '0'},
+                {tag: 'is_public_event', value: '0'},
+                {tag: 'page', value: '1'},
+                {tag: 'limit', value: '20'}
+            ],function (response){
+                if (getValueFromXMLTag(response, 'status') == "Success"){
+                    events = getSubXMLFromTag(response, 'event');
+                    var event_count = events.length;
+                    var html_str = '';
+                    for (var i = 0;i < event_count;i++){
+                        var event = events[i].innerHTML;
+                        var eventId = $(event).filter ('event_id').html();
+                        var event_name = $(event).filter ('event_name').html();
+                        html_str += '<option value="' + eventId + '">' + event_name + '</option>';
+                    }
+                    jSelectEventName.html(html_str);
+                }
+                else jerror('You have no event at this time');
+        });
+    }
+}
+
+function getMemreasEventMedia(){
+    var jMemreasEventMedia = $(".memreasEventMedia");
+
+    if (jMemreasEventMedia.hasClass("mCustomScrollbar"))
+        jMemreasEventMedia = $(".memreasEventMedia .mCSB_container");
+
+    var memreasEventId = $("#cmd_MorepageEvents").val();
+    if (memreasEventId == ''){
+        jerror('Please select your memreas event above');
+        return false;
+    }
+
+    if (memreasEventId == currentMorepageEventId && jMemreasEventMedia.html() != '') return false;
+
+    currentMorepageEventId = memreasEventId;
+    ajaxRequest(
+        'listallmedia',
+        [
+            { tag: 'event_id',  value: memreasEventId },
+            { tag: 'user_id',   value: user_id },
+            { tag: 'device_id', value: '' },
+            { tag: 'limit',     value: '100' },
+            { tag: 'page',      value: '1' }
+        ], function (response){
+            jMemreasEventMedia.empty();
+            if (getValueFromXMLTag(response, 'status') == "Success") {
+                var medias = getSubXMLFromTag(response, 'media');
+                var media_count = medias.length;
+                for (var i=0;i < media_count;i++) {
+                    var media = medias[i].innerHTML;
+                    var media_type = $(media).filter('type').html();
+                    var media_id = $(media).filter('media_id').html();
+                    var _media_url = getMediaThumbnail(media, '/memreas/img/small/1.jpg');
+                    if (media_type == 'video')
+                        jMemreasEventMedia.append ('<li class="event_img video-media" id="moremedia-' + media_id + '" onclick="more_clickMedia(this.id);"><img src="' + _media_url + '"/><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></li>');
+                    jMemreasEventMedia.append ('<li class="event_img" id="moremedia-' + media_id + '" onclick="more_clickMedia(this.id);"><img src="' + _media_url + '"/></li>');
+                }
+                ajaxScrollbarElement("#memreasEventMedia");
+            }
+            else jerror('You have no media on this event');
+    });
+}
+
+function getMorepageEventFriends(){
+    var jMemreasEventFriend = $(".memreasMorepageFriends");
+
+    if (jMemreasEventFriend.hasClass("mCustomScrollbar"))
+        jMemreasEventFriend = $(".memreasMorepageFriends .mCSB_container");
+
+    var memreasEventId = $("#cmd_MorepageEvents").val();
+
+    if (memreasEventId == ''){
+        jerror('Please select your memreas event above');
+        return false;
+    }
+
+    if (memreasEventId == currentMorepageEventId && jMemreasEventFriend.html() != '') return false;
+
+    currentMorepageEventId = memreasEventId;
+
+    ajaxRequest('geteventpeople', [{tag: 'event_id', value: memreasEventId}],
+        function(xml_response){
+            jMemreasEventFriend.empty();
+            if (getValueFromXMLTag(xml_response, 'status') == 'Success'){
+                var friends = getSubXMLFromTag(xml_response, 'friend');
+                var count_people = friends.length;
+                for (i = 0;i < count_people;i++){
+                    friend = friends[i];
+                    if (getValueFromXMLTag(friend, 'photo') == '' || getValueFromXMLTag(friend, 'photo') == 'null')
+                        friend_photo = '/memreas/img/profile-pic.jpg';
+                    else friend_photo = getValueFromXMLTag(friend, 'photo');
+                    friend_id = getValueFromXMLTag(friend, 'friend_id');
+                    friend_name = getValueFromXMLTag(friend, 'friend_name');
+                    html_str = '<li>';
+                    html_str += '<figure class="pro-pics2" id="morefriend-' + friend_id + '" onclick="javascript:morepage_clickFriends(this.id);"><img src="' + friend_photo + '" alt="" ></figure>';
+                    html_str += '<aside class="pro-pic_names2" name="' + friend_name + '" id="a' + friend_id + '" onclick="javascript:share_clickFriends(this.id.substr(1));">' + friend_name + '</aside>';
+                    html_str += '</li>';
+                    jMemreasEventFriend.append(html_str);
+                }
+                ajaxScrollbarElement(".memreasMorepageFriends");
+            }
+            else jerror('You have no friend on this event');
+        }
+    );
+}
+function morepage_clickFriends(friendElementId){
+    var jFriendElementImg = $("#" + friendElementId + ' img');
+    var jFriendElementAside = $("#" + friendElementId).next('aside');
+    if (jFriendElementImg.hasClass('setchoosed')){
+        jFriendElementImg.removeClass('setchoosed');
+        jFriendElementAside.css('border', '3px solid #FFF');
+    }
+    else{
+        jFriendElementImg.addClass('setchoosed');
+        jFriendElementAside.css('border', '3px solid green');
+    }
+}
+
+function more_clickMedia(mediaElementId){
+    var jMediaElement = $("#" + mediaElementId);
+    if (jMediaElement.hasClass('setchoosed'))
+        jMediaElement.removeClass('setchoosed');
+    else jMediaElement.addClass('setchoosed');
 }
