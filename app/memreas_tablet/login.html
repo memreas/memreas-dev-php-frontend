@@ -56,27 +56,27 @@ input[type=checkbox].css-checkbox + label.css-label {
     <div class="span6">
     <div class="login_contents">
     <form action="" method="get">
-    <ul>
-    <li>
-    <input name="input"type="text" class="input" value="Email" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Email')this.value = '';"/>
-    <input name="input"type="password"  class="input" value="Password" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Password')this.value = '';"/>
-    </li>
-    <li>
-    <input type="button" class="login-btn" value="login">
-    <a id="button" class="forgot-password" href="#" onClick="popup('forgot');">forgot your password?</a>
-    </li>
-    </ul>
+      <ul >
+        <li class="clearfix">
+        <input name="input"type="text" class="input" value="Email" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Email')this.value = '';"/>
+        <input name="input"type="password"  class="input" value="Password" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Password')this.value = '';"/>
+        <input type="button" class="login-btn" value="Log In">
+        </li>
+        <li class="clearfix">
+          <input type="checkbox" name="checkbox">
+          <label>Remember me</label>
+        <a id="button" class="forgot-password" href="#" onClick="popup('forgot');">Forgot your password?</a>
+        </li>
+      </ul>
     </form>
     </div>
     
     <div class="signin_contents">
     <div class="optional">(optional)</div>
-    <ul>
-    <li>
     <div class="signup_heading">
       <p>Sign Up</p>
     </div>
-    </li>
+    <ul class="clearfix">
     <li>
     <figure class="profile_picture"><output id="list"></output></figure>
     <div class="file_upload">Choose Profile Picture <input id="file" type="file" name="file" /></div>

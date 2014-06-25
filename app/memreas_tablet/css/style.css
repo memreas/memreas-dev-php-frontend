@@ -8,12 +8,10 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;
-	text-transform: lowercase !important;
 }
 /*.....:HTML5 display-role reset for older browsers:.....*/
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
 	display: block;
-	text-transform: lowercase !important;
 }
 ::-moz-selection {
  background:#185EB3;
@@ -156,11 +154,12 @@ body {
 /*  Main Style 
 ===================================================*/
 header {
-	width: 100%;
-	background: url(../img/header-bg.jpg) repeat-x;
-	height: 60px;
-	padding-top: 5px;
-	position: relative;
+    background-image: linear-gradient(#abb8c9, #7085a4);
+    border-bottom: 2px solid #88929e;
+    height: 60px;
+    padding-top: 5px;
+    position: relative;
+    width: 100%;
 }
 #logo {
 	width: 210px;
@@ -255,6 +254,9 @@ nav ul li a {
 }
 nav ul li a:hover, nav ul li a.active {
 	background: url(../img/nav-act.jpg) no-repeat right;
+}
+.content {
+    margin: 20px 0
 }
 .event_details {
 	margin: 0;
@@ -414,44 +416,37 @@ ul.commentpopup li textarea{
 	display: block;
 }
 .login_contents {
-	float: left;
-	margin: 0px 10px 10px 0px;
-	background-color: #2d5686;
-	border-bottom: 10px #4776a9 solid;
+    margin: 0 10px 10px 0;
+    width: 95%;
 }
 .login_contents ul li {
-	display: block;
 	list-style: none;
-	float: left;
-	margin: 0px 0px 0px 40px;
+	margin: 0px;
 }
 .input {
-	width: 210px;
-	height: 30px;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 14px;
-	color: #656565;
-	float: left;
-	margin-right: 10px;
+    background-color: #f5f5f5!important;
+    border-radius: 5px!important;
+    box-shadow: 0 2px 4px #838383 inset!important;
+    color: #6e6e6e;
+    margin-right: 5px;
+    border: none!important;
+    padding: 3px 5px !important;
+    text-shadow:0 1px 1px #f4f4f4!important;
+    width: 35%;
+    float: left;
 }
 .login-btn {
-	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#c3c3c3), to(#f4f4f4));
-	background: -webkit-linear-gradient(top, #c3c3c3, #f4f4f4);
-	background: -moz-linear-gradient(top, #c3c3c3, #f4f4f4);
-	background: -ms-linear-gradient(top, #c3c3c3, #f4f4f4);
-	background: -o-linear-gradient(top, #c3c3c3, #f4f4f4);
-	/*font-family: 'Quattrocento Sans', sans-serif;*/
-	font-family: "Century Gothic";
-	font-size: 18px;
-	padding: 5px 20px;
-	float: left;
-	border-radius: 10px;
-	box-shadow: 0 0 10px #333;
-	color: #545454;
-	text-shadow: 0 1px 1px #fff;
-	border: 0;
-	display: block;
-	margin: 10px 0px;
+    background-image: linear-gradient(#f3f3f3, #c4c4c4);
+    border-radius: 7px;
+    color: #545454;
+    box-shadow: 0 2px 4px #838383 ;
+    border: none;
+    font-family: tahoma;
+    font-weight: bold;
+    padding: 4px 10px;
+       width: 22% !important;
+    float: left;
+    text-shadow:0 1px 1px #f4f4f4;
 }
 .login-btn:hover {
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#6a85b6), to(#bac8e0));
@@ -462,13 +457,25 @@ ul.commentpopup li textarea{
 	color: #fff;
 	text-shadow: 0 1px 1px #333;
 }
+ul li input[type="checkbox"] {
+    display: block;
+    float: left;
+}
+ul li label {
+    color: #fff;
+    display: block;
+    float: left;
+    margin-left: 10px;
+}
 a.forgot-password {
-	font-family: Tahoma, Geneva, sans-serif;
-	font-size: 16px;
-	color: #FFF;
-	text-decoration: underline;
-	margin: 15px !important;
-	float: left;
+    color: #fff;
+    display: block;
+    float: left;
+    font-family: Tahoma,Geneva,sans-serif;
+    font-size: 15px;
+    margin: 0 0 0 37px;
+    text-decoration: underline;
+    font-weight: bold;
 }
 a.forgot-password:hover {
 	color: #FFF;
@@ -477,29 +484,32 @@ a.forgot-password:hover {
 	position:relative;
 	float: left;
 	margin: 0px 10px 50px 0px;
-	background-color: #2d5686;
-	border-bottom: 10px #4776a9 solid;
 }
 .optional{
-	width: 80px;
-	height: 20px;
-	font-family: "Century Gothic";
-	font-size: 16px;
-	color: #FFF;
-    left: 265px;
+    color: #fff;
+    font-family: "Century Gothic";
+    font-size: 16px;
+    height: 20px;
+    left: 200px;
     position: absolute;
-    top: 110px;
+    top: 142px;
+    width: 80px;
 }
 .signin_contents ul li {
-	display: block;
-	float: left;
-	margin: 0px 0px 0px 40px;
+    display: block;
+    float: none;
+    margin: 0 0 0 10px;
+    width: 90%;
 }
 .signup_heading p {
-	font-family: Tahoma, Geneva, sans-serif;
-	font-size: 32px;
-	color: #FFF;
-	padding: 10px 200px 10px 30px;
+    color: #fff;
+    font-family: Tahoma,Geneva,sans-serif;
+    font-size: 32px;
+    padding: 30px 0;
+    text-transform: initial;
+}
+.relative {
+	position: relative;
 }
 .profile_picture {
 	width: 75px;
@@ -515,7 +525,7 @@ a.forgot-password:hover {
 }
 .file_upload {
 	float: left;
-	width: 185px;
+	width: 65%;
 	height: 40px;
 	text-align: center;
 	color: #3b3b3b;
@@ -532,7 +542,7 @@ a.forgot-password:hover {
 	box-shadow: 0 0 10px #333;
 	margin-top: 9px;
 	text-shadow: 0 0 1px #FFF;
-	margin: 17px;
+	margin: 10px 17px;
 	cursor: pointer;
 	overflow: hidden;
 }
@@ -555,7 +565,7 @@ a.forgot-password:hover {
 	padding: 15px 30px 15px 30px;
 }
 .signup_textfields {
-	width: 330px;
+	width: 86%;
 	height: 45px;
 	float: left;
 	margin: 0px 0px 0px 0px;
@@ -587,8 +597,9 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
 	margin: 0;
 }
 .legal{
-	color: #FFF;
-	font-size: 18px;
+    color: #fff;
+    font-size: 17px;
+    font-weight: bold;
 }
 .legal:hover{
 	color: #FFF;
@@ -634,23 +645,20 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
 	margin: 10px 27%;
 }
 .sign-btn {
-	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#c3c3c3), to(#f4f4f4));
-	background: -webkit-linear-gradient(top, #c3c3c3, #f4f4f4);
-	background: -moz-linear-gradient(top, #c3c3c3, #f4f4f4);
-	background: -ms-linear-gradient(top, #c3c3c3, #f4f4f4);
-	background: -o-linear-gradient(top, #c3c3c3, #f4f4f4);
-	/*font-family: 'Quattrocento Sans', sans-serif;*/
-	font-family: "Century Gothic";
-	font-size: 18px;
-	padding: 5px 20px;
-	float: left;
-	border-radius: 10px;
-	box-shadow: 0 0 10px #333;
-	color: #545454;
-	text-shadow: 0 1px 1px #fff;
-	border: 0;
-	display: block;
-	margin: 10px 60px;
+    background: -moz-linear-gradient(center top , #c3c3c3, #f4f4f4) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border: 0 none;
+    border-radius: 10px;
+    box-shadow: 0 0 5px #333;
+    color: #545454;
+    display: block;
+    float: left;
+    font-family: "Century Gothic";
+    font-size: 18px;
+    font-weight: bold;
+    margin: 10px 60px;
+    padding: 10px 20px;
+    text-shadow: 0 1px 1px #fff;
+    text-transform: initial;
 }
 
 /******************************login****************************************/
@@ -1924,7 +1932,16 @@ footer {
 }
 /*****************start login******************/
 .input {
-	width: 190px;
+    background-image: linear-gradient(#f3f3f3, #c4c4c4);
+    border-radius: 7px;
+    color: #545454;
+    box-shadow: 0 2px 4px #838383 ;
+    border: none;
+    font-family: tahoma;
+    font-weight: bold;
+    padding: 4px 10px;
+    width: 20%;
+    text-shadow:0 1px 1px #f4f4f4;
 }
 .signin_contents {
 	margin: 0px 10px 50px 0px;
@@ -2240,10 +2257,8 @@ footer {
 	margin-left: 50px !important;
 	margin-right: 0px;
 }
-.input {
-	width: 350px !important;
-	height: 40px !important;
-	font-size: 18px !important;
+.login_contents ul li{
+	margin-left: 0 !important;
 }
 .signin_contents {
 	width: 900px !important;
@@ -2253,7 +2268,7 @@ footer {
 }
 .signin_contents ul li {
 	display: block;
-	width: 100%;
+	width: 95%;
 }
 .file_upload {
 	float: left;
@@ -2465,5 +2480,57 @@ ul.memreas_results{
 	height: 1000px;
 }
 
+
+}
+
+/***Responsiveness***/
+
+@media (max-width: 800px){  
+	.container {
+		width: 95%!important;
+	}
+	.row-fluid .span6 {
+    float: none;
+    padding: 0 !important;
+    width: 90%!important;
+}
+.login_contents ul li {
+    float: none;
+    margin: 0;
+    width: 86%;
+}
+a.forgot-password {
+	margin-left: 12em;
+}
+.login_contents {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100%;
+}
+.signin_contents {
+    margin-left: 0 !important;
+    margin-right: 0;
+    width: 89%!important;
+}
+.signup_heading p {
+    padding: 20px 29px;
+}
+.signup_textfields {
+    width: 94% !important;
+}
+.login_contents ul li {
+	margin: 0;
+}
+a.forgot-password {
+	font-size: 13px;
+}
+.signin_contents ul li {
+	float: left;
+	margin-left: 0;
+}
+.file_upload {
+    margin: 2px 30px;
+    width: 58%;
+}
 
 }
