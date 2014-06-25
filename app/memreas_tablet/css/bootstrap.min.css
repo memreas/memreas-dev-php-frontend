@@ -462,7 +462,6 @@ margin-left:2.127659574468085%
 	float: right
 }
 .container {
-	width:100%;
 	margin-right: auto;
 	margin-left: auto;
 *zoom:1
@@ -4510,4 +4509,47 @@ filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fffbb450', end
 }
 .affix {
 	position: fixed
+}
+
+@media (max-width: 768px){  
+	.container {
+		width: 90%
+	}
+	.row-fluid .span6 {
+    float: none;
+    padding: 0 !important;
+    width: 90%;
+}
+.login_contents {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100%;
+}
+.signin_contents {
+    margin-left: 0 !important;
+    margin-right: 0;
+    width: 100%!important;
+}
+.signup_textfields {
+    width: 82% !important;
+}
+.login_contents ul li {
+	margin: 0;
+}
+a.forgot-password {
+	font-size: 13px;
+}
+.signin_contents ul li {
+	float: none;
+	margin-left: 0;
+}
+.signup_heading p {
+    font-size: 20px;
+    padding: 20px 0;
+}
+.file_upload {
+	width: 90%;
+	margin: 10px 0;
+}
+
 }
