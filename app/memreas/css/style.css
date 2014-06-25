@@ -1108,7 +1108,7 @@ ul.share_friends_contents {
 	height: 230px;
 	margin-top: 10px;
 }
-ul.share_friends_contents li {
+ul.share_friends_contents li, ul.memreasMorepageFriends li {
 	display: block;
 	list-style: none;
 	float: left;
@@ -2640,7 +2640,7 @@ ul.memreas_results{
 	text-align: center;
 }
 
-#txt_locationmap_address {
+.txt_locationmap_address {
 	width: 27%;
 	height: 24px;
 	float: right;
@@ -2651,7 +2651,7 @@ ul.memreas_results{
 	box-shadow: inset 0 2px 2px #999 !important;
 }
 
-#btn_locationmap_ok {
+.btn_locationmap_ok {
 	float: right !important;
 	margin: 0 20px 0 0 !important;
 	padding: 6px 10px !important;

@@ -35,6 +35,7 @@ $(function(){
 
     $("#tabs-more li a:eq(3)").one ('click', function(){ $('#buttons4-moretab').akordeon(); });
     $("#tabs-more li a:eq(4)").one ('click', function(){ $('#buttons5-moretab').akordeon(); });
+    $("#tabs-more li a:eq(6)").one ('click', function(){ $('#buttons7-moretab').akordeon(); });
 
     /*Action tabs click*/
     //$("a[title=more]").click(function(){ fillUserDetail( $("input[name=user_id]").val()); });
@@ -617,6 +618,10 @@ $(function(){
     $(".memreas-friend-header").click(function(){
         getMorepageEventFriends();
     });
+
+    $("#cmd_MorepageEvents").change(function(){
+        fillmorepage_eventDetail($(this).val());
+    });
 });
 function getAccountMemreas(){
     var jSelectEventName = $("#cmd_MorepageEvents");
@@ -643,10 +648,73 @@ function getAccountMemreas(){
                         html_str += '<option value="' + eventId + '">' + event_name + '</option>';
                     }
                     jSelectEventName.html(html_str);
+                    $("#cmd_MorepageEvents").change();
                 }
                 else jerror('You have no event at this time');
         });
     }
+}
+
+function fillmorepage_eventDetail(morepage_event_id){
+    var jMorepageEventDate = $("#morepage_eventDate");
+    var jMorepageEventLocation = $("#morepage_eventLocation");
+    var jMorepageEventFriendsCanPost = $("#morepage_eventFriendsCanPost");
+    var jMorepageEventFreindsCanAdd = $("#morepage_friendsCanAdd");
+    var jMorepage_EventPublic = $("#morepage_public");
+    var jMorepage_isviewable = $("#morepage_isviewable");
+    var jMoredate_eventDateFrom = $("#moredate_eventDateFrom");
+    var jMoredate_eventDateTo = $("#moredate_eventDateTo");
+    var jMorepage_IsSelfDestruct = $("#morepage_isselfdestruct");
+    var jmorepage_eventSelfDestruct = $("#morepage_eventSelfDestruct");
+
+    ajaxRequest('geteventdetails',
+        [{tag: 'event_id', value: morepage_event_id}],
+        function(response){
+        if (getValueFromXMLTag(response, 'status') == "Success") {
+
+            if (getValueFromXMLTag(response, 'date') != '')
+                jMorepageEventDate.val(getValueFromXMLTag(response, 'date'));
+            else jMorepageEventDate.val('from');
+
+            if (getValueFromXMLTag(response, 'location') != '')
+                jMorepageEventLocation.val(getValueFromXMLTag(response, 'location'));
+
+            var friendsCanPost = getValueFromXMLTag(response, 'friends_can_post');
+            if (friendsCanPost == 1)
+                jMorepageEventFriendsCanPost.attr('checked', true);
+            else jMorepageEventFriendsCanPost.removeAttr('checked', false);
+
+            var friendsCanAdd = getValueFromXMLTag(response, 'friends_can_share');
+            if (friendsCanAdd == 1)
+                jMorepageEventFreindsCanAdd.attr('checked', true);
+            else jMorepageEventFreindsCanAdd.removeAttr('checked');
+
+            //jMorepage_isviewable.val(getValueFromXMLTag(response, ))
+            if (getValueFromXMLTag(response, 'viewable_from') != ''){
+                jMoredate_eventDateFrom.val(getValueFromXMLTag(response, 'viewable_from'));
+                jMorepage_isviewable.attr('checked', true)
+            }
+            else {
+                jMoredate_eventDateFrom.val('from');
+                jMorepage_isviewable.removeAttr('checked');
+            }
+
+            if (getValueFromXMLTag(response, 'viewable_to') != '')
+                jMoredate_eventDateTo.val(getValueFromXMLTag(response, 'viewable_to'));
+            else jMoredate_eventDateTo.val('to');
+
+            if (getValueFromXMLTag(response, 'self_destruct') != ''){
+                jmorepage_eventSelfDestruct.val(getValueFromXMLTag(response, 'self_destruct'));
+                jMorepage_IsSelfDestruct.attr('checked', true);
+            }
+            else{
+                jmorepage_eventSelfDestruct.val('');
+                jMorepage_IsSelfDestruct.removeAttr('checked');
+            }
+
+        }
+        else jerror(getValueFromXMLTag(response, 'message'));
+    });
 }
 
 function getMemreasEventMedia(){
@@ -692,6 +760,59 @@ function getMemreasEventMedia(){
     });
 }
 
+function morepage_saveEvent(){
+    var viewable_from = (($("#moredate_eventDateFrom").val() != ''
+                                                && $("#moredate_eventDateFrom").val() != 'from')
+                                                ? $("#moredate_eventDateFrom").val() : '');
+    if (viewable_from != ''){
+        var split_date = viewable_from.split('/');
+        viewable_from = split_date[1] + '-' + split_date[0] + '-' + split_date[2]; //Correct date format to d-m-Y
+    }
+
+    var viewable_to = (($("#moredate_eventDateTo").val() != ''
+                                                && $("#moredate_eventDateTo").val() != 'to')
+                                                ? $("#moredate_eventDateTo").val() : '');
+
+    if (viewable_to != ''){
+        var split_date = viewable_to.split('/');
+        viewable_to = split_date[1] + '-' + split_date[0] + '-' + split_date[2]; //Correct date format to d-m-Y
+    }
+
+    var self_destruct = (($("#morepage_eventSelfDestruct").val() != '') ? $("#morepage_eventSelfDestruct").val() : '');
+    if (self_destruct != ''){
+        var split_date = self_destruct.split('/');
+        self_destruct = split_date[1] + '-' + split_date[0] + '-' + split_date[2]; //Correct date format to d-m-Y
+    }
+
+    if ($("#morepage_eventFriendsCanPost").is(":checked"))
+        var friend_can_post = 1;
+    else friend_can_post = 0;
+
+    if ($("#morepage_friendsCanAdd").is(":checked"))
+        var friend_can_add = 1;
+    else var friend_can_add = 0;
+
+    var params = [
+                    {tag: 'event_id', value: $("#cmd_MorepageEvents").val()},
+                    {tag: 'event_name', value: $("#cmd_MorepageEvents option[value='" + $("#cmd_MorepageEvents").val() +"']").html()},
+                    {tag: 'event_location', value: (($("#morepage_eventLocation").val() != ''
+                                                        && $("#morepage_eventLocation").val() != 'address or current location')
+                                                        ? $("#morepage_eventLocation").val() : '')},
+                    {tag: 'event_date', value: (($("#morepage_eventDate").val() != ''
+                                                && $("#morepage_eventDate").val() != 'from')
+                                                ? $("#morepage_eventDate").val() : '')},
+                    //{tag: 'viewable'}
+                    {tag: 'event_from', value: viewable_from},
+                    {tag: 'event_to', value: viewable_to},
+                    {tag: 'is_friend_can_post_media', value: friend_can_post.toString()},
+                    {tag: 'is_friend_can_add_friend', value: friend_can_add.toString()},
+                    {tag: 'event_self_destruct', value: self_destruct},
+                ];
+    ajaxRequest('editevent', params, function(response){
+        alert(response);
+    });
+}
+
 function getMorepageEventFriends(){
     var jMemreasEventFriend = $(".memreasMorepageFriends");
 
@@ -723,7 +844,7 @@ function getMorepageEventFriends(){
                     friend_id = getValueFromXMLTag(friend, 'friend_id');
                     friend_name = getValueFromXMLTag(friend, 'friend_name');
                     html_str = '<li>';
-                    html_str += '<figure class="pro-pics2" id="morefriend-' + friend_id + '" onclick="javascript:morepage_clickFriends(this.id);"><img src="' + friend_photo + '" alt="" ></figure>';
+                    html_str += '<figure class="pro-pics2" id="morefriend-' + friend_id + '" onclick="javascript:morepage_clickFriends(this.id);"><img class="morepage-friend-thumb" src="' + friend_photo + '" alt="" ></figure>';
                     html_str += '<aside class="pro-pic_names2" name="' + friend_name + '" id="a' + friend_id + '" onclick="javascript:share_clickFriends(this.id.substr(1));">' + friend_name + '</aside>';
                     html_str += '</li>';
                     jMemreasEventFriend.append(html_str);
@@ -752,4 +873,242 @@ function more_clickMedia(mediaElementId){
     if (jMediaElement.hasClass('setchoosed'))
         jMediaElement.removeClass('setchoosed');
     else jMediaElement.addClass('setchoosed');
+}
+
+more_showGoogleMap = function(div_id) {
+    popup('more_dlg_locationmap');
+    more_initGoogleMap(div_id);
+}
+
+// close the popup window with google map.
+// save_address: variable indicating if the address is saved or not.
+more_closeGoogleMap = function(save_address) {
+    if (save_address == true) {
+        var addr = $('#more_txt_locationmap_address').val();
+        if (addr != "")
+            $('#morepage_eventLocation').val(addr);
+        else
+            setDefaultValue('morepage_eventLocation');
+    }
+
+    disablePopup('more_dlg_locationmap');
+}
+
+// initialize the google map.
+more_initGoogleMap = function(div_id) {
+    if (location_map == null || typeof location_map == "undefined") {
+         var lat = 44.88623409320778,
+             lng = -87.86480712897173,
+             latlng = new google.maps.LatLng(lat, lng),
+             image = 'http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png';
+
+         // create the google map object.
+         var mapOptions = {
+             center: new google.maps.LatLng(lat, lng),
+             zoom: 13,
+             mapTypeId: google.maps.MapTypeId.ROADMAP,
+             panControl: true,
+             panControlOptions: {
+                 position: google.maps.ControlPosition.TOP_RIGHT
+             },
+             zoomControl: true,
+             zoomControlOptions: {
+                 style: google.maps.ZoomControlStyle.LARGE,
+                 position: google.maps.ControlPosition.TOP_left
+             }
+         },
+         location_map = new google.maps.Map(document.getElementById(div_id), mapOptions),
+         marker = new google.maps.Marker({
+             position: latlng,
+             map: location_map,
+             icon: image
+         });
+
+         // set the search text field as auto-complete.
+         var input = document.getElementById('more_txt_locationmap_address');
+         var autocomplete = new google.maps.places.Autocomplete(input, {
+             types: ["geocode"]
+         });
+
+         autocomplete.bindTo('bounds', location_map);
+         var infowindow = new google.maps.InfoWindow();
+
+         google.maps.event.addListener(autocomplete, 'place_changed', function (event) {
+             infowindow.close();
+
+             var place = autocomplete.getPlace();
+             if (typeof place.geometry == "undefined")
+                 return;
+
+             if (place.geometry.viewport) {
+                 location_map.fitBounds(place.geometry.viewport);
+             } else {
+                 location_map.setCenter(place.geometry.location);
+                 location_map.setZoom(17);
+             }
+
+             moveMarker(place.name, place.geometry.location);
+         });
+
+         function moveMarker(placeName, latlng) {
+             marker.setIcon(image);
+             marker.setPosition(latlng);
+             infowindow.setContent(placeName);
+         }
+    }
+
+    if (isElementEmpty('morepage_eventLocation')) {
+        // get the current location.
+        var err_msg = "Error while getting location. Device GPS/location may be disabled."
+        var geoPositionOptions = $.extend({
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 10000
+        }, { timeout: 10000 } );
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition (
+                function(position) {
+                    var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                    if (geocoder == null)
+                        geocoder = new google.maps.Geocoder();
+                    geocoder.geocode({'latLng': latlng}, function(results, status) {
+                        if (status == google.maps.GeocoderStatus.OK) {
+                            if (results[1]) {
+                                $('#more_txt_locationmap_address').val(results[1].formatted_address);
+                            }
+                        } else {
+                        }
+                    });
+                    if (location_map)
+                        location_map.setCenter(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+                },
+                function(error) {
+                    jerror(err_msg);
+                },
+                geoPositionOptions
+            );
+        } else {
+            jerror(err_msg);
+        }
+    }
+}
+
+function morepage_removeMedias(){
+    var jMorepageMediaElement = $(".memreasEventMedia li");
+    var self_chooseMedia = [];
+    var counter_media = 0;
+    jMorepageMediaElement.each(function(){
+        if ($(this).hasClass('setchoosed')){
+            var media_id = $(this).attr('id').replace('moremedia-', '');
+            self_chooseMedia[counter_media++] = {tag: 'media_id', value: media_id};
+        }
+    });
+
+    if (self_chooseMedia.length == 0){
+        jerror('Please choose media to remove');
+        return false;
+    }
+
+    var params = [
+                    {tag: 'event_id', value: currentMorepageEventId},
+                    {tag: 'media_ids', value: self_chooseMedia},
+                ];
+
+    ajaxRequest('removeeventmedia', params, function(response){
+        if (getValueFromXMLTag(response, 'status') == 'Success'){
+            jsuccess(getValueFromXMLTag(response, 'message'));
+            setTimeout(function(){
+                var jMemreasEventMedia = $(".memreasEventMedia");
+
+                if (jMemreasEventMedia.hasClass("mCustomScrollbar"))
+                    jMemreasEventMedia = $(".memreasEventMedia .mCSB_container");
+                ajaxRequest(
+                    'listallmedia',
+                    [
+                        { tag: 'event_id',  value: memreasEventId },
+                        { tag: 'user_id',   value: user_id },
+                        { tag: 'device_id', value: '' },
+                        { tag: 'limit',     value: '100' },
+                        { tag: 'page',      value: '1' }
+                    ], function (response){
+                        jMemreasEventMedia.empty();
+                        if (getValueFromXMLTag(response, 'status') == "Success") {
+                            var medias = getSubXMLFromTag(response, 'media');
+                            var media_count = medias.length;
+                            for (var i=0;i < media_count;i++) {
+                                var media = medias[i].innerHTML;
+                                var media_type = $(media).filter('type').html();
+                                var media_id = $(media).filter('media_id').html();
+                                var _media_url = getMediaThumbnail(media, '/memreas/img/small/1.jpg');
+                                if (media_type == 'video')
+                                    jMemreasEventMedia.append ('<li class="event_img video-media" id="moremedia-' + media_id + '" onclick="more_clickMedia(this.id);"><img src="' + _media_url + '"/><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></li>');
+                                jMemreasEventMedia.append ('<li class="event_img" id="moremedia-' + media_id + '" onclick="more_clickMedia(this.id);"><img src="' + _media_url + '"/></li>');
+                            }
+                            ajaxScrollbarElement("#memreasEventMedia");
+                        }
+                        else jerror('You have no media on this event');
+                });
+            }, 2000);
+        }
+        else jerror(getValueFromXMLTag(response, 'message'));
+    });
+}
+
+function morepage_removeFriends(){
+    var jMorepageFriendsElement = $(".memreasMorepageFriends li");
+    var self_chooseFriends = [];
+    var counter_friend = 0;
+    jMorepageFriendsElement.each(function(){
+        var jFriendImage = $(this).find('img.morepage-friend-thumb');
+        if (jFriendImage.hasClass('setchoosed')){
+            var morepage_friendId = ($(this).find('figure').attr('id').replace('morefriend-', ''));
+            self_chooseFriends[counter_friend++] = {tag: 'friend_id', value: morepage_friendId};
+        }
+    });
+
+    if (self_chooseFriends.length == 0){
+        jerror('Please choose friend to remove');
+        return false;
+    }
+
+    var params = [
+                    {tag: 'event_id', value: currentMorepageEventId},
+                    {tag: 'friend_ids', value: self_chooseFriends},
+                ];
+    ajaxRequest('removeeventfriend', params, function(response){
+        if (getValueFromXMLTag(response, 'status') == 'Success'){
+            jsuccess(getValueFromXMLTag(response, 'message'));
+            setTimeout(function(){
+                var jMemreasEventFriend = $(".memreasMorepageFriends");
+
+                if (jMemreasEventFriend.hasClass("mCustomScrollbar"))
+                    jMemreasEventFriend = $(".memreasMorepageFriends .mCSB_container");
+                ajaxRequest('geteventpeople', [{tag: 'event_id', value: currentMorepageEventId}],
+                    function(xml_response){
+                        jMemreasEventFriend.empty();
+                        if (getValueFromXMLTag(xml_response, 'status') == 'Success'){
+                            var friends = getSubXMLFromTag(xml_response, 'friend');
+                            var count_people = friends.length;
+                            for (i = 0;i < count_people;i++){
+                                friend = friends[i];
+                                if (getValueFromXMLTag(friend, 'photo') == '' || getValueFromXMLTag(friend, 'photo') == 'null')
+                                    friend_photo = '/memreas/img/profile-pic.jpg';
+                                else friend_photo = getValueFromXMLTag(friend, 'photo');
+                                friend_id = getValueFromXMLTag(friend, 'friend_id');
+                                friend_name = getValueFromXMLTag(friend, 'friend_name');
+                                html_str = '<li>';
+                                html_str += '<figure class="pro-pics2" id="morefriend-' + friend_id + '" onclick="javascript:morepage_clickFriends(this.id);"><img class="morepage-friend-thumb" src="' + friend_photo + '" alt="" ></figure>';
+                                html_str += '<aside class="pro-pic_names2" name="' + friend_name + '" id="a' + friend_id + '" onclick="javascript:morepage_clickFriends(this.id.substr(1));">' + friend_name + '</aside>';
+                                html_str += '</li>';
+                                jMemreasEventFriend.append(html_str);
+                            }
+                            ajaxScrollbarElement(".memreasMorepageFriends");
+                        }
+                        else jerror('You have no friend on this event');
+                    }
+                );
+            }, 2000);
+        }
+    });
 }
