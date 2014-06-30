@@ -157,6 +157,8 @@ li.working-upload .progress-text{
     box-shadow: none;
     -moz-box-shadow:none;
 }
+#avpw_footer, .avpw_close_button, #avpw_tool_content_header{ display: none !important; }
+/*
 .avpw .avpw_icon{
     padding-left: 30px;
 }
@@ -165,27 +167,26 @@ li.working-upload .progress-text{
     width: 95px !important;
     height: 80px !important;
 }
-#avpw_footer, .avpw_close_button, #avpw_tool_content_header{ display: none !important; }
 .avpw_tool_icon{ height: 100px !important; }
 .avpw .avpw_icon_label{ left: 41px !important; bottom: 21px !important; font-size: 10px !important;}
 .avpw_tool_icon_inner:before{ display: none !important; }
 #avpw_main_enhance .avpw_tool_icon_inner{
-    background-position: -1165px -686px !important;
+    background-position: 4px 0px !important;
 }
 #avpw_main_effects .avpw_tool_icon_inner{
-    background-position: -1165px -600px !important;
+    background-position: -1267px -88px !important;
 }
 #avpw_main_frames .avpw_tool_icon_inner{
-    background-position: -1435px -172px !important;
+    background-position: 355px 0px !important;
 }
 #avpw_main_overlay .avpw_tool_icon_inner{
-    background-position: -2696px 0px !important;
+    background-position: -2636px 0px !important;
 }
 #avpw_main_orientation .avpw_tool_icon_inner{
-    background-position: -1886px -955px !important;
+    background-position: -2002px -87px !important;
 }
 #avpw_main_focus .avpw_tool_icon_inner{
-    background-position: -1527px -773px !important;
+    background-position: -1632px -88px !important;
 }
 #avpw_main_brightness .avpw_tool_icon_inner{
     background-position: -86px -173px !important;
@@ -208,3 +209,4 @@ li.working-upload .progress-text{
 #avpw_main_blemish .avpw_tool_icon_inner {
     background-position: -88px -85px !important;
 }
+*/

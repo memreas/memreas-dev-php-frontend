@@ -5,7 +5,7 @@ $(document).ready( function() {
 
     //Check if IOS only allow 1 file per upload
     if (userBrowser[0].ios){
-        $(".direct-upload").find("input[type=file]").removeAttr('multiple');
+        $(".media-upload").find("input[type=file]").removeAttr('multiple');
     }
 
     var ellipsisCount = 1;
@@ -13,22 +13,22 @@ $(document).ready( function() {
     var hashName = '';
 
     $(".upload-dropzone").click (function(){
-        $(".direct-upload").find ("input[type=file]").trigger('click');
+        $(".media-upload").find ("input[type=file]").trigger('click');
     });
 
-    $('.direct-upload').each( function() {
+    $('.media-upload').each( function() {
 
-        var form = $(this);
+        var form = $(".media-upload");
 
-        $(this).fileupload({
-            dropZone: $('.upload-dropzone, .upload-from-event'),
+        $('.media-upload').fileupload({
+            dropZone: $('.upload-from-event'),
             url: form.attr('action'),
             dataType: 'xml',
             crossDomain: true,
             multiple: true,
             type: 'POST',
             autoUpload: true,
-            add: function (event, data) {
+            add: function (event, data){
                 currentUploadFileCount = uploadFilesInstance.length;
                 if (currentUploadFileCount > 10){
                     jerror("Only allow to upload limited 10 files per session.");

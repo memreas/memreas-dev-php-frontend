@@ -42,19 +42,19 @@ $(function(){
     $("a[title=tab1-more]").click(function(){ $("a[title=more]").click(); });
 
     /* Change profile picture*/
-    var form = $("#frm-profile-pic");
 
-    $(".change-profile-btn").click(function(){ form.find('input[type=file]').click(); });
+    $(".change-profile-btn").click(function(){ $("#frm-profile-pic").find('input[type=file]').click(); });
 
     $("#frm-profile-pic").fileupload({
-        url: form.attr('action'),
+        url: $(this).attr('action'),
         dataType: 'xml',
         crossDomain: true,
         multiple: true,
         type: 'POST',
         autoUpload: true,
         add: function (event, data) {
-
+            if (!$("a[title=more]").hasClass('active')) return false;
+            var form = $(this);
             //Get signed credentials
             $.ajax({
                 url: "/index/s3signed",

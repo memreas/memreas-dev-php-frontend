@@ -11,7 +11,7 @@
                       <li class="first-upload"></li>
                     </ul>
                       <!-- Direct Upload to S3 -->
-                    <form action="https://<?php echo $data['bucket']; ?>.s3.amazonaws.com/" method="POST" enctype="multipart/form-data" class="direct-upload">
+                    <form action="https://<?php echo $data['bucket']; ?>.s3.amazonaws.com/" method="POST" enctype="multipart/form-data" class="media-upload">
 
                         <!-- We'll specify these variables with PHP -->
                         <!-- Order of these is Important -->
@@ -23,7 +23,7 @@
                         <input type="hidden" name="signature" value="">
 
                         <input type="file" name="file" multiple="" style="opacity: 0; -moz-opacity:0; -webkit-opacity: 0; filter: alpha(opacity = 0);"/>
-                        <div class="upload-dropzone"></div>
+                        <div class="upload-dropzone upload-from-event"></div>
                     </form>
                     <input type="hidden" name="ContentType" value="" />
                     <input type="hidden" name="ContentName" value="" />
