@@ -47,9 +47,9 @@ class IndexController extends AbstractActionController
     public function fetchXML($action, $xml) {
         $session = $this->getAuthService()->getIdentity();
 	    $guzzle = new Client();
-//error_log("Inside fetch XML request url ---> " . $this->url . PHP_EOL);
-//error_log("Inside fetch XML request action ---> " . $action . PHP_EOL);
-//error_log("Inside fetch XML request XML ---> " . $xml . PHP_EOL);
+error_log("Inside fetch XML request url ---> " . $this->url . PHP_EOL);
+error_log("Inside fetch XML request action ---> " . $action . PHP_EOL);
+error_log("Inside fetch XML request XML ---> " . $xml . PHP_EOL);
         $request = $guzzle->post(
 		    $this->url,
 		    null,
@@ -74,7 +74,7 @@ error_log("Enter FE indexAction".PHP_EOL);
         $data['bucket'] = "memreasdev";
 		$view = new ViewModel(array('data' => $data));
 		$view->setTemplate($path); // path to phtml file under view folder
-        error_log("Exit indexAction".PHP_EOL);
+error_log("Exit indexAction".PHP_EOL);
 
 		return $view;
     }
@@ -176,7 +176,8 @@ error_log("Enter FE indexAction".PHP_EOL);
 			$output = ob_get_clean();
 			header("Content-type: plain/text");
 			echo $callback_json;
-
+error_log("callback_json----->".$callback_json.PHP_EOL);
+				
             //Need to exit here to avoid ZF2 framework view.
 			exit;
 		} else {
@@ -359,18 +360,20 @@ error_log("Enter FE indexAction".PHP_EOL);
     * Login Action
     */
     public function loginAction() {
-		//Fetch the post data
+error_log("Inside loginAction".PHP_EOL);
+    	//Fetch the post data
 		$request = $this->getRequest();
 		$postData = $request->getPost()->toArray();
 		$username = $postData ['username'];
-		$password = $postData ['password'];
-        $status_user_id = $postData['status_user_id'];
-        if (empty ($status_user_id)){
+		//$password = $postData ['password'];
+		$userid = $postData ['userid'];
+error_log("userid---->".$userid.PHP_EOL);
+        if (empty ($userid)){
            return $this->redirect()->toRoute('index', array('action' => "index"));
         }
         else{
             $session = new Container('user');
-            $session->offsetSet('user_id', $status_user_id);
+            $session->offsetSet('user_id', $userid);
             $session->offsetSet('username', $username);
             return $this->redirect()->toRoute('index', array('action' => 'memreas'));
         }
