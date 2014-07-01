@@ -160,15 +160,19 @@ function fetchMyMemreas(){
 }
 function fetchFriendsMemreas(friendMemreasType){
     var user_id = $("input[name=user_id]").val();
-    if (friendMemreasType == 'private')
+    if (friendMemreasType == 'private'){
         showPublic = '0';
-    else showPublic = '1';
+            showAccepted = '1';
+        }else{
+            showPublic = '1';
+             showAccepted = '0';
+        } 
     ajaxRequest(
         'viewevents',
         [
             {tag: 'user_id', value: user_id},
             {tag: 'is_my_event', value : '0'},
-            {tag: 'is_friend_event', value: '1'},
+            {tag: 'is_friend_event', value: showAccepted},
             {tag: 'is_public_event', value: showPublic},
             {tag: 'page', value: '1'},
             {tag: 'limit', value: '20'}
