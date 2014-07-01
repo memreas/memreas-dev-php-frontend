@@ -191,7 +191,7 @@ function fetchFriendsMemreas(friendMemreasType){
             var friendsId = new Array();
             var friends = $.xml2json(response, true);
             if (getValueFromXMLTag(response, 'status') == "Success"){
-                if (typeof (friends.viewevents[0].friends[1]) != "undefined"){
+                if (typeof (friends.viewevents[0].friends[0]) != "undefined"){
                     friends = getSubXMLFromTag(response, 'friend');
                     var friend_count = friends.length;
                     for (var i = 0;i <  friend_count;i++){
