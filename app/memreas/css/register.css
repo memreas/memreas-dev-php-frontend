@@ -244,35 +244,27 @@ span.absolute{
 #demo_box_2 {
     display: none;
 }
-input.css-checkbox[type="checkbox"] + label.css-label {
-    font-size: 24px;
-    height: 30px;
-    margin-top: 10px;
+input[type=checkbox].css-checkbox {
+    display: none;
+}
+input[type=checkbox].css-checkbox + label.css-label {
     padding-left: 35px;
-}
-
-input.css-checkbox[type="checkbox"]:checked + label.css-label {
-    background: url("../img/check-box.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
-}
-input.css-checkbox[type="checkbox"] + label.css-label {
-    color: #fff;
-    cursor: pointer;
-    display: block;
+    height: 30px;
+    display: inline-block;
     font-family: "Century Gothic";
     font-size: 18px;
-    height: 30px;
-    margin: 20px auto 15px;
-    width: 31%
+    color: #FFF;
+    vertical-align: middle;
+    cursor: pointer;
+    margin-left: 80px;
+    min-width: 140px;
+}
+input[type=checkbox].css-checkbox:checked + label.css-label {
+    background: url(../img/check.png) no-repeat;
 }
 .css-label {
-    background: url("../img/check.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    background: url(../img/check-box.png) no-repeat;
     margin: 0;
-}
-
-input.css-checkbox[type="checkbox"]:checked + label.css-label {
-    background: url("../img/check-box.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
-    text-decoration: none;
-    font-family: Century Gothic;
 }
 .create-accnt {
     display: block;

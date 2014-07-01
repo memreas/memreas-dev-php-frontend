@@ -62,6 +62,7 @@
                                 <div class="login-top clearfix">
                                     <input name="username" type="text" placeholder="Username" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Email')this.value = '';"/>
                                     <input name="password" type="password" placeholder="Password"  onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Password')this.value = '';"/>
+                                    <input type="hidden" name="status_user_id" value="" />
                                     <input type="submit" value="log in" name="log in" class="btn btn-sm login-btn">
                                 </div>
                                 <div class="login-bottom clearfix">
@@ -101,13 +102,13 @@
                                     <input name="password" id="inPassword" type="password" placeholder="Password" onFocus="if(this.value == 'Password')this.value = '';" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" />
                                     <input name="verifypassword" id="inVerifyPassword" type="password" placeholder="Verify Password" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Verify Password')this.value = '';"/>
                                     <input name="invited_by" class="signup_textfields" type="text" value="invited by @person (optional)" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'invited by @person (optional)')this.value = '';" style="display: none;">
-                                    <input type="checkbox" checked="checked" class="css-checkbox" id="demo_box_2">
+                                    <input type="checkbox" checked="checked" class="css-checkbox" id="demo_box_2" name="legal_agree">
                                     <label class="css-label" for="demo_box_2"><a onclick="popup('popupContact');" href="javascript:;" class="legal clicker-1" id="button">legal disclaimer</a></label>
-                                    <a class="btn btn-lyt create-accnt">Create an Account</a>
+                                    <input type="submit" id="btnCall" class="btn btn-lyt create-accnt" value="Create an account">
                                 </form>
                             </div>
                         </div>
-                        <div class="pull-left ">
+                        <div class="pull-left">
                             <div class="relative feature">
                                 <div class="film absolute">
                                     <img src="/memreas/img/memreas-img.png" alt="Film Strip" style="width: 100%;">
@@ -214,7 +215,7 @@
 
                     reader.onload = (function(theFile) {
                         return function(e) {
-                            document.getElementById('list').innerHTML = ['<img src="', e.target.result,'" title="', theFile.name, '" width="75" />'].join('');
+                            document.getElementById('list').innerHTML = ['<img src="', e.target.result,'" title="', theFile.name, '" width="75" height="75" />'].join('');
                         };
                     })(f);
 
