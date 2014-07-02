@@ -33,6 +33,7 @@ class IndexController extends AbstractActionController
 	//Updated....
     protected $url = MemreasConstants::MEMREAS_WS; //Local development
     //protected $url = "http://memreas-dev-ws.localhost/"; //Local development
+    protected $stripe_url = "http://memreas-dev-stripe.localhost";
     protected $test = "Hope this works!";
     protected $user_id;
     protected $storage;
@@ -64,7 +65,7 @@ error_log("Inside fetch XML request XML ---> " . $xml . PHP_EOL);
 	    $response = $request->send();
 error_log("Inside fetch XML response ---> " . $response->getBody(true) . PHP_EOL);
 //error_log("Exit fetchXML".PHP_EOL);
-		return $data = $response->getBody(true);
+		return $data = $response->getBody(true);;
 	}
 
     public function indexAction() {
@@ -177,7 +178,7 @@ error_log("Exit indexAction".PHP_EOL);
 			header("Content-type: plain/text");
 			echo $callback_json;
 error_log("callback_json----->".$callback_json.PHP_EOL);
-				
+
             //Need to exit here to avoid ZF2 framework view.
 			exit;
 		} else {
@@ -248,7 +249,7 @@ error_log("callback_json----->".$callback_json.PHP_EOL);
 
         //$path = $this->security("application/index/memreas.phtml");
         $path = "application/index/memreas.phtml";
-        $view = new ViewModel(array('data' => $data, 'enableAdvertising' => $enableAdvertising));
+        $view = new ViewModel(array('data' => $data, 'enableAdvertising' => $enableAdvertising, 'stripeUrl' => $this->stripe_url));
         $view->setTemplate($path); // path to phtml file under view folder
         return $view;
     }

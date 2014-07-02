@@ -35,7 +35,10 @@ $(function(){
 
     $("#tabs-more li a:eq(3)").one ('click', function(){ $('#buttons4-moretab').akordeon(); });
     $("#tabs-more li a:eq(4)").one ('click', function(){ $('#buttons5-moretab').akordeon(); });
-    $("#tabs-more li a:eq(6)").one ('click', function(){ $('#buttons7-moretab').akordeon(); });
+    $("#tabs-more li a:eq(6)").one ('click', function(){
+        $('#buttons7-moretab').akordeon();
+        loadSubscriptionPlans();
+    });
 
     /*Action tabs click*/
     //$("a[title=more]").click(function(){ fillUserDetail( $("input[name=user_id]").val()); });
