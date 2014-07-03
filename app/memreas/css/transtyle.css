@@ -145,6 +145,7 @@ li.working-upload .progress-text{
 .notification span{
     display: block;
 }
+.hide-onload{ display: none; }
 
 /* Aviary page */
 

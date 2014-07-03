@@ -2,12 +2,53 @@
 *@ Stripe account functions
 */
 //handle header steps clicking
+var plans_payment = new Object();
+var account_cards = new Object();
 $(function(){
-    //Step2 tab click
+    //Step 2
     $(".subscription-payment-method").click(function(){
-        listStripeCard();
+       listStripeCard();
+    });
+
+    //Step 3
+    $(".subscription-order-summary").click(function(){
+        subscription_step3();
+    });
+
+    //Step 4
+    $(".subscription-order-receipt").click(function(){
+        subscription_step4();
     });
 });
+
+function planChange(choose_plan_id){
+    var real_plan_id = choose_plan_id.replace('plan-', '');
+    resetPlanChoose();
+    for (i in plans_payment){
+        if (real_plan_id == plans_payment[i].plan_id){
+            plans_payment[i].selected = 1;
+        }
+    }
+}
+function resetPlanChoose(){
+    for (i in plans_payment){
+        plans_payment[i].selected = 0;
+    }
+}
+
+function cardChange(choose_card_id){
+    resetCardChoose();
+    for (i in account_cards){
+        if (choose_card_id == account_cards[i].card_id){
+            account_cards[i].selected = 1;
+        }
+    }
+}
+function resetCardChoose(){
+    for (i in account_cards){
+        account_cards[i].selected = 0;
+    }
+}
 
 function loadSubscriptionPlans(){
     var jSubscriptionPlans = $(".subscription-plans");
@@ -30,6 +71,172 @@ function subscription_step2(){
         return false;
     }
     listStripeCard();
+}
+
+function subscription_step3(){
+    var html_content = '';
+    var jOrderSummary = $(".order-summary");
+    var jOrderSummaryActions = jOrderSummary.next('.bottom-actions');
+    jOrderSummaryActions.hide();
+    jOrderSummary.empty();
+    var jSubscriptionPlans = $(".subscription-plans");
+    var jMemberCard = $(".subscription-payment");
+    var checkPlanChoose = false;
+    var checkCardChoose = false;
+    jSubscriptionPlans.find('input[type=radio]').each(function(){
+        if ($(this).is(":checked")){
+            checkPlanChoose = true;
+            return;
+        }
+    });
+    if (!checkPlanChoose)
+        html_content = '<li><h3>Previous steps error! Please choose a plan first.</h3></li>';
+    else{
+        jMemberCard.find('input[type=radio]').each(function(){
+            if ($(this).is(":checked")){
+                checkCardChoose = true;
+                return;
+            }
+        });
+        if (!checkCardChoose)
+            html_content = '<li><h3>Previous steps error! Please choose a payment method.</h3></li>';
+        else html_content = $(".order-summary-preview ul").html();
+    }
+
+    jOrderSummary.html(html_content);
+    if (!checkPlanChoose || !checkCardChoose) return false;
+
+    //Fetch the order plan
+    var orderPlan = new Object();
+    for (i in plans_payment){
+        if (plans_payment[i].selected == 1){
+            orderPlan = plans_payment[i].data;
+            break;
+        }
+    }
+
+    //Fetch the card
+    var orderCard = new Object();
+    for (i in account_cards){
+        if (account_cards[i].selected == 1){
+            orderCard = account_cards[i].data;
+            break;
+        }
+    }
+
+    var card_data = orderCard.stripe_card_response;
+
+    jOrderSummary.find('#order-summary-name').val(orderCard.first_name + ' ' + orderCard.last_name);
+    jOrderSummary.find('#order-summary-address1').val(orderCard.address_line_1);
+    jOrderSummary.find('#order-summary-address2').val(orderCard.address_line_2);
+    jOrderSummary.find('#order-summary-cardtype option[value=' + orderCard.card_type + ']').attr('selected', true);
+    jOrderSummary.find('#order-summary-ccnum').val(orderCard.obfuscated_card_number);
+    jOrderSummary.find('#order-summary-expdate').val(card_data.exp_month);
+    jOrderSummary.find('#order-summary-expyear').val(card_data.exp_year);
+    jOrderSummary.find('#order-summary-city').val(card_data.address_city);
+    jOrderSummary.find('#order-summary-state').val(card_data.address_state);
+    jOrderSummary.find('#order-summary-zip').val(orderCard.zip_code);
+
+    jOrderSummary.find('#choose-plan-name').html(orderPlan.name);
+    jOrderSummary.find('#choose-plan-cost').html((orderPlan.amount / 100) + ' ' + orderPlan.currency);
+}
+
+function subscription_step4(){
+    var html_content = '';
+    var jOrderRecept = $(".order-recept");
+    var jMessageOrder = $(".message-order");
+    jMessageOrder.empty().hide();
+    jOrderRecept.empty();
+    var jSubscriptionPlans = $(".subscription-plans");
+    var jMemberCard = $(".subscription-payment");
+    var checkPlanChoose = false;
+    var checkCardChoose = false;
+    jSubscriptionPlans.find('input[type=radio]').each(function(){
+        if ($(this).is(":checked")){
+            checkPlanChoose = true;
+            return;
+        }
+    });
+    if (!checkPlanChoose)
+        html_content = '<li><h3>Previous steps error! Please choose a plan first.</h3></li>';
+    else{
+        jMemberCard.find('input[type=radio]').each(function(){
+            if ($(this).is(":checked")){
+                checkCardChoose = true;
+                return;
+            }
+        });
+        if (!checkCardChoose)
+            html_content = '<li><h3>Previous steps error! Please choose a payment method.</h3></li>';
+    }
+
+    jOrderRecept.html(html_content);
+    if (!checkPlanChoose || !checkCardChoose) return false;
+
+    //Fetch the order plan
+    var orderPlan = new Object();
+    for (i in plans_payment){
+        if (plans_payment[i].selected == 1){
+            orderPlan = plans_payment[i].data;
+            break;
+        }
+    }
+
+    //Fetch the card
+    var orderCard = new Object();
+    for (i in account_cards){
+        if (account_cards[i].selected == 1){
+            orderCard = account_cards[i].data;
+            break;
+        }
+    }
+    var stripeActionUrl = $("input[name=stripe_url]").val() + '/stripe/subscribe';
+    var order_summary = new Object();
+    order_summary.userid = $("input[name=user_id]").val();
+    order_summary.card_id = orderCard.stripe_card_reference_id;
+    order_summary.plan = orderPlan.id;
+    order_summary.amount = orderPlan.amount / 100;
+
+    order_summary = JSON.stringify(order_summary, null, '\t');
+    data = '{"action": "subscription", ' +
+            '"type":"jsonp", ' +
+            '"json": ' + order_summary  +
+            '}';
+    $('#loadingpopup').show();
+    $.ajax({
+        url: stripeActionUrl,
+        type: 'POST',
+        dataType: 'jsonp',
+        data: 'json=' + data,
+        success: function(response){
+            console.log(response);
+            if (response.status == 'Success'){
+                jOrderRecept.html($(".order-summary-recept ul").html());
+
+                //Set order recept
+                var card_data = orderCard.stripe_card_response;
+                jOrderRecept.find('#order-recept-name').html(orderCard.first_name + ' ' + orderCard.last_name);
+                jOrderRecept.find('#order-recept-address1').html(orderCard.address_line_1);
+                jOrderRecept.find('#order-recept-address2').html(orderCard.address_line_2);
+                jOrderRecept.find('#order-recept-cardtype').html(orderCard.card_type);
+                jOrderRecept.find('#order-recept-ccnum').html(orderCard.obfuscated_card_number);
+                jOrderRecept.find('#order-recept-expdate').html(card_data.exp_month);
+                jOrderRecept.find('#order-recept-expyear').html(card_data.exp_year);
+                jOrderRecept.find('#order-recept-city').html(card_data.address_city);
+                jOrderRecept.find('#order-recept-state').html(card_data.address_state);
+                jOrderRecept.find('#order-recept-zip').html(orderCard.zip_code);
+
+                jOrderRecept.find('#choose-planrecept-name').html(orderPlan.name);
+                jOrderRecept.find('#choose-planrecept-cost').html((orderPlan.amount / 100) + ' ' + orderPlan.currency);
+
+                jMessageOrder.html('Thank you! You will receive an email confirmation shortly').show();
+            }
+            else{
+                jerror(response.message);
+            }
+            $('#loadingpopup').hide();
+        }
+    });
 }
 
 
@@ -55,7 +262,10 @@ function getPlans(){
             if (plan_count > 0){
                 var plans = response;
                 for (i in plans){
-                    var html_element = '<li><label class="label_text2"><input type="radio" id="plan-' + plans[i].id + '" name="radio-4-set" class="regular-radio" /><label for="plan-' + plans[i].id + '"></label>' + plans[i].name + ' - ' + (plans[i].amount / 100) + ' ' + plans[i].currency + '</label></li>';
+                    plans_payment[i] = new Object();
+                    var params = {plan_id:plans[i].id, selected:0, data:plans[i]};
+                    plans_payment[i] = params;
+                    var html_element = '<li><label class="label_text2"><input type="radio" id="plan-' + plans[i].id + '" name="radio_plans" class="regular-radio" onchange="planChange(this.id);" /><label for="plan-' + plans[i].id + '"></label>' + plans[i].name + ' - ' + (plans[i].amount / 100) + ' ' + plans[i].currency + '</label></li>';
                     jSubscriptionPlans.append(html_element);
                 }
             }
@@ -65,15 +275,16 @@ function getPlans(){
     });
 }
 function listStripeCard(){
-    $(".subscription-payment-method").trigger('click');
     var jMemberCard = $(".subscription-payment");
+    if (!jMemberCard.hasClass('preload-null')) return false;
+    jMemberCard.removeClass('preload-null');
     jMemberCard.empty();
     var stripeUserId = $("input[name=user_id]").val();
     var stripeActionUrl = $("input[name=stripe_url]").val() + '/stripe/listCards';
     var obj = new Object();
     obj = {userid:stripeUserId};
     var json_listCard = JSON.stringify(obj, null, '\t');
-    data = '{"action": "delete", ' +
+    data = '{"action": "listcard", ' +
             '"type":"jsonp", ' +
             '"json": ' + json_listCard  +
             '}';
@@ -88,8 +299,11 @@ function listStripeCard(){
                 var cards = response.payment_methods;
                 var number_of_cards = response.NumRows;
                 for (i = 0;i < number_of_cards;i++){
+                    account_cards[i] = new Object();
+                    var params = {card_id:cards[i].stripe_card_reference_id, data:cards[i], selected:0};
+                    account_cards[i]= params;
                     var html_element = '<li>' +
-                                            '<label class="label_text2"><input type="radio" id="' + cards[i].stripe_card_reference_id + '" name="radio-4-set" class="regular-radio" />' +
+                                            '<label class="label_text2"><input type="radio" id="' + cards[i].stripe_card_reference_id + '" name="radio_cards" class="regular-radio" onchange="cardChange(this.id);" />' +
                                             '<label for="' + cards[i].stripe_card_reference_id + '"></label>' + cards[i].card_type + ' | ' + cards[i].obfuscated_card_number + '</label>' +
                                         '</li>';
                     jMemberCard.append(html_element);
