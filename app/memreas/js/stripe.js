@@ -2,9 +2,11 @@
 *@ Stripe account functions
 */
 //handle header steps clicking
+var account_stripe = new Object();
 var plans_payment = new Object();
 var account_cards = new Object();
 $(function(){
+
     //Step 2
     $(".subscription-payment-method").click(function(){
        listStripeCard();
@@ -241,6 +243,8 @@ function subscription_step4(){
 
 
 function getPlans(){
+    var jAccountPlans = $(".list-plans");
+    jAccountPlans.empty();
     var jSubscriptionPlans = $(".subscription-plans");
     jSubscriptionPlans.removeClass('.preload-null').empty();
     var stripeActionUrl = $("input[name=stripe_url]").val() + '/stripe/listPlan';
@@ -268,13 +272,48 @@ function getPlans(){
                     var html_element = '<li><label class="label_text2"><input type="radio" id="plan-' + plans[i].id + '" name="radio_plans" class="regular-radio" onchange="planChange(this.id);" /><label for="plan-' + plans[i].id + '"></label>' + plans[i].name + ' - ' + (plans[i].amount / 100) + ' ' + plans[i].currency + '</label></li>';
                     jSubscriptionPlans.append(html_element);
                 }
+                //Get customer info based on this account
+                var obj = new Object();
+                obj.userid = $("input[name=user_id]").val();
+                data_obj = JSON.stringify(obj, null, '\t');
+                data = '{"action": "getCustomerInfo", ' +
+                        '"type":"jsonp", ' +
+                        '"json": ' + data_obj  +
+                        '}';
+                var stripeCustomerUrl = $("input[name=stripe_url]").val() + '/stripe/getCustomerInfo';
+                $.ajax({
+                    url: stripeCustomerUrl,
+                    type: 'POST',
+                    dataType: 'jsonp',
+                    data: 'json=' + data,
+                    success: function(response){
+                        if (response.status == 'Success'){
+                            account_stripe = response.customer;
+                            if (account_stripe.exist == 1){
+                                var total_subscriptions = account_stripe.info.subscriptions.total_count;
+                                var active_subscriptions = account_stripe.info.subscriptions.data;
+                                for (i = 0;i < total_subscriptions;i++){
+                                    var plan = active_subscriptions[i].plan;
+                                    var html_element = '<p>'  + plan.name + '</p>';
+                                    jAccountPlans.append(html_element);
+                                }
+                            }
+                            else jAccountPlans.html('Your account has not existed or deleted before on Stripe');
+                        }
+                        else jAccountPlans.html('You have no active plan');
+                        $('#loadingpopup').hide();
+                    }
+                });
             }
-            else jerror('There is no plan at this time! Please come back and purchase later');
-            $('#loadingpopup').hide();
+            else {
+                jerror('There is no plan at this time! Please come back and purchase later');
+                $('#loadingpopup').hide();
+            }
         },
     });
 }
 function listStripeCard(){
+    $(".card-functions").hide();
     var jMemberCard = $(".subscription-payment");
     if (!jMemberCard.hasClass('preload-null')) return false;
     jMemberCard.removeClass('preload-null');
@@ -297,17 +336,34 @@ function listStripeCard(){
         success: function(response){
             if (response.status == 'Success'){
                 var cards = response.payment_methods;
+                console.log(cards);
                 var number_of_cards = response.NumRows;
+
+                var default_card = '';
+                if (account_stripe.exist == 1){
+                    default_card = account_stripe.info.default_card;
+                }
+
                 for (i = 0;i < number_of_cards;i++){
                     account_cards[i] = new Object();
                     var params = {card_id:cards[i].stripe_card_reference_id, data:cards[i], selected:0};
+                    var row_card_id = cards[i].stripe_card_reference_id;
+                    var row_card_type = cards[i].card_type;
+                    var row_card_obfuscated = cards[i].obfuscated_card_number;
                     account_cards[i]= params;
                     var html_element = '<li>' +
-                                            '<label class="label_text2"><input type="radio" id="' + cards[i].stripe_card_reference_id + '" name="radio_cards" class="regular-radio" onchange="cardChange(this.id);" />' +
-                                            '<label for="' + cards[i].stripe_card_reference_id + '"></label>' + cards[i].card_type + ' | ' + cards[i].obfuscated_card_number + '</label>' +
+                                            '<label class="label_text2"><input type="radio" id="' + row_card_id + '" name="radio_cards" class="regular-radio" onchange="cardChange(this.id);"';
+                    //Set default card checked if available
+                    if (default_card == row_card_id){
+                        html_element += ' checked="checked"';
+                        cardChange(default_card);
+                    }
+                    html_element += ' />' +
+                                            '<label for="' + row_card_id + '"></label>' + row_card_type + ' | ' + row_card_obfuscated + '</label>' +
                                         '</li>';
                     jMemberCard.append(html_element);
                 }
+                $(".card-functions").show();
             }
             else {
                 jMemberCard.append('<li>You have no card at this time. Try to add one first</li>');
@@ -374,11 +430,67 @@ function stripeAddCard(){
                 if (response.status == 'Success'){
                     jsuccess("Your card added successfully");
                     disablePopup('popupaddcard');
+                    $(".subscription-payment").addClass('preload-null');
                     listStripeCard();
                 }
                 else jerror(response.message);
                 $('#loadingpopup').hide();
               },
+              error:function(){
+                jerror('Card adding failure. Please check card\'s information.');
+                $('#loadingpopup').hide();
+              },
         });
+    }
+}
+
+function removeCard(){
+
+    var confirmBox = confirm("Are you sure want to remove this card?");
+
+    if (!confirmBox) return false;
+
+    //Fetch the card
+    var selectedCard = '';
+    for (i in account_cards){
+        if (account_cards[i].selected == 1){
+            selectedCard = account_cards[i].data.stripe_card_reference_id;
+            break;
+        }
+    }
+
+    if (selectedCard == '')
+        jerror('Please select a card');
+    else{
+        var stripeActionUrl =  $("input[name=stripe_url]").val() + '/stripe/deleteCards';
+        var cardSelected = new Array();
+        cardSelected.push(selectedCard);
+
+        var data_object = JSON.stringify(cardSelected, null, '\t');
+
+        var data = '{"action": "deleteCards", ' +
+                    '"type":"jsonp", ' +
+                    '"json": ' + data_object  +
+                    '}';
+        $('#loadingpopup').show();
+        $.ajax({
+              type:'post',
+              url: stripeActionUrl,
+              dataType: 'jsonp',
+              data: 'json=' + data,
+              success: function(response){
+                if (response.status = 'Success'){
+                    $(".subscription-payment").addClass('preload-null');
+                    $('#loadingpopup').hide();
+                    jsuccess(response.message);
+                    listStripeCard();
+                }
+                else {
+                    jerror(response.message);
+                    $('#loadingpopup').hide();
+                }
+              }
+          });
+
     }
 }
