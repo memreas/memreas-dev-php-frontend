@@ -9,7 +9,7 @@ $(function(){
 
     //Step 2
     $(".subscription-payment-method").click(function(){
-       listStripeCard();
+        listStripeCard();
     });
 
     //Step 3
@@ -201,9 +201,9 @@ function subscription_step4(){
 
     order_summary = JSON.stringify(order_summary, null, '\t');
     data = '{"action": "subscription", ' +
-            '"type":"jsonp", ' +
-            '"json": ' + order_summary  +
-            '}';
+    '"type":"jsonp", ' +
+    '"json": ' + order_summary  +
+    '}';
     $('#loadingpopup').show();
     $.ajax({
         url: stripeActionUrl,
@@ -211,7 +211,6 @@ function subscription_step4(){
         dataType: 'jsonp',
         data: 'json=' + data,
         success: function(response){
-            console.log(response);
             if (response.status == 'Success'){
                 jOrderRecept.html($(".order-summary-recept ul").html());
 
@@ -252,9 +251,9 @@ function getPlans(){
     obj.txt = "";
     data_obj = JSON.stringify(obj, null, '\t');
     data = '{"action": "list", ' +
-            '"type":"jsonp", ' +
-            '"json": ' + data_obj  +
-            '}';
+    '"type":"jsonp", ' +
+    '"json": ' + data_obj  +
+    '}';
     $('#loadingpopup').show();
     $.ajax({
         url: stripeActionUrl,
@@ -277,9 +276,9 @@ function getPlans(){
                 obj.userid = $("input[name=user_id]").val();
                 data_obj = JSON.stringify(obj, null, '\t');
                 data = '{"action": "getCustomerInfo", ' +
-                        '"type":"jsonp", ' +
-                        '"json": ' + data_obj  +
-                        '}';
+                '"type":"jsonp", ' +
+                '"json": ' + data_obj  +
+                '}';
                 var stripeCustomerUrl = $("input[name=stripe_url]").val() + '/stripe/getCustomerInfo';
                 $.ajax({
                     url: stripeCustomerUrl,
@@ -327,9 +326,9 @@ function listStripeCard(){
     obj = {userid:stripeUserId};
     var json_listCard = JSON.stringify(obj, null, '\t');
     data = '{"action": "listcard", ' +
-            '"type":"jsonp", ' +
-            '"json": ' + json_listCard  +
-            '}';
+    '"type":"jsonp", ' +
+    '"json": ' + json_listCard  +
+    '}';
     $('#loadingpopup').show();
     $.ajax({
         url: stripeActionUrl,
@@ -339,34 +338,37 @@ function listStripeCard(){
         success: function(response){
             if (response.status == 'Success'){
                 var cards = response.payment_methods;
-                console.log(cards);
                 var number_of_cards = response.NumRows;
 
-                var default_card = '';
-                if (account_stripe.exist == 1){
-                    default_card = account_stripe.info.default_card;
-                }
+                if (number_of_cards > 0){
 
-                for (i = 0;i < number_of_cards;i++){
-                    account_cards[i] = new Object();
-                    var params = {card_id:cards[i].stripe_card_reference_id, data:cards[i], selected:0};
-                    var row_card_id = cards[i].stripe_card_reference_id;
-                    var row_card_type = cards[i].card_type;
-                    var row_card_obfuscated = cards[i].obfuscated_card_number;
-                    account_cards[i]= params;
-                    var html_element = '<li>' +
-                                            '<label class="label_text2"><input type="radio" id="' + row_card_id + '" name="radio_cards" class="regular-radio" onchange="cardChange(this.id);"';
-                    //Set default card checked if available
-                    if (default_card == row_card_id){
-                        html_element += ' checked="checked"';
-                        cardChange(default_card);
+                    var default_card = '';
+                    if (account_stripe.exist == 1){
+                        default_card = account_stripe.info.default_card;
                     }
-                    html_element += ' />' +
-                                            '<label for="' + row_card_id + '"></label>' + row_card_type + ' | ' + row_card_obfuscated + '</label>' +
-                                        '</li>';
-                    jMemberCard.append(html_element);
+
+                    for (i = 0;i < number_of_cards;i++){
+                        account_cards[i] = new Object();
+                        var params = {card_id:cards[i].stripe_card_reference_id, data:cards[i], selected:0};
+                        var row_card_id = cards[i].stripe_card_reference_id;
+                        var row_card_type = cards[i].card_type;
+                        var row_card_obfuscated = cards[i].obfuscated_card_number;
+                        account_cards[i]= params;
+                        var html_element = '<li>' +
+                        '<label class="label_text2"><input type="radio" id="' + row_card_id + '" name="radio_cards" class="regular-radio" onchange="cardChange(this.id);"';
+                        //Set default card checked if available
+                        if (default_card == row_card_id){
+                            html_element += ' checked="checked"';
+                            cardChange(default_card);
+                        }
+                        html_element += ' />' +
+                        '<label for="' + row_card_id + '"></label>' + row_card_type + ' | ' + row_card_obfuscated + '</label>' +
+                        '</li>';
+                        jMemberCard.append(html_element);
+                    }
+                    $(".card-functions").show();
                 }
-                $(".card-functions").show();
+                else jMemberCard.append('<li>You have no card at this time. Try to add one first</li>');
             }
             else {
                 jMemberCard.append('<li>You have no card at this time. Try to add one first</li>');
@@ -435,10 +437,10 @@ function stripeAddCard(){
         $('#loadingpopup').show();
         $.ajax({
             type:'post',
-              url: stripeActionUrl,
-              dataType: 'jsonp',
-              data: 'json=' + data,
-              success: function(response){
+            url: stripeActionUrl,
+            dataType: 'jsonp',
+            data: 'json=' + data,
+            success: function(response){
                 if (response.status == 'Success'){
                     jsuccess("Your card added successfully");
                     disablePopup('popupaddcard');
@@ -447,11 +449,11 @@ function stripeAddCard(){
                 }
                 else jerror(response.message);
                 $('#loadingpopup').hide();
-              },
-              error:function(){
+            },
+            error:function(){
                 jerror('Card adding failure. Please check card\'s information.');
                 $('#loadingpopup').hide();
-              },
+            },
         });
     }
 }
@@ -481,16 +483,16 @@ function removeCard(){
         var data_object = JSON.stringify(cardSelected, null, '\t');
 
         var data = '{"action": "deleteCards", ' +
-                    '"type":"jsonp", ' +
-                    '"json": ' + data_object  +
-                    '}';
+        '"type":"jsonp", ' +
+        '"json": ' + data_object  +
+        '}';
         $('#loadingpopup').show();
         $.ajax({
-              type:'post',
-              url: stripeActionUrl,
-              dataType: 'jsonp',
-              data: 'json=' + data,
-              success: function(response){
+            type:'post',
+            url: stripeActionUrl,
+            dataType: 'jsonp',
+            data: 'json=' + data,
+            success: function(response){
                 if (response.status = 'Success'){
                     $(".subscription-payment").addClass('preload-null');
                     $('#loadingpopup').hide();
@@ -501,8 +503,7 @@ function removeCard(){
                     jerror(response.message);
                     $('#loadingpopup').hide();
                 }
-              }
-          });
-
+            }
+        });
     }
 }

@@ -39,6 +39,10 @@ $(function(){
         $('#buttons7-moretab').akordeon();
         loadSubscriptionPlans();
     });
+    $("#tabs-more li a:eq(7)").one ('click', function(){
+        $('#buttons8-moretab').akordeon();
+        buycredit_listCard();
+    });
 
     /*Action tabs click*/
     //$("a[title=more]").click(function(){ fillUserDetail( $("input[name=user_id]").val()); });

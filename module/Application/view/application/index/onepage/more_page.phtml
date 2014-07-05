@@ -88,6 +88,11 @@
             <?php include ('more_tabs/subscription.phtml'); ?>
         </div>
     </div>
+    <div id="tab8-more" class="hideCls">
+        <div class="akordeon" id="buttons8-moretab">
+            <?php include ('more_tabs/buycredit.phtml'); ?>
+        </div>
+    </div>
 </div>
         </div>
       </div>
@@ -128,7 +133,7 @@
         </li>
         <li>
             <label class="textfield_names">Address 2</label>
-            <input name="input" type="text" id="addcard_address2" class="" value="Address line 2" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Address line 2')this.value = '';"/>
+            <input name="input" type="text" id="addcard_address2" class="" value="Address line 2" default="Address line 2" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Address line 2')this.value = '';"/>
         </li>
         <li>
             <label class="textfield_names">City*</label>
