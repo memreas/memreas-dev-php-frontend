@@ -373,6 +373,15 @@ function listStripeCard(){
         },
     });
 }
+function addCardPopup(){
+    //Reset form;
+    var jAddCard = $(".addCardForm");
+    jAddCard.find('input[type=text]').each(function(){
+        $(this).val($(this).attr('default'));
+    });
+    jAddCard.find('select').val('');
+    popup('popupaddcard');
+}
 
 function stripeAddCard(){
     var jAddCard = $(".addCardForm");
