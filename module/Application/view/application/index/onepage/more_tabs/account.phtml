@@ -1,0 +1,156 @@
+<div class="akordeon-item expanded">
+    <div class="akordeon-item-head">
+        <div class="akordeon-item-head-container">
+            <div class="akordeon-heading">
+                profile
+            </div>
+        </div>
+    </div>
+    <div class="akordeon-item-body">
+        <div class="akordeon-item-content">
+            <div class="button-holder">
+                <input name="account_email" type="text" class="more-input" value="email" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'email')this.value = '';"/><br/>
+                <input name="account_password" type="password" class="more-input" value="password" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'password')this.value = '';" /><br/>
+                <input name="account_repassword" type="password" class="more-input" value="password" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'password')this.value = '';" />
+                <a class="black_btn_skin f-center" href="javascript:;" onclick="saveUserDetail();">ok</a>
+                <a class="black_btn_skin" href="#">cancel</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="akordeon-item expanded">
+    <div class="akordeon-item-head">
+        <div class="akordeon-item-head-container">
+            <div class="akordeon-heading">
+                plans
+            </div>
+        </div>
+    </div>
+    <div class="akordeon-item-body">
+        <div class="akordeon-item-content">
+            <div class="button-holder">
+                <label class="label_text"><input type="radio" id="radio-1-1" name="radio-1-set" class="regular-radio" checked /><label for="radio-1-1"></label>example text plans</label>
+                <label class="label_text"><input type="radio" id="radio-1-2" name="radio-1-set" class="regular-radio" /><label for="radio-1-2"></label>example text plans-2</label>
+                <label class="label_text"><input type="radio" id="radio-1-3" name="radio-1-set" class="regular-radio" /><label for="radio-1-3"></label>example text plans-3</label>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="akordeon-item expanded">
+    <div class="akordeon-item-head">
+        <div class="akordeon-item-head-container">
+            <div class="akordeon-heading">
+                credit card data
+            </div>
+        </div>
+    </div>
+    <div class="akordeon-item-body">
+        <div class="akordeon-item-content">
+            <div class="button-holder">
+                <div class="more-select">
+                    <select>
+                        <option>credit card type</option>
+                        <option>Visa</option>
+                        <option>Mastro</option>
+                    </select>
+                </div>
+                <input name="input" type="text" class="more-input" value="credit card number " onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'credit card number')this.value = '';"/>
+                <div class="more-select2">
+                    <select>
+                        <option>expiration month</option>
+                        <option>January</option>
+                        <option>February</option>
+                        <option>March</option>
+                        <option>April</option>
+                        <option>May</option>
+                        <option>June</option>
+                        <option>July</option>
+                        <option>August</option>
+                        <option>September</option>
+                        <option>October</option>
+                        <option>November</option>
+                        <option>December</option>
+                    </select>
+                </div>
+                <div class="more-select2">
+                    <select>
+                        <option>expiration year</option>
+                        <option>2013</option>
+                        <option>2014</option>
+                        <option>2015</option>
+                        <option>2016</option>
+                        <option>2017</option>
+                        <option>2018</option>
+                        <option>2019</option>
+                        <option>2020</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="akordeon-item expanded">
+    <div class="akordeon-item-head">
+        <div class="akordeon-item-head-container">
+            <div class="akordeon-heading">
+                billing address
+            </div>
+        </div>
+    </div>
+    <div class="akordeon-item-body">
+        <div class="akordeon-item-content">
+            <div class="button-holder">
+                <input name="input" type="text" class="more-input" value="address line 1" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'address line 1')this.value = '';"/>
+                <input name="input" type="text" class="more-input" value="address line 2" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'address line 2')this.value = '';"/>
+                <input name="input" type="text" class="more-input" value="city" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'city')this.value = '';"/>
+                <div class="more-select2">
+                    <select>
+                        <option>state</option>
+                        <option>Alaska</option>
+                        <option>California</option>
+                        <option>Florida</option>
+                        <option>Georgia</option>
+                        <option>Hawaii</option>
+                        <option>New York</option>
+                        <option>New Jersey</option>
+                        <option>Washington</option>
+                    </select>
+                </div>
+                <input name="input" type="text" class="more-input2" value="postal / zip code" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'postal / zip code')this.value = '';"/>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="akordeon-item expanded">
+    <div class="akordeon-item-head">
+        <div class="akordeon-item-head-container">
+            <div class="akordeon-heading">
+                paypal section
+            </div>
+        </div>
+    </div>
+    <div class="akordeon-item-body">
+        <div class="akordeon-item-content">
+            <div class="button-holder">
+                <input name="input" type="text" class="more-input" value="Paypal user name" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Paypal user name')this.value = '';"/>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="akordeon-item expanded">
+    <div class="akordeon-item-head">
+        <div class="akordeon-item-head-container">
+            <div class="akordeon-heading">
+                Logout
+            </div>
+        </div>
+    </div>
+    <div class="akordeon-item-body">
+        <div class="akordeon-item-content">
+            <div class="button-holder">
+                <h5 style="float: right;">System will log you out when clicking on logout button below</h5>
+                <a class="black_btn_skin" href="/index/logout">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -29,11 +29,10 @@ $(function(){
         event_id = -1;
         $('#tabs-share li:nth-child(1) a').click();
         event_id = '';
-
+        $("#ckb_canpost").attr('checked', true);
+        $("#ckb_canadd").attr('checked', true);
     });
-    user_id   = $("input[name=user_id]").val();
-    setCheckBoxValue('ckb_canpost', true);
-    setCheckBoxValue('ckb_canadd', true);
+    user_id = $("input[name=user_id]").val();
 });
 
 // initialize the share page objects.

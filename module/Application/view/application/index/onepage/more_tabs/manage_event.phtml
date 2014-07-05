@@ -1,0 +1,83 @@
+<div class="akordeon-item expanded">
+    <div class="akordeon-item-head">
+        <div class="akordeon-item-head-container">
+            <div class="akordeon-heading">
+                memreas detail
+            </div>
+        </div>
+    </div>
+    <div class="akordeon-item-body"  style="padding-bottom: 10px;">
+        <div class="akordeon-item-content">
+            <ul id="content_1" class="share_memreas_details">
+                <li>
+                    <label class="textfield_names">name :</label>
+                    <div class="styled-select" style="width: 87%;">
+                        <select id="cmd_MorepageEvents"></select>
+                    </div>
+                </li>
+                <li>
+                    <label class="textfield_names">date :</label>
+                    <input name="input" type="text" id="morepage_eventDate" class="share-txtfield date-picker" readonly value="from" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'from')this.value = '';"/>
+                </li>
+                <li>
+                    <label class="textfield_names">location :</label>
+                    <input name="input3" type="text" id="morepage_eventLocation" class="share-txtfield" value="address or current location" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'address or current location')this.value = '';" onClick="more_showGoogleMap('more_div_locationmap_maparea');"/>
+                </li>
+                <li>
+                    <input id="morepage_eventFriendsCanPost" class="css-checkbox" type="checkbox" name="morepage_eventFriendsCanPost"/>
+                    <label for="morepage_eventFriendsCanPost" name="demo_lbl_1" class="css-label margin-none" >friends can post pics/videos</label>
+                </li>
+                <li>
+                    <input id="morepage_friendsCanAdd" class="css-checkbox" type="checkbox" name="morepage_friendsCanAdd"/>
+                    <label for="morepage_friendsCanAdd" name="demo_lbl_2" class="css-label margin-none" >friends can add Friends</label>
+                </li>
+                <li>
+                    <input id="morepage_isviewable" class="css-checkbox" type="checkbox" />
+                    <label for="morepage_isviewable" name="demo_lbl_4" class="css-label margin-none" >viewable :</label>
+                    <input name="input" type="text" id="moredate_eventDateFrom" class="date-picker" readonly value="from" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'from')this.value = '';"/>
+                    <input name="input" type="text" id="moredate_eventDateTo" class="date-picker" readonly value="to" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'to')this.value = '';"/>
+                </li>
+                <li>
+                    <input id="morepage_isselfdestruct" class="css-checkbox" type="checkbox" />
+                    <label for="morepage_isselfdestruct" name="demo_lbl_5" class="css-label margin-none" >self destruct :</label>
+                    <input name="input" type="text" id="morepage_eventSelfDestruct" class="share-txtfield-2 date-picker" readonly value="" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == '')this.value = '';"/>
+                </li>
+            </ul>
+            <div style="clear: both; margin-top: 10px; margin-bottom: 10px; padding-top: 10px;"></div>
+            <a class="black_btn_skin" href="javascript:;" onclick="morepage_saveEvent();">Save</a>
+            <a class="black_btn_skin" href="javascript:;">cancel</a>
+        </div>
+    </div>
+</div>
+<div class="akordeon-item">
+    <div class="akordeon-item-head">
+        <div class="akordeon-item-head-container memreas-media-header">
+            <div class="akordeon-heading">
+                media
+            </div>
+        </div>
+    </div>
+    <div class="akordeon-item-body" style="height: 300px;">
+        <div class="akordeon-item-content">
+            <ul class="memreasEventMedia"></ul>
+            <div style="clear: both;"></div>
+            <a class="black_btn_skin" href="javascript:;" onclick="morepage_removeMedias();" style="margin-top: 20px; display: inline-block;">Remove media</a>
+        </div>
+    </div>
+</div>
+<div class="akordeon-item">
+    <div class="akordeon-item-head">
+        <div class="akordeon-item-head-container memreas-friend-header">
+            <div class="akordeon-heading">
+                Friends
+            </div>
+        </div>
+    </div>
+    <div class="akordeon-item-body" style="height: 300px;">
+        <div class="akordeon-item-content">
+            <ul class="memreasMorepageFriends"></ul>
+            <div style="clear: both;"></div>
+            <a class="black_btn_skin" href="javascript:;" onclick="morepage_removeFriends();" style="margin-top: 20px; display: inline-block;">Remove friend</a>
+        </div>
+    </div>
+</div>

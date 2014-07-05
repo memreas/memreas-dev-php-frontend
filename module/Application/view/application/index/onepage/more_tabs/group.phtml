@@ -1,0 +1,56 @@
+<div class="akordeon-item">
+    <div class="akordeon-item-head">
+        <div class="akordeon-item-head-container">
+            <div class="akordeon-heading">
+                group
+            </div>
+        </div>
+    </div>
+    <div class="akordeon-item-body">
+        <div class="akordeon-item-content">
+            <div class="group-select">
+                <select class="account-groups" name="account_groups">
+                    <option value="">-Choose-</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="akordeon-item expanded">
+    <div class="akordeon-item-head">
+        <div class="akordeon-item-head-container network-heading">
+            <div class="akordeon-heading">
+                network
+            </div>
+        </div>
+    </div>
+    <div class="akordeon-item-body">
+        <div class="akordeon-item-content">
+            <div class="more-select">
+                <select name="friend_network">
+                    <option value="">-Choose-</option>
+                    <option value="memreas">memreas</option>
+                    <option value="facebook">facebook</option>
+                    <option value="twitter">twitter</option>
+                </select>
+            </div>
+            <ul class="group scrollClass network-friends">
+                <!-- Friend network will loaded here -->
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="akordeon-item">
+    <div class="akordeon-item-head">
+        <div class="akordeon-item-head-container">
+            <div class="akordeon-heading">
+                email address list
+            </div>
+        </div>
+    </div>
+    <div class="akordeon-item-body">
+        <div class="akordeon-item-content">
+            <input name="input" type="text" class="more-input" value="add your email list here" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'add your email list here')this.value = '';"/>
+        </div>
+    </div>
+</div>

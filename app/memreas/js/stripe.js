@@ -291,16 +291,19 @@ function getPlans(){
                             account_stripe = response.customer;
                             if (account_stripe.exist == 1){
                                 var total_subscriptions = account_stripe.info.subscriptions.total_count;
-                                var active_subscriptions = account_stripe.info.subscriptions.data;
-                                for (i = 0;i < total_subscriptions;i++){
-                                    var plan = active_subscriptions[i].plan;
-                                    var html_element = '<p>'  + plan.name + '</p>';
-                                    jAccountPlans.append(html_element);
+                                if (total_subscriptions > 0){
+                                    var active_subscriptions = account_stripe.info.subscriptions.data;
+                                    for (i = 0;i < total_subscriptions;i++){
+                                        var plan = active_subscriptions[i].plan;
+                                        var html_element = '<p>'  + plan.name + '</p>';
+                                        jAccountPlans.append(html_element);
+                                    }
                                 }
+                                else jAccountPlans.html('You have no any actived plan');
                             }
                             else jAccountPlans.html('Your account has not existed or deleted before on Stripe');
                         }
-                        else jAccountPlans.html('You have no active plan');
+                        else jAccountPlans.html('You have no any actived plan');
                         $('#loadingpopup').hide();
                     }
                 });
