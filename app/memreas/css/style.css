@@ -9,6 +9,9 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	vertical-align: baseline;
 	text-transform: lowercase !important;
 }
+.container {
+	position: relative!important;
+}
 /*.....:HTML5 display-role reset for older browsers:.....*/
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
 	display: block;
@@ -156,35 +159,27 @@ body {
 ===================================================*/
 header {
 	width: 100%;
-	background: url(../img/header-bg.jpg) repeat-x;
+    background: -moz-linear-gradient(top, #b0bccd 0%, #7e92ad 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#b0bccd), color-stop(100%,#7e92ad));
 	height: 60px;
 	padding-top: 5px;
 	position: relative;
-}
-#logo {
-	width: 210px;
-	height: 40px;
-	display: block;
-	font-family: "Segoe Script";
-	font-size: 40px;
-	font-weight: bold;
-	text-shadow: 0 1px 1px #333;
-	margin: 0px 10px;
-	float: left;
 }
 .center_logo {
 	margin: 0 auto;
 	width: 230px;
 }
-#logo a {
-	display: block;
-	width: 210px;
-	height: 40px;
-	color: #fff;
+#logo {
+    float: left;
+    height: 48px;
+    width: 190px;
 }
-#logo a:hover {
-	text-decoration: none;
-	color: #fff;
+#logo a {
+    background: url("../img/logo.png") no-repeat scroll 0 0 / 100% auto rgba(0, 0, 0, 0);
+    display: block;
+    height: 27px;
+    margin-top: 18px;
+    text-indent: -99999px;
 }
 .search_bar {
 	width: 27%;
@@ -231,7 +226,7 @@ header {
 }
 nav {
 	background: url(../img/nav-bg.jpg) repeat-y right;
-	margin-top: -5px;
+	margin-top: 0;
 	min-height: 98% !important;
 	position: absolute;
 	display: block;
@@ -255,6 +250,9 @@ nav ul li a {
 }
 nav ul li a:hover, nav ul li a.active {
 	background: url(../img/nav-act.jpg) no-repeat right;
+}
+#maintab-content {
+	padding-top: 1em;
 }
 .event_details {
 	margin: 0;
@@ -306,10 +304,17 @@ ul.right textarea {
 	font: 15px Arial, Helvetica, sans-serif;
 	color: #999;
 }
+.ad {
+    bottom: -38px;
+    left: 8.6%;
+    position: absolute;
+    width: 68%;
+}
 .adbox {
 	font: 18px Arial, Helvetica, sans-serif;
 	color: #FFF;
-	background: url(../img/ad-.bg.png);
+	background: none repeat scroll 0 0 #274567;
+	min-height: 68px;
 	text-align: center;
 	padding: 73px 0px;
 	margin-bottom: 15px;
@@ -361,7 +366,8 @@ footer {
 	font: 12px/49px Arial, Helvetica, sans-serif;
 	color: #FFF;
 	text-align: center;
-	background: url(../img/footer-bg.jpg) repeat-x;
+    background: -moz-linear-gradient(top, #292929 0%, #000 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#292929), color-stop(100%,#000));
 	position: fixed;
 	width: 100%;
 	bottom: -2px !important;
@@ -548,6 +554,10 @@ a.forgot-password:hover {
 }
 #file {
 	margin-top: -100px;
+}
+.file {
+
+	background: url("../img/choose.png") repeat scroll 0 0 rgba(0, 0, 0, 0)!important;
 }
 .choose_style {
 	font-family: Arial, Helvetica, sans-serif;
@@ -1966,6 +1976,12 @@ ul.memreas_results li .event_members .event_gallery_pro{
 	top: 15px;
 }
 
+@media screen (width: 1920px;) { 
+nav {
+	min-height: 155%!important;
+}
+}
+
 @media only screen and (min-device-width : 1400px) and (max-device-width : 1600px) and (orientation : landscape) {
 nav {
 	min-height: 700px !important;
@@ -2304,9 +2320,6 @@ ul.right textarea {
 }
 .adbox-port {
 	display: block;
-}
-.ad img {
-	height: 130px;
 }
 footer {
 	bottom: -6px !important;
@@ -2692,4 +2705,21 @@ margin-left: 15%;
 .dropdown-menu {width:27%;}
 .dropdown-menu>.active>a:focus{
 	display: inline-block !important;
+}
+
+/***Mark Styles****/
+#memreas  #tabs-memreas li a 
+{
+	padding: 0.4em 3em;
+}
+#gallery .medium_tabs li a {
+	padding: 0.3em 2.3em !important;
+}
+#main-tab nav {
+	min-height: 175%!important;
+}
+#gallery .row-fluid {
+    bottom: -20em;
+    left: 1em;
+    position: absolute;
 }

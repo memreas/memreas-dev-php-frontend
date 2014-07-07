@@ -141,7 +141,7 @@ header {
 .body-bottom {
     background: -moz-linear-gradient(top, #4e8dd4 0%, #083b7a 100%);
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#4e8dd4), color-stop(100%,#083b7a));
-    min-height: 700px;
+    min-height: 581px;
 }
 .slogan h2 {
     background: url("../img/slogan.png") no-repeat scroll 0 25px / 97% auto rgba(0, 0, 0, 0);
@@ -191,6 +191,7 @@ span.absolute{
     font-size: 22px;
     left: 23px;
     top: 8px;
+    display: none;
 }
 .profile_picture {
     background: url("../img/user-icon.png") repeat scroll 0 0 rgba(0, 0, 0, 0);
@@ -208,17 +209,28 @@ span.absolute{
     float: left;
     margin-left: 10px;
 }
-.file {
-    float: right;
-    margin: 10px 0;
-    padding: 10px 0;
-    width: 72%;
+
+.file form {
+    background-attachment: scroll !important;
+    background-clip: border-box !important;
+    background-color: rgba(0, 0, 0, 0) !important;
+    background-image: url("../img/choose.png") !important;
+    background-origin: padding-box !important;
+    background-position: 0 0 !important;
+    background-repeat: no-repeat !important;
+    background-size: 100% 100%;
     cursor: pointer;
+    width: 100%;
 }
 .profile .btn-lg {
+    float: right;
+    height: 64px;
     margin-left: 5px;
+    margin-top: 0.5em;
     padding: 0;
+    width: 291px;
 }
+
 .signup {
     padding: 30px 4%;
 }
@@ -262,9 +274,12 @@ input[type=checkbox].css-checkbox + label.css-label {
 input[type=checkbox].css-checkbox:checked + label.css-label {
     background: url(../img/check.png) no-repeat;
 }
-.css-label {
-    background: url(../img/check-box.png) no-repeat;
-    margin: 0;
+label.css-label{
+    background: url("../img/check-box.png") no-repeat;
+    display: block!important;
+    margin: 0 auto!important;
+    text-align: center;
+    width: 18%;
 }
 .create-accnt {
     display: block;
@@ -374,8 +389,49 @@ footer {
     #body {
         top: 0;
     }
+label.css-label{
+    display: block!important;
+    margin: 0 auto!important;
+    text-align: center;
+    width: 18%;
 }
-@media (max-width: 1000px){
+}
+
+@media (max-width: 1024px){ 
+.body-top form {
+    margin: 10px auto;
+}
+.feature {
+    margin-left: 3em;
+    margin-top: 2em;
+}
+.film  img {
+    width: 79%!important;
+}
+.body-bottom {
+    min-height: 485px;
+}
+#slider {
+    left: 5.3em;
+    top: 4.6em;
+}
+.rslides img {
+    width: 82.4%!important;
+}
+.signup form input {
+    font-size: 15px;
+    padding: 6px;
+    width: 73%;
+}
+input.css-checkbox[type="checkbox"] + label.css-label {
+    margin-left: 10em;
+    font-size: 15px;
+}
+footer.rel {
+    position: fixed!important;
+}
+}
+@media (max-width: 980px){
 
     .container {
         width: 720px
@@ -392,10 +448,10 @@ footer {
         margin-left: 2.4em;
     }
     #slider {
-        left: 28%;
-        top: 19%;
-        width: 47%;
-    }
+    left: 21.4%;
+    top: 13.2%;
+    width: 46%;
+}
     .create-accnt {
         width: 49%;
     }
@@ -410,6 +466,12 @@ footer {
         font-size: 14px;
         left: 9px;
         top: 15px;
+    }
+    .profile .btn-lg {
+    width: 66%;
+}
+    footer.rel{
+        position: fixed!important;
     }
 }
 @media (max-width: 768px){
@@ -440,8 +502,11 @@ footer {
     top: 6px;
 }
 .profile .btn-lg {
-    margin-top: 18px;
-    padding: 0;
+    display: inline;
+}
+.profile_picture {
+    background: url("../img/user-icon.png") no-repeat scroll 0 0 / 100% auto rgba(0, 0, 0, 0);
+    width: 4em;
 }
 
 .signup form input {
@@ -458,22 +523,25 @@ input.css-checkbox[type="checkbox"]:checked + label.css-label {
         font-size: 14px;
         width: 40%;
     }
-    #slider {
-    left: 27.6%;
-    top: 18.6%;
-    width: 47%;
-}
 
+#slider {
+    left: 21.2%;
+    top: 14%;
+    width: 46%;
+}
 .create-accnt {
     font-size: 14px;
     font-weight: normal;
     padding: 5px 0;
     width: 53%;
 }
+footer.rel  {
+    position: fixed!important;
+}
 }
 
 
-@media (max-width: 760px){
+@media (max-width: 360px){
     .container {
     width: 320px;
     }
@@ -507,12 +575,18 @@ span.absolute {
     left: 20px;
     top: 7px;
 }
+.profile_picture {
+    margin-bottom: 10px;
+}
+.profile .btn-lg {
+    display: inline;
+}
 .signup form input {
     width: 82%;
 }
- #slider {
-    left: 5em;
-    top: 4.3em;
+#slider {
+    left: 3.9em;
+    top: 3.5em;
 }
     .profile_picture {
     float: none;
