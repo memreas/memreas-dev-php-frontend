@@ -173,6 +173,7 @@ header {
 #logo {
     float: left;
     height: 48px;
+    margin-left: 0.5em;
     width: 190px;
 }
 #logo a {
@@ -244,7 +245,7 @@ nav ul li a {
 	overflow: hidden;
 	color: #c6c6c5;
 	font-size: 12px;
-	padding: 15px 10px;
+	padding: 10px;
 	display: block;
 	text-align: center;
 	background: url("../img/nav-link.jpg")  no-repeat scroll right center / 100% auto rgba(0, 0, 0, 0);
@@ -304,12 +305,6 @@ ul.right textarea {
 	height: 60px;
 	font: 15px Arial, Helvetica, sans-serif;
 	color: #999;
-}
-.ad {
-    bottom: -38px;
-    left: 8.6%;
-    position: absolute;
-    width: 68%;
 }
 .adbox {
 	font: 18px Arial, Helvetica, sans-serif;
@@ -2748,6 +2743,11 @@ margin-left: 15%;
 .row-fluid .span11 {
     width: 97%;
 }
+.drop {
+}
+.pro-info:hover .drop {
+	display: block;
+}
 .drop-inner {
     background-color: #134e94;
     border: 2px solid #fff;
@@ -2759,7 +2759,7 @@ margin-left: 15%;
     z-index: 9;
 }
 .drop-inner ul li a {
-    background: url("../img/drop-1-bg.png") no-repeat scroll 9px 5px rgba(0, 0, 0, 0);
+    background: url("../img/drop-1-bg.png") no-repeat scroll 9px 7px rgba(0, 0, 0, 0);
     border-bottom: 1px solid #fff;
     color: #fff;
     display: block;
@@ -2797,4 +2797,8 @@ margin-left: 15%;
     min-height: 98% !important;
     padding-bottom: 37em;
     width: 100%;
+}
+.ad img {
+    margin-left: 2%;
+    width: 73%;
 }
