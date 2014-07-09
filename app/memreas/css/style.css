@@ -201,15 +201,13 @@ header {
 	top: 5px;
 }
 .pro-pic {
-	width: 48px;
-	height: 48px;
-	background: #FFF;
-	display: block;
-	-webkit-border-radius: 8px;
-	-moz-border-radius: 8px;
-	border-radius: 8px;
-	float: left;
-	overflow: hidden;
+    background: none repeat scroll 0 0 #fff;
+    border-radius: 8px;
+    display: block;
+    float: left;
+    height: 48px;
+    position: relative;
+    width: 48px;
 }
 .pro-pic img{ width: 70px;height: 60px; }
 .pro-name {
@@ -242,13 +240,14 @@ nav ul li {
 	display: inline;
 }
 nav ul li a {
-	overflow: hidden;
-	color: #c6c6c5;
-	font-size: 12px;
-	padding: 10px;
-	display: block;
-	text-align: center;
-	background: url("../img/nav-link.jpg")  no-repeat scroll right center / 100% auto rgba(0, 0, 0, 0);
+    background: url("../img/nav-link.jpg") no-repeat scroll right center / 100% auto rgba(0, 0, 0, 0);
+    border-bottom: 1px solid #1d2e37;
+    color: #c6c6c5;
+    display: block;
+    font-size: 12px;
+    overflow: hidden;
+    padding: 14px;
+    text-align: center;
 }
 nav ul li a:hover, nav ul li a.active {
 	background: url("../img/nav-act.jpg") no-repeat scroll right center / 100% auto rgba(0, 0, 0, 0);
@@ -969,8 +968,7 @@ a.black_btn_skin:hover, a.black_btn_skin:active {
 	padding: 1em;
 	position: relative;
 	z-index: 2;
-	min-height: 740px;
-	height: auto;
+	min-height: 1380px;
 	margin-bottom: 10px;
 }
 #tab-content h2, #tab-content h3, #tab-content p,
@@ -2002,6 +2000,9 @@ ul.right textarea {
 	margin-left: 10px;
 	width: 70%;
 }
+#tab-content, #tab-content-queue, #tab-content-share, #tab-content-memreas, #tab-content-memreas-detail, #tab-content-more {
+	min-height: 873px;
+}
 .pro-names {
 	width: 70%;
 	margin: 10px;
@@ -2734,7 +2735,7 @@ margin-left: 15%;
     margin-bottom: 15px;
     margin-top: 2em;
     min-height: 8em;
-    padding: 73px 0;
+    padding: 7em 0;
     text-align: center;
 }
 #bgstretcher {
@@ -2760,7 +2761,6 @@ margin-left: 15%;
 }
 .drop-inner ul li a {
     background: url("../img/drop-1-bg.png") no-repeat scroll 9px 7px rgba(0, 0, 0, 0);
-    border-bottom: 1px solid #fff;
     color: #fff;
     display: block;
     padding: 7px 10px 7px 38px;
@@ -2774,8 +2774,12 @@ margin-left: 15%;
 .drop-inner ul li.drop-4 a {
 	background-image: url("../img/drop-4-bg.png");
 }
-.drop-inner ul li:last-child a {
+.drop-inner ul li:last-child {
 	border-bottom: none!important;
+}
+
+.drop-inner ul li {
+	border-bottom: 1px solid #fff;
 }
 
 .drop-inner ul li a:hover { 
@@ -2801,4 +2805,17 @@ margin-left: 15%;
 .ad img {
     margin-left: 2%;
     width: 73%;
+}
+nav ul li img {
+	width: 73%
+}
+#noti {
+    background-color: #2664ca;
+    border-radius: 20px;
+    color: #fff;
+    display: block;
+    padding: 3px 8px;
+    position: absolute;
+    right: -9px;
+    top: -8px;
 }

@@ -208,3 +208,10 @@ footer h2 i{
     float: left;
     margin-top: 11px;
 }
+
+
+@media (max-width: 1280px){  
+.tab-content{
+        min-height: 738px;
+    }
+}
