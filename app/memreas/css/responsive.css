@@ -1,0 +1,79 @@
+.clear {
+    display: block;
+    clip: both;
+}
+.span1, .span2, .span3, .span4, .span5, .span6, .span7, .span8, .span9, .span10, .span11, .span12 {
+    float: left;
+}
+textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+}
+select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+    border-radius: 4px;
+    color: #555;
+    display: inline-block;
+    font-size: 14px;
+    height: 20px;
+    line-height: 20px;
+    margin-bottom: 10px;
+    padding: 4px 6px;
+    vertical-align: middle;
+}
+.search_bar {
+    background: url("../img/search.png") no-repeat scroll 99% center rgba(0, 0, 0, 0);
+    border: 1px solid #576e8a !important;
+    box-shadow: 0 2px 2px #999 inset !important;
+    float: left;
+    height: 40px;
+    margin-left: 15%;
+    margin-top: 10px;
+    width: 27%;
+}
+
+.dropdown-menu {
+    width: 27%;
+}
+.dropdown-menu {
+    background-clip: padding-box;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    display: none;
+    float: left;
+    left: 0;
+    list-style: none outside none;
+    margin: 2px 0 0;
+    min-width: 160px;
+    padding: 5px 0;
+    position: absolute;
+    top: 100%;
+    z-index: 1000;
+}
+
+#main-tab {
+    float: left;
+    width: 6%;
+}
+#maintab-content {
+    float: right;
+    padding: 1em 0 0;
+    width: 93%;
+}
+.span9 {
+    margin-left: 2%;
+    width: 75%;
+}
+.span3 {
+    margin-left: 3%;
+    width: 20%;
+}
+#gallery .row
+{
+    bottom: 0;
+    left: 2%;
+    position: absolute;
+}
