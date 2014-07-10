@@ -209,7 +209,11 @@ header {
     position: relative;
     width: 48px;
 }
-.pro-pic img{ width: 70px;height: 60px; }
+.pro-pic img{ 
+    border-radius: 5px;
+    display: block;
+    width: 100%;
+}
 .pro-name {
 	font-family: "Century Gothic";
 	font-size: 15px;
@@ -2744,16 +2748,15 @@ margin-left: 15%;
 .row-fluid .span11 {
     width: 97%;
 }
-.drop {
-}
-.pro-info:hover .drop {
+div.pro-info:hover .drop-inner {
 	display: block;
 }
 .drop-inner {
     background-color: #134e94;
     border: 2px solid #fff;
     border-radius: 5px;
-    bottom: -12em;
+    bottom: -11em;
+    display: none;
     position: absolute;
     right: 1em;
     width: 226px;
@@ -2789,9 +2792,10 @@ margin-left: 15%;
     background: url("../img/drop-bg.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
     display: block;
     height: 24px;
-    left: 106px;
+    left: 11px;
+    padding: 10px 90px 0;
     position: absolute;
-    top: -24px;
+    top: -34px;
     width: 28px;
 }
 #main-tab nav {
@@ -2818,4 +2822,27 @@ nav ul li img {
     position: absolute;
     right: -9px;
     top: -8px;
+}
+.fotorama__wrap {
+	width: 100%!important;
+}
+.fotorama__stage {
+	width: 100%!important
+}
+.fotorama__stage__frame {
+	overflow: visible!important;
+}
+img.fotorama__img {
+    display: block;
+    height: 100% !important;
+    height: 700px !important;
+    left: 0 !important;
+    margin: 0 !important;
+    position: relative !important;
+    top: 0 !important;
+    width: 100% !important;
+    overflow: visible!important;
+}
+.fotorama__stage, .fotorama__nav {
+	overflow: visible!important;
 }
