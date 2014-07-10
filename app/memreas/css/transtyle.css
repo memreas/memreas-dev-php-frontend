@@ -146,6 +146,10 @@ li.working-upload .progress-text{
     display: block;
 }
 .hide-onload{ display: none; }
+.error-description{
+    color: #FF1212;
+    font-style: italic;
+}
 
 /* Aviary page */
 

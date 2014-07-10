@@ -163,3 +163,27 @@ $(function(){
     });
     */
 });
+
+/*
+* Akordeon control
+* */
+function activeAkordeon(elementClass, callback_func){
+    var jActiveTab = $("." + elementClass);
+    var jAkordeonSubscription = $("#buttons7-moretab");
+    //reset collapsed items
+    jAkordeonSubscription.find(".akordeon-item").each(function(){
+        if ($(this).hasClass('expanded'))
+            $(this).removeClass('expanded');
+        if (!$(this).hasClass('collapsed'))
+            $(this).addClass('collapsed');
+        $(this).find('.akordeon-icon').children('span').html('+');
+    });
+    var currentItemBodyHeight = jActiveTab.find('.akordeon-item-body').find(".akordeon-item-content").height();
+    jAkordeonSubscription.find(".akordeon-item-body").css('height', 0);
+    jActiveTab.find('.akordeon-icon').children('span').html('–');
+    jActiveTab.removeClass('collapsed').addClass('expanded');
+    jActiveTab.find(".akordeon-item-body").css('height', currentItemBodyHeight);
+
+    if (callback_func)
+        callback_func();
+}

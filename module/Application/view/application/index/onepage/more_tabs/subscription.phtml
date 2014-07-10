@@ -1,4 +1,4 @@
-<div class="akordeon-item expanded">
+<div class="akordeon-item subscription-payment-plans-tab expanded">
     <div class="akordeon-item-head">
         <div class="akordeon-item-head-container">
             <div class="akordeon-heading">
@@ -33,7 +33,7 @@
                     </li>
                 </ul>
                 <div style="clear: both;"></div>
-                <!-- <a class="black_btn_skin" href="javascript:;" onclick="subscription_step2();" style="margin-top: 20px; display: inline-block;">Next</a> -->
+                <a class="black_btn_skin" href="javascript:;" onclick="activeAkordeon('subscription-payment-method-tab', subscription_step2);" style="margin-top: 20px; display: inline-block;">Next</a>
             </div>
         </div>
     </div>
@@ -62,11 +62,12 @@
                 <div style="clear: both;"></div>
                 <a class="black_btn_skin" href="javascript:;" onclick="addCardPopup();" style="margin-top: 20px; display: inline-block;">Add</a>
                 <a class="black_btn_skin card-functions hide-onload" href="javascript:;" onclick="removeCard();" style="margin-top: 20px; display: inline-block;">Remove</a>
+                <a class="black_btn_skin" href="javascript:;" onclick="activeAkordeon('subscription-order-summary-tab', subscription_step3);" style="margin-top: 20px; display: inline-block;">Next</a>
             </div>
         </div>
     </div>
 </div>
-<div class="akordeon-item">
+<div class="akordeon-item subscription-order-summary-tab">
     <div class="akordeon-item-head subscription-order-summary">
         <div class="akordeon-item-head-container">
             <div class="akordeon-heading">
@@ -133,16 +134,20 @@
                     <label class="textfield_names">Cost:</label>
                     <label class="textfield_names" style="margin-left: 10px;">$12</label>
                 </li>
+                <li>
+                    <input id="subscription-order-agree" class="css-checkbox" type="checkbox" name="subscription_order_agree"/>
+                    <label for="subscription-order-agree" name="demo_lbl_1" class="css-label margin-none" >Confirm place order.</label>
+                </li>
             </ul>
             <div style="clear: both;"></div>
-            <div class="bottom-actions hide-onload">
-                <!-- <a class="black_btn_skin" href="javascript:;" onclick="" style="margin-top: 20px; display: inline-block;">Next</a>
-                <a class="black_btn_skin" href="javascript:;" onclick="" style="margin-top: 20px; display: inline-block;">Cancel</a> -->
+            <div class="bottom-actions">
+                <a class="black_btn_skin" href="javascript:;" onclick="confirmOrder();" style="margin-top: 20px; display: inline-block;">Next</a>
+                <a class="black_btn_skin" href="javascript:;" onclick="activeAkordeon('subscription-payment-method-tab', false);" style="margin-top: 20px; display: inline-block;">Back</a>
             </div>
         </div>
     </div>
 </div>
-<div class="akordeon-item">
+<div class="akordeon-item subscription-order-receipt-tab">
     <div class="akordeon-item-head subscription-order-receipt">
         <div class="akordeon-item-head-container">
             <div class="akordeon-heading">

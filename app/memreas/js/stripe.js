@@ -19,7 +19,7 @@ $(function(){
 
     //Step 4
     $(".subscription-order-receipt").click(function(){
-        subscription_step4();
+        confirmOrder();
     });
 });
 
@@ -69,7 +69,8 @@ function subscription_step2(){
         }
     });
     if (!checkPlanChoose){
-        jerror('Please choose a subscription plan to continue');
+        jerror('<span>Please choose a subscription plan to continue</span>');
+        activeAkordeon('subscription-payment-plans-tab', false);
         return false;
     }
     listStripeCard();
@@ -92,7 +93,7 @@ function subscription_step3(){
         }
     });
     if (!checkPlanChoose)
-        html_content = '<li><h3>Previous steps error! Please choose a plan first.</h3></li>';
+        html_content = '<li><span class="error-description">Previous steps error! Please choose a plan first.</span></li>';
     else{
         jMemberCard.find('input[type=radio]').each(function(){
             if ($(this).is(":checked")){
@@ -101,7 +102,7 @@ function subscription_step3(){
             }
         });
         if (!checkCardChoose)
-            html_content = '<li><h3>Previous steps error! Please choose a payment method.</h3></li>';
+            html_content = '<li><span class="error-description">Previous steps error! Please choose a payment method.</span></li>';
         else html_content = $(".order-summary-preview ul").html();
     }
 
@@ -144,6 +145,7 @@ function subscription_step3(){
 }
 
 function subscription_step4(){
+
     var html_content = '';
     var jOrderRecept = $(".order-recept");
     var jMessageOrder = $(".message-order");
@@ -160,7 +162,7 @@ function subscription_step4(){
         }
     });
     if (!checkPlanChoose)
-        html_content = '<li><h3>Previous steps error! Please choose a plan first.</h3></li>';
+        html_content = '<li><span class="error-description">Previous steps error! Please choose a plan first.</span></li>';
     else{
         jMemberCard.find('input[type=radio]').each(function(){
             if ($(this).is(":checked")){
@@ -169,7 +171,7 @@ function subscription_step4(){
             }
         });
         if (!checkCardChoose)
-            html_content = '<li><h3>Previous steps error! Please choose a payment method.</h3></li>';
+            html_content = '<li><span class="error-description"Previous steps error! Please choose a payment method.</span></li>';
     }
 
     jOrderRecept.html(html_content);
@@ -311,7 +313,7 @@ function getPlans(){
                 jerror('There is no plan at this time! Please come back and purchase later');
                 $('#loadingpopup').hide();
             }
-        },
+        }
     });
 }
 function listStripeCard(){
@@ -375,7 +377,7 @@ function listStripeCard(){
                 jerror(response.message);
             }
             $('#loadingpopup').hide();
-        },
+        }
     });
 }
 function addCardPopup(){
@@ -453,7 +455,7 @@ function stripeAddCard(){
             error:function(){
                 jerror('Card adding failure. Please check card\'s information.');
                 $('#loadingpopup').hide();
-            },
+            }
         });
     }
 }
@@ -506,4 +508,15 @@ function removeCard(){
             }
         });
     }
+}
+
+function confirmOrder(){
+    //Check order confirm checkbox
+    if (!($("#subscription-order-agree").is(":checked"))){
+        jerror("Please agree with confirm box");
+        $(".order-recept").html('<li>Please confirm the order box.</li>');
+        return false;
+    }
+
+    activeAkordeon('subscription-order-receipt-tab', subscription_step4);
 }
