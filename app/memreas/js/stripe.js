@@ -132,7 +132,7 @@ function subscription_step3(){
     jOrderSummary.find('#order-summary-name').val(orderCard.first_name + ' ' + orderCard.last_name);
     jOrderSummary.find('#order-summary-address1').val(orderCard.address_line_1);
     jOrderSummary.find('#order-summary-address2').val(orderCard.address_line_2);
-    jOrderSummary.find('#order-summary-cardtype option[value=' + orderCard.card_type + ']').attr('selected', true);
+    jOrderSummary.find('#order-card-type').html(orderCard.card_type);
     jOrderSummary.find('#order-summary-ccnum').val(orderCard.obfuscated_card_number);
     jOrderSummary.find('#order-summary-expdate').val(card_data.exp_month);
     jOrderSummary.find('#order-summary-expyear').val(card_data.exp_year);
@@ -145,9 +145,9 @@ function subscription_step3(){
 }
 
 function subscription_step4(){
-
     var html_content = '';
     var jOrderRecept = $(".order-recept");
+    jOrderRecept.show();
     var jMessageOrder = $(".message-order");
     jMessageOrder.empty().hide();
     jOrderRecept.empty();
@@ -514,7 +514,7 @@ function confirmOrder(){
     //Check order confirm checkbox
     if (!($("#subscription-order-agree").is(":checked"))){
         jerror("Please agree with confirm box");
-        $(".order-recept").html('<li>Please confirm the order box.</li>');
+        $(".order-recept").hide();
         return false;
     }
 

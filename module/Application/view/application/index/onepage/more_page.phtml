@@ -217,59 +217,51 @@
 <div class="order-summary-preview hide-onload">
     <ul>
         <li>
-            <label class="textfield_names">Name :</label>
+            <label class="textfield_names" style="width: 135px;">Name :</label>
             <input name="input" type="text" id="order-summary-name" class="share-txtfield" value="name" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'name')this.value = '';"/>
         </li>
         <li>
-            <label class="textfield_names">Address :</label>
+            <label class="textfield_names" style="width: 135px;">Address :</label>
             <input name="input" type="text" id="order-summary-address1" class="share-txtfield" value="address line 1" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'address line 1')this.value = '';"/>
         </li>
         <li>
-            <label class="textfield_names">Address Line 2:</label>
+            <label class="textfield_names" style="width: 135px;">Address Line 2:</label>
             <input name="input" type="text" id="order-summary-address2" class="share-txtfield" value="address line 2" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'address line 2')this.value = '';"/>
         </li>
         <li>
-            <label class="textfield_names">Card type :</label>
-            <div class="styled-select" style="width: 72%; margin: 0;">
-                <select id="order-summary-cardtype">
-                    <option value="">-Choose-</option>
-                    <option value="VisaCard">Visa</option>
-                    <option value="MasterCard">Master</option>
-                    <option value="discover">Discover</option>
-                    <option value="Amex">Amex</option>
-                </select>
-            </div>
+            <label class="textfield_names" style="width: 135px;">Card type :</label>
+            <label class="textfield_names" style="margin-left: 10px; width: 200px;" id="order-card-type">Visa</label>
         </li>
         <li>
-            <label class="textfield_names">Card number</label>
+            <label class="textfield_names" style="width: 135px;">Card number</label>
             <input name="input" type="text" id="order-summary-ccnum" class="" value="card number" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'card number')this.value = '';" readonly />
         </li>
         <li>
-            <label class="textfield_names">Exp date:</label>
+            <label class="textfield_names" style="width: 135px;">Exp date:</label>
             <input name="input" type="text" id="order-summary-expdate" class="" value="exp date" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'exp date')this.value = '';" readonly />
         </li>
         <li>
-            <label class="textfield_names">Exp year:</label>
+            <label class="textfield_names" style="width: 135px;">Exp year:</label>
             <input name="input" type="text" id="order-summary-expyear" class="" value="exp year" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'exp year')this.value = '';" readonly />
         </li>
         <li>
-            <label class="textfield_names">City:</label>
+            <label class="textfield_names" style="width: 135px;">City:</label>
             <input name="input" type="text" id="order-summary-city" class="" value="city" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'city')this.value = '';"/>
         </li>
         <li>
-            <label class="textfield_names">State:</label>
+            <label class="textfield_names" style="width: 135px;">State:</label>
             <input name="input" type="text" id="order-summary-state" class="" value="state" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'state')this.value = '';"/>
         </li>
         <li>
-            <label class="textfield_names">Zip:</label>
+            <label class="textfield_names" style="width: 135px;">Zip:</label>
             <input name="input" type="text" id="order-summary-zip" class="" value="zip" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'zip')this.value = '';"/>
         </li>
         <li>
-            <label class="textfield_names">Plan name:</label>
+            <label class="textfield_names" style="width: 135px;">Plan name:</label>
             <label class="textfield_names" style="margin-left: 10px; width: 300px;" id="choose-plan-name">Plan A</label>
         </li>
         <li>
-            <label class="textfield_names">Cost:</label>
+            <label class="textfield_names" style="width: 135px;">Cost:</label>
             <label class="textfield_names" style="margin-left: 10px;" id="choose-plan-cost">$12</label>
         </li>
         <li>
