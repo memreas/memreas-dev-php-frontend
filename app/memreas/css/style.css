@@ -174,6 +174,7 @@ header {
     float: left;
     height: 48px;
     margin-left: 0.5em;
+    margin-right: 1em;
     width: 190px;
 }
 #logo a {
@@ -182,18 +183,6 @@ header {
     height: 27px;
     margin-top: 18px;
     text-indent: -99999px;
-}
-.search_bar {
-	width: 27%;
-	height: 40px;
-	background: url(../img/search.png) no-repeat 99% center;
-	float: left;
-	margin-left: 15%;
-	margin-top: 10px;
-	border: 1px #576e8a solid !important;
-	-moz-box-shadow: inset 0 2px 2px #999 !important;
-	-webkit-box-shadow: inset 0 2px 2px #999 !important;
-	box-shadow: inset 0 2px 2px #999 !important;
 }
 .pro-info {
 	position: absolute;
@@ -691,7 +680,7 @@ ul.pics {
 	margin: 0;
 	padding: 0;
 	overflow: auto;
-	height: 290px;
+	min-height: 400px;
 	margin-top: 10px;
 }
 ul.pics li {
@@ -812,12 +801,12 @@ a.black_btn_skin:hover, a.black_btn_skin:active {
 #tabs-share,
 #tabs-memreas-detail,
 #tabs-more {
-	overflow: hidden;
-	width: 100%;
-	margin: 0;
-	padding: 0;
-	list-style: none;
-	padding-left: 10px;
+    box-sizing: border-box;
+    list-style: none outside none;
+    margin: 0;
+    overflow: hidden;
+    padding: 0 0 0 10px;
+    width: 100%;
 }
 #tabs li,
 #tabs-queue li,
@@ -972,7 +961,7 @@ a.black_btn_skin:hover, a.black_btn_skin:active {
 	padding: 1em;
 	position: relative;
 	z-index: 2;
-	min-height: 588px;
+	min-height: 561px;
 	margin-bottom: 10px;
 }
 #tab-content h2, #tab-content h3, #tab-content p,
@@ -2419,7 +2408,6 @@ ul.pics li {
 }
 #tab-content {
 	padding: .5em;
-	min-height: 1000px !important;
 }
 .event_gallery_pro{
 	width: 32px;
@@ -2601,23 +2589,27 @@ ul.memreas_results{
 }
 
 #loadingpopup, .overlay {
-	width: 100%;
-	height: 100%;
-	background: rgba(200,200,200,0.6);
-	z-index: 1000000;
-	position:absolute;
-	display:none;
+    background: none repeat scroll 0 0 rgba(200, 200, 200, 0.6);
+    bottom: 0;
+    display: none;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 100%;
+    z-index: 1000000;
 }
 
 #loadingpopupinner {
-	width: 50%;
-	height: 18%;
-	background: rgba(255,255,255,0.8);
-	z-index: 10000;
-	position:absolute;
-	left: 25%;
-	top: 40%;
-	border-radius: 1rem;
+    background: none repeat scroll 0 0 rgba(255, 255, 255, 0.8);
+    border-radius: 1rem;
+    height: 30%;
+    left: 25%;
+    position: absolute;
+    top: 20%;
+    width: 50%;
+    z-index: 10000;
 }
 .overlay .overlay-inner{
     z-index: 10000;
@@ -2709,13 +2701,6 @@ margin-left: 15%;
 }
 
 /***Mark Styles****/
-#memreas  #tabs-memreas li a 
-{
-	padding: 0.4em 3em;
-}
-#gallery .medium_tabs li a {
-    padding: 0.5em 34% !important;
-}
 #main-tab nav {
 	min-height: 175%!important;
 }
@@ -2738,7 +2723,6 @@ margin-left: 15%;
     color: #fff;
     font: 18px Arial,Helvetica,sans-serif;
     margin-bottom: 15px;
-    margin-top: 2em;
     min-height: 4em;
     padding: 7em 0;
     text-align: center;
@@ -2790,11 +2774,11 @@ div.pro-info:hover .drop-inner {
 	background-color: #2961a3;
 	}
 .drop-inner > span {
-    background: url("../img/drop-bg.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    background: url("../img/drop-bg.png") no-repeat scroll 89px 0 rgba(0, 0, 0, 0);
     display: block;
-    height: 24px;
-    left: 96px;
-    padding: 10px 60px 0;
+    height: 19px;
+    left: 13px;
+    padding: 5px 90px 0;
     position: absolute;
     top: -24px;
     width: 28px;
@@ -2808,11 +2792,11 @@ div.pro-info:hover .drop-inner {
     width: 100%;
 }
 .ad img {
-    margin:0;
-    width: 73%;
+    margin: 0;
+    width: 100%;
 }
 nav ul li img {
-	width: 73%
+	width: 95%
 }
 #noti {
     background-color: #2664ca;
@@ -2837,4 +2821,55 @@ nav ul li img {
 }
 .fotorama__wrap  {
 	width: 100%!important;
+}
+#ad {
+	margin-top: 30px;
+}
+textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+}
+select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+    border-radius: 4px;
+    color: #555;
+    display: inline-block;
+    font-size: 14px;
+    height: 20px;
+    line-height: 20px;
+    margin-bottom: 10px;
+    padding: 4px 6px;
+    vertical-align: middle;
+}
+.search_bar {
+    background: url("../img/search.png") no-repeat scroll 99% center rgba(0, 0, 0, 0);
+    border: 1px solid #576e8a !important;
+    box-shadow: 0 2px 2px #999 inset !important;
+    float: left;
+    height: 40px;
+    margin-left: 15%;
+    margin-top: 10px;
+    width: 27%;
+}
+
+.dropdown-menu {
+    width: 27%;
+}
+.dropdown-menu {
+    background-clip: padding-box;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    display: none;
+    float: left;
+    left: 0;
+    list-style: none outside none;
+    margin: 2px 0 0;
+    min-width: 160px;
+    padding: 5px 0;
+    position: absolute;
+    top: 100%;
+    z-index: 1000;
 }
