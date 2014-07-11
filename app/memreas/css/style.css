@@ -1993,9 +1993,6 @@ ul.right textarea {
 	margin-left: 10px;
 	width: 70%;
 }
-#tab-content, #tab-content-queue, #tab-content-share, #tab-content-memreas, #tab-content-memreas-detail, #tab-content-more {
-	min-height: 873px;
-}
 .pro-names {
 	width: 70%;
 	margin: 10px;
