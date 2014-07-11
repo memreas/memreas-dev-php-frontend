@@ -14,10 +14,13 @@
                     <div class="styled-select" style="width: 87%;">
                         <select id="cmd_MorepageEvents"></select>
                     </div>
+                    <a class="black_btn_skin" href="javascript:;" onclick="">edit</a>
+
                 </li>
                 <li>
                     <label class="textfield_names">date :</label>
                     <input name="input" type="text" id="morepage_eventDate" class="share-txtfield date-picker" readonly value="from" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'from')this.value = '';"/>
+                    <a class="black_btn_skin" href="javascript:;" onclick="">edit</a>
                 </li>
                 <li>
                     <label class="textfield_names">location :</label>
@@ -32,6 +35,10 @@
                     <label for="morepage_friendsCanAdd" name="demo_lbl_2" class="css-label margin-none" >friends can add Friends</label>
                 </li>
                 <li>
+                    <input id="morepage_friendsCanAdd" class="css-checkbox" type="checkbox" name="morepage_friendsCanAdd"/>
+                    <label for="morepage_friendsCanAdd" name="demo_lbl_2" class="css-label margin-none" >public (anyone can add or post)</label>
+                </li>
+                <li>
                     <input id="morepage_isviewable" class="css-checkbox" type="checkbox" />
                     <label for="morepage_isviewable" name="demo_lbl_4" class="css-label margin-none" >viewable :</label>
                     <input name="input" type="text" id="moredate_eventDateFrom" class="date-picker" readonly value="from" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'from')this.value = '';"/>
@@ -39,13 +46,16 @@
                 </li>
                 <li>
                     <input id="morepage_isselfdestruct" class="css-checkbox" type="checkbox" />
-                    <label for="morepage_isselfdestruct" name="demo_lbl_5" class="css-label margin-none" >self destruct :</label>
+                    <label for="morepage_isselfdestruct" name="demo_lbl_5" class="css-label margin-none" >ghost :</label>
                     <input name="input" type="text" id="morepage_eventSelfDestruct" class="share-txtfield-2 date-picker" readonly value="" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == '')this.value = '';"/>
                 </li>
             </ul>
             <div style="clear: both; margin-top: 10px; margin-bottom: 10px; padding-top: 10px;"></div>
-            <a class="black_btn_skin" href="javascript:;" onclick="morepage_saveEvent();">Save</a>
+            <div class="btn">
+
+            <a class="black_btn_skin" href="javascript:;" onclick="morepage_saveEvent();">ok</a>
             <a class="black_btn_skin" href="javascript:;">cancel</a>
+            </div>
         </div>
     </div>
 </div>
@@ -59,9 +69,14 @@
     </div>
     <div class="akordeon-item-body" style="height: 300px;">
         <div class="akordeon-item-content">
-            <ul class="memreasEventMedia"></ul>
+            <ul class="memreasEventMedia">
+                <!--images here-->
+            </ul>
             <div style="clear: both;"></div>
-            <a class="black_btn_skin" href="javascript:;" onclick="morepage_removeMedias();" style="margin-top: 20px; display: inline-block;">Remove media</a>
+            <div class="btn">
+                <a class="black_btn_skin" href="javascript:;" onclick="morepage_saveEvent();">ok</a>
+                <a class="black_btn_skin" href="javascript:;">cancel</a>
+            </div>
         </div>
     </div>
 </div>
@@ -77,7 +92,10 @@
         <div class="akordeon-item-content">
             <ul class="memreasMorepageFriends"></ul>
             <div style="clear: both;"></div>
-            <a class="black_btn_skin" href="javascript:;" onclick="morepage_removeFriends();" style="margin-top: 20px; display: inline-block;">Remove friend</a>
+            <div class="btn">
+
+            <a class="black_btn_skin" href="javascript:;" onclick="morepage_saveEvent();">ok</a>
+            <a class="black_btn_skin" href="javascript:;">cancel</a>
         </div>
     </div>
 </div>

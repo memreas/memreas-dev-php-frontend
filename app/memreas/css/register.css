@@ -395,6 +395,10 @@ label.css-label{
     text-align: center;
     width: 18%;
 }
+
+footer.rel  {
+    position: fixed!important;
+}
 }
 
 @media (max-width: 1024px){ 
@@ -534,9 +538,6 @@ input.css-checkbox[type="checkbox"]:checked + label.css-label {
     font-weight: normal;
     padding: 5px 0;
     width: 53%;
-}
-footer.rel  {
-    position: fixed!important;
 }
 }
 

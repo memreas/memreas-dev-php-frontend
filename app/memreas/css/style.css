@@ -1198,9 +1198,10 @@ ul.share li img{
 	margin: 0px 0px 0px 0px;
 }
 ul.share_memreas_details li {
-	width: 100%;
-	clear: both;
-	margin: 5px 0px;
+    clear: both;
+    height: 35px;
+    margin: 10px 0;
+    width: 100%;
 }
 .textfield_names {
 	width: 100px;
@@ -1210,13 +1211,13 @@ ul.share_memreas_details li {
 	color: #FFF;
 }
 .share-txtfield {
-	width: 70% !important;
+	width: 66% !important;
 	float: left;
 	font-family: "Century Gothic";
 	font-size: 16px;
 }
 .share-txtfield-2 {
-	width: 61% !important;
+	width: 71% !important;
 	float: left;
 }
 .share-txtfield-3 {
@@ -1224,7 +1225,7 @@ ul.share_memreas_details li {
 	float: right;
 }
 .date-picker {
-	width: 28%;
+	width: 33%;
 	float: left;
 	background: url(../img/date.png) no-repeat right;
 	margin-right: 30px;
@@ -1316,31 +1317,26 @@ ul.share_memreas_details li {
 #button {
 }
 .styled-select select {
-	background: none !important;
-	width: 825px;
-	padding: 5px;
-	font-size: 16px;
-	line-height: 1;
-	border: 0;
-	border-radius: 0;
-	height: 34px;
-	-webkit-appearance: none;
-	border: 0px;
-	font-family: "Century Gothic";
-	font-size: 16px;
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+    border: 0 none;
+    border-radius: 0;
+    font-family: "Century Gothic";
+    font-size: 16px;
+    height: 34px;
+    line-height: 1;
+    opacity: 0;
+    padding: 5px;
+    width: 99%;
 }
 .styled-select {
-	width: 90%;
-	height: 34px;
-	overflow: hidden;
-	background: url(../img/new_arrow.png) no-repeat right #FFF;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	border-radius: 5px;
-	-moz-box-shadow: inset 0 2px 2px #666 !important;
-	-webkit-box-shadow: inset 0 2px 2px #666 !important;
-	box-shadow: inset 0 2px 2px #666 !important;
-	margin: 0 auto;
+    background: url("../img/new_arrow.png") no-repeat scroll right center #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 2px #666 inset !important;
+    height: 34px;
+    margin: 0;
+    overflow: hidden;
+    width: 68%!important;
+    float: left;
 }
 ul.popupContact {
 	height: 130px;
@@ -1397,7 +1393,8 @@ ul.popupContact2 li {
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
 	border-radius: 10px;
-	top: 20% !important;
+	top: 10% !important;
+	left: 7%!important
 }
 .popups2 h2 {
 	color: #FFF;
@@ -1628,7 +1625,7 @@ ul.sync li {
 	margin: 0 1.3em 0 1.3em !important;
 }
 .small_tabs a {
-	padding: .3em 1em !important;
+	padding: .3em 18.5% !important;
 	font-size: 16px !important;
 }
 ul.option li {
@@ -2075,19 +2072,20 @@ ul.share li {
 	margin: 0 1em 0 .8em !important;
 }
 .small_tabs a {
-	padding: .3em .9em !important;
+    font-size: 15px !important;
+    padding: 0.3em 4% !important;
 }
 .akordeon-item-content p {
 	font: 12px/18px Arial, Helvetica, sans-serif !important;
 }
 .akordeon-icon span {
 	font-size: 24px !important;
-	top: 5px !important;
+	top: 2px !important;
 	right: 3px !important;
 }
 .akordeon-item.expanded .akordeon-icon span {
-	top: 5px;
-	right: 2px !important;
+    right: 5px !important;
+    top: 0 !important;
 }
 /************************************start search results*****************************************/
 
@@ -2701,11 +2699,6 @@ margin-left: 15%;
 #main-tab nav {
 	min-height: 175%!important;
 }
-#gallery .row-fluid {
-    bottom: -5em;
-    left: 0;
-    position: absolute;
-}
 #main-tab {
 	width: 6%;
 }
@@ -2721,7 +2714,7 @@ margin-left: 15%;
     font: 18px Arial,Helvetica,sans-serif;
     margin-bottom: 15px;
     min-height: 4em;
-    padding: 7em 0;
+    padding: 5em 0;
     text-align: center;
 }
 #bgstretcher {
@@ -2787,6 +2780,11 @@ div.pro-info:hover .drop-inner {
     min-height: 98% !important;
     padding-bottom: 37em;
     width: 100%;
+}
+.ad {
+    float: left;
+    margin-left: 2%;
+    width: 98%;
 }
 .ad img {
     margin: 0;
@@ -2869,4 +2867,28 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
     position: absolute;
     top: 100%;
     z-index: 1000;
+}
+#content_1 {
+	width: 100%;
+}
+.btn
+{
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+}
+#content_1 .black_btn_skin {
+	float: right;
+	margin: 0;
+	padding:6px 7%;
+}
+#morepage_eventDate {
+	margin-right: 0!important;
+}
+.akordeon-heading {
+    padding-top: 4px!important;
+}
+.akordeon-item-head-container {
+    left: 0!important;
+    width: 98%!important;
 }
