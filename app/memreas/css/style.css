@@ -271,11 +271,10 @@ ul.right li {
 	margin-bottom: 10px;
 }
 .pro-pics {
-	-webkit-border-radius: 8px;
-	-moz-border-radius: 8px;
-	border-radius: 8px;
-	float: left;
-	overflow: hidden;
+border-radius: 8px;
+    float: left;
+    overflow: hidden;
+    width: 71px;
 }
 .pro-names {
 	width: 70%;
@@ -961,7 +960,7 @@ a.black_btn_skin:hover, a.black_btn_skin:active {
 	padding: 1em;
 	position: relative;
 	z-index: 2;
-	min-height: 561px;
+	min-height: 490px;
 	margin-bottom: 10px;
 }
 #tab-content h2, #tab-content h3, #tab-content p,
@@ -972,6 +971,9 @@ a.black_btn_skin:hover, a.black_btn_skin:active {
 #tab-content-more h2, #tab-content-more h3, #tab-content-more p {
 	margin: 0 0 15px 0;
 	color: #fff;
+}
+#memreas #tabs-memreas li a, #queue #tabs-memreas li a {
+	padding: 0.2em 2em!important;
 }
 .event_name_box{
 	position:absolute;
@@ -1885,9 +1887,10 @@ ul.personresults li{
 	width: 50%;
 	margin: 20px 0px;
     height: 75px;
+    border: 1px solid #7ca8e0;
 }
 a.black_btn_skin.btn-friends{
-    margin-top: 9px;
+    margin-top: 5px;
     display: inline-block;
     margin-left: 25px;
 }
@@ -1902,7 +1905,7 @@ a.black_btn_skin.btn-friends{
 	-moz-border-radius: 15px;
 	border-radius: 15px;
 	float: left;
-	margin: 5px 0px 0px 20px;
+	margin: 0 0 0 5%;
 	border: 3px #FFF solid;
 }
 ul.discover_results{
@@ -2685,7 +2688,11 @@ margin-left: 15%;
 }
 /* Typeahead seach */
 #setting-userprofile img{ width: 70px; height: 60px; }
-.bond img {width: 56px;vertical-align: middle;
+.bond img {
+	    border: 1px solid #ebebeb;
+    border-radius: 3px;
+    vertical-align: middle;
+    width: 56px;
  }
  .bond strong {padding-left: 5px;
  }
@@ -2809,10 +2816,12 @@ nav ul li img {
     margin-top: 0 !important;
     position: relative;
     top: 0;
+    height: 379px !important;
     width: 100% !important;
 }
 .fotorama__stage {
 	width: 100%!important;
+	height: 390px!important;
 }
 .fotorama__wrap  {
 	width: 100%!important;
@@ -2849,24 +2858,32 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 }
 
 .dropdown-menu {
-    width: 27%;
+    width: 25%;
 }
 .dropdown-menu {
     background-clip: padding-box;
     background-color: #fff;
     border: 1px solid rgba(0, 0, 0, 0.2);
-    border-radius: 6px;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+    box-shadow: 1px 2px 10px #9b9b9b inset;
     display: none;
     float: left;
-    left: 0;
+    left: 421px !important;
     list-style: none outside none;
     margin: 2px 0 0;
     min-width: 160px;
-    padding: 5px 0;
+    padding: 5px 12px;
     position: absolute;
-    top: 100%;
+    top: 40px !important;
     z-index: 1000;
+}
+.bond {
+    border-bottom: 1px solid #ebebeb;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+}
+.bond strong:hover {
+	color: blue;
 }
 #content_1 {
 	width: 100%;
