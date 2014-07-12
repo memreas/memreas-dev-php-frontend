@@ -114,7 +114,6 @@ DEALINGS IN THE SOFTWARE.
     /*var click = document.createEvent("Event");
     click.initEvent("click", true, true);
     link.dispatchEvent(click);*/
-    console.log(link);
     uploadAudio(blob);
     //$("#download-audio").trigger('click');
   }

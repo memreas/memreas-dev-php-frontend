@@ -66,7 +66,7 @@ error_log("Inside fetch XML request XML ---> " . $xml . PHP_EOL);
 	    $response = $request->send();
 error_log("Inside fetch XML response ---> " . $response->getBody(true) . PHP_EOL);
 //error_log("Exit fetchXML".PHP_EOL);
-		return $data = $response->getBody(true);;
+		return $data = $response->getBody(true);
 	}
 
     public function indexAction() {
@@ -625,6 +625,77 @@ error_log("userid---->".$userid.PHP_EOL);
             echo 'Media updated';
         else echo 'Error while saving your media please try again';
         die(); // For ajax calling only
+    }
+
+
+    //Process user add comment
+    public function audiocommentAction(){
+        if( isset($_POST['file_data']))
+        {
+            $user_id = $_POST['user_id'];
+            $event_id = $_POST['comment_event_id'];
+            $target_dir = getcwd() . '/app/memreas/user_comment_files/' . $user_id . '/';
+            $cad = $_POST['file_data'];
+
+            //Check if user directory has created or not
+            if (!file_exists($target_dir)){
+                mkdir($target_dir, 0777);
+            }
+
+            //generate file name
+            $filename = $this->createAudioFilename($user_id);
+            $server_source_file = $target_dir . $filename;
+
+            $stringas = explode(":",$cad);
+            $type = explode(";", $stringas[1]);
+            $base = explode(",", $type[1]);
+            $base64 = $base[1];
+
+            $fh = fopen($server_source_file, 'w');
+            fwrite($fh, base64_decode($base64));
+
+            //begin upload to S3
+            $s3Object = new S3('AKIAJMXGGG4BNFS42LZA', 'xQfYNvfT0Ar+Wm/Gc4m6aacPwdT5Ors9YHE/d38H');
+            $target_file = $user_id . '/media/audio/' . $filename;
+
+            $s3Object->putBucket('memreasdev', $s3Object::ACL_PUBLIC_READ_WRITE);
+
+            $result = $s3Object->putObjectFile($server_source_file, 'memreasdev', $target_file, $s3Object::ACL_PUBLIC_READ_WRITE, array(), 'audio/wav');
+
+            //Add this edited media as a new media
+            $action = 'addmediaevent';
+            $xml = "<xml>";
+            $xml .= "<addmediaevent>";
+            $xml .= "<s3url>" . $filename . "</s3url>";
+            $xml .= "<is_server_image>0</is_server_image>";
+            $xml .= "<content_type>audio/wav</content_type>";
+            $xml .= "<s3path>" . $user_id . "/media/audio/</s3path>";
+            $xml .= "<s3file_name>" .$filename . "</s3file_name>";
+            $xml .= "<device_id></device_id>";
+            $xml .= "<event_id>" . $event_id . "</event_id>";
+            $xml .= "<media_id></media_id>";
+            $xml .= "<user_id>" . $user_id . "</user_id>";
+            $xml .= "<is_profile_pic>0</is_profile_pic>";
+            $xml .= "<location></location>";
+            $xml .= "</addmediaevent>";
+            $xml .= "</xml>";
+            $result = $this->fetchXML($action, $xml);
+
+            $data = simplexml_load_string($result);
+            if ($data->addmediaeventresponse->status == 'Success')
+                echo 'Comment added successfully';
+            else echo 'Error while saving your media please try again';
+            die(); // For ajax calling only
+        }
+        die();
+    }
+
+    private function createAudioFilename($user_id){
+        $unique = uniqid();
+        $today = date('m-d-Y');
+        $filename = $user_id . '-' . $unique . '-comment-' . $today . '.wav';
+        if (file_exists($filename)) $this->createAudioFilename($user_id);
+        else return $filename;
     }
 
 } // end class IndexController

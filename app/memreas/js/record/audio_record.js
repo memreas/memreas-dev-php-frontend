@@ -145,10 +145,25 @@ function voiceCommentCancel(){
 }
 
 function uploadAudio(blobObject){
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', '/index/audiocomment', true);
-    xhr.onload = function(e){
-        var result = e.target.result;
-    }
-    xhr.send(blobObject);
+    voiceCommentCancel();
+    $('#loadingpopup').show();
+    var file2 = new FileReader();
+    file2.readAsDataURL( blobObject );
+    file2.onloadend = function(e){
+        $.ajax({
+            url: "/index/audiocomment",
+            type: "POST",
+            data: {
+                file_data: file2.result,
+                user_id: $('input[name=user_id]').val(),
+                comment_event_id: event_id
+            },
+            //processData: false,
+            dataType : "html",
+            success: function(response){
+                $('#loadingpopup').hide();
+                jsuccess(response);
+            }
+        });
+    } ;
 }

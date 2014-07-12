@@ -10,41 +10,41 @@
                 <div id="tab1-share" class="hideCls">
                     <div class="required">only name is required</div>
                     <ul id="content_1" class="share_memreas_details">
-                    <li>
-                    <label class="textfield_names">name :</label>
-                    <input name="input" type="text" id="txt_name" class="share-txtfield" value="sample" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'sample')this.value = '';"/>
-                    </li>
-                    <li>
-                    <label class="textfield_names">date :</label>
-                    <input name="input" type="text" id="dtp_date" class="share-txtfield date-picker" readonly value="from" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'from')this.value = '';"/>
-                    </li>
-                    <li>
-                    <label class="textfield_names">location :</label>
-                    <input name="input3" type="text" id="txt_location" class="share-txtfield" value="address or current location" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'address or current location')this.value = '';" onClick="share_showGoogleMap('div_locationmap_maparea');"/>
-                    </li>
-                    <li>
-                     <input id="ckb_canpost" class="css-checkbox" type="checkbox" name="ckb_canpost"/>
-                     <label for="ckb_canpost" name="demo_lbl_1" class="css-label margin-none" >friends can post pics/videos</label>
-                    </li>
-                    <li>
-                     <input id="ckb_canadd" class="css-checkbox" type="checkbox" name="ckb_canadd"/>
-                     <label for="ckb_canadd" name="demo_lbl_2" class="css-label margin-none" >friends can add Friends</label>
-                    </li>
-                    <li>
-                     <input id="ckb_public" class="css-checkbox" type="checkbox" name="ckb_public"/>
-                     <label for="ckb_public" name="demo_lbl_3" class="css-label margin-none" onClick="javascript:share_clickCkbPublic();" >public (anyone can add or post)</label>
-                    </li>
-                    <li>
-                     <input id="ckb_viewable" class="css-checkbox" type="checkbox" />
-                     <label for="ckb_viewable" name="demo_lbl_4" class="css-label margin-none" >viewable :</label>
-                     <input name="input" type="text" id="dtp_from" class="date-picker" readonly value="from" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'from')this.value = '';"/>
-                     <input name="input" type="text" id="dtp_to" class="date-picker" readonly value="to" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'to')this.value = '';"/>
-                    </li>
-                    <li>
-                     <input id="ckb_selfdestruct" class="css-checkbox" type="checkbox" />
-                     <label for="ckb_selfdestruct" name="demo_lbl_5" class="css-label margin-none" >self destruct :</label>
-                     <input name="input" type="text" id="dtp_selfdestruct" class="share-txtfield-2 date-picker" readonly value="" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == '')this.value = '';"/>
-                    </li>
+                        <li>
+                            <label class="textfield_names">name :</label>
+                            <input name="input" type="text" id="txt_name" class="share-txtfield" value="sample" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'sample')this.value = '';"/>
+                        </li>
+                        <li>
+                            <label class="textfield_names">date :</label>
+                            <input name="input" type="text" id="dtp_date" class="share-txtfield date-picker" readonly value="from" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'from')this.value = '';"/>
+                        </li>
+                        <li>
+                            <label class="textfield_names">location :</label>
+                            <input name="input3" type="text" id="txt_location" class="share-txtfield" value="address or current location" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'address or current location')this.value = '';" onClick="share_showGoogleMap('div_locationmap_maparea');"/>
+                        </li>
+                        <li>
+                            <input id="ckb_canpost" class="css-checkbox" type="checkbox" name="ckb_canpost"/>
+                            <label for="ckb_canpost" name="demo_lbl_1" class="css-label margin-none" >friends can post pics/videos</label>
+                        </li>
+                        <li>
+                            <input id="ckb_canadd" class="css-checkbox" type="checkbox" name="ckb_canadd"/>
+                            <label for="ckb_canadd" name="demo_lbl_2" class="css-label margin-none" >friends can add Friends</label>
+                        </li>
+                        <li>
+                            <input id="ckb_public" class="css-checkbox" type="checkbox" name="ckb_public"/>
+                            <label for="ckb_public" name="demo_lbl_3" class="css-label margin-none" onClick="javascript:share_clickCkbPublic();" >public (anyone can add or post)</label>
+                        </li>
+                        <li>
+                             <input id="ckb_viewable" class="css-checkbox" type="checkbox" />
+                             <label for="ckb_viewable" name="demo_lbl_4" class="css-label margin-none" >viewable :</label>
+                             <input name="input" type="text" id="dtp_from" class="date-picker" readonly value="from" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'from')this.value = '';"/>
+                             <input name="input" type="text" id="dtp_to" class="date-picker" readonly value="to" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'to')this.value = '';"/>
+                        </li>
+                        <li>
+                         <input id="ckb_selfdestruct" class="css-checkbox" type="checkbox" />
+                         <label for="ckb_selfdestruct" name="demo_lbl_5" class="css-label margin-none" >self destruct :</label>
+                         <input name="input" type="text" id="dtp_selfdestruct" class="share-txtfield-2 date-picker" readonly value="" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == '')this.value = '';"/>
+                        </li>
                     </ul>
                     <a class="black_btn_skin f-center" href="javascript:;" onclick="share_addEvent();">next</a>
                     <a class="black_btn_skin" href="javascript:share_clearMemreas(false);">cancel</a>
