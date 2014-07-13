@@ -5,6 +5,15 @@
 .span1, .span2, .span3, .span4, .span5, .span6, .span7, .span8, .span9, .span10, .span11, .span12 {
     float: left;
 }
+.relative {
+    position: relative;
+}
+.left {
+    float: left;
+}
+.right {
+    float: right;
+}
 
 #main-tab {
     float: left;
@@ -34,11 +43,14 @@
     margin: 0 auto;
     text-align: center;
 }
+@media (max-width: 1024px){     
+.search-sec {
+    margin-left: 10%!important;
+}
 
-    #maintab-content > .right-ads  {
-        display: none;
+    .typeahead.dropdown-menu {
+        width: 91%!important;
     }
-@media (max-width: 1024px){  
     #lbl-viewable, .css-label  {
         display: block!important;
         float: none!important;
@@ -61,8 +73,65 @@
     .styled-select {
     width: 42% !important;
     }
-    .share_memreas_details.sell_media_form input {
-        margin-left: 6%;
-        width: 74%;
+    #content_1 #dtp_selfdestruct {
+        margin-left: 66px!important;
+    }
+}
+
+@media (max-width: 768px){     
+
+    .search-sec {
+        margin-left: 0!important;
+    }
+    #search {
+        font-size: 12px!important;
+        margin-left: 0!important
+    }
+    input.search_bar {
+        margin-left: 10px !important;
+        width: 86%!important;
+    }
+    .typeahead.dropdown-menu {
+        width: 81% !important;
+    }
+    .pro-info {
+        width: 263px;
+    }
+    .row #main-tab nav {
+        padding-bottom: 63em!important;
+    }
+    ul.image_upload_box {
+        height: 190px;
+    }
+    #dtp_from, #dtp_to, #content_1 #dtp_selfdestruct {
+    display: block;
+    float: none;
+    margin: 0 auto 20px !important;
+    width: 252px !important;
+    }
+    input.css-checkbox[type="checkbox"] + label.css-label{
+        font-size: 20px;
+    }
+    .adbox {
+        font-size: 16px!important;
+    }
+    .account .f-center.change-profile-btn {
+        font-size: 16px!important;
+    }
+    #main-tab {
+        width: 8%!important;
+    }
+    #maintab-content {
+        width: 91%!important;
+    }
+    a.black_btn_skin {
+        font-size: 16px!important;
+    }
+    input.search_bar {
+    margin-left: 31px!important;
+    margin-top: 15px!important;
+    }
+    #main-tab nav {
+        padding-bottom: 45em!important;
     }
 }
