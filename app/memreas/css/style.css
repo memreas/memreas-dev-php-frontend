@@ -197,10 +197,12 @@ header {
     height: 48px;
     position: relative;
     width: 48px;
+    cursor: pointer;
 }
 .pro-pic img{ 
     border-radius: 5px;
     display: block;
+    height: 100%;
     width: 100%;
 }
 .pro-name {
@@ -216,6 +218,7 @@ header {
 	margin-left: 10px;
 	border: 3px #FFF solid;
 	margin-top: 7px;
+	cursor: pointer;
 }
 nav {
 	background: url(../img/nav-bg.jpg) repeat-y right;
@@ -239,7 +242,7 @@ nav ul li a {
     display: block;
     font-size: 12px;
     overflow: hidden;
-    padding: 14px;
+    padding: 13%;
     text-align: center;
 }
 nav ul li a:hover, nav ul li a.active {
@@ -803,8 +806,12 @@ a.black_btn_skin:hover, a.black_btn_skin:active {
     box-sizing: border-box;
     list-style: none outside none;
     margin: 0;
-    overflow: hidden;
     padding: 0 0 0 10px;
+    overflow: hidden;
+}
+#tabs-more {
+    overflow-x: scroll!important;
+    white-space: nowrap;
     width: 100%;
 }
 #tabs li,
@@ -812,9 +819,12 @@ a.black_btn_skin:hover, a.black_btn_skin:active {
 #tabs-memreas li,
 #tabs-share li,
 #tabs-memreas-detail,
-#tabs-more li{
+{
 	float: left;
-	margin: 0 1em 0 2em;
+}
+#tabs-more li{
+    display: inline-block!important;
+    float: none;
 }
 #tabs-memreas-detail{ float: none; }
 #tabs a,
@@ -1627,8 +1637,11 @@ ul.sync li {
 	margin: 0 1.3em 0 1.3em !important;
 }
 .small_tabs a {
-	padding: .3em 18.5% !important;
-	font-size: 16px !important;
+    font-size: 16px !important;
+    margin-bottom: -5px;
+    min-width: 38px;
+    padding: 0.3em 18.5% !important;
+    text-align: center;
 }
 ul.option li {
 	width: 100%;
@@ -1884,7 +1897,9 @@ ul.personresults{
 }
 ul.personresults li{
 	float: left;
-	width: 50%;
+	width: 45%;
+	border-radius: 3px;
+	padding: 20px;
 	margin: 20px 0px;
     height: 75px;
     border: 1px solid #7ca8e0;
@@ -2306,9 +2321,6 @@ ul.right textarea {
 	display: block;
 	text-align: center;
 }
-.adbox-port {
-	display: block;
-}
 footer {
 	bottom: -6px !important;
 }
@@ -2385,7 +2397,6 @@ input[type=checkbox].css-checkbox + label.css-label {
 /******start event-gallery******/
 ul.pics {
 	overflow: auto;
-	height: 920px;
 }
 ul.pics li {
 	width: 16%;
@@ -2689,8 +2700,9 @@ margin-left: 15%;
 /* Typeahead seach */
 #setting-userprofile img{ width: 70px; height: 60px; }
 .bond img {
-	    border: 1px solid #ebebeb;
+    border: 1px solid #ebebeb;
     border-radius: 3px;
+    max-height: 56px;
     vertical-align: middle;
     width: 56px;
  }

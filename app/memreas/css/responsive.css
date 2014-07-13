@@ -30,3 +30,39 @@
     position: absolute;
     width: 95%;
 }
+.mr-auto {
+    margin: 0 auto;
+    text-align: center;
+}
+
+    #maintab-content > .right-ads  {
+        display: none;
+    }
+@media (max-width: 1024px){  
+    #lbl-viewable, .css-label  {
+        display: block!important;
+        float: none!important;
+    }
+    #tab-content-share .mr-auto a {
+        margin: 5px auto!important;
+    }
+    #dtp_from {
+        margin:0 1% 0 10%;
+    }
+    .date-picker.hasDatepicker  {
+        width: 253px !important;
+    }
+    #dtp_from, #dtp_to {
+        width: 257px !important;
+    }
+    select {
+        width: 100%!important
+    }
+    .styled-select {
+    width: 42% !important;
+    }
+    .share_memreas_details.sell_media_form input {
+        margin-left: 6%;
+        width: 74%;
+    }
+}

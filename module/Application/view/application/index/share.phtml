@@ -207,7 +207,7 @@ else {
 						</li>
 						<li>
 						 <input id="ckb_viewable" class="css-checkbox" type="checkbox" checked="checked"/>
-						 <label for="ckb_viewable" name="demo_lbl_4" class="css-label margin-none" >viewable :</label>
+						 <label id="lbl-viewable" for="ckb_viewable" name="demo_lbl_4" class="css-label margin-none" >viewable :</label>
 						 <input name="input" type="text" id="dtp_from" class="date-picker" readonly value="from" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'from')this.value = '';"/>
 						 <input name="input" type="text" id="dtp_to" class="date-picker" readonly value="to" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'to')this.value = '';"/>
 						</li>
@@ -217,8 +217,10 @@ else {
 						 <input name="input" type="text" id="dtp_selfdestruct" class="share-txtfield-2 date-picker" readonly value="" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == '')this.value = '';"/>       
 						</li>
 						</ul>
-						<a class="black_btn_skin f-center" href="javascript:share_addEvent();">next</a> 
-						<a class="black_btn_skin" href="javascript:share_clearMemreas();">cancel</a>
+						<div class="btn" class="mr-auto">
+							<a class="black_btn_skin f-center" href="javascript:share_addEvent();">next</a> 
+							<a class="black_btn_skin" href="javascript:share_clearMemreas();">cancel</a>
+						</div>
 					</div>
 					<div id="share_tab2" class="hideCls">
 						<ul id="share_medialist" class="share scrollClass">
