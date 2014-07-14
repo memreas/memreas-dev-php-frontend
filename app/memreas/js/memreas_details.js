@@ -306,7 +306,7 @@ function addMemreasPopupGallery(eventId){
     ajaxRequest('addexistmediatoevent', params, function(xml_response){
         if (getValueFromXMLTag(xml_response, 'status') == 'Success'){
             $('#loadingpopup').show();
-            setTimeout(function(){ showEventDetail(eventId); $('#loadingpopup').hide(); disablePopup('popupContact'); jsuccess('Media added successfully'); }, 2000);
+            setTimeout(function(){ showEventDetail(eventId, $('input[name=user_id]').val()); $('#loadingpopup').hide(); disablePopup('popupContact'); jsuccess('Media added successfully'); }, 2000);
         }
         else jerror(getValueFromXMLTag(xml_response, 'message'));
     });
