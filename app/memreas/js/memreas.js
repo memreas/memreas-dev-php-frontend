@@ -161,11 +161,11 @@ function fetchMyMemreas(){
 function fetchFriendsMemreas(friendMemreasType){
     var user_id = $("input[name=user_id]").val();
     if (friendMemreasType == 'private'){
-        showPublic = '0';
+            showPublic = '0';
             showAccepted = '1';
         }else{
             showPublic = '1';
-             showAccepted = '0';
+            showAccepted = '1';
         } 
     ajaxRequest(
         'viewevents',
@@ -177,7 +177,6 @@ function fetchFriendsMemreas(friendMemreasType){
             {tag: 'page', value: '1'},
             {tag: 'limit', value: '20'}
         ], function(response){
-            $('#loadingpopup').show();
             if (friendMemreasType == 'private'){
                 if ($(".event_images").hasClass("mCustomScrollbar"))
                     var target_object = ".event_images .mCSB_container";
@@ -240,7 +239,6 @@ function fetchFriendsMemreas(friendMemreasType){
             }
         }
     );
-    $('#loadingpopup').hide();
 }
 function addMemreas(){
     $("a.share").click();
