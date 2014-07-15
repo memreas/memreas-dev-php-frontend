@@ -11,16 +11,16 @@
             <ul class="share_memreas_details">
                 <li>
                     <label class="textfield_names">name :</label>
-                    <input name="input" type="text" class="share-txtfield" value="sample" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'sample')this.value = '';"/>
+                    <input name="name_feedback" type="text" class="share-txtfield" value="your name" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'your name')this.value = '';"/>
                 </li>
                 <li>
                     <label class="textfield_names">email :</label>
-                    <input name="input" type="text" class="share-txtfield" value="sample@mail.com" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'sample@mail.com')this.value = '';"/>
+                    <input name="email_feedback" type="text" class="share-txtfield" value="your email" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'your email')this.value = '';"/>
                 </li>
                 <li>
                     <label class="textfield_names">message :</label>
-                    <textarea name="" cols="" rows="" class="share-txtfield"></textarea>
-                    <a class="black_btn_skin f-center" href="#" style="margin-left: 30% !important;">ok</a>
+                    <textarea name="message_feedback" cols="" rows="" class="share-txtfield"></textarea>
+                    <a class="black_btn_skin f-center" href="javascript:;" style="margin-left: 30% !important;" onclick="submitFeedback();">ok</a>
                     <a class="black_btn_skin" href="#">cancel</a>
                 </li>
             </ul>
