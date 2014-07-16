@@ -2881,6 +2881,7 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
     padding: 4px 6px;
     vertical-align: middle;
 }
+select{ height: 30px; }
 .dropdown-menu {
     width: 25%;
 }

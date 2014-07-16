@@ -24,22 +24,22 @@ $(function(){
     });
 
     //Group tab
-    $("#tabs-more li a:eq(1)").one ('click', function(){
+    $("a.group-tab").one ('click', function(){
         getUserGroups();
         $('#buttons2-moretab').akordeon();
     });
 
-    $("#tabs-more li a:eq(2)").one ('click', function(){
+    $("a.network-tab").one ('click', function(){
         $('#buttons3-moretab').akordeon();
     });
 
-    $("#tabs-more li a:eq(3)").one ('click', function(){ $('#buttons4-moretab').akordeon(); });
-    $("#tabs-more li a:eq(4)").one ('click', function(){ $('#buttons5-moretab').akordeon(); });
-    $("#tabs-more li a:eq(6)").one ('click', function(){
+    $("a.notification-tab").one ('click', function(){ $('#buttons4-moretab').akordeon(); });
+    $("a.help-tab").one ('click', function(){ $('#buttons5-moretab').akordeon(); });
+    $("a.subscription-tab").one ('click', function(){
         $('#buttons7-moretab').akordeon();
         loadSubscriptionPlans();
     });
-    $("#tabs-more li a:eq(7)").one ('click', function(){
+    $("a.buy-credit-tab").one ('click', function(){
         $('#buttons8-moretab').akordeon();
         buycredit_listCard();
     });
@@ -153,7 +153,7 @@ $(function(){
         },
         done: function (event, data) {
 
-        },
+        }
     });
 });
 
