@@ -225,7 +225,7 @@ header {
     display: block;
     float: left;
     height: 48px;
-    margin-left: 10%;
+    margin-left: 0;
     position: relative;
     width: 48px;
 }
@@ -238,7 +238,7 @@ header {
 }
 .pro-info .right {
     float: right;
-    width: 230px;
+    width: 210px;
 }
 .pro-name {
     border: 2px solid #fff;
@@ -2765,27 +2765,62 @@ margin-left: 15%;
 .row-fluid .span11 {
     width: 97%;
 }
-div.pro-info:hover .drop-inner {
+div.pro-info .right:hover .drop-inner {
 	display: block;
+}
+.notifications-all {
+    background-color: #205ca3;
+    border-bottom: 1px solid #90aed1;
+    color: #fff;
+    font-size: 12px;
+    padding: 20px 5px 5px;
+    position: relative;
+}
+.noti-title {
+    margin-bottom: 5px;
 }
 .drop-inner {
     background-color: #134e94;
     border: 2px solid #fff;
     border-radius: 5px;
-    bottom: -11em;
+    top: 6em;
     display: none;
     position: absolute;
     right: 0em;
     width: 226px;
     z-index: 9;
 }
-.drop-inner ul li a {
+.drop-inner ul li > a {
     background: url("../img/drop-1-bg.png") no-repeat scroll 9px 7px rgba(0, 0, 0, 0);
     color: #fff;
     display: block;
     padding: 7px 10px 7px 38px;
 }
-.drop-inner ul li.drop-2 a {
+
+.close {
+    color: #fff;
+    font-family: Century Gothic;
+    font-size: 18px;
+    font-weight: bold;
+    position: absolute;
+    right: 14px;
+    top: 0;
+}
+
+.reply {
+    background-color: #c5c5c5;
+    background-image: linear-gradient(#f3f3f3, #c5c5c5);
+    border-radius: 5px;
+    color: #717171;
+    display: inline-block;
+    float: right;
+    margin: 10px;
+    padding: 6px 15px;
+}
+.drop-2 {
+    background: url("../img/noti-arrow.png") no-repeat scroll 195px 8px / 9% auto rgba(0, 0, 0, 0);
+}
+.drop-inner ul li.drop-2 > a {
 	background-image: url("../img/drop-2-bg.png");
 }
 .drop-inner ul li.drop-3 a {
@@ -2806,11 +2841,11 @@ div.pro-info:hover .drop-inner {
 	background-color: #2961a3;
 	}
 .drop-inner > span {
-    background: url("../img/drop-bg.png") no-repeat scroll 90px 13px rgba(0, 0, 0, 0);
+    background: url("../img/drop-bg.png") no-repeat scroll 60px 13px rgba(0, 0, 0, 0);
     display: block;
     height: 26px;
-    left: 9px;
-    padding: 11px 90px 0;
+    left: 37px;
+    padding: 11px 60px 0;
     position: absolute;
     top: -37px;
     width: 28px;

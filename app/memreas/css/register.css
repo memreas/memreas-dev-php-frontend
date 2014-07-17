@@ -93,6 +93,7 @@ span.clear {
 header {
     background: -moz-linear-gradient(top, #b0bccd 0%, #7e92ad 100%);
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#b0bccd), color-stop(100%,#7e92ad));
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b0bccd', endColorstr='#7e92ad',GradientType=0 ); /* IE6-9 */
     left: 0;
     position: fixed;
     top: 0;
@@ -136,11 +137,14 @@ header {
 .body-top {
     background: -moz-linear-gradient(top, #083b7a 0%, #4e8dd4 100%);
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#083b7a), color-stop(100%,#4e8dd4));
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#083b7a', endColorstr='#4e8dd4',GradientType=0 ); /* IE6-9 */
     border-bottom: 2px solid #6c9fda;
 }
 .body-bottom {
     background: -moz-linear-gradient(top, #4e8dd4 0%, #083b7a 100%);
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#4e8dd4), color-stop(100%,#083b7a));
+
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4e8dd4', endColorstr='#083b7a',GradientType=0 ); /* IE6-9 */
     min-height: 581px;
 }
 .slogan h2 {
@@ -299,6 +303,7 @@ footer {
     text-align: center;
     width: 100%;
     border-top: 1px solid #000;
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#292929', endColorstr='#000',GradientType=0 ); /* IE6-9 */
 }
 
 /*****Modal Styles****/
@@ -483,7 +488,7 @@ footer.rel {
 		width: 97%
 	}
     .login-top  input[type="text"], .login-top  input[type="password"], .login-top  input[type="email"] {
-        width: 34%;
+        width: 32%;
         margin-bottom: 5px;
         padding: 5px 5px;
         font-size:12px;
@@ -510,7 +515,7 @@ footer.rel {
 }
 .profile_picture {
     background: url("../img/user-icon.png") no-repeat scroll 0 0 / 100% auto rgba(0, 0, 0, 0);
-    width: 4em;
+    width: 3em;
 }
 
 .signup form input {

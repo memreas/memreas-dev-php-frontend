@@ -230,5 +230,15 @@
             jQuery('#file').css('opacity',0);
         </script>
         <!--End Script for File-->
+
+        <!-- script for unchecked default-->
+        <script type="text/javascript">var checkboxes = document.getElementsByTagName('input');
+
+        for (var i=0; i<checkboxes.length; i++)  {
+        if (checkboxes[i].type == 'checkbox')   {
+        checkboxes[i].checked = false;
+        }
+        }
+</script>
     </body>
 </html>
