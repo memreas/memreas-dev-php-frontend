@@ -3,7 +3,9 @@ $(function(){
         loadAccountCard();
     });
 });
-
+/*
+* Card process section
+* */
 var accountTab_cards = new Object();
 
 function accountCardChange(choose_card_id){
@@ -331,4 +333,50 @@ function accountUpdateCard(){
             }
         });
     }
+}
+
+/*
+* Account plan section
+* */
+
+function getAccountPlans(){
+    var jAccountPlans = $(".account-plans");
+    jAccountPlans.empty();
+
+    //Get customer info based on this account
+    var obj = new Object();
+    obj.userid = $("input[name=user_id]").val();
+    data_obj = JSON.stringify(obj, null, '\t');
+    data = '{"action": "getCustomerInfo", ' +
+        '"type":"jsonp", ' +
+        '"json": ' + data_obj  +
+        '}';
+    $('#loadingpopup').show();
+    var stripeCustomerUrl = $("input[name=stripe_url]").val() + '/stripe/getCustomerInfo';
+    $.ajax({
+        url: stripeCustomerUrl,
+        type: 'POST',
+        dataType: 'jsonp',
+        data: 'json=' + data,
+        success: function(response){
+            if (response.status == 'Success'){
+                account_stripe = response.customer;
+                if (account_stripe.exist == 1){
+                    var total_subscriptions = account_stripe.info.subscriptions.total_count;
+                    if (total_subscriptions > 0){
+                        var active_subscriptions = account_stripe.info.subscriptions.data;
+                        for (i = 0;i < total_subscriptions;i++){
+                            var plan = active_subscriptions[i].plan;
+                            var html_element = '<li><label class="label_text2"><input type="radio" id="subscription-plan-1" name="radio-4-set" class="regular-radio" /><label for="subscription-plan-1"></label>'  + plan.name + '</label></li>';
+                            jAccountPlans.append(html_element);
+                        }
+                    }
+                    else jAccountPlans.html('You have no any actived plan');
+                }
+                else jAccountPlans.html('Your account has not existed or deleted before on Stripe');
+            }
+            else jAccountPlans.html('You have no any actived plan');
+            $('#loadingpopup').hide();
+        }
+    });
 }

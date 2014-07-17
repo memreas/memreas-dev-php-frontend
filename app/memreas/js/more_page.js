@@ -29,12 +29,19 @@ $(function(){
         $('#buttons2-moretab').akordeon();
     });
 
-    $("a.network-tab").one ('click', function(){
-        $('#buttons3-moretab').akordeon();
-    });
-
+    $("a.network-tab").one ('click', function(){ $('#buttons3-moretab').akordeon(); });
     $("a.notification-tab").one ('click', function(){ $('#buttons4-moretab').akordeon(); });
     $("a.help-tab").one ('click', function(){ $('#buttons5-moretab').akordeon(); });
+
+    $("a.friends-tab").one ('click', function(){
+        listFriends();
+    });
+
+    $("a.event-tab").one ('click', function(){
+        $('#buttons6-moretab').akordeon();
+        getAccountMemreas();
+    });
+
     $("a.subscription-tab").one ('click', function(){
         $('#buttons7-moretab').akordeon();
         loadSubscriptionPlans();
@@ -614,11 +621,6 @@ function updateNetworkFriends(){
 */
 var currentMorepageEventId = '';
 $(function(){
-    $("#tabs-more li a:eq(5)").one ('click', function(){
-        $('#buttons6-moretab').akordeon();
-        getAccountMemreas();
-    });
-
     $(".memreas-media-header").click(function(){
         getMemreasEventMedia();
     });
