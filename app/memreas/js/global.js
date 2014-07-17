@@ -85,6 +85,30 @@ function jerror (str_msg){
             onCompleted : function(){}
     });
 }
+function jconfirm(str_msg, confirm_func){
+    jNotify(
+        '<div class="notify-box"><p>' + str_msg + '</p><a href="javascript:;" class="btn" onclick="' + confirm_func + ';">OK</a>&nbsp;<a href="javascript:;" class="btn" onclick="$.jNotify._close();">Close</a></div>',
+        {
+            autoHide : false, // added in v2.0
+            clickOverlay : true, // added in v2.0
+            MinWidth : 250,
+            TimeShown : 3000,
+            ShowTimeEffect : 200,
+            HideTimeEffect : 0,
+            LongTrip :20,
+            HorizontalPosition : 'center',
+            VerticalPosition : 'top',
+            ShowOverlay : true,
+            ColorOverlay : '#FFF',
+            OpacityOverlay : 0.3,
+            onClosed : function(){ // added in v2.0
+
+            },
+            onCompleted : function(){ // added in v2.0
+
+            }
+        });
+}
 function logout(){
     var user_logged = $("input[name=user_id]").val();
     var params = [{tag: 'user_id', value: user_logged}];

@@ -356,28 +356,7 @@ share_clearMemreas = function(confirmed) {
         $("a[title=share]").click();
     }
     else{
-        jNotify(
-        '<div class="notify-box"><p>Are you sure want to restart progress?</p><a href="javascript:;" class="btn" onclick="share_clearMemreas(true);">OK</a>&nbsp;<a href="javascript:;" class="btn" onclick="$.jNotify._close();">Close</a></div>',
-        {
-          autoHide : false, // added in v2.0
-          clickOverlay : true, // added in v2.0
-          MinWidth : 250,
-          TimeShown : 3000,
-          ShowTimeEffect : 200,
-          HideTimeEffect : 0,
-          LongTrip :20,
-          HorizontalPosition : 'center',
-          VerticalPosition : 'top',
-          ShowOverlay : true,
-          ColorOverlay : '#FFF',
-          OpacityOverlay : 0.3,
-          onClosed : function(){ // added in v2.0
-
-          },
-          onCompleted : function(){ // added in v2.0
-
-          }
-        });
+        jconfirm('Are you sure want to restart progress?', 'share_clearMemreas(true)');
     }
 }
 

@@ -42,7 +42,11 @@ function manageF_clickFriends(friendElementId){
     }
 }
 
-function manageF_removeFriends(){
+function manageF_removeFriends(userConfirm){
+    if (!userConfirm){
+        jconfirm('Remove these friends?', 'manageF_removeFriends(true)');
+        return false;
+    }
     var jMorepageFriendsElement = $(".manage-friends li");
     var self_chooseFriends = [];
     var counter_friend = 0;
