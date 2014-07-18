@@ -102,7 +102,7 @@
                                     <input name="password" id="inPassword" type="password" placeholder="Password" onFocus="if(this.value == 'Password')this.value = '';" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" />
                                     <input name="verifypassword" id="inVerifyPassword" type="password" placeholder="Verify Password" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Verify Password')this.value = '';"/>
                                     <input name="invited_by" class="signup_textfields" type="text" value="invited by @person (optional)" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'invited by @person (optional)')this.value = '';" style="display: none;">
-                                    <input type="checkbox" checked="checked" class="css-checkbox" id="demo_box_2" name="legal_agree">
+                                    <input type="checkbox" class="css-checkbox" id="demo_box_2" name="legal_agree">
                                     <label class="css-label" for="demo_box_2"><a onclick="popup('popupContact');" href="javascript:;" class="legal clicker-1" id="button">legal disclaimer</a></label>
                                     <input type="submit" id="btnCall" class="btn btn-lyt create-accnt" value="Create an account">
                                 </form>
@@ -230,15 +230,5 @@
             jQuery('#file').css('opacity',0);
         </script>
         <!--End Script for File-->
-
-        <!-- script for unchecked default-->
-        <script type="text/javascript">var checkboxes = document.getElementsByTagName('input');
-
-        for (var i=0; i<checkboxes.length; i++)  {
-        if (checkboxes[i].type == 'checkbox')   {
-        checkboxes[i].checked = false;
-        }
-        }
-</script>
     </body>
 </html>
