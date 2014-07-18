@@ -27,33 +27,35 @@ $domain = "http://d1ckv7o9k6o3x9.cloudfront.net/";
 			</div>
 			<div class="pro-info clicker">
 				<div class="noti left"><a href="javascript:;" class="notification_icon"></a></div>
-				<div class="right">
+				<div class="right toggle">
 					<figure class="pro-pic"><img id="profile_picture" src="/memreas/img/profile-pic.jpg" alt=""><span id="noti">2</span></figure>
 					<div class="pro-name">Username</div>
 
-					<div class="drop-inner click-nav">
+					<div class="drop-inner click-nav slide-down">
 						<ul class="no-js">
 							<li>
 								<ul>
 									<li class="drop-1"><a href="/">HOME</a></li>
-									<li class="drop-2"><a href="">Notification</a>
-										<div class="notifications-all clearfix" >
-											<div class="noti-title"><strong>Scrat</strong> said on <span>06.25.2014</span>
+									<li class="drop-2"><a href="#"> <span class="arrow toggle-1"></span>Notification</a>
+										<div class="slide-down-1">
+											<div class="notifications-all clearfix" >
+												<div class="noti-title"><strong>Scrat</strong> said on <span>06.25.2014</span>
+												</div>
+												<div class="noti-content">
+													<p>This is Photoshop's version of Lorem ipsum prion gravida nibbe vei</p>
+												</div>
+												<a href="#" class="close">x</a>
+												<a href="#" class="reply">reply</a>
 											</div>
-											<div class="noti-content">
-												<p>This is Photoshop's version of Lorem ipsum prion gravida nibbe vei</p>
+											<div class="notifications-all clearfix" >
+												<div class="noti-title"><strong>Scrat</strong> said on <span>06.25.2014</span>
+												</div>
+												<div class="noti-content">
+													<p>This is Photoshop's version of Lorem ipsum prion gravida nibbe vei</p>
+												</div>
+												<a href="#" class="close">x</a>
+												<a href="#" class="reply">reply</a>
 											</div>
-											<a href="#" class="close">x</a>
-											<a href="#" class="reply">reply</a>
-										</div>
-										<div class="notifications-all clearfix" >
-											<div class="noti-title"><strong>Scrat</strong> said on <span>06.25.2014</span>
-											</div>
-											<div class="noti-content">
-												<p>This is Photoshop's version of Lorem ipsum prion gravida nibbe vei</p>
-											</div>
-											<a href="#" class="close">x</a>
-											<a href="#" class="reply">reply</a>
 										</div>
 									</li>
 									<li class="drop-3"><a href="">More</a></li>
@@ -72,3 +74,31 @@ $domain = "http://d1ckv7o9k6o3x9.cloudfront.net/";
 </div>
 <!-- End : Header -->
 
+<!--Script for toggle down-->
+<script>
+
+$(document).ready(function() {
+
+	
+/* In case accordion is not hover instead on click, uncomment this script
+	$('.toggle').toggle(function(){
+		$('.slide-down').slideDown();
+		return false;
+	}, function() {
+		$('.slide-down').slideUp();
+		return false;
+	});
+*/
+
+	$('.arrow').toggle(function(){
+		$(this).addClass('arrow-2');
+		$('.slide-down-1').slideDown();
+		return false;
+	}, function() {
+		$(this).removeClass('arrow-2');
+		$('.slide-down-1').slideUp();
+		return false;
+	});
+});
+</script>
+<!--End of Script for toggle down-->

@@ -218,6 +218,9 @@ header {
     height: 40px;
     width: 32px;
 }
+.pro-info .right:hover .drop-inner{
+	display: block;
+}
 .pro-pic {
     background: none repeat scroll 0 0 #fff;
     border-radius: 8px;
@@ -2765,8 +2768,11 @@ margin-left: 15%;
 .row-fluid .span11 {
     width: 97%;
 }
-div.pro-info .right:hover .drop-inner {
-	display: block;
+.slide-down {
+	display: none;
+}
+.slide-down-1 {
+	display: none;
 }
 .notifications-all {
     background-color: #205ca3;
@@ -2817,8 +2823,23 @@ div.pro-info .right:hover .drop-inner {
     margin: 10px;
     padding: 6px 15px;
 }
-.drop-2 {
-    background: url("../img/noti-arrow.png") no-repeat scroll 195px 8px / 9% auto rgba(0, 0, 0, 0);
+.arrow {
+    background: url("../img/toggle-bg.png") no-repeat scroll 0 -9px rgba(0, 0, 0, 0);
+    display: block;
+    height: 10px;
+    position: absolute;
+    right: 13px;
+    top: 11px;
+    width: 11px;
+}
+.arrow-2 {
+    background: url("../img/toggle-bg.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    display: block;
+    height: 10px;
+    position: absolute;
+    right: 13px;
+    top: 11px;
+    width: 11px;
 }
 .drop-inner ul li.drop-2 > a {
 	background-image: url("../img/drop-2-bg.png");
@@ -2831,6 +2852,9 @@ div.pro-info .right:hover .drop-inner {
 }
 .drop-inner ul li:last-child {
 	border-bottom: none!important;
+}
+.drop-2 {
+	position: relative;
 }
 
 .drop-inner ul li {
@@ -2953,6 +2977,10 @@ select{ height: 30px; }
     display: block;
     margin: 0 auto;
     text-align: center;
+}
+.black_btn_skin.f-left {
+    display: inline-block!important;
+    float: none!important;
 }
 #content_1 .black_btn_skin {
 	float: right;
