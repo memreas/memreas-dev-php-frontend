@@ -1,5 +1,5 @@
 <div class="akordeon-item subscription-payment-plans-tab expanded">
-    <div class="akordeon-item-head">
+    <div class="akordeon-item-head subscription-payment-plans">
         <div class="akordeon-item-head-container">
             <div class="akordeon-heading">
                 Plans
@@ -12,25 +12,11 @@
                 <div class="customer-active-plans">
                     <h3>Your current active plans : </h3>
                     <div class="list-plans">
-                        <p>10 GB Monthly</p>
-                        <p>20 GB Monthly</p>
-                        <p>30 GB Monthly</p>
-                        <p>40 GB Monthly</p>
+
                     </div>
                 </div>
                 <ul class="share_memreas_details subscription-plans preload-null">
-                    <li>
-                        <label class="label_text2"><input type="radio" id="subscription-plan-1" name="radio-4-set" class="regular-radio" /><label for="subscription-plan-1"></label>Plan A | Description for plan A - $12</label>
-                    </li>
-                    <li>
-                        <label class="label_text2"><input type="radio" id="subscription-plan-2" name="radio-4-set" class="regular-radio" /><label for="subscription-plan-2"></label>Plan B | Description for plan B - $24 </label>
-                    </li>
-                    <li>
-                        <label class="label_text2"><input type="radio" id="subscription-plan-3" name="radio-4-set" class="regular-radio" checked /><label for="subscription-plan-3"></label>Plan C | Description for plan C - $48</label>
-                    </li>
-                    <li>
-                        <label class="label_text2"><input type="radio" id="subscription-plan-4" name="radio-4-set" class="regular-radio" checked /><label for="subscription-plan-4"></label>Plan D | Description for plan C - $58</label>
-                    </li>
+
                 </ul>
                 <div style="clear: both;"></div>
                 <a class="black_btn_skin" href="javascript:;" onclick="activeAkordeon('subscription-payment-method-tab', subscription_step2);" style="margin-top: 20px; display: inline-block;">Next</a>
@@ -50,14 +36,7 @@
         <div class="akordeon-item-content">
             <div class="button-holder">
                 <ul class="share_memreas_details subscription-payment preload-null">
-                    <li>
-                        <label class="label_text2"><input type="radio" id="subscription-card-1" name="radio-4-set" class="regular-radio" />
-                            <label for="subscription-plan-1"></label>Card A | xxxxxxxxxxxx7576 01/2016</label>
-                    </li>
-                    <li>
-                        <label class="label_text2"><input type="radio" id="subscription-card-2" name="radio-4-set" class="regular-radio" />
-                            <label for="subscription-plan-2"></label>Card A | xxxxxxxxxxxx8547 06/2016</label>
-                    </li>
+
                 </ul>
                 <div style="clear: both;"></div>
                 <a class="black_btn_skin" href="javascript:;" onclick="addCardPopup();" style="margin-top: 20px; display: inline-block;">Add</a>
@@ -78,66 +57,7 @@
     <div class="akordeon-item-body">
         <div class="akordeon-item-content">
             <ul class="share_memreas_details order-summary">
-                <li>
-                    <label class="textfield_names">Name :</label>
-                    <input name="input" type="text" id="order-summary-date" class="share-txtfield" value="name" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'name')this.value = '';"/>
-                </li>
-                <li>
-                    <label class="textfield_names">Address :</label>
-                    <input name="input" type="text" id="order-summary-address1" class="share-txtfield" value="address line 1" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'address line 1')this.value = '';"/>
-                </li>
-                <li>
-                    <label class="textfield_names">Address Line 2:</label>
-                    <input name="input" type="text" id="order-summary-address2" class="share-txtfield" value="address line 2" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'address line 2')this.value = '';"/>
-                </li>
-                <li>
-                    <label class="textfield_names">Card type :</label>
-                    <div class="styled-select" style="width: 72%; margin: 0;">
-                        <select id="order-summary-cardtype">
-                            <option value="">-Choose-</option>
-                            <option value="visa">Visa</option>
-                            <option value="master">Master</option>
-                            <option value="discover">Discover</option>
-                            <option value="Amex">Amex</option>
-                        </select>
-                    </div>
-                </li>
-                <li>
-                    <label class="textfield_names">Card number</label>
-                    <input name="input" type="text" id="order-summary-ccnum" class="" value="card number" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'card number')this.value = '';" readonly />
-                </li>
-                <li>
-                    <label class="textfield_names">Exp date:</label>
-                    <input name="input" type="text" id="order-summary-expdate" class="" value="exp date" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'exp date')this.value = '';" readonly />
-                </li>
-                <li>
-                    <label class="textfield_names">Exp year:</label>
-                    <input name="input" type="text" id="order-summary-expyear" class="" value="exp year" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'exp year')this.value = '';" readonly />
-                </li>
-                <li>
-                    <label class="textfield_names">City:</label>
-                    <input name="input" type="text" id="order-summary-city" class="" value="city" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'city')this.value = '';"/>
-                </li>
-                <li>
-                    <label class="textfield_names">State:</label>
-                    <input name="input" type="text" id="order-summary-state" class="" value="state" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'state')this.value = '';"/>
-                </li>
-                <li>
-                    <label class="textfield_names">Zip:</label>
-                    <input name="input" type="text" id="order-summary-zip" class="" value="zip" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'zip')this.value = '';"/>
-                </li>
-                <li>
-                    <label class="textfield_names">Plan name:</label>
-                    <label class="textfield_names" style="margin-left: 10px; width: 300px;">Plan A</label>
-                </li>
-                <li>
-                    <label class="textfield_names">Cost:</label>
-                    <label class="textfield_names" style="margin-left: 10px;">$12</label>
-                </li>
-                <li>
-                    <input id="subscription-order-agree" class="css-checkbox" type="checkbox" name="subscription_order_agree"/>
-                    <label for="subscription-order-agree" name="demo_lbl_1" class="css-label margin-none" >Confirm place order.</label>
-                </li>
+
             </ul>
             <div style="clear: both;"></div>
             <div class="bottom-actions">
@@ -158,57 +78,214 @@
     <div class="akordeon-item-body">
         <div class="akordeon-item-content">
             <ul class="share_memreas_details order-recept">
-                <li>
-                    <label class="textfield_names">Name:</label>
-                    <label class="textfield_names" style="margin-left: 10px;">John Miller</label>
-                </li>
-                <li>
-                    <label class="textfield_names">Address:</label>
-                    <label class="textfield_names" style="margin-left: 10px;">Address line 1</label>
-                </li>
-                <li>
-                    <label class="textfield_names">Address 2:</label>
-                    <label class="textfield_names" style="margin-left: 10px;">Address line 2</label>
-                </li>
-                <li>
-                    <label class="textfield_names">Card type :</label>
-                    <label class="textfield_names" style="margin-left: 10px;">Visa</label>
-                </li>
-                <li>
-                    <label class="textfield_names">Card number</label>
-                    <label class="textfield_names" style="margin-left: 10px;">xxxxxxxxxxxx5452</label>
-                </li>
-                <li>
-                    <label class="textfield_names">Exp date:</label>
-                    <label class="textfield_names" style="margin-left: 10px;">02</label>
-                </li>
-                <li>
-                    <label class="textfield_names">Exp year:</label>
-                    <label class="textfield_names" style="margin-left: 10px;">2016</label>
-                </li>
-                <li>
-                    <label class="textfield_names">City:</label>
-                    <label class="textfield_names" style="margin-left: 10px;">Newyork</label>
-                </li>
-                <li>
-                    <label class="textfield_names">State:</label>
-                    <label class="textfield_names" style="margin-left: 10px;">NY</label>
-                </li>
-                <li>
-                    <label class="textfield_names">Zip:</label>
-                    <label class="textfield_names" style="margin-left: 10px;">25525</label>
-                </li>
-                <li>
-                    <label class="textfield_names">Plan name:</label>
-                    <label class="textfield_names" style="margin-left: 10px;">Plan A</label>
-                </li>
-                <li>
-                    <label class="textfield_names">Cost:</label>
-                    <label class="textfield_names" style="margin-left: 10px;">$12</label>
-                </li>
+
             </ul>
             <div style="clear: both;"></div>
-            <div style="text-align: center;" class="message-order hide-onload">Thank you! You will receive an email confirmation shortly</div>
         </div>
     </div>
+</div>
+
+<div id="popupaddcard" class="popups">
+    <a id="popupaddcardClose" onClick="disablePopup('popupaddcard');" class='popupClose'>x</a>
+    <h2>Add new card</h2>
+    <ul id="content_1" class="scrollpopup addCardForm">
+        <li>
+            <label class="textfield_names">First name*</label>
+            <input name="input" type="text" id="addcard_fname" class="" value="first name" default="first name" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'first name')this.value = '';"/>
+        </li>
+        <li>
+            <label class="textfield_names">Last name*</label>
+            <input name="input" type="text" id="addcard_lname" class="" value="last name" default="last name" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'last name')this.value = '';"/>
+        </li>
+         <li>
+            <label class="textfield_names">Address 1*</label>
+            <input name="input" type="text" id="addcard_address1" class="" value="Address line 1" default="Address line 1" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Address line 1')this.value = '';"/>
+        </li>
+        <li>
+            <label class="textfield_names">Address 2</label>
+            <input name="input" type="text" id="addcard_address2" class="" value="Address line 2" default="Address line 2" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Address line 2')this.value = '';"/>
+        </li>
+        <li>
+            <label class="textfield_names">City*</label>
+            <input name="input" type="text" id="addcard_city" class="" value="City" default="City" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'City')this.value = '';"/>
+        </li>
+        <li>
+            <label class="textfield_names">State*</label>
+            <input name="input" type="text" id="addcard_state" class="" value="State" default="State" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'State')this.value = '';"/>
+        </li>
+        <li>
+            <label class="textfield_names">Zip*</label>
+            <input name="input" type="text" id="addcard_zip" class="" value="Zip" default="Zip" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Zip')this.value = '';"/>
+        </li>
+        <li>
+            <label class="textfield_names">Card type*</label>
+            <select name="addcard_cctype" id="addcard_cctype">
+                <option value="">-Choose-</option>
+                <option value="visa">Visa</option>
+                <option value="master">Master</option>
+                <option value="discover">Discover</option>
+                <option value="amex">Amex</option>
+            </select>
+        </li>
+        <li>
+            <label class="textfield_names">Card no.*</label>
+            <input name="input" type="text" id="addcard_ccnum" class="" value="Card number" default="Card number" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Card number')this.value = '';"/>
+        </li>
+        <li>
+            <label class="textfield_names">Exp mon.*</label>
+            <select name="addcard_expmonth" id="addcard_expmonth">
+                <option value="">-Choose-</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+            </select>
+        </li>
+        <li>
+            <label class="textfield_names">Exp year*</label>
+            <select name="addcard_expyear" id="addcard_expyear">
+                <option value="">-Choose-</option>
+                <option value="2014">2014</option>
+                <option value="2015">2015</option>
+                <option value="2016">2016</option>
+                <option value="2017">2017</option>
+                <option value="2018">2018</option>
+                <option value="2019">2019</option>
+                <option value="2020">2020</option>
+                <option value="2021">2021</option>
+                <option value="2022">2022</option>
+                <option value="2023">2023</option>
+                <option value="2024">2024</option>
+                <option value="2025">2025</option>
+                <option value="2026">2026</option>
+            </select>
+        </li>
+        <li>
+            <label class="textfield_names">Card CVC*</label>
+            <input name="input" type="text" id="addcard_ccv" class="" value="Card code" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Card code')this.value = '';"/>
+        </li>
+    </ul>
+    <a class="black_btn_skin f-left" href="javascript:;" onclick="stripeAddCard();">ok</a> <a class="black_btn_skin f-right" href="javascript:disablePopup('popupaddcard');">cancel</a>
+</div>
+<div id="bgpopupaddcard" class="backgroundPopup"></div>
+<!-- Order summary content -->
+<div class="order-summary-preview hide-onload">
+    <ul>
+        <li>
+            <label class="textfield_names" style="width: 135px;">Name :</label>
+            <input name="input" type="text" id="order-summary-name" class="share-txtfield" value="name" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'name')this.value = '';"/>
+        </li>
+        <li>
+            <label class="textfield_names" style="width: 135px;">Address :</label>
+            <input name="input" type="text" id="order-summary-address1" class="share-txtfield" value="address line 1" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'address line 1')this.value = '';"/>
+        </li>
+        <li>
+            <label class="textfield_names" style="width: 135px;">Address Line 2:</label>
+            <input name="input" type="text" id="order-summary-address2" class="share-txtfield" value="address line 2" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'address line 2')this.value = '';"/>
+        </li>
+        <li>
+            <label class="textfield_names" style="width: 135px;">Card type :</label>
+            <label class="textfield_names" style="margin-left: 10px; width: 200px;" id="order-card-type">Visa</label>
+        </li>
+        <li>
+            <label class="textfield_names" style="width: 135px;">Card number</label>
+            <input name="input" type="text" id="order-summary-ccnum" class="" value="card number" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'card number')this.value = '';" readonly />
+        </li>
+        <li>
+            <label class="textfield_names" style="width: 135px;">Exp date:</label>
+            <input name="input" type="text" id="order-summary-expdate" class="" value="exp date" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'exp date')this.value = '';" readonly />
+        </li>
+        <li>
+            <label class="textfield_names" style="width: 135px;">Exp year:</label>
+            <input name="input" type="text" id="order-summary-expyear" class="" value="exp year" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'exp year')this.value = '';" readonly />
+        </li>
+        <li>
+            <label class="textfield_names" style="width: 135px;">City:</label>
+            <input name="input" type="text" id="order-summary-city" class="" value="city" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'city')this.value = '';"/>
+        </li>
+        <li>
+            <label class="textfield_names" style="width: 135px;">State:</label>
+            <input name="input" type="text" id="order-summary-state" class="" value="state" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'state')this.value = '';"/>
+        </li>
+        <li>
+            <label class="textfield_names" style="width: 135px;">Zip:</label>
+            <input name="input" type="text" id="order-summary-zip" class="" value="zip" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'zip')this.value = '';"/>
+        </li>
+        <li>
+            <label class="textfield_names" style="width: 135px;">Plan name:</label>
+            <label class="textfield_names" style="margin-left: 10px; width: 300px;" id="choose-plan-name">Plan A</label>
+        </li>
+        <li>
+            <label class="textfield_names" style="width: 135px;">Cost:</label>
+            <label class="textfield_names" style="margin-left: 10px;" id="choose-plan-cost">$12</label>
+        </li>
+        <li>
+            <input id="subscription-order-agree" class="css-checkbox" type="checkbox" name="subscription_order_agree"/>
+            <label for="subscription-order-agree" name="demo_lbl_1" class="css-label margin-none" >Confirm place order.</label>
+        </li>
+    </ul>
+</div>
+<!-- END -->
+<div class="order-summary-recept hide-onload">
+    <ul>
+        <li>
+            <label class="textfield_names" style="width: 150px; ">Name:</label>
+            <label class="textfield_names" style="margin-left: 10px; width: 200px;" id="order-recept-name">John Miller</label>
+        </li>
+        <li>
+            <label class="textfield_names" style="width: 150px;">Address:</label>
+            <label class="textfield_names" style="margin-left: 10px; width: 200px;" id="order-recept-address1">Address line 1</label>
+        </li>
+        <li>
+            <label class="textfield_names" style="width: 150px;">Address 2:</label>
+            <label class="textfield_names" style="margin-left: 10px; width: 200px;" id="order-recept-address2">Address line 2</label>
+        </li>
+        <li>
+            <label class="textfield_names" style="width: 150px;">Card type :</label>
+            <label class="textfield_names" style="margin-left: 10px; width: 200px;" id="order-recept-cardtype">Visa</label>
+        </li>
+        <li>
+            <label class="textfield_names" style="width: 150px;">Card number</label>
+            <label class="textfield_names" style="margin-left: 10px; width: 200px;" id="order-recept-ccnum">xxxxxxxxxxxx5452</label>
+        </li>
+        <li>
+            <label class="textfield_names" style="width: 150px;">Exp date:</label>
+            <label class="textfield_names" style="margin-left: 10px; width: 200px;" id="order-recept-expdate">02</label>
+        </li>
+        <li>
+            <label class="textfield_names" style="width: 150px;">Exp year:</label>
+            <label class="textfield_names" style="margin-left: 10px; width: 200px;" id="order-recept-expyear">2016</label>
+        </li>
+        <li>
+            <label class="textfield_names" style="width: 150px;">City:</label>
+            <label class="textfield_names" style="margin-left: 10px; width: 200px;" id="order-recept-city">Newyork</label>
+        </li>
+        <li>
+            <label class="textfield_names" style="width: 150px;">State:</label>
+            <label class="textfield_names" style="margin-left: 10px; width: 200px;" id="order-recept-state">NY</label>
+        </li>
+        <li>
+            <label class="textfield_names" style="width: 150px;">Zip:</label>
+            <label class="textfield_names" style="margin-left: 10px; width: 200px;" id="order-recept-zip">25525</label>
+        </li>
+        <li>
+            <label class="textfield_names" style="width: 150px;">Plan name:</label>
+            <label class="textfield_names" style="margin-left: 10px; width: 200px;" id="choose-planrecept-name">Plan A</label>
+        </li>
+        <li>
+            <label class="textfield_names" style="width: 150px;">Cost:</label>
+            <label class="textfield_names" style="margin-left: 10px; width: 200px;" id="choose-planrecept-cost">$12</label>
+        </li>
+        <li>
+            <div style="text-align: center;" class="message-order">Thank you! You will receive an email confirmation shortly</div>
+        </li>
+    </ul>
 </div>

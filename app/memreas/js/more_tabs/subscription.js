@@ -7,14 +7,21 @@ var plans_payment = new Object();
 var account_cards = new Object();
 $(function(){
 
+    //Step 1
+    $(".subscription-payment-plans").click(function(){
+        updateAkordeonContent(".subscription-payment-plans-tab");
+    });
+
     //Step 2
     $(".subscription-payment-method").click(function(){
-        listStripeCard();
+        subscription_step2();
+        updateAkordeonContent(".subscription-payment-method-tab");
     });
 
     //Step 3
     $(".subscription-order-summary").click(function(){
         subscription_step3();
+        updateAkordeonContent(".subscription-order-summary-tab");
     });
 
     //Step 4
@@ -142,15 +149,14 @@ function subscription_step3(){
 
     jOrderSummary.find('#choose-plan-name').html(orderPlan.name);
     jOrderSummary.find('#choose-plan-cost').html((orderPlan.amount / 100) + ' ' + orderPlan.currency);
+    updateAkordeonContent('.subscription-order-summary-tab');
 }
 
 function subscription_step4(){
     var html_content = '';
     var jOrderRecept = $(".order-recept");
     jOrderRecept.show();
-    var jMessageOrder = $(".message-order");
-    jMessageOrder.empty().hide();
-    jOrderRecept.empty();
+
     var jSubscriptionPlans = $(".subscription-plans");
     var jMemberCard = $(".subscription-payment");
     var checkPlanChoose = false;
@@ -232,7 +238,7 @@ function subscription_step4(){
                 jOrderRecept.find('#choose-planrecept-name').html(orderPlan.name);
                 jOrderRecept.find('#choose-planrecept-cost').html((orderPlan.amount / 100) + ' ' + orderPlan.currency);
 
-                jMessageOrder.html('Thank you! You will receive an email confirmation shortly').show();
+                updateAkordeonContent('.subscription-order-receipt-tab');
             }
             else{
                 jerror(response.message);
@@ -305,6 +311,7 @@ function getPlans(){
                             else jAccountPlans.html('Your account has not existed or deleted before on Stripe');
                         }
                         else jAccountPlans.html('You have no any actived plan');
+                        updateAkordeonContent('.subscription-payment-plans-tab');
                         $('#loadingpopup').hide();
                     }
                 });
@@ -367,6 +374,7 @@ function listStripeCard(){
                         '<label for="' + row_card_id + '"></label>' + row_card_type + ' | ' + row_card_obfuscated + '</label>' +
                         '</li>';
                         jMemberCard.append(html_element);
+                        updateAkordeonContent('.subscription-payment-method-tab');
                     }
                     $(".card-functions").show();
                 }
