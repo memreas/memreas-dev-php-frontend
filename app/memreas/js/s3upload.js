@@ -186,11 +186,9 @@ $(document).ready( function() {
             success: function(data, status, jqXHR) {
                 //$("#loadingpopup").show();
                 _media_url = getValueFromXMLTag(jqXHR.responseText, 'Location');
-                var _media_extension = _media_url.split(".");
-                _media_extension = _media_extension[_media_extension.length - 1];
-                if (_media_url.indexOf('image') >= 0)
-                    media_type = 'image/' + _media_extension;
-                else media_type = 'video/' + _media_extension;
+                var media_type = get_type_url(_media_url);
+                alert(media_type); return;
+
                 var userid = $("input[name=user_id]").val();
                 if ($("a.share").hasClass ("active"))
                     var addEvent = event_id;
@@ -236,9 +234,7 @@ $(document).ready( function() {
                     //progressUpload();
                 }, 'undefined', true);
             },
-            done: function (event, data) {
-
-            },
+            done: function (event, data) {}
         });
     });
 });
@@ -259,6 +255,36 @@ function XML2JS(xmlDoc, containerTag) {
         }
     }
     return output;
+}
+
+//Define custom other type, the rest will take default
+var image_types = [
+    {ext:   'jpg'  , type: 'jpeg'}
+];
+var video_types = [];
+function get_type_url(file_url){
+    //Determine S3 url type is image or video
+    var _media_extension = file_url.split(".");
+    var file_ext = _media_extension[_media_extension.length - 1];
+    if (_media_url.indexOf('image') >= 0)
+        var type_upload = 'image';
+    else var type_upload = 'video';
+
+    //If type of file is image
+    if (type_upload == 'image'){
+        for (var i = 0;i < image_types.length;i++){
+            if (file_ext == image_types[i].ext)
+                return type_upload + '/' + image_types[i].type;
+        }
+        return type_upload + '/' + file_ext;
+    }
+
+    //If type of file is video
+    for (var i = 0;i < video_types.length;i++){
+        if (file_ext == video_types[i].ext)
+            return type_upload + '/' + video_types[i].type;
+    }
+    return type_upload + '/' + file_ext;
 }
 
 /* Testing environment for upload handle - Not stable yet*/
