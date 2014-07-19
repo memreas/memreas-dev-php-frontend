@@ -525,7 +525,9 @@ error_log("userid---->".$userid.PHP_EOL);
                         ],
                         {
                             "success_action_status": "201"
-                        }
+                        },
+                        ["starts-with", "$Content-Type", ""],
+                        ["content-length-range", 0, 1048576]
                     ]
                 }';
         return base64_encode($policy);

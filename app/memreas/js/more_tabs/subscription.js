@@ -1,6 +1,6 @@
 /**
-*@ Stripe account functions
-*/
+ *@ Stripe account functions
+ */
 //handle header steps clicking
 var account_stripe = new Object();
 var plans_payment = new Object();
@@ -8,20 +8,15 @@ var account_cards = new Object();
 $(function(){
 
     //Step 1
-    $(".subscription-payment-plans").click(function(){
-        updateAkordeonContent(".subscription-payment-plans-tab");
-    });
 
     //Step 2
     $(".subscription-payment-method").click(function(){
         subscription_step2();
-        updateAkordeonContent(".subscription-payment-method-tab");
     });
 
     //Step 3
     $(".subscription-order-summary").click(function(){
         subscription_step3();
-        updateAkordeonContent(".subscription-order-summary-tab");
     });
 
     //Step 4
@@ -149,7 +144,7 @@ function subscription_step3(){
 
     jOrderSummary.find('#choose-plan-name').html(orderPlan.name);
     jOrderSummary.find('#choose-plan-cost').html((orderPlan.amount / 100) + ' ' + orderPlan.currency);
-    updateAkordeonContent('.subscription-order-summary-tab');
+    updateAkordeonContent($('.subscription-order-summary-tab'));
 }
 
 function subscription_step4(){
@@ -209,9 +204,9 @@ function subscription_step4(){
 
     order_summary = JSON.stringify(order_summary, null, '\t');
     data = '{"action": "subscription", ' +
-    '"type":"jsonp", ' +
-    '"json": ' + order_summary  +
-    '}';
+        '"type":"jsonp", ' +
+        '"json": ' + order_summary  +
+        '}';
     $('#loadingpopup').show();
     $.ajax({
         url: stripeActionUrl,
@@ -238,7 +233,7 @@ function subscription_step4(){
                 jOrderRecept.find('#choose-planrecept-name').html(orderPlan.name);
                 jOrderRecept.find('#choose-planrecept-cost').html((orderPlan.amount / 100) + ' ' + orderPlan.currency);
 
-                updateAkordeonContent('.subscription-order-receipt-tab');
+                updateAkordeonContent($('.subscription-order-receipt-tab'));
             }
             else{
                 jerror(response.message);
@@ -259,9 +254,9 @@ function getPlans(){
     obj.txt = "";
     data_obj = JSON.stringify(obj, null, '\t');
     data = '{"action": "list", ' +
-    '"type":"jsonp", ' +
-    '"json": ' + data_obj  +
-    '}';
+        '"type":"jsonp", ' +
+        '"json": ' + data_obj  +
+        '}';
     $('#loadingpopup').show();
     $.ajax({
         url: stripeActionUrl,
@@ -284,9 +279,9 @@ function getPlans(){
                 obj.userid = $("input[name=user_id]").val();
                 data_obj = JSON.stringify(obj, null, '\t');
                 data = '{"action": "getCustomerInfo", ' +
-                '"type":"jsonp", ' +
-                '"json": ' + data_obj  +
-                '}';
+                    '"type":"jsonp", ' +
+                    '"json": ' + data_obj  +
+                    '}';
                 var stripeCustomerUrl = $("input[name=stripe_url]").val() + '/stripe/getCustomerInfo';
                 $.ajax({
                     url: stripeCustomerUrl,
@@ -311,7 +306,7 @@ function getPlans(){
                             else jAccountPlans.html('Your account has not existed or deleted before on Stripe');
                         }
                         else jAccountPlans.html('You have no any actived plan');
-                        updateAkordeonContent('.subscription-payment-plans-tab');
+                        updateAkordeonContent($('.subscription-payment-plans-tab'));
                         $('#loadingpopup').hide();
                     }
                 });
@@ -335,9 +330,9 @@ function listStripeCard(){
     obj = {userid:stripeUserId};
     var json_listCard = JSON.stringify(obj, null, '\t');
     data = '{"action": "listcard", ' +
-    '"type":"jsonp", ' +
-    '"json": ' + json_listCard  +
-    '}';
+        '"type":"jsonp", ' +
+        '"json": ' + json_listCard  +
+        '}';
     $('#loadingpopup').show();
     $.ajax({
         url: stripeActionUrl,
@@ -364,17 +359,17 @@ function listStripeCard(){
                         var row_card_obfuscated = cards[i].obfuscated_card_number;
                         account_cards[i]= params;
                         var html_element = '<li>' +
-                        '<label class="label_text2"><input type="radio" id="' + row_card_id + '" name="radio_cards" class="regular-radio" onchange="cardChange(this.id);"';
+                            '<label class="label_text2"><input type="radio" id="' + row_card_id + '" name="radio_cards" class="regular-radio" onchange="cardChange(this.id);"';
                         //Set default card checked if available
                         if (default_card == row_card_id){
                             html_element += ' checked="checked"';
                             cardChange(default_card);
                         }
                         html_element += ' />' +
-                        '<label for="' + row_card_id + '"></label>' + row_card_type + ' | ' + row_card_obfuscated + '</label>' +
-                        '</li>';
+                            '<label for="' + row_card_id + '"></label>' + row_card_type + ' | ' + row_card_obfuscated + '</label>' +
+                            '</li>';
                         jMemberCard.append(html_element);
-                        updateAkordeonContent('.subscription-payment-method-tab');
+                        updateAkordeonContent($('.subscription-payment-method-tab'));
                     }
                     $(".card-functions").show();
                 }
@@ -440,9 +435,9 @@ function stripeAddCard(){
         var json_storeCard = JSON.stringify(obj);
 
         var data = '{"action": "storeCard", ' +
-        '"type":"jsonp", ' +
-        '"json": ' + json_storeCard  +
-        '}';
+            '"type":"jsonp", ' +
+            '"json": ' + json_storeCard  +
+            '}';
 
         $('#loadingpopup').show();
         $.ajax({
@@ -493,9 +488,9 @@ function removeCard(){
         var data_object = JSON.stringify(cardSelected, null, '\t');
 
         var data = '{"action": "deleteCards", ' +
-        '"type":"jsonp", ' +
-        '"json": ' + data_object  +
-        '}';
+            '"type":"jsonp", ' +
+            '"json": ' + data_object  +
+            '}';
         $('#loadingpopup').show();
         $.ajax({
             type:'post',

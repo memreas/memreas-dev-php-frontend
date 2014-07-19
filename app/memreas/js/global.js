@@ -207,13 +207,12 @@ function activeAkordeon(elementClass, callback_func){
     jActiveTab.find('.akordeon-icon').children('span').html('–');
     jActiveTab.removeClass('collapsed').addClass('expanded');
     jActiveTab.find(".akordeon-item-body").css('height', currentItemBodyHeight);
-    updateAkordeonContent("." + elementClass);
+    updateAkordeonContent($("." + elementClass));
 
     if (callback_func)
         callback_func();
 }
-function updateAkordeonContent(elementClass){
-    var jActiveTab = $(elementClass);
+function updateAkordeonContent(jActiveTab){
     var currentItemBodyHeight = jActiveTab.find('.akordeon-item-body').find(".akordeon-item-content").height();
     jActiveTab.find(".akordeon-item-body").css('height', currentItemBodyHeight);
 }
