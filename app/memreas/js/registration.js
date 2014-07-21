@@ -230,6 +230,8 @@ $(function(){
                 var filename = data.files[0].name;
                 var key_value = '${filename}';
 
+                form.find('input[name=Content-Type]').val(filetype);
+
                 //Check if valid type is image or video are allowed
                 if  (!(filetype.indexOf('image') >= 0)){
                     jerror('Only image type is allowed');

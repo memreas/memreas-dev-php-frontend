@@ -71,7 +71,7 @@ $(document).ready( function() {
                 if (filetype.indexOf ('image') >= 0)
                     var target = 'image';
                 else target = 'media';
-                $('input[name=ContentType]').val(filetype);
+                form.find('input[name=Content-Type]').val(filetype);
                 var userid = $("input[name=user_id]").val();
                 key_value = userid + '/' + target + '/' + key_value;
                 $('input[name=ContentName]').val(userid + '/' + target + '/' + filename);
@@ -187,7 +187,6 @@ $(document).ready( function() {
                 //$("#loadingpopup").show();
                 _media_url = getValueFromXMLTag(jqXHR.responseText, 'Location');
                 var media_type = get_type_url(_media_url);
-                alert(media_type); return;
 
                 var userid = $("input[name=user_id]").val();
                 if ($("a.share").hasClass ("active"))

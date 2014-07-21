@@ -71,8 +71,9 @@
 
                 function expandItem(item) {
                     var body = item.find('.akordeon-item-body');
-                    var h = body.data('h');
-                    body.animate({ height: h }, speed, function () {
+                    var h2 = item.find('.akordeon-item-body').find('.akordeon-item-content').height();
+                    //var h = body.data('h');
+                    body.animate({ height: h2 }, speed, function () {
                         item.removeClass('collapsed').addClass('expanded').find('.akordeon-icon span').html(expandText);
                     });
                 }

@@ -13,8 +13,6 @@
                       <!-- Direct Upload to S3 -->
                     <form action="https://<?php echo $data['bucket']; ?>.s3.amazonaws.com/" method="POST" enctype="multipart/form-data" class="media-upload">
 
-                        <!-- We'll specify these variables with PHP -->
-                        <!-- Order of these is Important -->
                         <input type="hidden" name="key" value="<?php echo $data['userid']; ?>/image/${filename}">
                         <input type="hidden" name="AWSAccessKeyId" value="<?php echo $data['accesskey']; ?>">
                         <input type="hidden" name="acl" value="public-read">
@@ -23,10 +21,9 @@
                         <input type="hidden" name="signature" value="">
 
                         <input type="file" name="file" multiple="" style="opacity: 0; -moz-opacity:0; -webkit-opacity: 0; filter: alpha(opacity = 0);"/>
+                        <input type="hidden" name="Content-Type" value="" />
                         <div class="upload-dropzone upload-from-event"></div>
                     </form>
-                    <input type="hidden" name="ContentType" value="" />
-                    <input type="hidden" name="ContentName" value="" />
                 </div>
                 <div id="complete" class="hideCls">
                     <ul id="content_1" class="pics completed-upload scroll-area">

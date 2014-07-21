@@ -62,7 +62,7 @@
                                 <div class="login-top clearfix">
                                     <input name="username" type="text" placeholder="Username" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Email')this.value = '';"/>
                                     <input name="password" type="password" placeholder="Password"  onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Password')this.value = '';"/>
-                                    <input type="hidden" name="userid" value="" />
+                                    <input type="hidden" name="status_user_id" value="" />
                                     <input type="submit" value="log in" name="log in" class="btn btn-sm login-btn">
                                 </div>
                                 <div class="login-bottom clearfix">
@@ -90,6 +90,7 @@
                                             <input type="hidden" name="success_action_status" value="201">
                                             <input type="hidden" name="policy" value="">
                                             <input type="hidden" name="signature" value="">
+                                            <input type="hidden" name="Content-Type" value="">
                                             <input class="" id="file" type="file" name="file" >
                                         </form>
 

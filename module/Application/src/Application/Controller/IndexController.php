@@ -368,7 +368,7 @@ error_log("Inside loginAction".PHP_EOL);
 		$postData = $request->getPost()->toArray();
 		$username = $postData ['username'];
 		//$password = $postData ['password'];
-		$userid = $postData ['userid'];
+		$userid = $postData ['status_user_id'];
 error_log("userid---->".$userid.PHP_EOL);
         if (empty ($userid)){
            return $this->redirect()->toRoute('index', array('action' => "index"));
