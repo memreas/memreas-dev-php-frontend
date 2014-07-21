@@ -35,9 +35,9 @@ $domain = "http://d1ckv7o9k6o3x9.cloudfront.net/";
 						<ul class="no-js">
 							<li>
 								<ul>
-									<li class="drop-1"><a href="/">HOME</a></li>
-									<li class="drop-2"><a href="#"> <span class="arrow toggle-1"></span>Notification</a>
-										<div class="slide-down-1">
+									<li class="drop-1"><a href="javascript:;" onclick="goHomeTab();">HOME</a></li>
+									<li class="drop-2"><a href="javascript:;" onclick="toggleNotification();"> <span class="arrow toggle-1"></span>Notification</a>
+										<div class="slide-down-1 notification-head">
 											<div class="notifications-all clearfix" >
 												<div class="noti-title"><strong>Scrat</strong> said on <span>06.25.2014</span>
 												</div>
@@ -58,8 +58,8 @@ $domain = "http://d1ckv7o9k6o3x9.cloudfront.net/";
 											</div>
 										</div>
 									</li>
-									<li class="drop-3"><a href="">More</a></li>
-									<li class="drop-4"><a href="">Log Out</a></li>
+									<li class="drop-3"><a href="javascript:;" onclick="goMoreTab();">More</a></li>
+									<li class="drop-4"><a href="/index/logout">Log Out</a></li>
 								</ul>	
 							</li>
 						</ul>

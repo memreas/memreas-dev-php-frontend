@@ -108,7 +108,7 @@ share_changeSocialType = function() {
             else share_addFriends(mr_friendsInfo);
             break;
         default:
-            $("#cmb_socialtype").val('memreas');
+            $("#cmb_socialtype option[value=memreas]").attr('selected', true);
             share_changeSocialType();
             break;
 	}

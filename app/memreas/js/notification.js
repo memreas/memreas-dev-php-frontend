@@ -112,3 +112,7 @@ function updateNotification(notification_id, update_status){
         default: jerror('No action performed');
     }
 }
+
+function toggleNotification(){
+    $(".notification-head").slideToggle(500);
+}

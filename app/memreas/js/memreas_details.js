@@ -350,7 +350,7 @@ function getPopupMemreasFriends(){
                                         'div_id': 'mr_' + i,
                                         'name': getValueFromXMLTag(friend, 'friend_name'),
                                         'photo': friend_photo,
-                                        'selected': false,
+                                        'selected': false
                                     };
             }
             memreas_fillFriends(mr_friendsInfo);
@@ -359,7 +359,7 @@ function getPopupMemreasFriends(){
         //There is no friend
         else {
             jerror("You have no friend on this network.");
-            $("#memreas-dropfriend").val(current_friendnw_selected);
+            $("#memreas-dropfriend option[value=mr]").attr('selected', true);
         }
     });
 }

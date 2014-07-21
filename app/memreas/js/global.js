@@ -216,3 +216,11 @@ function updateAkordeonContent(jActiveTab){
     var currentItemBodyHeight = jActiveTab.find('.akordeon-item-body').find(".akordeon-item-content").height();
     jActiveTab.find(".akordeon-item-body").css('height', currentItemBodyHeight);
 }
+
+/*Main tab navigation*/
+function goHomeTab(){
+    $("a[title=gallery]").trigger('click');
+}
+function goMoreTab(){
+    $("a[title=more]").trigger('click');
+}
