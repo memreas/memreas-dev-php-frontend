@@ -322,7 +322,7 @@ $(function(){
             ajaxRequest('login', params, function(xml_response){
             	if (getValueFromXMLTag(xml_response, 'status') == 'success'){
                     //$("#form-user-login").find('input[name=status_user_id]').val(getValueFromXMLTag(xml_response, 'userid'));
-                    $("#form-user-login").find('input[name=userid]').val(getValueFromXMLTag(xml_response, 'userid'));
+                    $("#form-user-login").find('input[name=status_user_id]').val(getValueFromXMLTag(xml_response, 'userid'));
                     document.user_login_frm.submit();
                 }
                 else jerror(getValueFromXMLTag(xml_response, 'message'));

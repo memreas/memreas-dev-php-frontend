@@ -108,7 +108,7 @@ gallery_initGoogleMap = function(div_id, mediaLat, mediaLng) {
             var params = [{tag: 'media_id', value: selected_id}];
             ajaxRequest('viewmediadetails', params, function(response){
                 var mediaLocationLat = getValueFromXMLTag(response, 'latitude');
-                var mediaLocationLng = getValueFromXMLTag(response, 'longtitude');
+                var mediaLocationLng = getValueFromXMLTag(response, 'longitude');
                 if (mediaLocationLat == '' || mediaLocationLng == '')
                     jerror('This media has no location, you can set it by typing it\'s address and hit update');
                 else{
@@ -126,7 +126,7 @@ gallery_initGoogleMap = function(div_id, mediaLat, mediaLng) {
     }
 }
 
-function gallery_updateLocation(galleryId, latitude, longtitude){
+function gallery_updateLocation(galleryId, latitude, longitude){
     if (galleryId == ''){
         $.jNotify._close();
         jerror('Please choose gallery');
@@ -136,7 +136,7 @@ function gallery_updateLocation(galleryId, latitude, longtitude){
                     {tag: 'media_id', value: galleryId},
                     {tag: 'location', value: [
                             {tag: 'latitude', value: latitude.toString()},
-                            {tag: 'longtitude', value: longtitude.toString()}
+                            {tag: 'longitude', value: longitude.toString()}
                         ]}
                 ];
     ajaxRequest('updatemedia', params, function(response){
