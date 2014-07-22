@@ -71,13 +71,13 @@ function updateNotification(notification_id, update_status){
     switch (update_status){
         case 'accept':
             var params = [
-                            {tag: 'notification', value:
-                                [
-                                    {tag: 'notification_id', value: notification_id},
-                                    {tag: 'status', value: '1'}
-                                ]
-                            }
-                        ];
+                {tag: 'notification', value:
+                    [
+                        {tag: 'notification_id', value: notification_id},
+                        {tag: 'status', value: '1'}
+                    ]
+                }
+            ];
             ajaxRequest('updatenotification', params, function(response){
                 if (getValueFromXMLTag(response, 'status') == 'success'){
                     jsuccess(getValueFromXMLTag(response, 'message'));
@@ -90,14 +90,14 @@ function updateNotification(notification_id, update_status){
             });
             break;
         case 'ignore':
-             var params = [
-                            {tag: 'notification', value:
-                                [
-                                    {tag: 'notification_id', value: notification_id},
-                                    {tag: 'status', value: '2'}
-                                ]
-                            }
-                        ];
+            var params = [
+                {tag: 'notification', value:
+                    [
+                        {tag: 'notification_id', value: notification_id},
+                        {tag: 'status', value: '2'}
+                    ]
+                }
+            ];
             ajaxRequest('updatenotification', params, function(response){
                 if (getValueFromXMLTag(response, 'status') == 'success'){
                     jsuccess(getValueFromXMLTag(response, 'message'));

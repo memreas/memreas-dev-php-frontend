@@ -133,6 +133,9 @@ jQuery.fetch_server_media = function (){
                       if (!$(".edit-areamedia-scroll").hasClass ('mCustomScrollbar'))
                           $(".edit-areamedia-scroll").mCustomScrollbar({ scrollButtons:{ enable:true }});
                       $(".edit-areamedia-scroll").mCustomScrollbar ('update');
+
+                      //Fetch user's notification header
+                      getUserNotificationsHeader();
                   }, 1000);
                   $(".swipebox").swipebox();
 
@@ -175,5 +178,106 @@ function aviarySpace(updateMode){   //updateMode is get or return
                 $(".right-ads").show();
             }
         }
+    }
+}
+
+function getUserNotificationsHeader(){
+    var user_id = $("input[name=user_id]").val();
+    var jTargetElement = $(".notification-head");
+    if (jTargetElement.hasClass ("mCustomScrollbar"))
+        jTargetElement = $(".notification-head .mCSB_container");
+    jTargetElement.empty();
+    ajaxRequest(
+        'listnotification',
+        [
+            { tag: 'user_id', value: user_id }
+        ],
+        function(ret_xml) {
+            if (getValueFromXMLTag(ret_xml, 'status') == 'success'){
+                var notifications = getSubXMLFromTag(ret_xml, 'notification');
+                var notification_count = notifications.length;
+                $(".notification-count").html(notification_count);
+                if (notification_count > 0){
+                    for (var i = 0;i < notification_count;i++){
+                        var notification = notifications[i].innerHTML;
+                        var notification_id = getValueFromXMLTag(notifications[i], 'notification_id');
+                        var notification_type = getValueFromXMLTag(notifications[i], 'notification_type');
+                        var meta_text = $(notifications[i]).wrap('meta')
+                            .html().split('<meta>')[1]
+                            .split('<notification_type>')[0];
+                        meta_text = '<span>' + meta_text + '</span>';
+                        var user_profile_pic = getValueFromXMLTag(notifications[i], 'profile_pic')
+                            .replace("<!--[CDATA[", "")
+                            .replace("]]-->", "");
+                        var notification_status = getValueFromXMLTag(notifications[i], 'notification_status');
+                        if (user_profile_pic == '') user_profile_pic = '/memreas/img/profile-pic.jpg';
+                        if (notification_status == '0')
+                            var link_action = '<a href="javascript:;" class="reply" onclick="updateNotificationHeader(\'' + notification_id + '\', \'ignore\');">Ignore</a> <a href="javascript:;" class="reply" onclick="updateNotificationHeader(\'' + notification_id + '\', \'accept\');">ok</a>';
+                        else var link_action = '';
+                        var html_content = '<div class="notifications-all clearfix">' +
+                                                '<div class="noti-content">' +
+                                                    '<p>' + meta_text + '</p>' +
+                                                '</div>' +
+                                                link_action +
+                                            '</div>';
+                        jTargetElement.append(html_content);
+                    }
+                }
+                else{
+                    jTargetElement.html('<div class="notifications-all clearfix">' +
+                                            '<div class="noti-content">' +
+                                                '<p>You have no notification.</p>' +
+                                            '</div>' +
+                                        '</div>');
+                }
+            }
+            else jerror('There is no notification');
+        }, 'undefined', true
+    );
+}
+
+function updateNotificationHeader(notification_id, update_status){
+    switch (update_status){
+        case 'accept':
+            var params = [
+                {tag: 'notification', value:
+                    [
+                        {tag: 'notification_id', value: notification_id},
+                        {tag: 'status', value: '1'}
+                    ]
+                }
+            ];
+            ajaxRequest('updatenotification', params, function(response){
+                if (getValueFromXMLTag(response, 'status') == 'success'){
+                    jsuccess(getValueFromXMLTag(response, 'message'));
+                    setTimeout(function(){
+                        //Reload notification
+                        getUserNotificationsHeader();
+                    }, 1000);
+                }
+                else jerror(getValueFromXMLTag(response, 'message'));
+            });
+            break;
+        case 'ignore':
+            var params = [
+                {tag: 'notification', value:
+                    [
+                        {tag: 'notification_id', value: notification_id},
+                        {tag: 'status', value: '2'}
+                    ]
+                }
+            ];
+            ajaxRequest('updatenotification', params, function(response){
+                if (getValueFromXMLTag(response, 'status') == 'success'){
+                    jsuccess(getValueFromXMLTag(response, 'message'));
+                    setTimeout(function(){
+                        //Reload notification
+                        getUserNotificationsHeader();
+                    }, 1000);
+                }
+                else jerror(getValueFromXMLTag(response, 'message'));
+            });
+            break;
+        default: jerror('No action performed');
     }
 }
