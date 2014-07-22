@@ -2624,7 +2624,7 @@ ul.memreas_results{
     text-transform: uppercase !important;
 }
 
-#loadingpopup, .overlay {
+.loadingpopup, .overlay {
     background: none repeat scroll 0 0 rgba(200, 200, 200, 0.6);
     bottom: 0;
     display: none;
@@ -2637,7 +2637,7 @@ ul.memreas_results{
     z-index: 1000000;
 }
 
-#loadingpopupinner {
+.loadingpopupinner {
     background: none repeat scroll 0 0 rgba(255, 255, 255, 0.8);
     border-radius: 1rem;
     height: 30%;

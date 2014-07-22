@@ -172,7 +172,7 @@ function subscription_step4(){
             }
         });
         if (!checkCardChoose)
-            html_content = '<li><span class="error-description"Previous steps error! Please choose a payment method.</span></li>';
+            html_content = '<li><span class="error-description">Previous steps error! Please choose a payment method.</span></li>';
     }
 
     jOrderRecept.html(html_content);
@@ -207,7 +207,7 @@ function subscription_step4(){
         '"type":"jsonp", ' +
         '"json": ' + order_summary  +
         '}';
-    $('#loadingpopup').show();
+    $('.stripe-payment').fadeIn(1000);
     $.ajax({
         url: stripeActionUrl,
         type: 'POST',
@@ -237,8 +237,10 @@ function subscription_step4(){
             }
             else{
                 jerror(response.message);
+                html_content = '<li><span class="error-description">' + response.message + '</span></li>';
+                jOrderRecept.html(html_content);
             }
-            $('#loadingpopup').hide();
+            $('.stripe-payment').fadeOut(500);
         }
     });
 }

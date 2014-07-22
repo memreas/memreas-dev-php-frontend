@@ -76,7 +76,7 @@ function buycreditAddCard(){
         '"json": ' + json_storeCard  +
         '}';
 
-        $('#loadingpopup').show();
+        $('.stripe-payment').fadeIn(1000);
         $.ajax({
             type:'post',
             url: stripeActionUrl,
@@ -94,8 +94,8 @@ function buycreditAddCard(){
             },
             error:function(){
                 jerror('Card adding failure. Please check card\'s information.');
-                $('#loadingpopup').hide();
-            },
+                $('.stripe-payment').fadeOut(500);
+            }
         });
     }
 }
@@ -160,7 +160,7 @@ function buycredit_listCard(){
                 jerror(response.message);
             }
             $('#loadingpopup').hide();
-        },
+        }
     });
 }
 function buycredit_removeCard(){

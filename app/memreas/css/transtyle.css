@@ -150,7 +150,24 @@ li.working-upload .progress-text{
     color: #FF1212;
     font-style: italic;
 }
-
+.stripe-payment-processing{
+    width: 30%;
+    margin: 0 auto;
+    text-align: center;
+    background: #FFF;
+    margin-top: 5%;
+    padding: 20px;
+    font-size: 13px;
+    font-style: italic;
+    color: #838383;
+    border: 3px solid #E9E9E9;
+}
+.stripe-logo img{
+    width: 250px;
+}
+.stripe-payment-processing .loading-image img{
+    width: 50px;
+}
 /* Aviary page */
 
 #avpw_controls, #avpw_tool_content_header, #avpw_tool_content_wrapper, #avpw_canvas_embed,

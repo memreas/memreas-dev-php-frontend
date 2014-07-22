@@ -151,14 +151,14 @@ $(document).ready(function() {
 
                             page = page + 1;
                             var param = [{tag: "tag", value: q},
-                                {tag: "page", value: page.toString()},
+                                {tag: "page", value: page.toString()}
                             ];
                             ajaxRequest(action, param, reqhandler);
                         };
             var prevbtn = function() {
                             page = page - 1;
                             var param = [{tag: "tag", value: q},
-                                {tag: "page", value: page.toString()},
+                                {tag: "page", value: page.toString()}
                             ];
                             ajaxRequest(action, param, reqhandler);
 
@@ -174,7 +174,7 @@ $(document).ready(function() {
         },
         highlighter: function(item) {
             return h(item);
-        },
+        }
 
     });
 });
@@ -233,7 +233,7 @@ function eventSearchLi(target, item) {
             + ' <div class="event_members">';
     if (item.friends.length > 0) {
         $.each(item.friends, function(i, friend) {
-            op += '<div class="event_gallery_pro"><img src="' + friend.profile_photo + '"></div>'
+            op += '<div class="event_gallery_pro"><img src="' + friend.profile_photo + '" title="' + friend.username + '"></div>'
         });
     }
 

@@ -40,7 +40,7 @@ function register_sell_media(){
             '}';
 
         var stripeActionUrl = $("input[name=stripe_url]").val() + '/stripe/addSeller';
-        $('#loadingpopup').show();
+        $('.stripe-payment').fadeIn(1000);
         $.ajax({
             url: stripeActionUrl,
             type: 'POST',
@@ -50,7 +50,7 @@ function register_sell_media(){
                 if (response.status == 'Success')
                     jsuccess('your account has been registered successfully');
                 else jerror(response.message);
-                $('#loadingpopup').hide();
+                $('.stripe-payment').fadeOut(500);
             }
         });
     }
