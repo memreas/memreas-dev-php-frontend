@@ -806,3 +806,11 @@ ul.popupContact2 li {
     height: 60px;
     overflow: hidden;
 }
+#register .password{
+    position: relative;
+}
+.password-level{
+    position: absolute;
+    right: -60px;
+    top: 7px;
+}

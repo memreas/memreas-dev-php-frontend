@@ -231,7 +231,14 @@ function getUserNotificationsHeader(){
                                         '</div>');
                 }
             }
-            else jerror('There is no notification');
+            else {
+                $(".notification-count").html(0);
+                jTargetElement.html('<div class="notifications-all clearfix">' +
+                                        '<div class="noti-content">' +
+                                        '<p>You have no notification.</p>' +
+                                        '</div>' +
+                                    '</div>');
+            }
         }, 'undefined', true
     );
 }

@@ -88,6 +88,7 @@ $(function(){
             var filetype = data.files[0].type;
             var filename = data.files[0].name;
             var key_value = '${filename}';
+            $(this).find("input[name=Content-Type]").val(filetype);
 
             //Check if valid type is image or video are allowed
             if  (!(filetype.indexOf('image') >= 0)){
@@ -201,7 +202,7 @@ function saveUserDetail(){
     var params = [
         {tag: 'user_id', value: userId},
         {tag: 'email', value: $("input[name=account_email]").val()},
-        {tag: 'password', value: account_password},
+        {tag: 'password', value: account_password}
     ];
     ajaxRequest('saveuserdetails', params, function(xml_response){
         if (getValueFromXMLTag(xml_response, 'status') == "Success"){
@@ -325,7 +326,7 @@ function networkPopupMemreasFriends(){
                     'div_id': 'mr_' + i,
                     'name': getValueFromXMLTag(friend, 'friend_name'),
                     'photo': friend_photo,
-                    'selected': false,
+                    'selected': false
                 };
             }
             network_fillPopupFriends(mr_friendsInfo);
@@ -556,7 +557,7 @@ function acceptAddFriendNetwork(){
     var params = [
         {tag: 'group_id', value: $("select[name=account_groups]").val()},
         {tag: 'network', value: network_name},
-        {tag: 'friends', value : selected_friend},
+        {tag: 'friends', value : selected_friend}
     ];
     ajaxRequest('addfriendtogroup', params, function(xml_response){
         if (getValueFromXMLTag(xml_response, 'status') == 'Success'){
@@ -815,7 +816,7 @@ function morepage_saveEvent(){
                     {tag: 'event_to', value: viewable_to},
                     {tag: 'is_friend_can_post_media', value: friend_can_post.toString()},
                     {tag: 'is_friend_can_add_friend', value: friend_can_add.toString()},
-                    {tag: 'event_self_destruct', value: self_destruct},
+                    {tag: 'event_self_destruct', value: self_destruct}
                 ];
     ajaxRequest('editevent', params, function(response){
         alert(response);
@@ -1021,7 +1022,7 @@ function morepage_removeMedias(){
 
     var params = [
                     {tag: 'event_id', value: currentMorepageEventId},
-                    {tag: 'media_ids', value: self_chooseMedia},
+                    {tag: 'media_ids', value: self_chooseMedia}
                 ];
 
     ajaxRequest('removeeventmedia', params, function(response){
@@ -1083,7 +1084,7 @@ function morepage_removeFriends(){
 
     var params = [
                     {tag: 'event_id', value: currentMorepageEventId},
-                    {tag: 'friend_ids', value: self_chooseFriends},
+                    {tag: 'friend_ids', value: self_chooseFriends}
                 ];
     ajaxRequest('removeeventfriend', params, function(response){
         if (getValueFromXMLTag(response, 'status') == 'Success'){
