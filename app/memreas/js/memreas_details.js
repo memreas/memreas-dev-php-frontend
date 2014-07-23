@@ -119,11 +119,11 @@ function showEventDetail(eventId, userId){
     ajaxRequest(
         'listallmedia',
         [
-            { tag: 'event_id',                 value: eventId },
-            { tag: 'user_id',                 value: userId },
-            { tag: 'device_id',             value: device_id },
-            { tag: 'limit',                 value: media_limit_count },
-            { tag: 'page',                     value: media_page_index }
+            { tag: 'event_id', value: eventId },
+            { tag: 'user_id', value: userId },
+            { tag: 'device_id', value: device_id },
+            { tag: 'limit',value: media_limit_count },
+            { tag: 'page', value: media_page_index }
         ], function (response){
 
             if (getValueFromXMLTag(response, 'status') == "Success") {
@@ -162,7 +162,6 @@ function showEventDetail(eventId, userId){
             else jerror(getValueFromXMLTag(response, 'message'));
             $(".memreas-detail-gallery .swipebox").swipebox();
             ajaxScrollbarElement('.memreas-detail-gallery');
-            //updateMemreasMediaDetailsScript();
         }
     );
     $("#popupContact a.accept-btn").attr ("href", "javascript:addMemreasPopupGallery('" + eventId + "')");

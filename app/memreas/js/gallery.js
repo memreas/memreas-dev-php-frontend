@@ -64,7 +64,7 @@ jQuery.fetch_server_media = function (){
     $("#tab-content #tab1").append('<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/325" data-max-width="100%"  data-allow-full-screen="true"  data-nav="thumbs"></div>');
     $(".edit-area-scroll, .aviary-thumbs, .galleries-location").empty();
     $(".user-resources, .scrollClass .mCSB_container, .sync .mCSB_container").html('');
-    $("#loadingpopup").show();
+
     ajaxRequest('listallmedia',
         [
             {tag: 'event_id', value: ''},
@@ -156,9 +156,8 @@ jQuery.fetch_server_media = function (){
 
                     $("#gallery #tab-content").find(".hideCls").hide();
                     $("#gallery #tab-content").find(".hideCls:eq(0)").show();
-
+                    getUserNotificationsHeader();
                 }
-                $("#loadingpopup").hide();
                 return true;
             }
     );
@@ -187,6 +186,7 @@ function getUserNotificationsHeader(){
     if (jTargetElement.hasClass ("mCustomScrollbar"))
         jTargetElement = $(".notification-head .mCSB_container");
     jTargetElement.empty();
+
     ajaxRequest(
         'listnotification',
         [
@@ -254,6 +254,7 @@ function updateNotificationHeader(notification_id, update_status){
                     ]
                 }
             ];
+
             ajaxRequest('updatenotification', params, function(response){
                 if (getValueFromXMLTag(response, 'status') == 'success'){
                     jsuccess(getValueFromXMLTag(response, 'message'));

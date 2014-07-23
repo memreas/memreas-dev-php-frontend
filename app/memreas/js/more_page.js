@@ -19,6 +19,8 @@ $(function(){
     });
 
     $("a[title=more]").one ('click', function(){
+        //$("#tabs-more").elastislide({minItems: 7});
+        $("a[title=tab1-more]").trigger("click");
         $('#buttons-moretab').akordeon();
         $('#button-less').akordeon({ buttons: false, toggle: true, itemsOrder: [2, 0, 1] });
     });

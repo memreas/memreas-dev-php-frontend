@@ -22,7 +22,9 @@ ajaxRequest = function (action, params, success_func, error_func, disableLoading
 
     var json_data = JSON.stringify(data);
     if (!disableLoadingScreen)
-        $('#loadingpopup').show();
+        $('#loadingpopup').fadeIn(1000);
+
+    pushStackAjax(action);
 	$.ajax( {
 	  	type:'post',
 	  	url: wsurl,
@@ -31,8 +33,11 @@ ajaxRequest = function (action, params, success_func, error_func, disableLoading
 	  	success: function(ret_xml) {
 			if (typeof success_func != "undefined")
 				success_func(ret_xml);
-            if (!disableLoadingScreen)
-                $('#loadingpopup').hide();
+
+            removeItem(stackAjaxInstance, action);
+            //Make sure there is no ajax instance still processing
+            if (stackAjaxInstance.length == 0)
+                $('#loadingpopup').fadeOut(500);
 	  	},
 	  	error: function (jqXHR, textStatus, errorThrown) {
        		//alert(jqXHR.responseText);
@@ -80,21 +85,21 @@ getXMLStringFromParamArray = function(action, params) {
         case "getmedialike":        action_tag = "getmedialike"; break;
         case "findtag":             action_tag = "findtag"; break;
         case "listmemreasfriends":  action_tag = "listmemreasfriends"; break;
-        case "changepassword":  action_tag = "changepassword"; break;
-        case "viewmediadetails":  action_tag = "viewmediadetails"; break;
+        case "changepassword":      action_tag = "changepassword"; break;
+        case "viewmediadetails":    action_tag = "viewmediadetails"; break;
         case "updatenotification":  action_tag = "updatenotification"; break;
 
         case "checkexistmedia":     action_tag = "checkexistmedia"; break;
-        case "findevent":     action_tag = "findevent"; break;
-        case "getDiscover":     action_tag = "getDiscover"; break;
-        case "updatemedia":     action_tag = "updatemedia"; break;
+        case "findevent":           action_tag = "findevent"; break;
+        case "getDiscover":         action_tag = "getDiscover"; break;
+        case "updatemedia":         action_tag = "updatemedia"; break;
         case "geteventdetails":     action_tag = "geteventdetails"; break;
-        case "editevent":     action_tag = "editevent"; break;
-        case "removeeventmedia":     action_tag = "removeeventmedia"; break;
-        case "removeeventfriend":     action_tag = "removeeventfriend"; break;
-        case "feedback":     action_tag = "feedback"; break;
-        case "getfriends":     action_tag = "getfriends"; break;
-        case "removefriends":     action_tag = "removefriends"; break;
+        case "editevent":           action_tag = "editevent"; break;
+        case "removeeventmedia":    action_tag = "removeeventmedia"; break;
+        case "removeeventfriend":   action_tag = "removeeventfriend"; break;
+        case "feedback":            action_tag = "feedback"; break;
+        case "getfriends":          action_tag = "getfriends"; break;
+        case "removefriends":       action_tag = "removefriends"; break;
 
 
 		default: break;

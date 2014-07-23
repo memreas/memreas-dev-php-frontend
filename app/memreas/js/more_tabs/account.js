@@ -2,6 +2,27 @@ $(function(){
     $(".account-card-section").click(function(){
         loadAccountCard();
     });
+
+    var tabBaseMargin = $("#tabs-more li:eq(0)").css("margin-left");
+    //Tab navigator
+    $(".tab-slide-nav .slide-left").click(function(){
+        var jFirstTab = $("#tabs-more li:eq(0)");
+        if (tabBaseMargin == jFirstTab.css("margin-left"))
+            return false;
+        var firstTabWidth = jFirstTab.width();
+        var firstTabMargin = parseInt(jFirstTab.css("margin-left"));
+        var marginPos = firstTabMargin + firstTabWidth;
+        jFirstTab.attr("style", "margin-left: " + marginPos + "px !important");
+    });
+
+    $(".tab-slide-nav .slide-right").click(function(){
+
+        var jFirstTab = $("#tabs-more li:eq(0)");
+        var firstTabWidth = jFirstTab.width();
+        var firstTabMargin = parseInt(jFirstTab.css("margin-left"));
+        var marginPos = firstTabMargin - firstTabWidth;
+        jFirstTab.attr("style", "margin-left: " + marginPos + "px !important");
+    });
 });
 /*
 * Card process section

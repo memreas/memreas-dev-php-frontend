@@ -167,7 +167,27 @@ li.working-upload .progress-text{
 .stripe-payment-processing .loading-image img{
     width: 50px;
 }
-
+.memreas-detail-owner{
+    width: 45%;
+    margin-left: 2%;
+}
+#tab-content-more{ padding-top: 50px; }
+.tab-slide-nav{ position: relative; }
+.tab-slide-nav .slide-left{
+    display: inline-block;
+    position: absolute;
+    left: -5px;
+    bottom: 15px;
+    cursor: pointer;
+}
+.tab-slide-nav .slide-right{
+    display: inline-block;
+    position: absolute;
+    right: -5px;
+    bottom: 15px;
+    cursor: pointer;
+}
+.tab-slide-nav img{ width: 13px; }
 /* Aviary page */
 
 #avpw_controls, #avpw_tool_content_header, #avpw_tool_content_wrapper, #avpw_canvas_embed,

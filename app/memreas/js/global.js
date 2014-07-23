@@ -9,32 +9,37 @@ if (CURRENT_URL.indexOf('localhost') < 0 && GLOBAL_ENV == 'development')
 
 var s3_bucket = 'memreasdev';
 var userBrowser = detectBrowser();
+var stackAjaxInstance = []; //This var is used for stack ajax on site
 
+function pushStackAjax(stackAjaxName){
+    var current_stack_length = stackAjaxInstance.length;
+    stackAjaxInstance[current_stack_length] = stackAjaxName;
+}
 /*
 *@ Function Scrollbar Secure
 *@ Surely scrollbar element loaded and scroll loaded also
 */
 function ajaxScrollbarElement(element_object){
-    var jelement_object = $(element_object);
-    jelement_object.mCustomScrollbar('update');
-    if (!jelement_object.hasClass ('mCustomScrollbar'))
-        jelement_object.mCustomScrollbar({ scrollButtons:{ enable:true }});
-    if (!jelement_object.find ('.mCSB_scrollTools').is(':visible')){
-        jelement_object.mCustomScrollbar('update');
+    var jElement_object = $(element_object);
+    jElement_object.mCustomScrollbar('update');
+    if (!jElement_object.hasClass ('mCustomScrollbar'))
+        jElement_object.mCustomScrollbar({ scrollButtons:{ enable:true }});
+    if (!jElement_object.find ('.mCSB_scrollTools').is(':visible')){
+        jElement_object.mCustomScrollbar('update');
         setTimeout (function(){ ajaxScrollbarElement(element_object); }, 1000);
     }
 }
 function getMediaThumbnail(element_object, default_value){
-    jelement_object = $(element_object);
-    var media_response = new Array('media_url_98x78', 'media_url_79x80', 'media_url_448x306', 'event_media_video_thum', 'main_media_url');
+    var jElement_object = $(element_object);
+    var media_response = ['media_url_98x78', 'media_url_79x80', 'media_url_448x306', 'event_media_video_thum', 'main_media_url'];
     var total_media_response = media_response.length;
     var found_link = '';
     for (i = 0;i < total_media_response;i++){
-        found_link = jelement_object.filter (media_response[i]).html();
+        found_link = jElement_object.filter (media_response[i]).html();
         found_link = found_link.replace("<!--[CDATA[", "").replace("]]-->", "");
         if (found_link != '') break;
     }
-    media_type = jelement_object.filter('type').html();
+    var media_type = jElement_object.filter('type').html();
     if (found_link == '' || found_link.indexOf ('undefined') >= 0 || (media_type == 'video' && (i == total_media_response - 1))) found_link = default_value;
     return found_link;
 }
