@@ -172,7 +172,7 @@ li.working-upload .progress-text{
     margin-left: 2%;
 }
 #tab-content-more{ padding-top: 50px; }
-.tab-slide-nav{ position: relative; }
+.tab-slide-nav{ position: relative; display: none; }
 .tab-slide-nav .slide-left{
     display: inline-block;
     position: absolute;
@@ -188,6 +188,8 @@ li.working-upload .progress-text{
     cursor: pointer;
 }
 .tab-slide-nav img{ width: 13px; }
+.fotorama__stage__frame{ text-align: center; }
+.notification-head{ height: 200px; overflow: auto; }
 /* Aviary page */
 
 #avpw_controls, #avpw_tool_content_header, #avpw_tool_content_wrapper, #avpw_canvas_embed,

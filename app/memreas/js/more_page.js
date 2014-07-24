@@ -131,13 +131,13 @@ $(function(){
             window.onbeforeunload = null;
         },
         success: function(data, status, jqXHR) {
-            _media_url = getValueFromXMLTag(jqXHR.responseText, 'Location');
+            var _media_url = getValueFromXMLTag(jqXHR.responseText, 'Location');
             var _media_extension = _media_url.split(".");
             _media_extension = _media_extension[_media_extension.length - 1];
+            var media_type = '';
             if (_media_url.indexOf('image') >= 0)
                 media_type = 'image/' + _media_extension;
             else media_type = 'video/' + _media_extension;
-            //var filename = _media_url.split("/");
             var s3_filename = getValueFromXMLTag(jqXHR.responseText, 'Key');
             var s3_filename_split = s3_filename.split("/");
             var filename = s3_filename_split[s3_filename_split.length - 1];

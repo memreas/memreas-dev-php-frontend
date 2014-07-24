@@ -115,4 +115,9 @@ function updateNotification(notification_id, update_status){
 
 function toggleNotification(){
     $(".notification-head").slideToggle(500);
+    if ($(".notification-head").is(":visible")){
+        if ($(".notification-head ul").hasClass('mCustomScrollbar'))
+            $(".notification-head ul").mCustomScrollbar('update');
+        else $(".notification-head ul").mCustomScrollbar();
+    }
 }

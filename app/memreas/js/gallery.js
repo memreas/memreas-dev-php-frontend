@@ -182,9 +182,9 @@ function aviarySpace(updateMode){   //updateMode is get or return
 
 function getUserNotificationsHeader(){
     var user_id = $("input[name=user_id]").val();
-    var jTargetElement = $(".notification-head");
+    var jTargetElement = $(".notification-head ul");
     if (jTargetElement.hasClass ("mCustomScrollbar"))
-        jTargetElement = $(".notification-head .mCSB_container");
+        jTargetElement = $(".notification-head ul .mCSB_container");
     jTargetElement.empty();
 
     ajaxRequest(
@@ -214,12 +214,12 @@ function getUserNotificationsHeader(){
                         if (notification_status == '0')
                             var link_action = '<a href="javascript:;" class="reply" onclick="updateNotificationHeader(\'' + notification_id + '\', \'ignore\');">Ignore</a> <a href="javascript:;" class="reply" onclick="updateNotificationHeader(\'' + notification_id + '\', \'accept\');">ok</a>';
                         else var link_action = '';
-                        var html_content = '<div class="notifications-all clearfix">' +
+                        var html_content = '<li><div class="notifications-all clearfix">' +
                                                 '<div class="noti-content">' +
                                                     '<p>' + meta_text + '</p>' +
                                                 '</div>' +
                                                 link_action +
-                                            '</div>';
+                                            '</div></li>';
                         jTargetElement.append(html_content);
                     }
                 }

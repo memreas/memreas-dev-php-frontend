@@ -3,14 +3,19 @@ $(function(){
         loadAccountCard();
     });
 
-    var tabBaseMargin = $("#tabs-more li:eq(0)").css("margin-left");
+    $("#tabs-more").mouseover(function(){
+       $(".tab-slide-nav").fadeIn(500);
+    });
+    $(".tab-slide-nav").mouseleave(function(){ $(this).fadeOut(500); });
+
+    var tabBaseMargin = parseInt($("#tabs-more li:eq(0)").css("margin-left"));
     //Tab navigator
     $(".tab-slide-nav .slide-left").click(function(){
         var jFirstTab = $("#tabs-more li:eq(0)");
-        if (tabBaseMargin == jFirstTab.css("margin-left"))
+        var firstTabMargin = parseInt(jFirstTab.css("margin-left"));
+        if (tabBaseMargin - firstTabMargin < 10)
             return false;
         var firstTabWidth = jFirstTab.width();
-        var firstTabMargin = parseInt(jFirstTab.css("margin-left"));
         var marginPos = firstTabMargin + firstTabWidth;
         jFirstTab.attr("style", "margin-left: " + marginPos + "px !important");
     });

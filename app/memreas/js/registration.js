@@ -38,7 +38,7 @@ jQuery.checkUserName = function () {
 	var xml_register;
 
     var params = [
-                    {tag: 'username', value: $('#inUserName').val()},
+                    {tag: 'username', value: $('#inUserName').val()}
                 ];
     ajaxRequest('checkusername', params, function(response){
         var response_status = getValueFromXMLTag(response, 'Status');
@@ -141,6 +141,11 @@ function autoLogin(handle_username, handle_user_id){
     $("#form-user-login").find('input[name=username]').val(handle_username);
     $("#form-user-login").find('input[name=password]').val(Math.random());
     $("#form-user-login").find('input[name=status_user_id]').val(handle_user_id);
+
+    //Reset profile picture
+    $("input[name=profile_image]").val(0);
+    $(".profile_picture #list").html('');
+
     document.register.reset();
     document.user_login_frm.submit();
 }
@@ -270,13 +275,15 @@ $(function(){
                 window.onbeforeunload = null;
             },
             success: function(data, status, jqXHR) {
-                _media_url = getValueFromXMLTag(jqXHR.responseText, 'Location');
+                var _media_url = getValueFromXMLTag(jqXHR.responseText, 'Location');
                 var _media_extension = _media_url.split(".");
                 _media_extension = _media_extension[_media_extension.length - 1];
+
+                var media_type = '';
                 if (_media_url.indexOf('image') >= 0)
                     media_type = 'image/' + _media_extension;
                 else media_type = 'video/' + _media_extension;
-                //var filename = _media_url.split("/");
+
                 var s3_filename = getValueFromXMLTag(jqXHR.responseText, 'Key');
                 var s3_filename_split = s3_filename.split("/");
                 var filename = s3_filename_split[s3_filename_split.length - 1];
@@ -302,7 +309,7 @@ $(function(){
             },
             done: function (event, data) {
 
-            },
+            }
         });
     });
 
@@ -317,7 +324,7 @@ $(function(){
                             {tag: 'username', value: loginname},
                             {tag: 'password', value: loginpass},
                             {tag: 'devicetype', value: 1},
-                            {tag: 'devicetoken', value: ''},
+                            {tag: 'devicetoken', value: ''}
                             ];
             ajaxRequest('login', params, function(xml_response){
             	if (getValueFromXMLTag(xml_response, 'status') == 'success'){
@@ -360,7 +367,7 @@ $(function(){
                         {tag: 'new', value: new_password},
                         {tag: 'retype', value: retype_password},
                         {tag: 'username', value: ''},
-                        {tag: 'password', value: ''},
+                        {tag: 'password', value: ''}
                     ];
         ajaxRequest('changepassword', params, function(xml_response){
             if (getValueFromXMLTag(xml_response, 'status') == 'failure')
