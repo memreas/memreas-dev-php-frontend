@@ -765,7 +765,7 @@ ul.event_images li img{
 .f-right {
 	float: right;
 }
-a.black_btn_skin {
+a.black_btn_skin, #avpw_save_button, #avpw_apply_container {
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#252525), to(#646464));
 	background: -webkit-linear-gradient(top, #252525, #646464);
 	background: -moz-linear-gradient(top, #252525, #646464);
@@ -779,7 +779,8 @@ a.black_btn_skin {
 	border: 1px solid #451c1b;
 	margin: 20px 10px;
 }
-a.black_btn_skin:hover, a.black_btn_skin:active {
+a.black_btn_skin:hover, a.black_btn_skin:active, #avpw_save_button:hover, #avpw_save_button:active,
+#avpw_apply_container:hover, #avpw_apply_container:active{
 	color: #fff;
 	text-decoration: none;
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#646464), to(#252525));

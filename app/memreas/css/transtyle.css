@@ -120,7 +120,7 @@ li.working-upload .progress-text{
 }
 #tab-content-share .hideCls{ display: none; }
 #tab-content-share #tab1-share{ display: block; }
-.aviary-edit-wrapper{ height: 400px; position: relative; }
+.aviary-edit-wrapper{ height: 450px; position: relative; }
 .aviary-thumbs li, .galleries-location li{
     margin-left: 10px !important;
     margin-right: 10px !important;
@@ -190,10 +190,27 @@ li.working-upload .progress-text{
 .tab-slide-nav img{ width: 13px; }
 .fotorama__stage__frame{ text-align: center; }
 .notification-head{ height: 200px; overflow: auto; }
+.aviary-edit-tools{ overflow: hidden; color: #FFF; }
+.aviary-edit-tools .tool-inner{
+    margin-left: -215px;
+}
+.aviary-edit-tools a{ color: #FFF; }
+.aviary-edit-tools a:hover{ text-decoration: underline; }
 /* Aviary page */
+#avpw_save_button, #avpw_apply_container{
+    width: 20px;
+    padding-top: 11px;
+    padding-bottom: 0px;
+    margin: 0;
+    text-align: center;
+    padding-left: 30px;
+    padding-right: 45px;
+    font-size: 17px;
+    margin-top: -20px;
+}
 
-#avpw_controls, #avpw_tool_content_header, #avpw_tool_content_wrapper, #avpw_canvas_embed,
-#avpw_footer, #avpw_tool_content_header, #avpw_rghtArrow{
+.aviary-inner #avpw_controls, .aviary-inner #avpw_tool_content_header, .aviary-inner #avpw_tool_content_wrapper,
+.aviary-inner #avpw_canvas_embed, .aviary-inner #avpw_footer, .aviary-inner  #avpw_tool_content_header, .aviary-inner #avpw_rghtArrow{
     border-radius: none !important;
     border: none !important;
     -webkit-border-radius: none !important;

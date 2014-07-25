@@ -289,3 +289,26 @@ function updateNotificationHeader(notification_id, update_status){
         default: jerror('No action performed');
     }
 }
+
+function toggleBottomAviary(){
+    var jToolInner = $(".aviary-edit-tools .tool-inner");
+    var jToolToggle = $(".aviary-edit-tools .tool-navigate a");
+    var currentToolMargin = parseInt(jToolInner.css('margin-left'));
+
+    //Is hidden
+    if (currentToolMargin < 0){
+        jToolInner.animate({
+            'margin-left': '0px'
+        }, 300);
+        jToolToggle.html("&laquo; tools");
+    }
+    else{
+        jToolInner.animate({
+            'margin-left': '-215px'
+        }, 300);
+        jToolToggle.html("&raquo; tools");
+    }
+}
+function toogleEditThumb(){
+    $(".aviary-thumbs").parents('.carousel-area').slideToggle(500);
+}

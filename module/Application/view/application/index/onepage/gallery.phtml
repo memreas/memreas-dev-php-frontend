@@ -34,7 +34,7 @@
             </div>
             <div id="tab3" class="hideCls hidden-onload">
                 <div class="aviary-edit-wrapper">
-                    <div class="aviary" id="aviary">
+                    <div class="aviary aviary-inner" id="aviary">
                         <!-- AVIARY ELEMENT WILL LOAD HERE -->
                     </div>
                 </div>
@@ -46,7 +46,13 @@
                     </ul>
                 </div>
                 <div class="clearfix"></div>
-                <div><a class="black_btn_skin" href="javascript:;" onclick="switch_mode();" style="display: none;">Fullscreen</a></div>
+                <div class="aviary-edit-tools">
+                    <span class="tool-inner">
+                        <a class="" href="javascript:;" onclick="switch_mode();">Fullscreen</a> |
+                        <a href="javascript:;" onclick="toogleEditThumb()">Hide/Show thumbnails</a>
+                    </span>
+                    <span class="tool-navigate"><a href="javascript:;" onclick="toggleBottomAviary();">&raquo; tools</a></span>
+                </div>
             </div>
             <div id="tab4" class="hideCls hidden-onload">
                 <div class="gallery-address-box">
