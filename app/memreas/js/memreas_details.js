@@ -245,10 +245,6 @@ function popupVideoPlayer(video_id){
     popup('popupplayerMemreas');
 }
 function popupAddMemreasGallery(){
-    if (eventdetail_user != user_id){
-        jerror("Only available on your own event");
-        return;
-    }
     ajaxRequest('listallmedia',
         [
             {tag: 'event_id', value: ''},

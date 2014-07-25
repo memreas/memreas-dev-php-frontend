@@ -36,8 +36,8 @@ $(function(){
                             var link_action = '<a class="black_btn_skin" href="javascript:;" onclick="updateNotification(\'' + notification_id + '\', \'accept\');">Ok</a> <a class="black_btn_skin" href="javascript:;" onclick="updateNotification(\'' + notification_id + '\', \'ignore\');">Ignore</a>'
                         else var link_action = '';
                         if ($(".notificationresults").hasClass ("mCustomScrollbar"))
-                            $(".notificationresults .mCSB_container").append('<li class="notification ' + notification_status_to_class(notification_status) + '"><div class="notification_pro"><img src="' + user_profile_pic + '"></div>' + meta_text + ' ' + link_action + '</li>');
-                        else $(".notificationresults").append('<li class="notification accept"><div class="notification_pro"><img src="' + user_profile_pic + '"></div>' + meta_text + ' ' + link_action + '</li>');
+                            $(".notificationresults .mCSB_container").append('<li class="notification ' + notification_status_to_class(notification_status) + '"><div class="notification_pro"><img src="' + user_profile_pic + '"></div>' + meta_text + ' <div class="notification-actions">' + link_action + '</div></li>');
+                        else $(".notificationresults").append('<li class="notification accept"><div class="notification_pro"><img src="' + user_profile_pic + '"></div>' + meta_text + ' <div class="notification-actions">' + link_action + '</div></li>');
                     }
                     $("#loadingpopup").hide();
                 }

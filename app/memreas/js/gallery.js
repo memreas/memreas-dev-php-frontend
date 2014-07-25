@@ -221,6 +221,7 @@ function getUserNotificationsHeader(){
                                                 link_action +
                                             '</div></li>';
                         jTargetElement.append(html_content);
+                        jTargetElement.mCustomScrollbar({scrollButtons:{ enable:true }});
                     }
                 }
                 else{

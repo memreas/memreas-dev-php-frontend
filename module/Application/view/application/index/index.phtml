@@ -223,7 +223,7 @@
                     reader.readAsDataURL(f);
                 }
             } else {
-                alert('This browser does not support FileReader');
+                jerror('This browser does not support FileReader! Preview will not available');
             }
             document.getElementById('file').addEventListener('change', handleFileSelect, false);
         </script>

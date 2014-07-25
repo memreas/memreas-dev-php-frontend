@@ -196,6 +196,16 @@ li.working-upload .progress-text{
 }
 .aviary-edit-tools a{ color: #FFF; }
 .aviary-edit-tools a:hover{ text-decoration: underline; }
+.myMemreas, .friendMemreas, .publicMemreas{ height: 400px; }
+img.loading-small{
+    width: 24px !important;
+    height: 10px !important;
+    border: 0px !important;
+}
+.notification-actions{
+    clear: both;
+    margin-left: 10%;
+}
 /* Aviary page */
 #avpw_save_button, #avpw_apply_container{
     width: 20px;

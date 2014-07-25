@@ -40,6 +40,7 @@ function centerPopup(id){
 	var popupHeight = $("#"+id).height();
 	var popupWidth = $("#"+id).width();
 	//centering
+    alert(windowWidth/2 + " => " + popupWidth/2);
 	$("#"+id).css({
 		"position": "absolute",
 		"top": windowHeight/2-popupHeight/2,
@@ -48,8 +49,7 @@ function centerPopup(id){
 	//only need force for IE6
 
 	$("#bg"+id).css({
-		"height": windowHeight,
-
+		"height": windowHeight
 	});
 
 }

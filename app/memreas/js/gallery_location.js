@@ -67,9 +67,10 @@ gallery_initGoogleMap = function(div_id, mediaLat, mediaLng) {
                  location_map.setZoom(17);
              }
              newLocation = [
-                                {tag: 'lat', value: place.geometry.location.A},
+                                {tag: 'lat', value: place.geometry.location.B},
                                 {tag: 'lng', value: place.geometry.location.k}
                             ];
+            console.log(place.geometry.location);
              moveMarker(place.name, place.geometry.location);
          });
 
@@ -78,6 +79,7 @@ gallery_initGoogleMap = function(div_id, mediaLat, mediaLng) {
                                 {tag: 'lat', value: event.latLng.A},
                                 {tag: 'lng', value: event.latLng.k}
                             ];
+             console.log(newLocation);
          });
 
          $("#btn_gallerymap_ok").bind("click", function(){

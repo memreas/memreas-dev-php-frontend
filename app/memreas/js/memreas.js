@@ -35,7 +35,11 @@ $(function(){
 function fetchMyMemreas(){
     ajaxScrollbarElement('.myMemreas');
     var user_id = $("input[name=user_id]").val();
-    $(".myMemreas .mCSB_container").empty();
+    if ($(".myMemreas").hasClass("mCustomScrollbar"))
+        var jTarget_object = $(".myMemreas .mCSB_container");
+    else var jTarget_object = $(".myMemreas");
+    jTarget_object.empty();
+
     ajaxRequest(
         'viewevents',
         [
@@ -47,10 +51,8 @@ function fetchMyMemreas(){
             {tag: 'limit', value: '20'}
         ],function (response){
             if (getValueFromXMLTag(response, 'status') == "Success"){
-                events = getSubXMLFromTag(response, 'event');
-                if ($(".myMemreas").hasClass("mCustomScrollbar"))
-                    var target_object = ".myMemreas .mCSB_container";
-                else var target_object = ".myMemreas";
+                var events = getSubXMLFromTag(response, 'event');
+
                 var event_count = events.length;
                 for (var i = 0;i < event_count;i++){
                     var event = events[i].innerHTML;
@@ -62,12 +64,12 @@ function fetchMyMemreas(){
                     '<aside class="event_name" onclick="showEventDetail(\'' + eventId + '\', \'' + user_id + '\');" style="cursor: pointer;">' + event_name + '</aside>' +
                     '<div class="event_like"><span>' + like_count + '</span></div>' +
                     '<div class="event_comment"><span>' + comment_count + '</span></div>' +
-                    '<div id="event-people-' + eventId + '">' +
+                    '<div id="event-people-' + eventId + '"><img src="/memreas/img/loading-line.gif" class="loading-small" />' +
 
                     '</div>' +
                     '<div class="clear"></div>' +
                     '<div id="viewport" onselectstart="return false;">' +
-                      '<div id="myEvent-' + eventId + '" class="swipeclass">' +
+                      '<div id="myEvent-' + eventId + '" class="swipeclass"><img src="/memreas/img/loading-line.gif" class="loading-small" />' +
                       '</div>' +
                     '</div>' +
                     '<div id="viewport" onselectstart="return false;">' +
@@ -75,24 +77,27 @@ function fetchMyMemreas(){
                       '</div>' +
                     '</div>' +
                    '</div>';
-                    $(target_object).append (element);
+                    jTarget_object.append(element);
 
                     var event_comments = $(event).filter('comments').html();
                     if (event_comments != ''){
                         var event_comments = getSubXMLFromTag(event_comments, 'comment');
-                        for (j = 0;j < comment_count;j++){
-                            event_comment = $(event_comments.prevObject[j]).html();
+                        var jCommentElement = $("#swipebox-comment-" + eventId);
+                        var html_comment = '';
+                        for (var j = 0;j < comment_count;j++){
+                            var event_comment = $(event_comments.prevObject[j]).html();
                             if (typeof (event_comment) == 'undefined') continue;
                             var comment_owner_pic = $(event_comment).filter('profile_pic').html();
                             comment_owner_pic = comment_owner_pic.replace("<!--[CDATA[", "").replace("]]-->", "");
                             if (comment_owner_pic == '')
                                 comment_owner_pic = '/memreas/img/profile-pic.jpg';
                             var comment_text = $(event_comment).filter('comment_text').html();
-                            $("#swipebox-comment-" + eventId).append ('<div class="swipebox_comment">' +
+                            html_comment += '<div class="swipebox_comment">' +
                                           '<div class="event_pro"><img src="' + comment_owner_pic + '"></div>' +
                                           '<textarea class="event_textarea" readonly="readonly">' + comment_text + '</textarea>' +
-                                        '</div>');
+                                        '</div>';
                         }
+                        jCommentElement.empty().html(html_comment);
                     }
 
                     //get event medias
@@ -105,10 +110,11 @@ function fetchMyMemreas(){
                             { tag: 'limit',                 value: media_limit_count },
                             { tag: 'page',                     value: media_page_index }
                         ], function (response){
+                            var eventId = getValueFromXMLTag(response, 'event_id');
+                            var jMediaElement = $("#myEvent-" + eventId);
                             if (getValueFromXMLTag(response, 'status') == "Success") {
-                                var target_element = $("#myEvent-" + $('input[name=temp_event]').val());
                                 var medias = getSubXMLFromTag(response, 'media');
-                                var eventId = getValueFromXMLTag(response, 'event_id');
+                                var html_media = '';
                                 if (typeof (eventId != 'undefined')){
                                     var media_count = medias.length;
                                     for (var i=0;i < media_count;i++) {
@@ -116,10 +122,18 @@ function fetchMyMemreas(){
                                         var media_type = $(media).filter('type').html();
                                         var _media_url = getMediaThumbnail(media, '/memreas/img/small/1.jpg');
                                         if (media_type == 'video')
-                                            $("#myEvent-" + eventId).append ('<div class="event_img video-media"><img src="' + _media_url + '"/><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></div>');
-                                        else $("#myEvent-" + eventId).append ('<div class="event_img"><img src="' + _media_url + '"/></div>');
+                                            html_media += '<div class="event_img video-media"><img src="' + _media_url + '"/><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></div>';
+                                        else html_media += '<div class="event_img"><img src="' + _media_url + '"/></div>';
                                     }
+                                    if (html_media != ''){
+                                        jMediaElement.empty().html(html_media);
+                                    }
+                                    else jMediaElement.empty().html('<div class="event_img video-media">There is no media on this event</div>');
                                 }
+                            }
+                            else {
+                                console.log(jMediaElement);
+                                jMediaElement.empty().html('<i style="color: #FFFFFF;">There is no media on this event</i>');
                             }
                         }
                     );
@@ -129,27 +143,31 @@ function fetchMyMemreas(){
                         'geteventpeople',
                         [{tag: 'event_id', value: eventId}],
                         function(xml_response){
+                            var html_people = '';
+                            var response_event_id = getValueFromXMLTag(xml_response, 'event_id');
+                            var jEvent_people = $("#event-people-" + response_event_id);
+                            var friends = getSubXMLFromTag(xml_response, 'friend');
                             if (getValueFromXMLTag(xml_response, 'status') == 'Success'){
-                                var response_event_id = getValueFromXMLTag(xml_response, 'event_id');
-                                var jEvent_people = $("#event-people-" + response_event_id);
-                                var friends = getSubXMLFromTag(xml_response, 'friend');
                                 var count_people = friends.length;
                                 for (i = 0;i < count_people;i++){
-                                    friend = friends[i];
+                                    var friend = friends[i];
+                                    var friend_photo = '';
                                     if (getValueFromXMLTag(friend, 'photo') == '' || getValueFromXMLTag(friend, 'photo') == 'null')
                                         friend_photo = '/memreas/img/profile-pic.jpg';
                                     else friend_photo = getValueFromXMLTag(friend, 'photo');
-                                    friend_name = getValueFromXMLTag(friend, 'friend_name');
-                                    html_str = '<div class="event_gallery_pro"><img src="' + friend_photo + '" alt="' + friend_name + '" title="' + friend_name + '"></div>';
-                                    jEvent_people.append(html_str);
+                                    var friend_name = getValueFromXMLTag(friend, 'friend_name');
+                                    html_people += '<div class="event_gallery_pro"><img src="' + friend_photo + '" alt="' + friend_name + '" title="' + friend_name + '"></div>';
                                 }
+                                jEvent_people.html(html_people);
                             }
+                            else jEvent_people.html('');
                         }
                     );
-
                  $("#myEvent-" + eventId).swipe({ TYPE:'mouseSwipe', HORIZ: true });
                  $("#swipebox-comment-" + eventId).swipe({ TYPE:'mouseSwipe', HORIZ: true });
                 }
+
+
             }
             else{
                 jerror('You have no event at this time. Try add some event at share tab');
@@ -161,11 +179,11 @@ function fetchMyMemreas(){
 function fetchFriendsMemreas(friendMemreasType){
     var user_id = $("input[name=user_id]").val();
     if (friendMemreasType == 'private'){
-            showPublic = '0';
-            showAccepted = '1';
+            var showPublic = '0';
+            var showAccepted = '1';
         }else{
-            showPublic = '1';
-            showAccepted = '1';
+            var showPublic = '1';
+            var showAccepted = '1';
         } 
     ajaxRequest(
         'viewevents',
