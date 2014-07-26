@@ -28,9 +28,21 @@
 })(jQuery);
 
 $(function(){
-    $("a.memreas").click (function(){ fetchMyMemreas(); });
-    $("#tabs-memreas li:eq(1) a").click (function(){ fetchFriendsMemreas('private'); });
-    $("#tabs-memreas li:eq(2) a").click (function(){ fetchFriendsMemreas('public'); });
+    $("a.memreas").click (function(){
+        if (checkReloadItem('view_my_events')){
+            fetchMyMemreas();
+        }
+    });
+    $("#tabs-memreas li:eq(1) a").click (function(){
+        if (checkReloadItem('view_friend_events')){
+            fetchFriendsMemreas('private');
+        }
+    });
+    $("#tabs-memreas li:eq(2) a").click (function(){
+        if (checkReloadItem('view_public_events')){
+            fetchFriendsMemreas('public');
+        }
+    });
 });
 function fetchMyMemreas(){
     ajaxScrollbarElement('.myMemreas');

@@ -9,7 +9,36 @@ if (CURRENT_URL.indexOf('localhost') < 0 && GLOBAL_ENV == 'development')
 
 var s3_bucket = 'memreasdev';
 var userBrowser = detectBrowser();
-var stackAjaxInstance = []; //This var is used for stack ajax on site
+var stackAjaxInstance = []; //This variable is used for stacking ajax request(s) on site
+
+/*
+* Summary for this variable, remove then if needed
+* Set this variable for reloading ajax when clicking or not
+    It's used for when user makes changes on uploading new media, creating new event,...
+    Store which request will be reloaded
+* @listallmedia: Reload main gallery page
+* @view_my_event: memreas page for my event
+* @view_friend_event: memreas page for friend event
+* @view_public_event: memreas page for public event
+* */
+var reloadItems = ['view_my_events', 'view_friend_events', 'view_public_events'];
+
+
+function checkReloadItem(itemName){
+    if (reloadItems.length > 0){
+        for (var i = 0;i < reloadItems.length;i++){
+            if (itemName == reloadItems[i]){
+                removeItem(reloadItems, itemName);
+                return true;
+            }
+        }
+        return false;
+    }
+    else return false;
+}
+function pushReloadItem(itemName){
+    reloadItems[reloadItems.length] = itemName;
+}
 
 function pushStackAjax(stackAjaxName){
     var current_stack_length = stackAjaxInstance.length;
@@ -106,12 +135,8 @@ function jconfirm(str_msg, confirm_func){
             ShowOverlay : true,
             ColorOverlay : '#FFF',
             OpacityOverlay : 0.3,
-            onClosed : function(){ // added in v2.0
-
-            },
-            onCompleted : function(){ // added in v2.0
-
-            }
+            onClosed : function(){},
+            onCompleted : function(){}
         });
 }
 function logout(){
@@ -192,6 +217,12 @@ $(function(){
     });
     */
 });
+
+/*
+* Enable / Disable input field (for ajax calling and prevent user typing)
+* */
+function disableInput(element){ $(element).attr('readonly', true); }
+function enableInput(element){ $(element).removeAttr('readonly'); }
 
 /*
 * Akordeon control

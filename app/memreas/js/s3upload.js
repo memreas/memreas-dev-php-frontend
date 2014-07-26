@@ -228,6 +228,7 @@ $(document).ready( function() {
                         $(".image_upload_box .mCSB_container").empty();
                         $(".image_upload_box").mCustomScrollbar("update");
                         //$("#loadingpopup").hide();
+                        pushReloadItem('listallmedia');
                         jsuccess('Medias uploaded successfully');
                     }
                     //progressUpload();

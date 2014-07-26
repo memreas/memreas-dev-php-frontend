@@ -34,8 +34,6 @@ $(document).ready(function(){
     $("#tabs li:first").attr("id","current"); // Activate first tab
     $("#tab-content div:first").fadeIn(); // Show first tab content
 
-    $("#tabs li:eq(0) a").click (function(){ $.fetch_server_media($("input[name=user_id]").val()); });
-
     $('#tabs a').click(function(e) {
         e.preventDefault();
         $("#tab-content div.hideCls").hide(); //Hide all content

@@ -334,6 +334,7 @@ share_addEvent = function() {
 
 			    if (status.toLowerCase() == 'success') {
 				    jsuccess('Event "' + name + '" was registered successfully.');
+                    pushReloadItem('view_my_events');
 			        setTimeout(function(){ share_gotoPage(SHAREPAGE_TAB_MEDIA); }, 2000);
 			    }
 			    else {

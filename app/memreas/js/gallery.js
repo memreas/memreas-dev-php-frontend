@@ -30,6 +30,11 @@ $(function(){
     }
 
     $("a[title=gallery]").click(function(){ $("#gallery #tabs a[title=tab1]").click(); });
+    $("#gallery #tabs a[title=tab1]").click (function(){
+        if (checkReloadItem('listallmedia')){
+            $.fetch_server_media();
+        }
+    });
 
     $(".aviary-tab").click(function(){
         if (detectHandheldIOSDevice())
@@ -46,10 +51,6 @@ $(function(){
         //$('.galleries-location').find('li:eq(0) img').trigger("click");
     });
 
-    $(".testaviary-tab").click(function(){
-        aviaryScroll();
-    });
-
     //Return space for ads area
     if (detectHandheldIOSDevice()){
         $("#gallery").find("#tabs").find("a").not(".aviary-tab").click(function(){ aviarySpace('return'); });
@@ -57,8 +58,9 @@ $(function(){
     }
 
 });
+
 var checkHasImage = false;
-/*Preload for server media*/
+/*Load server media*/
 jQuery.fetch_server_media = function (){
     $(".user-resources").remove();
     $("#tab-content #tab1").append('<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/325" data-max-width="100%"  data-allow-full-screen="true"  data-nav="thumbs"></div>');
@@ -76,7 +78,7 @@ jQuery.fetch_server_media = function (){
             {tag: 'page', value: '1'}
         ], function (response){
             if (getValueFromXMLTag(response, 'status') == "Success") {
-                medias = getSubXMLFromTag(response, 'media');
+                var medias = getSubXMLFromTag(response, 'media');
                 $(".user-resources, .scrollClass .mCSB_container, .sync-content .scrollClass").html('');
                 var count_media = medias.length;
                 for (var json_key = 0;json_key < count_media;json_key++){
@@ -84,14 +86,16 @@ jQuery.fetch_server_media = function (){
                     var _media_type = $(media).filter ('type').html();
                     var _media_url = $(media).filter ('main_media_url').html();
                     _media_url = _media_url.replace("<!--[CDATA[", "").replace("]]-->", "");
+                    var _mp4_media = '';
                     var mediaId = $(media).filter ('media_id').html();
+
                     //Build video thumbnail
                     if (_media_type == 'video'){
-                        userBrowser = detectBrowser();
+
                         //Check if ios device
                         if (userBrowser[0].ios == 1){
                             _media_url = $(media).filter('media_url_hls').html();
-                            _hls_media = 1;
+                            var _hls_media = 1;
                             if (typeof (_media_url) != 'undefined'){
                                 _mp4_media = $(media).filter('media_url_1080p').html();
                                 _mp4_media = _mp4_media.replace("<!--[CDATA[", "").replace("]]-->", "");
@@ -124,6 +128,7 @@ jQuery.fetch_server_media = function (){
                         checkHasImage = true;
                     }
                   }
+
                   setTimeout(function(){
                       $(".user-resources").fotorama({width: '800', height: '350', 'max-width': '100%'});
                       if (!$(".edit-area-scroll").hasClass ('mCustomScrollbar'))

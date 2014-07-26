@@ -1381,10 +1381,9 @@ ul.share_memreas_details li {
     border-radius: 5px;
     box-shadow: 0 2px 2px #666 inset !important;
     height: 34px;
-    margin: 0;
+    margin: 0 auto;
     overflow: hidden;
     width: 68%;
-    float: left;
 }
 ul.popupContact {
 	height: 130px;

@@ -11,6 +11,7 @@ $(document).ready(function() {
             }
         }
 
+        disableInput('input.search_bar');
         ajaxRequest('findtag', [{tag: "tag", value: query}]
                 , function(data) {
                     var q = $('#search').val();
@@ -40,6 +41,7 @@ $(document).ready(function() {
                             break;
 
                     }
+                    enableInput('input.search_bar');
                    return process(users);
                 });
     }, 1000);
@@ -198,11 +200,11 @@ var h = function(item) {
                 if(comment.length > 25) {
     comment = comment.substring(0,24)+"...";
 }
-                html ='<div class="swipebox_comment" style="float: left;"><div class="event_pro"><img src="' + photo + '"></div>'+ name +'<div class="event_textarea" >' + comment + '</div></div><div class="event_gallery_pro"><img src="' + map[item].commenter_photo + '"></div>';
+                var html ='<div class="swipebox_comment" style="float: left;"><div class="event_pro"><img src="' + photo + '"></div>'+ name +'<div class="event_textarea" >' + comment + '</div></div><div class="event_gallery_pro"><img src="' + map[item].commenter_photo + '"></div>';
                 return html;
             break;
     }
-    html = '<div class="bond"><img src="' + photo + '"><strong>' + name + '</strong></div>';
+    var html = '<div class="bond"><img src="' + photo + '"><strong>' + name + '</strong></div>';
     return html;
 
 

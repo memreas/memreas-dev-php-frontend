@@ -1,0 +1,1 @@
+/* For testing JS functionally only*/

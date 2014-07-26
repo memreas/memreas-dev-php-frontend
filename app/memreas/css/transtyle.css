@@ -206,6 +206,10 @@ img.loading-small{
     clear: both;
     margin-left: 10%;
 }
+.dropdown-menu{ height: 200px; overflow-y: auto; }
+.typeahead li .bond{ height: 60px; }
+.typeahead li a .bond strong{ color: #D84429; }
+.typeahead li a:hover .bond strong{ color: #00F; }
 /* Aviary page */
 #avpw_save_button, #avpw_apply_container{
     width: 20px;
