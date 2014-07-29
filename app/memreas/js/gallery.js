@@ -3,6 +3,7 @@
 */
 //Check if user not logged
 $(function(){
+    //ajaxRequestHeaderNotification();
     if ($("input[name=user_id]").val() == "")
         document.location.href = "/index";
     else{
@@ -161,7 +162,6 @@ jQuery.fetch_server_media = function (){
 
                     $("#gallery #tab-content").find(".hideCls").hide();
                     $("#gallery #tab-content").find(".hideCls:eq(0)").show();
-                    getUserNotificationsHeader();
                 }
                 return true;
             }
@@ -183,6 +183,11 @@ function aviarySpace(updateMode){   //updateMode is get or return
             }
         }
     }
+}
+
+function ajaxRequestHeaderNotification(){
+    getUserNotificationsHeader();
+    setInterval(function(){ getUserNotificationsHeader() }, 15000);
 }
 
 function getUserNotificationsHeader(){

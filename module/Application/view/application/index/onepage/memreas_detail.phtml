@@ -76,10 +76,11 @@
                   <option value="mr" selected="selected">memreas</option>
                 </select>
             </div>
-            <ul id="content_1" class="popupContact scrollpopup">
+            <ul id="content_1" class="popupContact scrollpopup memreas-detail-friends">
                 <!-- Ajax friend will load here -->
             </ul>
             <div>
+                <input name="memreas_detail_emails" id="memreas_detail_emails" class="popup-input" type="text" value="email" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'email')this.value = '';"/>
                 <input id="memreas_makegroup_check" class="css-checkbox" type="checkbox" />
                 <label for="memreas_makegroup_check" name="demo_lbl_6" class="css-label">make this a group</label>
                 <input name="memreas_groupname" class="popup-input" type="text" value="group name here" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'group name here')this.value = '';"/>

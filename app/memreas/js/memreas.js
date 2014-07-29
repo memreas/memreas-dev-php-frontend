@@ -29,6 +29,7 @@
 
 $(function(){
     $("a.memreas").click (function(){
+        ajaxScrollbarElement('.myMemreas');
         if (checkReloadItem('view_my_events')){
             fetchMyMemreas();
         }
@@ -144,7 +145,6 @@ function fetchMyMemreas(){
                                 }
                             }
                             else {
-                                console.log(jMediaElement);
                                 jMediaElement.empty().html('<i style="color: #FFFFFF;">There is no media on this event</i>');
                             }
                         }

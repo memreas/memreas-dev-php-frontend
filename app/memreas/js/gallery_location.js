@@ -70,7 +70,6 @@ gallery_initGoogleMap = function(div_id, mediaLat, mediaLng) {
                                 {tag: 'lat', value: place.geometry.location.B},
                                 {tag: 'lng', value: place.geometry.location.k}
                             ];
-            console.log(place.geometry.location);
              moveMarker(place.name, place.geometry.location);
          });
 
@@ -83,23 +82,7 @@ gallery_initGoogleMap = function(div_id, mediaLat, mediaLng) {
          });
 
          $("#btn_gallerymap_ok").bind("click", function(){
-             jNotify(
-                '<div class="notify-box"><p>Update this location for this media?</p><a href="javascript:;" class="btn" onclick="gallery_updateLocation(\'' + location_media_id + '\', ' + newLocation[0].value + ', ' + newLocation[1].value + ');">OK</a>&nbsp;<a href="javascript:;" class="btn" onclick="$.jNotify._close();">Close</a></div>',
-                {
-                  autoHide : false, // added in v2.0
-                  clickOverlay : true, // added in v2.0
-                  MinWidth : 250,
-                  TimeShown : 3000,
-                  ShowTimeEffect : 200,
-                  HideTimeEffect : 0,
-                  LongTrip :20,
-                  HorizontalPosition : 'center',
-                  VerticalPosition : 'top',
-                  ShowOverlay : true,
-                  ColorOverlay : '#FFF',
-                  OpacityOverlay : 0.3,
-                  onClosed : function(){ },
-                  onCompleted : function(){ }});
+             jconfirm('Update this location for this media?', 'gallery_updateLocation(\'' + location_media_id + '\', ' + newLocation[0].value + ', ' + newLocation[1].value + ')');
          });
 
          $(".img-gallery").click(function(){
@@ -111,11 +94,13 @@ gallery_initGoogleMap = function(div_id, mediaLat, mediaLng) {
             ajaxRequest('viewmediadetails', params, function(response){
                 var mediaLocationLat = getValueFromXMLTag(response, 'latitude');
                 var mediaLocationLng = getValueFromXMLTag(response, 'longitude');
+                var address = getValueFromXMLTag(response, 'address');
                 if (mediaLocationLat == '' || mediaLocationLng == '')
                     jerror('This media has no location, you can set it by typing it\'s address and hit update');
                 else{
                     $("#gallery-location").empty();
                     gallery_initGoogleMap("gallery-location", Number(mediaLocationLng), Number(mediaLocationLat));
+                    $("#txt_gallery_address").val(address);
                 }
             });
          });
@@ -135,11 +120,15 @@ function gallery_updateLocation(galleryId, latitude, longitude){
         return false;
     }
     var params = [
-                    {tag: 'media_id', value: galleryId},
-                    {tag: 'location', value: [
-                            {tag: 'latitude', value: latitude.toString()},
-                            {tag: 'longitude', value: longitude.toString()}
-                        ]}
+                    {tag: 'media', value:[
+                        {tag: 'media_id', value: galleryId},
+                        {tag: 'location', value: [
+                                {tag: 'latitude', value: latitude.toString()},
+                                {tag: 'longitude', value: longitude.toString()},
+                                {tag: 'address', value: $("#txt_gallery_address").val()}
+                            ]}
+                        ]
+                    }
                 ];
     ajaxRequest('updatemedia', params, function(response){
         if (getValueFromXMLTag(response, 'status') == 'Success')

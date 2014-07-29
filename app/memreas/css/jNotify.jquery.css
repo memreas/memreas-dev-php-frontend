@@ -14,7 +14,14 @@
 	border-radius:5px;
 	-webkit-border-radius:5px;
 }
-#jNotify a {color:#35517c !important;text-decoration:none;}
+#jNotify a {
+    color: #35517C !important;
+    text-decoration: none;
+    width: 50px;
+    text-align: center;
+    margin-top: 5px;
+    display: inline-block;
+}
 
 /******************/
 /** jSuccess CSS **/

@@ -146,6 +146,7 @@ function autoLogin(handle_username, handle_user_id){
     $("input[name=profile_image]").val(0);
     $(".profile_picture #list").html('');
 
+    $("span.password-level").hide();
     document.register.reset();
     document.user_login_frm.submit();
 }

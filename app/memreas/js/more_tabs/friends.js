@@ -47,6 +47,7 @@ function manageF_removeFriends(userConfirm){
         jconfirm('Remove these friends?', 'manageF_removeFriends(true)');
         return false;
     }
+    $.jNotify._close();
     var jMorepageFriendsElement = $(".manage-friends li");
     var self_chooseFriends = [];
     var counter_friend = 0;

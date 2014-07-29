@@ -126,9 +126,9 @@ function showEventDetail(eventId, userId){
             { tag: 'page', value: media_page_index }
         ], function (response){
 
+            var eventId = getValueFromXMLTag(response, 'event_id');
             if (getValueFromXMLTag(response, 'status') == "Success") {
                 var medias = getSubXMLFromTag(response, 'media');
-                var eventId = getValueFromXMLTag(response, 'event_id');
                 if (typeof (eventId != 'undefined')){
                     var event_owner_name = getValueFromXMLTag(response, 'username');
                     var event_owner_pic = getValueFromXMLTag(response, 'profile_pic');
@@ -156,10 +156,10 @@ function showEventDetail(eventId, userId){
                             jcarousel_element.append ('<li data-preview="' + _main_media + '"  media-id="' + mediaId + '"><a href="#"><img src="' + _media_url + '" alt="image01" /></a></li>');
                         }
                     }
-                    $(".memreas-addfriend-btn").attr ('href', "javascript:addFriendToEvent('" + eventId + "');");
                 }
             }
             else jerror(getValueFromXMLTag(response, 'message'));
+            $(".memreas-addfriend-btn").attr ('href', "javascript:addFriendToEvent('" + eventId + "');");
             $(".memreas-detail-gallery .swipebox").swipebox();
             ajaxScrollbarElement('.memreas-detail-gallery');
         }
@@ -525,6 +525,18 @@ function addFriendToEvent(eventId){
     var selFriends  = [];
     var i = 0, count = 0;
 
+    var emailList 	= splitByDelimeters(getElementValue('memreas_detail_emails'), [',', ';']);
+    var emailTags = [];
+    if (emailList.length > 0){
+        var counter = 0;
+        for (i = 0;i < emailList.length;i++){
+            emailTags[counter++] = {
+                tag: 'email',
+                value: emailList[i]
+            };
+        }
+    }
+
     // get all information of selected friends (facebook and twitter).
     if (fb_friendsInfo) {
         for (i = 0; i < fb_friendsInfo.length; i++) {
@@ -610,9 +622,10 @@ function addFriendToEvent(eventId){
     ajaxRequest(
         'addfriendtoevent',
         [
-            { tag: 'user_id',         value: user_id },
-            { tag: 'event_id',         value: eventId },
-            { tag: 'friends',         value: selFriends }
+            { tag: 'user_id',   value: user_id },
+            { tag: 'emails',    value: emailTags},
+            { tag: 'event_id',  value: eventId },
+            { tag: 'friends',   value: selFriends }
         ],
         function(ret_xml) {
             // parse the returned xml.

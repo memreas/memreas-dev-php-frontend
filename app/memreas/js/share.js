@@ -376,57 +376,58 @@ share_gotoPage = function(tab_no) {
 
 // add the comment to Media when click "next" button on the Media Page.
 share_addComment = function() {
-	//ar_stop();
-	//ar_saveAudio();
+
     media_ids = fetch_selected_media();
     if (media_ids.length <= 0){
-        jerror ("There is no media selected");
-        return;
+        jconfirm("You didn't add any media! Continue?", 'share_uploadMedias(true)');
+        return false;
     }
-	share_uploadMedias(function() {
-		var comments 	= getElementValue('txt_comment');
-		var media_id	= "";
+    else{
+        share_uploadMedias(function() {
+            var comments 	= getElementValue('txt_comment');
+            var media_id	= "";
 
-		if (media_ids.length > 0)
-			media_id = media_ids[0];
+            if (media_ids.length > 0)
+                media_id = media_ids[0];
 
-		audio_media_id	= "";
+            audio_media_id	= "";
 
-		// send the request.
+            // send the request.
 
-        //Prepair request params
-        var request_params = [
-            {tag: 'event_id',       value: event_id},
-            {tag: 'user_id',        value: user_id},
-            {tag: 'comments',       value: comments},
-            {tag: 'audio_media_id', value: audio_media_id}
-        ];
+            //Prepair request params
+            var request_params = [
+                {tag: 'event_id',       value: event_id},
+                {tag: 'user_id',        value: user_id},
+                {tag: 'comments',       value: comments},
+                {tag: 'audio_media_id', value: audio_media_id}
+            ];
 
-        var count = 3;
-        for (key in media_ids){
-            request_params[++count] = new Array();
-            request_params[count]['tag'] = 'media_id';
-            request_params[count]['value'] = media_ids[key];
-        }
+            var count = 3;
+            for (key in media_ids){
+                request_params[++count] = new Array();
+                request_params[count]['tag'] = 'media_id';
+                request_params[count]['value'] = media_ids[key];
+            }
 
-		ajaxRequest(
-			'addcomments',
-            request_params,
-			function(ret_xml) {
-				// parse the returned xml.
-				var status   = getValueFromXMLTag(ret_xml, 'status');
-				var message  = getValueFromXMLTag(ret_xml, 'message');
+            ajaxRequest(
+                'addcomments',
+                request_params,
+                function(ret_xml) {
+                    // parse the returned xml.
+                    var status   = getValueFromXMLTag(ret_xml, 'status');
+                    var message  = getValueFromXMLTag(ret_xml, 'message');
 
-				if (status.toLowerCase() == 'success') {
-					jsuccess('comments was added successfully.');
-					share_gotoPage(SHAREPAGE_TAB_FRIENDS);
-				}
-				else {
-					jerror(message);
-				}
-			}
-		);
-	});
+                    if (status.toLowerCase() == 'success') {
+                        jsuccess('comments was added successfully.');
+                        share_gotoPage(SHAREPAGE_TAB_FRIENDS);
+                    }
+                    else {
+                        jerror(message);
+                    }
+                }
+            );
+        });
+    }
 }
 
 function fetch_selected_media(){
@@ -664,12 +665,6 @@ share_makeGroup = function() {
                 };
             }
         }
-    }
-
-    //Check if friends are chose or not
-    if (selFriends.length == 0){
-        jerror("Please choose friend for adding to event.");
-        return false;
     }
 
     if (groupName != ''){
