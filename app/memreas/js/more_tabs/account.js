@@ -22,11 +22,14 @@ $(function(){
 
     $(".tab-slide-nav .slide-right").click(function(){
 
-        var jFirstTab = $("#tabs-more li:eq(0)");
-        var firstTabWidth = jFirstTab.width();
-        var firstTabMargin = parseInt(jFirstTab.css("margin-left"));
-        var marginPos = firstTabMargin - firstTabWidth;
-        jFirstTab.attr("style", "margin-left: " + marginPos + "px !important");
+        var lastElementX = parseInt($("#tabs-more li:last-child").position().left);
+        if (lastElementX > parseInt($('body').width() / 2)){
+            var jFirstTab = $("#tabs-more li:eq(0)");
+            var firstTabWidth = jFirstTab.width();
+            var firstTabMargin = parseInt(jFirstTab.css("margin-left"));
+            var marginPos = firstTabMargin - firstTabWidth;
+            jFirstTab.attr("style", "margin-left: " + marginPos + "px !important");
+        }
     });
 });
 /*

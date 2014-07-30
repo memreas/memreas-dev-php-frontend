@@ -46,8 +46,8 @@ ajaxRequest = function (action, params, success_func, error_func, disableLoading
             removeItem(stackAjaxInstance, action);
 			if (typeof error_func != "undefined")
 				error_func();
-            if (!disableLoadingScreen)
-                $('#loadingpopup').hide();
+            if (stackAjaxInstance.length == 0)
+                $('#loadingpopup').fadeOut(500);
 	  	}
 	});
 	return false;

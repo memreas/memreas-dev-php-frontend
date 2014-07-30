@@ -1,7 +1,6 @@
 /*
 * Server side
 */
-//Check if user not logged
 $(function(){
     ajaxRequestHeaderNotification();
     if ($("input[name=user_id]").val() == "")
@@ -31,6 +30,7 @@ $(function(){
     }
 
     $("a[title=gallery]").click(function(){ $("#gallery #tabs a[title=tab1]").click(); });
+
     $("#gallery #tabs a[title=tab1]").click (function(){
         if (checkReloadItem('listallmedia')){
             $.fetch_server_media();
