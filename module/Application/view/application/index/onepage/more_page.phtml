@@ -9,9 +9,15 @@
                 <li><a href="#" title="tab5-more" class="help-tab">help</a></li>
                 <li><a href="#" title="tab-friends" class="friends-tab">Friends</a></li>
                 <li><a href="#" title="tab6-more" class="event-tab">memreas</a></li>
+                <?php if ($PaymentTabs['Subscription']): ?>
                 <li><a href="#" title="tab7-more" class="subscription-tab">Subscriptions</a></li>
+                <?php endif ?>
+                <?php if ($PaymentTabs['BuyCredit']): ?>
                 <li><a href="#" title="tab8-more" class="buy-credit-tab">Buy credit</a></li>
+                <?php endif ?>
+                <?php if ($PaymentTabs['SellMedia']): ?>
                 <li><a href="#" title="tab9-more" class="sell-media-tab">Sell media</a></li>
+                <?php endif ?>
             </ul>
 
 <div id="tab-content-more">
@@ -94,22 +100,28 @@
             <?php include ('more_tabs/manage_event.phtml'); ?>
         </div>
     </div>
+    <?php if ($PaymentTabs['Subscription']): ?>
     <div id="tab7-more" class="hideCls">
         <input type="hidden" name="stripe_url" value="<?php echo $this->stripeUrl; ?>" />
        <div class="akordeon" id="buttons7-moretab">
             <?php include ('more_tabs/subscription.phtml'); ?>
         </div>
     </div>
+    <?php endif ?>
+    <?php if ($PaymentTabs['BuyCredit']): ?>
     <div id="tab8-more" class="hideCls">
         <div class="akordeon" id="buttons8-moretab">
             <?php include ('more_tabs/buycredit.phtml'); ?>
         </div>
     </div>
+    <?php endif ?>
+    <?php if ($PaymentTabs['SellMedia']): ?>
     <div id="tab9-more" class="hideCls">
         <div class="akordeon" id="buttons9-moretab">
             <?php include ('more_tabs/sellmedia.phtml'); ?>
         </div>
     </div>
+    <?php endif ?>
 </div>
         </div>
       </div>

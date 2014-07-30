@@ -233,6 +233,11 @@ error_log("callback_json----->".$callback_json.PHP_EOL);
         $xml = '<xml><getsession><sid>1</sid></getsession></xml>';
         //Configure Ads on page
         $enableAdvertising = MemreasConstants::MEMREAS_ADS;
+        $payment_tabs = array(
+            'Subscription' => MemreasConstants::PAYMENT_TAB_SUBSCRIPTION,
+            'BuyCredit' => MemreasConstants::PAYMENT_TAB_BUY_CREDIT,
+            'SellMedia' => MemreasConstants::PAYMENT_TAB_SELL_MEDIA
+        );
 
         //Guzzle the LoginWeb Service
         $user = simplexml_load_string($this->fetchXML($action, $xml));
@@ -250,7 +255,12 @@ error_log("callback_json----->".$callback_json.PHP_EOL);
 
         //$path = $this->security("application/index/memreas.phtml");
         $path = "application/index/memreas.phtml";
-        $view = new ViewModel(array('data' => $data, 'enableAdvertising' => $enableAdvertising, 'stripeUrl' => $this->stripe_url));
+        $view = new ViewModel(array(
+            'data' => $data,
+            'enableAdvertising' => $enableAdvertising,
+            'stripeUrl' => $this->stripe_url,
+            'PaymentTabs' => $payment_tabs
+        ));
         $view->setTemplate($path); // path to phtml file under view folder
         return $view;
     }

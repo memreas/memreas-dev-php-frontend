@@ -3,7 +3,7 @@
 */
 //Check if user not logged
 $(function(){
-    //ajaxRequestHeaderNotification();
+    ajaxRequestHeaderNotification();
     if ($("input[name=user_id]").val() == "")
         document.location.href = "/index";
     else{
