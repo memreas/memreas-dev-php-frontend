@@ -38,7 +38,6 @@ ajaxRequest = function (action, params, success_func, error_func, disableLoading
             //Make sure there is no ajax instance still processing
             if (stackAjaxInstance.length == 0)
                 $('#loadingpopup').fadeOut(500);
-            console.log(stackAjaxInstance);
 	  	},
 	  	error: function (jqXHR, textStatus, errorThrown) {
        		//alert(jqXHR.responseText);

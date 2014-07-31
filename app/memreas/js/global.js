@@ -196,26 +196,6 @@ $(function(){
     $(window).bind('orientationchange resize', function(event){
        //Update lock orientation script here
     });
-     /*
-    //Label click unclick
-    $(".css-label").click(function(){
-        var checkedLabel = $(this).css('background');
-        var jCheckbox = $(this).prev('input[type=checkbox]:eq(0)');
-        if (jCheckbox.length > 0){
-            var jElementid = $("#" + jCheckbox.attr('id'));
-            if (checkedLabel.indexOf('check-box.png') >= 0){
-                alert(1);
-                jElementid.attr('checked', 'checked');
-                $(this).css('background', 'url(/memreas/img/check.png) no-repeat')
-            }
-            else {
-                alert(2);
-                jElementid.removeAtt('checked');
-                $(this).css('background', 'url(/memreas/img/check-box.png) no-repeat');
-            }
-        }
-    });
-    */
 });
 
 /*

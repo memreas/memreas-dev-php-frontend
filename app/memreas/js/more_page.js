@@ -98,10 +98,12 @@ $(function(){
                 $("input[name=profile_image]").val(0);
                 return false;
             }
+
             $("input[name=profile_image]").val(1);
             if (filetype.indexOf ('image') >= 0)
                 var target = 'image';
             else target = 'media';
+
             key_value = user_id + '/' + target + '/' + key_value;
             $(this).find('input[name=key]').val(key_value);
             // Use XHR, fallback to iframe
@@ -114,10 +116,6 @@ $(function(){
                 using_iframe_transport = true;
             }
 
-            // Message on unLoad.
-            window.onbeforeunload = function() {
-                return 'You have unsaved changes.';
-            };
             $("#loadingpopup").show();
             var jqXHR = data.submit();
         },

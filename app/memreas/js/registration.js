@@ -248,6 +248,7 @@ $(function(){
                 if (filetype.indexOf ('image') >= 0)
                     var target = 'image';
                 else target = 'media';
+
                 key_value = target + '/' + key_value;
                 $(this).find('input[name=key]').val(key_value);
                 // Use XHR, fallback to iframe
@@ -260,10 +261,6 @@ $(function(){
                     using_iframe_transport = true;
                 }
 
-                // Message on unLoad.
-                window.onbeforeunload = function() {
-                    return 'You have unsaved changes.';
-                };
                 uploadHandle = data;
             },
             send: function(e, data) {

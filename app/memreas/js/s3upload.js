@@ -29,13 +29,15 @@ $(document).ready( function() {
             type: 'POST',
             autoUpload: true,
             add: function (event, data){
+
                 currentUploadFileCount = uploadFilesInstance.length;
                 if (currentUploadFileCount > 10){
                     jerror("Only allow to upload limited 10 files per session.");
                     return false;
                 }
+
                 //Check if current file with the same name is currently uploading
-                for (i = 0;i < currentUploadFileCount;i++){
+                for (var i = 0;i < currentUploadFileCount;i++){
                     if (uploadFilesInstance[i] == data.files[0].name){
                         jerror ('not allowed to upload same files at same time');
                         return false;
@@ -45,18 +47,18 @@ $(document).ready( function() {
 
                 //Get signed credentials
                 $.ajax({
-                  url: "/index/s3signed",
-                  type: 'GET',
-                  dataType: 'json',
-                  data: {title: data.files[0].name}, // send the file name to the server so it can generate the key param
-                  async: false,
-                  success: function(data) {
+                    url: "/index/s3signed",
+                    type: 'GET',
+                    dataType: 'json',
+                    data: {title: data.files[0].name}, // send the file name to the server so it can generate the key param
+                    async: false,
+                    success: function(data) {
                     // Now that we have our data, we update the form so it contains all
                     // the needed data to sign the request
                     form.find('input[name=policy]').val(data.policy)
                     form.find('input[name=signature]').val(data.signature)
-                  }
-                })
+                    }
+                });
 
                 var filetype = data.files[0].type;
                 var filename = data.files[0].name;
@@ -71,6 +73,7 @@ $(document).ready( function() {
                 if (filetype.indexOf ('image') >= 0)
                     var target = 'image';
                 else target = 'media';
+
                 form.find('input[name=Content-Type]').val(filetype);
                 var userid = $("input[name=user_id]").val();
                 key_value = userid + '/' + target + '/' + key_value;
@@ -86,15 +89,12 @@ $(document).ready( function() {
                     using_iframe_transport = true;
                 }
 
-                // Message on unLoad.
-                window.onbeforeunload = function() {
-                    return 'You have unsaved changes.';
-                };
                 //For upload
+
                 var tpl2 = $('<li class="working-upload">' +
                                 '<div class="upload_progress" id="table">' +
                                     '<div class="upload_progress_img">' +
-                                        '<img src="/memreas/img/pic-1.jpg">' +
+                                        '<img src="/memreas/img/loading-line.gif" class="loading-small">' +
                                     '</div>' +
                                     '<div class="upload_progress_bar">' +
                                         '<span></span><div class="progress"></div>' +
@@ -104,8 +104,27 @@ $(document).ready( function() {
                                 '</div>' +
                               '</li>');
 
-                //data.context = tpl2.appendTo(".image_upload_box");
                 data.context = tpl2;
+
+                //Set preview if browser is supported file reader
+                if (window.FileReader) {
+                    var file = data.files[0]; //Files[0] = 1st file
+                    var reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = (function(event){
+                        var preview_thumbnail = event.target.result;
+                        data.context.find('.upload_progress_img')
+                            .find('img')
+                            .attr('src', preview_thumbnail)
+                            .removeClass('loading-small');
+                    });
+                }
+                else {
+                    data.context.find('.upload_progress_img')
+                        .find('img')
+                        .attr('src', '/memreas/img/pic-1.jpg')
+                        .removeClass('loading-small');
+                }
 
                 //Active on share tab
                 if ($("a.share").hasClass ("active")){
@@ -122,8 +141,6 @@ $(document).ready( function() {
                     else $(".image_upload_box").mCustomScrollbar({scrollButtons:{enable:true }});
                     $(".image_upload_box").mCustomScrollbar("scrollTo","last");
                 }
-                // Submit
-                var _image_handle = data.context.find(".upload_progress_img img");
 
                 //Check if media exist or not
                 var params = [
@@ -133,6 +150,7 @@ $(document).ready( function() {
 
                 var jqXHR = '';
                 data.context.find('.progress-text').html('Checking file exist');
+
                 ajaxRequest('checkexistmedia', params, function(xml_response){
                     if (getValueFromXMLTag(xml_response, 'status') == 'Failure'){
                         data.context.find('.progress-text').html('This file has already existed. Uploading will abort!');
@@ -143,8 +161,6 @@ $(document).ready( function() {
                     else {
                          jqXHR = data.submit();
                          data.context.find('.progress-text').html('Ok! Uploading...');
-                         //data.context.find('.progress-text').html('Queued');
-                         //putObjectUploadToQueue(data);
                          data.context.find("a.cancel-upload").click (function(){
                             if(data.context.hasClass('working-upload')){
                                 var currentPercent = data.context.find(".upload_progress_bar .progress").width() / data.context.find(".upload_progress_bar .progress").parent().width() * 100;
@@ -171,21 +187,19 @@ $(document).ready( function() {
 
             },
             progress: function(e, data){
-                // This is what makes everything really cool, thanks to that callback
-                // you can now update the progress bar based on the upload progress
                 var percent = Math.round((data.loaded / data.total) * 100);
                 data.context.find(".upload_progress_bar .progress").css ("width", percent + "%");
                 data.context.find(".upload_progress_bar span").html (percent + "%");
                 if (percent == 100){
-                    data.context.find('.progress-text').html('Please wait while adding media to your account.');
+                    data.context.find('.progress-text').html('<img src="/memreas/img/loading-line.gif" class="loading-small"> Please wait while adding media to your account.');
+                    data.context.find('.close_progress').html('<span><img src="/memreas/img/arrow-gray.png" /></span>');
                 }
             },
             fail: function(e, data) {
                 window.onbeforeunload = null;
             },
             success: function(data, status, jqXHR) {
-                //$("#loadingpopup").show();
-                _media_url = getValueFromXMLTag(jqXHR.responseText, 'Location');
+                var _media_url = getValueFromXMLTag(jqXHR.responseText, 'Location');
                 var media_type = get_type_url(_media_url);
 
                 var userid = $("input[name=user_id]").val();
@@ -211,6 +225,7 @@ $(document).ready( function() {
                                 {tag: 'is_profile_pic', value: '0'},
                                 {tag: 'location', value: ''}
                             ];
+
                 if (media_type.indexOf('image') >= 0){
                     if ($(".completed-upload").hasClass ('mCSB_container'))
                         $(".completed-upload .mCSB_container").append ('<li><img src="' + _media_url + '"/></li>');
@@ -221,17 +236,16 @@ $(document).ready( function() {
                         $(".completed-upload .mCSB_container").append ('<li class="video-media"><img src="/memreas/img/small/1.jpg"/><img src="/memreas/img/video-overlay.png" class="overlay-videoimg"></li>');
                     else $(".completed-upload .first-element").append ('<li class="video-media"><img src="/memreas/img/small/1.jpg"/><img src="/memreas/img/video-overlay.png" class="overlay-videoimg"></li>');
                 }
+
                 ajaxRequest('addmediaevent', params, function(xml_response){
                     removeItem(uploadFilesInstance, filename);
                     currentUploadFileCount = uploadFilesInstance.length;
                     if (currentUploadFileCount == 0){
                         $(".image_upload_box .mCSB_container").empty();
                         $(".image_upload_box").mCustomScrollbar("update");
-                        //$("#loadingpopup").hide();
                         pushReloadItem('listallmedia');
                         jsuccess('Medias uploaded successfully');
                     }
-                    //progressUpload();
                 }, 'undefined', true);
             },
             done: function (event, data) {}
@@ -262,9 +276,10 @@ var image_types = [
     {ext:   'jpg'  , type: 'jpeg'}
 ];
 var video_types = [];
-function get_type_url(file_url){
+
+function get_type_url(_media_url){
     //Determine S3 url type is image or video
-    var _media_extension = file_url.split(".");
+    var _media_extension = _media_url.split(".");
     var file_ext = _media_extension[_media_extension.length - 1];
     if (_media_url.indexOf('image') >= 0)
         var type_upload = 'image';
@@ -286,27 +301,3 @@ function get_type_url(file_url){
     }
     return type_upload + '/' + file_ext;
 }
-
-/* Testing environment for upload handle - Not stable yet*/
-
-var objectHandleUpload = []; //Used for put object upload handle to stack
-var currentUploadIndex = 0;
-var isUploading = false; //Check if now uploading or not
-var nextelement = 0;
-function putObjectUploadToQueue(objectElement){
-    objectHandleUpload[currentUploadIndex++] = objectElement;
-    if ((currentUploadIndex) == 1);
-       progressUpload();
-}
-
-function progressUpload(){
-    var indexHandle = nextelement++;
-    if (indexHandle <= currentUploadIndex){
-        objectHandleUpload[indexHandle].context.find('.progress-text').html('Ok! Uploading...');
-        objectHandleUpload[indexHandle].submit();
-        removeItem(objectHandleUpload, objectHandleUpload[indexHandle]);
-        currentUploadIndex--;
-    }
-}
-
-/****/

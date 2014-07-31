@@ -1495,9 +1495,12 @@ ul.image_upload_box li {
 	float: left;
 	border: 1px solid #CCC;
 	margin-right: 1%;
+    height: 100px;
+    text-align: center;
 }
 .upload_progress_img img {
 	width: 100%;
+    height: 100%;
 }
 .upload_progress_bar {
 	float: left;
@@ -1537,6 +1540,12 @@ ul.image_upload_box li {
 }
 .close_progress a:hover, .close_progress a:active {
 	box-shadow: 0 0 10px #fff;
+}
+.close_progress span{
+    padding: 3px;
+    float: left;
+    height: 25px;
+    margin: 25px 0 0 1.5%;
 }
 /************************************end queue*****************************************/
 
