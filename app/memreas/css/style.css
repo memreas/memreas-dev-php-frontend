@@ -160,8 +160,17 @@ body {
 ===================================================*/
 header {
 	width: 100%;
-    background: -moz-linear-gradient(top, #b0bccd 0%, #7e92ad 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#b0bccd), color-stop(100%,#7e92ad));
+    /*background: -moz-linear-gradient(top, #b0bccd 0%, #7e92ad 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#b0bccd), color-stop(100%,#7e92ad));*/
+    background: #b0bccd; /* Old browsers Khan Changes*/
+    background: -moz-linear-gradient(top,  #b0bccd 0%, #7e92ad 100%); /* FF3.6+ Khan Changes*/
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#b0bccd), color-stop(100%,#7e92ad)); /* Chrome,Safari4+ Khan Changes*/
+    background: -webkit-linear-gradient(top,  #b0bccd 0%,#7e92ad 100%); /* Chrome10+,Safari5.1+ Khan Changes*/
+    background: -o-linear-gradient(top,  #b0bccd 0%,#7e92ad 100%); /* Opera 11.10+ Khan Changes*/
+    background: -ms-linear-gradient(top,  #b0bccd 0%,#7e92ad 100%); /* IE10+ Khan Changes*/
+    background: linear-gradient(to bottom,  #b0bccd 0%,#7e92ad 100%); /* W3C Khan Changes*/
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b0bccd', endColorstr='#7e92ad',GradientType=0 ); /* IE6-9 Khan Changes*/
+
 	height: 60px;
 	padding-top: 5px;
 	position: relative;
@@ -217,6 +226,7 @@ header {
     float: left;
     height: 40px;
     width: 32px;
+    display: none;
 }
 .pro-info .right:hover .drop-inner{
 	display: block;
@@ -2789,7 +2799,8 @@ margin-left: 15%;
 }
 .notifications-all {
     background-color: #205ca3;
-    border-bottom: 1px solid #90aed1;
+    /*border-bottom: 1px solid #90aed1;*/
+    border-bottom: 1px solid #89a7ca; /* Khan Changes */
     color: #fff;
     font-size: 12px;
     padding: 20px 5px 5px;
@@ -2803,7 +2814,7 @@ margin-left: 15%;
     background-color: #134e94;
     border: 2px solid #fff;
     border-radius: 5px;
-    top: 6em; 
+    top: 4.8em; 
     display: none;
     position: absolute;
     right: 0em;
@@ -2879,14 +2890,14 @@ margin-left: 15%;
 	background-color: #2961a3;
 	}
 .drop-inner > span {
-    background: url("../img/drop-bg.png") no-repeat scroll 60px 13px rgba(0, 0, 0, 0);
+    background: url("../img/drop-bg.png") no-repeat scroll 115px 13px rgba(0, 0, 0, 0);/* Khan Changes*/
     display: block;
     height: 26px;
-    left: 37px;
+    /*left: 39px; Khan Changes*/
     padding: 11px 60px 0;
     position: absolute;
     top: -37px;
-    width: 28px;
+    width: 106px; /* Khan Changes*/
 }
 #main-tab nav {
     background: none repeat scroll 0 0 #1d2e37;
