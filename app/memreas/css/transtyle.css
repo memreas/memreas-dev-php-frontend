@@ -210,6 +210,11 @@ img.loading-small{
 .typeahead li .bond{ height: 60px; }
 .typeahead li a .bond strong{ color: #D84429; }
 .typeahead li a:hover .bond strong{ color: #00F; }
+.popupAddMediaContent img{
+    width: 100%;
+    height: 60px;
+}
+.memreas-detail-gallery{ height: 400px; }
 /* Aviary page */
 #avpw_save_button, #avpw_apply_container{
     width: 20px;

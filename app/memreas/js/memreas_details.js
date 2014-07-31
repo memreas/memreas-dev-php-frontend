@@ -254,12 +254,14 @@ function popupAddMemreasGallery(){
             {tag: 'page', value: '1'}
         ], function (response){
             if (getValueFromXMLTag(response, 'status') == "Success") {
-                medias = getSubXMLFromTag(response, 'media');
+                var medias = getSubXMLFromTag(response, 'media');
                 var count_media = medias.length;
-                var jtarget_element = $('.popupContact2');
+                var jtarget_element = $('.popupAddMediaContent');
+
                 if (jtarget_element.hasClass('mCustomScrollbar'))
-                    jtarget_element = $('.popupContact2 .mCSB_container');
+                    jtarget_element = $('.popupAddMediaContent .mCSB_container');
                 jtarget_element.empty();
+
                 for (var json_key = 0;json_key < count_media;json_key++){
                     var media = medias[json_key].innerHTML;
                     var _media_type = $(media).filter ('type').html();
@@ -276,8 +278,8 @@ function popupAddMemreasGallery(){
             else jerror("This is no media");
         }
     );
-    popup('popupContact');
-    ajaxScrollbarElement(".popupContact2");
+    popup('popupAddMedia');
+    ajaxScrollbarElement(".popupAddMediaContent");
 }
 
 function addMemreasPopupGallery(eventId){
@@ -663,7 +665,7 @@ function memreasAddComment(){
     ajaxRequest(
         'geteventcount',
         [
-            {tag: 'event_id', value: eventdetail_id},
+            {tag: 'event_id', value: eventdetail_id}
         ],function (response){
             var jTargetCommentCount = $(".memreas-detail-commentcount span");
             if (getValueFromXMLTag(response, 'status') == "Success"){

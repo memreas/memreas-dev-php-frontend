@@ -148,7 +148,7 @@ function fetchMyMemreas(){
                                 jMediaElement.empty().html('<i style="color: #FFFFFF;">There is no media on this event</i>');
                             }
                         }
-                    );
+                    , 'undefined', true);
 
                     //Get event people
                     ajaxRequest(
@@ -174,18 +174,14 @@ function fetchMyMemreas(){
                             }
                             else jEvent_people.html('');
                         }
-                    );
+                    , 'undefined', true);
                  $("#myEvent-" + eventId).swipe({ TYPE:'mouseSwipe', HORIZ: true });
                  $("#swipebox-comment-" + eventId).swipe({ TYPE:'mouseSwipe', HORIZ: true });
                 }
-
-
             }
-            else{
-                jerror('You have no event at this time. Try add some event at share tab');
-            }
+            else jerror('You have no event at this time. Try add some event at share tab');
         }
-    );
+    , 'undefined', true);
     $(".myMemreas").mCustomScrollbar('update');
 }
 function fetchFriendsMemreas(friendMemreasType){

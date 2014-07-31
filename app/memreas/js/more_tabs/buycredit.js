@@ -252,8 +252,6 @@ function fill_account_detail(){
         }
     }
 
-    console.log(orderCard);
-
     if (!checkCardChoose){
         jerror('Please choose a payment method');
         return false;

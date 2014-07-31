@@ -209,9 +209,10 @@ function enableInput(element){ $(element).removeAttr('readonly'); }
 * */
 function activeAkordeon(elementClass, callback_func){
     var jActiveTab = $("." + elementClass);
-    var jAkordeonSubscription = $("#buttons7-moretab");
+    var jParentAkordeon = jActiveTab.parents('.parent-global-akordeon');
+
     //reset collapsed items
-    jAkordeonSubscription.find(".akordeon-item").each(function(){
+    jParentAkordeon.find(".akordeon-item").each(function(){
         if ($(this).hasClass('expanded'))
             $(this).removeClass('expanded');
         if (!$(this).hasClass('collapsed'))
@@ -219,11 +220,11 @@ function activeAkordeon(elementClass, callback_func){
         $(this).find('.akordeon-icon').children('span').html('+');
     });
     var currentItemBodyHeight = jActiveTab.find('.akordeon-item-body').find(".akordeon-item-content").height();
-    jAkordeonSubscription.find(".akordeon-item-body").css('height', 0);
+    jParentAkordeon.find(".akordeon-item-body").css('height', 0);
     jActiveTab.find('.akordeon-icon').children('span').html('–');
     jActiveTab.removeClass('collapsed').addClass('expanded');
     jActiveTab.find(".akordeon-item-body").css('height', currentItemBodyHeight);
-    updateAkordeonContent($("." + elementClass));
+    updateAkordeonContent(jActiveTab);
 
     if (callback_func)
         callback_func();

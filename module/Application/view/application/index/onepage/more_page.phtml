@@ -101,7 +101,7 @@
         </div>
     </div>
     <?php if ($PaymentTabs['Subscription']): ?>
-    <div id="tab7-more" class="hideCls">
+    <div id="tab7-more" class="hideCls parent-global-akordeon">
         <input type="hidden" name="stripe_url" value="<?php echo $this->stripeUrl; ?>" />
        <div class="akordeon" id="buttons7-moretab">
             <?php include ('more_tabs/subscription.phtml'); ?>
@@ -109,14 +109,14 @@
     </div>
     <?php endif ?>
     <?php if ($PaymentTabs['BuyCredit']): ?>
-    <div id="tab8-more" class="hideCls">
+    <div id="tab8-more" class="hideCls parent-global-akordeon">
         <div class="akordeon" id="buttons8-moretab">
             <?php include ('more_tabs/buycredit.phtml'); ?>
         </div>
     </div>
     <?php endif ?>
     <?php if ($PaymentTabs['SellMedia']): ?>
-    <div id="tab9-more" class="hideCls">
+    <div id="tab9-more" class="hideCls parent-global-akordeon">
         <div class="akordeon" id="buttons9-moretab">
             <?php include ('more_tabs/sellmedia.phtml'); ?>
         </div>

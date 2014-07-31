@@ -187,7 +187,6 @@ function aviarySpace(updateMode){   //updateMode is get or return
 
 function ajaxRequestHeaderNotification(){
     getUserNotificationsHeader();
-    setInterval(function(){ getUserNotificationsHeader() }, 15000);
 }
 
 function getUserNotificationsHeader(){
@@ -195,7 +194,6 @@ function getUserNotificationsHeader(){
     var jTargetElement = $(".notification-head ul");
     if (jTargetElement.hasClass ("mCustomScrollbar"))
         jTargetElement = $(".notification-head ul .mCSB_container");
-    jTargetElement.empty();
 
     ajaxRequest(
         'listnotification',
@@ -205,9 +203,11 @@ function getUserNotificationsHeader(){
         function(ret_xml) {
             if (getValueFromXMLTag(ret_xml, 'status') == 'success'){
                 var notifications = getSubXMLFromTag(ret_xml, 'notification');
+                console.log(notifications);
                 var notification_count = notifications.length;
                 $(".notification-count").html(notification_count);
                 if (notification_count > 0){
+                    var html_content = '';
                     for (var i = 0;i < notification_count;i++){
                         var notification = notifications[i].innerHTML;
                         var notification_id = getValueFromXMLTag(notifications[i], 'notification_id');
@@ -224,15 +224,15 @@ function getUserNotificationsHeader(){
                         if (notification_status == '0')
                             var link_action = '<a href="javascript:;" class="reply" onclick="updateNotificationHeader(\'' + notification_id + '\', \'ignore\');">Ignore</a> <a href="javascript:;" class="reply" onclick="updateNotificationHeader(\'' + notification_id + '\', \'accept\');">ok</a>';
                         else var link_action = '';
-                        var html_content = '<li><div class="notifications-all clearfix">' +
+                        html_content += '<li><div class="notifications-all clearfix">' +
                                                 '<div class="noti-content">' +
                                                     '<p>' + meta_text + '</p>' +
                                                 '</div>' +
                                                 link_action +
                                             '</div></li>';
-                        jTargetElement.append(html_content);
-                        jTargetElement.mCustomScrollbar({scrollButtons:{ enable:true }});
                     }
+                    jTargetElement.empty().html(html_content);
+                    jTargetElement.mCustomScrollbar({scrollButtons:{ enable:true }});
                 }
                 else{
                     jTargetElement.html('<div class="notifications-all clearfix">' +
@@ -250,6 +250,7 @@ function getUserNotificationsHeader(){
                                         '</div>' +
                                     '</div>');
             }
+            //setTimeout(function(){ getUserNotificationsHeader() }, 15000);
         }, 'undefined', true
     );
 }

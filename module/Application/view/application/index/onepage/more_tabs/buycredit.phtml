@@ -1,4 +1,4 @@
-<div class="akordeon-item expanded">
+<div class="akordeon-item expanded buycredit-order-init">
     <div class="akordeon-item-head">
         <div class="akordeon-item-head-container">
             <div class="akordeon-heading">
@@ -22,11 +22,12 @@
                 <div style="clear: both;"></div>
                 <a class="black_btn_skin" href="javascript:;" onclick="buycredit_addCardPopup();" style="margin-top: 20px; display: inline-block;">Add</a>
                 <a class="black_btn_skin buycredit-card-functions hide-onload" href="javascript:;" onclick="buycredit_removeCard();" style="margin-top: 20px; display: inline-block;">Remove</a>
+                <a class="black_btn_skin" href="javascript:;" onclick="activeAkordeon('buycredit-order-tab', fill_account_detail);" style="margin-top: 20px; display: inline-block;">Next</a>
             </div>
         </div>
     </div>
 </div>
-<div class="akordeon-item">
+<div class="akordeon-item buycredit-order-tab">
     <div class="akordeon-item-head buycredit-order">
         <div class="akordeon-item-head-container">
             <div class="akordeon-heading">
@@ -62,6 +63,7 @@
             <div style="clear: both;"></div>
             <div style="text-align: center;" class="credit-message-order hide-onload">Thank you! You will receive an email confirmation shortly</div>
             <a class="black_btn_skin" href="javascript:;" onclick="buycredit_confirmAmount();" style="margin-top: 20px; display: inline-block;">Ok</a>
+            <a class="black_btn_skin" href="javascript:;" onclick="activeAkordeon('buycredit-order-init', false);" style="margin-top: 20px; display: inline-block;">Cancel</a>
         </div>
     </div>
 </div>

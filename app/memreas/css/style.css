@@ -736,6 +736,7 @@ ul.pics li img, .aviary-thumbs img, .galleries-location img{
     height: 98px;
     cursor: pointer;
 }
+#memreas-detail-tab1 ul.pics li img{ width: 100%; }
 ul.pics li a{
     display: inline-block;
     width: 100%;
@@ -1402,14 +1403,14 @@ ul.popupContact li {
 	margin-left: 70px;
 	width: 250px;
 }
-ul.popupContact2 {
+ul.popupAddMediaContent {
 	margin: 0;
 	padding: 0;
 	overflow: auto;
 	height: 230px;
 	margin: 10px 0px 10px 10px;
 }
-ul.popupContact2 li {
+ul.popupAddMediaContent li {
 	width: 20%;
 	border: 1px #d6d6d6 solid;
 	float: left;
