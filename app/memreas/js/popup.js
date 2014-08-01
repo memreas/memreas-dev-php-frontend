@@ -15,6 +15,8 @@ function loadPopup(id){
 			"opacity": "0.7"
 		});
 		$("#bg"+id).fadeIn("slow");
+
+		// This will 
 		$("body,html").animate({
 			scrollTop:$('body').offset().top
 		},700);
@@ -22,9 +24,6 @@ function loadPopup(id){
 		popupStatus = 1;
 	}
 }
-
-//disabling popup with jQuery magic!
-// $("#bgpopupaccountaddcard").on('click', disablePopup(id));
 
 function disablePopup(id){
 	//disables popup only if it is enabled
