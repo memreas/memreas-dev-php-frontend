@@ -21,8 +21,8 @@ RewriteRule ^(.*)$ %{ENV:BASE}index.php [NC,L]
 </ifModule>
 
 ## BASIC PASSWORD PROTECTION
-AuthType basic
-AuthName "secure-content"
-AuthUserFile /var/app/current/apache_passwords
-Require valid-user
+#AuthType basic
+#AuthName "secure-content"
+#AuthUserFile /var/app/current/apache_passwords
+#Require valid-user
 
