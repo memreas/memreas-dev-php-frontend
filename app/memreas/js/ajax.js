@@ -21,10 +21,11 @@ ajaxRequest = function (action, params, success_func, error_func, disableLoading
     data.callback = '';
 
     var json_data = JSON.stringify(data);
-    if (!disableLoadingScreen)
+    if (!disableLoadingScreen){
         $('#loadingpopup').fadeIn(1000);
+        pushStackAjax(action);
+    }
 
-    pushStackAjax(action);
 	$.ajax( {
 	  	type:'post',
 	  	url: wsurl,
@@ -34,7 +35,9 @@ ajaxRequest = function (action, params, success_func, error_func, disableLoading
 			if (typeof success_func != "undefined")
 				success_func(ret_xml);
 
-            removeItem(stackAjaxInstance, action);
+            if (!disableLoadingScreen)
+                removeItem(stackAjaxInstance, action);
+
             //Make sure there is no ajax instance still processing
             if (stackAjaxInstance.length == 0)
                 $('#loadingpopup').fadeOut(500);
@@ -42,9 +45,12 @@ ajaxRequest = function (action, params, success_func, error_func, disableLoading
 	  	error: function (jqXHR, textStatus, errorThrown) {
        		//alert(jqXHR.responseText);
        		//alert(jqXHR.status);
-            removeItem(stackAjaxInstance, action);
+            if (!disableLoadingScreen)
+                removeItem(stackAjaxInstance, action);
+
 			if (typeof error_func != "undefined")
 				error_func();
+
             if (stackAjaxInstance.length == 0)
                 $('#loadingpopup').fadeOut(500);
 	  	}

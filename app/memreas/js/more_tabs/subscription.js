@@ -371,7 +371,6 @@ function listStripeCard(){
                             '<label for="' + row_card_id + '"></label>' + row_card_type + ' | ' + row_card_obfuscated + '</label>' +
                             '</li>';
                         jMemberCard.append(html_element);
-                        updateAkordeonContent($('.subscription-payment-method-tab'));
                     }
                     $(".card-functions").show();
                 }
@@ -379,8 +378,10 @@ function listStripeCard(){
             }
             else {
                 jMemberCard.append('<li>You have no card at this time. Try to add one first</li>');
+                updateAkordeonContent($('.subscription-payment-method-tab'));
                 jerror(response.message);
             }
+            updateAkordeonContent($('.subscription-payment-method-tab'));
             $('#loadingpopup').hide();
         }
     });

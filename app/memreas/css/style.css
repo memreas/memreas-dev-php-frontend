@@ -745,9 +745,10 @@ ul.pics li {
 }
 ul.pics li img, .aviary-thumbs img, .galleries-location img{
     height: 98px;
+    width: 180px;
     cursor: pointer;
 }
-#memreas-detail-tab1 ul.pics li img{ width: 100%; }
+#memreas-detail-tab1 ul.pics li img, #share_medialist img{ width: 100%; }
 ul.pics li a{
     display: inline-block;
     width: 100%;

@@ -78,7 +78,6 @@ gallery_initGoogleMap = function(div_id, mediaLat, mediaLng) {
                                 {tag: 'lat', value: event.latLng.A},
                                 {tag: 'lng', value: event.latLng.k}
                             ];
-             console.log(newLocation);
          });
 
          $("#btn_gallerymap_ok").bind("click", function(){
@@ -130,9 +129,14 @@ function gallery_updateLocation(galleryId, latitude, longitude){
                         ]
                     }
                 ];
+    addLoading('.gallery-address-box');
+    disableButtons('.gallery-address-box');
     ajaxRequest('updatemedia', params, function(response){
-        if (getValueFromXMLTag(response, 'status') == 'Success')
+        if (getValueFromXMLTag(response, 'status') == 'Success'){
             jsuccess(getValueFromXMLTag(response, 'message'));
+            removeLoading('.gallery-address-box');
+            enableButtons('.gallery-address-box');
+        }
         else jerror(getValueFromXMLTag(response, 'message'));
-    });
+    }, 'undefined', true);
 }

@@ -101,8 +101,7 @@ function deleteFiles(confirmed){
     }
     if (confirmed){
         $.jNotify._close();
-        $("#loadingpopup").show();
-
+        disableButtons('.edit-area');
         //Store data to javascript
         $(".edit-area a").each(function(){
             if ($(this).parent('li').hasClass("setchoosed")){
@@ -125,8 +124,9 @@ function deleteFiles(confirmed){
                xml_data[0] = new Array();
                xml_data[0]['tag'] = 'mediaid';
                xml_data[0]['value'] = media_id.trim();
+                $(this).parent('li').find('a').append('<img src="/memreas/img/loading-line.gif" class="loading-small loading" />');
 
-               ajaxRequest ('deletephoto', xml_data, success_deletephoto, error_deletephoto);
+               ajaxRequest ('deletephoto', xml_data, success_deletephoto, error_deletephoto, true);
            }
         });
     }
@@ -135,12 +135,14 @@ function deleteFiles(confirmed){
 function success_deletephoto(xml_response){
 
     //If there is no more medias to be deleted, reload resources
+    var media_id = getValueFromXMLTag(xml_response, 'media_id');
+    $("#" + media_id).parents('li').remove();
     --deleteMediasChecked;
-    console.log(deleteMediasChecked);
     if (deleteMediasChecked == 0){
-        $("#loadingpopup").hide();
+        pushReloadItem('listallmedia');
         jsuccess('Media deleted');
-        $.fetch_server_media($("input[name=user_id]").val());
+        ajaxScrollbarElement('.edit-areamedia-scroll');
+        enableButtons('.edit-area');
     }
 }
 function error_deletephoto(){ jerror ("error delete photo"); }

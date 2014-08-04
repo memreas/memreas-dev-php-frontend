@@ -12,7 +12,9 @@
                     <ul id="content_1" class="share_memreas_details">
                         <li>
                             <label class="textfield_names">name :</label>
-                            <input name="input" type="text" id="txt_name" class="share-txtfield" value="sample" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'sample')this.value = '';"/>
+                            <div class="input-wrap share-event-name">
+                                <input name="input" type="text" id="txt_name" class="share-txtfield" value="sample" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'sample')this.value = '';"/>
+                            </div>
                         </li>
                         <li>
                             <label class="textfield_names">date :</label>

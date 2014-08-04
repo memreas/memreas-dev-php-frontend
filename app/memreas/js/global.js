@@ -21,7 +21,7 @@ var stackAjaxInstance = []; //This variable is used for stacking ajax request(s)
 * @view_friend_event: memreas page for friend event
 * @view_public_event: memreas page for public event
 * */
-var reloadItems = ['view_my_events', 'view_friend_events', 'view_public_events'];
+var reloadItems = ['view_my_events', 'view_friend_events', 'view_public_events', 'share_listmedia'];
 
 
 function checkReloadItem(itemName){
@@ -240,4 +240,39 @@ function goHomeTab(){
 }
 function goMoreTab(){
     $("a[title=more]").trigger('click');
+}
+
+/*Other*/
+addLoading = function(element){
+    var jElement = $(element);
+    jElement.append('<div class="overlay-bg"><div class="bg"></div><img src="/memreas/img/loading-line.gif" class="loading-small overlay-small-loading" /></div>');
+    var input_width = jElement.find('input').width();
+    var input_height = jElement.find('input').height();
+    var input_left_pos = (jElement.find('input').offset().left - jElement.offset().left);
+
+    //Set loading
+    jElement.find('.overlay-bg').css({'width':input_width, 'height':input_height, 'left':input_left_pos}).fadeIn(500);
+}
+removeLoading = function(element){
+    var jElement = $(element);
+    jElement.find('.overlay-bg').remove();
+}
+
+var buttonHandler = [];
+disableButtons = function(elementBox){
+    buttonHandler = [];
+    var counter = 0;
+    var jElement = $(elementBox);
+    jElement.find('a.black_btn_skin').each(function(){
+        buttonHandler[counter++] = $(this).attr('href');
+        $(this).removeAttr('href').addClass('button-disabled');
+    });
+}
+
+enableButtons = function(elementBox){
+    var counter = 0;
+    var jElement = $(elementBox);
+    jElement.find('a.black_btn_skin').each(function(){
+        $(this).attr('href', buttonHandler[counter++]).removeClass('button-disabled');
+    });
 }

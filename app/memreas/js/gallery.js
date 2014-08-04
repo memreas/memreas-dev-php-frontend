@@ -250,7 +250,7 @@ function getUserNotificationsHeader(){
                                         '</div>' +
                                     '</div>');
             }
-            //setTimeout(function(){ getUserNotificationsHeader() }, 15000);
+            setTimeout(function(){ getUserNotificationsHeader() }, 15000);
         }, 'undefined', true
     );
 }

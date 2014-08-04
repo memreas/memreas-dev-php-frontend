@@ -1,5 +1,7 @@
 var eventdetail_id = '';
 var eventdetail_user = '';
+var event_owner_name = 'User Name';
+var eventdetail_user_pic = '/memreas/img/profile-pic-2.jpg';
 var eventdetail_media_id = '';
 var current_friendnw_selected = '';
 $(function(){
@@ -19,6 +21,8 @@ $(function(){
         $("#tabs-memreas-detail li").attr("id",""); //Reset id's
         $(this).parent().attr("id","current"); // Activate this
         $('#' + $(this).attr('title')).fadeIn(); // Show content for current tab
+
+        getMediaComment();
     });
     $("a[title=memreas-detail-tab3]").click(function(){
 
@@ -39,6 +43,66 @@ $(function(){
         checkMemreasDetailCarousel();
     });
 });
+
+function getMediaComment(){
+    var jComment_element = $('.memreas-detail-comments');
+    if (jComment_element.hasClass('mCustomScrollbar'))
+        jComment_element = $('.memreas-detail-comments .mCSB_container');
+    jComment_element.empty();
+    jComment_element.html('<li class="clearfix event-owner">' +
+                            '<figure class="pro-pics"><img src="' + eventdetail_user_pic + '" alt=""></figure>' +
+                            '<div class="pro-names">' + event_owner_name + '</div>' +
+                            '<p class="loading" style="clear: both;"><img src="/memreas/img/loading-line.gif" class="loading-small" /></p>' +
+                        '</li>');
+
+    //Show event comments
+    ajaxRequest('listcomments',
+        [
+            {tag: 'event_id', value: eventdetail_id},
+            {tag: 'media_id', value: eventdetail_media_id},
+            {tag: 'limit', value: '100'},
+            {tag: 'page', value: '1'}
+        ], function(ret_xml){
+
+            var jComment_popup = $(".commentpopup");
+            if (jComment_popup.hasClass('mCustomScrollbar'))
+                jComment_popup = $(".commentpopup .mCSB_container");
+            jComment_popup.empty();
+
+            var event_comments = getSubXMLFromTag(ret_xml, 'comment');
+            var comment_count = event_comments.length;
+            if (comment_count > 0){
+                for (var i = 0;i < comment_count;i++){
+                    var event_comment = event_comments[i].innerHTML;
+                    var comment_owner_pic = $(event_comment).filter('profile_pic').html();
+                    comment_owner_pic = comment_owner_pic.replace("<!--[CDATA[", "").replace("]]-->", "");
+                    if (comment_owner_pic == '')
+                        comment_owner_pic = '/memreas/img/profile-pic.jpg';
+                    var comment_text = $(event_comment).filter('comment_text').html();
+                    var html_str = '<li>' +
+                        '<figure class="pro-pics"><img src="' + comment_owner_pic + '" alt=""></figure>' +
+                        '<textarea readonly="readonly">' + comment_text + '</textarea>' +
+                        '</li>';
+                    var html_popup_str = '<li>' +
+                        '<div class="event_pro"><img src="' + comment_owner_pic + '"></div>' +
+                        '<textarea name="memreas_popup_comment" cols="" rows=""' +
+                        ' readonly="readonly">' +  comment_text + '</textarea>' +
+                        '</li>';
+                    jComment_element.append(html_str);
+                    jComment_popup.append(html_popup_str);
+                }
+                jComment_element.find('.loading').remove();
+                ajaxScrollbarElement('.memreas-detail-comments');
+            }
+            else{
+                jComment_element.append('<li>No comment yet!</li>');
+                jComment_popup.append('<li>No comment yet!</li>');
+                jComment_element.find('.loading').remove();
+            }
+
+        }, 'undefined', true);
+}
+
 function updateMemreasMediaDetailsScript(){
     if (!$("#carousel").parent (".elastislide-carousel").length > 0){
         var current = 0;
@@ -63,6 +127,7 @@ function updateMemreasMediaDetailsScript(){
                 $(".memreas-detail-download").attr("href", download_url);
 
                 updateMediaLike();
+                getMediaComment();
             },
             onReady : function() {
                 el = $carouselItems.eq( current );
@@ -99,11 +164,7 @@ $(function(){
 function showEventDetail(eventId, userId){
     eventdetail_id = eventId;
     eventdetail_user = userId;
-    var jComment_element = $('.memreas-detail-comments');
-    if (jComment_element.hasClass('mCustomScrollbar'))
-        jComment_element = $('.memreas-detail-comments .mCSB_container');
-    jComment_element.empty();
-    jComment_element.html('<li class="clearfix event-owner"><figure class="pro-pics"><img src="/memreas/img/profile-pic-2.jpg" alt=""></figure><div class="pro-names">User Name</div></li>');
+
     //Show gallery details
     var target_element = $(".memreas-detail-gallery");
     if (target_element.hasClass ('mCustomScrollbar'))
@@ -116,6 +177,7 @@ function showEventDetail(eventId, userId){
     $(".carousel-memrease-area").append ('<ul id="carousel" class="elastislide-list"></ul>');
     var jcarousel_element = $("ul#carousel");
     jcarousel_element.empty();
+
     ajaxRequest(
         'listallmedia',
         [
@@ -130,10 +192,10 @@ function showEventDetail(eventId, userId){
             if (getValueFromXMLTag(response, 'status') == "Success") {
                 var medias = getSubXMLFromTag(response, 'media');
                 if (typeof (eventId != 'undefined')){
-                    var event_owner_name = getValueFromXMLTag(response, 'username');
-                    var event_owner_pic = getValueFromXMLTag(response, 'profile_pic');
-                    event_owner_pic = event_owner_pic.replace("<!--[CDATA[", "").replace("]]-->", "");
-                    //$(".memreas-detail-comments .event-owner .pro-pics img").attr ('src', event_owner_pic);
+                    event_owner_name = getValueFromXMLTag(response, 'username');
+                    eventdetail_user_pic = getValueFromXMLTag(response, 'profile_pic');
+                    eventdetail_user_pic = eventdetail_user_pic.replace("<!--[CDATA[", "").replace("]]-->", "");
+
                     $(".memreas-detail-comments .event-owner .pro-pics img").attr ('src', $("header").find("#profile_picture").attr('src'));
                     $(".memreas-detail-comments .pro-names").html(event_owner_name);
 
@@ -164,52 +226,13 @@ function showEventDetail(eventId, userId){
             ajaxScrollbarElement('.memreas-detail-gallery');
         }
     );
-    $("#popupContact a.accept-btn").attr ("href", "javascript:addMemreasPopupGallery('" + eventId + "')");
-
-    //Show event comments
-    ajaxRequest('listcomments',
-                [
-                    {tag: 'event_id', value: eventdetail_id},
-                    {tag: 'limit', value: '100'},
-                    {tag: 'page', value: '1'}
-                ], function(ret_xml){
-                    var jComment_element = $('.memreas-detail-comments');
-                    if (jComment_element.hasClass('mCustomScrollbar'))
-                        jComment_element = $('.memreas-detail-comments .mCSB_container');
-
-                    var jComment_popup = $(".commentpopup");
-                    if (jComment_popup.hasClass('mCustomScrollbar'))
-                        jComment_popup = $(".commentpopup .mCSB_container");
-                    jComment_popup.empty();
-
-                    var event_comments = getSubXMLFromTag(ret_xml, 'comment');
-                    var comment_count = event_comments.length;
-                    for (i = 0;i < comment_count;i++){
-                        var event_comment = event_comments[i].innerHTML;
-                        var comment_owner_pic = $(event_comment).filter('profile_pic').html();
-                        comment_owner_pic = comment_owner_pic.replace("<!--[CDATA[", "").replace("]]-->", "");
-                        if (comment_owner_pic == '')
-                            comment_owner_pic = '/memreas/img/profile-pic.jpg';
-                        var comment_text = $(event_comment).filter('comment_text').html();
-                        var html_str = '<li>' +
-                                            '<figure class="pro-pics"><img src="' + comment_owner_pic + '" alt=""></figure>' +
-                                            '<textarea readonly="readonly">' + comment_text + '</textarea>' +
-                                          '</li>';
-                        var html_popup_str = '<li>' +
-                                                '<div class="event_pro"><img src="' + comment_owner_pic + '"></div>' +
-                                                '<textarea name="memreas_popup_comment" cols="" rows=""' +
-                                                ' readonly="readonly">' +  comment_text + '</textarea>' +
-                                            '</li>';
-                        jComment_element.append(html_str);
-                        jComment_popup.append(html_popup_str);
-                    }
-                });
+    $("#popupAddMedia a.accept-btn").attr ("href", "javascript:addMemreasPopupGallery('" + eventId + "')");
 
     //Show comment count/event count
      ajaxRequest(
         'geteventcount',
         [
-            {tag: 'event_id', value: eventdetail_id},
+            {tag: 'event_id', value: eventdetail_id}
         ],function (response){
             var jTargetLikeCount = $(".memreas-detail-likecount span");
             var jTargetCommentCount = $(".memreas-detail-commentcount span");
@@ -286,24 +309,24 @@ function addMemreasPopupGallery(eventId){
     var medias_selected = new Array();
     var user_id = $("input[name=user_id]").val();
     var i = 0;
-    $(".popupContact2 li.setchoosed").each(function(){
+    $(".popupAddMediaContent li.setchoosed").each(function(){
         medias_selected[++i] = $(this).find ('a').attr ('id');
     });
     var media_id_params = [];
     var increase = 0;
-    for (key = 1;key <= i;key++){
+    for (var key = 1;key <= i;key++){
         var media_id = medias_selected[key].replace('memreas-addgallery-', '');
         media_id_params[increase++] = {tag: 'media_id', value: media_id};
     }
     var params = [
                     {tag: 'event_id', value: eventId},
-                    {tag: 'media_ids', value: media_id_params},
+                    {tag: 'media_ids', value: media_id_params}
                 ];
 
     ajaxRequest('addexistmediatoevent', params, function(xml_response){
         if (getValueFromXMLTag(xml_response, 'status') == 'Success'){
             $('#loadingpopup').show();
-            setTimeout(function(){ showEventDetail(eventId, $('input[name=user_id]').val()); $('#loadingpopup').hide(); disablePopup('popupContact'); jsuccess('Media added successfully'); }, 2000);
+            setTimeout(function(){ showEventDetail(eventId, $('input[name=user_id]').val()); $('#loadingpopup').hide(); disablePopup('popupAddMedia'); jsuccess('Media added successfully'); }, 2000);
         }
         else jerror(getValueFromXMLTag(xml_response, 'message'));
     });
@@ -336,9 +359,10 @@ function getPopupMemreasFriends(){
         if (getValueFromXMLTag(xml_response, 'status') == 'Success'){
             var friends = getSubXMLFromTag(xml_response, 'friend');
             var friendCount = friends.length;
-            mr_friendsInfo = [];
+            var mr_friendsInfo = [];
             for (i = 0;i < friendCount;i++){
                 var friend = friends[i];
+                var friend_photo = '';
                 if (getValueFromXMLTag(friend, 'photo') == '' || getValueFromXMLTag(friend, 'photo') == 'null')
                     friend_photo = '/memreas/img/profile-pic.jpg';
                 else friend_photo = getValueFromXMLTag(friend, 'photo');
@@ -655,27 +679,57 @@ function memreasAddComment(){
                     {tag: "comments", value: comment_txt},
                     {tag: "audio_media_id", value: ""}
                  ];
+    addLoading('.popup-addcomment-text');
+    disableButtons("#popupcomment");
     ajaxRequest('addcomments', params, function(ret_xml){
-        jsuccess("your comment added");
-        showEventDetail(eventdetail_id, eventdetail_user);
-        disablePopup('popupcomment');
-    });
 
-    //Update event detail bar
-    ajaxRequest(
-        'geteventcount',
-        [
-            {tag: 'event_id', value: eventdetail_id}
-        ],function (response){
-            var jTargetCommentCount = $(".memreas-detail-commentcount span");
-            if (getValueFromXMLTag(response, 'status') == "Success"){
-                var comment_count = getValueFromXMLTag(response, 'comment_count');
-            }
-            else{
-                var comment_count = 0;
-            }
-            jTargetCommentCount.html(comment_count);
-     });
+        var jComment_popup = $(".commentpopup");
+        if (jComment_popup.hasClass('mCustomScrollbar'))
+            jComment_popup = $(".commentpopup .mCSB_container");
+
+        var user_profile = $('#profile_picture').attr('src');
+        jComment_popup.prepend('<li>' +
+            '<div class="event_pro"><img src="' + user_profile + '"></div>' +
+            '<textarea name="memreas_popup_comment" cols="" rows=""' +
+            ' readonly="readonly">' + comment_txt + '</textarea>' +
+        '</li>');
+
+        $(".commentpopup").mCustomScrollbar("update");
+        $(".commentpopup").mCustomScrollbar("scrollTo","top");
+
+        //Add main comment area
+        var jComment_element = $('.event-owner');
+
+        jComment_element.after('<li>' +
+            '<figure class="pro-pics"><img src="' + user_profile + '" alt=""></figure>' +
+            '<textarea readonly="readonly">' + comment_txt + '</textarea>' +
+        '</li>');
+
+        $(".memreas-detail-comments").mCustomScrollbar("update");
+        $(".memreas-detail-comments").mCustomScrollbar("scrollTo","top");
+
+        $("input[name=comment_txtfield]").val('');
+        removeLoading('.popup-addcomment-text');
+        enableButtons("#popupcomment");
+        jsuccess("your comment added");
+
+        //Update event detail bar
+        ajaxRequest(
+            'geteventcount',
+            [
+                {tag: 'event_id', value: eventdetail_id}
+            ],function (response){
+                var jTargetCommentCount = $(".memreas-detail-commentcount span");
+                if (getValueFromXMLTag(response, 'status') == "Success"){
+                    var comment_count = getValueFromXMLTag(response, 'comment_count');
+                }
+                else{
+                    var comment_count = 0;
+                }
+                jTargetCommentCount.html(comment_count);
+            }, 'undefined', true);
+
+    }, 'undefined', true);
 }
 function likeMemreasMedia(){
     var current_user = $("input[name=user_id]").val();
@@ -701,7 +755,7 @@ function updateMediaLike(){
     var params = [{tag: 'media_id', value: eventdetail_media_id}];
     ajaxRequest('getmedialike', params, function(xml_response){
         $(".memreas-detail-likecount span").html(getValueFromXMLTag(xml_response, 'likes'));
-    });
+    }, 'undefined', true);
 }
 
 /*Additions fixing*/
