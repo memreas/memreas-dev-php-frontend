@@ -215,7 +215,6 @@ function getUserNotificationsHeader(){
                         var html_content = '';
                         for (var i = 0;i < notification_count;i++){
                             var notification = notifications[i].innerHTML;
-                            console.log(notification);
 
                             var notification_id = getValueFromXMLTag(notifications[i], 'notification_id');
                             var notification_type = getValueFromXMLTag(notifications[i], 'notification_type');
@@ -238,6 +237,7 @@ function getUserNotificationsHeader(){
                             if (notification.indexOf('comment_id') >= 0){
                                 var comment_id = getValueFromXMLTag(notifications[i], 'comment_id');
                                 var comment_text = getValueFromXMLTag(notifications[i], 'comment');
+                                var event_id = getValueFromXMLTag(notifications[i], 'event_id');
                                 comment_text = comment_text .replace("<!--[CDATA[", "")
                                     .replace("]]-->", "");
 
@@ -253,7 +253,7 @@ function getUserNotificationsHeader(){
                                                         '<span class="notification-time">' + comment_time.getHours() + ':' + correctDateNumber(comment_time.getMinutes()) + ' am <br/>' +
                                                         correctDateNumber(comment_time.getDate()) + '/' + correctDateNumber(comment_time.getMonth()) + '/' + comment_time.getFullYear() + '</span>' +
                                                         '<a href="#" class="close">x</a>' +
-                                                        '<a href="#" class="reply">reply</a>' +
+                                                        '<a href="javascript:;" onclick="gotoEventDetail(\'' + event_id + '\');" class="reply">reply</a>' +
                                                     '</div>' +
                                                 '</div></li>';
 
@@ -308,17 +308,15 @@ function updateNotificationHeader(notification_id, update_status){
                     ]
                 }
             ];
-
+            addLoading("#notification-header-" + notification_id + " .notifications-all", 'div', 'notification-header-loading');
             ajaxRequest('updatenotification', params, function(response){
                 if (getValueFromXMLTag(response, 'status') == 'success'){
                     jsuccess(getValueFromXMLTag(response, 'message'));
-                    setTimeout(function(){
-                        //Reload notification
-                        getUserNotificationsHeader();
-                    }, 1000);
+                    $("#notification-header-" + notification_id).fadeOut(500).delay(500).remove();
                 }
                 else jerror(getValueFromXMLTag(response, 'message'));
-            });
+                removeLoading("#notification-header-" + notification_id + " .notifications-all");
+            }, 'undefined', true);
             break;
         case 'ignore':
             var params = [
@@ -329,19 +327,124 @@ function updateNotificationHeader(notification_id, update_status){
                     ]
                 }
             ];
+
+            addLoading("#notification-header-" + notification_id + " notifications-all", 'div', 'notification-header-loading');
             ajaxRequest('updatenotification', params, function(response){
                 if (getValueFromXMLTag(response, 'status') == 'success'){
                     jsuccess(getValueFromXMLTag(response, 'message'));
-                    setTimeout(function(){
-                        //Reload notification
-                        getUserNotificationsHeader();
-                    }, 1000);
+                    $("#notification-header-" + notification_id).fadeOut(500).delay(500).remove();
                 }
                 else jerror(getValueFromXMLTag(response, 'message'));
-            });
+                removeLoading("#notification-header-" + notification_id + " .notifications-all");
+            }, 'undefined', false);
             break;
         default: jerror('No action performed');
     }
+}
+
+function gotoEventDetail(eventId){
+
+    eventdetail_id = eventId;
+    eventdetail_user = $('input[name=user_id]').val();
+    userId = eventdetail_user;
+
+    //Show gallery details
+    var target_element = $(".memreas-detail-gallery");
+    if (target_element.hasClass ('mCustomScrollbar'))
+        target_element = $(".memreas-detail-gallery .mCSB_container");
+    target_element.empty();
+
+    /* Update details_tab also */
+    $(".carousel-memrease-area").empty();
+    $(".carousel-memrease-area").append ('<ul id="carousel" class="elastislide-list"></ul>');
+    var jcarousel_element = $("ul#carousel");
+    jcarousel_element.empty();
+
+    removeItem(stackAjaxInstance, 'view_my_events');
+    $("a.memreas").trigger('click');
+    $(".memreas-main").hide();
+    $(".memreas-detail").fadeIn(500);
+    //pushReloadItem('view_my_events');
+
+    ajaxRequest(
+        'listallmedia',
+        [
+            { tag: 'event_id', value: eventId },
+            { tag: 'user_id', value: userId },
+            { tag: 'device_id', value: device_id },
+            { tag: 'limit',value: media_limit_count },
+            { tag: 'page', value: media_page_index }
+        ], function (response){
+
+            var eventId = getValueFromXMLTag(response, 'event_id');
+            if (getValueFromXMLTag(response, 'status') == "Success") {
+                var medias = getSubXMLFromTag(response, 'media');
+                if (typeof (eventId != 'undefined')){
+                    event_owner_name = getValueFromXMLTag(response, 'username');
+                    eventdetail_user_pic = getValueFromXMLTag(response, 'profile_pic');
+                    eventdetail_user_pic = eventdetail_user_pic.replace("<!--[CDATA[", "").replace("]]-->", "");
+
+                    $(".memreas-detail-comments .event-owner .pro-pics img").attr ('src', $("header").find("#profile_picture").attr('src'));
+                    $(".memreas-detail-comments .pro-names").html(event_owner_name);
+
+                    var media_count = medias.length;
+                    for (var i=0;i < media_count;i++) {
+                        var media = medias[i].innerHTML;
+                        var _main_media = $(media).filter ('main_media_url').html();
+                        _main_media = _main_media.replace("<!--[CDATA[", "").replace("]]-->", "");
+                        if (_main_media.indexOf ('undefined') >= 0) _main_media = '/memreas/img/large/1.jpg';
+                        var _media_url = getMediaThumbnail(media, '/memreas/img/small/1.jpg');
+                        var _media_type = $(media).filter ('type').html();
+
+                        var mediaId = $(media).filter ('media_id').html();
+                        if (_media_type == 'video'){
+                            target_element.append ('<li class="video-media" id="memreasvideo-' + mediaId + '" media-url="' + _main_media + '"><a href=\'javascript:popupVideoPlayer("memreasvideo-' + mediaId + '");\' id="button"><img src="' + _media_url + '" alt=""><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a></li>');
+                            jcarousel_element.append ('<li data-preview="' + _media_url + '"  media-id="' + mediaId + '"><a href="#"><img src="' + _media_url + '" alt="image01" /></a></li>');
+                        }
+                        else {
+                            target_element.append ('<li  media-id="' + mediaId + '"><a href="' + _media_url + '" class="swipebox" title="photo-2"><img src="' + _media_url + '" alt=""></a></li>');
+                            jcarousel_element.append ('<li data-preview="' + _main_media + '"  media-id="' + mediaId + '"><a href="#"><img src="' + _media_url + '" alt="image01" /></a></li>');
+                        }
+                    }
+                }
+            }
+            else jerror(getValueFromXMLTag(response, 'message'));
+            $(".memreas-addfriend-btn").attr ('href', "javascript:addFriendToEvent('" + eventId + "');");
+            $(".memreas-detail-gallery .swipebox").swipebox();
+            ajaxScrollbarElement('.memreas-detail-gallery');
+            $("a[title=memreas-detail-tab3]").trigger('click');
+
+            var checkCommentLoaded = setInterval(function(){
+
+                //Make sure comment is loaded
+                if (!($('.memreas-detail-comments').find('.loading') > 0)){
+                    showPopupComment();
+                    clearInterval(checkCommentLoaded);
+                }
+            }, 3000);
+        }
+    );
+    $("#popupAddMedia a.accept-btn").attr ("href", "javascript:addMemreasPopupGallery('" + eventId + "')");
+
+    //Show comment count/event count
+    ajaxRequest(
+        'geteventcount',
+        [
+            {tag: 'event_id', value: eventdetail_id}
+        ],function (response){
+            var jTargetLikeCount = $(".memreas-detail-likecount span");
+            var jTargetCommentCount = $(".memreas-detail-commentcount span");
+            if (getValueFromXMLTag(response, 'status') == "Success"){
+                var comment_count = getValueFromXMLTag(response, 'comment_count');
+                var like_count = getValueFromXMLTag(response, 'like_count');
+            }
+            else{
+                var comment_count = 0;
+                var like_count = 0;
+            }
+            jTargetLikeCount.html(like_count)
+            jTargetCommentCount.html(comment_count);
+        }, 'undefined', true);
 }
 
 function toggleBottomAviary(){

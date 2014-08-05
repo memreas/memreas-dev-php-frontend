@@ -129,7 +129,7 @@ function gallery_updateLocation(galleryId, latitude, longitude){
                         ]
                     }
                 ];
-    addLoading('.gallery-address-box');
+    addLoading('.gallery-address-box', 'input', '');
     disableButtons('.gallery-address-box');
     ajaxRequest('updatemedia', params, function(response){
         if (getValueFromXMLTag(response, 'status') == 'Success'){

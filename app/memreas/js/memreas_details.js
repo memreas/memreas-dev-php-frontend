@@ -45,6 +45,7 @@ $(function(){
 });
 
 function getMediaComment(){
+
     var jComment_element = $('.memreas-detail-comments');
     if (jComment_element.hasClass('mCustomScrollbar'))
         jComment_element = $('.memreas-detail-comments .mCSB_container');
@@ -63,11 +64,15 @@ function getMediaComment(){
             {tag: 'limit', value: '100'},
             {tag: 'page', value: '1'}
         ], function(ret_xml){
+            var jComment_element = $('.memreas-detail-comments');
+            if (jComment_element.hasClass('mCustomScrollbar'))
+                jComment_element = $('.memreas-detail-comments .mCSB_container');
 
             var jComment_popup = $(".commentpopup");
             if (jComment_popup.hasClass('mCustomScrollbar'))
                 jComment_popup = $(".commentpopup .mCSB_container");
             jComment_popup.empty();
+            jComment_popup.append('<li><p class="loading" style="clear: both;"><img src="/memreas/img/loading-line.gif" class="loading-small" /></p></li>');
 
             var event_comments = getSubXMLFromTag(ret_xml, 'comment');
             var comment_count = event_comments.length;
@@ -92,14 +97,15 @@ function getMediaComment(){
                     jComment_popup.append(html_popup_str);
                 }
                 jComment_element.find('.loading').remove();
+                jComment_popup.find('.loading').remove();
                 ajaxScrollbarElement('.memreas-detail-comments');
             }
             else{
                 jComment_element.append('<li>No comment yet!</li>');
                 jComment_popup.append('<li>No comment yet!</li>');
                 jComment_element.find('.loading').remove();
+                jComment_popup.find('.loading').remove();
             }
-
         }, 'undefined', true);
 }
 
@@ -679,7 +685,7 @@ function memreasAddComment(){
                     {tag: "comments", value: comment_txt},
                     {tag: "audio_media_id", value: ""}
                  ];
-    addLoading('.popup-addcomment-text');
+    addLoading('.popup-addcomment-text', 'input', '');
     disableButtons("#popupcomment");
     ajaxRequest('addcomments', params, function(ret_xml){
 

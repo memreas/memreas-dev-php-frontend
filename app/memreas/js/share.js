@@ -349,7 +349,7 @@ share_addEvent = function() {
 }
 
 function shareDisableFields(){
-    addLoading(".share-event-name");
+    addLoading(".share-event-name", 'input', '');
     $("#dtp_date").attr('readonly', true);
     $("#txt_location").attr('readonly', true);
     $("#ckb_canpost").attr('readonly', true);

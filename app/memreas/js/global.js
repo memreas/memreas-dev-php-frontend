@@ -243,15 +243,18 @@ function goMoreTab(){
 }
 
 /*Other*/
-addLoading = function(element){
+addLoading = function(element, typeLoading, additionClass){
     var jElement = $(element);
-    jElement.append('<div class="overlay-bg"><div class="bg"></div><img src="/memreas/img/loading-line.gif" class="loading-small overlay-small-loading" /></div>');
-    var input_width = jElement.find('input').width();
-    var input_height = jElement.find('input').height();
-    var input_left_pos = (jElement.find('input').offset().left - jElement.offset().left);
+    if (additionClass != '') additionClass = ' ' + additionClass;
+    jElement.append('<div class="overlay-bg' + additionClass + '"><div class="bg"></div><img src="/memreas/img/loading-line.gif" class="loading-small overlay-small-loading" /></div>');
+    if (typeLoading == 'input'){
+        var input_width = jElement.find('input').width();
+        var input_height = jElement.find('input').height();
+        var input_left_pos = (jElement.find('input').offset().left - jElement.offset().left);
 
-    //Set loading
-    jElement.find('.overlay-bg').css({'width':input_width, 'height':input_height, 'left':input_left_pos}).fadeIn(500);
+        jElement.find('.overlay-bg').css({'width':input_width, 'height':input_height, 'left':input_left_pos}).fadeIn(500);
+    }
+    else jElement.find('.overlay-bg').fadeIn(500);
 }
 removeLoading = function(element){
     var jElement = $(element);
