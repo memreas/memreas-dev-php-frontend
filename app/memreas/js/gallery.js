@@ -215,6 +215,8 @@ function getUserNotificationsHeader(){
                         var html_content = '';
                         for (var i = 0;i < notification_count;i++){
                             var notification = notifications[i].innerHTML;
+                            console.log(notification);
+
                             var notification_id = getValueFromXMLTag(notifications[i], 'notification_id');
                             var notification_type = getValueFromXMLTag(notifications[i], 'notification_type');
                             var meta_text = $(notifications[i]).wrap('meta')
@@ -222,7 +224,7 @@ function getUserNotificationsHeader(){
                                 .split('<notification_type>')[0];
                             meta_text = '<span>' + meta_text + '</span>';
                             meta_text = meta_text.replace("<!--[CDATA[", "")
-                                                    .replace("]]-->", "");
+                                                    .replace("]]-->", "").replace("]]>", "");
                             meta_text = $('<div/>').html(meta_text).text();
 
                             var user_profile_pic = getValueFromXMLTag(notifications[i], 'profile_pic')
@@ -232,14 +234,14 @@ function getUserNotificationsHeader(){
                             if (user_profile_pic == '') user_profile_pic = '/memreas/img/profile-pic.jpg';
 
                             //Check if notification is comment or not
-                            var comment_id = getValueFromXMLTag(ret_xml, 'comment_id');
-                            if (comment_id != ''){
-                                var comment_text = getValueFromXMLTag(ret_xml, 'comment');
+
+                            if (notification.indexOf('comment_id') >= 0){
+                                var comment_id = getValueFromXMLTag(notifications[i], 'comment_id');
+                                var comment_text = getValueFromXMLTag(notifications[i], 'comment');
                                 comment_text = comment_text .replace("<!--[CDATA[", "")
                                     .replace("]]-->", "");
 
                                 var comment_time = new Date((getValueFromXMLTag(ret_xml, 'comment_time')) * 1000);
-                                console.log(comment_time);
 
                                 html_content += '<li id="notification-header-' + notification_id + '"><div class="notifications-all clearfix">' +
                                                     '<div class="notification-pic"><img src="' + user_profile_pic +'" /></div>' +
@@ -269,7 +271,7 @@ function getUserNotificationsHeader(){
                                                     '</div></li>';
                                 }
                             }
-                        jTargetElement.empty().html(html_content).text();
+                        jTargetElement.empty().html(html_content);
                         jTargetElement.mCustomScrollbar({scrollButtons:{ enable:true }});
                     }
                     else{
