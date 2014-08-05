@@ -1,6 +1,8 @@
 /*
 * Server side
 */
+var notificationHeaderObject = new Object(); //This variable stored header notification and compare with a new for checking
+                                                //new value come
 $(function(){
     ajaxRequestHeaderNotification();
     if ($("input[name=user_id]").val() == "")
@@ -203,43 +205,80 @@ function getUserNotificationsHeader(){
         function(ret_xml) {
             if (getValueFromXMLTag(ret_xml, 'status') == 'success'){
                 var notifications = getSubXMLFromTag(ret_xml, 'notification');
-                console.log(notifications);
-                var notification_count = notifications.length;
-                $(".notification-count").html(notification_count);
-                if (notification_count > 0){
-                    var html_content = '';
-                    for (var i = 0;i < notification_count;i++){
-                        var notification = notifications[i].innerHTML;
-                        var notification_id = getValueFromXMLTag(notifications[i], 'notification_id');
-                        var notification_type = getValueFromXMLTag(notifications[i], 'notification_type');
-                        var meta_text = $(notifications[i]).wrap('meta')
-                            .html().split('<meta>')[1]
-                            .split('<notification_type>')[0];
-                        meta_text = '<span>' + meta_text + '</span>';
-                        var user_profile_pic = getValueFromXMLTag(notifications[i], 'profile_pic')
-                            .replace("<!--[CDATA[", "")
-                            .replace("]]-->", "");
-                        var notification_status = getValueFromXMLTag(notifications[i], 'notification_status');
-                        if (user_profile_pic == '') user_profile_pic = '/memreas/img/profile-pic.jpg';
-                        if (notification_status == '0')
-                            var link_action = '<a href="javascript:;" class="reply" onclick="updateNotificationHeader(\'' + notification_id + '\', \'ignore\');">Ignore</a> <a href="javascript:;" class="reply" onclick="updateNotificationHeader(\'' + notification_id + '\', \'accept\');">ok</a>';
-                        else var link_action = '';
-                        html_content += '<li><div class="notifications-all clearfix">' +
-                                                '<div class="noti-content">' +
-                                                    '<p>' + meta_text + '</p>' +
-                                                '</div>' +
-                                                link_action +
-                                            '</div></li>';
+
+                //Check if user has new notification
+                if (notificationHeaderObject.length != notifications.length){
+                    notificationHeaderObject = notifications;
+                    var notification_count = notifications.length;
+                    $(".notification-count").html(notification_count);
+                    if (notification_count > 0){
+                        var html_content = '';
+                        for (var i = 0;i < notification_count;i++){
+                            var notification = notifications[i].innerHTML;
+                            var notification_id = getValueFromXMLTag(notifications[i], 'notification_id');
+                            var notification_type = getValueFromXMLTag(notifications[i], 'notification_type');
+                            var meta_text = $(notifications[i]).wrap('meta')
+                                .html().split('<meta>')[1]
+                                .split('<notification_type>')[0];
+                            meta_text = '<span>' + meta_text + '</span>';
+                            meta_text = meta_text.replace("<!--[CDATA[", "")
+                                                    .replace("]]-->", "");
+                            meta_text = $('<div/>').html(meta_text).text();
+
+                            var user_profile_pic = getValueFromXMLTag(notifications[i], 'profile_pic')
+                                .replace("<!--[CDATA[", "")
+                                .replace("]]-->", "");
+                            var notification_status = getValueFromXMLTag(notifications[i], 'notification_status');
+                            if (user_profile_pic == '') user_profile_pic = '/memreas/img/profile-pic.jpg';
+
+                            //Check if notification is comment or not
+                            var comment_id = getValueFromXMLTag(ret_xml, 'comment_id');
+                            if (comment_id != ''){
+                                var comment_text = getValueFromXMLTag(ret_xml, 'comment');
+                                comment_text = comment_text .replace("<!--[CDATA[", "")
+                                    .replace("]]-->", "");
+
+                                var comment_time = new Date((getValueFromXMLTag(ret_xml, 'comment_time')) * 1000);
+                                console.log(comment_time);
+
+                                html_content += '<li id="notification-header-' + notification_id + '"><div class="notifications-all clearfix">' +
+                                                    '<div class="notification-pic"><img src="' + user_profile_pic +'" /></div>' +
+                                                    '<div class="notification-right">' +
+                                                        '<div class="noti-title">' + meta_text +'</div>' +
+                                                        '<div class="noti-content">' +
+                                                            '<p>' + comment_text + '</p>' +
+                                                        '</div>' +
+                                                        '<span class="notification-time">' + comment_time.getHours() + ':' + correctDateNumber(comment_time.getMinutes()) + ' am <br/>' +
+                                                        correctDateNumber(comment_time.getDate()) + '/' + correctDateNumber(comment_time.getMonth()) + '/' + comment_time.getFullYear() + '</span>' +
+                                                        '<a href="#" class="close">x</a>' +
+                                                        '<a href="#" class="reply">reply</a>' +
+                                                    '</div>' +
+                                                '</div></li>';
+
+                            }
+                            else{
+
+                                if (notification_status == '0')
+                                    var link_action = '<a href="javascript:;" class="reply" onclick="updateNotificationHeader(\'' + notification_id + '\', \'ignore\');">Ignore</a> <a href="javascript:;" class="reply" onclick="updateNotificationHeader(\'' + notification_id + '\', \'accept\');">ok</a>';
+                                else var link_action = '';
+                                html_content += '<li id="notification-header-' + notification_id + '"><div class="notifications-all clearfix">' +
+                                                        '<div class="noti-content">' +
+                                                            '<p>' + meta_text + '</p>' +
+                                                        '</div>' +
+                                                        link_action +
+                                                    '</div></li>';
+                                }
+                            }
+                        jTargetElement.empty().html(html_content).text();
+                        jTargetElement.mCustomScrollbar({scrollButtons:{ enable:true }});
                     }
-                    jTargetElement.empty().html(html_content);
-                    jTargetElement.mCustomScrollbar({scrollButtons:{ enable:true }});
-                }
-                else{
-                    jTargetElement.html('<div class="notifications-all clearfix">' +
-                                            '<div class="noti-content">' +
-                                                '<p>You have no notification.</p>' +
-                                            '</div>' +
-                                        '</div>');
+                    else{
+                        jTargetElement.html('<div class="notifications-all clearfix">' +
+                                                '<div class="noti-content">' +
+                                                    '<p>You have no notification.</p>' +
+                                                '</div>' +
+                                            '</div>');
+                    }
                 }
             }
             else {
@@ -250,7 +289,8 @@ function getUserNotificationsHeader(){
                                         '</div>' +
                                     '</div>');
             }
-            setTimeout(function(){ getUserNotificationsHeader() }, 15000);
+
+            setTimeout(function(){ getUserNotificationsHeader() }, 10000);
         }, 'undefined', true
     );
 }

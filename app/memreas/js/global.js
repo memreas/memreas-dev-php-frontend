@@ -276,3 +276,8 @@ enableButtons = function(elementBox){
         $(this).attr('href', buttonHandler[counter++]).removeClass('button-disabled');
     });
 }
+
+function correctDateNumber(date_number){
+    if (date_number < 10)
+        return '0' + date_number.toString();
+}

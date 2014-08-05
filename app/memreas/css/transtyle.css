@@ -245,6 +245,25 @@ img.loading-small{
 }
 .image-sync{ position: relative; }
 .image-sync img.loading{ position: absolute; left: 45%; top: 35%; }
+.notification-pic{
+    width: 50px;
+    float: left;
+    margin-right: 10px;
+}
+.notification-pic img{
+    width: 50px;
+    height: 50px;
+    border-radius: 4px;
+}
+.notification-time{
+    background: url('../img/header-noti-comment.png') no-repeat left center;
+    padding-left: 27px;
+    display: block;
+    float: left;
+    height: 35px;
+    width: 70px;
+    margin-top: 10px;
+}
 /* Aviary page */
 #avpw_save_button, #avpw_apply_container{
     width: 20px;
