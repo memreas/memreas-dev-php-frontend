@@ -360,11 +360,11 @@ function gotoEventDetail(eventId){
     var jcarousel_element = $("ul#carousel");
     jcarousel_element.empty();
 
-    removeItem(stackAjaxInstance, 'view_my_events');
+    removeItem(reloadItems, 'view_my_events');
     $("a.memreas").trigger('click');
     $(".memreas-main").hide();
     $(".memreas-detail").fadeIn(500);
-    //pushReloadItem('view_my_events');
+    pushReloadItem('view_my_events');
 
     ajaxRequest(
         'listallmedia',
