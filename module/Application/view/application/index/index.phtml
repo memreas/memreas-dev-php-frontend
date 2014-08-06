@@ -64,6 +64,7 @@
                                     <input name="password" type="password" placeholder="Password"  onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Password')this.value = '';"/>
                                     <input type="hidden" name="status_user_id" value="" />
                                     <input type="submit" value="log in" name="log in" class="btn btn-sm login-btn">
+                                    <a class="visible-xs forgot clicker forgot-password" href="javascript:;" onClick="popup('forgot');">Forgot Your Password?</a>
                                 </div>
                                 <div class="login-bottom clearfix">
                                     <input type="checkbox" name="remember" style="margin: 0px;">
@@ -76,7 +77,7 @@
                 </div>
                 <div class="body-bottom">
                     <div class="container clearfix">
-                        <div class="pull-right">
+                        <div class="pull-right sign-up">
                             <div class="signup">
                                 <h2>Sign up</h2>
                                 <div class="profile clearfix">
@@ -109,7 +110,7 @@
                                 </form>
                             </div>
                         </div>
-                        <div class="pull-left">
+                        <div class="pull-left filmstrip">
                             <div class="relative feature">
                                 <div class="film absolute">
                                     <img src="/memreas/img/memreas-img.png" alt="Film Strip" style="width: 100%;">
