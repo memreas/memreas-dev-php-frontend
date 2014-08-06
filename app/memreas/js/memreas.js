@@ -237,28 +237,35 @@ function fetchFriendsMemreas(friendMemreasType){
                         else profile_img = '/memreas/img/profile-pic.jpg';
                         if (profile_img == '') profile_img = '/memreas/img/profile-pic.jpg';
                         var event_creator = $(friend).filter ('event_creator').html();
-                        $(target_object).append ('<section class="row-fluid clearfix">' +
+                        $(target_object).append ('<div class="event_section"><section class="row-fluid clearfix">' +
                                   '<figure class="pro-pics2"><img class="public-profile-img" src="' + profile_img + '" alt=""></figure>' +
                                   '<aside class="pro-names2">' + event_creator + '</aside>' +
                                 '</section><div id="viewport" class="mouse_swip" onselectstart="return false;">' +
-                                                    '<div id="' + friend_row + '" class="swipeclass"></div></div>');
+                                                    '<div id="' + friend_row + '" class="swipeclass"></div></div></div>');
 
                         var friend_resources = $(friend).filter ('events').html();
                         friend_resources = $(friend_resources).filter ('event');
                         var friend_resources_count = friend_resources.length;
-                        for (var key=0;key < friend_resources_count;key++){
-                            var friend_resource = friend_resources[key].innerHTML;
-                            var eventId = $(friend_resource).filter('event_id').html();
-                            var resource_media = $(friend_resource).filter('event_media_98x78').html();
-                            resource_media = resource_media.replace("<!--[CDATA[", "").replace("]]-->", "");
-                            if (resource_media == '') resource_media = '/memreas/img/small/1.jpg';
-                            var event_name = $(friend_resource).filter ('event_name').html();
-                            $("#" + friend_row).append ('<div class="event_img"><img src="' + resource_media + '" alt=""><span class="event_name_box"><a style="color:#FFF;" href="javascript:showEventDetail(\'' + eventId + '\', \'' + creator_id + '\');">' + event_name + '</a></span></div>');
+                        if (friend_resources_count > 0){
+                            for (var key=0;key < friend_resources_count;key++){
+                                var friend_resource = friend_resources[key].innerHTML;
+                                var eventId = $(friend_resource).filter('event_id').html();
+                                var resource_media = $(friend_resource).filter('event_media_98x78').html();
+                                resource_media = resource_media.replace("<!--[CDATA[", "").replace("]]-->", "");
+                                if (resource_media == '') resource_media = '/memreas/img/small/1.jpg';
+                                var event_name = $(friend_resource).filter ('event_name').html();
+                                $("#" + friend_row).append ('<div class="event_img"><img src="' + resource_media + '" alt=""><span class="event_name_box"><a style="color:#FFF;" href="javascript:showEventDetail(\'' + eventId + '\', \'' + creator_id + '\');">' + event_name + '</a></span></div>');
+                            }
+                            $("#" + friend_row).swipe({
+                                TYPE:'mouseSwipe',
+                                HORIZ: true
+                             });
                         }
-                        $("#" + friend_row).swipe({
-                            TYPE:'mouseSwipe',
-                            HORIZ: true
-                         });
+                        else{
+                            $("#" + friend_row).append ('There is no event shared');
+                            $("#" + friend_row).css({'color':'#FFF', 'font-style':'italic', 'margin-bottom':'20px'})
+                                .parent("#viewport").removeAttr('id').removeAttr('class');
+                        }
                     }
                     $(".event_images_public").mCustomScrollbar('update');
                 }

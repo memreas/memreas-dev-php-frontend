@@ -43,7 +43,7 @@ $(function(){
         if (detectHandheldIOSDevice())
             aviarySpace('get');
         if (!($(".aviary-thumbs").parent(".elastislide-carousel").length > 0))
-            $('.aviary-thumbs').elastislide();
+            $('.aviary-thumbs').elastislide({orientation : 'vertical', minItems: 4});
         $('.aviary-thumbs').find('li:eq(0) img').trigger("click");
     });
 
@@ -252,8 +252,8 @@ function getUserNotificationsHeader(){
                                                         '</div>' +
                                                         '<span class="notification-time">' + comment_time.getHours() + ':' + correctDateNumber(comment_time.getMinutes()) + ' am <br/>' +
                                                         correctDateNumber(comment_time.getDate()) + '/' + correctDateNumber(comment_time.getMonth()) + '/' + comment_time.getFullYear() + '</span>' +
-                                                        '<a href="#" class="close">x</a>' +
-                                                        '<a href="javascript:;" onclick="gotoEventDetail(\'' + event_id + '\');" class="reply">reply</a>' +
+                                                        '<a href="javascript:;" onclick="updateNotificationHeader(\'' + notification_id + '\', \'ignore\');" class="close">x</a>' +
+                                                        '<a href="javascript:;" onclick="gotoEventDetail(\'' + event_id + '\', \'' + notification_id + '\');" class="reply">reply</a>' +
                                                     '</div>' +
                                                 '</div></li>';
 
@@ -328,7 +328,7 @@ function updateNotificationHeader(notification_id, update_status){
                 }
             ];
 
-            addLoading("#notification-header-" + notification_id + " notifications-all", 'div', 'notification-header-loading');
+            addLoading("#notification-header-" + notification_id + " .notifications-all", 'div', 'notification-header-loading');
             ajaxRequest('updatenotification', params, function(response){
                 if (getValueFromXMLTag(response, 'status') == 'success'){
                     jsuccess(getValueFromXMLTag(response, 'message'));
@@ -336,13 +336,15 @@ function updateNotificationHeader(notification_id, update_status){
                 }
                 else jerror(getValueFromXMLTag(response, 'message'));
                 removeLoading("#notification-header-" + notification_id + " .notifications-all");
-            }, 'undefined', false);
+            }, 'undefined', true);
             break;
         default: jerror('No action performed');
     }
 }
 
-function gotoEventDetail(eventId){
+function gotoEventDetail(eventId, notification_id){
+
+    updateNotificationHeader(notification_id, 'accept');
 
     eventdetail_id = eventId;
     eventdetail_user = $('input[name=user_id]').val();
@@ -461,7 +463,7 @@ function toggleBottomAviary(){
     }
     else{
         jToolInner.animate({
-            'margin-left': '-215px'
+            'margin-left': '-65px'
         }, 300);
         jToolToggle.html("&raquo; tools");
     }

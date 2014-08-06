@@ -249,16 +249,19 @@ addLoading = function(element, typeLoading, additionClass){
     jElement.append('<div class="overlay-bg' + additionClass + '"><div class="bg"></div><img src="/memreas/img/loading-line.gif" class="loading-small overlay-small-loading" /></div>');
     if (typeLoading == 'input'){
         var input_width = jElement.find('input').width();
-        var input_height = jElement.find('input').height();
+        var input_height = jElement.find('input').height() + 5;
         var input_left_pos = (jElement.find('input').offset().left - jElement.offset().left);
+        var input_top_pos = (jElement.find('input').offset().top - jElement.offset().top);
 
-        jElement.find('.overlay-bg').css({'width':input_width, 'height':input_height, 'left':input_left_pos}).fadeIn(500);
+        jElement.find('.overlay-bg').css({'width':input_width, 'height':input_height, 'left':input_left_pos, 'top':input_top_pos}).fadeIn(500);
+        jElement.find('input').attr('readonly', true);
     }
     else jElement.find('.overlay-bg').fadeIn(500);
 }
 removeLoading = function(element){
     var jElement = $(element);
     jElement.find('.overlay-bg').remove();
+    jElement.find('input').removeAttr('readonly');
 }
 
 var buttonHandler = [];

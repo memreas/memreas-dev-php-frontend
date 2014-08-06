@@ -11,7 +11,7 @@ $(document).ready(function() {
             }
         }
 
-        disableInput('input.search_bar');
+        addLoading('.top-search', 'input', '');
         ajaxRequest('findtag', [{tag: "tag", value: query}]
                 , function(data) {
                     var q = $('#search').val();
@@ -41,9 +41,9 @@ $(document).ready(function() {
                             break;
 
                     }
-                    enableInput('input.search_bar');
+                   removeLoading('.top-search');
                    return process(users);
-                });
+                }, 'undefined', true);
     }, 1000);
 
 

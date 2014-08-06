@@ -1024,6 +1024,7 @@ a.black_btn_skin:hover, a.black_btn_skin:active, #avpw_save_button:hover, #avpw_
 	min-height: 490px;
 	margin-bottom: 10px;
 }
+#tab-content-more{ margin-top: -2px; }
 #tab-content h2, #tab-content h3, #tab-content p,
 #tab-content-queue h2, #tab-content-queue h3, #tab-content-queue p,
 #tab-content-share h2, #tab-content-share h3, #tab-content-share p,

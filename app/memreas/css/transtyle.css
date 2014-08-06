@@ -120,11 +120,15 @@ li.working-upload .progress-text{
 }
 #tab-content-share .hideCls{ display: none; }
 #tab-content-share #tab1-share{ display: block; }
-.aviary-edit-wrapper{ height: 450px; position: relative; }
-.aviary-thumbs li, .galleries-location li{
-    margin-left: 10px !important;
-    margin-right: 10px !important;
+.aviary-edit-wrapper{
+    height: 450px; position: relative;
+    width: 80%;
+    float: left;
 }
+.aviary-thumbs li, .galleries-location li{
+    margin-bottom: 10px !important;
+}
+.aviary-thumbs li{ border: 1px solid #FFF; }
 .change-profile-btn{ float: right; }
 .exit-aviary-fullscreen{
     position: fixed;
@@ -191,9 +195,9 @@ li.working-upload .progress-text{
 .tab-slide-nav img{ width: 13px; }
 .fotorama__stage__frame{ text-align: center; }
 .notification-head{ height: 200px; overflow: auto; }
-.aviary-edit-tools{ overflow: hidden; color: #FFF; }
+.aviary-edit-tools{ overflow: hidden; color: #FFF; clear: both; }
 .aviary-edit-tools .tool-inner{
-    margin-left: -215px;
+    margin-left: -65px;
 }
 .aviary-edit-tools a{ color: #FFF; }
 .aviary-edit-tools a:hover{ text-decoration: underline; }
@@ -235,7 +239,7 @@ img.loading-small{
     position: relative;
     z-index: 2;
     margin-left: 20px;
-    margin-top: 15px;
+    margin-top: 10px;
 }
 .button-disabled{
     opacity: 0.7;
@@ -268,6 +272,22 @@ img.loading-small{
     width: 100%;
     height: 100%;
     text-align: center;
+}
+.carousel-area-aviary{
+    width: 15%;
+    float: left;
+}
+.carousel-area-aviary .elastislide-carousel{
+    height: auto;
+}
+.carousel-area-aviary .elastislide-wrapper navs span{
+    background: url(../img/arrows-top-down.png) no-repeat 0px 0px;
+    left: 45%;
+    width: 45px;
+    height: 14px;
+}
+.carousel-area-aviary .elastislide-wrapper navs span.elastislide-next{
+    background-position: 0px -14px;
 }
 /* Aviary page */
 #avpw_save_button, #avpw_apply_container{
