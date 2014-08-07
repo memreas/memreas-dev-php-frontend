@@ -9,3 +9,5 @@ nbproject
 vendor/
 data/
 composer.lock
+*.log
+app/.htaccess

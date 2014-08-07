@@ -1,5 +1,5 @@
 $(document).ready(function() {
-
+ var user_id = $("input[name=user_id]").val();
      var throttledRequest = _.debounce(function(query, process)
     {
 
@@ -12,7 +12,7 @@ $(document).ready(function() {
         }
 
         addLoading('.top-search', 'input', '');
-        ajaxRequest('findtag', [{tag: "tag", value: query}]
+        ajaxRequest('findtag', [{tag: "tag", value: query},  {tag: 'user_id', value: user_id} ]
                 , function(data) {
                     var q = $('#search').val();
                     users = [];
@@ -56,7 +56,7 @@ $(document).ready(function() {
                 var target = '#search-result ul .mCSB_container';
             else target = '#search-result ul';
             var action = 'findtag';
-            var param = [{tag: "tag", value: this.query}];
+            var param = [{tag: "tag", value: this.query}, {tag: 'user_id', value: user_id}];
             var q = this.query;
 
             $("#search-result").show();
@@ -218,8 +218,12 @@ function personalSearchLi(target, item) {
         var name = $.trim(item.username);
         var op = '<li><figure class="pro-pics"><img src="'
                 + photo + '" alt=""></figure><div class="user-names">'
-                + name + '</div><a href="javascript:;" class="btn-friends black_btn_skin" id="'
+                + name + '</div>';
+                if(typeof item.friend_request_sent  === 'undefined'){
+                    op += '<a href="javascript:;" class="btn-friends black_btn_skin" id="'
                 + name + '">add friend</a></li>';
+                }
+                
         $(target).append(op);
     }
 }

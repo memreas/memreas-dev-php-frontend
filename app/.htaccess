@@ -15,14 +15,14 @@ RewriteRule ^.*$ - [NC,L]
 RewriteCond %{REQUEST_URI}::$1 ^(/.+)(.+)::\2$
 RewriteRule ^(.*) - [E=BASE:%1]
 RewriteRule ^(.*)$ %{ENV:BASE}index.php [NC,L]
-<ifModule mod_headers.c>
-    Header set Access-Control-Allow-Origin: *
-    Header set Access-Control-Allow-Origin: amazonaws.com
-</ifModule>
+#<ifModule mod_headers.c>
+#    Header set Access-Control-Allow-Origin: *
+#    Header set Access-Control-Allow-Origin: amazonaws.com
+#</ifModule>
 
 ## BASIC PASSWORD PROTECTION
-AuthType basic
-AuthName "secure-content"
-AuthUserFile /var/app/current/apache_passwords
-Require valid-user
+#AuthType basic
+#AuthName "secure-content"
+#AuthUserFile /var/app/current/apache_passwords
+#Require valid-user
 
