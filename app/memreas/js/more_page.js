@@ -196,8 +196,8 @@ $(function(){
                 {tag: 'location', value: ''}
             ];
             ajaxRequest('addmediaevent', params, function(){
-                jsuccess('Your profile picture updated');
                 $("#setting-userprofile img, img#profile_picture").attr ('src', _media_url);
+                jsuccess('Your profile picture updated');
             });
         },
         done: function (event, data) {

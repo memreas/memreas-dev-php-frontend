@@ -57,18 +57,18 @@ function buycreditAddCard(){
         var stripeActionUrl = $("input[name=stripe_url]").val() + '/stripe/storeCard';
         var obj = new Object();
         obj.user_id = $('input[name=user_id]').val();
-        obj.first_name = $("#credit_addcard_fname").val();
-        obj.last_name = $("#credit_addcard_lname").val();
-        obj.credit_card_type = $("#credit_addcard_cctype").val();
-        obj.credit_card_number = $("#credit_addcard_ccnum").val();
-        obj.expiration_month = $("#credit_addcard_expmonth").val();
-        obj.expiration_year = $("#credit_addcard_expyear").val();
-        obj.cvc = $("#credit_addcard_ccv").val();
-        obj.address_line_1 = $("#credit_addcard_address1").val();
-        obj.address_line_2 = $("#credit_addcard_address2").val();
-        obj.city = $("#credit_addcard_city").val();
-        obj.state = $("#credit_addcard_state").val();
-        obj.zip_code = $("#credit_addcard_zip").val();
+        obj.first_name = jAddCard.find("#credit_addcard_fname").val();
+        obj.last_name = jAddCard.find("#credit_addcard_lname").val();
+        obj.credit_card_type = jAddCard.find("#credit_addcard_cctype").val();
+        obj.credit_card_number = jAddCard.find("#credit_addcard_ccnum").val();
+        obj.expiration_month = jAddCard.find("#credit_addcard_expmonth").val();
+        obj.expiration_year = jAddCard.find("#credit_addcard_expyear").val();
+        obj.cvc = jAddCard.find("#credit_addcard_ccv").val();
+        obj.address_line_1 = jAddCard.find("#credit_addcard_address1").val();
+        obj.address_line_2 = jAddCard.find("#credit_addcard_address2").val();
+        obj.city = jAddCard.find("#credit_addcard_city").val();
+        obj.state = jAddCard.find("#credit_addcard_state").val();
+        obj.zip_code = jAddCard.find("#credit_addcard_zip").val();
 
         var json_storeCard = JSON.stringify(obj);
 
