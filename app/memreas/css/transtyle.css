@@ -291,6 +291,8 @@ img.loading-small{
 }
 ul.popupContact.memreas-detail-friends, .account-payment{ height: 200px; }
 .TermsAndServiceContent{ height: 300px; }
+.creditAddCardForm input, .accountAddCardForm input, .addCardForm input{ color: #A0A0A0; }
+
 /* Aviary page */
 #avpw_save_button, #avpw_apply_container{
     width: 20px;

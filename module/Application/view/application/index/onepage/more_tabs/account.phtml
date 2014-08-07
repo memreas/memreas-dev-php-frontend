@@ -115,31 +115,31 @@
     <ul id="content_1" class="scrollpopup accountAddCardForm">
         <li>
             <label class="textfield_names">First name*</label>
-            <input name="input" type="text" id="addcard_fname" class="" value="first name" default="first name" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'first name')this.value = '';"/>
+            <input name="input" type="text" id="addcard_fname" class="" value="first name" default="first name" onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#A0A0A0'); }" onFocus="if(this.value == 'first name'){ this.value = ''; $(this).css('color', '#000'); }"/>
         </li>
         <li>
             <label class="textfield_names">Last name*</label>
-            <input name="input" type="text" id="addcard_lname" class="" value="last name" default="last name" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'last name')this.value = '';"/>
+            <input name="input" type="text" id="addcard_lname" class="" value="last name" default="last name" onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }" onFocus="if(this.value == 'last name'){ this.value = ''; $(this).css('color', '#000'); }"/>
         </li>
          <li>
             <label class="textfield_names">Address 1*</label>
-            <input name="input" type="text" id="addcard_address1" class="" value="Address line 1" default="Address line 1" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Address line 1')this.value = '';"/>
+            <input name="input" type="text" id="addcard_address1" class="" value="Address line 1" default="Address line 1" onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }" onFocus="if(this.value == 'Address line 1'){ this.value = ''; $(this).css('color', '#000'); }"/>
         </li>
         <li>
             <label class="textfield_names">Address 2</label>
-            <input name="input" type="text" id="addcard_address2" class="" value="Address line 2" default="Address line 2" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Address line 2')this.value = '';"/>
+            <input name="input" type="text" id="addcard_address2" class="" value="Address line 2" default="Address line 2" onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }" onFocus="if(this.value == 'Address line 2'){ this.value = ''; $(this).css('color', '#000'); }"/>
         </li>
         <li>
             <label class="textfield_names">City*</label>
-            <input name="input" type="text" id="addcard_city" class="" value="City" default="City" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'City')this.value = '';"/>
+            <input name="input" type="text" id="addcard_city" class="" value="City" default="City" onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }" onFocus="if(this.value == 'City'){ this.value = ''; $(this).css('color', '#000'); }"/>
         </li>
         <li>
             <label class="textfield_names">State*</label>
-            <input name="input" type="text" id="addcard_state" class="" value="State" default="State" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'State')this.value = '';"/>
+            <input name="input" type="text" id="addcard_state" class="" value="State" default="State" onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }" onFocus="if(this.value == 'State'){ this.value = ''; $(this).css('color', '#000'); }"/>
         </li>
         <li>
             <label class="textfield_names">Zip*</label>
-            <input name="input" type="text" id="addcard_zip" class="" value="Zip" default="Zip" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Zip')this.value = '';"/>
+            <input name="input" type="text" id="addcard_zip" class="" value="Zip" default="Zip" onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }" onFocus="if(this.value == 'Zip'){ this.value = ''; $(this).css('color', '#000'); }"/>
         </li>
         <li>
             <label class="textfield_names">Card type*</label>
@@ -153,7 +153,7 @@
         </li>
         <li>
             <label class="textfield_names">Card no.*</label>
-            <input name="input" type="text" id="addcard_ccnum" class="" value="Card number" default="Card number" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Card number')this.value = '';"/>
+            <input name="input" type="text" id="addcard_ccnum" class="" value="Card number" default="Card number" onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }" onFocus="if(this.value == 'Card number'){ this.value = ''; $(this).css('color', '#000'); }"/>
         </li>
         <li>
             <label class="textfield_names">Exp mon.*</label>
@@ -194,7 +194,7 @@
         </li>
         <li>
             <label class="textfield_names">Card CVC*</label>
-            <input name="input" type="text" id="addcard_ccv" class="" value="Card code" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Card code')this.value = '';"/>
+            <input name="input" type="text" id="addcard_ccv" class="" value="Card code" onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }" onFocus="if(this.value == 'Card code'){ this.value = ''; $(this).css('color', '#000'); }"/>
         </li>
     </ul>
     <a class="black_btn_skin f-left" href="javascript:;" onclick="accountAddCard();">ok</a> <a class="black_btn_skin f-right" href="javascript:disablePopup('popupaccountaddcard');">cancel</a>
