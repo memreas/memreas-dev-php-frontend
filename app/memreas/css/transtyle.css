@@ -289,6 +289,8 @@ img.loading-small{
 .carousel-area-aviary .elastislide-wrapper navs span.elastislide-next{
     background-position: 0px -14px;
 }
+ul.popupContact.memreas-detail-friends, .account-payment{ height: 200px; }
+.TermsAndServiceContent{ height: 300px; }
 /* Aviary page */
 #avpw_save_button, #avpw_apply_container{
     width: 20px;

@@ -44,18 +44,59 @@ $(function(){
         getAccountMemreas();
     });
 
-    $("a.subscription-tab").one ('click', function(){
-        $('#buttons7-moretab').akordeon();
-        loadSubscriptionPlans();
+    var subscriptionTabAkordeon = false;
+    $("a.subscription-tab").click (function(){
+
+        if (!subscriptionTabAkordeon){
+            $('#buttons7-moretab').akordeon();
+            loadSubscriptionPlans();
+            subscriptionTabAkordeon = true;
+        }
+
+        if ($(".subscription-payment-method-tab").hasClass('expanded')){
+            var jMemberCard = $(".subscription-payment");
+            if (checkReloadItem('reload_subscription_cards') || jMemberCard.html() == ''){
+                if (!jMemberCard.hasClass('preload-null'))
+                    jMemberCard.addClass('preload-null');
+            }
+            listStripeCard();
+        }
     });
-    $("a.buy-credit-tab").one ('click', function(){
-        $('#buttons8-moretab').akordeon();
+
+    var buyCreditTabAkordeon = false;
+    $("a.buy-credit-tab").click (function(){
+
+        if (!buyCreditTabAkordeon){
+            $('#buttons8-moretab').akordeon();
+            buyCreditTabAkordeon = true;
+        }
+
+        var jMemberCard = $(".buycredit-payment");
+        if (checkReloadItem('reload_buy_credit_cards') || jMemberCard.html() == ''){
+            if (jMemberCard.hasClass('preload-null'))
+                jMemberCard.addClass('preload-null');
+        }
         buycredit_listCard();
     });
 
     /*Action tabs click*/
-    //$("a[title=more]").click(function(){ fillUserDetail( $("input[name=user_id]").val()); });
-    $("a[title=tab1-more]").click(function(){ $("a[title=more]").click(); });
+    var accountTabAkordenon = false;
+    $("a[title=tab1-more]").click(function(){
+        if (!accountTabAkordenon){
+            activeAkordeon('account-profile-tab', false);
+            accountTabAkordenon = true;
+        }
+        if ($(".account-card-tab").hasClass('expanded')){
+            var jMemberCard = $(".account-payment");
+            if (checkReloadItem('reload_account_cards') || jMemberCard.html() == ''){
+                if (!jMemberCard.hasClass('preload-null'))
+                    jMemberCard.addClass('preload-null')
+            }
+            loadAccountCard();
+            $(".account-card-functions").show();
+        }
+
+    });
 
     /* Change profile picture*/
 

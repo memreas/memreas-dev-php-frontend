@@ -1,5 +1,11 @@
 $(function(){
     $(".account-card-section").click(function(){
+
+        var jMemberCard = $(".account-payment");
+        if (checkReloadItem('reload_account_cards') || jMemberCard.html() == ''){
+            if (!jMemberCard.hasClass('preload-null'))
+                jMemberCard.addClass('preload-null')
+        }
         loadAccountCard();
     });
 
@@ -38,8 +44,9 @@ $(function(){
 var accountTab_cards = new Object();
 
 function accountCardChange(choose_card_id){
+    choose_card_id = choose_card_id.replace('account-card-', '');
     accountResetCardChoose();
-    for (i in accountTab_cards){
+    for (var i in accountTab_cards){
         if (choose_card_id == accountTab_cards[i].card_id){
             accountTab_cards[i].selected = 1;
         }
@@ -47,7 +54,7 @@ function accountCardChange(choose_card_id){
 }
 
 function accountResetCardChoose(){
-    for (i in accountTab_cards){
+    for (var i in accountTab_cards){
         accountTab_cards[i].selected = 0;
     }
 }
@@ -56,19 +63,25 @@ function accountResetCardChoose(){
 function loadAccountCard(){
     $(".account-card-functions").hide();
     var jMemberCard = $(".account-payment");
+
     if (!jMemberCard.hasClass('preload-null')) return false;
     jMemberCard.removeClass('preload-null');
+
+    if (jMemberCard.hasClass('mCustomScrollbar'))
+        jMemberCard = $(".account-payment .mCSB_container");
+
     jMemberCard.empty();
     var stripeUserId = $("input[name=user_id]").val();
     var stripeActionUrl = $("input[name=stripe_url]").val() + '/stripe/listCards';
     var obj = new Object();
     obj = {userid:stripeUserId};
     var json_listCard = JSON.stringify(obj, null, '\t');
-    data = '{"action": "listcards", ' +
+    var data = '{"action": "listcards", ' +
         '"type":"jsonp", ' +
         '"json": ' + json_listCard  +
         '}';
-    $('#loadingpopup').show();
+
+    $('#loadingpopup').fadeIn(1000);
     $.ajax({
         url: stripeActionUrl,
         type: 'POST',
@@ -81,41 +94,44 @@ function loadAccountCard(){
 
                 if (number_of_cards > 0){
 
-                    for (i = 0;i < number_of_cards;i++){
+                    for (var i = 0;i < number_of_cards;i++){
                         accountTab_cards[i] = new Object();
                         var params = {card_id:cards[i].stripe_card_reference_id, data:cards[i], selected:0};
                         var row_card_id = cards[i].stripe_card_reference_id;
                         var row_card_type = cards[i].card_type;
                         var row_card_obfuscated = cards[i].obfuscated_card_number;
                         accountTab_cards[i]= params;
-                        var html_element = '<li>' +
-                            '<label class="label_text2"><input type="radio" id="' + row_card_id + '" name="radio_cards" class="regular-radio" onchange="accountCardChange(this.id);" />' +
-                            '<label for="' + row_card_id + '"></label>' + row_card_type + ' | ' + row_card_obfuscated + '</label>' +
+                        var html_element = '<li id="account-card-' + row_card_id + '">' +
+                            '<label class="label_text2"><input type="radio" id="account-card-' + row_card_id + '" name="radio_cards" class="regular-radio" onchange="accountCardChange(this.id);" />' +
+                            '<label for="account-card-' + row_card_id + '"></label>' + row_card_type + ' | ' + row_card_obfuscated + '</label>' +
                             '</li>';
                         jMemberCard.append(html_element);
                     }
+                    ajaxScrollbarElement('.account-payment');
                     $(".account-card-functions").show();
                 }
                 else jMemberCard.append('<li>You have no card at this time. Try to add one first</li>');
+                removeItem(reloadItems, 'reload_account_cards');
             }
             else {
                 jMemberCard.append('<li>You have no card at this time. Try to add one first</li>');
                 jerror(response.message);
             }
-            $('#loadingpopup').hide();
+            $('#loadingpopup').fadeOut(500);
         }
     });
 }
 
-function accountRemoveCard(){
+function accountRemoveCard(userConfirm){
 
-    var confirmBox = confirm("Are you sure want to remove this card?");
-
-    if (!confirmBox) return false;
+    if (!userConfirm){
+        jconfirm('Are you sure want to remove this card?', 'accountRemoveCard(true)');
+        return false;
+    }
 
     //Fetch the card
     var selectedCard = '';
-    for (i in accountTab_cards){
+    for (var i in accountTab_cards){
         if (accountTab_cards[i].selected == 1){
             selectedCard = accountTab_cards[i].data.stripe_card_reference_id;
             break;
@@ -135,7 +151,8 @@ function accountRemoveCard(){
             '"type":"jsonp", ' +
             '"json": ' + data_object  +
             '}';
-        $('#loadingpopup').show();
+
+        $('#loadingpopup').fadeIn(1000);
         $.ajax({
             type:'post',
             url: stripeActionUrl,
@@ -143,15 +160,16 @@ function accountRemoveCard(){
             data: 'json=' + data,
             success: function(response){
                 if (response.status = 'Success'){
-                    $(".account-payment").addClass('preload-null');
-                    $('#loadingpopup').hide();
+
                     jsuccess(response.message);
-                    loadAccountCard();
+                    $("#account-card-" + selectedCard).remove();
+                    pushReloadItem('reload_subscription_cards');
+                    pushReloadItem('reload_buy_credit_cards');
                 }
                 else {
                     jerror(response.message);
-                    $('#loadingpopup').hide();
                 }
+                $('#loadingpopup').fadeOut(500);
             }
         });
     }
@@ -213,7 +231,7 @@ function accountAddCard(){
             '"json": ' + json_storeCard  +
             '}';
 
-        $('#loadingpopup').show();
+        $('.stripe-payment').fadeIn(1000);
         $.ajax({
             type:'post',
             url: stripeActionUrl,
@@ -225,13 +243,15 @@ function accountAddCard(){
                     disablePopup('popupaccountaddcard');
                     $(".account-payment").addClass('preload-null');
                     loadAccountCard();
+                    pushReloadItem('reload_subscription_cards');
+                    pushReloadItem('reload_buy_credit_cards');
                 }
                 else jerror(response.message);
-                $('#loadingpopup').hide();
+                $('#loadingpopup').fadeOut(500);
             },
             error:function(){
                 jerror('Card adding failure. Please check card\'s information.');
-                $('#loadingpopup').hide();
+                $('.stripe-payment').fadeOut(500);
             }
         });
     }
@@ -246,7 +266,7 @@ function accountViewCard(){
     jViewCard.find('select').val('');
 
     var selectedCard = '';
-    for (i in accountTab_cards){
+    for (var i in accountTab_cards){
         if (accountTab_cards[i].selected == 1){
             selectedCard = accountTab_cards[i].data.stripe_card_reference_id;
             break;
@@ -268,7 +288,7 @@ function accountViewCard(){
             '"json": ' + data_object  +
             '}';
 
-        $('#loadingpopup').show();
+        $('#loadingpopup').fadeIn(1000);
         $.ajax({
             type:'post',
             url: stripeActionUrl,
@@ -292,10 +312,13 @@ function accountViewCard(){
                     jViewCard.find("#addcard_city").val(card_info.address_city);
                     jViewCard.find("#addcard_state").val(card_info.address_state);
                     jViewCard.find("#addcard_zip").val(card_info.address_zip);
+                    $('#loadingpopup').fadeOut(500);
                     popup('popupaccountviewcard');
                 }
-                else jerror(response.message);
-                $('#loadingpopup').hide();
+                else {
+                    $('#loadingpopup').fadeOut(500);
+                    jerror(response.message);
+                }
             }
         });
     }
@@ -344,21 +367,20 @@ function accountUpdateCard(){
             '"json": ' + json_storeCard  +
             '}';
 
-        $('#loadingpopup').show();
+        $('#loadingpopup').fadeIn(1000);
         $.ajax({
             type:'post',
             url: stripeActionUrl,
             dataType: 'jsonp',
             data: 'json=' + data,
             success: function(response){
+                $('#loadingpopup').fadeOut(500);
                 if (response.status == 'Success')
                     jsuccess('Card information updated');
                 else jerror(response.message);
-                $('#loadingpopup').hide();
             },
             error:function(){
                 jerror('Card adding failure. Please check card\'s information.');
-                $('#loadingpopup').hide();
             }
         });
     }
@@ -384,8 +406,10 @@ function getAccountPlans(){
         '"type":"jsonp", ' +
         '"json": ' + data_obj  +
         '}';
-    $('#loadingpopup').show();
+
     var stripeCustomerUrl = $("input[name=stripe_url]").val() + '/stripe/getCustomerInfo';
+
+    $('#loadingpopup').fadeIn(1000);
     $.ajax({
         url: stripeCustomerUrl,
         type: 'POST',
@@ -393,7 +417,7 @@ function getAccountPlans(){
         data: 'json=' + data,
         success: function(response){
             if (response.status == 'Success'){
-                account_stripe = response.customer;
+                var account_stripe = response.customer;
                 if (account_stripe.exist == 1){
                     var total_subscriptions = account_stripe.info.subscriptions.total_count;
                     if (total_subscriptions > 0){
@@ -408,9 +432,9 @@ function getAccountPlans(){
                     else jAccountPlans.html('You have no any actived plan');
                 }
                 else jAccountPlans.html('Your account has not existed or deleted before on Stripe');
+                $('#loadingpopup').fadeOut(500);
             }
             else jAccountPlans.html('You have no any actived plan');
-            $('#loadingpopup').hide();
         }
     });
 }

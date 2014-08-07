@@ -124,10 +124,10 @@
             <label class="textfield_names">Card type*</label>
             <select name="addcard_cctype" id="addcard_cctype">
                 <option value="">-Choose-</option>
-                <option value="visa">Visa</option>
-                <option value="master">Master</option>
-                <option value="discover">Discover</option>
-                <option value="amex">Amex</option>
+                <option value="visa">Visa Card</option>
+                <option value="master">Master Card</option>
+                <option value="discover">Discover Card</option>
+                <option value="amex">Amex Card</option>
             </select>
         </li>
         <li>
@@ -232,7 +232,7 @@
         </li>
         <li>
             <input id="subscription-order-agree" class="css-checkbox" type="checkbox" name="subscription_order_agree"/>
-            <label for="subscription-order-agree" name="demo_lbl_1" class="css-label margin-none" >Confirm place order.</label>
+            <label for="subscription-order-agree" name="demo_lbl_1" class="css-label margin-none" >Check this box to confirm memreas subscription order and agree to our <a href="javascript:;" onclick="showTermsAndService();">terms of service</a></label>
         </li>
     </ul>
 </div>
@@ -292,3 +292,106 @@
         </li>
     </ul>
 </div>
+
+<div id="popupTermsAndService" class="popups">
+  <a id="popupTermsAndServiceClose" onClick="disablePopup('popupTermsAndService')" class='popupTermsAndService'>x</a>
+    <h2>Terms of Service</h2>
+    <ul id="TermsAndServiceContent" class="popup_legal scrollpopup">
+        <h3>Terms of Service</h3>
+
+        <p>
+            The contents on this website http://memreasdev-frontend.elasticbeanstalk.com(the "site") are provided by memreas as a service to its customers.<br/>
+            Please Read These Terms Carefully Before Using this Service. You are deemed to have read and agreed to the following Terms of Service when using this Website and all its services. If you do not agree to be bound by all of these Terms of Use, do not access or use the Service.
+        </p>
+
+        <h4>1. Basic Terms</h4>
+        <p>The following terminology applies to these Terms of Service and any or all Agreements. "User", "You", "Your", and "Yourself" refers to you, the person accessing this Website, using its services and hereby accepting the Website’s Terms of Service. "Website", "memreas", "Our", "Ourselves", "We", and "Us" refers to our Website: www.memreasdev-frontend.elasticbeanstalk.com  operated by the legal owner of the registered domain name: www.memreasdev-frontend.elasticbeanstalk.com. "Party", "Parties", or "Us", refers to both the User and Ourselves, or either the User or Ourselves. All terms refer to the offer, acceptance and usage of all the Website’s services. This Agreement sets forth the legally binding terms and conditions for your use of the Website.</p>
+
+        <h4>2. Acknowledgement and Acceptance of Terms of Use</h4>
+        <p>This Service from www.memreasdev-frontend.elasticbeanstalk.com is offered to you conditioned on your acceptance without modification, of the terms, conditions, and notices contained in this agreement and any operating rules, policies, and procedures that may be published from time to time on this site (collectively the "Terms").</p>
+        <p>Unless explicitly stated otherwise, the Terms govern the use of any new features that augment or enhance the current Services, including the release of new memreas resources and services. In case of any violation of these rules and regulations, memreas reserves the right to seek all remedies available by law and in equity for such violations.</p>
+
+        <h4>3. Revision and Changes</h4>
+        <p>The Website reserves the right to revise or change these terms from time to time as it sees fit and your continued use of the Website monitored by our systems or not will signify your acceptance of any adjustment to these terms. If there are any changes to our Privacy Policy, we will announce that these changes have been made on the relevant page and on other key pages of our Website.</p>
+        <p>If the revision, in our sole discretion, is material we will notify you via an update or an e-mail to the email associated with your account. By continuing to access or use the services after those revisions become effective, you agree to be bound by the revised Terms.</p>
+        <p>You are therefore advised to re-read this statement on a regular basis.</p>
+
+        <h4>4. Privacy</h4>
+        <p>We are committed to protecting your privacy. Any information that you provide to memreas is subject to our Privacy Policy, which governs our collection and use of your information. You understand that, through your use of the Website’s services, you consent to the collection and use (as set forth in the Privacy Policy) of this information, including the transfer of this information for storage, processing and use by memreas. Only authorized persons, on a need to know basis, will use any information collected from individual users. We constantly review our systems and data to ensure the best possible service to our users. Please see our Privacy Policy here: Privacy Policy</p>
+
+        <h4>5. Services& Territory</h4>
+        <p>These Terms of Service apply to all users of our Service, including users who contribute Content on the Service. “Content” includes the photos, videos, sounds, audiovisual combinations, text, software, scripts, graphics, interactive features and other materials you may view on, access through, or contribute to the Service.</p>
+        <p>The information provided within the Service is not intended for distribution to or use by any person or entity in any jurisdiction or country where such distribution or use would be contrary to law or regulation or which would subject memreas to any registration requirement within such jurisdiction or country. We reserve the right to limit the availability of the Service or any portion of the Service, to any person, geographic area, or jurisdiction, at any time and in our sole discretion, and to limit the quantities of any content, program, product, service or other feature that memreas provides.</p>
+
+        <h4>6. Account</h4>
+        <p>In order to access the Service, you will have to create an Account and become a member. When creating your account, you must provide accurate and complete information. You are solely responsible for the activity that occurs on your account since you alone know the password to access your account. You must keep your account password secure and should not share it with anyone. You must notify memreas immediately of any breach of security or unauthorized use of your account. You may be liable for the losses of memreas or others due to such unauthorized use.</p>
+
+        <h4>7. Rights</h4>
+        <p>You retain your rights to any content you submit, post or display on or through the site’s services. By doing so, you grant us a worldwide, non-exclusive, royalty-free license to use, copy, reproduce, process, adapt, modify, publish, transmit, display and distribute such content in any and all media or distribution methods (now known or later developed).</p>
+        <p>You agree that this license includes the right for memreas to provide, promote, and improve its services and to make content submitted to or through all the services available to other companies, organizations or individuals who partner with memreas for the distribution or publication of such content on other media and services, subject to our terms and conditions for such content use.</p>
+
+        <h4>8. Responsibility</h4>
+        <p>You are entirely responsible for your use of the site’s services, for any content you provide, and for any consequences thereof, including the use of your content by other users and our third party partners. You understand that your content may be syndicated, broadcast, distributed, or published by our partners and if you do not have the right to submit content for such use, it may subject you to liability.</p>
+        <p>You represent and warrant that you have all the rights, power and authority necessary to grant the rights granted herein to any submitted content. You are solely responsible for evaluating the fitness for a particular purpose of any downloads, programs and text available through this site.</p>
+        <p>memreas will not be held responsible or liable for your content and any use of your content, in accordance with these Terms. This includes the non-liability of this Website for the consequences which might occur as a result of your content and any use of your content by yourself or others, including death and/or personal, physical, material, and moral injury.</p>
+
+        <h4>9. Intellectual Property</h4>
+        <p>The Website and all its original content, features and functionality are owned by memreas and are protected by international Copyright, trademark, patent, trade secret and other intellectual property or proprietary rights laws. You are only permitted to use the Content as expressly authorized by memreas. These Terms do not transfer any right, title, or interest in the Service, Site or the Content to you.</p>
+        <p>Redistribution or republication of any part of this site or its content is prohibited, including such by framing or other similar or any other means, without the express written consent of the site owner.</p>
+        <p>We respect the intellectual property of others and ask that you do too. In case of any violation of your copyright, you can follow the DMCA guidelines provided on this site to lodge your complaint. We reserve the right to delete or disable content alleged to be infringing and terminate accounts of repeat infringers.</p>
+
+        <h4>10. User Submission- Content Restrictions</h4>
+        <p>By accepting and agreeing to these terms, you understand, agree and consent to submit, upload, post, and share  the Content which: (a) is copyright-free, advertisement-free, non-pornographic related, non-violent related, non-graphic related, non-alcoholic related, neither unethical nor immoral;(b) will not be - unlawful, threatening, abusive, harassing, defamatory, libellous, deceptive, fraudulent, invasive of another's privacy or tortuous; (c) will not - victimize, harass, degrade, or intimidate an individual or group of individuals on the basis of religion, gender, sexual orientation, race, ethnicity, age, or disability; (d) will not - infringe on any patent, trademark, trade secret, copyright, right of publicity, or other proprietary right of any party; (e) will not - contain software viruses or any other computer code, files, or programs that are designed or intended to disrupt, damage, or limit the functioning of any software, hardware, or telecommunications equipment or to damage or obtain unauthorized access to any data or other information of any third party.</p>
+        <p>You agree not to alter or modify any part of the Service.</p>
+        <p>You agree not to attempt to gain access to secured portions of the Site or Services to which you do not possess access rights.</p>
+        <p>You agree not to interfere or attempt to interfere with the proper working of the sites; by imposing unreasonable load on the infrastructure.</p>
+        <p>You agree not to distribute in any medium any part of the Service or the Content without memreas's prior written authorization.</p>
+        <p>You agree not to use the Service to distribute, promote or otherwise publish any material containing any solicitation for funds, advertising or solicitation for goods or services.</p>
+        <p>You agree not to use the Service to distribute or up load any virus, trojan horses or do anything else that might cause harm to the Service, memreas.com systems or to other Members' systems in any way.</p>
+        <p>You are responsible for the content uploaded/posted by you. You retain all of your ownership rights in your Content. A non-respect of statement in the above paragraph would constitute a prohibited content.</p>
+        <p>If these rules were to be ignored or violated, memreas reserves the right to immediately terminate the account associated to the relevant prohibited content, with no prior warning.</p>
+
+        <h4>11. Disclaimer</h4>
+        <p>The Exclusions and Limitations are defined as follows.</p>
+        <p>THE INFORMATION ON THIS WEBSITE IS PROVIDED ON AN "AS-IS" BASIS. YOU AGREE THAT YOUR USE OF THE SERVICES SHALL BE AT YOUR SOLE RISK. TO THE FULLEST EXTENT PERMITTED BY – THIS WEBSITE EXCLUDES ALL REPRESENTATIONS AND WARRANTIES IN ANY FORM RELATING TO THIS WEBSITE AND ITS CONTENT OR WHICH IS OR MAY BE PROVIDED BY ANY AFFILIATES OR ANY OTHER THIRD PARTY, INCLUDING IN RELATION TO ANY (I) ERRORS, MISTAKES, OR INACCURACIES OF CONTENT, (II) PERSONAL INJURY OR PROPERTY DAMAGE, OF ANY NATURE WHATSOEVER, RESULTING FROM YOUR ACCESS TO AND USE OF OUR SERVICES, EVEN IF MEMREAS HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES, (III) ANY UNAUTHORIZED ACCESS TO OR USE OF OUR SECURE SERVERS AND/OR ANY AND ALL PERSONAL INFORMATION AND/OR FINANCIAL INFORMATION STORED THEREIN, (IV) ANY INTERRUPTION OR CESSATION OF TRANSMISSION TO OR FROM OUR SERVICES, (IV) ANY BUGS, VIRUSES, TROJAN HORSES, OR THE LIKE WHICH MAY BE TRANSMITTED TO OR THROUGH OUR SERVICES BY ANY THIRD PARTY, AND/OR (V) ANY ERRORS OR OMISSIONS IN ANY CONTENT OR FOR ANY LOSS OR DAMAGE OF ANY KIND INCURRED AS A RESULT OF THE USE OF ANY CONTENT POSTED, EMAILED, TRANSMITTED, OR OTHERWISE MADE AVAILABLE VIA THE SERVICES. MEMREAS DOES NOT WARRANT, ENDORSE, GUARANTEE, OR ASSUME RESPONSIBILITY FOR ANY PRODUCT OR SERVICE ADVERTISED OR OFFERED BY A THIRD PARTY, AND MEMREAS WILL NOT BE A PARTY TO OR IN ANY WAY BE RESPONSIBLE FOR MONITORING ANY TRANSACTION BETWEEN YOU AND THIRD-PARTY PROVIDERS OF PRODUCTS OR SERVICES.</p>
+        <p>This includes, without limitation, direct loss, loss of business or profits (whether or not the loss of such profits was foreseeable, arose in the normal course of things or you have advised this Website of the possibility of such potential loss), damage caused to your computer, computer software, systems and programs and the data thereon or any other direct or indirect, consequential and incidental damages.</p>
+        <p>Memreas does not guarantee any confidentiality with respect to any Content you submit.</p>
+        <p>TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, MEMREAS, ITS OFFICERS, DIRECTORS, EMPLOYEES, AND AGENTSARE NOT AND WILL NOT BE RESPONSIBLE OR LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL OR PUNITIVE FORM OF DAMAGES.</p>
+
+        <h4>12. Availability and Warranty</h4>
+        <p>The services featured on this Website are only available within the range of the site’s server and host capabilities. The site does not warrant that its service will be uninterrupted, timely or error free, although it is provided to the best ability. By using this service, you thereby indemnify this Website, its employees, agents and affiliates against any loss or damage, in whatever manner, howsoever caused.</p>
+        <p>Although the Website might show any error, bug or dysfunction, memreas will not be held responsible or liable upon these related concerns.</p>
+
+        <h4>13. Limitation of Liability</h4>
+        <p>As a condition of use of the Service, and in consideration of the services provided by memreas, User agrees that neither memreas, nor any officer, director, shareholder, agent, contractor or employee of memreas will be liable to User or any third party for any direct, indirect, incidental, special, punitive, or consequential loss of profits, loss of earnings, loss of business opportunities, damages, expenses, or costs resulting directly or indirectly from, or otherwise arising in connection with the Service, Site or Content.</p>
+        <p>MEMREAS SHALL NOT BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, PUNITIVE, SPECIAL, MULTIPLE, OR CONSEQUENTIAL DAMAGES, RESULTING FROM THE USE OR THE INABILITY TO USE MEMREAS SERVICES OR TRANSACTIONS ENTERED INTO THROUGH THE SITE OR RESULTING FROM HACKING OF THE WEBSITE, UNAUTHORIZED ACCESS TO AND USE OF, DELETION OR ALTERATION OF USER'S TRANSMISSIONS OR DATA OR FAILURE OF THE SITE TO STORE USER'S TRANSMISSIONS OR DATA, INCLUDING BUT NOT LIMITED TO, DAMAGES FOR LOSS OF PROFITS, USE, DATA OR OTHER INTANGIBLE PROPERTY, EVEN IF MEMREASHAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES. YOU HEREBY RELEASE MEMREAS FROM ANY AND ALL OBLIGATIONS, LIABILITIES AND CLAIMS.</p>
+        <p>IN SOME JURISDICTIONS, WARRANTIES, DISCLAIMERS AND CONDITIONS MAY APPLY THAT CANNOT BE LEGALLY EXCLUDED, IF THAT IS TRUE IN YOUR JURISDICTION, THEN TO THE EXTENT PERMITTED BY LAW, MEMREAS LIMITS ITS LIABILITY FOR ANY CLAIMS UNDER THOSE WARRANTIES OR CONDITIONS TO SUPPLYING YOU THE SERVICES AGAIN.</p>
+
+        <h4>14. Indemnification</h4>
+        <p>USER WILL DEFEND, INDEMNIFY AND HOLD HARMLESS MEMREAS AND ITS DIRECTORS, OFFICERS, EMPLOYEES, PROPRIETORS, INDEPENDENTCONTRACTORS, CONSULTANTS, PARTNERS, SHAREHOLDERS, REPRESENTATIVES, CUSTOMERS, AGENTS, PREDECESSORS, SUCCESSORS, AND PERMITTED ASSIGNS FROM AND AGAINST ANY CLAIM, SUIT, DEMAND, LOSS, DAMAGE, EXPENSE (INCLUDING REASONABLE ATTORNEYS' FEES AND COSTS) OR LIABILITY THAT MAY RESULT FROM, ARISE OUT OF OR RELATE TO: (a) ACTS OR OMISSIONS BY USER ARISING OUT OF OR IN CONNECTION WITH THIS AGREEMENT; (b) INTENTIONAL OR NEGLIGENT VIOLATIONS BY USER OF ANY APPLICABLE LAWS OR GOVERNMENTAL REGULATION, (c) CONTRACTUAL RELATIONS BETWEEN THE USER AND A THIRD PARTY; OR (d) INFRINGEMENT OF INTELLECTUAL PROPERTY RIGHTS INCLUDING, BUT NOT LIMITED TO, RIGHTS RELATING TO IP AND COPYRIGHT.</p>
+        <p>User acknowledges that memreas has no control over the Content uploaded/transmitted by Users.Memreas does not examine the use to which Users put the Service or the nature of the Content Users send or receive. User hereby indemnifies and holds harmless memreas, its stockholders, officers, directors, employees and agents from any and all loss, cost, damage, expense, or liability relating to or arising out of the transmission, reception, and/or content of whatever nature transmitted or received by Users.</p>
+
+        <h4>15.   Termination</h4>
+        <p>You agree that we may terminate your right to use our Services if the information that you provided initially to register for our Services or subsequently modified, contains false or misleading information, or conceals or omits any information we would likely consider material.</p>
+        <p>Any attempt to undermine or cause harm to memreas server or its customers, is strictly prohibited and will be subject to automatic account termination. This includes Spamming.</p>
+        <p>Memreas may terminate your account and forfeit any fee at any time without prior notice, if you are in breach of the terms of this Agreement. memreas will be the sole arbiter as to what constitutes a violation of the Agreement.</p>
+        <p>On termination, memreas will retain the information to meet any legal requirements in future.</p>
+
+        <h4>16. Links</h4>
+        <p>As a service to our customers, we provide links to third party websites. We do not monitor or review the content of other party’s websites which are linked to from this Website. Opinions expressed or materials appearing on such websites are not necessarily shared or endorsed by us and should not be regarded as the publisher of such opinions or material. Please be aware that we do not have control over third party sites and we are not responsible for the privacy practices, or content, of these sites. We strongly encourage our users to be aware when they leave our Website and to read the privacy policies of these sites. You should evaluate the security and trustworthiness of any other site connected to this site or accessed through this site yourself, before disclosing any personal information to them. This Website will not accept any responsibility for any loss or damage in whatever manner, howsoever caused, resulting from your disclosure to third parties of personal information.</p>
+
+        <h4>17. Eligibility to Accept Terms of Service</h4>
+        <p>You affirm that you are either more than 18 years of age, or an emancipated minor, or possess legal parental or guardian consent, and are fully able and competent to enter into this Agreement, and to abide by and comply with these Terms of Service. In any case, you affirm that you are over the age of 13, as the Service is not intended for children under 13. If you are under 13 years of age, then please do not use the Service.</p>
+
+        <h4>18. Assignment</h4>
+        <p>These Terms of Service, and any rights and licenses granted hereunder, may not be transferred or assigned by you to any third party. However, we may assign this to a third party without restriction to enable us to continue to provide the services to you.</p>
+
+        <h4>19. Laws and Dispute Resolution</h4>
+        <p>These terms (hence this Agreement) will be governed and construed in accordance with the laws of _________, United States, without giving effect to any principles of conflicts of law. Any claims/dispute relating to these Terms or the Services shall be resolved through final and binding arbitration, as per the Arbitration procedure of the American Arbitration Association (AAA). Arbitration shall be held in _________________, USA, or any other location mutually agreed to.  The AAA rules will govern payment of all arbitration fees.</p>
+
+        <h4>20. General Terms</h4>
+        <p>By accessing this Website and using its services, you consent to these Terms of Service and to the exclusive applicable jurisdiction in all disputes arising out of such access. If any of these terms are deemed invalid or unenforceable for any reason (including, but not limited to the exclusions and limitations set out in the relevant section), then the invalid or unenforceable provision will be severed from these terms and the remaining terms provided by memreas will continue to apply. Failure of the Website to enforce any of the provisions set out in these Terms of Service and any Agreement, or failure to exercise any option to terminate, will not be construed as waiver in any form and will not affect the validity of these Terms of Service or of any Agreement or any part thereof, or the right thereafter to enforce each and every provision. These Terms of Service will not be amended, modified, varied or supplemented except in writing and signed by duly authorized representatives of memreas.</p>
+    </ul>
+    <a class="black_btn_skin f-left" href="javascript:;" onclick="disablePopup('popupTermsAndService');">ok</a>
+</div>
+<div id="bgpopupTermsAndService" class="backgroundPopup"></div>

@@ -35,21 +35,22 @@ function planChange(choose_plan_id){
     }
 }
 function resetPlanChoose(){
-    for (i in plans_payment){
+    for (var i in plans_payment){
         plans_payment[i].selected = 0;
     }
 }
 
 function cardChange(choose_card_id){
+    choose_card_id = choose_card_id.replace('subscription-card-', '');
     resetCardChoose();
-    for (i in account_cards){
+    for (var i in account_cards){
         if (choose_card_id == account_cards[i].card_id){
             account_cards[i].selected = 1;
         }
     }
 }
 function resetCardChoose(){
-    for (i in account_cards){
+    for (var i in account_cards){
         account_cards[i].selected = 0;
     }
 }
@@ -74,6 +75,12 @@ function subscription_step2(){
         jerror('<span>Please choose a subscription plan to continue</span>');
         activeAkordeon('subscription-payment-plans-tab', false);
         return false;
+    }
+
+    var jMemberCard = $(".subscription-payment");
+    if (checkReloadItem('reload_subscription_cards') || jMemberCard.html() == ''){
+        if (!jMemberCard.hasClass('preload-null'))
+            jMemberCard.addClass('preload-null');
     }
     listStripeCard();
 }
@@ -180,7 +187,7 @@ function subscription_step4(){
 
     //Fetch the order plan
     var orderPlan = new Object();
-    for (i in plans_payment){
+    for (var i in plans_payment){
         if (plans_payment[i].selected == 1){
             orderPlan = plans_payment[i].data;
             break;
@@ -189,7 +196,7 @@ function subscription_step4(){
 
     //Fetch the card
     var orderCard = new Object();
-    for (i in account_cards){
+    for (var i in account_cards){
         if (account_cards[i].selected == 1){
             orderCard = account_cards[i].data;
             break;
@@ -203,7 +210,7 @@ function subscription_step4(){
     order_summary.amount = orderPlan.amount / 100;
 
     order_summary = JSON.stringify(order_summary, null, '\t');
-    data = '{"action": "subscription", ' +
+    var data = '{"action": "subscription", ' +
         '"type":"jsonp", ' +
         '"json": ' + order_summary  +
         '}';
@@ -254,8 +261,8 @@ function getPlans(){
     var stripeActionUrl = $("input[name=stripe_url]").val() + '/stripe/listPlan';
     var obj = new Object();
     obj.txt = "";
-    data_obj = JSON.stringify(obj, null, '\t');
-    data = '{"action": "list", ' +
+    var data_obj = JSON.stringify(obj, null, '\t');
+    var data = '{"action": "list", ' +
         '"type":"jsonp", ' +
         '"json": ' + data_obj  +
         '}';
@@ -279,8 +286,8 @@ function getPlans(){
                 //Get customer info based on this account
                 var obj = new Object();
                 obj.userid = $("input[name=user_id]").val();
-                data_obj = JSON.stringify(obj, null, '\t');
-                data = '{"action": "getCustomerInfo", ' +
+                var data_obj = JSON.stringify(obj, null, '\t');
+                var data = '{"action": "getCustomerInfo", ' +
                     '"type":"jsonp", ' +
                     '"json": ' + data_obj  +
                     '}';
@@ -321,7 +328,7 @@ function getPlans(){
     });
 }
 function listStripeCard(){
-    $(".card-functions").hide();
+
     var jMemberCard = $(".subscription-payment");
     if (!jMemberCard.hasClass('preload-null')) return false;
     jMemberCard.removeClass('preload-null');
@@ -331,7 +338,7 @@ function listStripeCard(){
     var obj = new Object();
     obj = {userid:stripeUserId};
     var json_listCard = JSON.stringify(obj, null, '\t');
-    data = '{"action": "listcard", ' +
+    var data = '{"action": "listcard", ' +
         '"type":"jsonp", ' +
         '"json": ' + json_listCard  +
         '}';
@@ -353,7 +360,7 @@ function listStripeCard(){
                         default_card = account_stripe.info.default_card;
                     }
 
-                    for (i = 0;i < number_of_cards;i++){
+                    for (var i = 0;i < number_of_cards;i++){
                         account_cards[i] = new Object();
                         var params = {card_id:cards[i].stripe_card_reference_id, data:cards[i], selected:0};
                         var row_card_id = cards[i].stripe_card_reference_id;
@@ -361,20 +368,20 @@ function listStripeCard(){
                         var row_card_obfuscated = cards[i].obfuscated_card_number;
                         account_cards[i]= params;
                         var html_element = '<li>' +
-                            '<label class="label_text2"><input type="radio" id="' + row_card_id + '" name="radio_cards" class="regular-radio" onchange="cardChange(this.id);"';
+                            '<label class="label_text2"><input type="radio" id="subscription-card-' + row_card_id + '" name="radio_cards" class="regular-radio" onchange="cardChange(this.id);"';
                         //Set default card checked if available
                         if (default_card == row_card_id){
                             html_element += ' checked="checked"';
                             cardChange(default_card);
                         }
                         html_element += ' />' +
-                            '<label for="' + row_card_id + '"></label>' + row_card_type + ' | ' + row_card_obfuscated + '</label>' +
+                            '<label for="subscription-card-' + row_card_id + '"></label>' + row_card_type + ' | ' + row_card_obfuscated + '</label>' +
                             '</li>';
                         jMemberCard.append(html_element);
                     }
-                    $(".card-functions").show();
                 }
                 else jMemberCard.append('<li>You have no card at this time. Try to add one first</li>');
+                removeItem(reloadItems, 'reload_subscription_cards');
             }
             else {
                 jMemberCard.append('<li>You have no card at this time. Try to add one first</li>');
@@ -442,7 +449,7 @@ function stripeAddCard(){
             '"json": ' + json_storeCard  +
             '}';
 
-        $('#loadingpopup').show();
+        $('.stripe-payment').fadeIn(1000);
         $.ajax({
             type:'post',
             url: stripeActionUrl,
@@ -454,13 +461,15 @@ function stripeAddCard(){
                     disablePopup('popupaddcard');
                     $(".subscription-payment").addClass('preload-null');
                     listStripeCard();
+                    pushReloadItem('reload_account_cards');
+                    pushReloadItem('reload_buy_credit_cards');
                 }
                 else jerror(response.message);
-                $('#loadingpopup').hide();
+                $('.stripe-payment').fadeOut(500);
             },
             error:function(){
                 jerror('Card adding failure. Please check card\'s information.');
-                $('#loadingpopup').hide();
+                $('.stripe-payment').fadeOut(500);
             }
         });
     }
@@ -506,6 +515,8 @@ function removeCard(){
                     $('#loadingpopup').hide();
                     jsuccess(response.message);
                     listStripeCard();
+                    pushReloadItem('reload_account_cards');
+                    pushReloadItem('reload_buy_credit_cards');
                 }
                 else {
                     jerror(response.message);
@@ -519,10 +530,13 @@ function removeCard(){
 function confirmOrder(){
     //Check order confirm checkbox
     if (!($("#subscription-order-agree").is(":checked"))){
-        jerror("Please agree with confirm box");
+        jerror("You must agree with our terms of service");
         $(".order-recept").hide();
         return false;
     }
 
     activeAkordeon('subscription-order-receipt-tab', subscription_step4);
+}
+function showTermsAndService(){
+    popup('popupTermsAndService');
 }

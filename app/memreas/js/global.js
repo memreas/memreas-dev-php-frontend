@@ -21,7 +21,8 @@ var stackAjaxInstance = []; //This variable is used for stacking ajax request(s)
 * @view_friend_event: memreas page for friend event
 * @view_public_event: memreas page for public event
 * */
-var reloadItems = ['view_my_events', 'view_friend_events', 'view_public_events', 'share_listmedia'];
+var reloadItems = ['view_my_events', 'view_friend_events', 'view_public_events', 'share_listmedia',
+                    'reload_account_cards', 'reload_subscription_cards', 'reload_buy_credit_cards'];
 
 
 function checkReloadItem(itemName){

@@ -72,6 +72,7 @@
                 function expandItem(item) {
                     var body = item.find('.akordeon-item-body');
                     var h2 = item.find('.akordeon-item-body').find('.akordeon-item-content').height();
+                    h2 = h2 + 20;
                     //var h = body.data('h');
                     body.animate({ height: h2 }, speed, function () {
                         item.removeClass('collapsed').addClass('expanded').find('.akordeon-icon span').html(expandText);

@@ -1,4 +1,4 @@
-<div class="akordeon-item expanded">
+<div class="akordeon-item account-profile-tab">
     <div class="akordeon-item-head">
         <div class="akordeon-item-head-container">
             <div class="akordeon-heading">
@@ -18,7 +18,7 @@
         </div>
     </div>
 </div>
-<div class="akordeon-item expanded">
+<div class="akordeon-item">
     <div class="akordeon-item-head account-plans-tab">
         <div class="akordeon-item-head-container">
             <div class="akordeon-heading">
@@ -47,7 +47,7 @@
         </div>
     </div>
 </div>
-<div class="akordeon-item expanded">
+<div class="akordeon-item account-card-tab">
     <div class="akordeon-item-head account-card-section">
         <div class="akordeon-item-head-container">
             <div class="akordeon-heading">
@@ -71,12 +71,12 @@
                 <div style="clear: both;"></div>
                 <a class="black_btn_skin" href="javascript:;" onclick="accountAddCardPopup();" style="margin-top: 20px; display: inline-block;">Add</a>
                 <a class="black_btn_skin account-card-functions hide-onload" href="javascript:;" onclick="accountViewCard();" style="margin-top: 20px; display: inline-block;">View</a>
-                <a class="black_btn_skin account-card-functions hide-onload" href="javascript:;" onclick="accountRemoveCard();" style="margin-top: 20px; display: inline-block;">Remove</a>
+                <a class="black_btn_skin account-card-functions hide-onload" href="javascript:;" onclick="accountRemoveCard(false);" style="margin-top: 20px; display: inline-block;">Remove</a>
             </div>
         </div>
     </div>
 </div>
-<div class="akordeon-item expanded">
+<div class="akordeon-item">
     <div class="akordeon-item-head">
         <div class="akordeon-item-head-container">
             <div class="akordeon-heading">
@@ -104,39 +104,6 @@
                     </select>
                 </div>
                 <input name="input" type="text" class="more-input2" value="postal / zip code" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'postal / zip code')this.value = '';"/>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="akordeon-item expanded">
-    <div class="akordeon-item-head">
-        <div class="akordeon-item-head-container">
-            <div class="akordeon-heading">
-                paypal section
-            </div>
-        </div>
-    </div>
-    <div class="akordeon-item-body">
-        <div class="akordeon-item-content">
-            <div class="button-holder">
-                <input name="input" type="text" class="more-input" value="Paypal user name" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Paypal user name')this.value = '';"/>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="akordeon-item expanded">
-    <div class="akordeon-item-head">
-        <div class="akordeon-item-head-container">
-            <div class="akordeon-heading">
-                Logout
-            </div>
-        </div>
-    </div>
-    <div class="akordeon-item-body">
-        <div class="akordeon-item-content">
-            <div class="button-holder">
-                <h5 style="float: right;">System will log you out when clicking on logout button below</h5>
-                <a class="black_btn_skin" href="/index/logout">Logout</a>
             </div>
         </div>
     </div>
@@ -178,10 +145,10 @@
             <label class="textfield_names">Card type*</label>
             <select name="addcard_cctype" id="addcard_cctype">
                 <option value="">-Choose-</option>
-                <option value="visa">Visa</option>
-                <option value="master">Master</option>
-                <option value="discover">Discover</option>
-                <option value="amex">Amex</option>
+                <option value="visa">Visa Card</option>
+                <option value="master">Master Card</option>
+                <option value="discover">Discover Card</option>
+                <option value="amex">Amex Card</option>
             </select>
         </li>
         <li>

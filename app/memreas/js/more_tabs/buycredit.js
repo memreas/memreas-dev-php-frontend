@@ -9,15 +9,16 @@ $(function(){
 });
 
 function buycredit_cardChange(choose_card_id){
+    choose_card_id = choose_card_id.replace('buycredit-card-', '');
     buycredit_resetCardChoose();
-    for (i in buycredit_account_cards){
+    for (var i in buycredit_account_cards){
         if (choose_card_id == buycredit_account_cards[i].card_id){
             buycredit_account_cards[i].selected = 1;
         }
     }
 }
 function buycredit_resetCardChoose(){
-    for (i in buycredit_account_cards){
+    for (var i in buycredit_account_cards){
         buycredit_account_cards[i].selected = 0;
     }
 }
@@ -88,6 +89,8 @@ function buycreditAddCard(){
                     disablePopup('popupcreditaddcard');
                     $(".buycredit-payment").addClass('preload-null');
                     buycredit_listCard();
+                    pushReloadItem('reload_account_cards');
+                    pushReloadItem('reload_subscription_cards');
                 }
                 else jerror(response.message);
                 $('#loadingpopup').hide();
@@ -101,19 +104,25 @@ function buycreditAddCard(){
 }
 function buycredit_listCard(){
     $(".buycredit-card-functions").hide();
+
     var jMemberCard = $(".buycredit-payment");
+
     if (!jMemberCard.hasClass('preload-null')) return false;
     jMemberCard.removeClass('preload-null');
+
+    if (jMemberCard.hasClass('mCustomScrollbar'))
+        jMemberCard = $(".buycredit-payment .mCSB_container");
+
     jMemberCard.empty();
     var stripeUserId = $("input[name=user_id]").val();
     var stripeActionUrl = $("input[name=stripe_url]").val() + '/stripe/listCards';
     var obj = new Object();
     obj = {userid:stripeUserId};
     var json_listCard = JSON.stringify(obj, null, '\t');
-    data = '{"action": "listcard", ' +
-    '"type":"jsonp", ' +
-    '"json": ' + json_listCard  +
-    '}';
+    var data = '{"action": "listcard", ' +
+        '"type":"jsonp", ' +
+        '"json": ' + json_listCard  +
+        '}';
     $('#loadingpopup').show();
     if ($.isEmptyObject(account_stripe)) fetch_customer();
     $.ajax({
@@ -132,7 +141,7 @@ function buycredit_listCard(){
                         default_card = account_stripe.info.default_card;
                     }
 
-                    for (i = 0;i < number_of_cards;i++){
+                    for (var i = 0;i < number_of_cards;i++){
                         buycredit_account_cards[i] = new Object();
                         var params = {card_id:cards[i].stripe_card_reference_id, data:cards[i], selected:0};
                         var row_card_id = cards[i].stripe_card_reference_id;
@@ -140,20 +149,22 @@ function buycredit_listCard(){
                         var row_card_obfuscated = cards[i].obfuscated_card_number;
                         buycredit_account_cards[i]= params;
                         var html_element = '<li>' +
-                        '<label class="label_text2"><input type="radio" id="' + row_card_id + '" name="radio_cards" class="regular-radio" onchange="buycredit_cardChange(this.id);"';
+                        '<label class="label_text2"><input type="radio" id="buycredit-card-' + row_card_id + '" name="radio_cards" class="regular-radio" onchange="buycredit_cardChange(this.id);"';
                         //Set default card checked if available
                         if (default_card == row_card_id){
                             html_element += ' checked="checked"';
                             buycredit_cardChange(default_card);
                         }
                         html_element += ' />' +
-                        '<label for="' + row_card_id + '"></label>' + row_card_type + ' | ' + row_card_obfuscated + '</label>' +
+                        '<label for="buycredit-card-' + row_card_id + '"></label>' + row_card_type + ' | ' + row_card_obfuscated + '</label>' +
                         '</li>';
                         jMemberCard.append(html_element);
                     }
+                    ajaxScrollbarElement('.buycredit-payment');
                     $(".buycredit-card-functions").show();
                 }
                 else jMemberCard.append('<li>You have no card at this time. Try to add one first</li>');
+                removeItem(reloadItems, 'reload_buy_credit_cards');
             }
             else {
                 jMemberCard.append('<li>You have no card at this time. Try to add one first</li>');
@@ -202,6 +213,8 @@ function buycredit_removeCard(){
                     $('#loadingpopup').hide();
                     jsuccess(response.message);
                     buycredit_listCard();
+                    pushReloadItem('reload_account_cards');
+                    pushReloadItem('reload_subscription_cards');
                 }
                 else {
                     jerror(response.message);
@@ -216,8 +229,8 @@ function fetch_customer(){
     //Get customer info based on this account
     var obj = new Object();
     obj.userid = $("input[name=user_id]").val();
-    data_obj = JSON.stringify(obj, null, '\t');
-    data = '{"action": "getCustomerInfo", ' +
+    var data_obj = JSON.stringify(obj, null, '\t');
+    var data = '{"action": "getCustomerInfo", ' +
     '"type":"jsonp", ' +
     '"json": ' + data_obj  +
     '}';
@@ -244,7 +257,7 @@ function fill_account_detail(){
     jBuyerBalance.html('Not Specify');
     var checkCardChoose = false;
     var orderCard = new Object();
-    for (i in buycredit_account_cards){
+    for (var i in buycredit_account_cards){
         if (buycredit_account_cards[i].selected == 1){
             orderCard = buycredit_account_cards[i].data;
             checkCardChoose = true;
@@ -268,7 +281,7 @@ function buycredit_confirmAmount(){
     var checkCardChoose = false;
     //Fetch the card
     var orderCard = new Object();
-    for (i in buycredit_account_cards){
+    for (var i in buycredit_account_cards){
         if (buycredit_account_cards[i].selected == 1){
             orderCard = buycredit_account_cards[i].data;
             checkCardChoose = true;
@@ -285,14 +298,15 @@ function buycredit_confirmAmount(){
     params.userid = $("input[name=user_id]").val();
     params.stripe_card_reference_id = orderCard.stripe_card_reference_id;
     params.amount = $("select#credit-amount").val();
-    params_json = JSON.stringify(params, null, '\t');
-    data = '{"action": "subscription", ' +
+    var params_json = JSON.stringify(params, null, '\t');
+    var data = '{"action": "subscription", ' +
     '"type":"jsonp", ' +
     '"json": ' + params_json  +
     '}';
 
     var stripeActionUrl = $("input[name=stripe_url]").val() + '/stripe/addValue';
-    $('#loadingpopup').show();
+
+    $('.stripe-payment').fadeIn(1000);
     $.ajax({
         url: stripeActionUrl,
         type: 'POST',
@@ -306,7 +320,7 @@ function buycredit_confirmAmount(){
                 fill_account_detail();
             }
             else jerror(response.message);
-            $('#loadingpopup').hide();
+            $('.stripe-payment').fadeOut(500);
         }
     });
 }
