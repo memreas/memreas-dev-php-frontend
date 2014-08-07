@@ -436,7 +436,7 @@ function stripeAddCard(){
         obj.expiration_month = jAddCard.find("#addcard_expmonth").val();
         obj.expiration_year = jAddCard.find("#addcard_expyear").val();
         obj.cvc = jAddCard.find("#addcard_ccv").val();
-        obj.address_line_1 = jAddCard.find(".addCardForm")("#addcard_address1").val();
+        obj.address_line_1 = jAddCard.find("#addcard_address1").val();
         obj.address_line_2 = jAddCard.find("#addcard_address2").val();
         obj.city = jAddCard.find("#addcard_city").val();
         obj.state = jAddCard.find("#addcard_state").val();
