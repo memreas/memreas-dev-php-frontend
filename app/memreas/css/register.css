@@ -911,3 +911,20 @@ ul.popupContact2 li {
     right: -60px;
     top: 7px;
 }
+.notfound.top{
+    text-align: center;
+    padding: 20px;
+}
+.notfound.top h2{
+    font-size: 25px;
+}
+.notfound-image{
+    text-align: center;
+    padding-top: 25%;
+}
+.take-back-btn{
+    display: inline-block;
+    position: absolute;
+    bottom: 10px;
+    right: 1px;
+}
