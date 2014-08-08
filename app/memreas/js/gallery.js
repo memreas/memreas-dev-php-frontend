@@ -75,10 +75,10 @@ jQuery.fetch_server_media = function (){
             {tag: 'event_id', value: ''},
             {tag: 'user_id', value: user_id},
             {tag: 'device_id', value : ''},
-            //Added jmeah - checking jwplayer rtmp - 2-APR-2014
             {tag: 'rtmp', value : 'true'},
             {tag: 'limit', value: '200'},
-            {tag: 'page', value: '1'}
+            {tag: 'page', value: '1'},
+            {tag: 'metadata', value: '1'}
         ], function (response){
             if (getValueFromXMLTag(response, 'status') == "Success") {
                 var medias = getSubXMLFromTag(response, 'media');
@@ -95,33 +95,52 @@ jQuery.fetch_server_media = function (){
                     //Build video thumbnail
                     if (_media_type == 'video'){
 
-                        //Check if ios device
-                        if (userBrowser[0].ios == 1){
-                            _media_url = $(media).filter('media_url_hls').html();
-                            var _hls_media = 1;
-                            if (typeof (_media_url) != 'undefined'){
-                                _mp4_media = $(media).filter('media_url_1080p').html();
-                                _mp4_media = _mp4_media.replace("<!--[CDATA[", "").replace("]]-->", "");
+                        var metadata = getValueFromXMLTag(medias[json_key], 'metadata').replace("<!--[CDATA[", "").replace("]]-->", "");
+                        metadata = JSON.parse(metadata);
+                        var transcode_progress = metadata.S3_files.transcode_progress;
+
+                        //Check if web transcode is completed or not
+                        var web_transcoded = false;
+                        for (var i = 0;i < transcode_progress.length;i++){
+                            if (transcode_progress[i] == 'transcode_web_completed'){
+                                web_transcoded = true;
+                                break;
                             }
                         }
-                        else {
-                            _media_url = $(media).filter('media_url_1080p').html();
-                            _mp4_media = '';
-                            _hls_media = 0;
-                        }
 
-                        //Ignore if has no enough info or media is corrupted
-                        if (typeof (_media_url) != 'undefined'){
-                            _media_url = _media_url.replace("<!--[CDATA[", "").replace("]]-->", "");
-                            var temp_url = _media_url.split ('media');
-                            var mediaThumbnail = getMediaThumbnail(media, '/memreas/img/small/1.jpg');
-                            $.post('/index/buildvideocache', {video_url:_media_url, thumbnail:mediaThumbnail, media_id:mediaId, hls_media:_hls_media, mp4_media:_mp4_media}, function(response_data){
-                                response_data = JSON.parse (response_data);
-                                $(".user-resources").append('<a data-video="true" href="/memreas/js/jwplayer/jwplayer_cache/' + response_data.video_link + '"><img src="' + response_data.thumbnail + '"/></a>');
-                                $(".edit-area-scroll").append ('<li class="video-media"><a class="video-resource image-sync" id="' + response_data.media_id + '" onclick="return imageChoosed(this.id);" href="' + response_data.thumbnail + '"><img src="' + response_data.thumbnail + '"/><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a><img src="/memreas/img/gallery-select.png"></li>');
-                            });
+                        if (web_transcoded){
+
+                            //Check if ios device
+                            if (userBrowser[0].ios == 1){
+                                _media_url = $(media).filter('media_url_hls').html();
+                                var _hls_media = 1;
+                                if (typeof (_media_url) != 'undefined'){
+                                    _mp4_media = $(media).filter('media_url_1080p').html();
+                                    _mp4_media = _mp4_media.replace("<!--[CDATA[", "").replace("]]-->", "");
+                                }
+                            }
+                            else {
+                                _media_url = $(media).filter('media_url_1080p').html();
+                                _mp4_media = '';
+                                _hls_media = 0;
+                            }
+
+                            //Ignore if has no enough info or media is corrupted
+                            if (typeof (_media_url) != 'undefined'){
+                                _media_url = _media_url.replace("<!--[CDATA[", "").replace("]]-->", "");
+                                var temp_url = _media_url.split ('media');
+                                var mediaThumbnail = getMediaThumbnail(media, '/memreas/img/small/1.jpg');
+                                $.post('/index/buildvideocache', {video_url:_media_url, thumbnail:mediaThumbnail, media_id:mediaId, hls_media:_hls_media, mp4_media:_mp4_media}, function(response_data){
+                                    response_data = JSON.parse (response_data);
+                                    $(".user-resources").append('<a data-video="true" href="/memreas/js/jwplayer/jwplayer_cache/' + response_data.video_link + '"><img src="' + response_data.thumbnail + '"/></a>');
+                                    $(".edit-area-scroll").append ('<li class="video-media"><a class="video-resource image-sync" id="' + response_data.media_id + '" onclick="return imageChoosed(this.id);" href="' + response_data.thumbnail + '"><img src="' + response_data.thumbnail + '"/><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a><img src="/memreas/img/gallery-select.png"></li>');
+                                });
+                            }
+                            else $(".edit-area-scroll").append ('<li class="video-media"><a class="video-resource image-sync" id="' + mediaId + '" onclick="return imageChoosed(this.id);" href="/memreas/img/large-pic-1.jpg"><img src="/memreas/img/large-pic-1.jpg"/><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a><img src="/memreas/img/gallery-select.png"></li>');
                         }
-                        else $(".edit-area-scroll").append ('<li class="video-media"><a class="video-resource image-sync" id="' + mediaId + '" onclick="return imageChoosed(this.id);" href="/memreas/img/large-pic-1.jpg"><img src="/memreas/img/large-pic-1.jpg"/><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a><img src="/memreas/img/gallery-select.png"></li>');
+                        else{
+                            $(".edit-area-scroll").append ('<li class="video-media"><a class="video-resource image-sync" id="' + mediaId + '" onclick="return imageChoosed(this.id);" href="/memreas/img/transcode-icon.png"><img src="/memreas/img/transcode-icon.png"/></a><img src="/memreas/img/gallery-select.png"></li>');
+                        }
                     }
                     else {
                         $(".user-resources").append('<img src="' + _media_url + '"/>');

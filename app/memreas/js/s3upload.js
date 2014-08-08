@@ -107,7 +107,7 @@ $(document).ready( function() {
                 data.context = tpl2;
 
                 //Set preview if browser is supported file reader
-                if (window.FileReader) {
+                if (window.FileReader && filetype.indexOf ('image') >= 0) {
                     var file = data.files[0]; //Files[0] = 1st file
                     var reader = new FileReader();
                     reader.readAsDataURL(file);

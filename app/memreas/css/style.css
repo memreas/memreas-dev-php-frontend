@@ -764,7 +764,7 @@ ul.event_images li {
 ul.event_images li img{
 	width: 100%;
 }
-.edit-area-scroll img{ width: 100%; }
+.edit-area-scroll img{ width: 100% !important; }
 .f-left {
 	float: left;
 }

@@ -130,7 +130,8 @@ function updateMemreasMediaDetailsScript(){
 
                 //Set download button
                 var download_url = el.find('img').attr('src');
-                $(".memreas-detail-download").attr("href", download_url);
+                $(".memreas-detail-download").attr("download", download_url);
+                $(".memreas-detail-download").attr("href", 'data:image/octet-stream, ' + download_url);
 
                 updateMediaLike();
                 getMediaComment();
@@ -147,7 +148,8 @@ function updateMemreasMediaDetailsScript(){
 
                 //Set download button
                 var download_url = el.find('img').attr('src');
-                $(".memreas-detail-download").attr("href", download_url);
+                $(".memreas-detail-download").attr("download", download_url);
+                $(".memreas-detail-download").attr("href", 'data:image/octet-stream, ' + download_url);
 
                 updateMediaLike();
             }
