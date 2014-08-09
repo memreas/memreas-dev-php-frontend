@@ -245,6 +245,8 @@ error_log("callback_json----->".$callback_json.PHP_EOL);
         $user_id = $session->user_id;
         //if (!$user) return $this->redirect()->toRoute('index', array('action' => "index"));
         $data['userid'] = $user_id;
+                $data['sid'] = $session->sid;
+
 
         $data['bucket'] = "memreasdev";
         $data['accesskey'] = "AKIAJMXGGG4BNFS42LZA";
@@ -376,7 +378,7 @@ error_log("Inside loginAction".PHP_EOL);
     	//Fetch the post data
 		$request = $this->getRequest();
 		$postData = $request->getPost()->toArray();
-		$username = $postData ['username'];
+ 		$username = $postData ['username'];
 		//$password = $postData ['password'];
 		$userid = $postData ['status_user_id'];
 error_log("userid---->".$userid.PHP_EOL);
@@ -387,6 +389,7 @@ error_log("userid---->".$userid.PHP_EOL);
             $session = new Container('user');
             $session->offsetSet('user_id', $userid);
             $session->offsetSet('username', $username);
+            $session->offsetSet('sid',  $postData ['sid']);
             return $this->redirect()->toRoute('index', array('action' => 'memreas'));
         }
         /* OLD
@@ -583,8 +586,9 @@ error_log("userid---->".$userid.PHP_EOL);
 
     public function getToken()
     {
-        $session = $this->getAuthService()->getIdentity();
-        return  empty($session['token'])?'':$session['token']; ;
+        $session = new Container('user');
+        error_log('session-fe'.print_r($session['sid'],true));
+         return  empty($session['sid'])?'':$session['sid'];
     }
 
     public function editmediaAction(){

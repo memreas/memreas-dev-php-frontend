@@ -63,6 +63,8 @@
                                     <input name="username" type="text" placeholder="Username" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Email')this.value = '';"/>
                                     <input name="password" type="password" placeholder="Password"  onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Password')this.value = '';"/>
                                     <input type="hidden" name="status_user_id" value="" />
+                                    <input type="hidden" name="sid" value="" />
+
                                     <input type="submit" value="log in" name="log in" class="btn btn-sm login-btn">
                                     <a class="visible-xs forgot clicker forgot-password" href="javascript:;" onClick="popup('forgot');">Forgot Your Password?</a>
                                 </div>

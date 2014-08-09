@@ -328,6 +328,8 @@ $(function(){
             	if (getValueFromXMLTag(xml_response, 'status') == 'success'){
                     //$("#form-user-login").find('input[name=status_user_id]').val(getValueFromXMLTag(xml_response, 'userid'));
                     $("#form-user-login").find('input[name=status_user_id]').val(getValueFromXMLTag(xml_response, 'userid'));
+                    $('input[name=sid]').val(getValueFromXMLTag(xml_response, 'sid'));
+
                     document.user_login_frm.submit();
                 }
                 else jerror(getValueFromXMLTag(xml_response, 'message'));
