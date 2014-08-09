@@ -59,7 +59,7 @@ error_log("Inside fetch XML request XML ---> " . $xml . PHP_EOL);
 		    'action' => $action,
 		    //'cache_me' => true,
     	    'xml' => $xml,
-            'PHPSESSID' => $this->getToken(),
+            'sid' => $this->getToken(),
             'user_id' => empty($_SESSION['user']['user_id'])?'':$_SESSION['user']['user_id']
 	        )
 	    );
@@ -587,7 +587,7 @@ error_log("userid---->".$userid.PHP_EOL);
     public function getToken()
     {
         $session = new Container('user');
-        error_log('session-fe'.print_r($session['sid'],true));
+        error_log('fe-session -> '.print_r($session['sid'],true));
          return  empty($session['sid'])?'':$session['sid'];
     }
 
