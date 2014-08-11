@@ -553,10 +553,13 @@ share_getAllMedia = function() {
 
                             //Check if web transcode is completed or not
                             var web_transcoded = false;
-                            for (var i = 0;i < transcode_progress.length;i++){
-                                if (transcode_progress[i] == 'transcode_web_completed'){
-                                    web_transcoded = true;
-                                    break;
+
+                            if (typeof (transcode_progress) != 'undefined'){
+                                for (var i = 0;i < transcode_progress.length;i++){
+                                    if (transcode_progress[i] == 'transcode_web_completed'){
+                                        web_transcoded = true;
+                                        break;
+                                    }
                                 }
                             }
 
