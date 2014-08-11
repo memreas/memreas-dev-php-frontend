@@ -529,7 +529,8 @@ share_getAllMedia = function() {
                 { tag: 'user_id', 				value: user_id },
                 { tag: 'device_id', 			value: device_id },
                 { tag: 'limit', 				value: media_limit_count },
-                { tag: 'page', 					value: media_page_index }
+                { tag: 'page', 					value: media_page_index },
+                { tag: 'metadata', value: '1'}
             ],
             function(response) {
                 if (getValueFromXMLTag(response, 'status') == "Success") {
@@ -545,9 +546,25 @@ share_getAllMedia = function() {
                         var _media_url = getMediaThumbnail(media, '/memreas/img/small-pic-3.jpg');
                         var _media_id = $(media).filter('media_id').html();
                         if (_media_type == 'video'){
-                            var _main_video_media = $(media).filter ('main_media_url').html();
-                            _main_video_media = _main_video_media.replace("<!--[CDATA[", "").replace("]]-->", "");
-                            jtarget_element.append('<li class="video-media" media-url="' + _main_video_media + '"><a href="javascript:;" id="share-' + _media_id + '" class="image-sync" onclick="return imageChoosed(this.id);"><img src="' + _media_url + '" alt=""><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a></li>');
+
+                            var metadata = getValueFromXMLTag(medias[json_key], 'metadata').replace("<!--[CDATA[", "").replace("]]-->", "");
+                            metadata = JSON.parse(metadata);
+                            var transcode_progress = metadata.S3_files.transcode_progress;
+
+                            //Check if web transcode is completed or not
+                            var web_transcoded = false;
+                            for (var i = 0;i < transcode_progress.length;i++){
+                                if (transcode_progress[i] == 'transcode_web_completed'){
+                                    web_transcoded = true;
+                                    break;
+                                }
+                            }
+
+                            if (web_transcoded){
+                                var _main_video_media = $(media).filter ('main_media_url').html();
+                                _main_video_media = _main_video_media.replace("<!--[CDATA[", "").replace("]]-->", "");
+                                jtarget_element.append('<li class="video-media" media-url="' + _main_video_media + '"><a href="javascript:;" id="share-' + _media_id + '" class="image-sync" onclick="return imageChoosed(this.id);"><img src="' + _media_url + '" alt=""><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a></li>');
+                            }
                         }
                         else jtarget_element.append('<li><a href="javascript:;" id="share-' + _media_id + '" class="image-sync" onclick="return imageChoosed(this.id);"><img src="' + _media_url + '" alt=""></a></li>');
                     }

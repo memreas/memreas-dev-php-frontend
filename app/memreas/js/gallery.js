@@ -2,9 +2,8 @@
 * Server side
 */
 var notificationHeaderObject = new Object(); //This variable stored header notification and compare with a new for checking
-                                                //new value come
-$(function(){
-    ajaxRequestHeaderNotification();
+
+function getUserDetail(){
     if ($("input[name=user_id]").val() == "")
         document.location.href = "/index";
     else{
@@ -28,8 +27,11 @@ $(function(){
                 $("input[name=account_email]").val(useremail);
             }
             else jerror (getValueFromXMLTag(xml_response, 'messsage'));
-        });
+        }, 'undefined', true);
     }
+}
+
+$(function(){
 
     $("a[title=gallery]").click(function(){ $("#gallery #tabs a[title=tab1]").click(); });
 
@@ -162,6 +164,7 @@ jQuery.fetch_server_media = function (){
                       $(".edit-areamedia-scroll").mCustomScrollbar ('update');
 
                       //Fetch user's notification header
+                      getUserDetail();
                       getUserNotificationsHeader();
                   }, 1000);
                   $(".swipebox").swipebox();
@@ -311,7 +314,7 @@ function getUserNotificationsHeader(){
                                     '</div>');
             }
 
-            setTimeout(function(){ getUserNotificationsHeader() }, 10000);
+            setTimeout(function(){ getUserNotificationsHeader() }, 30000);
         }, 'undefined', true
     );
 }
