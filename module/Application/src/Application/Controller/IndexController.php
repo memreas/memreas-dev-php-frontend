@@ -245,7 +245,7 @@ error_log("callback_json----->".$callback_json.PHP_EOL);
         $user_id = $session->user_id;
         //if (!$user) return $this->redirect()->toRoute('index', array('action' => "index"));
         $data['userid'] = $user_id;
-                $data['sid'] = $session->sid;
+        $data['sid'] = $session->sid;
 
 
         $data['bucket'] = "memreasdev";
@@ -540,7 +540,7 @@ error_log("userid---->".$userid.PHP_EOL);
                             "success_action_status": "201"
                         },
                         ["starts-with", "$Content-Type", ""],
-                        ["content-length-range", 0, 1048576]
+                        ["content-length-range", 0, 204857600]
                     ]
                 }';
         return base64_encode($policy);
