@@ -188,6 +188,9 @@ jQuery.fetch_server_media = function (){
 
                     $("#gallery #tab-content").find(".hideCls").hide();
                     $("#gallery #tab-content").find(".hideCls:eq(0)").show();
+                    //Fetch user's notification header
+                    getUserDetail();
+                    getUserNotificationsHeader();
                 }
                 return true;
             }
@@ -316,7 +319,7 @@ function getUserNotificationsHeader(){
                                     '</div>');
             }
 
-            //setTimeout(function(){ getUserNotificationsHeader() }, 30000);
+            setTimeout(function(){ getUserNotificationsHeader() }, 30000);
         }, 'undefined', true
     );
 }

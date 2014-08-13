@@ -129,9 +129,17 @@ function validateRegstration(){
                 var current_key = $("#frm-profile-pic").find('input[name=key]').val();
                 current_key = user_id + '/' + current_key;
                 $("#frm-profile-pic").find('input[name=key]').val(current_key);
+                $("#form-user-login").find('input[name=username]').val(input_uname);
+                $("#form-user-login").find('input[name=password]').val(input_upass);
                 var jqXHR = uploadHandle.submit();
             }
-            else setTimeout(function(){ autoLogin(input_uname, user_id); }, 2000);
+            else {
+                setTimeout(function(){
+                    $("#form-user-login").find('input[name=username]').val(input_uname);
+                    $("#form-user-login").find('input[name=password]').val(input_upass);
+                    $("#form-user-login").trigger('submit');
+                }, 1500);
+            }
         }
         else jerror(getValueFromXMLTag(response, 'message'));
     });
@@ -302,7 +310,9 @@ $(function(){
                                 ];
                 ajaxRequest('addmediaevent', params, function(){
                     jsuccess('Your profile picture updated');
-                    setTimeout(function(){ autoLogin($("#register input[name=username]").val(), user_id); })
+                    setTimeout(function(){
+                        $("#form-user-login").trigger('submit');
+                    }, 1500);
                 });
             },
             done: function (event, data) {
