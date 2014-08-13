@@ -1034,9 +1034,6 @@ a.black_btn_skin:hover, a.black_btn_skin:active, #avpw_save_button:hover, #avpw_
 	margin: 0 0 15px 0;
 	color: #fff;
 }
-#memreas #tabs-memreas li a, #queue #tabs-memreas li a {
-	padding: 0.2em 2em!important;
-}
 .event_name_box{
 	position:absolute;
 	width: 100%;

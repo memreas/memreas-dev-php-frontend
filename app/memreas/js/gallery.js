@@ -316,7 +316,7 @@ function getUserNotificationsHeader(){
                                     '</div>');
             }
 
-            setTimeout(function(){ getUserNotificationsHeader() }, 30000);
+            //setTimeout(function(){ getUserNotificationsHeader() }, 30000);
         }, 'undefined', true
     );
 }

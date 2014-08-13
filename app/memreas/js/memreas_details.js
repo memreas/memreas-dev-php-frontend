@@ -21,11 +21,10 @@ $(function(){
         $("#tabs-memreas-detail li").attr("id",""); //Reset id's
         $(this).parent().attr("id","current"); // Activate this
         $('#' + $(this).attr('title')).fadeIn(); // Show content for current tab
-
-        getMediaComment();
     });
-    $("a[title=memreas-detail-tab3]").click(function(){
 
+    $("a[title=memreas-detail-tab3]").click(function(){
+        updateMemreasMediaDetailsScript();
         //prevent this tab active if there is no media on this event
         var target_element = $(".memreas-detail-gallery");
         if (target_element.hasClass ('mCustomScrollbar'))
@@ -39,7 +38,6 @@ $(function(){
 
         // example how to integrate with a previewer
         ajaxScrollbarElement(".memreas-detail-comments");
-        updateMemreasMediaDetailsScript();
         checkMemreasDetailCarousel();
     });
 });
@@ -76,6 +74,7 @@ function getMediaComment(){
 
             var event_comments = getSubXMLFromTag(ret_xml, 'comment');
             var comment_count = event_comments.length;
+            $(".memreas-detail-commentcount span").html(comment_count);
             if (comment_count > 0){
                 for (var i = 0;i < comment_count;i++){
                     var event_comment = event_comments[i].innerHTML;
@@ -101,8 +100,8 @@ function getMediaComment(){
                 ajaxScrollbarElement('.memreas-detail-comments');
             }
             else{
-                jComment_element.append('<li>No comment yet!</li>');
-                jComment_popup.append('<li>No comment yet!</li>');
+                jComment_element.append('<li style="color: #FFF;">No comment yet!</li>');
+                jComment_popup.append('<li style="color: #FFF;">No comment yet!</li>');
                 jComment_element.find('.loading').remove();
                 jComment_popup.find('.loading').remove();
             }
@@ -130,8 +129,7 @@ function updateMemreasMediaDetailsScript(){
 
                 //Set download button
                 var download_url = el.find('img').attr('src');
-                $(".memreas-detail-download").attr("download", download_url);
-                $(".memreas-detail-download").attr("href", 'data:image/octet-stream, ' + download_url);
+                $(".memreas-detail-download").attr("href", download_url);
 
                 updateMediaLike();
                 getMediaComment();
@@ -148,10 +146,11 @@ function updateMemreasMediaDetailsScript(){
 
                 //Set download button
                 var download_url = el.find('img').attr('src');
-                $(".memreas-detail-download").attr("download", download_url);
-                $(".memreas-detail-download").attr("href", 'data:image/octet-stream, ' + download_url);
+                $(".memreas-detail-download").attr("href", download_url);
+                $(".memreas-detail-download").swipebox();
 
                 updateMediaLike();
+                getMediaComment();
             }
         } );
     }
@@ -166,6 +165,13 @@ $(function(){
     $("a.memreas").click(function(){
         $(".memreas-detail").hide();
         $(".memreas-main").fadeIn(500);
+    });
+
+    $(".memreas-detail-download").click(function(){
+        var download_url = $(this).attr('download');
+        $.post('/index/downloadMedia', {file:download_url}, function(data){
+
+        });
     });
 });
 
@@ -235,26 +241,6 @@ function showEventDetail(eventId, userId){
         }
     );
     $("#popupAddMedia a.accept-btn").attr ("href", "javascript:addMemreasPopupGallery('" + eventId + "')");
-
-    //Show comment count/event count
-     ajaxRequest(
-        'geteventcount',
-        [
-            {tag: 'event_id', value: eventdetail_id}
-        ],function (response){
-            var jTargetLikeCount = $(".memreas-detail-likecount span");
-            var jTargetCommentCount = $(".memreas-detail-commentcount span");
-            if (getValueFromXMLTag(response, 'status') == "Success"){
-                var comment_count = getValueFromXMLTag(response, 'comment_count');
-                var like_count = getValueFromXMLTag(response, 'like_count');
-            }
-            else{
-                var comment_count = 0;
-                var like_count = 0;
-            }
-            jTargetLikeCount.html(like_count)
-            jTargetCommentCount.html(comment_count);
-     });
 
     $(".memreas-main").hide();
     $('#loadingpopup').hide();
