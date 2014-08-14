@@ -1,3 +1,4 @@
+var eventdetail_object = new Object();
 var eventdetail_id = '';
 var eventdetail_user = '';
 var event_owner_name = 'User Name';
@@ -179,6 +180,16 @@ function showEventDetail(eventId, userId){
     eventdetail_id = eventId;
     eventdetail_user = userId;
 
+    ajaxRequest('geteventdetails', [{tag: 'event_id', value: eventId}], function(response){
+        eventdetail_object.id = getValueFromXMLTag(response, 'event_id');
+        eventdetail_object.name = getValueFromXMLTag(response, 'name');
+        eventdetail_object.location = getValueFromXMLTag(response, 'location');
+        eventdetail_object.date = getValueFromXMLTag(response, 'date');
+        eventdetail_object.friends_can_post = getValueFromXMLTag(response, 'friends_can_post');
+        eventdetail_object.friends_can_share = getValueFromXMLTag(response, 'friends_can_share');
+        eventdetail_object.public = getValueFromXMLTag(response, 'public');
+    }, 'undefined', true);
+
     //Show gallery details
     var target_element = $(".memreas-detail-gallery");
     if (target_element.hasClass ('mCustomScrollbar'))
@@ -302,6 +313,15 @@ function popupAddMemreasGallery(){
 function addMemreasPopupGallery(eventId){
     var medias_selected = new Array();
     var user_id = $("input[name=user_id]").val();
+
+    //If this is friend access to event
+    if (user_id != eventdetail_user){
+        if (eventdetail_object.friends_can_post == "0"){
+            jerror("This shared event unable to add more media from friend");
+            return false;
+        }
+    }
+
     var i = 0;
     $(".popupAddMediaContent li.setchoosed").each(function(){
         medias_selected[++i] = $(this).find ('a').attr ('id');
@@ -331,8 +351,10 @@ function success_addmemreas_media(){}
 $(function(){ $("#memreas-dropfriend").change(function(){ popupMemreasAddfriends(); }); });
 function popupMemreasAddfriends(){
     if (eventdetail_user != user_id){
-        jerror("Only available on your own event");
-        return;
+        if (eventdetail_object.friends_can_share == "0"){
+            jerror("This shared event unable to add more friend");
+            return;
+        }
     }
     var friend_list = $("#memreas-dropfriend").val();
     //Reset friend element
