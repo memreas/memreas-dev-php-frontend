@@ -928,3 +928,74 @@ ul.popupContact2 li {
     bottom: 10px;
     right: 1px;
 }
+ul.share_memreas_details li {
+    clear: both;
+    min-height: 35px;
+    margin: 10px 0;
+    width: 100%;
+}
+.textfield_names {
+    width: 100px;
+    float: left;
+    font-family: "Century Gothic";
+    font-size: 18px;
+    color: #FFF;
+}
+.share-txtfield {
+    width: 66% !important;
+    float: left;
+    font-family: "Century Gothic";
+    font-size: 16px;
+}
+.share-txtfield-2 {
+    width: 71% !important;
+    float: left;
+}
+.share-txtfield-3 {
+    width: 50% !important;
+    float: right;
+}
+.date-picker {
+    width: 33%;
+    float: left;
+    background: url(../img/date.png) no-repeat right;
+    margin-right: 30px;
+}
+.share_chek_box_split {
+    float: left;
+    width: 180px;
+}
+.share_details_split {
+    float: left;
+    width: 200px;
+}
+textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+}
+select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+    border-radius: 4px;
+    color: #555;
+    display: inline-block;
+    font-size: 14px;
+    height: 20px;
+    line-height: 20px;
+    margin-bottom: 10px;
+    padding: 4px 6px;
+    vertical-align: middle;
+}
+select{ height: 30px; }
+.backgroundPopup {
+    display: none;
+    position: fixed;
+    _position: absolute; /* hack for internet explorer 6*/
+    height: 100% !important;
+    width: 100% !important;
+    top: 0;
+    left: 0;
+    background: #FFF;
+    border: 1px solid #cecece;
+    z-index: 999;
+}

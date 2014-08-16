@@ -12,7 +12,7 @@
     <head>
         <meta name="description" content="PUT YOUR Description here">
         <meta name="keywords" content="PUT YOUR Keyword here">
-        <title>memreas - 404 error</title>
+        <title>memreas - 500 Internal Error</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!--meta responsive-->
 
         <link rel="stylesheet" type="text/css" href="/memreas/css/reset.css">
@@ -21,8 +21,19 @@
         <link href="/memreas/css/modalPopLite.css" rel="stylesheet" type="text/css" />
         <link rel="shortcut icon" href="/memreas/img/icon.png" />
 
-        <script type="text/javascript" src="/memreas/js/global.js"></script>
+        <script src="/memreas/js/jquery-register.js"></script>
         <script type="text/javascript" src="/memreas/js/modalPopLite.min.js"></script>
+        <script src="/memreas/js/responsiveslides.min.js"></script>
+        <script src="/memreas/js/jNotify.jquery.min.js"></script>
+        <script type="text/javascript" src="/memreas/js/global.js"></script>
+        <script src="/memreas/js/base_func.js"></script>
+        <script type="text/javascript" src="/memreas/js/ajax.js"></script>
+        <script src="//code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+        <script src="/memreas/assets/js/jquery.iframe-transport.js"></script>
+        <script src="/memreas/assets/js/jquery.fileupload.js"></script>
+        <script type="text/javascript" src="/memreas/js/registration.js"></script>
+        <script src="/memreas/js/popup.js" type="text/javascript"></script>
+        <script src="/memreas/js/jquery.mCustomScrollbar.concat.min.js"></script>
     </head>
     <body>
         <!--Header Starts Here-->
@@ -43,7 +54,7 @@
                 <div class="body-top ">
                     <div class="container clearfix">
                         <div class="notfound top">
-                            <h2>500 - an error occurred ... let us know we'll fix it. <a href="javascript:popup('Feedback');">Feedback</a></h2>
+                            <h2>500 - an error occurred ... let us know we'll fix it. <a href="javascript:popup('popupFeedback');">Feedback</a></h2>
                         </div>
                     </div>
                 </div>
@@ -80,14 +91,26 @@
             <p>&copy; 2014 memreas, llc. All rights reserved.</p>
         </footer>
         <!--End of Footer-->
-
         <div id="popupFeedback" class="popups">
-          <a id="popupFeedbackClose" onClick="disablePopup('popupContact')" class='popupClose'>x</a>
-            <h2>Feedback</h2>
-            <ul id="content_1" class="popup_legal scrollpopup">
-              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+          <a id="popupFeedbackClose" onClick="disablePopup('popupFeedback')" class='popupClose'>x</a>
+            <h2>Send us your feedback</h2>
+            <ul class="feedback-detail share_memreas_details">
+                <li>
+                    <label class="textfield_names">Your email</label>
+                    <input style="width: 250px;" name="input" type="text" id="email" class="" value="your email" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'your email')this.value = '';"/>
+                </li>
+                <li>
+                    <label class="textfield_names">Subject</label>
+                    <input style="width: 250px;" name="input" type="text" id="subject" class="" value="Subject" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Subject')this.value = '';"/>
+                </li>
+                <li>
+                    <label class="textfield_names">Comment</label>
+                    <textarea id="comment" style="height: 100px; width: 250px;"></textarea>
+                </li>
             </ul>
+            <div style="text-align: right;">
+            <a class="btn btn-sm" href="javascript:;" onclick="">Send</a> <a class="btn btn-sm" href="javascript:disablePopup('popupFeedback');">close</a>
+            </div>
         </div>
         <div id="bgpopupFeedback" class="backgroundPopup"></div>
 

@@ -714,4 +714,11 @@ error_log("userid---->".$userid.PHP_EOL);
         else return $filename;
     }
 
+    public function error500Action(){
+        $path = "application/index/500.phtml";
+        $view = new ViewModel();
+        $view->setTemplate($path); // path to phtml file under view folder
+        return $view;
+    }
+
 } // end class IndexController
