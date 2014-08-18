@@ -2336,7 +2336,6 @@ nav {
 .event {
 	width: 600px !important;
 	margin-left: 20px;
-	height: 450px !important;
 	margin-bottom: 20px;
 }
 .clear-2 {
@@ -2344,9 +2343,8 @@ nav {
 }
 ul.right {
 	overflow: auto;
-	height: 350px;
+	height: 250px;
 	margin-bottom: 30px;
-	width: 600px !important;
 }
 ul.right li {
 	display: block;
@@ -2454,9 +2452,6 @@ ul.pics {
 }
 ul.pics li {
 	width: 16%;
-}
-.popups {
-	height: 420px;
 }
 .event_gallery_comment .event_pro{
 	height: 40px;

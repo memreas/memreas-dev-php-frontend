@@ -76,7 +76,7 @@
     #content_1 #dtp_selfdestruct {
         margin-left: 66px!important;
     }
-    .memreas-detail-owner{ margin-top: 2%; }
+    .memreas-detail-owner{ margin-top: 2%; width: 60% !important; }
 }
 
 @media (max-width: 768px){     

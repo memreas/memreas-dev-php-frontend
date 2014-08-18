@@ -774,6 +774,21 @@ function updateMediaLike(){
     }, 'undefined', true);
 }
 
+function reportMedia(userConfirm){
+    if (!userConfirm)
+        jconfirm('report this media?', 'reportMedia(true)');
+    else{
+        ajaxRequest('mediainappropriate',
+            [{tag: 'media_id', value: eventdetail_media_id.toString()},{tag: 'is_appropriate', value: '1'}]
+        , function(response){
+
+            if (getValueFromXMLTag(response,  'status') == 'Success')
+                jsuccess(getValueFromXMLTag(response, 'message'));
+            else jerror(getValueFromXMLTag(response, 'message'));
+        });
+    }
+}
+
 /*Additions fixing*/
 
 //Prevent clicking on carousel on detail tab if not enough media with full width
