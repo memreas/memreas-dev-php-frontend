@@ -74,7 +74,7 @@ function fetchMyMemreas(){
                     var eventId = $(event).filter ('event_id').html();
                     var event_name = $(event).filter ('event_name').html();
                     var element = '<div class="event_section">' +
-                    '<aside class="event_name" onclick="showEventDetail(\'' + eventId + '\', \'' + user_id + '\');" style="cursor: pointer;">' + event_name + '</aside>' +
+                    '<aside class="event_name" onclick="showEventDetail(\'' + eventId + '\', \'' + user_id + '\');" style="cursor: pointer;">!' + event_name + '</aside>' +
                     '<div class="event_like"><span>' + like_count + '</span></div>' +
                     '<div class="event_comment"><span>' + comment_count + '</span></div>' +
                     '<div id="event-people-' + eventId + '"><img src="/memreas/img/loading-line.gif" class="loading-small" />' +

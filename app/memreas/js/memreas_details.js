@@ -628,11 +628,6 @@ function addFriendToEvent(eventId){
         }
     }
 
-    var friendSelected = selFriends.length;
-    if (friendSelected <= 0){
-        jerror ("Please select your friend to add");
-        return;
-    }
     if ($("#memreas_makegroup_check").is (":checked")){
         if (groupName != '' && groupName.toLowerCase() != 'group name here'){
             // send the request.
