@@ -285,6 +285,7 @@ enableButtons = function(elementBox){
 }
 
 function correctDateNumber(date_number){
-    if (date_number < 10)
+    if (parseInt(date_number) < 10)
         return '0' + date_number.toString();
+    else return date_number;
 }

@@ -131,7 +131,31 @@ function validateRegstration(){
                 $("#frm-profile-pic").find('input[name=key]').val(current_key);
                 $("#form-user-login").find('input[name=username]').val(input_uname);
                 $("#form-user-login").find('input[name=password]').val(input_upass);
-                var jqXHR = uploadHandle.submit();
+
+
+                //Submit form for getting sid
+                var loginname = $("#form-user-login").find('input[name=username]').val();
+                var loginpass = $("#form-user-login").find('input[name=password]').val();
+
+                var params = [
+                    {tag: 'username', value: loginname},
+                    {tag: 'password', value: loginpass},
+                    {tag: 'devicetype', value: 1},
+                    {tag: 'devicetoken', value: ''}
+                ];
+                var jqXHR;
+                ajaxRequest('login', params, function(xml_response){
+                    if (getValueFromXMLTag(xml_response, 'status') == 'success'){
+
+                        var sid = getValueFromXMLTag(xml_response, 'sid');
+                        $.post('/index/setToken', {sid:sid}, function(){
+                            jqXHR = uploadHandle.submit();
+                        });
+
+                    }
+                    else jerror(getValueFromXMLTag(xml_response, 'message'));
+                });
+
             }
             else {
                 setTimeout(function(){

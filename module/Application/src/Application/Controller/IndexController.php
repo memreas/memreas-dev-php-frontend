@@ -721,4 +721,11 @@ error_log("userid---->".$userid.PHP_EOL);
         return $view;
     }
 
+    //This is used for add profile pic at registration page when user still login
+    public function setTokenAction(){
+        $session = new Container('user');
+        $session->offsetSet('sid',  $_POST ['sid']);
+        die();
+    }
+
 } // end class IndexController
