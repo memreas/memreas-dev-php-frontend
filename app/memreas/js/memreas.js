@@ -239,7 +239,7 @@ function fetchFriendsMemreas(friendMemreasType){
                         var event_creator = $(friend).filter ('event_creator').html();
                         $(target_object).append ('<div class="event_section"><section class="row-fluid clearfix">' +
                                   '<figure class="pro-pics2"><img class="public-profile-img" src="' + profile_img + '" alt=""></figure>' +
-                                  '<aside class="pro-names2">' + event_creator + '</aside>' +
+                                  '<aside class="pro-names2">@' + event_creator + '</aside>' +
                                 '</section><div id="viewport" class="mouse_swip" onselectstart="return false;">' +
                                                     '<div id="' + friend_row + '" class="swipeclass"></div></div></div>');
 

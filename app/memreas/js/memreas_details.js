@@ -375,8 +375,8 @@ function getPopupMemreasFriends(){
         if (getValueFromXMLTag(xml_response, 'status') == 'Success'){
             var friends = getSubXMLFromTag(xml_response, 'friend');
             var friendCount = friends.length;
-            var mr_friendsInfo = [];
-            for (i = 0;i < friendCount;i++){
+            mr_friendsInfo = [];
+            for (var i = 0;i < friendCount;i++){
                 var friend = friends[i];
                 var friend_photo = '';
                 if (getValueFromXMLTag(friend, 'photo') == '' || getValueFromXMLTag(friend, 'photo') == 'null')
@@ -384,7 +384,7 @@ function getPopupMemreasFriends(){
                 else friend_photo = getValueFromXMLTag(friend, 'photo');
                 mr_friendsInfo[i] = {
                                         'id': getValueFromXMLTag(friend, 'friend_id'),
-                                        'div_id': 'mr_' + i,
+                                        'div_id': 'mrmemreas_' + i,
                                         'name': getValueFromXMLTag(friend, 'friend_name'),
                                         'photo': friend_photo,
                                         'selected': false
@@ -399,6 +399,54 @@ function getPopupMemreasFriends(){
             $("#memreas-dropfriend option[value=mr]").attr('selected', true);
         }
     });
+}
+
+memreas_clickFriends = function(id) {
+    var type = id.substr(0, 2);
+    var idx = parseInt(id.substr(3));
+    if (isNaN(idx))
+        idx = (id.substr(10));
+
+    if (type == "fb") {
+        fb_friendsInfo[idx].selected = !fb_friendsInfo[idx].selected;
+        if (fb_friendsInfo[idx].selected) {
+            $('#' + id + ' img').addClass('setchoosed');
+            $('#' + id).next ('aside').css('border', '3px solid green');
+        }
+        else {
+            $('#' + id + ' img').removeClass('setchoosed');
+            $('#' + id).next ('aside').css('border', '3px solid #FFF');
+        }
+    }
+    else if (type == "tw") {
+        tw_friendsInfo[idx].selected = !tw_friendsInfo[idx].selected;
+        if (tw_friendsInfo[idx].selected) {
+            $('#' + id + ' img').addClass('setchoosed');
+            $('#' + id).next ('aside').css('border', '3px solid green');
+        }
+        else {
+            $('#' + id + ' img').removeClass('setchoosed');
+            $('#' + id).next ('aside').css('border', '3px solid #FFF');
+        }
+    }
+    else if(type == "mr"){
+        mr_friendsInfo[idx].selected = !mr_friendsInfo[idx].selected;
+        if (mr_friendsInfo[idx].selected) {
+            $('#' + id + ' img').addClass('setchoosed');
+            $('#' + id).next ('aside').css('border', '3px solid green');
+        }
+        else {
+            $('#' + id + ' img').removeClass('setchoosed');
+            $('#' + id).next ('aside').css('border', '3px solid #FFF');
+        }
+    }
+    /*
+     var jElement = $("#" + id);
+     var jImg_profile = jElement.find ('img');
+     if (jImg_profile.hasClass ('setchoosed'))
+     jImg_profile.removeClass ('setchoosed');
+     else jImg_profile.addClass ('setchoosed');
+     */
 }
 
 function getPopupFacebookFriends(){
@@ -480,8 +528,8 @@ function memreas_fillFriends(info){
     for (i = 0; i < info.length; i++) {
         el = '';
         el += '<li>';
-        el += '<figure class="pro-pics2" id="' + info[i].div_id + '" onclick="javascript:share_clickFriends(this.id);"><img src="/memreas/img/profile-pic.jpg" alt="" ' + (info[i].selected ? 'class="setchoosed"' : '') + '></figure>';
-        el += '<aside class="pro-pic_names2" name="' + info[i].name + '" id="a' + info[i].div_id + '" onclick="javascript:share_clickFriends(this.id.substr(1));">' + info[i].name + '</aside>';
+        el += '<figure class="pro-pics2" id="' + info[i].div_id + '" onclick="javascript:memreas_clickFriends(this.id);"><img src="/memreas/img/profile-pic.jpg" alt="" ' + (info[i].selected ? 'class="setchoosed"' : '') + '></figure>';
+        el += '<aside class="pro-pic_names2" name="' + info[i].name + '" id="' + info[i].div_id + '" onclick="javascript:memreas_clickFriends(this.id);">' + info[i].name + '</aside>';
         el += '</li>';
 
         friendList.append(el);
@@ -550,8 +598,8 @@ function memreas_TwFriends(){
     }
     friend_list = JSON.parse (friend_list);
     var friend_count = friend_list.length;
-    for (i = 0;i < friend_count;i++){
-        temp_id = friend_list[i]['div_id'];
+    for (var i = 0;i < friend_count;i++){
+        var temp_id = friend_list[i]['div_id'];
         temp_id = temp_id.split ('_');
         friend_list[i]['div_id'] = 'twmemreas_' + temp_id[1];
     }
