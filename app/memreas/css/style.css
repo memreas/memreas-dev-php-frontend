@@ -283,7 +283,7 @@ nav ul li {
 	display: inline;
 }
 nav ul li a {
-    background: url("../img/nav-link.jpg") no-repeat scroll right center / 100% auto rgba(0, 0, 0, 0);
+    background: url("../img/nav-link.jpg") no-repeat right center;
     border-bottom: 1px solid #1d2e37;
     color: #c6c6c5;
     display: block;
@@ -293,7 +293,7 @@ nav ul li a {
     text-align: center;
 }
 nav ul li a:hover, nav ul li a.active {
-	background: url("../img/nav-act.jpg") no-repeat scroll right center / 100% auto rgba(0, 0, 0, 0);
+	background: url("../img/nav-act.jpg") no-repeat right center;
 }
 #maintab-content {
 	padding-top: 1em;
@@ -2333,11 +2333,14 @@ nav {
 	width: 7%;
 	min-height: 1350px !important;
 }
+.add-comment-buttons{ clear: both; }
+#share_medialist{ min-height: 250px; }
 .event {
-	width: 600px !important;
+	width: 450px !important;
 	margin-left: 20px;
 	margin-bottom: 20px;
 }
+.memreas-detail-owner{ width: 100% !important; }
 .clear-2 {
 	clear: both;
 }
@@ -2477,7 +2480,7 @@ ul.share_memreas_details li {
 	margin: 10px 0px !important;
 }
 ul.share_friends_contents {
-	height: 750px;
+	height: 350px;
 }
 ul.share_friends_contents li {
 	width: 100% !important;
@@ -2496,8 +2499,10 @@ ul.share_friends_contents li {
 	margin: 20px 0px 0px 20px;
 }
 .share-txtfield-3 {
-	width: 45% !important;
+	width: 98% !important;
 	margin-top: 10px;
+    float: none;
+    margin-left: 3%;
 }
 ul.share {
 	height: 870px;

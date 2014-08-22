@@ -192,6 +192,7 @@ function showEventDetail(eventId, userId){
         eventdetail_object.public = getValueFromXMLTag(response, 'public');
     }, 'undefined', true);
 
+
     //Show gallery details
     var target_element = $(".memreas-detail-gallery");
     if (target_element.hasClass ('mCustomScrollbar'))

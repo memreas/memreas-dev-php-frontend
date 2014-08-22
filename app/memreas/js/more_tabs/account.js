@@ -37,6 +37,8 @@ $(function(){
             jFirstTab.attr("style", "margin-left: " + marginPos + "px !important");
         }
     });
+
+    $(".account-billing-tab").one('click', function(){ $('.account-billing').mCustomScrollbar({scrollButtons:{enable:true }}); });
 });
 /*
 * Card process section

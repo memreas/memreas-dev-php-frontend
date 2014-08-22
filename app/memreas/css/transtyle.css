@@ -298,6 +298,7 @@ ul.popupContact.memreas-detail-friends, .account-payment{ height: 200px; }
     margin-bottom: 10px;
     font-family: "Century Gothic";
 }
+.account-billing{ height: 180px; }
 /* Aviary page */
 #avpw_save_button, #avpw_apply_container{
     width: 20px;
