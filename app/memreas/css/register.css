@@ -176,7 +176,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4e8dd4', end
     min-height: 581px;
 }
 .slogan h2 {
-    background: url("../img/slogan.png") no-repeat scroll 0 25px / 97% auto rgba(0, 0, 0, 0);
+    background: rgba(0, 0, 0, 0) url("../img/slogan.png") no-repeat scroll 0 25px ;
+    background-size: 97% auto;
     font-size: 27px;
     padding: 21px 0;
     text-indent: -9999px;
@@ -340,6 +341,7 @@ footer {
     text-align: center;
     width: 100%;
     border-top: 1px solid #000;
+    z-index: 1000;
     /*filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#292929', endColorstr='#000',GradientType=0 ); /* IE6-9 */
 }
 
