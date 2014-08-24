@@ -194,9 +194,7 @@ function detectHandheldIOSDevice(){
 }
 
 $(function(){
-    $(window).bind('orientationchange resize', function(event){
-       //Update lock orientation script here
-    });
+
 });
 
 /*

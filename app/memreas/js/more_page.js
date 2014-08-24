@@ -509,7 +509,7 @@ function network_fillFriends(info){
         el = '';
         el += '<li>';
         el += '<figure class="pro-pics2" id="' + info[i].div_id + '" onclick="javascript:network_clickFriends(this.id);"><img src="' + info[i].photo + '" alt="" ' + (info[i].selected ? 'class="setchoosed"' : '') + '></figure>';
-        el += '<aside class="pro-pic_names2" name="' + info[i].name + '" id="network-' + info[i].div_id + '">' + info[i].name + '</aside>';
+        el += '<aside class="pro-pic_names2" name="' + info[i].name + '" id="network-' + info[i].div_id + '" onclick="$(this).prev(\'figure\').click();">' + info[i].name + '</aside>';
         el += '</li>';
 
         friendList.append(el);

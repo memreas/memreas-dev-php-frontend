@@ -243,9 +243,15 @@ function fetchFriendsMemreas(friendMemreasType){
                                 '</section><div id="viewport" class="mouse_swip" onselectstart="return false;">' +
                                                     '<div id="' + friend_row + '" class="swipeclass"></div></div></div>');
 
+                        var global_width = $("#tab-content-memreas").width();
+                        var base_event_row_width = 120;
+
                         var friend_resources = $(friend).filter ('events').html();
                         friend_resources = $(friend_resources).filter ('event');
                         var friend_resources_count = friend_resources.length;
+
+                        var total_event_row_width = 120 * friend_resources_count;
+
                         if (friend_resources_count > 0){
                             for (var key=0;key < friend_resources_count;key++){
                                 var friend_resource = friend_resources[key].innerHTML;
@@ -256,10 +262,13 @@ function fetchFriendsMemreas(friendMemreasType){
                                 var event_name = $(friend_resource).filter ('event_name').html();
                                 $("#" + friend_row).append ('<div class="event_img"><img src="' + resource_media + '" alt=""><span class="event_name_box"><a style="color:#FFF;" href="javascript:showEventDetail(\'' + eventId + '\', \'' + creator_id + '\');">' + event_name + '</a></span></div>');
                             }
-                            $("#" + friend_row).swipe({
-                                TYPE:'mouseSwipe',
-                                HORIZ: true
-                             });
+
+                            if (total_event_row_width > global_width){
+                                $("#" + friend_row).swipe({
+                                    TYPE:'mouseSwipe',
+                                    HORIZ: true
+                                 });
+                            }
                         }
                         else{
                             $("#" + friend_row).append ('There is no event shared');
