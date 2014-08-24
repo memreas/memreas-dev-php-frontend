@@ -136,6 +136,11 @@ footer{
     width: 100%;
     z-index: 33;
 }
+@media (min-height: 800px) and (min-width:1359px){
+    footer{
+        position: static;
+    }
+}
 
 footer h2{
     font-size: 14px;

@@ -68,7 +68,12 @@ var checkHasImage = false;
 /*Load server media*/
 jQuery.fetch_server_media = function (){
     $(".user-resources").remove();
-    $("#tab-content #tab1").append('<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/325" data-max-width="100%"  data-allow-full-screen="true"  data-nav="thumbs"></div>');
+    // Khan Changes
+    if(window.innerWidth > 1359 && window.innerHeight > 800){
+        $("#tab-content #tab1").append('<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/725" data-max-width="100%" data-height="55%" data-allow-full-screen="true"  data-nav="thumbs"></div>');
+    } else {
+        $("#tab-content #tab1").append('<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/725" data-max-width="100%" data-allow-full-screen="true"  data-nav="thumbs"></div>');
+    }
     $(".edit-area-scroll, .aviary-thumbs, .galleries-location").empty();
     $(".user-resources, .scrollClass .mCSB_container, .sync .mCSB_container").html('');
 

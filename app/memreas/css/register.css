@@ -341,7 +341,7 @@ footer {
     text-align: center;
     width: 100%;
     border-top: 1px solid #000;
-    z-index: 1000;
+    z-index: 1000; /* Khan Changes */
     /*filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#292929', endColorstr='#000',GradientType=0 ); /* IE6-9 */
 }
 

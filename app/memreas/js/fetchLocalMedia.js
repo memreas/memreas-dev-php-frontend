@@ -37,6 +37,10 @@
         $("#tab-content #tab1").append ('<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/325" data-max-width="100%"  data-allow-full-screen="true"  data-nav="thumbs"></div>');
         $(".user-resources, .scrollClass .mCSB_container").html('');
         handleFileSelect(e);
-        setTimeout(function(){ $(".user-resources").fotorama(); $(".browse-file").hide(); }, 1000);
+        setTimeout(function(){ 
+          $(".user-resources").fotorama({
+
+          }); 
+          $(".browse-file").hide(); }, 1000);
     });
   });

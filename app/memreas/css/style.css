@@ -86,7 +86,8 @@ input, textarea {
 	height: 0;
 }
 .clearfix {
-	display: inline-block;
+	/*display: inline-block; Khan Changes*/
+	/* I don't why display property is set on clearfix class */
 }
 html[xmlns] .clearfix {
 	display: block;
@@ -2038,14 +2039,22 @@ nav {
 }
 }
 
+
 @media only screen and (min-device-width : 1400px) and (max-device-width : 1600px) and (orientation : landscape) {
-nav {
-	min-height: 700px !important;
+	nav {
+		min-height: 700px !important;
+	}
+	.map iframe{
+		height: 440px;
+	}
 }
-.map iframe{
-	height: 440px;
+
+@media (min-height: 800px) and (min-width:1359px){
+    #gallery #tab-content{
+        min-height:540px;
+    }
 }
-}
+
 @media only screen and (min-device-width : 1200px) and (max-device-width : 1280px) and (orientation : landscape) {
 	ul.right li {
 		display: block;
@@ -2252,7 +2261,7 @@ ul.pics li {
 	height: 35px;
 }
 .popups{
-	left: 27%;
+	left: 27%; /* khan Changes */
 }
 /*****************************Share****************************************/
 .comment-txt {
@@ -2910,7 +2919,7 @@ margin-left: 15%;
     float: left;
     margin-left: 2%;
     width: 98%;
-    margin-bottom: 70px; /* Khan Changes */
+    margin-bottom: 0px; /* Khan Changes */
 }
 .ad img {
     margin: 0;
@@ -2939,6 +2948,11 @@ nav ul li img {
 .fotorama__stage {
 	width: 100%!important;
 	height: 390px!important;
+}
+@media (min-height: 800px) and (min-width:1359px){
+   .fotorama__stage {
+		height: 475px!important;
+	}
 }
 .fotorama__wrap  {
 	width: 100%!important;
