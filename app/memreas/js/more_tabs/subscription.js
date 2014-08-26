@@ -540,3 +540,8 @@ function confirmOrder(){
 function showTermsAndService(){
     popup('popupTermsAndService');
 }
+
+function popupPolicy(){
+    disablePopup('popupTermsAndService');
+    popup('popupPolicy');
+}
