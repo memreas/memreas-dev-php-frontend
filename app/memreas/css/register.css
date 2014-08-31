@@ -198,6 +198,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4e8dd4', end
     top: 1px;
     z-index: 999;
 }
+.filmstrip{
+    width: 34.5%; /* Khan Changes MFE-458*/
+}
 #slider {
     left: 7em;
     top: 6em;
@@ -480,16 +483,16 @@ footer {
     #body {
         top: 0;
     }
-label.css-label{
-    display: block!important;
-    margin: 0 auto!important;
-    text-align: center;
-    width: 18%;
-}
+    label.css-label{
+        display: block!important;
+        margin: 0 auto!important;
+        text-align: center;
+        width: 18%;
+    }
 
-footer.rel  {
-    position: fixed!important;
-}
+    footer.rel  {
+        position: fixed!important;
+    }
 }
 
 /* =1024 These are the styling that match the width of 10" screens */
@@ -576,10 +579,16 @@ footer.rel  {
         font-size: 12px;
         margin-left: 2.4em;
     }
+    .filmstrip{
+        width: 50%;
+    }
     #slider {
-        left: 21.4%;
-        top: 13.2%;
+        top: 3.8em;
+        left: 4.3em;
         width: 46%;
+    }
+    #slider img{
+        width: 93% !important;
     }
     .create-accnt {
         width: 49%;
@@ -1065,7 +1074,4 @@ select{ height: 30px; }
     background: #FFF;
     border: 1px solid #cecece;
     z-index: 999;
-}
-.filmstrip{
-    width: 34.5%; /* Khan Changes MFE-458*/
 }
