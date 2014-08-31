@@ -173,7 +173,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4e8dd4', end
     background: linear-gradient(to bottom,  #4e8dd4 0%,#083b7a 100%); /* W3C Khan Changes*/
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4e8dd4', endColorstr='#083b7a',GradientType=0 ); /* IE6-9 Khan Changes*/
 
-    min-height: 581px;
+    /*min-height: 581px; Khan Changes MFE-458*/
 }
 .slogan h2 {
     background: rgba(0, 0, 0, 0) url("../img/slogan.png") no-repeat scroll 0 25px ;
@@ -189,7 +189,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4e8dd4', end
 }
 .feature {
     margin-left: 1em;
-    margin-top: 3em;
+    /*margin-top: 3em; */
+    margin-top: 1em; /* Khan Changes MFE-458*/
     min-height: 436px;
 }
 .film {
@@ -231,7 +232,8 @@ span.absolute{
     border-radius: 5px;
     float: left;
     height: 75px;
-    margin-bottom: 20px;
+    /*margin-bottom: 20px;*/
+    margin-bottom: 10px; /* Khan Changes MFE:458 */
     overflow: hidden;
     width: 75px;
 }
@@ -265,10 +267,12 @@ span.absolute{
 }
 
 .signup {
-    padding: 30px 4%;
+    padding: 10px 4% 0; /* Khan Changes MFE:458 */
 }
 .signup h2 {
     font-family: tahoma;
+    font-size: 31.5px; /* Khan Changes MFE:458 */
+    margin-bottom: 0; /* Khan Changes MFE:458 */
 }
 .signup form input {
     color: #8f8f8f;
@@ -423,8 +427,45 @@ footer {
     text-decoration: underline;
 }
 
-/****Responsive Styles****/
+    #slider{
+        left: 5.6em;
+        z-index: 1;
+        top: 5em;
+    }
+    .rslides{
+        width: 88%;
+    }
 
+/****Responsive Styles****/
+/****= MQH ****/
+@media (max-height:650px){
+    .filmstrip{
+        width: 32.5%;
+    }
+    .profile_picture{
+        width: 68px;
+        height: 68px;
+        -webkit-background-size: cover;
+        background-size: cover;
+    }
+    .file form{
+        width: 81%;
+        -webkit-background-size: cover;
+        background-size: cover;
+    }
+    .signup form input{
+        margin: 0 auto 10px 40px;
+        padding: 8px 10px;
+        width: 67%;
+    }
+    footer{
+        padding-top:10px;
+        padding-bottom: 10px;
+        font-size: 12px;
+    }
+}
+
+/****= MQW ****/
 @media (max-width:1366px ) {
 
     .rel {
@@ -1000,4 +1041,7 @@ select{ height: 30px; }
     background: #FFF;
     border: 1px solid #cecece;
     z-index: 999;
+}
+.filmstrip{
+    width: 34.5%; /* Khan Changes MFE-458*/
 }
