@@ -437,8 +437,9 @@ footer {
     }
 
 /****Responsive Styles****/
-/****= MQH ****/
-@media (max-height:650px){
+/****=MQH ****/
+/*Khan Changes */
+@media (max-height:660px){
     .filmstrip{
         width: 32.5%;
     }
@@ -462,6 +463,11 @@ footer {
         padding-top:10px;
         padding-bottom: 10px;
         font-size: 12px;
+    }
+}
+@media screen and (min-height: 768px) and (min-width:1280px){
+    .sign-up,.filmstrip{
+    padding: 35px 0;
     }
 }
 
@@ -504,12 +510,29 @@ footer.rel  {
     .body-bottom {
         min-height: 485px;
     }
+    .profile{
+        padding-bottom: 0; /* Khan Change MFE-452 */
+    }
+    .profile_picture{
+        padding-bottom: 0; /* Khan Change MFE-452 */
+    }
     #slider {
         left: 5.3em;
         top: 4.6em;
+        
+        /* Khan Change MFE-452 */
+        left: 4.1em; 
+        top: 3.6em;
     }
     .rslides img {
         width: 82.4%!important;
+        width: 68.4%!important; /* Khan Change MFE-452 */
+    }
+    .file form{     /* Khan Change MFE-452 */
+        width: 81%;
+        height: 32px;
+        -webkit-background-size: cover;
+        background-size: cover;
     }
     form{
         background: #1b4a81;
@@ -568,6 +591,7 @@ footer.rel  {
     .file {
         width: 63%;
     }
+
     span.absolute {
         font-size: 14px;
         left: 9px;
