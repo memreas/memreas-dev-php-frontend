@@ -324,7 +324,7 @@ function getUserNotificationsHeader(){
                                     '</div>');
             }
 
-            setTimeout(function(){ getUserNotificationsHeader() }, 30000);
+            setTimeout(function(){ getUserNotificationsHeader() }, 240000); //3 minutes
         }, 'undefined', true
     );
 }
