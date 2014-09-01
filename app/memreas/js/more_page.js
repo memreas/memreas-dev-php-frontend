@@ -860,7 +860,9 @@ function morepage_saveEvent(){
                     {tag: 'event_self_destruct', value: self_destruct}
                 ];
     ajaxRequest('editevent', params, function(response){
-        alert(response);
+        if (getValueFromXMLTag(response, 'status'))
+            jsuccess(getValueFromXMLTag(response, 'message'));
+        else jerror(getValueFromXMLTag(response, 'message'));
     });
 }
 

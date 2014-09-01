@@ -651,6 +651,7 @@ error_log("userid---->".$userid.PHP_EOL);
             $user_id = $_POST['user_id'];
             $event_id = $_POST['comment_event_id'];
             $target_dir = getcwd() . '/app/memreas/user_comment_files/' . $user_id . '/';
+            $media_id = isset($_POST['media_id']) ? $_POST['media_id'] : '';
             $cad = $_POST['file_data'];
 
             //Check if user directory has created or not
@@ -689,7 +690,7 @@ error_log("userid---->".$userid.PHP_EOL);
             $xml .= "<s3file_name>" .$filename . "</s3file_name>";
             $xml .= "<device_id></device_id>";
             $xml .= "<event_id>" . $event_id . "</event_id>";
-            $xml .= "<media_id></media_id>";
+            $xml .= "<media_id>{$media_id}</media_id>";
             $xml .= "<user_id>" . $user_id . "</user_id>";
             $xml .= "<is_profile_pic>0</is_profile_pic>";
             $xml .= "<location></location>";
