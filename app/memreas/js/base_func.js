@@ -74,7 +74,7 @@ getElementValue = function(id) {
 
 // return the checkbox value.
 getCheckBoxValue = function(id) {
-	return ($('#' + id)[0].checked ? 0 : 1)
+	return ($('#' + id)[0].checked ? 1 : 0)
 }
 
 // set the value of checkbox.

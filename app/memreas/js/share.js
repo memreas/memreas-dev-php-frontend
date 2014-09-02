@@ -310,7 +310,6 @@ share_addEvent = function() {
  	    var ckb_viewable 	 	= getCheckBoxValue('ckb_viewable');
 	    var ckb_selfdestruct 	= getCheckBoxValue('ckb_selfdestruct');
 
-
 	    // send the request.
         shareDisableFields();
 	    ajaxRequest(
