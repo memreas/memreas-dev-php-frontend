@@ -142,6 +142,13 @@ footer{
     }
 }
 
+/* Khan Changes MFE-466 */
+@media (max-height:660px){
+    footer{
+        padding: 0;
+    }
+}
+
 footer h2{
     font-size: 14px;
     font-weight: normal;
