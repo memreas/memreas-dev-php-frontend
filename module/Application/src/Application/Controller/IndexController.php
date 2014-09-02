@@ -113,7 +113,7 @@ error_log("Exit indexAction".PHP_EOL);
                                     file: "' . $_POST['video_url'] . '",
                                     "autostart": "true",
                                     "width": 500,
-                                    "height": 300,';
+                                    "height": 300,"skin": "bekle.xml"';
             }
             $content = '<!doctype html>
                             <html>
@@ -122,6 +122,7 @@ error_log("Exit indexAction".PHP_EOL);
                             <title>Untitled Document</title>
                             <script type="text/javascript" src="../jwplayer.js"></script>
                             <script type="text/javascript" src="../jwplayer.html5.js"></script>
+                            <script type="text/javascript">jwplayer.key="CxCVpLlE64weMpm8vjiNVAMrRicsKBkO+7Vfcg==";</script>
                             <style>
                             #myElement_wrapper{
                                 margin:0 auto !important;
