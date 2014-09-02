@@ -3054,29 +3054,3 @@ select{ height: 30px; }
     top: 3em !important;
     width: 93%;
 }
-/* Khan Changes MFE-466 */
-@media (max-height: 660px){
-	#main-tab nav {
-		padding-bottom: 15em;
-	}
-	#maintab-content{
-		padding-top: 0.5em;
-	}
-	.adbox{
-		padding: 3.28em 0px;
-		margin-bottom: 12px;
-	}
-	#tab-content,
-	#tab-content-queue,
-	#tab-content-share,
-	#tab-content-memreas,
-	#tab-content-memreas-detail,
-	#tab-content-more {
-		min-height: initial;
-		margin-bottom: 0px;
-	}
-	.fotorama__nav-wrap{
-		margin-top: -91px;
-		/*margin-top: -55px;*/
-	}
-}
