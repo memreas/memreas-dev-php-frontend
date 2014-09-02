@@ -113,7 +113,7 @@ error_log("Exit indexAction".PHP_EOL);
                                     file: "' . $_POST['video_url'] . '",
                                     "autostart": "true",
                                     "width": 500,
-                                    "height": 300,"skin": "bekle.xml"';
+                                    "height": 300,"skin": "/memreas/js/jwplayer/bekle.xml"';
             }
             $content = '<!doctype html>
                             <html>
