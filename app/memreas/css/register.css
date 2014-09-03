@@ -221,8 +221,7 @@ form input[type=text], form input[type=password],  form input[type=email] {
     width: 34%;
 }
 .forgot {
-	    font-size: 14px;
-    margin-left: 5em;
+	font-size: 14px;
 }
 span.absolute{
     font-size: 22px;
