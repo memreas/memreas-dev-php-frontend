@@ -721,7 +721,11 @@ footer {
 }
 }
 
-
+@media(min-width: 361px){
+    .splash {
+        display: none;
+    }
+}
 @media (max-width: 360px){
     .container {
     width: 320px;
@@ -732,6 +736,13 @@ footer {
     }
     #body .pull-left, #body .pull-right {
         width: 100%;
+    }
+    .splash .filmstrip{
+        display: block;
+    }
+    .container .filmstrip{
+        display: none;
+        
     }
     .pull-left.filmstrip {
         margin: 100px auto 0px;

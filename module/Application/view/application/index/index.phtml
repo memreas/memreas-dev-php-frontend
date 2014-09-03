@@ -77,7 +77,20 @@
                 </div>
                 <div class="body-bottom">
                     <div class="container clearfix">
-                        
+                        <div class="pull-left filmstrip">
+                            <div class="relative feature">
+                                <div class="film absolute">
+                                    <img src="/memreas/img/memreas-img.png" alt="Film Strip" style="width: 100%;">
+                                </div>
+                                <div id="slider" class="absolute">
+                                    <ul class="rslides">
+                                        <li><img src="/memreas/img/slide-3.png" alt="Beach Party"></li>
+                                        <li><img src="/memreas/img/slide-1.png" alt="Fireworks"></li>
+                                        <li><img src="/memreas/img/slide-2.png" alt="Wedding"></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                         <div class="pull-right sign-up">
                             <div class="signup">
                                 <h2>Sign up</h2>
@@ -240,19 +253,29 @@
             }
             document.getElementById('file').addEventListener('change', handleFileSelect, false);
 
-            if(window.innerHeight <= 360){
-                window.addEventListener('load',function () {
-                    var filmstripHeight = $('.filmstrip').height();
-                    console.log(filmstripHeight);
-                    // $('.filmstrip').css({
-                    //     "top": (window.innerHeight - filmstripHeight)/2+ 'px'
-                    // });
-                    setTimeout(function  () {
 
-                        $('.splash').fadeOut('normal');
-                    },3000);
-                });
+            
+
+
+            if(window.innerWidth <= 360){
+                window.addEventListener('load', splash); 
+            } else {
+                $('.splash').css({'display':'none'});
             }
+
+
+            function splash() {
+                // var filmstripHeight = $('.filmstrip').height();
+                // console.log(filmstripHeight);
+                // $('.filmstrip').css({
+                //     "top": (window.innerHeight - filmstripHeight)/2+ 'px'
+                // });
+                setTimeout(function  () {
+                    $('.splash').fadeOut('normal');
+                },3000); // setTimeout
+            } // splash
+
+            
         </script>
         <script type="text/javascript" charset="utf-8">
             jQuery('#file').css('opacity',0);
