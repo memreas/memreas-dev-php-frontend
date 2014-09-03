@@ -734,9 +734,10 @@ footer {
         width: 100%;
     }
     .pull-left.filmstrip {
-        margin: 10px auto 0px;
+        margin: 100px auto 0px;
         float: none;
         max-width: 340px;
+        position: relative;
     }
     .login-top .btn-sm {
     margin-bottom: 5px;
@@ -770,6 +771,7 @@ footer {
     .signup{ /* Khan Changes - MFE-470 */
         margin: 0 auto;
         max-width: 300px;
+        padding: 20px 0 0;
     }
     .signup form input {
         width: 100%;
@@ -800,6 +802,7 @@ footer {
     .film img{
         display: block;
         margin: 0 auto;
+        width: 100% !important;
     }
     .signup h2 {
         margin-bottom: 0;
@@ -814,12 +817,29 @@ footer {
         margin: 0 auto;
         min-height: 350px;
     }
-    .body-top{/* KHan changes : MFE-470 */
+    .body-top.register{/* KHan changes : MFE-470 */
         display: none;
     }
     .pull-right.sign-up { /* KHan changes : MFE-470 */
         margin-top: 0;
     }
+    footer.rel{
+        position: static !important;
+    }
+
+    /*.film{
+        top:initial;
+    }*/
+
+    .splash{
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: #1A64B9;
+        height: 100%;
+    }
+    
 }
 
 /* Oroginal style */

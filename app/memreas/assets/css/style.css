@@ -152,6 +152,12 @@ footer{
     }
 }
 
+@media (max-width:360px){
+    footer{
+        position: static !important;
+    }
+}
+
 footer h2{
     font-size: 14px;
     font-weight: normal;
