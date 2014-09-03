@@ -240,17 +240,19 @@
             }
             document.getElementById('file').addEventListener('change', handleFileSelect, false);
 
-            window.addEventListener('load',function () {
-                var filmstripHeight = $('.filmstrip').height();
-                console.log(filmstripHeight);
-                // $('.filmstrip').css({
-                //     "top": (window.innerHeight - filmstripHeight)/2+ 'px'
-                // });
-                setTimeout(function  () {
+            if(window.innerHeight <= 360){
+                window.addEventListener('load',function () {
+                    var filmstripHeight = $('.filmstrip').height();
+                    console.log(filmstripHeight);
+                    // $('.filmstrip').css({
+                    //     "top": (window.innerHeight - filmstripHeight)/2+ 'px'
+                    // });
+                    setTimeout(function  () {
 
-                    $('.splash').fadeOut('normal');
-                },3000);
-            });
+                        $('.splash').fadeOut('normal');
+                    },3000);
+                });
+            }
         </script>
         <script type="text/javascript" charset="utf-8">
             jQuery('#file').css('opacity',0);
