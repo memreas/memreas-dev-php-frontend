@@ -227,7 +227,7 @@ function fillUserDetail(currentUserId){
 function saveUserDetail(){
     var account_password = $("input[name=account_password]").val();
 
-    if (account_password != 'password' || account_password != ''){
+    if (account_password != 'password' && account_password != ''){
         var retype_account_password = $("input[name=account_repassword]").val();
         if (account_password != retype_account_password){
             jerror('password is not matched');
@@ -806,6 +806,7 @@ function getMemreasEventMedia(){
                     jMemreasEventMedia.append ('<li class="event_img" id="moremedia-' + media_id + '" onclick="more_clickMedia(this.id);"><img src="' + _media_url + '"/></li>');
                 }
                 ajaxScrollbarElement("#memreasEventMedia");
+                updateAkordeonContent($(".memreas-media"));
             }
             else jerror('You have no media on this event');
     });
@@ -903,6 +904,7 @@ function getMorepageEventFriends(){
                     jMemreasEventFriend.append(html_str);
                 }
                 ajaxScrollbarElement(".memreasMorepageFriends");
+                updateAkordeonContent($(".memreas-friends"));
             }
             else jerror('You have no friend on this event');
         }
