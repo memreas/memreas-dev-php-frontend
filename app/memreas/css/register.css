@@ -287,6 +287,9 @@ span.absolute{
     text-transform: lowercase;
     width: 75%;
 }
+.signup form label{
+    display: none;
+}
 #file {
     display: block;
     opacity: 0;
@@ -723,12 +726,18 @@ footer {
 @media (max-width: 360px){
     .container {
     width: 320px;
+    width: auto; /* KHan changes : MFE-470 */
     }
     #logo a {
         font-size: 30px;
     }
     #body .pull-left, #body .pull-right {
         width: 100%;
+    }
+    .pull-left.filmstrip {
+        margin: 10px auto 0px;
+        float: none;
+        max-width: 340px;
     }
     .login-top .btn-sm {
     margin-bottom: 5px;
@@ -737,6 +746,7 @@ footer {
     }
     .slogan h2 {
         font-size: 21px;
+
     }
     .forgot {
         margin-left: 4em;
@@ -744,48 +754,72 @@ footer {
     .body-top form {
         padding-left: 0;
     }
-.login-top input[type="text"], .login-top input[type="password"], .login-top input[type="email"]
-    {
-        width: 96%;
+    .login-top input[type="text"], .login-top input[type="password"], .login-top input[type="email"]
+        {
+            width: 96%;
+        }
+
+    span.absolute {
+        font-size: 16px;
+        left: 20px;
+        top: 7px;
+    }
+    .profile{
+        padding: 10px 0;
     }
 
-span.absolute {
-    font-size: 16px;
-    left: 20px;
-    top: 7px;
-}
-.profile_picture {
-    margin-bottom: 10px;
-}
-.profile .btn-lg {
-    display: inline;
-}
-.signup form input {
-    width: 82%;
-}
-#slider {
-    left: 3.9em;
-    top: 3.5em;
-}
+    .signup{ /* Khan Changes - MFE-470 */
+        margin: 0 auto;
+        max-width: 300px;
+    }
+    .signup form input {
+        width: 100%;
+        margin: 0px auto 10px;
+        padding: 5px 0 5px 5px;
+    }
+    .signup form label{
+        display: block;
+    }
+    #slider {
+        left: 3.9em;
+        top: 3.5em;
+    }
     .profile_picture {
-    float: none;
+    float: left;/* Khan Changes - MFE-470 */
     margin: 0 auto;
-}
-.profile .btn-lg {
-    float: none;
-    margin: 10px auto;
-    padding: 0;
-    width: 90%;
-}
-    h2 {
+    }
+    .profile .btn-lg {
+        display: inline;
+        float: right;/* Khan Changes - MFE-470 */
+        margin: 10px auto;
+        padding: 0;
+        width: 73%;
+    }
+    .file form{
+        width: 100%;
+    }
+    .film img{
+        display: block;
+        margin: 0 auto;
+    }
+    .signup h2 {
         margin-bottom: 0;
+        display: none;/* KHan changes : MFE-470 */
+
     }
     #logo a {
         background: url("../img/logo.png") no-repeat scroll 5px 16px rgba(0, 0, 0, 0);
         height: 42px;
     }
     .feature {
-        margin: 0 1em;
+        margin: 0 auto;
+        min-height: 350px;
+    }
+    .body-top{/* KHan changes : MFE-470 */
+        display: none;
+    }
+    .pull-right.sign-up { /* KHan changes : MFE-470 */
+        margin-top: 0;
     }
 }
 

@@ -79,6 +79,20 @@
                 </div>
                 <div class="body-bottom">
                     <div class="container clearfix">
+                        <div class="pull-left filmstrip">
+                            <div class="relative feature">
+                                <div class="film absolute">
+                                    <img src="/memreas/img/memreas-img.png" alt="Film Strip" style="width: 100%;">
+                                </div>
+                                <div id="slider" class="absolute">
+                                    <ul class="rslides">
+                                        <li><img src="/memreas/img/slide-3.png" alt="Beach Party"></li>
+                                        <li><img src="/memreas/img/slide-1.png" alt="Fireworks"></li>
+                                        <li><img src="/memreas/img/slide-2.png" alt="Wedding"></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                         <div class="pull-right sign-up">
                             <div class="signup">
                                 <h2>Sign up</h2>
@@ -101,31 +115,23 @@
                                     </div>
                                 </div>
                                 <form enctype="multipart/form-data" action="<?php echo $this->url('index',array('action'=>'registration'));?>" method="post" name="register" id="register" onsubmit="return validateRegstration();">
+                                    <label for="email">email</label>
                                     <input name="email" id="inEmail" type="email" placeholder="Your Email" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Your Email')this.value = '';"/>
+                                    <label for="username">username</label>
                                     <input name="username" type="text" id="inUserName" placeholder="Your Username" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'User Name')this.value = '';"/>
+                                    <label for="password">password</label>
                                     <div class="password"><input name="password" id="inPassword" type="password" placeholder="Password" onFocus="if(this.value == 'Password')this.value = '';" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" /><span class="password-level"></span></div>
+                                    <label for="inVerifyPassword">verify password</label>
                                     <input name="verifypassword" id="inVerifyPassword" type="password" placeholder="Verify Password" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Verify Password')this.value = '';"/>
-                                    <input name="invited_by" class="signup_textfields" type="text" value="invited by @person (optional)" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'invited by @person (optional)')this.value = '';" style="display: none;">
+                                    <label for="invited_by">!event name</label>
+                                    <input name="invited_by" id="invited_by" class="signup_textfields" type="text" value="invited by @person (optional)" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'invited by @person (optional)')this.value = '';" style="display: none;">
                                     <input type="checkbox" class="css-checkbox" id="demo_box_2" name="legal_agree">
                                     <label class="css-label" for="demo_box_2"><a onclick="popup('popupContact');" href="javascript:;" class="legal clicker-1" id="button">legal disclaimer</a></label>
                                     <input type="submit" id="btnCall" class="btn btn-lyt create-accnt" value="Create an account">
                                 </form>
                             </div>
                         </div>
-                        <div class="pull-left filmstrip">
-                            <div class="relative feature">
-                                <div class="film absolute">
-                                    <img src="/memreas/img/memreas-img.png" alt="Film Strip" style="width: 100%;">
-                                </div>
-                                <div id="slider" class="absolute">
-                                    <ul class="rslides">
-                                        <li><img src="/memreas/img/slide-3.png" alt="Beach Party"></li>
-                                        <li><img src="/memreas/img/slide-1.png" alt="Fireworks"></li>
-                                        <li><img src="/memreas/img/slide-2.png" alt="Wedding"></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                        
 
                     </div>
                     <!---Pop up section-->

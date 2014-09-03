@@ -143,9 +143,12 @@ footer{
 }
 
 /* Khan Changes MFE-466 */
-@media (max-height:660px){
+@media (max-height:690px){
     footer{
         padding: 0;
+    }
+    footer p{
+        margin:-5px 0;
     }
 }
 

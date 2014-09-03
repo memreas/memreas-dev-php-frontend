@@ -3056,17 +3056,38 @@ select{ height: 30px; }
     width: 93%;
 }
 
+@media (max-height:660px){
+	.fotorama__nav-wrap{
+		margin-top: -91px;
+		/*margin-top: -55px;*/
+	}
+}
+
+@media (min-height: 667px){
+	div#gallery > .ad{
+		margin-top: 15px;
+	}
+	.fotorama__nav-wrap{
+		margin-top: -71px;
+		/*margin-top: -55px;*/
+	}
+}
 /* Khan Changes MFE-466 */
-@media (max-height: 660px){
+@media (max-height: 690px){
 	#main-tab nav {
 		padding-bottom: 15em;
 	}
 	#maintab-content{
 		padding-top: 0.5em;
 	}
+
 	.adbox{
 		padding: 3.28em 0px;
 		margin-bottom: 12px;
+	}
+	.fotorama__nav-wrap{
+		margin-top: -61px;
+		/*margin-top: -55px;*/
 	}
 	#tab-content,
 	#tab-content-queue,
@@ -3077,8 +3098,9 @@ select{ height: 30px; }
 		min-height: initial;
 		margin-bottom: 0px;
 	}
-	.fotorama__nav-wrap{
-		margin-top: -91px;
-		/*margin-top: -55px;*/
-	}
+	
+
 }
+
+
+
