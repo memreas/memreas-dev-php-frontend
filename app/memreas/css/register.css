@@ -721,12 +721,12 @@ footer {
 }
 }
 
-@media(min-width: 361px){
+@media(min-width: 401px){
     .splash {
         display: none;
     }
 }
-@media (max-width: 360px){
+@media (max-width: 400px){
     .container {
     width: 320px;
     width: auto; /* KHan changes : MFE-470 */
@@ -745,10 +745,11 @@ footer {
         
     }
     .pull-left.filmstrip {
-        margin: 100px auto 0px;
+        margin: 0px auto 0px;
         float: none;
         max-width: 340px;
         position: relative;
+        display: none;
     }
     .login-top .btn-sm {
     margin-bottom: 5px;
@@ -793,8 +794,11 @@ footer {
         display: block;
     }
     #slider {
-        left: 3.9em;
-        top: 3.5em;
+        left: 4.8em;
+        top: 4.3em;
+    }
+    #slider img {
+        width: 112% !important;
     }
     .profile_picture {
     float: left;/* Khan Changes - MFE-470 */

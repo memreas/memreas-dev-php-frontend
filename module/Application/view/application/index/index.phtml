@@ -257,7 +257,7 @@
             
 
 
-            if(window.innerWidth <= 360){
+            if(window.innerWidth <= 400){
                 window.addEventListener('load', splash); 
             } else {
                 $('.splash').css({'display':'none'});
@@ -265,11 +265,12 @@
 
 
             function splash() {
-                // var filmstripHeight = $('.filmstrip').height();
-                // console.log(filmstripHeight);
-                // $('.filmstrip').css({
-                //     "top": (window.innerHeight - filmstripHeight)/2+ 'px'
-                // });
+                var filmstrip =  $('.splash .filmstrip.pull-left');
+                var filmstripHeight = filmstrip.height();
+                filmstrip.css({
+                    "top": (window.innerHeight - filmstripHeight)/2+ 'px'
+                });
+                filmstrip.show();
                 setTimeout(function  () {
                     $('.splash').fadeOut('normal');
                 },3000); // setTimeout
