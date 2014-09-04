@@ -193,6 +193,9 @@ jQuery.fetch_server_media = function (){
                 else{
                     jerror ('There is no media on your account! Please use upload tab on leftside you can add some resources!');
 
+                    //Go to queue page
+                    $("a.queue").trigger('click');
+
                     //If there is no media hide edit & delete tabs
                     $("a[title=tab2], a[title=tab3]").hide();
                     $("#gallery #tabs").find("li").removeClass('current');

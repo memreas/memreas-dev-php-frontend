@@ -195,7 +195,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4e8dd4', end
 }
 .film {
     left: 1px;
-    top: 1px;
+    top: -15px;
     z-index: 999;
 }
 .filmstrip{
