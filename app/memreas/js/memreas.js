@@ -260,7 +260,7 @@ function fetchFriendsMemreas(friendMemreasType){
                                 resource_media = resource_media.replace("<!--[CDATA[", "").replace("]]-->", "");
                                 if (resource_media == '') resource_media = '/memreas/img/small/1.jpg';
                                 var event_name = $(friend_resource).filter ('event_name').html();
-                                $("#" + friend_row).append ('<div class="event_img"><img src="' + resource_media + '" alt=""><span class="event_name_box"><a style="color:#FFF;" href="javascript:showEventDetail(\'' + eventId + '\', \'' + creator_id + '\');">' + event_name + '</a></span></div>');
+                                $("#" + friend_row).append ('<div class="event_img"><img src="' + resource_media + '" alt=""><span class="event_name_box"><a style="color:#FFF;" href="javascript:showEventDetail(\'' + eventId + '\', \'' + creator_id + '\');">!' + event_name + '</a></span></div>');
                             }
 
                             if (total_event_row_width > global_width){
