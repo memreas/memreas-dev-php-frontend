@@ -67,12 +67,16 @@ $(function(){
 var checkHasImage = false;
 /*Load server media*/
 jQuery.fetch_server_media = function (){
+    var verticalHeight = window.innerHeight;
     $(".user-resources").remove();
     // Khan Changes
-    if(window.innerHeight <= 690){
+    if(verticalHeight <= 690){
         $("#tab-content #tab1").append('<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/725" data-max-width="100%" data-height="50%" data-allow-full-screen="true"  data-nav="thumbs"></div>');
     }
-    else if(window.innerWidth > 1359 && window.innerHeight > 800){
+    else if(verticalHeight >= 691 || verticalHeight  <= 750){
+        $("#tab-content #tab1").append('<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/725" data-max-width="100%" data-height="53%" data-allow-full-screen="true"  data-nav="thumbs"></div>');
+    }
+    else if(window.innerWidth > 1359 && verticalHeight > 800){
         $("#tab-content #tab1").append('<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/725" data-max-width="100%" data-height="55%" data-allow-full-screen="true"  data-nav="thumbs"></div>');
     } else {
         $("#tab-content #tab1").append('<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/725" data-max-width="100%" data-allow-full-screen="true"  data-nav="thumbs"></div>');
