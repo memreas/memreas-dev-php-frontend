@@ -2,11 +2,11 @@ var popupStatus=0;function loadPopup(id){if(popupStatus===0){$("#bg"+id).css({"o
 function disablePopup(id){if(popupStatus==1){$("#bg"+id).fadeOut("slow");$("#"+id).fadeOut("slow");popupStatus=0;}}
 function centerPopup(id){$(".popups").fadeOut("slow");$(".backgroundPopup").fadeOut("slow");var windowWidth=window.innerWidth;var windowHeight=window.innerHeight;var popupHeight=$("#"+id).outerHeight();var popupWidth=$("#"+id).outerWidth();$("#"+id).css({"position":"absolute","top":(windowHeight-popupHeight)/2,"left":"37%"});
 //Khan Changes starts Here 
-if(window.innerWidth<991){
+if(window.innerWidth<=1024){
 	if(window.innerWidth<=768){
-		$("#"+id).css({"left":"10%","top":"35px"});
+		$("#"+id).css({"left":"10%","top":"23px"});
 	} else {
-		$("#"+id).css({"left":"23%"});
+		$("#"+id).css({"left":"23%","top":"-113px"});
 	}
 }
 //Khan Changes ends here

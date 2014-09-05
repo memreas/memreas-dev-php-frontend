@@ -25,6 +25,9 @@ $(document).ready(function(){
 (function($){
     $(window).load(function(){
 
+    var navHeight = window.outerHeight - ($('header').outerHeight() + $('footer').outerHeight());
+    $('nav').css({'min-height':navHeight + 'px'});
+
     $("ul.scrollClass").mCustomScrollbar({
             scrollButtons:{
                 enable:true
