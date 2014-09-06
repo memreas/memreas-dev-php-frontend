@@ -205,7 +205,7 @@ error_log("callback_json----->".$callback_json.PHP_EOL);
     * @ Return: json Object
     */
     public function s3signedAction(){
-        $data['bucket'] = "memreasdev";
+        $data['bucket'] = S3BUCKET;
 
         $data['accesskey'] = "AKIAJMXGGG4BNFS42LZA";
         $data['secret'] = "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";

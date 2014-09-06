@@ -8,7 +8,9 @@ namespace Application\Model;
 class MemreasConstants {
 	
 	const MEMREAS_WS = "http://memreasdev-wsu.elasticbeanstalk.com";
-	const MEMREAS_ADS = true;
+	const MEMREAS_ADS = false;
+	const S3BUCKET = "memreasdevsec";
+	
 
     //Enable / Disable payment tabs at more page
     const PAYMENT_TAB_SUBSCRIPTION = true;

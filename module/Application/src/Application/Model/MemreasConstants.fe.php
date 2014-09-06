@@ -9,6 +9,7 @@ class MemreasConstants {
 	
 	const MEMREAS_WS = "http://memreasdev-wsg.elasticbeanstalk.com";
 	const MEMREAS_ADS = true;
+	const S3BUCKET = "memreasdevsec";
 
     //Enable / Disable payment tabs at more page
     const PAYMENT_TAB_SUBSCRIPTION = true;
