@@ -3,7 +3,6 @@
 // Copyright memreas llc 2013
 /////////////////////////////////
 
-//var base_url = 'http://memreasdev.elasticbeanstalk.com/eventapp_zend2.1/webservices/index.php?';
 var wsurl = 'http://memreas-dev-php-frontend.localhost/index/sampleAjax';
 //////////////////////////////////
 // Input xml and fetch output xml

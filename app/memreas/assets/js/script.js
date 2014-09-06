@@ -200,7 +200,13 @@ $(document).ready( function() {
                 var filename = s3_filename_split[s3_filename_split.length - 1];
                 var s3_path_split = s3_filename.split(filename);
                 var s3_path = s3_path_split[0];
-                var server_url = _media_url.replace('https://memreasdev.s3.amazonaws.com/', '');
+                /*
+                 * 6-SEP-2014 - need to get these into one single constants file 
+                 */
+                var S3BUCKET = "memreasdevsec";
+                var S3URL = "https://"+S3BUCKET+".s3.amazonaws.com/";
+                var server_url = _media_url.replace(S3URL, '');
+                 
                 var params = [
                                 {tag: 's3url', value: filename},
                                 {tag: 'is_server_image', value: '0'},
