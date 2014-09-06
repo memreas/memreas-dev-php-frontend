@@ -7,7 +7,7 @@ namespace Application\Model;
 
 class MemreasConstants {
 	
-	const MEMREAS_WS = "http://memreasdev-wsg.elasticbeanstalk.com";
+	const MEMREAS_WS = "http://memreasdev-wsu.elasticbeanstalk.com";
 	const MEMREAS_ADS = true;
 
     //Enable / Disable payment tabs at more page
