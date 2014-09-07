@@ -204,8 +204,9 @@ $(document).ready( function() {
                  * 6-SEP-2014 - need to get these into one single constants file 
                  */
                 var S3BUCKET = "memreasdevsec";
-                var S3URL = "https://"+S3BUCKET+".s3.amazonaws.com/";
+                var S3URL = "https://" + S3BUCKET + ".s3.amazonaws.com/";
                 var server_url = _media_url.replace(S3URL, '');
+//alert("server url -->" + server_url);                
                  
                 var params = [
                                 {tag: 's3url', value: filename},

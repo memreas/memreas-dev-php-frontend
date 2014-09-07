@@ -32,10 +32,8 @@ class IndexController extends AbstractActionController
 {
 	//Updated....
     protected $url = MemreasConstants::MEMREAS_WS; //Local development
-    //protected $url = "http://memreas-dev-ws.localhost/"; //Local development
     protected $stripe_url = "http://memreasdev-pay.elasticbeanstalk.com";
     //protected $stripe_url = "http://memreas-dev-stripe.localhost";
-    protected $test = "Hope this works!";
     protected $user_id;
     protected $storage;
     protected $authservice;
@@ -49,9 +47,9 @@ class IndexController extends AbstractActionController
     public function fetchXML($action, $xml) {
         $session = $this->getAuthService()->getIdentity();
 	    $guzzle = new Client();
-error_log("Inside fetch XML request url ---> " . $this->url . PHP_EOL);
-error_log("Inside fetch XML request action ---> " . $action . PHP_EOL);
-error_log("Inside fetch XML request XML ---> " . $xml . PHP_EOL);
+//error_log("Inside fetch XML request url ---> " . $this->url . PHP_EOL);
+//error_log("Inside fetch XML request action ---> " . $action . PHP_EOL);
+//error_log("Inside fetch XML request XML ---> " . $xml . PHP_EOL);
         $request = $guzzle->post(
 		    $this->url,
 		    null,
@@ -64,7 +62,7 @@ error_log("Inside fetch XML request XML ---> " . $xml . PHP_EOL);
 	        )
 	    );
 	    $response = $request->send();
-error_log("Inside fetch XML response ---> " . $response->getBody(true) . PHP_EOL);
+//error_log("Inside fetch XML response ---> " . $response->getBody(true) . PHP_EOL);
 //error_log("Exit fetchXML".PHP_EOL);
 		return $data = $response->getBody(true);
 	}
@@ -73,10 +71,9 @@ error_log("Inside fetch XML response ---> " . $response->getBody(true) . PHP_EOL
 error_log("Enter FE indexAction".PHP_EOL);
 
         $path = $this->security("application/index/index.phtml");
-        $data['bucket'] = "memreasdev";
-		$view = new ViewModel(array('data' => $data));
+        $data['bucket'] = MemreasConstants::S3BUCKET;
+        $view = new ViewModel(array('data' => $data));
 		$view->setTemplate($path); // path to phtml file under view folder
-error_log("Exit indexAction".PHP_EOL);
 
 		return $view;
     }
@@ -205,7 +202,7 @@ error_log("callback_json----->".$callback_json.PHP_EOL);
     * @ Return: json Object
     */
     public function s3signedAction(){
-        $data['bucket'] = S3BUCKET;
+        $data['bucket'] = MemreasConstants::S3BUCKET;
 
         $data['accesskey'] = "AKIAJMXGGG4BNFS42LZA";
         $data['secret'] = "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";
@@ -249,7 +246,7 @@ error_log("callback_json----->".$callback_json.PHP_EOL);
         $data['sid'] = $session->sid;
 
 
-        $data['bucket'] = "memreasdev";
+        $data['bucket'] = MemreasConstants::S3BUCKET;
         $data['accesskey'] = "AKIAJMXGGG4BNFS42LZA";
         $data['secret'] = "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";
 

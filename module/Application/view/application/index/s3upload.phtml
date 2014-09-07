@@ -6,6 +6,7 @@
 <script type="text/javascript" src="/memreas/js/ajax.js"></script>
 <script type="text/javascript" src="/memreas/js/syncing.js"></script>
 <script type="text/javascript">
+<?php error_log("this->data['bucket']----->".$this->data['bucket'].PHP_EOL) ?>
     $(document).ready(function() {
         $("#file_upload").uploadify({
             'uploader'        : '/memreas/ajax-s3/files/uploadify/uploadify.swf',

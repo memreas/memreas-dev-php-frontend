@@ -667,6 +667,7 @@ final class S3Request {
             $this->bucket = explode('/', $this->bucket);
             $this->resource = '/'.$this->bucket[0].$this->uri;
             $this->headers['Host'] = $this->bucket[0].'.s3.amazonaws.com';
+error_log("this->headers['Host']---->".$this->headers['Host'].PHP_EOL);
             $this->bucket = implode('/', $this->bucket);
         } else {
             $this->headers['Host'] = 's3.amazonaws.com';
