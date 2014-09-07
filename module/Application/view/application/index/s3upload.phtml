@@ -12,7 +12,8 @@
             'uploader'        : '/memreas/ajax-s3/files/uploadify/uploadify.swf',
             'buttonText'    : 'Browse',
             'cancelImg'        : '/memreas/ajax-s3/files/uploadify/cancel.png',
-            'script'        : 'http://s3.amazonaws.com/<?php echo $this->data['bucket']; ?>',
+            //'script'        : 'http://s3.amazonaws.com/<?php echo $this->data['bucket']; ?>',
+            'script'        : 'http://<?php echo $this->data['bucket']; ?>.s3.amazonaws.com/',
             'scriptAccess'    : 'always',
             'method'        : 'post',
             'scriptData'    : {
