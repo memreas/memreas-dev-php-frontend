@@ -1,6 +1,8 @@
 <?php
 namespace Application\View\Helper;
 use Zend\View\Helper\AbstractHelper;
+use Application\Model\MemreasConstants;
+
 
 class S3Service extends AbstractHelper{
     public static $AWS_ACCESS_KEY             = 'AKIAJMXGGG4BNFS42LZA';
@@ -38,7 +40,7 @@ class S3Service extends AbstractHelper{
                 '"expiration": "'.gmdate('Y-m-d\TH:i:s\Z', time()+60*60*24+intval(@$data['timestamp'])).'",'.
                 '"conditions": '.
                 '['.
-                    '{"bucket": "'.$data['bucket'].'"},'.
+                    '{"bucket": "'.MemreasConstants::S3BUCKET.'"},'.
                     '["starts-with", "$key", ""],'.
                     '{"acl": "authenticated-read"},'.
                     //'{"success_action_redirect": "'.$SWFSuccess_Redirect.'"},'.
