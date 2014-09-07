@@ -35,24 +35,27 @@ class S3Service extends AbstractHelper{
 
     public static function get_policy_doc(array $data)
     {
-        return base64_encode(
-            '{'.
-                '"expiration": "'.gmdate('Y-m-d\TH:i:s\Z', time()+60*60*24+intval(@$data['timestamp'])).'",'.
-                '"conditions": '.
-                '['.
-                    '{"bucket": "'.MemreasConstants::S3BUCKET.'"},'.
-                    '["starts-with", "$key", ""],'.
-                    '{"acl": "authenticated-read"},'.
-                    //'{"success_action_redirect": "'.$SWFSuccess_Redirect.'"},'.
-                    '{"success_action_status": "201"},'.
-                    '["starts-with","$key","'.str_replace('/', '\/', $data['folder'] ).'"],'.
-                    '["starts-with","$Filename",""],'.
-                    '["starts-with","$folder",""],'.
-                    '["starts-with","$fileext",""],'.
-                    '["content-length-range",0,5242880]'.
-                ']'.
-            '}'
-        );
+    	$policy = '{'.
+                		'"expiration": "'.gmdate('Y-m-d\TH:i:s\Z', time()+60*60*24+intval(@$data['timestamp'])).'",'.
+                		'"conditions": '.
+                		'['.
+                    		'{"bucket": "'.MemreasConstants::S3BUCKET.'"},'.
+                    		'["starts-with", "$key", ""],'.
+                    		'{"acl": "authenticated-read"},'.
+                    		//'{"success_action_redirect": "'.$SWFSuccess_Redirect.'"},'.
+                    		'{"success_action_status": "201"},'.
+                    		'["starts-with","$key","'.str_replace('/', '\/', $data['folder'] ).'"],'.
+                    		'["starts-with","$Filename",""],'.
+                    		'["starts-with","$folder",""],'.
+                    		'["starts-with","$fileext",""],'.
+                    		'["content-length-range",0,5242880]'.
+                			']'.
+            		'}';
+
+error_log("policy ----> ".$policy.PHP_EOL);
+    	$encoded_policy = base64_encode($policy);
+error_log("encoded_policy ----> ".$encoded_policy.PHP_EOL);
+    	return $encoded_policy;
     }
 
     public static function get_signature( $policy_doc ) {

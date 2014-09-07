@@ -214,7 +214,7 @@ error_log("callback_json----->".$callback_json.PHP_EOL);
         $policy = $this->getS3Policy();
         $hmac = $this->hmacsha1($data['secret'], $policy);
         $json_object = array(
-                                'accessKey' => 'AKIAJMXGGG4BNFS42LZA',
+                                'accessKey' => $data['accesskey'],
                                 'policy' => $policy,
                                 'signature' => $this->hex2b64($hmac)
                             );
@@ -524,8 +524,10 @@ error_log("userid---->".$userid.PHP_EOL);
                     "expiration": "' . $expire . '",
                     "conditions": [
                         {
-                            "bucket": "memreasdev"
-                        },
+                            "bucket": ' 
+                            			. MemreasConstants::S3BUCKET . 
+                        			  '
+    					},
                         {
                             "acl": "public-read"
                         },
