@@ -2390,6 +2390,13 @@ ul.right textarea {
 	display: block;
 	text-align: center;
 }
+.menu ul li span{
+	top: 32px;
+	right:25px;
+}
+li.memreas-detail-commentcount span{
+	top: 28px;
+}
 footer {
 	bottom: -6px !important;
 }
