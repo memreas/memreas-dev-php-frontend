@@ -245,7 +245,6 @@ function showEventDetail(eventId, userId){
     $("#popupAddMedia a.accept-btn").attr ("href", "javascript:addMemreasPopupGallery('" + eventId + "')");
 
     $(".memreas-main").hide();
-    $('#loadingpopup').hide();
     $(".memreas-detail").fadeIn(500);
 }
 function popupVideoPlayer(video_id){
