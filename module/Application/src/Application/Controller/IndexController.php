@@ -32,6 +32,7 @@ class IndexController extends AbstractActionController
 {
 	//Updated....
     protected $url = MemreasConstants::MEMREAS_WS; //Local development
+    //protected $url = 'http://memreas-dev-ws.localhost'; //Local development
     protected $stripe_url = "http://memreasdev-pay.elasticbeanstalk.com";
     //protected $stripe_url = "http://memreas-dev-stripe.localhost";
     protected $user_id;
@@ -524,9 +525,9 @@ error_log("userid---->".$userid.PHP_EOL);
                     "expiration": "' . $expire . '",
                     "conditions": [
                         {
-                            "bucket": ' 
+                            "bucket": "'
                             			. MemreasConstants::S3BUCKET . 
-                        			  '
+                        			  '"
     					},
                         {
                             "acl": "public-read"

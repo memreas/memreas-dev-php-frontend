@@ -101,15 +101,18 @@ jQuery.fetch_server_media = function (){
                 for (var json_key = 0;json_key < count_media;json_key++){
                     var media = medias[json_key].innerHTML;
                     var _media_type = $(media).filter ('type').html();
-                    var _media_url = $(media).filter ('main_media_url').html();
-                    _media_url = _media_url.replace("<!--[CDATA[", "").replace("]]-->", "");
+                    var _media_url = $(media).filter ('media_url_web').html();
+                    _media_url = _media_url.replace('<!--[CDATA[["', "").replace('"]]]-->', "");
+                    _media_url = _media_url.split("\\/").join('/');
                     var _mp4_media = '';
                     var mediaId = $(media).filter ('media_id').html();
 
                     //Build video thumbnail
                     if (_media_type == 'video'){
 
-                        var metadata = getValueFromXMLTag(medias[json_key], 'metadata').replace("<!--[CDATA[", "").replace("]]-->", "");
+                        var metadata = getValueFromXMLTag(medias[json_key], 'metadata')
+                                                .replace("<!--[CDATA[", "")
+                                                .replace("]]-->", "");
                         metadata = JSON.parse(metadata);
                         var transcode_progress = metadata.S3_files.transcode_progress;
 
