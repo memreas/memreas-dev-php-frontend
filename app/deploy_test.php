@@ -1,5 +1,5 @@
 <?php
 
-echo "Deploy for frontend v1.2.2 - Correct indexController Bucket - ready for review";
+echo "Deploy for frontend v1.2.3 - File size upload increased / remove upload debug code - ready for review";
 
 ?>

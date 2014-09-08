@@ -110,6 +110,8 @@ error_log("Enter FE indexAction".PHP_EOL);
                 $flashPlayerContent = ' flashplayer: "../jwplayer.flash.swf",
                                     file: "' . $_POST['video_url'] . '",
                                     "autostart": "true",
+                                    "controlbar.position":"bottom",
+                                    "controlbar.idlehide":"false",
                                     "width": 500,
                                     "height": 300,"skin": "/memreas/js/jwplayer/bekle.xml"';
             }
@@ -541,9 +543,9 @@ error_log("userid---->".$userid.PHP_EOL);
                             "success_action_status": "201"
                         },
                         ["starts-with", "$Content-Type", ""],
-                        ["content-length-range", 0, 204857600]
+                        ["content-length-range", 0, 4004857600]
                     ]
-                }';
+                }'; //4GB file supported
         return base64_encode($policy);
     }
 
