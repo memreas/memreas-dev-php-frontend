@@ -2670,7 +2670,7 @@ ul.memreas_results{
 }
 
 .loadingpopup, .overlay {
-    background: none repeat scroll 0 0 rgba(200, 200, 200, 0.6);
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.4);
     bottom: 0;
     display: none;
     height: 100%;
@@ -2683,7 +2683,6 @@ ul.memreas_results{
 }
 
 .loadingpopupinner {
-    background: none repeat scroll 0 0 rgba(255, 255, 255, 0.8);
     border-radius: 1rem;
     height: 30%;
     left: 25%;
@@ -2701,12 +2700,10 @@ ul.memreas_results{
 }
 .voice-comment-load img{ width: 200px; }
 #loadingimg {
-	width:2rem;
-	height: 2rem;
+	width: 55px;
+	height: 55px;
 	opacity: 0.75;
-	-webkit-border-radius: 1rem;
 	border-radius: 1rem;
-	background-color:black;
 	position:absolute;
 	left:50%;
 	top:50%;
