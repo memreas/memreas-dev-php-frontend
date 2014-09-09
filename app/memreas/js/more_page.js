@@ -664,6 +664,27 @@ function updateNetworkFriends(){
     });
 }
 
+function removeGroup(confimStatus){
+    var group_id = $("select[name=account_groups]").val();
+    if (group_id == ''){
+        jerror('Please select your group name first.');
+        return false;
+    }
+
+    if (!confimStatus)
+        jconfirm('Are you sure want to remove this group?', 'removeGroup(true)');
+    else{
+        var params = [{tag: 'group_id', value: group_id}];
+        ajaxRequest('removegroup', params, function(response){
+            if (getValueFromXMLTag(response, 'status') == 'Success'){
+                jsuccess(getValueFromXMLTag(response, 'message'));
+                getUserGroups();
+            }
+            else jerror(getValueFromXMLTag(response, 'messsage'));
+        });
+    }
+}
+
 /*
 * Morepage memreas management
 */
