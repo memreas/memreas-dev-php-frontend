@@ -1,5 +1,5 @@
 <?php
 
-echo "Deploy for frontend v1.2.1 - Video Premium skin path - ready for review";
+echo "Deploy for frontend v1.2.4 - Correct share/memreas list media - ready for review";
 
 ?>

@@ -32,6 +32,7 @@ class IndexController extends AbstractActionController
 {
 	//Updated....
     protected $url = MemreasConstants::MEMREAS_WS; //Local development
+    //protected $url = 'http://memreas-dev-ws.localhost'; //Local development
     protected $stripe_url = "http://memreasdev-pay.elasticbeanstalk.com";
     //protected $stripe_url = "http://memreas-dev-stripe.localhost";
     protected $user_id;
@@ -109,6 +110,8 @@ error_log("Enter FE indexAction".PHP_EOL);
                 $flashPlayerContent = ' flashplayer: "../jwplayer.flash.swf",
                                     file: "' . $_POST['video_url'] . '",
                                     "autostart": "true",
+                                    "controlbar.position":"bottom",
+                                    "controlbar.idlehide":"false",
                                     "width": 500,
                                     "height": 300,"skin": "/memreas/js/jwplayer/bekle.xml"';
             }
@@ -524,9 +527,9 @@ error_log("userid---->".$userid.PHP_EOL);
                     "expiration": "' . $expire . '",
                     "conditions": [
                         {
-                            "bucket": ' 
+                            "bucket": "'
                             			. MemreasConstants::S3BUCKET . 
-                        			  '
+                        			  '"
     					},
                         {
                             "acl": "public-read"
@@ -540,9 +543,9 @@ error_log("userid---->".$userid.PHP_EOL);
                             "success_action_status": "201"
                         },
                         ["starts-with", "$Content-Type", ""],
-                        ["content-length-range", 0, 204857600]
+                        ["content-length-range", 0, 4004857600]
                     ]
-                }';
+                }'; //4GB file supported
         return base64_encode($policy);
     }
 
@@ -613,9 +616,9 @@ error_log("userid---->".$userid.PHP_EOL);
         //$target_file = $_POST['user_id'] . '/image/' . $source_filename;
         $target_file = $_POST['user_id'] . '/image/' . $remote_filename;
 
-        $s3Object->putBucket('memreasdev', $s3Object::ACL_PUBLIC_READ_WRITE);
+        $s3Object->putBucket(MemreasConstants::S3BUCKET, $s3Object::ACL_PUBLIC_READ_WRITE);
 
-        $result = $s3Object->putObjectFile($server_source_file, 'memreasdev', $target_file, $s3Object::ACL_PUBLIC_READ_WRITE, array(), 'image/jpeg');
+        $result = $s3Object->putObjectFile($server_source_file, MemreasConstants::S3BUCKET, $target_file, $s3Object::ACL_PUBLIC_READ_WRITE, array(), 'image/jpeg');
 
         //Add this edited media as a new media
         $action = 'addmediaevent';
@@ -675,9 +678,9 @@ error_log("userid---->".$userid.PHP_EOL);
             $s3Object = new S3('AKIAJMXGGG4BNFS42LZA', 'xQfYNvfT0Ar+Wm/Gc4m6aacPwdT5Ors9YHE/d38H');
             $target_file = $user_id . '/media/audio/' . $filename;
 
-            $s3Object->putBucket('memreasdev', $s3Object::ACL_PUBLIC_READ_WRITE);
+            $s3Object->putBucket(MemreasConstants::S3BUCKET, $s3Object::ACL_PUBLIC_READ_WRITE);
 
-            $result = $s3Object->putObjectFile($server_source_file, 'memreasdev', $target_file, $s3Object::ACL_PUBLIC_READ_WRITE, array(), 'audio/wav');
+            $result = $s3Object->putObjectFile($server_source_file, MemreasConstants::S3BUCKET, $target_file, $s3Object::ACL_PUBLIC_READ_WRITE, array(), 'audio/wav');
 
             //Add this edited media as a new media
             $action = 'addmediaevent';

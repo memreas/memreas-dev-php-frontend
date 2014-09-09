@@ -61,12 +61,13 @@ function ajaxScrollbarElement(element_object){
 }
 function getMediaThumbnail(element_object, default_value){
     var jElement_object = $(element_object);
-    var media_response = ['media_url_98x78', 'media_url_79x80', 'media_url_448x306', 'event_media_video_thum', 'main_media_url'];
+    var media_response = ['media_url_98x78', 'media_url_79x80', 'media_url_448x306', 'event_media_video_thum', 'media_url_web','main_media_url'];
     var total_media_response = media_response.length;
     var found_link = '';
-    for (i = 0;i < total_media_response;i++){
+    for (var i = 0;i < total_media_response;i++){
         found_link = jElement_object.filter (media_response[i]).html();
-        found_link = found_link.replace("<!--[CDATA[", "").replace("]]-->", "");
+        found_link = found_link.replace('<!--[CDATA[["', "").replace('"]]]-->', "");
+        found_link = found_link.split("\\/").join('/');
         if (found_link != '') break;
     }
     var media_type = jElement_object.filter('type').html();

@@ -180,8 +180,7 @@ function fetchMyMemreas(){
                 }
             }
             else jerror('You have no event at this time. Try add some event at share tab');
-        }
-    , 'undefined', true);
+        });
     $(".myMemreas").mCustomScrollbar('update');
 }
 function fetchFriendsMemreas(friendMemreasType){

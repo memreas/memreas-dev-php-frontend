@@ -219,9 +219,6 @@ $(document).ready( function() {
                 
                 var server_url = _media_url.replace(S3URL, '');
 
-alert("s3upload.js S3URL -->" + S3URL);
-alert("s3upload.js server_url -->" + server_url);
-
 				var params = [
                                 {tag: 's3url', value: filename},
                                 {tag: 'is_server_image', value: '0'},
