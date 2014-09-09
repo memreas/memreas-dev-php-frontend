@@ -129,27 +129,10 @@ jQuery.fetch_server_media = function (){
 
                         if (web_transcoded){
 
-                            //Check if ios device
-                            if (userBrowser[0].ios == 1){
-                                _media_url = $(media).filter('media_url_hls').html();
-                                var _hls_media = 1;
-                                if (typeof (_media_url) != 'undefined'){
-                                    _mp4_media = $(media).filter('media_url_1080p').html();
-                                    _mp4_media = _mp4_media.replace("<!--[CDATA[", "").replace("]]-->", "");
-                                }
-                            }
-                            else {
-                                _media_url = $(media).filter('media_url_1080p').html();
-                                _mp4_media = '';
-                                _hls_media = 0;
-                            }
-
                             //Ignore if has no enough info or media is corrupted
                             if (typeof (_media_url) != 'undefined'){
-                                _media_url = _media_url.replace("<!--[CDATA[", "").replace("]]-->", "");
-                                var temp_url = _media_url.split ('media');
                                 var mediaThumbnail = getMediaThumbnail(media, '/memreas/img/small/1.jpg');
-                                $.post('/index/buildvideocache', {video_url:_media_url, thumbnail:mediaThumbnail, media_id:mediaId, hls_media:_hls_media, mp4_media:_mp4_media}, function(response_data){
+                                $.post('/index/buildvideocache', {video_url:_media_url, thumbnail:mediaThumbnail, media_id:mediaId, hls_media:_media_url, mp4_media:_media_url}, function(response_data){
                                     response_data = JSON.parse (response_data);
                                     $(".user-resources").append('<a data-video="true" href="/memreas/js/jwplayer/jwplayer_cache/' + response_data.video_link + '"><img src="' + response_data.thumbnail + '"/></a>');
                                     $(".edit-area-scroll").append ('<li class="video-media"><a class="video-resource image-sync" id="' + response_data.media_id + '" onclick="return imageChoosed(this.id);" href="' + response_data.thumbnail + '"><img src="' + response_data.thumbnail + '"/><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a><img src="/memreas/img/gallery-select.png"></li>');

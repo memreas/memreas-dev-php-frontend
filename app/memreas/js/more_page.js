@@ -239,10 +239,16 @@ function saveUserDetail(){
             account_password = '';
     }
 
+    if ($("input[name=account_alternate_email]").val() == '' || $("input[name=account_alternate_email]").val() == 'alternate email'){
+        jerror('Please sepecify alternate email');
+        return false;
+    }
+
+
     var userId = $("input[name=user_id]").val();
     var params = [
         {tag: 'user_id', value: userId},
-        {tag: 'email', value: $("input[name=account_email]").val()},
+        {tag: 'email', value: $("input[name=account_alternate_email]").val()},
         {tag: 'password', value: account_password}
     ];
     ajaxRequest('saveuserdetails', params, function(xml_response){

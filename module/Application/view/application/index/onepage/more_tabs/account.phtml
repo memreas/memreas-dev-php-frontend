@@ -9,7 +9,8 @@
     <div class="akordeon-item-body">
         <div class="akordeon-item-content">
             <div class="button-holder">
-                <input name="account_email" type="text" class="more-input" value="email" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'email')this.value = '';"/><br/>
+                <input name="account_email" type="text" class="more-input" value="email" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'email')this.value = '';" readonly /><br/>
+                <input name="account_alternate_email" type="text" class="more-input" value="alternate email" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'alternate email')this.value = '';" /><br/>
                 <input name="account_password" type="password" class="more-input" value="password" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'password')this.value = '';" /><br/>
                 <input name="account_repassword" type="password" class="more-input" value="password" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'password')this.value = '';" />
                 <a class="black_btn_skin f-center" href="javascript:;" onclick="saveUserDetail();">ok</a>
