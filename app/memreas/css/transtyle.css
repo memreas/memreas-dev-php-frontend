@@ -378,3 +378,8 @@ ul.popupContact.memreas-detail-friends, .account-payment{ height: 200px; }
     background-position: -88px -85px !important;
 }
 */
+/*@media (max-height:690px){
+    #gallery-location{
+        height: 334px;
+    }
+}*/

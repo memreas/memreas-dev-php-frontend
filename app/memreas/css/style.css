@@ -3141,6 +3141,9 @@ select{ height: 30px; }
 		min-height: initial;
 		margin-bottom: 0px;
 	}
+	/*ul.pics{
+		min-height: 279px;
+	}*/
 }
 
 
