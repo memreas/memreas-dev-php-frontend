@@ -239,10 +239,16 @@ function saveUserDetail(){
             account_password = '';
     }
 
+    if ($("input[name=account_alternate_email]").val() == '' || $("input[name=account_alternate_email]").val() == 'alternate email'){
+        jerror('Please sepecify alternate email');
+        return false;
+    }
+
+
     var userId = $("input[name=user_id]").val();
     var params = [
         {tag: 'user_id', value: userId},
-        {tag: 'email', value: $("input[name=account_email]").val()},
+        {tag: 'email', value: $("input[name=account_alternate_email]").val()},
         {tag: 'password', value: account_password}
     ];
     ajaxRequest('saveuserdetails', params, function(xml_response){
@@ -656,6 +662,27 @@ function updateNetworkFriends(){
             $("select[name=friend_network]").trigger('change');
             }, 2000);
     });
+}
+
+function removeGroup(confimStatus){
+    var group_id = $("select[name=account_groups]").val();
+    if (group_id == ''){
+        jerror('Please select your group name first.');
+        return false;
+    }
+
+    if (!confimStatus)
+        jconfirm('Are you sure want to remove this group?', 'removeGroup(true)');
+    else{
+        var params = [{tag: 'group_id', value: group_id}];
+        ajaxRequest('removegroup', params, function(response){
+            if (getValueFromXMLTag(response, 'status') == 'Success'){
+                jsuccess(getValueFromXMLTag(response, 'message'));
+                getUserGroups();
+            }
+            else jerror(getValueFromXMLTag(response, 'messsage'));
+        });
+    }
 }
 
 /*

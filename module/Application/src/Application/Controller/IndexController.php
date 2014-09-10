@@ -93,59 +93,39 @@ error_log("Enter FE indexAction".PHP_EOL);
             $cache_file = $this->generateVideoCacheFile ($cache_dir, $video_name);
             $file_handle = fopen ($cache_dir . $cache_file, 'w');
             if ($hls_media){
-                $flashPlayerContent = 'playlist:[
-                                        {image:"",
-                                        sources:[
-                                        {file:"' . $_POST['video_url'] . '"},
-                                        {file:"' . $_POST['mp4_media'] . '"},
-                                        ]
-                                        }],
-                                        width: 500,
-                                        height: 300,
-                                        aspectratio: "16:9",
-                                        primary:"flash",
-                                        ';
+                $flashPlayerContent = 'flashplayer: "../jwplayer.flash.swf",
+                                        "controlbar.position":"bottom", "controlbar.idlehide":"false",
+                                        playlist:[
+                                            {image:"",
+                                                sources:[
+                                                    {file:"' . $_POST['video_url'] . '"},
+                                                    {file:"' . $_POST['mp4_media'] . '"},
+                                                ]
+                                            }],
+                                        width: 500, height: 300, aspectratio: "16:9", primary:"flash",
+                                        "skin": "/memreas/js/jwplayer/bekle.xml"';
             }
             else{
-                $flashPlayerContent = ' flashplayer: "../jwplayer.flash.swf",
-                                    file: "' . $_POST['video_url'] . '",
-                                    "autostart": "true",
-                                    "controlbar.position":"bottom",
-                                    "controlbar.idlehide":"false",
-                                    "width": 500,
-                                    "height": 300,"skin": "/memreas/js/jwplayer/bekle.xml"';
+                $flashPlayerContent = 'flashplayer: "../jwplayer.flash.swf", file: "' . $_POST['video_url'] . '",
+                                    "autostart": "true", "controlbar.position":"bottom", "controlbar.idlehide":"false",
+                                    "width": 500, "height": 300, aspectratio: "16:9",
+                                    "skin": "/memreas/js/jwplayer/bekle.xml"';
             }
-            $content = '<!doctype html>
-                            <html>
-                            <head>
-                            <meta charset="utf-8">
-                            <title>Untitled Document</title>
-                            <script type="text/javascript" src="../jwplayer.js"></script>
-                            <script type="text/javascript" src="../jwplayer.html5.js"></script>
-                            <script type="text/javascript">jwplayer.key="CxCVpLlE64weMpm8vjiNVAMrRicsKBkO+7Vfcg==";</script>
-                            <style>
-                            #myElement_wrapper{
-                                margin:0 auto !important;
-                                width: 100% !important;
-                                min-height: 310px !important;
-                            }
-                            </style>
-                            </head>
-                            <body>
-                            <center><div id="myElement">Loading the player...</div></center>
-                            <script type="text/javascript">
-                                jwplayer("myElement").setup({
-                                   ' . $flashPlayerContent . '
-                                });
-                            </script>
-                            </body>
-                            </html>';
+            $content = $this->renderJWPlayerCache($flashPlayerContent);
             fwrite ($file_handle, $content, 5000);
             fclose ($file_handle);
             $response = array ('video_link' => $cache_file, 'thumbnail' => isset ($_POST['thumbnail']) ? $_POST['thumbnail'] : '/memreas/img/large-pic-1.jpg', 'media_id' => $_POST['media_id']);
             echo json_encode ($response);
         }
         exit();
+    }
+
+    private function renderJWPlayerCache($initContent){
+        $jwPlayerTemplate = $_SERVER['DOCUMENT_ROOT'] . '/memreas/js/jwplayer/template.phtml';
+        $fileHandle = fopen($jwPlayerTemplate, 'r');
+        $content = fread($fileHandle, filesize($jwPlayerTemplate));
+        $content = str_replace('{CONTENT_FLASH}', $initContent, $content);
+        return $content;
     }
 
     /*
@@ -207,8 +187,8 @@ error_log("callback_json----->".$callback_json.PHP_EOL);
     public function s3signedAction(){
         $data['bucket'] = MemreasConstants::S3BUCKET;
 
-        $data['accesskey'] = "AKIAJMXGGG4BNFS42LZA";
-        $data['secret'] = "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";
+        $data['accesskey'] = MemreasConstants::S3_APPKEY;
+        $data['secret'] = MemreasConstants::S3_APPSEC;
 
         /*$s3Authenticate = json_decode($this->getS3Key());
         $data['accessKey'] = $s3Authenticate['AccessKeyId'];
@@ -244,19 +224,19 @@ error_log("callback_json----->".$callback_json.PHP_EOL);
         $user = simplexml_load_string($this->fetchXML($action, $xml));
         $session = new Container('user');
         $user_id = $session->user_id;
+
         //if (!$user) return $this->redirect()->toRoute('index', array('action' => "index"));
         $data['userid'] = $user_id;
         $data['sid'] = $session->sid;
 
 
         $data['bucket'] = MemreasConstants::S3BUCKET;
-        $data['accesskey'] = "AKIAJMXGGG4BNFS42LZA";
-        $data['secret'] = "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";
+        $data['accesskey'] = MemreasConstants::S3_APPKEY;
+        $data['secret'] = MemreasConstants::S3_APPSEC;
 
         $data['base64Policy'] = $this->getS3Policy();
         $data['signature'] = $this->hex2b64($this->hmacsha1($data['secret'], $data['base64Policy']));
 
-        //$path = $this->security("application/index/memreas.phtml");
         $path = "application/index/memreas.phtml";
         $view = new ViewModel(array(
             'data' => $data,
@@ -527,9 +507,7 @@ error_log("userid---->".$userid.PHP_EOL);
                     "expiration": "' . $expire . '",
                     "conditions": [
                         {
-                            "bucket": "'
-                            			. MemreasConstants::S3BUCKET . 
-                        			  '"
+                            "bucket": "' . MemreasConstants::S3BUCKET . '"
     					},
                         {
                             "acl": "public-read"
@@ -596,14 +574,9 @@ error_log("userid---->".$userid.PHP_EOL);
 
     public function editmediaAction(){
         $target_dir = getcwd() . '/app/memreas/temps_media_edit/';
-        $s3Object = new S3('AKIAJMXGGG4BNFS42LZA', 'xQfYNvfT0Ar+Wm/Gc4m6aacPwdT5Ors9YHE/d38H');
+        $s3Object = new S3(MemreasConstants::S3_APPKEY, MemreasConstants::S3_APPSEC);
         $file_source = $_POST['file_source'];
         $file_remote = $_POST['file_url'];
-
-        /*
-        $source_filename = explode('/', $file_source);
-        $source_filename = $source_filename[count($source_filename) - 1];
-        */
 
         $remote_filename = explode('/', $file_remote);
         $remote_filename = $remote_filename[count($remote_filename) - 1];
@@ -675,7 +648,7 @@ error_log("userid---->".$userid.PHP_EOL);
             fwrite($fh, base64_decode($base64));
 
             //begin upload to S3
-            $s3Object = new S3('AKIAJMXGGG4BNFS42LZA', 'xQfYNvfT0Ar+Wm/Gc4m6aacPwdT5Ors9YHE/d38H');
+            $s3Object = new S3(MemreasConstants::S3_APPKEY, MemreasConstants::S3_APPSEC);
             $target_file = $user_id . '/media/audio/' . $filename;
 
             $s3Object->putBucket(MemreasConstants::S3BUCKET, $s3Object::ACL_PUBLIC_READ_WRITE);
