@@ -210,7 +210,8 @@ function showEventDetail(eventId, userId){
                 if (typeof (eventId != 'undefined')){
                     event_owner_name = getValueFromXMLTag(response, 'username');
                     eventdetail_user_pic = getValueFromXMLTag(response, 'profile_pic');
-                    eventdetail_user_pic = eventdetail_user_pic.replace("<!--[CDATA[", "").replace("]]-->", "");
+                    eventdetail_user_pic = eventdetail_user_pic.replace('<!--[CDATA[', "").replace(']]-->', "");
+                    eventdetail_user_pic = eventdetail_user_pic.split("\\/").join('/');
 
                     $(".memreas-detail-comments .event-owner .pro-pics img").attr ('src', $("header").find("#profile_picture").attr('src'));
                     $(".memreas-detail-comments .pro-names").html(event_owner_name);
@@ -219,7 +220,8 @@ function showEventDetail(eventId, userId){
                     for (var i=0;i < media_count;i++) {
                         var media = medias[i].innerHTML;
                         var _main_media = $(media).filter ('main_media_url').html();
-                        _main_media = _main_media.replace("<!--[CDATA[", "").replace("]]-->", "");
+                        _main_media = _main_media.replace('<!--[CDATA[["', "").replace("]]-->", "");
+                        _main_media = _main_media.split("\\/").join('/');
                         if (_main_media.indexOf ('undefined') >= 0) _main_media = '/memreas/img/large/1.jpg';
                         var _media_url = getMediaThumbnail(media, '/memreas/img/small/1.jpg');
                         var _media_type = $(media).filter ('type').html();

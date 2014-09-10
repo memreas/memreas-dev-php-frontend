@@ -221,7 +221,7 @@ function personalSearchLi(target, item) {
                 + name + '</div>';
                 if(typeof item.friend_request_sent  === 'undefined'){
                     op += '<a href="javascript:;" class="btn-friends black_btn_skin" id="'
-                + name + '">add friend</a></li>';
+                + name + '" title="user-' + name.replace('@', '') +'">add friend</a></li>';
                 }
                 
         $(target).append(op);
@@ -276,6 +276,12 @@ function addFriend(name) {
 
                     //jsuccess('your friends added successfully.');
                     jsuccess(message);
+                    var link_object = "a[title='user-" + name.replace('@', '') + "']";
+                    $(link_object).removeAttr('href')
+                        .html("requested")
+                        .attr("disabled", true)
+                        .css({'font-size':'12px', 'font-style':'italic'})
+                        .unbind('click');
                     //$(".popupContact li").each (function(){ $(this).removeClass ('setchoosed');});
                 }
                 else
