@@ -26,9 +26,17 @@ $(document).ready(function(){
     $(window).load(function(){
 
     // Automatically calculate height of nav element to strech it to the bottom of the page
-    var navHeight = window.outerHeight - ($('header').outerHeight() + $('footer').outerHeight());
-    navHeight = navHeight + 4;
-    $('nav').css({'min-height':navHeight + 'px'});
+    var calculateNavHeight = function() {
+        var headerHeight = $('header').outerHeight(),
+        footerHeight = $('footer').outerHeight(),
+        navHeight = window.innerHeight - (headerHeight + footerHeight);
+        navHeight = navHeight + 4;
+        $('nav').css({'min-height':navHeight + 'px'});
+    };
+
+    calculateNavHeight();
+
+    window.addEventListener('resize',calculateNavHeight());
 
     $("ul.scrollClass").mCustomScrollbar({
             scrollButtons:{

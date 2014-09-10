@@ -1,4 +1,4 @@
-/*Tran developer will style here*/
+Tran developer will style here*/
 .row-choose-file{ position: relative; margin: 0 auto; width: 590px; }
 li.setchoosed, img.setchoosed{ border: 1px solid #10FA2C !important; position: relative; }
 .description{
@@ -128,7 +128,7 @@ li.working-upload .progress-text{
 .aviary-thumbs li, .galleries-location li{
     margin-bottom: 10px !important;
 }
-.aviary-thumbs li{ border: 1px solid #FFF; }
+/*.aviary-thumbs li{ border: 1px solid #FFF; } kH*/
 .change-profile-btn{ float: right; }
 .exit-aviary-fullscreen{
     position: fixed;
@@ -278,20 +278,26 @@ img.loading-small{
     text-align: center;
 }
 .carousel-area-aviary{
-    width: 15%;
+    /*width: 15%; KH*/
+    width: 80%;
     float: left;
+    float:right;
 }
 .carousel-area-aviary .elastislide-carousel{
     height: auto;
 }
 .carousel-area-aviary .elastislide-wrapper navs span{
     background: url(../img/arrows-top-down.png) no-repeat 0px 0px;
-    left: 45%;
+    background: url(../img/arrows.png) no-repeat 0px 0px;
+    left: 0%;
     width: 45px;
+    width: 14px;
     height: 14px;
+    height: 34px;
 }
 .carousel-area-aviary .elastislide-wrapper navs span.elastislide-next{
     background-position: 0px -14px;
+    background-position: -14px 0px; /* KH */
 }
 ul.popupContact.memreas-detail-friends, .account-payment{ height: 200px; }
 .TermsAndServiceContent{ height: 300px; }
@@ -382,4 +388,4 @@ ul.popupContact.memreas-detail-friends, .account-payment{ height: 200px; }
     #gallery-location{
         height: 334px;
     }
-}*/
+}

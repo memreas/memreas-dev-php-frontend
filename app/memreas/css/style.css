@@ -734,6 +734,7 @@ ul.pics {
 	padding: 0;
 	overflow: auto;
 	min-height: 400px;
+	min-height:270px; /* KH I've added these styles in order to fix delete tab */
 	margin-top: 10px;
 }
 ul.pics li {
@@ -749,6 +750,8 @@ ul.pics li {
 ul.pics li img, .aviary-thumbs img, .galleries-location img{
     height: 98px;
     width: 180px;
+    /*height: 64px;
+    width: 64px;*/
     cursor: pointer;
 }
 #memreas-detail-tab1 ul.pics li img, #share_medialist img{ width: 100%; }
@@ -3078,6 +3081,7 @@ select{ height: 30px; }
 		margin-top: -71px;
 		/*margin-top: -55px;*/
 	}
+
 }
 
 @media (min-height: 751px){
@@ -3135,12 +3139,25 @@ select{ height: 30px; }
 	#tab-content-memreas,
 	#tab-content-memreas-detail,
 	#tab-content-more {
-		min-height: initial;
-		margin-bottom: 0px;
+		max-height: 388px;
 	}
 	/*ul.pics{
 		min-height: 279px;
 	}*/
+}
+
+@media (max-height: 667px){
+	#tab-content,
+	#tab-content-queue,
+	#tab-content-share,
+	#tab-content-memreas,
+	#tab-content-memreas-detail,
+	#tab-content-more {
+		min-height: initial;
+		margin-bottom: 0px;
+		max-height: 365px;
+		overflow: auto;
+	}
 }
 
 
