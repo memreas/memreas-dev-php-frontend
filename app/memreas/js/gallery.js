@@ -58,7 +58,7 @@ $(function(){
         if (detectHandheldIOSDevice())
             aviarySpace('get');
         if (!($(".aviary-thumbs").parent(".elastislide-carousel").length > 0))
-            $('.aviary-thumbs').elastislide({orientation : 'horizontal', minItems: 3});
+            $('.aviary-thumbs').elastislide({orientation : 'vertical', minItems: 3});
         $('.aviary-thumbs').find('li:eq(0) img').trigger("click");
     });
 
