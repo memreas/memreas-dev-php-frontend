@@ -121,7 +121,7 @@ li.working-upload .progress-text{
 #tab-content-share .hideCls{ display: none; }
 #tab-content-share #tab1-share{ display: block; }
 .aviary-edit-wrapper{
-    height: 450px; position: relative;
+    height: 120px; position: relative;
     width: 80%;
     float: left;
 }
@@ -325,21 +325,41 @@ ul.popupContact.memreas-detail-friends, .account-payment{ height: 200px; }
     box-shadow: none;
     -moz-box-shadow:none;
 }
+#avpw_controls{
+    z-index: initial !important;
+    overflow: initial !important;
+    min-height: initial !important;
+}
+#avpw_canvas_embed{
+    z-index: 9999 !important;
+    top: -339px !important;
+    height: 300px;
+    left: 19% !important;
+}
 #avpw_footer, .avpw_close_button, #avpw_tool_content_header{ display: none !important; }
 .avpw_mode_action_right {
-left: 0px;
+    left: 0px !important;
 }
 
 .avpw_prev {
-left: 120px;
+    left: 120px !important;
 }
 .avpw_tool_pager .avpw_clip {
-left: 168px;
-right: 47px;
+    left: 168px !important;
+    right: 47px !important;
 }
+
+/* Right Chevron Button */
 #avpw_rghtArrow {
-right: -1px;
+    right: -1px !important;
 }
+
+/* The Cancel Button */
+.avpw_mode_action_left {
+    right: 0 !important;
+    left: 85% !important;
+}
+
 /*
 .avpw .avpw_icon{
     padding-left: 30px;
