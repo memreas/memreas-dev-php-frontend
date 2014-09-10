@@ -278,26 +278,20 @@ img.loading-small{
     text-align: center;
 }
 .carousel-area-aviary{
-    /*width: 15%; KH*/
-    width: 80%;
+    width: 15%; 
     float: left;
-    float:right;
 }
 .carousel-area-aviary .elastislide-carousel{
     height: auto;
 }
 .carousel-area-aviary .elastislide-wrapper navs span{
     background: url(../img/arrows-top-down.png) no-repeat 0px 0px;
-    background: url(../img/arrows.png) no-repeat 0px 0px;
-    left: 0%;
+    left: 45%;
     width: 45px;
-    width: 14px;
     height: 14px;
-    height: 34px;
 }
 .carousel-area-aviary .elastislide-wrapper navs span.elastislide-next{
     background-position: 0px -14px;
-    background-position: -14px 0px; /* KH */
 }
 ul.popupContact.memreas-detail-friends, .account-payment{ height: 200px; }
 .TermsAndServiceContent{ height: 300px; }
@@ -332,6 +326,20 @@ ul.popupContact.memreas-detail-friends, .account-payment{ height: 200px; }
     -moz-box-shadow:none;
 }
 #avpw_footer, .avpw_close_button, #avpw_tool_content_header{ display: none !important; }
+.avpw_mode_action_right {
+left: 0px;
+}
+
+.avpw_prev {
+left: 120px;
+}
+.avpw_tool_pager .avpw_clip {
+left: 168px;
+right: 47px;
+}
+#avpw_rghtArrow {
+right: -1px;
+}
 /*
 .avpw .avpw_icon{
     padding-left: 30px;

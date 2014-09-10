@@ -734,7 +734,6 @@ ul.pics {
 	padding: 0;
 	overflow: auto;
 	min-height: 400px;
-	min-height:270px; /* KH I've added these styles in order to fix delete tab */
 	margin-top: 10px;
 }
 ul.pics li {
@@ -1029,6 +1028,8 @@ a.black_btn_skin:hover, a.black_btn_skin:active, #avpw_save_button:hover, #avpw_
 	z-index: 2;
 	min-height: 490px;
 	margin-bottom: 10px;
+		overflow: auto;
+
 }
 #tab-content-more{ margin-top: -2px; }
 #tab-content h2, #tab-content h3, #tab-content p,
@@ -3117,6 +3118,9 @@ select{ height: 30px; }
 		min-height: initial;
 		margin-bottom: 0px;
 	}
+	ul.pics{
+		min-height: 317px;
+	}
 }
 
 /* Khan Changes MFE-466 */
@@ -3141,9 +3145,9 @@ select{ height: 30px; }
 	#tab-content-more {
 		max-height: 388px;
 	}
-	/*ul.pics{
-		min-height: 279px;
-	}*/
+	ul.pics{
+		min-height: 270px;
+	}
 }
 
 @media (max-height: 667px){
@@ -3156,7 +3160,6 @@ select{ height: 30px; }
 		min-height: initial;
 		margin-bottom: 0px;
 		max-height: 365px;
-		overflow: auto;
 	}
 }
 

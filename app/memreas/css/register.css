@@ -720,12 +720,12 @@ footer {
 }
 }
 
-@media(min-width: 401px){
+@media(min-width: 601px){
     .splash {
         display: none;
     }
 }
-@media (max-width: 400px){
+@media (max-width: 600px){
     .container {
     width: 320px;
     width: auto; /* KHan changes : MFE-470 */
@@ -838,7 +838,7 @@ footer {
         margin-top: 0;
     }
     footer.rel{
-        position: static !important;
+        /*position: static !important;*/
     }
 
     /*.film{
@@ -852,6 +852,7 @@ footer {
         right: 0;
         background: #1A64B9;
         height: 100%;
+        z-index: 1000;
     }
     
 }
