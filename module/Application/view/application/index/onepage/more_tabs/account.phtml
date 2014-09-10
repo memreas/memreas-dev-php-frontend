@@ -9,9 +9,15 @@
     <div class="akordeon-item-body">
         <div class="akordeon-item-content">
             <div class="button-holder">
-                <input name="account_email" type="text" class="more-input" value="email" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'email')this.value = '';" readonly /><br/>
-                <input name="account_alternate_email" type="text" class="more-input" value="alternate email" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'alternate email')this.value = '';" /><br/>
-                <input name="account_password" type="password" class="more-input" value="password" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'password')this.value = '';" /><br/>
+                <input name="account_email" type="text" class="more-input" value="email" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'email')this.value = '';" readonly />
+                <input name="account_alternate_email" type="text" class="more-input" value="alternate email" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'alternate email')this.value = '';" />
+                <div class="clear"></div>
+                <div class="account-gender">
+                    <label class="label_text2"><input type="radio" id="gender-male" name="gender_choose" class="regular-radio" value="male" /><label for="gender-male"></label>Male</label>
+                    <label class="label_text2"><input type="radio" id="gender-female" name="gender_choose" class="regular-radio" value="female" /><label for="gender-female"></label>Female</label>
+                </div>
+                <input name="account_dob" id="account_dob" type="text" class="more-input date-picker" value="date of birth" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'date of birth')this.value = '';" /><br/>
+                <input name="account_password" type="password" class="more-input" value="password" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'password')this.value = '';" />
                 <input name="account_repassword" type="password" class="more-input" value="password" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'password')this.value = '';" />
                 <a class="black_btn_skin f-center" href="javascript:;" onclick="saveUserDetail();">ok</a>
                 <a class="black_btn_skin" href="#">cancel</a>

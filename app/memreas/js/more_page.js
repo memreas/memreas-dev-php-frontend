@@ -214,10 +214,21 @@ function fillUserDetail(currentUserId){
             var username = getValueFromXMLTag(xml_response, 'username');
             var useremail = getValueFromXMLTag(xml_response, 'email');
             var userprofile = getValueFromXMLTag(xml_response, 'profile');
+            var alternate_email = getValueFromXMLTag(xml_response, 'alternate_email');
+            var gender = getValueFromXMLTag(xml_response, 'gender');
+            var dob = getValueFromXMLTag(xml_response, 'dob');
             $("#setting-username").html(username);
             if (userprofile != '')
                 $("#setting-userprofile img").attr('src', userprofile);
             $("input[name=account_email]").val(useremail);
+            $("input[name=account_alternate_email]").val(alternate_email);
+            $("input[name=dob]").val(dob);
+
+            if (gender == 'male')
+                $("#gender-male").attr("checked", "checked");
+            else{
+                if (gender == 'female') $("#gender-female").attr("checked", "checked");
+            }
         }
         else jerror (getValueFromXMLTag(xml_response, 'messsage'));
     });
@@ -244,12 +255,22 @@ function saveUserDetail(){
         return false;
     }
 
+    if ($("#gender-male").is(":checked"))
+        var account_gender = 'male';
+    else{
+        if ($("#gender-female").is(":checked"))
+            var account_gender = 'male';
+        else var account_gender = '';
+    }
+    var account_dob = $("input[name=account_dob]").val();
 
     var userId = $("input[name=user_id]").val();
     var params = [
         {tag: 'user_id', value: userId},
         {tag: 'email', value: $("input[name=account_alternate_email]").val()},
-        {tag: 'password', value: account_password}
+        {tag: 'password', value: account_password},
+        {tag: 'gender', value: account_gender},
+        {tag: 'dob', value: account_dob}
     ];
     ajaxRequest('saveuserdetails', params, function(xml_response){
         if (getValueFromXMLTag(xml_response, 'status') == "Success"){
