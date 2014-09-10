@@ -203,7 +203,7 @@ function showEventDetail(eventId, userId){
             { tag: 'limit',value: media_limit_count },
             { tag: 'page', value: media_page_index }
         ], function (response){
-
+            console.log(response);
             var eventId = getValueFromXMLTag(response, 'event_id');
             if (getValueFromXMLTag(response, 'status') == "Success") {
                 var medias = getSubXMLFromTag(response, 'media');

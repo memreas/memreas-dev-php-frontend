@@ -14,6 +14,9 @@ function getUserDetail(){
                 var username = getValueFromXMLTag(xml_response, 'username');
                 $("input[name=username]").val(username);
                 var userprofile = getValueFromXMLTag(xml_response, 'profile');
+                var alternate_email = getValueFromXMLTag(xml_response, 'alternate_email');
+                var gender = getValueFromXMLTag(xml_response, 'gender');
+                var dob = getValueFromXMLTag(xml_response, 'dob');
                 var username_length = username.length;
                 if (username_length > 10){
                     username = username.substring(0, 7) + '...';
@@ -24,6 +27,16 @@ function getUserDetail(){
                     $("header").find("#profile_picture").attr('src', userprofile);
                     $("#setting-userprofile img").attr('src', userprofile);
                 }
+                $("input[name=account_email]").val(useremail);
+                $("input[name=account_alternate_email]").val(alternate_email);
+                $("input[name=dob]").val(dob);
+
+                if (gender == 'male')
+                    $("#gender-male").attr("checked", "checked");
+                else{
+                    if (gender == 'female') $("#gender-female").attr("checked", "checked");
+                }
+
                 $("input[name=account_email]").val(useremail);
             }
             else jerror (getValueFromXMLTag(xml_response, 'messsage'));

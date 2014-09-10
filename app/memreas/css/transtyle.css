@@ -309,6 +309,12 @@ ul.popupContact.memreas-detail-friends, .account-payment{ height: 200px; }
     font-family: "Century Gothic";
 }
 .account-billing{ height: 180px; }
+input[name="account_email"],
+input[name="account_alternate_email"], .account-gender,
+input[name="account_dob"],
+input[name="account_password"],
+input[name="account_repassword"]{ width: 42%; margin-right: 10px; float: left; }
+.account-gender{ margin-right: 23px; }
 /* Aviary page */
 #avpw_save_button, #avpw_apply_container{
     width: 20px;
