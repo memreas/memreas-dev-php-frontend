@@ -64,7 +64,6 @@ function getMediaUrl(element_object, mediatype){
     var photo_tags = ['media_url_web', 'main_media_url'];
     var video_tags = ['media_url_web', 'media_url_1080p', 'main_media_url'];
 
-    var jElement_object = $(element_object);
     switch (mediatype){
         case 'image':
             var search_element = photo_tags;
@@ -80,9 +79,11 @@ function getMediaUrl(element_object, mediatype){
     var total_media_response = search_element.length;
     var found_link = '';
     for (var i = 0;i < total_media_response;i++){
-        found_link = jElement_object.filter (search_element[i]).html();
-        console.log(found_link);
-        if (found_link != '' && typeof (found_link) != 'undefined'){
+
+        if ((element_object.innerHTML).indexOf(search_element[i]) >= 0)
+            found_link = getValueFromXMLTag(element_object, search_element[i]);
+
+        if (found_link != ''){
             found_link = found_link.replace('<!--[CDATA[["', "").replace('"]]]-->', "")
                 .replace("<!--[CDATA[", "").replace("]]-->", "");
             if (found_link.indexOf("\\/") >= 0)
@@ -91,7 +92,7 @@ function getMediaUrl(element_object, mediatype){
         }
     }
 
-    if (found_link == '' || found_link.indexOf ('undefined') >= 0)
+    if (found_link == '')
         return '/memreas/img/small/1.jpg';
     else return found_link;
 }
@@ -106,18 +107,23 @@ function removeCdataCorrectLink(media_link){
 }
 
 function getMediaThumbnail(element_object, default_value){
-    var jElement_object = $(element_object);
-    var media_response = ['media_url_98x78', 'media_url_79x80', 'media_url_448x306', 'event_media_video_thum', 'media_url_web','main_media_url'];
-    var total_media_response = media_response.length;
+    var media_tags = ['media_url_98x78', 'media_url_79x80', 'media_url_448x306', 'event_media_video_thum', 'media_url_web','main_media_url'];
+    var total_media_response = media_tags.length;
     var found_link = '';
     for (var i = 0;i < total_media_response;i++){
-        found_link = jElement_object.filter (media_response[i]).html();
-        found_link = found_link.replace('<!--[CDATA[["', "").replace('"]]]-->', "");
-        found_link = found_link.split("\\/").join('/');
-        if (found_link != '') break;
+
+        if ((element_object.innerHTML).indexOf(media_tags[i]) >= 0)
+            found_link = getValueFromXMLTag(element_object, media_tags[i]);
+
+        if (found_link != ''){
+            found_link = found_link.replace('<!--[CDATA[["', "").replace('"]]]-->', "");
+            if (found_link.indexOf("\\/") >= 0)
+                found_link = found_link.split("\\/").join('/');
+            break;
+        }
     }
-    var media_type = jElement_object.filter('type').html();
-    if (found_link == '' || found_link.indexOf ('undefined') >= 0 || (media_type == 'video' && (i == total_media_response - 1))) found_link = default_value;
+
+    if (found_link == '') found_link = default_value;
     return found_link;
 }
 

@@ -108,12 +108,14 @@ jQuery.fetch_server_media = function (){
             {tag: 'metadata', value: '1'}
         ], function (response){
             if (getValueFromXMLTag(response, 'status') == "Success") {
+
                 var medias = getSubXMLFromTag(response, 'media');
                 $(".user-resources, .scrollClass .mCSB_container, .sync-content .scrollClass").html('');
                 var count_media = medias.length;
+
                 for (var json_key = 0;json_key < count_media;json_key++){
-                    var media = medias[json_key].innerHTML;
-                    var _media_type = $(media).filter ('type').html();
+                    var media = medias[json_key];
+                    var _media_type = getValueFromXMLTag(media, 'type');
                     var _media_url = getMediaUrl(media, _media_type);
 
                     var mediaId = $(media).filter ('media_id').html();
@@ -121,37 +123,42 @@ jQuery.fetch_server_media = function (){
                     //Build video thumbnail
                     if (_media_type == 'video'){
 
-                        var metadata = removeCdataCorrectLink(getValueFromXMLTag(medias[json_key], 'metadata'));
+                        var metadata = getValueFromXMLTag(medias[json_key], 'metadata');
 
-                        metadata = JSON.parse(metadata);
-                        var transcode_progress = metadata.S3_files.transcode_progress;
+                        if (typeof (metadata) != 'undefined'){
 
-                        //Check if web transcode is completed or not
-                        var web_transcoded = false;
-                        if (typeof (transcode_progress) != 'undefined'){
-                            for (var i = 0;i < transcode_progress.length;i++){
-                                if (transcode_progress[i] == 'transcode_web_completed'){
-                                    web_transcoded = true;
-                                    break;
+                            metadata = removeCdataCorrectLink(metadata);
+
+                            metadata = JSON.parse(metadata);
+                            var transcode_progress = metadata.S3_files.transcode_progress;
+
+                            //Check if web transcode is completed or not
+                            var web_transcoded = false;
+                            if (typeof (transcode_progress) != 'undefined'){
+                                for (var i = 0;i < transcode_progress.length;i++){
+                                    if (transcode_progress[i] == 'transcode_web_completed'){
+                                        web_transcoded = true;
+                                        break;
+                                    }
                                 }
                             }
-                        }
 
-                        if (web_transcoded){
+                            if (web_transcoded){
 
-                            //Ignore if has no enough info or media is corrupted
-                            if (typeof (_media_url) != 'undefined'){
-                                var mediaThumbnail = getMediaThumbnail(media, '/memreas/img/small/1.jpg');
-                                $.post('/index/buildvideocache', {video_url:_media_url, thumbnail:mediaThumbnail, media_id:mediaId, hls_media:_media_url, mp4_media:_media_url}, function(response_data){
-                                    response_data = JSON.parse (response_data);
-                                    $(".user-resources").append('<a data-video="true" href="/memreas/js/jwplayer/jwplayer_cache/' + response_data.video_link + '"><img src="' + response_data.thumbnail + '"/></a>');
-                                    $(".edit-area-scroll").append ('<li class="video-media"><a class="video-resource image-sync" id="' + response_data.media_id + '" onclick="return imageChoosed(this.id);" href="' + response_data.thumbnail + '"><img src="' + response_data.thumbnail + '"/><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a><img src="/memreas/img/gallery-select.png"></li>');
-                                });
+                                //Ignore if has no enough info or media is corrupted
+                                if (typeof (_media_url) != 'undefined'){
+                                    var mediaThumbnail = getMediaThumbnail(media, '/memreas/img/small/1.jpg');
+                                    $.post('/index/buildvideocache', {video_url:_media_url, thumbnail:mediaThumbnail, media_id:mediaId, hls_media:_media_url, mp4_media:_media_url}, function(response_data){
+                                        response_data = JSON.parse (response_data);
+                                        $(".user-resources").append('<a data-video="true" href="/memreas/js/jwplayer/jwplayer_cache/' + response_data.video_link + '"><img src="' + response_data.thumbnail + '"/></a>');
+                                        $(".edit-area-scroll").append ('<li class="video-media"><a class="video-resource image-sync" id="' + response_data.media_id + '" onclick="return imageChoosed(this.id);" href="' + response_data.thumbnail + '"><img src="' + response_data.thumbnail + '"/><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a><img src="/memreas/img/gallery-select.png"></li>');
+                                    });
+                                }
+                                else $(".edit-area-scroll").append ('<li class="video-media"><a class="video-resource image-sync" id="' + mediaId + '" onclick="return imageChoosed(this.id);" href="/memreas/img/large-pic-1.jpg"><img src="/memreas/img/large-pic-1.jpg"/><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a><img src="/memreas/img/gallery-select.png"></li>');
                             }
-                            else $(".edit-area-scroll").append ('<li class="video-media"><a class="video-resource image-sync" id="' + mediaId + '" onclick="return imageChoosed(this.id);" href="/memreas/img/large-pic-1.jpg"><img src="/memreas/img/large-pic-1.jpg"/><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a><img src="/memreas/img/gallery-select.png"></li>');
-                        }
-                        else{
-                            $(".edit-area-scroll").append ('<li class="video-media"><a class="video-resource image-sync" id="' + mediaId + '" onclick="return imageChoosed(this.id);" href="/memreas/img/transcode-icon.png"><img src="/memreas/img/transcode-icon.png"/></a><img src="/memreas/img/gallery-select.png"></li>');
+                            else{
+                                $(".edit-area-scroll").append ('<li class="video-media"><a class="video-resource image-sync" id="' + mediaId + '" onclick="return imageChoosed(this.id);" href="/memreas/img/transcode-icon.png"><img src="/memreas/img/transcode-icon.png"/></a><img src="/memreas/img/gallery-select.png"></li>');
+                            }
                         }
                     }
                     else {
