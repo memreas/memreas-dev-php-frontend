@@ -72,6 +72,7 @@ function getMediaUrl(element_object, mediatype){
         case 'video':
             var search_element = video_tags;
             break;
+        default : var search_element = photo_tags;
     }
 
     var found_link = '';

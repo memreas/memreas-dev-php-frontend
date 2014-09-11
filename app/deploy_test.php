@@ -1,5 +1,5 @@
 <?php
 
-echo "Deploy for frontend v1.2.5 - Video/Photo link - ready for review";
+echo "Deploy for frontend v1.2.6 - Video/Photo link - ready for review";
 
 ?>
