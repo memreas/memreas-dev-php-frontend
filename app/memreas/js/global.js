@@ -81,13 +81,14 @@ function getMediaUrl(element_object, mediatype){
     var found_link = '';
     for (var i = 0;i < total_media_response;i++){
         found_link = jElement_object.filter (search_element[i]).html();
-        found_link = found_link.replace('<!--[CDATA[["', "").replace('"]]]-->', "")
-                                .replace("<!--[CDATA[", "").replace("]]-->", "");
 
-        if (found_link.indexOf("\\/") >= 0)
-            found_link = found_link.split("\\/").join('/');
-
-        if (found_link != '') break;
+        if (found_link != '' || typeof (found_link) != 'undefined'){
+            found_link = found_link.replace('<!--[CDATA[["', "").replace('"]]]-->', "")
+                .replace("<!--[CDATA[", "").replace("]]-->", "");
+            if (found_link.indexOf("\\/") >= 0)
+                found_link = found_link.split("\\/").join('/');
+            break;
+        }
     }
 
     if (found_link == '' || found_link.indexOf ('undefined') >= 0)
