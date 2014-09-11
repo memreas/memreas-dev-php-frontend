@@ -82,7 +82,7 @@ function getMediaUrl(element_object, mediatype){
     for (var i = 0;i < total_media_response;i++){
         found_link = jElement_object.filter (search_element[i]).html();
         console.log(found_link);
-        if (found_link != '' || typeof (found_link) != 'undefined' || found_link.indexOf ('undefined') < 0){
+        if (found_link != '' && typeof (found_link) != 'undefined'){
             found_link = found_link.replace('<!--[CDATA[["', "").replace('"]]]-->', "")
                 .replace("<!--[CDATA[", "").replace("]]-->", "");
             if (found_link.indexOf("\\/") >= 0)
