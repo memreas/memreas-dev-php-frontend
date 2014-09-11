@@ -114,18 +114,15 @@ jQuery.fetch_server_media = function (){
                 for (var json_key = 0;json_key < count_media;json_key++){
                     var media = medias[json_key].innerHTML;
                     var _media_type = $(media).filter ('type').html();
-                    var _media_url = $(media).filter ('media_url_web').html();
-                    _media_url = _media_url.replace('<!--[CDATA[["', "").replace('"]]]-->', "");
-                    _media_url = _media_url.split("\\/").join('/');
-                    var _mp4_media = '';
+                    var _media_url = getMediaUrl(media, _media_type);
+
                     var mediaId = $(media).filter ('media_id').html();
 
                     //Build video thumbnail
                     if (_media_type == 'video'){
 
-                        var metadata = getValueFromXMLTag(medias[json_key], 'metadata')
-                                                .replace("<!--[CDATA[", "")
-                                                .replace("]]-->", "");
+                        var metadata = removeCdataCorrectLink(getValueFromXMLTag(medias[json_key], 'metadata'));
+
                         metadata = JSON.parse(metadata);
                         var transcode_progress = metadata.S3_files.transcode_progress;
 
@@ -263,13 +260,10 @@ function getUserNotificationsHeader(){
                                 .html().split('<meta>')[1]
                                 .split('<notification_type>')[0];
                             meta_text = '<span>' + meta_text + '</span>';
-                            meta_text = meta_text.replace("<!--[CDATA[", "")
-                                                    .replace("]]-->", "").replace("]]>", "");
+                            meta_text = removeCdataCorrectLink(meta_text);
                             meta_text = $('<div/>').html(meta_text).text();
 
-                            var user_profile_pic = getValueFromXMLTag(notifications[i], 'profile_pic')
-                                .replace("<!--[CDATA[", "")
-                                .replace("]]-->", "");
+                            var user_profile_pic = removeCdataCorrectLink(getValueFromXMLTag(notifications[i], 'profile_pic'));
                             var notification_status = getValueFromXMLTag(notifications[i], 'notification_status');
                             if (user_profile_pic == '') user_profile_pic = '/memreas/img/profile-pic.jpg';
 
@@ -279,8 +273,7 @@ function getUserNotificationsHeader(){
                                 var comment_id = getValueFromXMLTag(notifications[i], 'comment_id');
                                 var comment_text = getValueFromXMLTag(notifications[i], 'comment');
                                 var event_id = getValueFromXMLTag(notifications[i], 'event_id');
-                                comment_text = comment_text .replace("<!--[CDATA[", "")
-                                    .replace("]]-->", "");
+                                comment_text = removeCdataCorrectLink(comment_text);
 
                                 var comment_time = new Date((getValueFromXMLTag(ret_xml, 'comment_time')) * 1000);
 
@@ -431,12 +424,12 @@ function gotoEventDetail(eventId, notification_id){
                     $(".memreas-detail-comments .pro-names").html(event_owner_name);
 
                     var media_count = medias.length;
-                    for (var i=0;i < media_count;i++) {
+                    for (var i = 0;i < media_count;i++) {
                         var media = medias[i].innerHTML;
-                        var _main_media = $(media).filter ('main_media_url').html();
-                        _main_media = _main_media.replace("<!--[CDATA[", "").replace("]]-->", "");
-                        if (_main_media.indexOf ('undefined') >= 0) _main_media = '/memreas/img/large/1.jpg';
+                        var _main_media = getMediaUrl(media);
+
                         var _media_url = getMediaThumbnail(media, '/memreas/img/small/1.jpg');
+
                         var _media_type = $(media).filter ('type').html();
 
                         var mediaId = $(media).filter ('media_id').html();

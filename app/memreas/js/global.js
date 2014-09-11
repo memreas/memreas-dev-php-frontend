@@ -59,6 +59,50 @@ function ajaxScrollbarElement(element_object){
         setTimeout (function(){ ajaxScrollbarElement(element_object); }, 1000);
     }
 }
+
+function getMediaUrl(element_object, mediatype){
+    var photo_tags = ['media_url_web', 'main_media_url'];
+    var video_tags = ['media_url_web', 'media_url_1080p', 'main_media_url'];
+
+    var jElement_object = $(element_object);
+    switch (mediatype){
+        case 'image':
+            var search_element = photo_tags;
+            break;
+        case 'video':
+            var search_element = video_tags;
+            break;
+    }
+
+    var found_link = '';
+
+    var total_media_response = search_element.length;
+    var found_link = '';
+    for (var i = 0;i < total_media_response;i++){
+        found_link = jElement_object.filter (search_element[i]).html();
+        found_link = found_link.replace('<!--[CDATA[["', "").replace('"]]]-->', "")
+                                .replace("<!--[CDATA[", "").replace("]]-->", "");
+
+        if (found_link.indexOf("\\/") >= 0)
+            found_link = found_link.split("\\/").join('/');
+
+        if (found_link != '') break;
+    }
+
+    if (found_link == '' || found_link.indexOf ('undefined') >= 0)
+        return '/memreas/img/small/1.jpg';
+    else return found_link;
+}
+
+function removeCdataCorrectLink(media_link){
+    media_link = media_link.replace('<!--[CDATA[["', "").replace('"]]]-->', "")
+        .replace("<!--[CDATA[", "").replace("]]-->", "");
+    if (media_link.indexOf("\\/") >= 0)
+        media_link = media_link.split("\\/").join('/');
+
+    return media_link;
+}
+
 function getMediaThumbnail(element_object, default_value){
     var jElement_object = $(element_object);
     var media_response = ['media_url_98x78', 'media_url_79x80', 'media_url_448x306', 'event_media_video_thum', 'media_url_web','main_media_url'];
