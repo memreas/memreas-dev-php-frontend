@@ -3129,7 +3129,7 @@ select{ height: 30px; }
 	}
 
 	.adbox{
-		padding: 3.28em 0px;
+		padding: 3.58em 0px;
 		margin-bottom: 12px;
 	}
 	.fotorama__nav-wrap{
@@ -3150,6 +3150,10 @@ select{ height: 30px; }
 }
 
 @media (max-height: 667px){
+	.adbox{
+		padding: 3.28em 0px;
+		margin-bottom: 12px;
+	}
 	#tab-content,
 	#tab-content-queue,
 	#tab-content-share,
