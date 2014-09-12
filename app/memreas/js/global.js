@@ -59,19 +59,71 @@ function ajaxScrollbarElement(element_object){
         setTimeout (function(){ ajaxScrollbarElement(element_object); }, 1000);
     }
 }
-function getMediaThumbnail(element_object, default_value){
-    var jElement_object = $(element_object);
-    var media_response = ['media_url_98x78', 'media_url_79x80', 'media_url_448x306', 'event_media_video_thum', 'media_url_web','main_media_url'];
-    var total_media_response = media_response.length;
+
+function getMediaUrl(element_object, mediatype){
+    var photo_tags = ['media_url_web', 'main_media_url'];
+    var video_tags = ['media_url_web', 'media_url_1080p', 'main_media_url'];
+
+    switch (mediatype){
+        case 'image':
+            var search_element = photo_tags;
+            break;
+        case 'video':
+            var search_element = video_tags;
+            break;
+        default : var search_element = photo_tags;
+    }
+
+    var found_link = '';
+
+    var total_media_response = search_element.length;
     var found_link = '';
     for (var i = 0;i < total_media_response;i++){
-        found_link = jElement_object.filter (media_response[i]).html();
-        found_link = found_link.replace('<!--[CDATA[["', "").replace('"]]]-->', "");
-        found_link = found_link.split("\\/").join('/');
-        if (found_link != '') break;
+
+        if ((element_object.innerHTML).indexOf(search_element[i]) >= 0)
+            found_link = getValueFromXMLTag(element_object, search_element[i]);
+
+        if (found_link != ''){
+            found_link = found_link.replace('<!--[CDATA[["', "").replace('"]]]-->', "")
+                .replace("<!--[CDATA[", "").replace("]]-->", "");
+            if (found_link.indexOf("\\/") >= 0)
+                found_link = found_link.split("\\/").join('/');
+            break;
+        }
     }
-    var media_type = jElement_object.filter('type').html();
-    if (found_link == '' || found_link.indexOf ('undefined') >= 0 || (media_type == 'video' && (i == total_media_response - 1))) found_link = default_value;
+
+    if (found_link == '')
+        return '/memreas/img/small/1.jpg';
+    else return found_link;
+}
+
+function removeCdataCorrectLink(media_link){
+    media_link = media_link.replace('<!--[CDATA[["', "").replace('"]]]-->', "")
+        .replace("<!--[CDATA[", "").replace("]]-->", "");
+    if (media_link.indexOf("\\/") >= 0)
+        media_link = media_link.split("\\/").join('/');
+
+    return media_link;
+}
+
+function getMediaThumbnail(element_object, default_value){
+    var media_tags = ['media_url_98x78', 'media_url_79x80', 'media_url_448x306', 'event_media_video_thum', 'media_url_web','main_media_url'];
+    var total_media_response = media_tags.length;
+    var found_link = '';
+    for (var i = 0;i < total_media_response;i++){
+
+        if ((element_object.innerHTML).indexOf(media_tags[i]) >= 0)
+            found_link = getValueFromXMLTag(element_object, media_tags[i]);
+
+        if (found_link != ''){
+            found_link = found_link.replace('<!--[CDATA[["', "").replace('"]]]-->', "");
+            if (found_link.indexOf("\\/") >= 0)
+                found_link = found_link.split("\\/").join('/');
+            break;
+        }
+    }
+
+    if (found_link == '') found_link = default_value;
     return found_link;
 }
 
