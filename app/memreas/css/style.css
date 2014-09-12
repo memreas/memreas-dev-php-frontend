@@ -1028,7 +1028,6 @@ a.black_btn_skin:hover, a.black_btn_skin:active, #avpw_save_button:hover, #avpw_
 	z-index: 2;
 	min-height: 490px;
 	margin-bottom: 10px;
-		overflow: auto;
 
 }
 #tab-content-more{ margin-top: -2px; }
@@ -3161,8 +3160,16 @@ select{ height: 30px; }
 		margin-bottom: 0px;
 		max-height: 365px;
 	}
+	.fotorama__nav-wrap{
+		margin-top: -85px;
+	}
 }
 
+/*@media (max-height: 630px) {
+	.fotorama__nav-wrap{
+		margin-top: -85px;
+	}
+}*/
 
 
 

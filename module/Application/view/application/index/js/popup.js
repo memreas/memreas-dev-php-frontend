@@ -34,6 +34,7 @@ function disablePopup(id){
 function centerPopup(id){
 	$(".popups").fadeOut("slow");
 		$(".backgroundPopup").fadeOut("slow");
+
 	//request data for centering
 	var windowWidth = document.documentElement.clientWidth;
 	var windowHeight = document.documentElement.clientHeight;
@@ -51,6 +52,9 @@ function centerPopup(id){
 		"height": windowHeight,
 		
 	});
+
+	//
+	$('#tab-content').css({"overflow":"hidden"});
 	
 }
 

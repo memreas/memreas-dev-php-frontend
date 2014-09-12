@@ -366,6 +366,10 @@ input[name="account_repassword"]{ width: 42%; margin-right: 10px; float: left; }
     left: 85% !important;
 }
 
+#avpw_zoom_container{
+    /*top: 265px !important;*/
+}
+
 /*
 .avpw .avpw_icon{
     padding-left: 30px;
