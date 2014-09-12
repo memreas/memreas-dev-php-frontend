@@ -3142,7 +3142,7 @@ select{ height: 30px; }
 	#tab-content-memreas,
 	#tab-content-memreas-detail,
 	#tab-content-more {
-		max-height: 388px;
+		/*max-height: 388px;*/
 	}
 	ul.pics{
 		min-height: 270px;
