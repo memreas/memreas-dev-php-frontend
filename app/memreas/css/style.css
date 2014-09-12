@@ -3162,7 +3162,7 @@ select{ height: 30px; }
 	#tab-content-more {
 		min-height: initial;
 		margin-bottom: 0px;
-		max-height: 365px;
+		/*max-height: 365px;*/
 	}
 	.fotorama__nav-wrap{
 		margin-top: -85px;
