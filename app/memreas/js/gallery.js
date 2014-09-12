@@ -172,6 +172,7 @@ jQuery.fetch_server_media = function (){
 
                   setTimeout(function(){
                       $(".user-resources").fotorama({width: '800', height: '350', 'max-width': '100%'});
+                      
                       if (!$(".edit-area-scroll").hasClass ('mCustomScrollbar'))
                           $(".edit-area-scroll").mCustomScrollbar({ scrollButtons:{ enable:true }});
                       $(".edit-area-scroll").mCustomScrollbar ('update');
