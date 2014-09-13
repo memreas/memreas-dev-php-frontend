@@ -56,5 +56,5 @@
 
 @media screen and (max-width:640px){
     .medium_tabs a{ padding: .2em .4em !important; }
-    
+    .date-picker{margin-right: 0;}
 }
