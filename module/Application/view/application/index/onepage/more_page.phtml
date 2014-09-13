@@ -49,10 +49,14 @@
               <?php include('more_tabs/group.phtml'); ?>
           </div>
          <!-- <a class="black_btn_skin f-center" href="javascript:;" onclick="addFriendNetwork();" style="margin-left: 10% !important;">Add friend</a> -->
-        <div style="clear: both; margin-top: 30px;">
-            <a class="black_btn_skin" href="javascript:;" onclick="updateNetworkFriends();" style="margin-left: 10% !important;">update</a>
+        <div style="clear: both; margin-top: 30px;" class="group-default-actions">
+            <a class="black_btn_skin" href="javascript:;" onclick="AddGroup();" style="margin-left: 10% !important;">Add</a>
+            <a class="black_btn_skin" href="javascript:;" onclick="updateNetworkFriends(false);">update</a>
             <a class="black_btn_skin" href="javascript:;" onclick="removeGroup(false);">delete</a>
-            <a class="black_btn_skin" href="#">cancel</a>
+        </div>
+        <div style="clear: both; margin-top: 30px; display: none;" class="group-add-actions">
+            <a class="black_btn_skin" href="javascript:;" onclick="saveAddGroup();" style="margin-left: 10% !important;">Save</a>
+            <a class="black_btn_skin" href="javascript:;" onclick="cancelAddGroup(false);">cancel</a>
         </div>
 
          <!-- POPUP FRIEND HERE -->

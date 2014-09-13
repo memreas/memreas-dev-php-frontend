@@ -113,11 +113,11 @@ function loadAccountCard(){
                     ajaxScrollbarElement('.account-payment');
                     $(".account-card-functions").show();
                 }
-                else jMemberCard.append('<li>You have no card at this time. Try to add one first</li>');
+                else jMemberCard.append('<li>Please add a card.</li>');
                 removeItem(reloadItems, 'reload_account_cards');
             }
             else {
-                jMemberCard.append('<li>You have no card at this time. Try to add one first</li>');
+                jMemberCard.append('<li>Please add a card.</li>');
                 jerror(response.message);
             }
             $('#loadingpopup').fadeOut(500);
@@ -435,9 +435,9 @@ function getAccountPlans(){
                     else jAccountPlans.html('You have no any actived plan');
                 }
                 else jAccountPlans.html('Your account has not existed or deleted before on Stripe');
-                $('#loadingpopup').fadeOut(500);
             }
             else jAccountPlans.html('You have no any actived plan');
+            $('#loadingpopup').fadeOut(500);
         }
     });
 }

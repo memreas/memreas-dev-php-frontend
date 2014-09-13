@@ -1,4 +1,5 @@
-networkfriendsInfo = [];
+var networkfriendsInfo = [];
+var group_mode = 'update';
 $(function(){
     $("#morepage_eventDate").datepicker();
     $("#moredate_eventDateFrom").datepicker();
@@ -288,6 +289,7 @@ function saveUserDetail(){
 function getUserGroups(){
     var loggedUserId = $("input[name=user_id]").val();
     var params = [{tag: 'user_id', value: loggedUserId}];
+    $("select.account-groups").html('<option value="">-Choose-</option>');
     ajaxRequest('getusergroups', params, function(xml_response){
         if (getValueFromXMLTag(xml_response, 'status') == 'Success'){
             var groups = getSubXMLFromTag(xml_response, 'group');
@@ -303,9 +305,7 @@ function getUserGroups(){
 $(function(){
     //Network heading click
     $(".network-heading").click(function(){
-        //Check if now friend list is empty
-        if ($('.network-friends').html() == '' || $(".network-friends .mCSB_container").html() == '')
-            $("select[name=friend_network]").trigger('change');
+        $("select[name=friend_network]").trigger('change');
     });
 
     //Friend network selection changed
@@ -326,13 +326,18 @@ function networkFriendsChanged(friend_network){
 }
 //Get friend based on group list
 function getGroupFriends(friend_network){
-    var group_id = $("select[name=account_groups]").val();
-    if (group_id == ''){
-        jerror('Please select your group name first.');
-        return false;
+
+    if (group_mode == 'update'){
+        var group_id = $("select[name=account_groups]").val();
+        if (group_id == ''){
+            jerror('Please select your group name first.');
+            return false;
+        }
     }
+    else group_id = '';
+
     var params = [
-        {tag: 'group_id', value: $("select[name=account_groups]").val()},
+        {tag: 'group_id', value: group_id},
         {tag: 'network', value: friend_network}
     ];
     ajaxRequest('getgroupfriends', params, function(xml_response){
@@ -525,8 +530,12 @@ function network_fillPopupFriends(info){
 }
 
 function network_fillFriends(info){
-    if (friendList == null)
-        friendList = $('.network-friends');
+    if (friendList == null){
+        if ($('.network-friends').hasClass('mCustomScrollbar'))
+            friendList = $(".network-friends .mCSB_container");
+        else friendList = $('.network-friends');
+    }
+    friendList.empty();
 
     friendList.empty();
 
@@ -547,7 +556,7 @@ function network_fillFriends(info){
     for (i = 0; i < imgList.length; i++) {
         $(imgList[i]).prop('src', info[i].photo);
     }
-    $(".network-friends").mCustomScrollbar({scrollButtons:{enable:true }});
+    ajaxScrollbarElement(".network-friends");
 }
 
 //Add friend to network groups
@@ -657,7 +666,8 @@ function network_clickFriends(selected_friend_id){
 }
 
 //Update network friends
-function updateNetworkFriends(){
+function updateNetworkFriends(confirmStatus){
+
     var network_friend_count = networkfriendsInfo.length;
 
     networkFriendsSelected = [];
@@ -671,6 +681,11 @@ function updateNetworkFriends(){
     if (friendSelected == 0){
         jerror('Please select friend(s) to remove.');
         return;
+    }
+
+    if (!confirmStatus){
+        jconfirm("Update these changes?", "updateNetworkFriends(true)");
+        return false;
     }
 
     var params = [
@@ -1214,4 +1229,59 @@ function morepage_removeFriends(){
             }, 2000);
         }
     });
+}
+
+function AddGroup(){
+    $(".group-select, .group-default-actions").hide();
+    $(".input_group_name, .group-add-actions").show();
+    group_mode = 'add_new';
+}
+
+function saveAddGroup(){
+    var group_name = $(".input_group_name").val();
+    if (group_name == '' || group_name == 'group name'){
+        jerror('Please input group name');
+        return false;
+    }
+
+    var network_friend_count = networkfriendsInfo.length;
+
+    networkFriendsSelected = [];
+    increase = 0;
+    for (i = 0;i < network_friend_count;i++){
+        if ($("#" + networkfriendsInfo[i].id).hasClass('nw-friend-selected'))
+            networkFriendsSelected[increase++] = { tag: 'friend', value:[{tag: 'friend_id', value: networkfriendsInfo[i].id}]  };
+
+    }
+    var friendSelected = networkFriendsSelected.length;
+    if (friendSelected == 0){
+        jerror('Please select friend(s) to add.');
+        return;
+    }
+
+    ajaxRequest(
+        'creategroup',
+        [
+            { tag: 'group_name', 	value: group_name },
+            { tag: 'user_id', 		value: user_id },
+            { tag: 'friends', 		value: networkFriendsSelected }
+        ],
+        function(ret_xml) {
+            // parse the returned xml.
+            var status   = getValueFromXMLTag(ret_xml, 'status');
+            var message  = getValueFromXMLTag(ret_xml, 'message');
+            if (status.toLowerCase() == 'success'){
+                jsuccess('group was created successfully.');
+                cancelAddGroup();
+                getUserGroups();
+            }
+            else jerror(message);
+        }
+    );
+
+}
+function cancelAddGroup(){
+    $(".input_group_name, .group-add-actions").hide();
+    $(".group-select, .group-default-actions").show();
+    group_mode = 'update';
 }

@@ -94,16 +94,17 @@ error_log("Enter FE indexAction".PHP_EOL);
             $file_handle = fopen ($cache_dir . $cache_file, 'w');
             if ($hls_media){
                 $flashPlayerContent = 'flashplayer: "../jwplayer.flash.swf",
-                                        "controlbar.position":"bottom", "controlbar.idlehide":"false",
-                                        playlist:[
-                                            {image:"",
+                                        "controlbar":"bottom",
+                                        "playlist":[
+                                            {image:"' . $_POST['thumbnail'] . '",
                                                 sources:[
-                                                    {file:"' . $_POST['video_url'] . '"},
-                                                    {file:"' . $_POST['mp4_media'] . '"},
+                                                    {label: "480p", file:"' . $_POST['video_url'] . '", default:true},
+                                                    {label: "720p", file:"' . $_POST['video_url'] . '"},
+                                                    {label: "1080p", file:"' . $_POST['mp4_media'] . '"},
                                                 ]
                                             }],
-                                        width: 500, height: 300, aspectratio: "16:9", primary:"flash",
-                                        "skin": "/memreas/js/jwplayer/bekle.xml"';
+                                        "width": 500, "height": 300, "aspectratio": "16:9", "primary":"flash",
+                                         "skin": "/memreas/js/jwplayer/bekle.xml"';
             }
             else{
                 $flashPlayerContent = 'flashplayer: "../jwplayer.flash.swf", file: "' . $_POST['video_url'] . '",
