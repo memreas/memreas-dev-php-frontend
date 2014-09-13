@@ -46,7 +46,7 @@ ul.edit-area-scroll{ height: 270px; }
 @media screen and (max-width: 900px){
     #tabs-memreas a{ padding: .4em 2em; }
 }
-@media screen and (max-width: 760px){
+@media screen and (min-width:700px) and (max-width: 760px){
     #maintab-content .span9:first-child{
         width: 66%;
         margin-left: 7%;

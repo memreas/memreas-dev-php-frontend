@@ -22,7 +22,7 @@
         margin-left: 30px;
         width: 260px;
     }
-    .medium_tabs a{ padding: .2em .8em !important; }
+    .medium_tabs a{ padding: .2em .4em !important; }
     input.search_bar{ margin-left: -10px; }
     ul.pics li,
     ul.pics li img{ height: 70px; }
@@ -52,4 +52,9 @@
         padding: 8px 20px;
     }
 
+}
+
+@media screen and (max-width:640px){
+    .medium_tabs a{ padding: .2em .4em !important; }
+    
 }
