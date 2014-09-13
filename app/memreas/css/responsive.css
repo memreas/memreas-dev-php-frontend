@@ -62,7 +62,7 @@
         margin:0 1% 0 10%;
     }
     .date-picker.hasDatepicker  {
-        width: 253px !important;
+        /*width: 253px !important;*/
     }
     #dtp_from, #dtp_to {
         width: 257px !important;
