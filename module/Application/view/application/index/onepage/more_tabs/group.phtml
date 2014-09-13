@@ -13,10 +13,11 @@
                     <option value="">-Choose-</option>
                 </select>
             </div>
+            <input style="display: none; width: 98%;" name="input" type="text" id="input_group_name" class="input_group_name" value="group name" default="group name" onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }" onFocus="if(this.value == 'group name'){ this.value = ''; $(this).css('color', '#000'); }"/>
         </div>
     </div>
 </div>
-<div class="akordeon-item expanded">
+<div class="akordeon-item expanded manage-group-friend">
     <div class="akordeon-item-head">
         <div class="akordeon-item-head-container network-heading">
             <div class="akordeon-heading">
@@ -28,7 +29,6 @@
         <div class="akordeon-item-content">
             <div class="more-select">
                 <select name="friend_network">
-                    <option value="">-Choose-</option>
                     <option value="memreas">memreas</option>
                     <option value="facebook">facebook</option>
                     <option value="twitter">twitter</option>
