@@ -118,7 +118,7 @@ jQuery.fetch_server_media = function (){
                     var _media_type = getValueFromXMLTag(media, 'type');
                     var _media_url = getMediaUrl(media, _media_type);
 
-                    var mediaId = $(media).filter ('media_id').html();
+                    var mediaId = getValueFromXMLTag(media, 'media_id');
 
                     //Build video thumbnail
                     if (_media_type == 'video'){
