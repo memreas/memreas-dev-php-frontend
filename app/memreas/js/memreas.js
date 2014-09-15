@@ -131,7 +131,7 @@ function fetchMyMemreas(){
                                 if (typeof (eventId != 'undefined')){
                                     var media_count = medias.length;
                                     for (var i=0;i < media_count;i++) {
-                                        var media = medias[i].innerHTML;
+                                        var media = medias[i];
                                         var media_type = $(media).filter('type').html();
                                         var _media_url = getMediaThumbnail(media, '/memreas/img/small/1.jpg');
                                         if (media_type == 'video')
