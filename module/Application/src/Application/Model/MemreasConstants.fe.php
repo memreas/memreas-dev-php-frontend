@@ -7,7 +7,7 @@ namespace Application\Model;
 
 class MemreasConstants {
 	
-	const MEMREAS_WS = "https://memreasdev-wsg.memreas.com";
+	const MEMREAS_WS = "https://memreasdev-wsu.memreas.com";
 	const MEMREAS_PAY = "https://memreasdev-pay.memreas.com";
 	const MEMREAS_ADS = true;
     const S3_APPKEY = 'AKIAJMXGGG4BNFS42LZA';
