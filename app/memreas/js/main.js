@@ -1,10 +1,7 @@
 $(document).ready(function(){
     //Prefetch for image location
     $.fetch_server_media();
-    $.addfile();
-    share_initObjects();
-    share_initAkordeon();
-    share_customScrollbar();
+
     $(document).bgStretcher({
             images: ['/memreas/img/bg.jpg'],
             imageWidth: 1366, imageHeight: 700
