@@ -14,6 +14,7 @@ function getUserDetail(){
                 var username = getValueFromXMLTag(xml_response, 'username');
                 $("input[name=username]").val(username);
                 var userprofile = getValueFromXMLTag(xml_response, 'profile');
+                userprofile = removeCdataCorrectLink(userprofile);
                 var alternate_email = getValueFromXMLTag(xml_response, 'alternate_email');
                 var gender = getValueFromXMLTag(xml_response, 'gender');
                 var dob = getValueFromXMLTag(xml_response, 'dob');
