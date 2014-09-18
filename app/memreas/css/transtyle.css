@@ -347,8 +347,11 @@ input[name="account_repassword"]{ width: 42%; margin-right: 10px; float: left; }
     left: 0px !important;
 }
 
-.avpw_prev {
+.avpw_prev { /* This sets left arrow when effects are not selected */
     left: 120px !important;
+}
+a#avpw_filter_lftArrow { /* This sets left arrow when effects are selected */
+    left: 0px !important;
 }
 .avpw_tool_pager .avpw_clip {
     left: 168px !important;

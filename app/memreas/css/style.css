@@ -2641,7 +2641,7 @@ nav {
 	}
 }
 
-@media screen and (min-width:599px) and (max-width:732px){
+@media screen and (max-width:768px){
 	#logo{
 		width: 140px;
 	}
