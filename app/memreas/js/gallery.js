@@ -14,6 +14,7 @@ function getUserDetail(){
                 var username = getValueFromXMLTag(xml_response, 'username');
                 $("input[name=username]").val(username);
                 var userprofile = getValueFromXMLTag(xml_response, 'profile');
+                userprofile = removeCdataCorrectLink(userprofile);
                 var alternate_email = getValueFromXMLTag(xml_response, 'alternate_email');
                 var gender = getValueFromXMLTag(xml_response, 'gender');
                 var dob = getValueFromXMLTag(xml_response, 'dob');
@@ -118,7 +119,7 @@ jQuery.fetch_server_media = function (){
                     var _media_type = getValueFromXMLTag(media, 'type');
                     var _media_url = getMediaUrl(media, _media_type);
 
-                    var mediaId = $(media).filter ('media_id').html();
+                    var mediaId = getValueFromXMLTag(media, 'media_id');
 
                     //Build video thumbnail
                     if (_media_type == 'video'){
@@ -513,3 +514,95 @@ function toggleBottomAviary(){
 function toogleEditThumb(){
     $(".aviary-thumbs").parents('.carousel-area').slideToggle(500);
 }
+
+/*function for sync tab image */
+function imageChoosed(media_id){
+    if (jQuery("a#" + media_id).parent('li').hasClass ('setchoosed')){
+        jQuery("a#" + media_id).parent('li').removeClass ('setchoosed');
+        jQuery("a#" + media_id).parent('li').find("img.selected-gallery").remove();
+    }
+    else {
+        jQuery("a#" + media_id).parent('li').addClass ('setchoosed');
+        jQuery("a#" + media_id).parent('li').append ('<img class="selected-gallery" src="/memreas/img/gallery-select.png">');
+    }
+    return false;
+}
+
+var deleteMediasChecked = 0;
+function deleteFiles(confirmed){
+    if (!($(".edit-area").find(".setchoosed").length > 0)){
+        jerror ('There is no media selected');
+        return false;
+    }
+    if (!confirmed){
+        //Confirm to delete
+        jNotify(
+            '<div class="notify-box"><p>Are you sure want to delete them?</p><a href="javascript:;" class="btn" onclick="deleteFiles(true);">OK</a>&nbsp;<a href="javascript:;" class="btn" onclick="$.jNotify._close();">Close</a></div>',
+            {
+                autoHide : false, // added in v2.0
+                clickOverlay : true, // added in v2.0
+                MinWidth : 250,
+                TimeShown : 3000,
+                ShowTimeEffect : 200,
+                HideTimeEffect : 0,
+                LongTrip :20,
+                HorizontalPosition : 'center',
+                VerticalPosition : 'top',
+                ShowOverlay : true,
+                ColorOverlay : '#FFF',
+                OpacityOverlay : 0.3,
+                onClosed : function(){ // added in v2.0
+
+                },
+                onCompleted : function(){ // added in v2.0
+
+                }
+            });
+    }
+    if (confirmed){
+        $.jNotify._close();
+        disableButtons('.edit-area');
+        //Store data to javascript
+        $(".edit-area a").each(function(){
+            if ($(this).parent('li').hasClass("setchoosed")){
+                var media_id = $(this).attr ("id");
+                var xml_data = new Array();
+                xml_data[0] = new Array();
+                xml_data[0]['tag'] = 'mediaid';
+                xml_data[0]['value'] = media_id.trim();
+
+                //Put to management object
+                ++deleteMediasChecked;
+            }
+        });
+
+        //Delete medias
+        $(".edit-area a").each(function(){
+            if ($(this).parent('li').hasClass("setchoosed")){
+                var media_id = $(this).attr ("id");
+                var xml_data = new Array();
+                xml_data[0] = new Array();
+                xml_data[0]['tag'] = 'mediaid';
+                xml_data[0]['value'] = media_id.trim();
+                $(this).parent('li').find('a').append('<img src="/memreas/img/loading-line.gif" class="loading-small loading" />');
+
+                ajaxRequest ('deletephoto', xml_data, success_deletephoto, error_deletephoto, true);
+            }
+        });
+    }
+    return false;
+}
+function success_deletephoto(xml_response){
+
+    //If there is no more medias to be deleted, reload resources
+    var media_id = getValueFromXMLTag(xml_response, 'media_id');
+    $("#" + media_id).parents('li').remove();
+    --deleteMediasChecked;
+    if (deleteMediasChecked == 0){
+        pushReloadItem('listallmedia');
+        jsuccess('Media deleted');
+        ajaxScrollbarElement('.edit-areamedia-scroll');
+        enableButtons('.edit-area');
+    }
+}
+function error_deletephoto(){ jerror ("error delete photo"); }

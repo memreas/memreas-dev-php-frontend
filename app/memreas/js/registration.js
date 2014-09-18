@@ -6,7 +6,40 @@
 var base_url = '/index/sampleAjax/';
 var isUserNameValid = false;
 var user_id = '';
+var assigned_event = 0;
 var uploadHandle = '';
+
+$(function(){
+    var event_id = getURLParameter('event_id');
+    if (event_id != ''){
+        ajaxRequest('checkevent', [{tag: 'event_id', value: event_id}], function(response){
+            if (getValueFromXMLTag(response, 'status') == 'success'){
+                $(".event-name").html("!" + getValueFromXMLTag(response, 'event_name')).css('display', 'inline-block');
+                assigned_event = getValueFromXMLTag(response, 'event_id');
+            }
+            else {
+                jerror(getValueFromXMLTag(response, 'message'));
+                setTimeout(function(){ document.location.href = "/index"; }, 3000);
+            }
+        }, 'undefined', true);
+    }
+});
+
+function getURLParameter(sParam){
+    var sPageURL = window.location.href;
+    sPageURL = sPageURL.split('?')[1];
+    if (typeof (sPageURL) != 'undefined'){
+        var sURLVariables = sPageURL.split('&');
+
+        for (var i = 0;i < sURLVariables.length;i++){
+            var sParameterName = sURLVariables[i].split('=');
+            if (sParameterName[0] == sParam)
+                return sParameterName[1];
+        }
+    }
+    return '';
+}
+
 onEmailFocusOut = function () {
     if (!isValidEmail($('#inEmail').val())) {
         jerror("Please check your email address");
@@ -117,7 +150,8 @@ function validateRegstration(){
                     {tag: 'password', value: input_upass},
                     {tag: 'device_token', value: ''},
                     {tag: 'device_type', value: ''},
-                    {tag: 'invited_by', value: ''}
+                    {tag: 'invited_by', value: ''},
+                    {tag: 'event_id', value: assigned_event}
                 ];
     ajaxRequest('registration', params, function(response){
         if (getValueFromXMLTag(response, 'status') == 'Success'){
@@ -138,9 +172,9 @@ function validateRegstration(){
                 var params = [
                     {tag: 'username', value: loginname},
                     {tag: 'password', value: loginpass},
-                    {tag: 'devicetype', value: 1},
-                    {tag: 'devicetoken', value: ''}
+                    {tag: 'devicetype', value: 1}
                 ];
+
                 var jqXHR;
                 ajaxRequest('login', params, function(xml_response){
                     if (getValueFromXMLTag(xml_response, 'status') == 'success'){

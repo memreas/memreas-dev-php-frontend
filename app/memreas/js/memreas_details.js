@@ -79,7 +79,7 @@ function getMediaComment(){
                 for (var i = 0;i < comment_count;i++){
                     var event_comment = event_comments[i].innerHTML;
                     var comment_owner_pic = $(event_comment).filter('profile_pic').html();
-                    comment_owner_pic = comment_owner_pic.replace("<!--[CDATA[", "").replace("]]-->", "");
+                    comment_owner_pic = removeCdataCorrectLink(comment_owner_pic);
                     if (comment_owner_pic == '')
                         comment_owner_pic = '/memreas/img/profile-pic.jpg';
                     var comment_text = $(event_comment).filter('comment_text').html();
@@ -210,8 +210,7 @@ function showEventDetail(eventId, userId){
                 if (typeof (eventId != 'undefined')){
                     event_owner_name = getValueFromXMLTag(response, 'username');
                     eventdetail_user_pic = getValueFromXMLTag(response, 'profile_pic');
-                    eventdetail_user_pic = eventdetail_user_pic.replace('<!--[CDATA[', "").replace(']]-->', "");
-                    eventdetail_user_pic = eventdetail_user_pic.split("\\/").join('/');
+                    eventdetail_user_pic = removeCdataCorrectLink(eventdetail_user_pic);
 
                     $(".memreas-detail-comments .event-owner .pro-pics img").attr ('src', $("header").find("#profile_picture").attr('src'));
                     $(".memreas-detail-comments .pro-names").html(event_owner_name);
@@ -220,8 +219,7 @@ function showEventDetail(eventId, userId){
                     for (var i=0;i < media_count;i++) {
                         var media = medias[i].innerHTML;
                         var _main_media = $(media).filter ('main_media_url').html();
-                        _main_media = _main_media.replace('<!--[CDATA[["', "").replace("]]-->", "");
-                        _main_media = _main_media.split("\\/").join('/');
+                        _main_media = removeCdataCorrectLink(_main_media);
                         if (_main_media.indexOf ('undefined') >= 0) _main_media = '/memreas/img/large/1.jpg';
                         var _media_url = getMediaThumbnail(media, '/memreas/img/small/1.jpg');
                         var _media_type = $(media).filter ('type').html();
@@ -289,7 +287,7 @@ function popupAddMemreasGallery(){
                     var _media_id = $(media).filter('media_id').html();
                     if (_media_type == 'video'){
                         var _main_video_media = $(media).filter ('main_media_url').html();
-                        _main_video_media = _main_video_media.replace("<!--[CDATA[", "").replace("]]-->", "");
+                        _main_video_media = removeCdataCorrectLink(_main_video_media);
                         jtarget_element.append('<li class="video-media" media-url="' + _main_video_media + '"><a href="javascript:;" id="memreas-addgallery-' + _media_id + '" onclick="return imageChoosed(this.id);"><img src="' + _media_url + '" alt=""><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a></li>');
                     }
                     else jtarget_element.append('<li><a href="javascript:;" id="memreas-addgallery-' + _media_id + '" onclick="return imageChoosed(this.id);"><img src="' + _media_url + '" alt=""></a></li>');

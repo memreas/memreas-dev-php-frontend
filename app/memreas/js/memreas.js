@@ -131,7 +131,7 @@ function fetchMyMemreas(){
                                 if (typeof (eventId != 'undefined')){
                                     var media_count = medias.length;
                                     for (var i=0;i < media_count;i++) {
-                                        var media = medias[i].innerHTML;
+                                        var media = medias[i];
                                         var media_type = $(media).filter('type').html();
                                         var _media_url = getMediaThumbnail(media, '/memreas/img/small/1.jpg');
                                         if (media_type == 'video')
@@ -217,9 +217,9 @@ function fetchFriendsMemreas(friendMemreasType){
                 $(".event_images_public .mCSB_container").empty();
             }
             var friendsId = new Array();
-            var friends = $.xml2json(response, true);
+            var friends = getSubXMLFromTag(response,  'friend');
             if (getValueFromXMLTag(response, 'status') == "Success"){
-                if (typeof (friends.viewevents[0].friends[0]) != "undefined"){
+                if (friends.length > 0){
                     friends = getSubXMLFromTag(response, 'friend');
                     var friend_count = friends.length;
                     for (var i = 0;i <  friend_count;i++){
