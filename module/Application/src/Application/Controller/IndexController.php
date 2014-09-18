@@ -93,10 +93,12 @@ error_log("Enter FE indexAction".PHP_EOL);
             $cache_file = $this->generateVideoCacheFile ($cache_dir, $video_name);
             $file_handle = fopen ($cache_dir . $cache_file, 'w');
             if ($hls_media){
+                $thumbnail = explode(",", $_POST['thumbnail']);
+                $thumbnail = $thumbnail[0];
                 $flashPlayerContent = 'flashplayer: "../jwplayer.flash.swf",
                                         "controlbar":"bottom",
                                         "playlist":[
-                                            {image:["' . $_POST['thumbnail'] . '"],
+                                            {image:"' . $thumbnail . '",
                                                 sources:[
                                                     {label: "480p", file:"' . $_POST['video_url'] . '", default:true},
                                                     {label: "720p", file:"' . $_POST['video_url'] . '"},
@@ -104,7 +106,7 @@ error_log("Enter FE indexAction".PHP_EOL);
                                                 ]
                                             }],
                                         "width": 500, "height": 300, "aspectratio": "16:9", "primary":"flash",
-                                         "skin": "/memreas/js/jwplayer/bekle.xml"';
+                                         "skin": "/memreas/js/jwplayer/bekle.xml", allowfullscreen: true';
             }
             else{
                 $flashPlayerContent = 'flashplayer: "../jwplayer.flash.swf", file: "' . $_POST['video_url'] . '",
