@@ -5,6 +5,7 @@
 var account_stripe = new Object();
 var plans_payment = new Object();
 var account_cards = new Object();
+var check_user_subscription = 0;
 $(function(){
 
     //Step 1
@@ -241,6 +242,7 @@ function subscription_step4(){
                 jOrderRecept.find('#choose-planrecept-cost').html((orderPlan.amount / 100) + ' ' + orderPlan.currency);
 
                 updateAkordeonContent($('.subscription-order-receipt-tab'));
+                check_user_subscription = 1;
             }
             else{
                 jerror(response.message);
@@ -276,7 +278,7 @@ function getPlans(){
             var plan_count = response.length;
             if (plan_count > 0){
                 var plans = response;
-                for (i in plans){
+                for (var i in plans){
                     plans_payment[i] = new Object();
                     var params = {plan_id:plans[i].id, selected:0, data:plans[i]};
                     plans_payment[i] = params;
@@ -309,6 +311,7 @@ function getPlans(){
                                         var html_element = '<p>'  + plan.name + '</p>';
                                         jAccountPlans.append(html_element);
                                     }
+                                    check_user_subscription = 1;
                                 }
                                 else jAccountPlans.html('You have no any actived plan');
                             }
@@ -527,11 +530,16 @@ function removeCard(){
     }
 }
 
-function confirmOrder(){
+function confirmOrder(checkSubscription){
     //Check order confirm checkbox
     if (!($("#subscription-order-agree").is(":checked"))){
         jerror("You must agree with our terms of service");
         $(".order-recept").hide();
+        return false;
+    }
+
+    if (checkSubscription && check_user_subscription){
+        jconfirm("You have an active plan, are you sure want to upgrade?", "confirmOrder(false)");
         return false;
     }
 
