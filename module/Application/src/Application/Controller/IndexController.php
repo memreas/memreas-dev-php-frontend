@@ -96,7 +96,7 @@ error_log("Enter FE indexAction".PHP_EOL);
                 $flashPlayerContent = 'flashplayer: "../jwplayer.flash.swf",
                                         "controlbar":"bottom",
                                         "playlist":[
-                                            {image:"' . $_POST['thumbnail'] . '",
+                                            {image:["' . $_POST['thumbnail'] . '"],
                                                 sources:[
                                                     {label: "480p", file:"' . $_POST['video_url'] . '", default:true},
                                                     {label: "720p", file:"' . $_POST['video_url'] . '"},
