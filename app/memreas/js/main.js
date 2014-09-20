@@ -19,21 +19,18 @@ $(document).ready(function(){
     );
 });
 
-(function($){
-    $(window).load(function(){
+$(function(){
 
     // Automatically calculate height of nav element to strech it to the bottom of the page
     var calculateNavHeight = function() {
-        var headerHeight = $('header').outerHeight(),
-        footerHeight = $('footer').outerHeight(),
-        navHeight = window.innerHeight - (headerHeight + footerHeight);
-        navHeight = navHeight + 4;
-        $('nav').css({'min-height':navHeight + 'px'});
+        $('nav').css({'height': $("#maintab-content").height() + 5});
     };
 
     calculateNavHeight();
 
-    window.addEventListener('resize',calculateNavHeight());
+    $('body').bind('click', function(){
+        calculateNavHeight();
+    });
 
     $("ul.scrollClass").mCustomScrollbar({
             scrollButtons:{
@@ -53,34 +50,34 @@ $(document).ready(function(){
         ajaxScrollbarElement('#' + $(this).attr('title') + " .scroll-area");
     });
 
-        //ajax demo fn
-        $("a[rel='load-content']").click(function(e){
+    //ajax demo fn
+    $("a[rel='load-content']").click(function(e){
 
-            e.preventDefault();
-            var $this=$(this),
-                url=$this.attr("href");
-            $this.addClass("loading");
-            $.get(url,function(data){
-                $this.removeClass("loading");
-                $("ul.scrollClass .mCSB_container").html(data); //load new content inside .mCSB_container
-                $("ul.scrollClass").mCustomScrollbar("update"); //update scrollbar according to newly loaded content
-                $("ul.scrollClass").mCustomScrollbar("scrollTo","top",{scrollInertia:200}); //scroll to top
-            });
-        });
-        $("a[rel='append-content']").click(function(e){
-            e.preventDefault();
-            var $this=$(this),
-                url=$this.attr("href");
-            $this.addClass("loading");
-            $.get(url,function(data){
-                $this.removeClass("loading");
-                $("ul.scrollClass .mCSB_container").append(data); //append new content inside .mCSB_container
-                $("ul.scrollClass").mCustomScrollbar("update"); //update scrollbar according to newly appended content
-                $("ul.scrollClass").mCustomScrollbar("scrollTo","h2:last",{scrollInertia:2500,scrollEasing:"easeInOutQuad"}); //scroll to appended content
-            });
+        e.preventDefault();
+        var $this=$(this),
+            url=$this.attr("href");
+        $this.addClass("loading");
+        $.get(url,function(data){
+            $this.removeClass("loading");
+            $("ul.scrollClass .mCSB_container").html(data); //load new content inside .mCSB_container
+            $("ul.scrollClass").mCustomScrollbar("update"); //update scrollbar according to newly loaded content
+            $("ul.scrollClass").mCustomScrollbar("scrollTo","top",{scrollInertia:200}); //scroll to top
         });
     });
-})(jQuery);
+    $("a[rel='append-content']").click(function(e){
+        e.preventDefault();
+        var $this=$(this),
+            url=$this.attr("href");
+        $this.addClass("loading");
+        $.get(url,function(data){
+            $this.removeClass("loading");
+            $("ul.scrollClass .mCSB_container").append(data); //append new content inside .mCSB_container
+            $("ul.scrollClass").mCustomScrollbar("update"); //update scrollbar according to newly appended content
+            $("ul.scrollClass").mCustomScrollbar("scrollTo","h2:last",{scrollInertia:2500,scrollEasing:"easeInOutQuad"}); //scroll to appended content
+        });
+    });
+});
+
 jQuery(function($) {
     $(".swipebox").swipebox();
 });

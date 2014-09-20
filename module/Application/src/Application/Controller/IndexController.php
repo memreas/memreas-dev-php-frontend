@@ -106,7 +106,7 @@ error_log("Enter FE indexAction".PHP_EOL);
                                                 ]
                                             }],
                                         "width": 500, "height": 300, "aspectratio": "16:9", "primary":"flash",
-                                         "skin": "/memreas/js/jwplayer/bekle.xml", allowfullscreen: true';
+                                         "skin": "/memreas/js/jwplayer/bekle.xml", allowfullscreen: true, autostart: true';
             }
             else{
                 $flashPlayerContent = 'flashplayer: "../jwplayer.flash.swf", file: "' . $_POST['video_url'] . '",
@@ -117,7 +117,7 @@ error_log("Enter FE indexAction".PHP_EOL);
             $content = $this->renderJWPlayerCache($flashPlayerContent);
             fwrite ($file_handle, $content, 5000);
             fclose ($file_handle);
-            $response = array ('video_link' => $cache_file, 'thumbnail' => isset ($_POST['thumbnail']) ? $_POST['thumbnail'] : '/memreas/img/large-pic-1.jpg', 'media_id' => $_POST['media_id']);
+            $response = array ('video_link' => $cache_file, 'thumbnail' => isset ($_POST['thumbnail']) ? $thumbnail : '/memreas/img/large-pic-1.jpg', 'media_id' => $_POST['media_id']);
             echo json_encode ($response);
         }
         exit();
