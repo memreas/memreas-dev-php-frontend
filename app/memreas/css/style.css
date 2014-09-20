@@ -3170,7 +3170,4 @@ select{ height: 30px; }
 		/*margin-top: -85px;*/
 	}
 }
-
-
-
-
+.hideCls{ display: none; }

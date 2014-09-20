@@ -33,6 +33,8 @@ $(function(){
         $("#ckb_canadd").attr('checked', true);
     });
     user_id = $("input[name=user_id]").val();
+    share_initObjects();
+    share_customScrollbar();
 });
 
 // initialize the share page objects.
@@ -512,7 +514,7 @@ share_clearMedia = function() {
 
 	var mediaList = $("#share_medialist .mCSB_container li a img");
 
-	for (i = 0; i < mediaList.length; i++) {
+	for (var i = 0; i < mediaList.length; i++) {
 		$(mediaList[i]).removeClass ('setchoosed');
 	}
 }
@@ -533,20 +535,20 @@ share_getAllMedia = function() {
             ],
             function(response) {
                 if (getValueFromXMLTag(response, 'status') == "Success") {
-                    medias = getSubXMLFromTag(response, 'media');
+                    var medias = getSubXMLFromTag(response, 'media');
                     var count_media = medias.length;
                     var jtarget_element = $('#share_medialist');
                     if (jtarget_element.hasClass('mCustomScrollbar'))
                         jtarget_element = $('#share_medialist .mCSB_container');
                     jtarget_element.empty();
                     for (var json_key = 0;json_key < count_media;json_key++){
-                        var media = medias[json_key].innerHTML;
-                        var _media_type = $(media).filter ('type').html();
+                        var media = medias[json_key];
+                        var _media_type = getValueFromXMLTag(media, 'type');
                         var _media_url = getMediaThumbnail(media, '/memreas/img/small-pic-3.jpg');
-                        var _media_id = $(media).filter('media_id').html();
+                        var _media_id = getValueFromXMLTag(media, 'media_id');
                         if (_media_type == 'video'){
 
-                            var metadata = getValueFromXMLTag(medias[json_key], 'metadata').replace("<!--[CDATA[", "").replace("]]-->", "");
+                            var metadata = getValueFromXMLTag(media, 'metadata').replace("<!--[CDATA[", "").replace("]]-->", "");
                             metadata = JSON.parse(metadata);
                             var transcode_progress = metadata.S3_files.transcode_progress;
 
@@ -563,8 +565,8 @@ share_getAllMedia = function() {
                             }
 
                             if (web_transcoded){
-                                var _main_video_media = $(media).filter ('main_media_url').html();
-                                _main_video_media = _main_video_media.replace("<!--[CDATA[", "").replace("]]-->", "");
+                                var _main_video_media = getValueFromXMLTag(media, 'main_media_url');
+                                _main_video_media = removeCdataCorrectLink(_main_video_media);
                                 jtarget_element.append('<li class="video-media" media-url="' + _main_video_media + '"><a href="javascript:;" id="share-' + _media_id + '" class="image-sync" onclick="return imageChoosed(this.id);"><img src="' + _media_url + '" alt=""><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a></li>');
                             }
                         }

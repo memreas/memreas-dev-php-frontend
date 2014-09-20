@@ -79,17 +79,12 @@ function getMediaUrl(element_object, mediatype){
     var total_media_response = search_element.length;
     var found_link = '';
     for (var i = 0;i < total_media_response;i++){
-
-        if ((element_object.innerHTML).indexOf(search_element[i]) >= 0)
+        if ((element_object.innerHTML).indexOf(search_element[i]) >= 0){
             found_link = getValueFromXMLTag(element_object, search_element[i]);
-
-        if (found_link != ''){
-            found_link = found_link.replace('<!--[CDATA[["', "").replace('"]]]-->', "")
-                .replace("<!--[CDATA[", "").replace("]]-->", "");
-            if (found_link.indexOf("\\/") >= 0)
-                found_link = found_link.split("\\/").join('/');
-            break;
+            found_link = removeCdataCorrectLink(found_link);
         }
+
+        if (found_link != '') break;
     }
 
     if (found_link == '')
@@ -112,15 +107,12 @@ function getMediaThumbnail(element_object, default_value){
     var found_link = '';
     for (var i = 0;i < total_media_response;i++){
 
-        if ((element_object.innerHTML).indexOf(media_tags[i]) >= 0)
+        if ((element_object.innerHTML).indexOf(media_tags[i]) >= 0){
             found_link = getValueFromXMLTag(element_object, media_tags[i]);
-
-        if (found_link != ''){
-            found_link = found_link.replace('<!--[CDATA[["', "").replace('"]]]-->', "");
-            if (found_link.indexOf("\\/") >= 0)
-                found_link = found_link.split("\\/").join('/');
-            break;
+            found_link = removeCdataCorrectLink(found_link);
         }
+
+        if (found_link != '') break;
     }
 
     if (found_link == '') found_link = default_value;
@@ -356,7 +348,10 @@ formatDateToDMY = function(date) {
 
 // return the text value within the specified xml tag.
 getValueFromXMLTag = function(xml, tag) {
-    return $(xml).find(tag)[0].innerHTML;
+    var element = $(xml).find(tag)[0];
+    if (typeof (element) != 'undefined')
+        return element.innerHTML;
+    else return '';
 }
 
 // return the sub xml array from tag.

@@ -203,28 +203,29 @@ function showEventDetail(eventId, userId){
             { tag: 'limit',value: media_limit_count },
             { tag: 'page', value: media_page_index }
         ], function (response){
-            console.log(response);
             var eventId = getValueFromXMLTag(response, 'event_id');
             if (getValueFromXMLTag(response, 'status') == "Success") {
                 var medias = getSubXMLFromTag(response, 'media');
                 if (typeof (eventId != 'undefined')){
                     event_owner_name = getValueFromXMLTag(response, 'username');
                     eventdetail_user_pic = getValueFromXMLTag(response, 'profile_pic');
-                    eventdetail_user_pic = removeCdataCorrectLink(eventdetail_user_pic);
+                    if (eventdetail_user_pic != '')
+                        eventdetail_user_pic = removeCdataCorrectLink(eventdetail_user_pic);
+                    else eventdetail_user_pic = '/memreas/img/profile-pic.jpg';
 
                     $(".memreas-detail-comments .event-owner .pro-pics img").attr ('src', $("header").find("#profile_picture").attr('src'));
                     $(".memreas-detail-comments .pro-names").html(event_owner_name);
 
                     var media_count = medias.length;
                     for (var i=0;i < media_count;i++) {
-                        var media = medias[i].innerHTML;
-                        var _main_media = $(media).filter ('main_media_url').html();
+                        var media = medias[i];
+                        var _main_media = getValueFromXMLTag(media, 'main_media_url');
                         _main_media = removeCdataCorrectLink(_main_media);
-                        if (_main_media.indexOf ('undefined') >= 0) _main_media = '/memreas/img/large/1.jpg';
-                        var _media_url = getMediaThumbnail(media, '/memreas/img/small/1.jpg');
-                        var _media_type = $(media).filter ('type').html();
 
-                        var mediaId = $(media).filter ('media_id').html();
+                        var _media_url = getMediaThumbnail(media, '/memreas/img/small/1.jpg');
+                        var _media_type = getValueFromXMLTag(media, 'type');
+
+                        var mediaId = getValueFromXMLTag(media, 'media_id');
                         if (_media_type == 'video'){
                             target_element.append ('<li class="video-media" id="memreasvideo-' + mediaId + '" media-url="' + _main_media + '"><a href=\'javascript:popupVideoPlayer("memreasvideo-' + mediaId + '");\' id="button"><img src="' + _media_url + '" alt=""><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a></li>');
                             jcarousel_element.append ('<li data-preview="' + _media_url + '"  media-id="' + mediaId + '"><a href="#"><img src="' + _media_url + '" alt="image01" /></a></li>');
@@ -281,12 +282,12 @@ function popupAddMemreasGallery(){
                 jtarget_element.empty();
 
                 for (var json_key = 0;json_key < count_media;json_key++){
-                    var media = medias[json_key].innerHTML;
-                    var _media_type = $(media).filter ('type').html();
+                    var media = medias[json_key];
+                    var _media_type = getValueFromXMLTag(media,  'type');
                     var _media_url = getMediaThumbnail(media, '/memreas/img/small-pic-3.jpg');
-                    var _media_id = $(media).filter('media_id').html();
+                    var _media_id = getValueFromXMLTag(media, 'media_id');
                     if (_media_type == 'video'){
-                        var _main_video_media = $(media).filter ('main_media_url').html();
+                        var _main_video_media = getValueFromXMLTag(media, 'main_media_url');
                         _main_video_media = removeCdataCorrectLink(_main_video_media);
                         jtarget_element.append('<li class="video-media" media-url="' + _main_video_media + '"><a href="javascript:;" id="memreas-addgallery-' + _media_id + '" onclick="return imageChoosed(this.id);"><img src="' + _media_url + '" alt=""><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a></li>');
                     }
