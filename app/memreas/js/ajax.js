@@ -31,6 +31,12 @@ ajaxRequest = function (action, params, success_func, error_func, disableLoading
 	  	dataType: 'jsonp',
 	  	data: 'json=' + json_data,
 	  	success: function(ret_xml) {
+
+            if (getValueFromXMLTag(ret_xml, 'error').trim() == 'Please Login'){
+                document.location.href="/index";
+                return;
+            }
+
 			if (typeof success_func != "undefined")
 				success_func(ret_xml);
 

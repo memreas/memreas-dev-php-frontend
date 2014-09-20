@@ -128,7 +128,7 @@ function updateMemreasMediaDetailsScript(){
                 $(".image-preview .swipebox").swipebox();
 
                 //Set download button
-                var download_url = el.find('img').attr('src');
+                var download_url = el.find('img').attr('download');
                 $(".memreas-detail-download").attr("href", download_url);
                 $(".memreas-detail-download").attr("download", download_url);
 
@@ -146,7 +146,7 @@ function updateMemreasMediaDetailsScript(){
                 $(".image-preview .swipebox").swipebox();
 
                 //Set download button
-                var download_url = el.find('img').attr('src');
+                var download_url = el.find('img').attr('download');
                 $(".memreas-detail-download").attr("href", download_url);
                 $(".memreas-detail-download").attr("download", download_url);
                 //$(".memreas-detail-download").swipebox();
@@ -225,14 +225,17 @@ function showEventDetail(eventId, userId){
                         var _media_url = getMediaThumbnail(media, '/memreas/img/small/1.jpg');
                         var _media_type = getValueFromXMLTag(media, 'type');
 
+                        var _download_url = getValueFromXMLTag(media, 'media_url_download');
+                        if (_download_url == '') _download_url = _media_url;
+
                         var mediaId = getValueFromXMLTag(media, 'media_id');
                         if (_media_type == 'video'){
                             target_element.append ('<li class="video-media" id="memreasvideo-' + mediaId + '" media-url="' + _main_media + '"><a href=\'javascript:popupVideoPlayer("memreasvideo-' + mediaId + '");\' id="button"><img src="' + _media_url + '" alt=""><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a></li>');
-                            jcarousel_element.append ('<li data-preview="' + _media_url + '"  media-id="' + mediaId + '"><a href="#"><img src="' + _media_url + '" alt="image01" /></a></li>');
+                            jcarousel_element.append ('<li data-preview="' + _media_url + '"  media-id="' + mediaId + '"><a href="#"><img src="' + _media_url + '" alt="image01" download="' + _media_url + '" /></a></li>');
                         }
                         else {
                             target_element.append ('<li  media-id="' + mediaId + '"><a href="' + _media_url + '" class="swipebox" title="photo-2"><img src="' + _media_url + '" alt=""></a></li>');
-                            jcarousel_element.append ('<li data-preview="' + _main_media + '"  media-id="' + mediaId + '"><a href="#"><img src="' + _media_url + '" alt="image01" /></a></li>');
+                            jcarousel_element.append ('<li data-preview="' + _main_media + '"  media-id="' + mediaId + '"><a href="#"><img src="' + _media_url + '" alt="image01" download="' + _media_url + '" /></a></li>');
                         }
                     }
                 }

@@ -595,13 +595,21 @@ function deleteFiles(confirmed){
 function success_deletephoto(xml_response){
 
     //If there is no more medias to be deleted, reload resources
-    var media_id = getValueFromXMLTag(xml_response, 'media_id');
-    $("#" + media_id).parents('li').remove();
-    --deleteMediasChecked;
-    if (deleteMediasChecked == 0){
-        pushReloadItem('listallmedia');
-        jsuccess('Media deleted');
-        ajaxScrollbarElement('.edit-areamedia-scroll');
+    if (getValueFromXMLTag(xml_response) == 'success'){
+        var media_id = getValueFromXMLTag(xml_response, 'media_id');
+        $("#" + media_id).parents('li').remove();
+        --deleteMediasChecked;
+        if (deleteMediasChecked == 0){
+            pushReloadItem('listallmedia');
+            jsuccess('Media deleted');
+            ajaxScrollbarElement('.edit-areamedia-scroll');
+            enableButtons('.edit-area');
+        }
+    }
+    else {
+        --deleteMediasChecked;
+        jerror (getValueFromXMLTag(xml_response, 'message'));
+        $("a#" + getValueFromXMLTag(xml_response, 'media_id')).find(".loading-small").hide();
         enableButtons('.edit-area');
     }
 }
