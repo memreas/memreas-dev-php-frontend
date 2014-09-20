@@ -198,12 +198,15 @@ var h = function(item) {
             var comment =map[item].comment;
                 //html = '<div class="bond"><img src="' + photo + '"><strong>' + name + '</strong><strong>' + map[item].event_name + '</strong></div>';
                 if(comment.length > 25) {
-    comment = comment.substring(0,24)+"...";
-}
+                    comment = comment.substring(0,24)+"...";
+                }
+                photo = removeCdataCorrectLink(photo);
                 var html ='<div class="swipebox_comment" style="float: left;"><div class="event_pro"><img src="' + photo + '"></div>'+ name +'<div class="event_textarea" >' + comment + '</div></div><div class="event_gallery_pro"><img src="' + map[item].commenter_photo + '"></div>';
                 return html;
             break;
     }
+
+    photo = removeCdataCorrectLink(photo);
     var html = '<div class="bond"><img src="' + photo + '"><strong>' + name + '</strong></div>';
     return html;
 
@@ -215,6 +218,7 @@ function personalSearchLi(target, item) {
     //Prevent yourself listing
     if (('@' + $("input[name=username]").val()) != item.username){
         var photo = item.profile_photo;
+        photo = removeCdataCorrectLink(photo);
         var name = $.trim(item.username);
         var op = '<li><figure class="pro-pics"><img src="'
                 + photo + '" alt=""></figure><div class="user-names">'

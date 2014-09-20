@@ -94,7 +94,8 @@ function getMediaUrl(element_object, mediatype){
 
 function removeCdataCorrectLink(media_link){
     media_link = media_link.replace('<!--[CDATA[["', "").replace('"]]]-->', "")
-        .replace("<!--[CDATA[", "").replace("]]-->", "");
+        .replace("<!--[CDATA[", "").replace("]]-->", "")
+        .replace('["', "").replace('"]', "");
     if (media_link.indexOf("\\/") >= 0)
         media_link = media_link.split("\\/").join('/');
 
