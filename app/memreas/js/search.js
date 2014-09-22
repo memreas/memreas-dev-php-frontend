@@ -262,7 +262,7 @@ function addFriend(name) {
         value: [
             {tag: 'friend_name', value: name.replace("@", "")},
             {tag: 'network_name', value: 'memreas'},
-            {tag: 'profile_pic_url', value: photo}
+            {tag: 'profile_pic_url', value: ''}
         ]
     };
     ajaxRequest(
