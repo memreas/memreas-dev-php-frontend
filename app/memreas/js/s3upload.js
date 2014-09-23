@@ -99,7 +99,7 @@ $(document).ready( function() {
                                     '<div class="upload_progress_bar">' +
                                         '<span></span><div class="progress"></div>' +
                                     '</div><div class="progress-text"></div>' +
-                                    '<div class="close_progress"><a href="#" class="cancel-upload"><img src="/memreas/img/close.png" alt=""></a></div>' +
+                                    '<div class="close_progress"><a href="javascript:;" class="cancel-upload"><img src="/memreas/img/close.png" alt=""></a></div>' +
                                     '<div class="clear"></div>' +
                                 '</div>' +
                               '</li>');
