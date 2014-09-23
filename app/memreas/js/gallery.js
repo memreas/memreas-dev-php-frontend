@@ -130,7 +130,7 @@ jQuery.fetch_server_media = function (){
 
                             metadata = removeCdataCorrectLink(metadata);
 
-                            //metadata = JSON.parse(metadata);
+                            metadata = JSON.parse(metadata);
                             var transcode_progress = metadata.S3_files.transcode_progress;
 
                             //Check if web transcode is completed or not
