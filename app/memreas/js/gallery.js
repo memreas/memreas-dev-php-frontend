@@ -142,7 +142,7 @@ jQuery.fetch_server_media = function (){
                             var web_transcoded = false;
                             if (transcode_progress != false){
                                 for (var i = 0;i < transcode_progress.length;i++){
-                                    if (transcode_progress[i] == 'transcode_web_completed'){
+                                    if (transcode_progress[i].indexOf('transcode_web_completed') >= 0){
                                         web_transcoded = true;
                                         break;
                                     }
