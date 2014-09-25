@@ -432,9 +432,10 @@ footer {
 }
 
     #slider{
-        left: 5.6em;
-        z-index: 1;
-        top: 5em;
+       left: 5.6em;
+       z-index: 1;
+       top: 3.8em;
+       width: 50%;
     }
     .rslides{
         width: 88%;
@@ -525,8 +526,9 @@ footer {
         top: 4.6em;
         
         /* Khan Change MFE-452 */
-        left: 4.1em; 
-        top: 3.6em;
+        left: 3.9em;
+        top: 2.4em;
+        width: 59%;
     }
     .rslides img {
         width: 82.4%!important;
@@ -584,7 +586,7 @@ footer {
         width: 50%;
     }
     #slider {
-        top: 3.8em;
+        top: 2.7em;
         left: 4.3em;
         width: 46%;
     }
@@ -653,7 +655,7 @@ footer {
     .signup form{
         width: 100%;
         background: transparent;
-        border-bottom: 0px;
+        /*margin-bottom: 10px;*/
     }
 	.container {
 		width: 100%
@@ -709,8 +711,8 @@ footer {
     }
 
     #slider {
-        left: 21.2%;
-        top: 14%;
+        left: 22.2%;
+        top: 10.7%;
         width: 46%;
     }
     .create-accnt {
@@ -795,7 +797,7 @@ footer {
     }
     #slider {
         left: 4.8em;
-        top: 4.3em;
+        top: 3.2em;
     }
     #slider img {
         width: 112% !important;
