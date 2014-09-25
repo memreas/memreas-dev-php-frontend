@@ -44,17 +44,11 @@ share_initObjects = function() {
 
 	// event function when click "media" tab
 	$('#tabs-share li:nth-child(2) a').on('click', function() {
-        if (event_id == ""){
-            return false;
-        }
 		share_getAllMedia();
 	});
 
 	// event function when click "Friends" tab
 	$('#tabs-share li:nth-child(3) a').on('click', function() {
-        if (event_id == ""){
-            return false;
-        }
 		share_changeSocialType();
 	});
 
@@ -124,9 +118,7 @@ share_customScrollbar = function () {
 	$("#tab-content-share div:first").fadeIn(); // Show first tab content*/
 
 	$('#tabs-share a').click(function(e) {
-		if (event_id == ""){
-            return false;
-        }
+
 		e.preventDefault();
 		$("#tab-content-share div.hideCls").hide(); //Hide all content
 		$("#tabs-share li").attr("id",""); //Reset id's
@@ -409,6 +401,10 @@ share_gotoPage = function(tab_no) {
 
 // add the comment to Media when click "next" button on the Media Page.
 share_addComment = function() {
+    if (event_id == ''){
+        jerror("Please complete event detail at step 1");
+        return false;
+    }
 
     media_ids = fetch_selected_media();
     if (media_ids.length <= 0){
@@ -666,6 +662,11 @@ share_clickFriends = function(id) {
 
 // make the group with selected friends and e-mail list.
 share_makeGroup = function() {
+    if (event_id == ''){
+        jerror ('Please complete event detail at step 1');
+        return false;
+    }
+
 	var emailList 	= splitByDelimeters(getElementValue('txt_emaillist'), [',', ';']);
     var emailTags = [];
     if (emailList.length > 0){

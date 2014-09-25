@@ -84,7 +84,7 @@ function loadAccountCard(){
         '"json": ' + json_listCard  +
         '}';
 
-    $('#loadingpopup').fadeIn(1000);
+    $('.stripe-payment').fadeIn(1000);
     $.ajax({
         url: stripeActionUrl,
         type: 'POST',
@@ -120,7 +120,7 @@ function loadAccountCard(){
                 jMemberCard.append('<li>Please add a card.</li>');
                 jerror(response.message);
             }
-            $('#loadingpopup').fadeOut(500);
+            $('.stripe-payment').fadeOut(500);
         }
     });
 }

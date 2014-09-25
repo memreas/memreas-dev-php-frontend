@@ -20,7 +20,7 @@ function listFriends(){
                 var friend_name = getValueFromXMLTag(friend, 'friend_name');
                 var html_str = '<li>';
                 html_str += '<figure class="pro-pics2" id="manageF-' + friend_id + '" onclick="javascript:manageF_clickFriends(this.id);"><img class="morepage-friend-thumb" src="' + friend_photo + '" alt="" ></figure>';
-                html_str += '<aside class="pro-pic_names2" name="' + friend_name + '" id="a' + friend_id + '" onclick="javascript:manageF_clickFriends(this.id.substr(1));">' + friend_name + '</aside>';
+                html_str += '<aside class="pro-pic_names2" name="' + friend_name + '" id="manageF-' + friend_id + '" onclick="javascript:manageF_clickFriends(this.id);">' + friend_name + '</aside>';
                 html_str += '</li>';
                 jFriendList.append(html_str);
             }
