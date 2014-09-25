@@ -403,6 +403,10 @@ ul.right textarea {
 	background: url(../img/menu-act.png);
 }
 footer {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	right: 0;
 	font: 12px/49px Arial, Helvetica, sans-serif;
 	color: #FFF;
 	text-align: center;

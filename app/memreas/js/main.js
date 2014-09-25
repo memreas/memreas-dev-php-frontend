@@ -23,7 +23,8 @@ $(function(){
 
     // Automatically calculate height of nav element to strech it to the bottom of the page
     var calculateNavHeight = function() {
-        $('nav').css({'height': $("#maintab-content").height() + 5});
+        var windowHeight = window.innerHeight - 114;
+        $('nav').css({'height': windowHeight});
     };
 
     calculateNavHeight();
