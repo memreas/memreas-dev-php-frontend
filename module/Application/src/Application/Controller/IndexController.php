@@ -94,7 +94,7 @@ error_log("Enter FE indexAction".PHP_EOL);
             $file_handle = fopen ($cache_dir . $cache_file, 'w');
             if ($hls_media){
                 $thumbnail = explode(",", $_POST['thumbnail']);
-                $thumbnail = $thumbnail[0];
+                $thumbnail = str_replace('"', "", $thumbnail[0]);
                 $flashPlayerContent = 'flashplayer: "../jwplayer.flash.swf",
                                         "controlbar":"bottom",
                                         "playlist":[
