@@ -326,7 +326,8 @@ function addMemreasPopupGallery(eventId){
     ajaxRequest('addexistmediatoevent', params, function(xml_response){
         if (getValueFromXMLTag(xml_response, 'status') == 'Success'){
             $('#loadingpopup').show();
-            setTimeout(function(){ showEventDetail(eventId, $('input[name=user_id]').val()); $('#loadingpopup').hide(); disablePopup('popupAddMedia'); jsuccess('Media added successfully'); }, 2000);
+            disablePopup('popupAddMedia');
+            setTimeout(function(){ showEventDetail(eventId, $('input[name=user_id]').val()); $('#loadingpopup').hide(); jsuccess('Media added successfully'); }, 2000);
         }
         else jerror(getValueFromXMLTag(xml_response, 'message'));
     });
@@ -618,7 +619,7 @@ function addFriendToEvent(eventId){
                                 { tag: 'friend_name',         value: fb_friendsInfo[i].name },
                                 { tag: 'friend_id',         value: fb_friendsInfo[i].id },
                                 { tag: 'network_name',         value: 'facebook' },
-                                { tag: 'profile_pic_url',     value: fb_friendsInfo[i].photo }
+                                { tag: 'profile_pic_url',     value: '' }
                             ]
                 };
             }
@@ -634,7 +635,7 @@ function addFriendToEvent(eventId){
                                 { tag: 'friend_name',         value: tw_friendsInfo[i].name },
                                 { tag: 'friend_id',         value: tw_friendsInfo[i].id.toString() },
                                 { tag: 'network_name',         value: 'twitter' },
-                                { tag: 'profile_pic_url',     value: tw_friendsInfo[i].photo }
+                                { tag: 'profile_pic_url',     value: '' }
                             ]
                 };
             }
@@ -650,7 +651,7 @@ function addFriendToEvent(eventId){
                                 { tag: 'friend_name',         value: mr_friendsInfo[i].name },
                                 { tag: 'friend_id',         value: mr_friendsInfo[i].id },
                                 { tag: 'network_name',         value: 'memreas' },
-                                { tag: 'profile_pic_url',     value: mr_friendsInfo[i].photo }
+                                { tag: 'profile_pic_url',     value: '' }
                             ]
                 };
             }
@@ -700,6 +701,7 @@ function addFriendToEvent(eventId){
             if (status.toLowerCase() == 'success') {
                 jsuccess('your friends added successfully.');
                 $(".popupContact li").each (function(){ $(this).removeClass ('setchoosed');});
+                disablePopup("popupFriends");
             }
             else jerror(message);
         }

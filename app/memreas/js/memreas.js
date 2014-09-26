@@ -230,8 +230,8 @@ function fetchFriendsMemreas(friendMemreasType){
                         }
                         else var friend_row = 'friendPublic-' + creator_id;
                         if (typeof ($(friend).filter('profile_pic')) != 'undefined'){
-                            profile_img = $(friend).filter('profile_pic').html();
-                            profile_img = profile_img.replace("<!--[CDATA[", "").replace("]]-->", "");
+                            var profile_img = $(friend).filter('profile_pic').html();
+                            profile_img = removeCdataCorrectLink(profile_img);
                         }
                         else profile_img = '/memreas/img/profile-pic.jpg';
                         if (profile_img == '') profile_img = '/memreas/img/profile-pic.jpg';

@@ -262,11 +262,11 @@ function activeAkordeon(elementClass, callback_func){
             $(this).removeClass('expanded');
         if (!$(this).hasClass('collapsed'))
             $(this).addClass('collapsed');
-        $(this).find('.akordeon-icon').children('span').html('+');
+        $(this).find('.akordeon-icon').children('span').html("+");
     });
     var currentItemBodyHeight = jActiveTab.find('.akordeon-item-body').find(".akordeon-item-content").height();
     jParentAkordeon.find(".akordeon-item-body").css('height', 0);
-    jActiveTab.find('.akordeon-icon').children('span').html('–');
+    jActiveTab.find('.akordeon-icon').children('span').html("&ndash;");
     jActiveTab.removeClass('collapsed').addClass('expanded');
     jActiveTab.find(".akordeon-item-body").css('height', currentItemBodyHeight);
     updateAkordeonContent(jActiveTab);
