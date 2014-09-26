@@ -257,7 +257,7 @@ error_log("callback_json----->".$callback_json.PHP_EOL);
    */
     public function twitterAction() {
         $server_url = $this->getRequest()->getServer('HTTP_HOST');
-        $callback_url = (strpos ($server_url, 'localhost')) ? 'http://memreas-dev-php-frontend.localhost/index/twitter' : 'http://memreasdev-frontend.elasticbeanstalk.com/index/twitter';
+        $callback_url = (strpos ($server_url, 'localhost')) ? 'http://memreas-dev-php-frontend.localhost/index/twitter' : MemreasConstants::MEMREAS_FE."/index/twitter";
         $config = new \Application\OAuth\Config();
         /*
         *OLD API
