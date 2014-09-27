@@ -65,6 +65,9 @@ $(document).ready( function() {
                 var filetype = data.files[0].type;
                 var key_value = filename;
 
+                /*
+                 * 28-SEP-2014 JM: Modified for allowed file types
+                 */
                 //Check here is file is valid - matches checking on server
                 var extension = filename.substr( (filename.lastIndexOf('.') +1) );
                 var is_valid = false;
