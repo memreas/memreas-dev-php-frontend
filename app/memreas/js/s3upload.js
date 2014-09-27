@@ -65,8 +65,77 @@ $(document).ready( function() {
                 var filetype = data.files[0].type;
                 var key_value = filename;
 
+                //Check here is file is valid - matches checking on server
+                var extension = filename.substr( (filename.lastIndexOf('.') +1) );
+                var is_valid = false;
+                switch(extension.toLowerCase()) {
+                	//image types allowed
+                	case 'jpeg':
+                		filetype='image'; 
+                		is_valid = true;
+						break;
+                    case 'jpg':
+                    	filetype='image';
+                		is_valid = true;
+						break;
+                    case 'png':
+                    	filetype='image';
+                		is_valid = true;
+						break;
+                    case 'gif':
+                    	filetype='image';
+                		is_valid = true;
+						break;
+
+                    //video types allowed
+					case 'mpeg' :
+						filetype='video';
+                		is_valid = true;
+						break;
+					case 'mp4' :
+						filetype='video';
+                		is_valid = true;
+						break;
+					case 'avi' :
+						filetype='video';
+                		is_valid = true;
+						break;
+					case 'mov' :
+						filetype='video';
+                		is_valid = true;
+						break;
+					case '3gp' :
+						filetype='video';
+                		is_valid = true;
+						break;
+					case '3gpp' :
+						filetype='video';
+                		is_valid = true;
+						break;
+					case 'mkv' :
+						filetype='video';
+                		is_valid = true;
+						break;
+
+					//audio types allowed
+					case 'mp3' :
+						filetype='audio';
+                		is_valid = true;
+						break;
+					case 'wav' :
+						filetype='audio';
+                		is_valid = true;
+						break;
+					case 'caf' :
+						filetype='audio';
+                		is_valid = true;
+						break;
+                    default:
+                        jerror('file type is not allowed');
+                }
                 //Check if valid type is image or video are allowed
-                if  (!(filetype.indexOf('image') >= 0 || filetype.indexOf('video') >= 0)){
+                //if  (!(filetype.indexOf('image') >= 0 || filetype.indexOf('video') >= 0 || filetype.indexOf('audio') >= 0)){
+                if  (!is_valid) {
                     jerror('file type is not allowed');
                     return false;
                 }
