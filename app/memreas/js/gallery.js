@@ -312,8 +312,11 @@ function getUserNotificationsHeader(){
                                     var link_action = '<a href="javascript:;" class="reply" onclick="updateNotificationHeader(\'' + notification_id + '\', \'ignore\');">Ignore</a> <a href="javascript:;" class="reply" onclick="updateNotificationHeader(\'' + notification_id + '\', \'accept\');">ok</a>';
                                 else var link_action = '';
                                 html_content += '<li id="notification-header-' + notification_id + '"><div class="notifications-all clearfix">' +
+                                                        '<div class="notification-pic"><img src="' + user_profile_pic +'" /></div>' +
                                                         '<div class="noti-content">' +
-                                                            '<p>' + meta_text + '</p>' +
+                                                            '<div class="noti-content">' +
+                                                                '<p>' + meta_text + '</p>' +
+                                                            '</div>' +
                                                         '</div>' +
                                                         link_action +
                                                     '</div></li>';

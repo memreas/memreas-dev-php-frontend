@@ -271,7 +271,8 @@ function saveUserDetail(){
         {tag: 'email', value: $("input[name=account_alternate_email]").val()},
         {tag: 'password', value: account_password},
         {tag: 'gender', value: account_gender},
-        {tag: 'dob', value: account_dob}
+        {tag: 'dob', value: account_dob},
+        {tag: 'profile_picture', value: ''}
     ];
     ajaxRequest('saveuserdetails', params, function(xml_response){
         if (getValueFromXMLTag(xml_response, 'status') == "Success"){
