@@ -1,6 +1,7 @@
 
 var uploadFilesInstance = []; //Used for store all file name for uploading
 var currentUploadFileCount = 0; //Count for all current files selected for upload
+var filename = '';
 $(document).ready( function() {
 
     //Check if IOS only allow 1 file per upload
@@ -29,7 +30,8 @@ $(document).ready( function() {
             type: 'POST',
             autoUpload: true,
             add: function (event, data){
-
+                filename = data.files[0].name;
+                filename = correctUploadFilename(filename);
                 currentUploadFileCount = uploadFilesInstance.length;
                 if (currentUploadFileCount > 10){
                     jerror("Only allow to upload limited 10 files per session.");
@@ -38,19 +40,19 @@ $(document).ready( function() {
 
                 //Check if current file with the same name is currently uploading
                 for (var i = 0;i < currentUploadFileCount;i++){
-                    if (uploadFilesInstance[i] == data.files[0].name){
+                    if (uploadFilesInstance[i] == filename){
                         jerror ('not allowed to upload same files at same time');
                         return false;
                     }
                 }
-                uploadFilesInstance[currentUploadFileCount] = data.files[0].name;
+                uploadFilesInstance[currentUploadFileCount] = filename;
 
                 //Get signed credentials
                 $.ajax({
                     url: "/index/s3signed",
                     type: 'GET',
                     dataType: 'json',
-                    data: {title: data.files[0].name}, // send the file name to the server so it can generate the key param
+                    data: {title: filename}, // send the file name to the server so it can generate the key param
                     async: false,
                     success: function(data) {
                     // Now that we have our data, we update the form so it contains all
@@ -61,8 +63,7 @@ $(document).ready( function() {
                 });
 
                 var filetype = data.files[0].type;
-                var filename = data.files[0].name;
-                var key_value = '${filename}';
+                var key_value = filename;
 
                 //Check if valid type is image or video are allowed
                 if  (!(filetype.indexOf('image') >= 0 || filetype.indexOf('video') >= 0)){
@@ -145,7 +146,7 @@ $(document).ready( function() {
                 //Check if media exist or not
                 var params = [
                     {tag: 'user_id', value: $("input[name=user_id]").val()},
-                    {tag: 'filename', value: data.files[0].name}
+                    {tag: 'filename', value: filename}
                 ];
 
                 var jqXHR = '';
@@ -154,7 +155,7 @@ $(document).ready( function() {
                 ajaxRequest('checkexistmedia', params, function(xml_response){
                     if (getValueFromXMLTag(xml_response, 'status') == 'Failure'){
                         data.context.find('.progress-text').html('This file has already existed. Uploading will abort!');
-                        removeItem(uploadFilesInstance, data.files[0].name);
+                        removeItem(uploadFilesInstance, filename);
                         setTimeout(function(){ tpl2.remove(); }, 2000);
                         return false;
                     }
@@ -167,7 +168,7 @@ $(document).ready( function() {
                                 if (currentPercent < 100){
                                     jqXHR.abort();
                                     stopUpload = true;
-                                    removeItem(uploadFilesInstance, data.files[0].name);
+                                    removeItem(uploadFilesInstance, filename);
                                 }
                                 else {
                                     jerror('Upload is completed. Please wait until add media to your account done');
@@ -259,25 +260,14 @@ $(document).ready( function() {
         });
     });
 });
-function XML2JS(xmlDoc, containerTag) {
-    var output = new Array();
-    var rawData = xmlDoc.getElementsByTagName(containerTag)[0];
-    var i, j, oneRecord, oneObject;
-    for (i = 0; i < rawData.childNodes.length; i++) {
-        if (rawData.childNodes[i].nodeType == 1) {
-            oneRecord = rawData.childNodes[i];
-            oneObject = output[output.length] = new Object();
-            for (j = 0; j < oneRecord.childNodes.length; j++) {
-                if (oneRecord.childNodes[j].nodeType == 1) {
-                    oneObject[oneRecord.childNodes[j].tagName] =
-                        oneRecord.childNodes[j].firstChild.nodeValue;
-                }
-            }
-        }
-    }
-    return output;
-}
 
+function correctUploadFilename(filename){
+    var invalidChars = [' ', '+', '*', "'", '"', '(', ')', '!'];
+    for (var i = 0;i < invalidChars.length;i++)
+        filename = filename.replace(invalidChars[i], '-');
+
+    return filename;
+}
 //Define custom other type, the rest will take default
 var image_types = [
     {ext:   'jpg'  , type: 'jpeg'}

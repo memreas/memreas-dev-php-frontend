@@ -41,28 +41,7 @@ $domain = "http://d1ckv7o9k6o3x9.cloudfront.net/";
 									<li class="drop-2"><a href="javascript:;" onclick="toggleNotification();"> <span class="arrow toggle-1"></span>Notification</a>
 										<div class="slide-down-1 notification-head">
                                             <ul>
-											    <li>
-                                                    <div class="notifications-all clearfix" >
-                                                        <div class="noti-title"><strong>Scrat</strong> said on <span>06.25.2014</span>
-                                                        </div>
-                                                        <div class="noti-content">
-                                                            <p>This is Photoshop's version of Lorem ipsum prion gravida nibbe vei</p>
-                                                        </div>
-                                                        <a href="#" class="close">x</a>
-                                                        <a href="#" class="reply">reply</a>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="notifications-all clearfix" >
-                                                        <div class="noti-title"><strong>Scrat</strong> said on <span>06.25.2014</span>
-                                                        </div>
-                                                        <div class="noti-content">
-                                                            <p>This is Photoshop's version of Lorem ipsum prion gravida nibbe vei</p>
-                                                        </div>
-                                                        <a href="#" class="close">x</a>
-                                                        <a href="#" class="reply">reply</a>
-                                                    </div>
-                                                </li>
+
                                             </ul>
 										</div>
 									</li>
@@ -80,6 +59,21 @@ $domain = "http://d1ckv7o9k6o3x9.cloudfront.net/";
 	  </div>
 	</header>
 </div>
+<div id="popupGiveMessage" class="popups">
+    <a id="popupaccountviewcardClose" onClick="disablePopup('popupGiveMessage');" class='popupClose'>x</a>
+    <h2>Give your message</h2>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <ul id="content_1" class="scrollpopup give-message-form">
+        <li>
+            <input type="hidden" name="card_id" id="card_id" value="">
+            <textarea name="notification-popup-message" class="notification-popup-message" style="width: 389px; height: 150px;" placeholder="Your message"></textarea>
+        </li>
+    </ul>
+    <a class="black_btn_skin f-left" href="javascript:;" id="accept-notification" onclick="updateNotificationHeader(1, 'accept');">Update</a> <a class="black_btn_skin f-right" href="javascript:disablePopup('popupGiveMessage');">close</a>
+</div>
+<div id="bgpopupGiveMessage" class="backgroundPopup"></div>
 <!-- End : Header -->
 
 <!--Script for toggle down-->

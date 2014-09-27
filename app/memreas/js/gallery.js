@@ -309,7 +309,7 @@ function getUserNotificationsHeader(){
                             else{
 
                                 if (notification_status == '0')
-                                    var link_action = '<a href="javascript:;" class="reply" onclick="updateNotificationHeader(\'' + notification_id + '\', \'ignore\');">Ignore</a> <a href="javascript:;" class="reply" onclick="updateNotificationHeader(\'' + notification_id + '\', \'accept\');">ok</a>';
+                                    var link_action = '<a href="javascript:;" class="reply" onclick="updateNotificationHeader(\'' + notification_id + '\', \'ignore\');">Ignore</a> <a href="javascript:;" class="reply" onclick="showUpdateNotification(\'' + notification_id + '\', \'accept\');">ok</a>';
                                 else var link_action = '';
                                 html_content += '<li id="notification-header-' + notification_id + '"><div class="notifications-all clearfix">' +
                                                         '<div class="notification-pic"><img src="' + user_profile_pic +'" /></div>' +
@@ -343,7 +343,7 @@ function getUserNotificationsHeader(){
                                     '</div>');
             }
 
-            setTimeout(function(){ getUserNotificationsHeader() }, 240000); //3 minutes
+            setTimeout(function(){ getUserNotificationsHeader() }, 15000); //15s
         }, 'undefined', true
     );
 }
@@ -351,15 +351,21 @@ function getUserNotificationsHeader(){
 function updateNotificationHeader(notification_id, update_status){
     switch (update_status){
         case 'accept':
+            var message_feedback = $(".notification-popup-message").val();
+            if (message_feedback == ''){
+                jerror("Please fill your message detail");
+                return false;
+            }
             var params = [
                 {tag: 'notification', value:
                     [
                         {tag: 'notification_id', value: notification_id},
-                        {tag: 'status', value: '1'}
+                        {tag: 'status', value: '1'},
+                        {tag: 'message', value: message_feedback}
                     ]
                 }
             ];
-            addLoading("#notification-header-" + notification_id + " .notifications-all", 'div', 'notification-header-loading');
+            disablePopup("popupGiveMessage");
             ajaxRequest('updatenotification', params, function(response){
                 if (getValueFromXMLTag(response, 'status') == 'success'){
                     jsuccess(getValueFromXMLTag(response, 'message'));
@@ -367,7 +373,7 @@ function updateNotificationHeader(notification_id, update_status){
                 }
                 else jerror(getValueFromXMLTag(response, 'message'));
                 removeLoading("#notification-header-" + notification_id + " .notifications-all");
-            }, 'undefined', true);
+            });
             break;
         case 'ignore':
             var params = [
@@ -391,6 +397,11 @@ function updateNotificationHeader(notification_id, update_status){
             break;
         default: jerror('No action performed');
     }
+}
+
+function showUpdateNotification(notification_id){
+    $("#accept-notification").attr('onclick', 'updateNotificationHeader(\'' + notification_id + '\', \'accept\');')
+    popup("popupGiveMessage");
 }
 
 function gotoEventDetail(eventId, notification_id){
