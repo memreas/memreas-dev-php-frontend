@@ -404,6 +404,7 @@ ul.right textarea {
 }
 footer {
 	position: fixed;
+	z-index: 2;
 	left: 0;
 	bottom: 0;
 	right: 0;
@@ -1027,8 +1028,12 @@ a.black_btn_skin:hover, a.black_btn_skin:active, #avpw_save_button:hover, #avpw_
 	z-index: 2;
 	min-height: 490px;
 	margin-bottom: 10px;
-
 }
+
+.noads #tab-content{
+	margin-bottom: 50px;
+}
+
 #tab-content-more{ margin-top: -2px; }
 #tab-content h2, #tab-content h3, #tab-content p,
 #tab-content-queue h2, #tab-content-queue h3, #tab-content-queue p,
@@ -2821,6 +2826,9 @@ margin-left: 15%;
 .row-fluid .span11 {
     width: 97%;
 }
+.noads .row-fluid .span11{
+	width: 99.7%;
+}
 .slide-down {
 	display: none;
 }
@@ -2942,8 +2950,9 @@ margin-left: 15%;
     float: left;
     margin-left: 2%;
     width: 98%;
-    margin-bottom: 0px; /* Khan Changes */
+    margin-bottom: 50px; /* Khan Changes */
     margin-top: 5px;
+
 }
 .ad img {
     margin: 0;

@@ -432,7 +432,7 @@ footer {
 }
 
     #slider{
-       left: 5.8em;
+       left: 5.5em;
        z-index: 1;
        top: 4.1em;
        width: 51.9%;
@@ -720,7 +720,14 @@ footer {
         font-weight: normal;
         padding: 5px 0;
         width: 53%;
+    }
 }
+
+@media (max-width: 675px) {
+    #slider {
+        top: 9.7%;
+        width: 43%;
+    }
 }
 
 @media(min-width: 601px){

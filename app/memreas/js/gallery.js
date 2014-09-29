@@ -84,16 +84,20 @@ jQuery.fetch_server_media = function (){
     var verticalHeight = window.innerHeight;
     $(".user-resources").remove();
     // Khan Changes
-    if(verticalHeight <= 690){
-        $("#tab-content #tab1").append('<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/725" data-max-width="100%" data-height="50%" data-allow-full-screen="true"  data-nav="thumbs"></div>');
-    }
-    else if(verticalHeight >= 691 || verticalHeight  <= 750){
-        $("#tab-content #tab1").append('<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/725" data-max-width="100%" data-height="53%" data-allow-full-screen="true"  data-nav="thumbs"></div>');
-    }
-    else if(window.innerWidth > 1359 && verticalHeight > 800){
-        $("#tab-content #tab1").append('<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/725" data-max-width="100%" data-height="55%" data-allow-full-screen="true"  data-nav="thumbs"></div>');
+    if(!document.documentElement.classList.contains('noads')){
+        if(verticalHeight <= 690){
+            $("#tab-content #tab1").append('<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/725" data-max-width="100%" data-height="50%" data-allow-full-screen="true"  data-nav="thumbs"></div>');
+        }
+        else if(verticalHeight >= 691 || verticalHeight  <= 750){
+            $("#tab-content #tab1").append('<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/725" data-max-width="100%" data-height="53%" data-allow-full-screen="true"  data-nav="thumbs"></div>');
+        }
+        else if(window.innerWidth > 1359 && verticalHeight > 800){
+            $("#tab-content #tab1").append('<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/725" data-max-width="100%" data-height="55%" data-allow-full-screen="true"  data-nav="thumbs"></div>');
+        } else {
+            $("#tab-content #tab1").append('<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/725" data-max-width="100%" data-height="100%" data-allow-full-screen="true"  data-nav="thumbs"></div>');
+        }
     } else {
-        $("#tab-content #tab1").append('<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/725" data-max-width="100%" data-allow-full-screen="true"  data-nav="thumbs"></div>');
+        $("#tab-content #tab1").append('<div class="user-resources" data-fit="cover" data-click="false" data-swipe="true" data-ratio="800/725" data-width="100%" data-height="90%" data-allow-full-screen="true"  data-nav="thumbs"></div>');
     }
     $(".edit-area-scroll, .aviary-thumbs, .galleries-location").empty();
     $(".user-resources, .scrollClass .mCSB_container, .sync .mCSB_container").html('');
