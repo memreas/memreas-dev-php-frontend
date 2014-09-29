@@ -432,10 +432,10 @@ footer {
 }
 
     #slider{
-       left: 5.6em;
+       left: 5.8em;
        z-index: 1;
-       top: 3.8em;
-       width: 50%;
+       top: 4.1em;
+       width: 51.9%;
     }
     .rslides{
         width: 88%;
@@ -796,8 +796,9 @@ footer {
         display: block;
     }
     #slider {
-        left: 4.8em;
-        top: 3.2em;
+        left: 4.7em;
+        top: 3.4em;
+        width: 48%;
     }
     #slider img {
         width: 112% !important;
