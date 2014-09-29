@@ -632,6 +632,7 @@ footer {
         float: none;
         width: 100%;
         margin-top: 10px;
+        margin-bottom: 26px;
         background: #1c66bb; /* Old browsers */
         background: -moz-linear-gradient(top,  #1c66bb 0%, #1c66bb 2%, #1a64b9 2%, #1a64b9 8%, #1862b7 9%, #1761b6 11%, #1761b6 13%, #1a62b6 13%, #1860b4 22%, #165eb2 25%, #155ead 25%, #145cae 31%, #175aab 32%, #1659aa 36%, #1459a6 38%, #1358a6 43%, #1154a3 45%, #0e4e98 67%, #0c4c96 67%, #0b4b95 72%, #084890 75%, #09438c 88%, #074288 90%, #064187 97%, #043f85 97%, #043d84 100%); /* FF3.6+ */
         background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#1c66bb), color-stop(2%,#1c66bb), color-stop(2%,#1a64b9), color-stop(8%,#1a64b9), color-stop(9%,#1862b7), color-stop(11%,#1761b6), color-stop(13%,#1761b6), color-stop(13%,#1a62b6), color-stop(22%,#1860b4), color-stop(25%,#165eb2), color-stop(25%,#155ead), color-stop(31%,#145cae), color-stop(32%,#175aab), color-stop(36%,#1659aa), color-stop(38%,#1459a6), color-stop(43%,#1358a6), color-stop(45%,#1154a3), color-stop(67%,#0e4e98), color-stop(67%,#0c4c96), color-stop(72%,#0b4b95), color-stop(75%,#084890), color-stop(88%,#09438c), color-stop(90%,#074288), color-stop(97%,#064187), color-stop(97%,#043f85), color-stop(100%,#043d84)); /* Chrome,Safari4+ */
@@ -672,6 +673,9 @@ footer {
         height: 27px;
         padding: 5px;
         width: 19%;
+    }
+    .feature{
+        /*min-height: 386px;*/
     }
     #file {
         padding: 7px 0;
