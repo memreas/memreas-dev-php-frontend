@@ -102,7 +102,7 @@ $(function(){
     /* Change profile picture*/
 
     $(".change-profile-btn").click(function(){ $("#frm-profile-pic").find('input[type=file]').click(); });
-
+    var profile_filename = '';
     $("#frm-profile-pic").fileupload({
         url: $(this).attr('action'),
         dataType: 'xml',
@@ -111,6 +111,8 @@ $(function(){
         type: 'POST',
         autoUpload: true,
         add: function (event, data) {
+            profile_filename = data.files[0].name;
+            profile_filename = correctUploadFilename(profile_filename);
             if (!$("a[title=more]").hasClass('active')) return false;
             var form = $(this);
             //Get signed credentials
@@ -118,7 +120,7 @@ $(function(){
                 url: "/index/s3signed",
                 type: 'GET',
                 dataType: 'json',
-                data: {title: data.files[0].name}, // send the file name to the server so it can generate the key param
+                data: {title: profile_filename}, // send the file name to the server so it can generate the key param
                 async: false,
                 success: function(data) {
                     // Now that we have our data, we update the form so it contains all
@@ -130,8 +132,7 @@ $(function(){
             })
 
             var filetype = data.files[0].type;
-            var filename = data.files[0].name;
-            var key_value = '${filename}';
+            var key_value = profile_filename;
             $(this).find("input[name=Content-Type]").val(filetype);
 
             //Check if valid type is image or video are allowed
@@ -199,6 +200,43 @@ $(function(){
             ajaxRequest('addmediaevent', params, function(){
                 $("#setting-userprofile img, img#profile_picture").attr ('src', _media_url);
                 jsuccess('Your profile picture updated');
+                setTimeout(function(){
+                    var params = [{tag: 'user_id', value: $("input[name=user_id]").val()}];
+                    ajaxRequest('getuserdetails', params, function(xml_response){
+                        if (getValueFromXMLTag(xml_response, 'status') == 'Success'){
+                            var useremail = getValueFromXMLTag(xml_response, 'email');
+                            var username = getValueFromXMLTag(xml_response, 'username');
+                            $("input[name=username]").val(username);
+                            var userprofile = getValueFromXMLTag(xml_response, 'profile');
+                            userprofile = removeCdataCorrectLink(userprofile);
+                            var alternate_email = getValueFromXMLTag(xml_response, 'alternate_email');
+                            var gender = getValueFromXMLTag(xml_response, 'gender');
+                            var dob = getValueFromXMLTag(xml_response, 'dob');
+                            var username_length = username.length;
+                            if (username_length > 10){
+                                username = username.substring(0, 7) + '...';
+                            }
+                            $("header").find(".pro-name").html(username);
+                            $("#setting-username").html(getValueFromXMLTag(xml_response, 'username'));
+                            if (userprofile != ''){
+                                $("header").find("#profile_picture").attr('src', userprofile);
+                                $("#setting-userprofile img").attr('src', userprofile);
+                            }
+                            $("input[name=account_email]").val(useremail);
+                            $("input[name=account_alternate_email]").val(alternate_email);
+                            $("input[name=dob]").val(dob);
+
+                            if (gender == 'male')
+                                $("#gender-male").attr("checked", "checked");
+                            else{
+                                if (gender == 'female') $("#gender-female").attr("checked", "checked");
+                            }
+
+                            $("input[name=account_email]").val(useremail);
+                        }
+                        else jerror (getValueFromXMLTag(xml_response, 'messsage'));
+                    });
+                }, 2000);
             });
         },
         done: function (event, data) {

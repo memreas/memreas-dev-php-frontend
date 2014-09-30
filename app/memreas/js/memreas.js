@@ -167,6 +167,7 @@ function fetchMyMemreas(){
                                     if (getValueFromXMLTag(friend, 'photo') == '' || getValueFromXMLTag(friend, 'photo') == 'null')
                                         friend_photo = '/memreas/img/profile-pic.jpg';
                                     else friend_photo = getValueFromXMLTag(friend, 'photo');
+                                    friend_photo = removeCdataCorrectLink(friend_photo);
                                     var friend_name = getValueFromXMLTag(friend, 'friend_name');
                                     html_people += '<div class="event_gallery_pro"><img src="' + friend_photo + '" alt="' + friend_name + '" title="' + friend_name + '"></div>';
                                 }
