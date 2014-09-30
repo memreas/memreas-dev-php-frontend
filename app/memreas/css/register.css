@@ -432,9 +432,9 @@ footer {
 }
 
     #slider{
-       left: 5.5em;
+       left: 5.7em;
        z-index: 1;
-       top: 4.1em;
+       top: 4.4em;
        width: 51.9%;
     }
     .rslides{
@@ -522,12 +522,8 @@ footer {
         padding-bottom: 0; /* Khan Change MFE-452 */
     }
     #slider {
-        left: 5.3em;
-        top: 4.6em;
-        
-        /* Khan Change MFE-452 */
         left: 3.9em;
-        top: 2.4em;
+        top: 2.6em;
         width: 59%;
     }
     .rslides img {
@@ -586,9 +582,9 @@ footer {
         width: 50%;
     }
     #slider {
-        top: 2.7em;
+        top: 3.1em;
         left: 4.3em;
-        width: 46%;
+        width: 44%;
     }
     #slider img{
         width: 93% !important;
@@ -716,8 +712,8 @@ footer {
 
     #slider {
         left: 22.2%;
-        top: 10.7%;
-        width: 46%;
+        top: 12%;
+        width: 43.8%;
     }
     .create-accnt {
         font-size: 14px;
@@ -726,11 +722,23 @@ footer {
         width: 53%;
     }
 }
+@media (max-width: 725px) {
+    #slider {
+        top: 11%;
+        width: 43%;
+    }
+}
 
 @media (max-width: 675px) {
     #slider {
         top: 9.7%;
         width: 43%;
+    }
+}
+@media (max-width: 635px) {
+    #slider {
+        top: 8.7%;
+        width: 44.5%;
     }
 }
 
