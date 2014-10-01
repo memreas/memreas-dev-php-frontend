@@ -127,23 +127,31 @@ function loadAccountCard(){
 
 function accountRemoveCard(userConfirm){
 
-    if (!userConfirm){
-        jconfirm('Are you sure want to remove this card?', 'accountRemoveCard(true)');
-        return false;
-    }
-
-    //Fetch the card
-    var selectedCard = '';
-    for (var i in accountTab_cards){
-        if (accountTab_cards[i].selected == 1){
-            selectedCard = accountTab_cards[i].data.stripe_card_reference_id;
-            break;
+    if(!userConfirm){
+        //Fetch the card
+        var selectedCard = '';
+        for (var i in accountTab_cards){
+            if (accountTab_cards[i].selected == 1){
+                selectedCard = accountTab_cards[i].data.stripe_card_reference_id;
+                break;
+            }
         }
-    }
 
-    if (selectedCard == '')
-        jerror('Please select a card');
-    else{
+        
+
+
+        if (selectedCard == '')
+            jerror('Please select a card');
+        // else if (!userConfirm){
+        //     jconfirm('Are you sure want to remove this card?', 'accountRemoveCard(true)');
+        //     return false;
+        // }
+        else{
+            accountViewCard('delete');
+        }
+    }// check whether userConfirm is set or true
+
+    else{ // The card will be deleted now
         var stripeActionUrl =  $("input[name=stripe_url]").val() + '/stripe/deleteCards';
         var cardSelected = new Array();
         cardSelected.push(selectedCard);
@@ -164,6 +172,7 @@ function accountRemoveCard(userConfirm){
             success: function(response){
                 if (response.status = 'Success'){
 
+                    disablePopup('popupaccountviewcard_delete');
                     jsuccess(response.message);
                     $("#account-card-" + selectedCard).remove();
                     pushReloadItem('reload_subscription_cards');
@@ -261,6 +270,15 @@ function accountAddCard(){
 }
 
 function accountViewCard(){
+    var deleteBoolean = false;
+    for(var key in arguments){
+        if(arguments[key] === "delete"){
+            deleteBoolean = true;
+            // return false;
+        }
+    }// Check whether function is called from accountRemoveCard
+     // function
+
     //Reset form;
     var jViewCard = $(".accountEditCardForm");
     jViewCard.find('input[type=text]').each(function(){
@@ -276,7 +294,7 @@ function accountViewCard(){
         }
     }
 
-    if (selectedCard == '')
+    if (selectedCard == '' && !deleteBoolean)
         jerror('Please select a card');
     else{
         var stripeActionUrl = $("input[name=stripe_url]").val() + '/stripe/viewCard';
@@ -292,38 +310,73 @@ function accountViewCard(){
             '}';
 
         $('#loadingpopup').fadeIn(1000);
-        $.ajax({
-            type:'post',
-            url: stripeActionUrl,
-            dataType: 'jsonp',
-            data: 'json=' + data,
-            success: function(response){
-                if (response.status == 'Success'){
-                    var card_info = response.card;
-                    var first_name = card_info.name.split(' ')[0];
-                    var last_name = card_info.name.split(' ')[1];
-                    jViewCard.find("#card_id").val(card_info.id);
-                    jViewCard.find("#addcard_fname").val(first_name);
-                    jViewCard.find("#addcard_lname").val(last_name);
-                    jViewCard.find("#addcard_cctype").val(card_info.type).attr('readonly', true);
-                    jViewCard.find("#addcard_ccnum").val('***'+ card_info.last4).attr('readonly', true);
-                    jViewCard.find("#addcard_expmonth").val(card_info.exp_month).attr('readonly', true);
-                    jViewCard.find("#addcard_expyear").val(card_info.exp_year).attr('readonly', true);
-                    jViewCard.find("#addcard_ccv").val('***').attr('readonly', true);
-                    jViewCard.find("#addcard_address1").val(card_info.address_line1);
-                    jViewCard.find("#addcard_address2").val(card_info.address_line2);
-                    jViewCard.find("#addcard_city").val(card_info.address_city);
-                    jViewCard.find("#addcard_state").val(card_info.address_state);
-                    jViewCard.find("#addcard_zip").val(card_info.address_zip);
-                    $('#loadingpopup').fadeOut(500);
-                    popup('popupaccountviewcard');
+        if(deleteBoolean){
+            $.ajax({
+                type:'post',
+                url: stripeActionUrl,
+                dataType: 'jsonp',
+                data: 'json=' + data,
+                success: function(response){
+                    if (response.status == 'Success'){
+                        var card_info = response.card;
+                        var first_name = card_info.name.split(' ')[0];
+                        var last_name = card_info.name.split(' ')[1];
+                        jViewCard.find("#card_id").val(card_info.id).attr('readonly', true);
+                        jViewCard.find("#addcard_fname").val(first_name).attr('readonly', true);
+                        jViewCard.find("#addcard_lname").val(last_name).attr('readonly', true);
+                        jViewCard.find("#addcard_cctype").val(card_info.type).attr('readonly', true);
+                        jViewCard.find("#addcard_ccnum").val('***'+ card_info.last4).attr('readonly', true);
+                        jViewCard.find("#addcard_expmonth").val(card_info.exp_month).attr('readonly', true);
+                        jViewCard.find("#addcard_expyear").val(card_info.exp_year).attr('readonly', true);
+                        jViewCard.find("#addcard_ccv").val('***').attr('readonly', true);
+                        jViewCard.find("#addcard_address1").val(card_info.address_line1).attr('readonly', true);
+                        jViewCard.find("#addcard_address2").val(card_info.address_line2).attr('readonly', true);
+                        jViewCard.find("#addcard_city").val(card_info.address_city).attr('readonly', true);
+                        jViewCard.find("#addcard_state").val(card_info.address_state).attr('readonly', true);
+                        jViewCard.find("#addcard_zip").val(card_info.address_zip).attr('readonly', true);
+                        $('#loadingpopup').fadeOut(500);
+                        popup('popupaccountviewcard_delete');
+                    }
+                    else {
+                        $('#loadingpopup').fadeOut(500);
+                        jerror(response.message);
+                    }
                 }
-                else {
-                    $('#loadingpopup').fadeOut(500);
-                    jerror(response.message);
+            });  
+        } else {
+            $.ajax({
+                type:'post',
+                url: stripeActionUrl,
+                dataType: 'jsonp',
+                data: 'json=' + data,
+                success: function(response){
+                    if (response.status == 'Success'){
+                        var card_info = response.card;
+                        var first_name = card_info.name.split(' ')[0];
+                        var last_name = card_info.name.split(' ')[1];
+                        jViewCard.find("#card_id").val(card_info.id);
+                        jViewCard.find("#addcard_fname").val(first_name);
+                        jViewCard.find("#addcard_lname").val(last_name);
+                        jViewCard.find("#addcard_cctype").val(card_info.type).attr('readonly', true);
+                        jViewCard.find("#addcard_ccnum").val('***'+ card_info.last4).attr('readonly', true);
+                        jViewCard.find("#addcard_expmonth").val(card_info.exp_month).attr('readonly', true);
+                        jViewCard.find("#addcard_expyear").val(card_info.exp_year).attr('readonly', true);
+                        jViewCard.find("#addcard_ccv").val('***').attr('readonly', true);
+                        jViewCard.find("#addcard_address1").val(card_info.address_line1);
+                        jViewCard.find("#addcard_address2").val(card_info.address_line2);
+                        jViewCard.find("#addcard_city").val(card_info.address_city);
+                        jViewCard.find("#addcard_state").val(card_info.address_state);
+                        jViewCard.find("#addcard_zip").val(card_info.address_zip);
+                        $('#loadingpopup').fadeOut(500);
+                        popup('popupaccountviewcard');
+                    }
+                    else {
+                        $('#loadingpopup').fadeOut(500);
+                        jerror(response.message);
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 }
 
