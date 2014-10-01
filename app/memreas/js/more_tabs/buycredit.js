@@ -149,7 +149,13 @@ function buycredit_listCard(){
                         var row_card_obfuscated = cards[i].obfuscated_card_number;
                         buycredit_account_cards[i]= params;
                         var html_element = '<li>' +
-                        '<label class="label_text2"><input type="radio" id="buycredit-card-' + row_card_id + '" name="radio_cards" class="regular-radio" onchange="buycredit_cardChange(this.id);"';
+                        '<label class="label_text2"><input';
+
+                        //Set first card is default checked
+                        if (i == 0)
+                            html_element += ' checked="checked"';
+
+                        html_element += ' type="radio" id="buycredit-card-' + row_card_id + '" name="radio_cards" class="regular-radio" onchange="buycredit_cardChange(this.id);"';
                         //Set default card checked if available
                         if (default_card == row_card_id){
                             html_element += ' checked="checked"';

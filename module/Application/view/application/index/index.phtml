@@ -118,7 +118,7 @@
                                     <label for="username">username</label>
                                     <input name="username" type="text" id="inUserName" placeholder="Your Username" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'User Name')this.value = '';"/>
                                     <label for="password">password</label>
-                                    <div class="password"><input name="password" id="inPassword" type="password" placeholder="Password" onFocus="if(this.value == 'Password')this.value = '';" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" /><span class="password-level"></span></div>
+                                    <div class="password"><input maxlength="32" name="password" id="inPassword" type="password" placeholder="Password" onFocus="if(this.value == 'Password')this.value = '';" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" /><span class="password-level"></span></div>
                                     <label for="inVerifyPassword">verify password</label>
                                     <input name="verifypassword" id="inVerifyPassword" type="password" placeholder="Verify Password" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Verify Password')this.value = '';"/>
                                     <label for="invited_by" class="event-name">!event name</label>

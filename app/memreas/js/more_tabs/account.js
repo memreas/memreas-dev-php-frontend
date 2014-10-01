@@ -105,7 +105,13 @@ function loadAccountCard(){
                         var row_card_obfuscated = cards[i].obfuscated_card_number;
                         accountTab_cards[i]= params;
                         var html_element = '<li id="account-card-' + row_card_id + '">' +
-                            '<label class="label_text2"><input type="radio" id="account-card-' + row_card_id + '" name="radio_cards" class="regular-radio" onchange="accountCardChange(this.id);" />' +
+                            '<label class="label_text2"><input';
+
+                        //Set first card is default checked
+                        if (i == 0)
+                            html_element += ' checked="checked"';
+
+                        html_element += ' type="radio" id="account-card-' + row_card_id + '" name="radio_cards" class="regular-radio" onchange="accountCardChange(this.id);" />' +
                             '<label for="account-card-' + row_card_id + '"></label>' + row_card_type + ' | ' + row_card_obfuscated + '</label>' +
                             '</li>';
                         jMemberCard.append(html_element);

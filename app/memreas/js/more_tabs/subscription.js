@@ -371,7 +371,13 @@ function listStripeCard(){
                         var row_card_obfuscated = cards[i].obfuscated_card_number;
                         account_cards[i]= params;
                         var html_element = '<li>' +
-                            '<label class="label_text2"><input type="radio" id="subscription-card-' + row_card_id + '" name="radio_cards" class="regular-radio" onchange="cardChange(this.id);"';
+                            '<label class="label_text2"><input';
+
+                        //Set first card is default checked
+                        if (i == 0)
+                            html_element += ' checked="checked"';
+
+                        html_element += ' type="radio" id="subscription-card-' + row_card_id + '" name="radio_cards" class="regular-radio" onchange="cardChange(this.id);"';
                         //Set default card checked if available
                         if (default_card == row_card_id){
                             html_element += ' checked="checked"';
@@ -486,7 +492,7 @@ function removeCard(){
 
     //Fetch the card
     var selectedCard = '';
-    for (i in account_cards){
+    for (var i in account_cards){
         if (account_cards[i].selected == 1){
             selectedCard = account_cards[i].data.stripe_card_reference_id;
             break;
