@@ -152,8 +152,10 @@ function buycredit_listCard(){
                         '<label class="label_text2"><input';
 
                         //Set first card is default checked
-                        if (i == 0)
+                        if (i == 0){
                             html_element += ' checked="checked"';
+                            buycredit_cardChange('buycredit-card-' + row_card_id);
+                        }
 
                         html_element += ' type="radio" id="buycredit-card-' + row_card_id + '" name="radio_cards" class="regular-radio" onchange="buycredit_cardChange(this.id);"';
                         //Set default card checked if available

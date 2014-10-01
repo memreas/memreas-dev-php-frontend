@@ -108,8 +108,10 @@ function loadAccountCard(){
                             '<label class="label_text2"><input';
 
                         //Set first card is default checked
-                        if (i == 0)
+                        if (i == 0){
                             html_element += ' checked="checked"';
+                            accountCardChange("account-card-" + row_card_id);
+                        }
 
                         html_element += ' type="radio" id="account-card-' + row_card_id + '" name="radio_cards" class="regular-radio" onchange="accountCardChange(this.id);" />' +
                             '<label for="account-card-' + row_card_id + '"></label>' + row_card_type + ' | ' + row_card_obfuscated + '</label>' +
@@ -134,6 +136,7 @@ function loadAccountCard(){
 function accountRemoveCard(userConfirm){
 
     if(!userConfirm){
+
         //Fetch the card
         var selectedCard = '';
         for (var i in accountTab_cards){
@@ -142,9 +145,6 @@ function accountRemoveCard(userConfirm){
                 break;
             }
         }
-
-        
-
 
         if (selectedCard == '')
             jerror('Please select a card');
@@ -159,6 +159,15 @@ function accountRemoveCard(userConfirm){
 
     else{ // The card will be deleted now
         var stripeActionUrl =  $("input[name=stripe_url]").val() + '/stripe/deleteCards';
+
+        //Fetch the card
+        var selectedCard = '';
+        for (var i in accountTab_cards){
+            if (accountTab_cards[i].selected == 1){
+                selectedCard = accountTab_cards[i].data.stripe_card_reference_id;
+                break;
+            }
+        }
         var cardSelected = new Array();
         cardSelected.push(selectedCard);
 
@@ -183,6 +192,8 @@ function accountRemoveCard(userConfirm){
                     $("#account-card-" + selectedCard).remove();
                     pushReloadItem('reload_subscription_cards');
                     pushReloadItem('reload_buy_credit_cards');
+                    $(".account-payment").addClass("preload-null");
+                    loadAccountCard();
                 }
                 else {
                     jerror(response.message);

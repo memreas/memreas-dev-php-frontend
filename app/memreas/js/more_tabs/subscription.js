@@ -374,8 +374,10 @@ function listStripeCard(){
                             '<label class="label_text2"><input';
 
                         //Set first card is default checked
-                        if (i == 0)
+                        if (i == 0){
                             html_element += ' checked="checked"';
+                            cardChange('subscription-card-' + row_card_id);
+                        }
 
                         html_element += ' type="radio" id="subscription-card-' + row_card_id + '" name="radio_cards" class="regular-radio" onchange="cardChange(this.id);"';
                         //Set default card checked if available
