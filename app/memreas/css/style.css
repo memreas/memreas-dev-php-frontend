@@ -89,6 +89,17 @@ input, textarea {
 	/*display: inline-block; Khan Changes*/
 	/* I don't why display property is set on clearfix class */
 }
+
+.group:before,
+.group:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.group:after {
+    clear: both;
+}
+
 html[xmlns] .clearfix {
 	display: block;
 }
@@ -3020,7 +3031,7 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
     padding: 4px 6px;
     vertical-align: middle;
 }
-select{ height: 30px; }
+select{ width: 184px; height: 30px; }
 .dropdown-menu {
     width: 25%;
 }

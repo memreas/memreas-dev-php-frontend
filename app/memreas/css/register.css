@@ -1181,10 +1181,10 @@ label.event-name{
     color: #FFF;
     vertical-align: middle;
     cursor: pointer;
-    margin-left: 80px;
+    /*margin-left: 80px;*/
     min-width: 140px;
     border: 1px solid #A3A3A3;
-    width: 240px;
+    /*width: 240px;*/
     padding-top: 4px;
     text-align: center;
     background: #7A7A7A;

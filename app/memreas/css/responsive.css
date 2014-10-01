@@ -68,7 +68,7 @@
         width: 257px !important;
     }
     select {
-        width: 100%!important
+        /*width: 100%!important*/
     }
     .styled-select {
     width: 42% !important;
