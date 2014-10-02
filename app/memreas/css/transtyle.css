@@ -308,6 +308,8 @@ input[name="account_alternate_email"], .account-gender,
 input[name="account_dob"],
 input[name="account_password"],
 input[name="account_repassword"]{ width: 42%; margin-right: 10px; float: left; }
+.change-password input[type="password"]{float: none;}
+.change-password label{width: 130px;display: inline-block;}
 .account-gender{ margin-right: 23px; }
 /* Aviary page */
 #avpw_save_button, #avpw_apply_container{

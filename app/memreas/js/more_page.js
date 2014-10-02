@@ -275,20 +275,6 @@ function fillUserDetail(currentUserId){
 
 /*Function Save user detail*/
 function saveUserDetail(){
-    var account_password = $("input[name=account_password]").val();
-
-    if (account_password != 'password' && account_password != ''){
-        var retype_account_password = $("input[name=account_repassword]").val();
-        if (account_password != retype_account_password){
-            jerror('password is not matched');
-            return false;
-        }
-    }
-    else {
-        if (account_password == 'password')
-            account_password = '';
-    }
-
     if ($("input[name=account_alternate_email]").val() == '' || $("input[name=account_alternate_email]").val() == 'alternate email'){
         jerror('Please sepecify alternate email');
         return false;
@@ -307,10 +293,39 @@ function saveUserDetail(){
     var params = [
         {tag: 'user_id', value: userId},
         {tag: 'email', value: $("input[name=account_alternate_email]").val()},
-        {tag: 'password', value: account_password},
         {tag: 'gender', value: account_gender},
         {tag: 'dob', value: account_dob},
         {tag: 'profile_picture', value: ''}
+    ];
+    ajaxRequest('saveuserdetails', params, function(xml_response){
+        if (getValueFromXMLTag(xml_response, 'status') == "Success"){
+            jsuccess(getValueFromXMLTag(xml_response, 'message'));
+            fillUserDetail($("input[name=user_id]").val());
+        }
+        else jerror(getValueFromXMLTag(xml_response, 'message'));
+    });
+}
+
+/*Function Save user detail*/
+function saveChangePassword(){
+    var account_password = $("input[name=account_password]").val();
+
+    if (account_password != 'password' && account_password != ''){
+        var retype_account_password = $("input[name=account_repassword]").val();
+        if (account_password != retype_account_password){
+            jerror('password is not matched');
+            return false;
+        }
+    }
+    else {
+        if (account_password == 'password')
+            account_password = '';
+    }
+
+    var userId = $("input[name=user_id]").val();
+    var params = [
+        {tag: 'user_id', value: userId},
+        {tag: 'password', value: account_password},
     ];
     ajaxRequest('saveuserdetails', params, function(xml_response){
         if (getValueFromXMLTag(xml_response, 'status') == "Success"){
