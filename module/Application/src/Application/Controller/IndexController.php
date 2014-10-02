@@ -524,9 +524,13 @@ error_log("userid---->".$userid.PHP_EOL);
                             "success_action_status": "201"
                         },
                         ["starts-with", "$Content-Type", ""],
-                        ["content-length-range", 0, 4004857600]
+                        ["content-length-range", 0, 5000000000]
                     ]
-                }'; //4GB file supported
+                }'; 
+        			/*
+        			 * Changed support 5GB
+        			 */
+        			//4GB file supported
         return base64_encode($policy);
     }
 

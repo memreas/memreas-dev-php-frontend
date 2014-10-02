@@ -29,6 +29,7 @@ $(document).ready( function() {
             multiple: true,
             type: 'POST',
             autoUpload: true,
+            maxFileSize: 5000000,
             add: function (event, data){
                 filename = data.files[0].name;
                 filename = correctUploadFilename(filename);
