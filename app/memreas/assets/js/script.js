@@ -201,10 +201,18 @@ $(document).ready( function() {
                 var s3_path_split = s3_filename.split(filename);
                 var s3_path = s3_path_split[0];
                 /*
-                 * 6-SEP-2014 - need to get these into one single constants file 
+                 * 6-SEP-2014 - need to get these into one single constants file
+                 * 2-OCT-2014 - udpated to allow for constants file for environments 
                  */
-                var S3BUCKET = "memreasdevsec";
-                var S3URL = "https://" + S3BUCKET + ".s3.amazonaws.com/";
+                var S3URL = "";
+                $.getScript('/memreas/js/constants.js', function()
+                		{
+                		    // script is now loaded and executed.
+                		    // put your dependent JS here.
+                			alert (S3BUCKET);
+                    		//S3BUCKET = "memreasprdsec";
+                    		S3URL = "https://" + S3BUCKET + ".s3.amazonaws.com/";
+                		});
                 var server_url = _media_url.replace(S3URL, '');
 //alert("server url -->" + server_url);                
                  
