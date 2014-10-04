@@ -13,7 +13,7 @@ class MemreasConstants {
 	const MEMREAS_ADS = false;
     const S3_APPKEY = 'AKIAJMXGGG4BNFS42LZA';
     const S3_APPSEC = 'xQfYNvfT0Ar+Wm/Gc4m6aacPwdT5Ors9YHE/d38H';
-	const S3BUCKET = "memreasprdsec";
+	const S3BUCKET = "memreasdevsec";
 	
     //Enable / Disable payment tabs at more page
     const PAYMENT_TAB_SUBSCRIPTION = true;
