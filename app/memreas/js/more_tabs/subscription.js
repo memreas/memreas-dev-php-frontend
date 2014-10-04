@@ -6,6 +6,7 @@ var account_stripe = new Object();
 var plans_payment = new Object();
 var account_cards = new Object();
 var check_user_subscription = 0;
+var default_plan = 'PLAN_A_2GB_MONTHLY';
 $(function(){
 
     //Step 1
@@ -29,11 +30,18 @@ $(function(){
 function planChange(choose_plan_id){
     var real_plan_id = choose_plan_id.replace('plan-', '');
     resetPlanChoose();
-    for (i in plans_payment){
+    for (var i in plans_payment){
         if (real_plan_id == plans_payment[i].plan_id){
             plans_payment[i].selected = 1;
         }
     }
+    if (real_plan_id == default_plan){
+        if (!$(".step1-next").hasClass('button-disabled'))
+            $(".step1-next").addClass("button-disabled");
+        $(".step1-next").removeAttr("href").removeAttr("onclick");
+    }
+    else $(".step1-next").removeClass("button-disabled").attr("href", 'javascript:;').attr("activeAkordeon('subscription-payment-method-tab', subscription_step2);");
+
 }
 function resetPlanChoose(){
     for (var i in plans_payment){
@@ -49,6 +57,7 @@ function cardChange(choose_card_id){
             account_cards[i].selected = 1;
         }
     }
+
 }
 function resetCardChoose(){
     for (var i in account_cards){
@@ -274,11 +283,11 @@ function subscription_step4(){
                                     }
                                     check_user_subscription = 1;
                                 }
-                                else jAccountPlans.html('You have no any actived plan');
+                                else setUserDefaultPlan();
                             }
                             else jAccountPlans.html('Your account has not existed or deleted before on Stripe');
                         }
-                        else jAccountPlans.html('You have no any actived plan');
+                        else setUserDefaultPlan();
                         $('#loadingpopup').hide();
                     }
                 });
@@ -352,11 +361,11 @@ function getPlans(){
                                     }
                                     check_user_subscription = 1;
                                 }
-                                else jAccountPlans.html('You have no any actived plan');
+                                else setUserDefaultPlan();
                             }
                             else jAccountPlans.html('Your account has not existed or deleted before on Stripe');
                         }
-                        else jAccountPlans.html('You have no any actived plan');
+                        else setUserDefaultPlan();
                         updateAkordeonContent($('.subscription-payment-plans-tab'));
                         $('#loadingpopup').hide();
                     }
@@ -369,6 +378,13 @@ function getPlans(){
         }
     });
 }
+
+function setUserDefaultPlan(){
+    var jAccountPlans = $(".list-plans");
+    jAccountPlans.empty();
+    jAccountPlans.html('free 2gb monthly');
+}
+
 function listStripeCard(){
 
     var jMemberCard = $(".subscription-payment");
