@@ -302,7 +302,7 @@ function getPlans(){
                     success: function(response){
                         if (response.status == 'Success'){
                             account_stripe = response.customer;
-                            if (account_stripe.exist == 1){
+                            if (account_stripe != null && account_stripe.exist == 1){
                                 var total_subscriptions = account_stripe.info.subscriptions.total_count;
                                 if (total_subscriptions > 0){
                                     var active_subscriptions = account_stripe.info.subscriptions.data;
@@ -359,7 +359,7 @@ function listStripeCard(){
                 if (number_of_cards > 0){
 
                     var default_card = '';
-                    if (account_stripe.exist == 1){
+                    if (account_stripe != null && account_stripe.exist == 1){
                         default_card = account_stripe.info.default_card;
                     }
 
