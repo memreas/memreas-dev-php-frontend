@@ -308,6 +308,7 @@ function saveUserDetail(){
 
 /*Function Save user detail*/
 function saveChangePassword(){
+    var account_old_password = $("input[name=account_password]").val();
     var account_password = $("input[name=account_password]").val();
 
     if (account_password != 'password' && account_password != ''){
@@ -325,7 +326,9 @@ function saveChangePassword(){
     var userId = $("input[name=user_id]").val();
     var params = [
         {tag: 'user_id', value: userId},
-        {tag: 'password', value: account_password},
+        {tag: 'old', value: account_old_password},
+        {tag: 'new', value: account_password},
+        {tag: 'retype', value: retype_account_password}
     ];
     ajaxRequest('saveuserdetails', params, function(xml_response){
         if (getValueFromXMLTag(xml_response, 'status') == "Success"){

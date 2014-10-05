@@ -93,7 +93,7 @@ function buycreditAddCard(){
                     pushReloadItem('reload_subscription_cards');
                 }
                 else jerror(response.message);
-                $('#loadingpopup').hide();
+                $('.stripe-payment').fadeOut(500);
             },
             error:function(){
                 jerror('Card adding failure. Please check card\'s information.');
@@ -279,7 +279,11 @@ function fill_account_detail(){
     }
     $('#loadingpopup').show();
     jBuyerName.html(orderCard.first_name + ' ' + orderCard.last_name);
-    jBuyerBalance.html('$' + account_user.balance);
+
+    if (account_user.balance == '' || typeof (account_user.balance) == 'undefined')
+        var balance = 0
+    else var balance= account_user.balance;
+    jBuyerBalance.html('$' + balance);
     $('#loadingpopup').hide();
 }
 

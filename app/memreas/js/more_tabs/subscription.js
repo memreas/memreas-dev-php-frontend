@@ -6,6 +6,7 @@ var account_stripe = new Object();
 var plans_payment = new Object();
 var account_cards = new Object();
 var check_user_subscription = 0;
+var default_plan = 'PLAN_A_2GB_MONTHLY';
 $(function(){
 
     //Step 1
@@ -29,11 +30,18 @@ $(function(){
 function planChange(choose_plan_id){
     var real_plan_id = choose_plan_id.replace('plan-', '');
     resetPlanChoose();
-    for (i in plans_payment){
+    for (var i in plans_payment){
         if (real_plan_id == plans_payment[i].plan_id){
             plans_payment[i].selected = 1;
         }
     }
+    if (real_plan_id == default_plan){
+        if (!$(".step1-next").hasClass('button-disabled'))
+            $(".step1-next").addClass("button-disabled");
+        $(".step1-next").removeAttr("href").removeAttr("onclick");
+    }
+    else $(".step1-next").removeClass("button-disabled").attr("href", 'javascript:;').attr("activeAkordeon('subscription-payment-method-tab', subscription_step2);");
+
 }
 function resetPlanChoose(){
     for (var i in plans_payment){
@@ -49,6 +57,7 @@ function cardChange(choose_card_id){
             account_cards[i].selected = 1;
         }
     }
+
 }
 function resetCardChoose(){
     for (var i in account_cards){
@@ -243,6 +252,45 @@ function subscription_step4(){
 
                 updateAkordeonContent($('.subscription-order-receipt-tab'));
                 check_user_subscription = 1;
+
+                //Reload user subscription
+                var jAccountPlans = $(".list-plans");
+                jAccountPlans.empty();
+                var obj = new Object();
+                obj.userid = $("input[name=user_id]").val();
+                var data_obj = JSON.stringify(obj, null, '\t');
+                var data = '{"action": "getCustomerInfo", ' +
+                    '"type":"jsonp", ' +
+                    '"json": ' + data_obj  +
+                    '}';
+                var stripeCustomerUrl = $("input[name=stripe_url]").val() + '/stripe/getCustomerInfo';
+                $.ajax({
+                    url: stripeCustomerUrl,
+                    type: 'POST',
+                    dataType: 'jsonp',
+                    data: 'json=' + data,
+                    success: function(response){
+                        if (response.status == 'Success'){
+                            account_stripe = response.customer;
+                            if (account_stripe != null && account_stripe.exist == 1){
+                                var total_subscriptions = account_stripe.info.subscriptions.total_count;
+                                if (total_subscriptions > 0){
+                                    var active_subscriptions = account_stripe.info.subscriptions.data;
+                                    for (i = 0;i < total_subscriptions;i++){
+                                        var plan = active_subscriptions[i].plan;
+                                        var html_element = '<p>'  + plan.name + '</p>';
+                                        jAccountPlans.append(html_element);
+                                    }
+                                    check_user_subscription = 1;
+                                }
+                                else setUserDefaultPlan();
+                            }
+                            else jAccountPlans.html('Your account has not existed or deleted before on Stripe');
+                        }
+                        else setUserDefaultPlan();
+                        $('#loadingpopup').hide();
+                    }
+                });
             }
             else{
                 jerror(response.message);
@@ -302,7 +350,7 @@ function getPlans(){
                     success: function(response){
                         if (response.status == 'Success'){
                             account_stripe = response.customer;
-                            if (account_stripe.exist == 1){
+                            if (account_stripe != null && account_stripe.exist == 1){
                                 var total_subscriptions = account_stripe.info.subscriptions.total_count;
                                 if (total_subscriptions > 0){
                                     var active_subscriptions = account_stripe.info.subscriptions.data;
@@ -313,11 +361,11 @@ function getPlans(){
                                     }
                                     check_user_subscription = 1;
                                 }
-                                else jAccountPlans.html('You have no any actived plan');
+                                else setUserDefaultPlan();
                             }
                             else jAccountPlans.html('Your account has not existed or deleted before on Stripe');
                         }
-                        else jAccountPlans.html('You have no any actived plan');
+                        else setUserDefaultPlan();
                         updateAkordeonContent($('.subscription-payment-plans-tab'));
                         $('#loadingpopup').hide();
                     }
@@ -330,6 +378,13 @@ function getPlans(){
         }
     });
 }
+
+function setUserDefaultPlan(){
+    var jAccountPlans = $(".list-plans");
+    jAccountPlans.empty();
+    jAccountPlans.html('free 2gb monthly');
+}
+
 function listStripeCard(){
 
     var jMemberCard = $(".subscription-payment");
@@ -359,7 +414,7 @@ function listStripeCard(){
                 if (number_of_cards > 0){
 
                     var default_card = '';
-                    if (account_stripe.exist == 1){
+                    if (account_stripe != null && account_stripe.exist == 1){
                         default_card = account_stripe.info.default_card;
                     }
 
@@ -547,7 +602,7 @@ function confirmOrder(checkSubscription){
     }
 
     if (checkSubscription && check_user_subscription){
-        jconfirm("You have an active plan, are you sure want to upgrade?", "confirmOrder(false)");
+        jconfirm("You have an activated plan, are you sure want to upgrade/downgrade? <br/>(Downgrade will not be charged.)", "confirmOrder(false)");
         return false;
     }
 

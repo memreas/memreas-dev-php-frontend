@@ -5,7 +5,7 @@
 // ///////////////////////////////
 namespace Application\Model;
 
-class MemreasConstants {
+class MemreasEnvConstants {
 	
 	const MEMREAS_FE = "https://fe2.memreas.com";
 	const MEMREAS_WS = "https://memreasdev-wsg.memreas.com";

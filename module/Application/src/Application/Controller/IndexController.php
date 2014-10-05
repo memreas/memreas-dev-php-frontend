@@ -51,6 +51,7 @@ class IndexController extends AbstractActionController
 //error_log("Inside fetch XML request url ---> " . $this->url . PHP_EOL);
 //error_log("Inside fetch XML request action ---> " . $action . PHP_EOL);
 //error_log("Inside fetch XML request XML ---> " . $xml . PHP_EOL);
+
         $request = $guzzle->post(
 		    $this->url,
 		    null,
@@ -193,10 +194,6 @@ error_log("callback_json----->".$callback_json.PHP_EOL);
         $data['accesskey'] = MemreasConstants::S3_APPKEY;
         $data['secret'] = MemreasConstants::S3_APPSEC;
 
-        /*$s3Authenticate = json_decode($this->getS3Key());
-        $data['accessKey'] = $s3Authenticate['AccessKeyId'];
-        $data['secret'] = $s3Authenticate['SecretAccessKey'];*/
-
         $policy = $this->getS3Policy();
         $hmac = $this->hmacsha1($data['secret'], $policy);
         $json_object = array(
@@ -213,8 +210,6 @@ error_log("callback_json----->".$callback_json.PHP_EOL);
     * @ Tran Tuan
     */
     public function memreasAction(){
-        $action = 'getsession';
-        $xml = '<xml><getsession><sid>1</sid></getsession></xml>';
         //Configure Ads on page
         $enableAdvertising = MemreasConstants::MEMREAS_ADS;
         $payment_tabs = array(
@@ -224,14 +219,12 @@ error_log("callback_json----->".$callback_json.PHP_EOL);
         );
 
         //Guzzle the LoginWeb Service
-        $user = simplexml_load_string($this->fetchXML($action, $xml));
         $session = new Container('user');
         $user_id = $session->user_id;
 
         //if (!$user) return $this->redirect()->toRoute('index', array('action' => "index"));
         $data['userid'] = $user_id;
         $data['sid'] = $session->sid;
-
 
         $data['bucket'] = MemreasConstants::S3BUCKET;
         $data['accesskey'] = MemreasConstants::S3_APPKEY;
@@ -259,15 +252,7 @@ error_log("callback_json----->".$callback_json.PHP_EOL);
         $server_url = $this->getRequest()->getServer('HTTP_HOST');
         $callback_url = (strpos ($server_url, 'localhost')) ? 'http://memreas-dev-php-frontend.localhost/index/twitter' : MemreasConstants::MEMREAS_FE."/index/twitter";
         $config = new \Application\OAuth\Config();
-        /*
-        *OLD API
-        * APP ID: 1bqpAfSWfZFuEeY3rbsKrw
-        * SECRET: wM0gGBCzZKl5dLRB8TQydRDfTD5ocf2hGRKSQwag
-        *
-        * NEW API For Online App
-        *  APP ID : vKv8HUdQ4OP2mClSuOqtjA
-        *  SECRET : 0pc7NHkFsCVYn86xLLZAhzU87yY184vhMZFnjKwzwXo
-        */
+
         if (strpos ($server_url, 'localhost')){
             //Localhost development
             $appKey = '1bqpAfSWfZFuEeY3rbsKrw';
@@ -376,42 +361,6 @@ error_log("userid---->".$userid.PHP_EOL);
             $session->offsetSet('sid',  $postData ['sid']);
             return $this->redirect()->toRoute('index', array('action' => 'memreas'));
         }
-        /* OLD
-        $this->getAuthService()->getAdapter()->setUsername($username);
-        $this->getAuthService()->getAdapter()->setPassword($password);
-        $token = empty($this->session->token)?'':$this->session->token;
-        $this->getAuthService()->getAdapter()->setToken($token);
-        $result = $this->getAuthService()->authenticate();
- 		//Setup the URL and action
-		$action = 'login';
-		$xml = "<xml><login><username>$username</username><password>$password</password></login></xml>";
-
-
-		//Guzzle the LoginWeb Service
-		$result = $this->fetchXML($action, $xml);
-
-		$data = simplexml_load_string($result);
-        if ($data->loginresponse->status == 'success'){
-            $this->setSession($username);
-            return $this->redirect()->toRoute('index', array('action' => $redirect));
-        }
-        else return $this->redirect()->toRoute('index', array('action' => "index"));
-        //setcookie(session_name(),$data->loginresponse->sid,0,'/');
-
- 		//ZF2 Authenticate
-         $redirect = 'memreas';
-		if ($result->getIdentity()) {
-            error_log("Inside loginresponse success...");
-            //	$this->setSession($username);
-            //Redirect here
-            error_log("Inside loginresponse success redirect ---> " . $redirect);
-            $this->setSession($username);
-			return $this->redirect()->toRoute('index', array('action' => $redirect));
-		} else {
-            error_log("Inside loginresponse else...");
-			return $this->redirect()->toRoute('index', array('action' => "index"));
-		}
-        */
     }
 
     public function logoutAction() {
@@ -428,10 +377,6 @@ error_log("userid---->".$userid.PHP_EOL);
         error_log("Inside setSession ...");
    	    $user = $this->getUserTable()->findOneBy(array('username' => $username));
 
-        //$user->password='';
-       	//$user->disable_account='';
-   	    //$user->create_date='';
-        //$user->update_time='';
 		$session = new Container('user');
         error_log("Inside setSession got new Container...");
 		$session->offsetSet('user_id', $user->user_id);
@@ -463,7 +408,6 @@ error_log("userid---->".$userid.PHP_EOL);
 	 	//Setup the URL and action
 		$action = 'forgotpassword';
 		$xml = "<xml><changepassword><new>$new</new><retype>$retype</retype><token>$token</token></changepassword></xml>";
-		//$redirect = 'gallery';
 
 		//Guzzle the LoginWeb Service
 		$result = $this->fetchXML($action, $xml);
@@ -524,9 +468,13 @@ error_log("userid---->".$userid.PHP_EOL);
                             "success_action_status": "201"
                         },
                         ["starts-with", "$Content-Type", ""],
-                        ["content-length-range", 0, 4004857600]
+                        ["content-length-range", 0, 5000000000]
                     ]
-                }'; //4GB file supported
+                }'; 
+        			/*
+        			 * Changed support 5GB
+        			 */
+        			//4GB file supported
         return base64_encode($policy);
     }
 
@@ -588,13 +536,11 @@ error_log("userid---->".$userid.PHP_EOL);
         file_put_contents($target_dir . $remote_filename, $file_content);
 
         $server_source_file = $target_dir . $remote_filename;
-
-        //$target_file = $_POST['user_id'] . '/image/' . $source_filename;
         $target_file = $_POST['user_id'] . '/image/' . $remote_filename;
 
         $s3Object->putBucket(MemreasConstants::S3BUCKET, $s3Object::ACL_PUBLIC_READ_WRITE);
 
-        $result = $s3Object->putObjectFile($server_source_file, MemreasConstants::S3BUCKET, $target_file, $s3Object::ACL_PUBLIC_READ_WRITE, array(), 'image/jpeg');
+        $s3Object->putObjectFile($server_source_file, MemreasConstants::S3BUCKET, $target_file, $s3Object::ACL_PUBLIC_READ_WRITE, array(), 'image/jpeg');
 
         //Add this edited media as a new media
         $action = 'addmediaevent';
