@@ -358,7 +358,6 @@ function getUserNotificationsHeader(){
             		{
             		    // script is now loaded and executed.
             		    // put your dependent JS here.
-            			alert ( LISTNOTIFICATIONSPOLLTIME );
                 		poll_delay = LISTNOTIFICATIONSPOLLTIME;
             		});
 
