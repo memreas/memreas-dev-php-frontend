@@ -195,7 +195,7 @@ jQuery.fetch_server_media = function (){
                       //Fetch user's notification header
                       getUserDetail();
                       getUserNotificationsHeader();
-                  }, 1000);
+                  }, 10000);
                   $(".swipebox").swipebox();
 
                   //Show edit and delete tabs
@@ -361,8 +361,9 @@ function getUserNotificationsHeader(){
                 		poll_delay = LISTNOTIFICATIONSPOLLTIME;
             		});
 
-            setTimeout(function(){ getUserNotificationsHeader() }, poll_delay); //see constants.js
-            //setTimeout(function(){ getUserNotificationsHeader() }, 15000); //15s
+            //setTimeout(function(){ getUserNotificationsHeader() }, poll_delay); //see constants.js
+            setTimeout(function(){ getUserNotificationsHeader() }, 15000); //15s
+            //setTimeout(function(){ getUserNotificationsHeader() }, 120000); //2mins
         }, 'undefined', true
     );
 }
