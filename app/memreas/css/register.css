@@ -198,6 +198,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4e8dd4', end
     top: -15px;
     z-index: 999;
 }
+.film img{
+    width: 100%;
+}
 .filmstrip{
     width: 34.5%; /* Khan Changes MFE-458*/
 }
@@ -446,6 +449,14 @@ footer {
 /****Responsive Styles****/
 /****=MQH ****/
 /*Khan Changes */
+@media (min-height:661px){
+    .filmstrip .film img{
+        width: 308px;
+    }
+    #slider {
+        width: 49%;
+    }
+}
 @media (max-height:660px){
     .filmstrip{
         width: 32.5%;

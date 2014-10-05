@@ -307,6 +307,7 @@ input[name="account_email"],
 input[name="account_alternate_email"], .account-gender,
 input[name="account_dob"],
 input[name="account_password"],
+input[name="accout_expassword"],
 input[name="account_repassword"]{ width: 42%; margin-right: 10px; float: left; }
 .change-password input[type="password"]{float: none;}
 .change-password label{width: 130px;display: inline-block;}
@@ -333,6 +334,22 @@ input[name="account_repassword"]{ width: 42%; margin-right: 10px; float: left; }
     box-shadow: none;
     -moz-box-shadow:none;
 }
+.gallery-edit{
+    position: relative;
+}
+.aviary-edit-tools{
+    z-index: 10000;
+    display: block;
+    position: absolute;
+    bottom: -10px;
+    left: 130px;
+    width: 130px;
+}
+.avpw_mode_action_right{
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+}
+/*
 #avpw_controls{
     z-index: initial !important;
     overflow: initial !important;
@@ -344,35 +361,36 @@ input[name="account_repassword"]{ width: 42%; margin-right: 10px; float: left; }
     height: 300px;
     left: 19% !important;
 }
+*/
 #avpw_footer, .avpw_close_button, #avpw_tool_content_header{ display: none !important; }
 .avpw_mode_action_right {
-    left: 0px !important;
+    /*left: 0px !important;*/
 }
 
-.avpw_prev { /* This sets left arrow when effects are not selected */
-    left: 120px !important;
-}
-a#avpw_filter_lftArrow { /* This sets left arrow when effects are selected */
-    left: 0px !important;
-}
-.avpw_tool_pager .avpw_clip {
+/*.avpw_prev { *//* This sets left arrow when effects are not selected */
+    /*left: 120px !important;*/
+/*}*/
+/*a#avpw_filter_lftArrow {  This sets left arrow when effects are selected */
+    /*left: 0px !important;*/
+/*}*/
+/*.avpw_tool_pager .avpw_clip {
     left: 168px !important;
     right: 47px !important;
 }
-
+*/
 /* Right Chevron Button */
-#avpw_rghtArrow {
+/*#avpw_rghtArrow {
     right: -1px !important;
-}
+}*/
 
 /* The Cancel Button */
 .avpw_mode_action_left {
-    right: 0 !important;
-    left: 85% !important;
+    /*right: 0 !important;
+    left: 85% !important;*/
 }
 
 #avpw_zoom_container{
-    /*top: 265px !important;*/
+    top: 80% !important;
 }
 
 /*
