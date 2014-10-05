@@ -186,10 +186,12 @@ var h = function(item) {
     switch (item.charAt(0)) {
         case '@':
             var photo = map[item].profile_photo;
+            photo = removeCdataCorrectLink(photo);
             var name = map[item].username;
             break;
         case '!':
             var photo = map[item].event_photo;
+            photo = removeCdataCorrectLink(photo);
             var name = map[item].name;
             break;
         case '#':
@@ -233,6 +235,7 @@ function personalSearchLi(target, item) {
 }
 function eventSearchLi(target, item) {
     var event_img = item.event_photo;
+    event_img = removeCdataCorrectLink(event_img);
     var name = $.trim(item.name);
 
     var op = '<li>'
@@ -243,7 +246,8 @@ function eventSearchLi(target, item) {
             + ' <div class="event_members">';
     if (item.friends.length > 0) {
         $.each(item.friends, function(i, friend) {
-            op += '<div class="event_gallery_pro"><img src="' + friend.profile_photo + '" title="' + friend.username + '"></div>'
+            var friend_photo = removeCdataCorrectLink(friend.profile_photo);
+            op += '<div class="event_gallery_pro"><img src="' + friend_photo + '" title="' + friend.username + '"></div>'
         });
     }
 
