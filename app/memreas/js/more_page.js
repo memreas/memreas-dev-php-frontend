@@ -80,6 +80,11 @@ $(function(){
         buycredit_listCard();
     });
 
+    //Sell mediatab
+    $("a.sell-media-tab").one("click", function(){
+        $('#buttons9-moretab').akordeon();
+    });
+
     /*Action tabs click*/
     var accountTabAkordenon = false;
     $("a[title=tab1-more]").click(function(){

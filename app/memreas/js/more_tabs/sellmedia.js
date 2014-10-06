@@ -2,19 +2,35 @@
 * Sell media handle
 * */
 
-function register_sell_media(){
-    var jSellMediaForm = $(".sell_media_form");
-    var jSellMediaMessage = $(".add-seller-message");
-    jSellMediaMessage.empty().hide();
+function sellMediaStep2(){
+    if (checkSellerBasicInformation('sell_media_form', false))
+        activeAkordeon("sell-media-payout-tab");
+}
+
+function checkSellerBasicInformation(element, focus_element){
     var formPass = true;
+    var jSellMediaForm = $("." + element);
     jSellMediaForm.find("input[type=text]").not("#sell-media-address2").each(function(){
         if ($(this).val() == '' || $(this).val() == $(this).attr('default')){
             jerror("Please complete all required fields.");
-            $(this).focus();
+            if (focus_element) $(this).focus();
             formPass = false;
-            return false;
+            return formPass;
         }
     });
+    return formPass;
+}
+
+function register_sell_media(){
+    var jSellMediaMessage = $(".add-seller-message");
+    jSellMediaMessage.empty().hide();
+
+    //Recheck previous tab
+    if (!checkSellerBasicInformation("sell_media_form", false))
+        return false;
+
+    var formPass = true;
+    formPass = checkSellerBasicInformation("sell_media_bank", true);
 
     if (formPass){
         var address_line_2 = ($("#sell-media-address2").val() == ''
@@ -29,7 +45,10 @@ function register_sell_media(){
                         city: $("#sell-media-city").val(),
                         state: $("#sell-media-state").val(),
                         zip_code: $("#sell-media-zip").val(),
-                        stripe_email_address: $("#sell-media-semail").val()
+                        stripe_email_address: $("#sell-media-semail").val(),
+                        sell_media_bank: $("#sell-media-bank").val(),
+                        bank_routing: $("#sell-media-bank-routing").val(),
+                        account_number: $("#sell-media-account-number").val()
                     }
 
         var data_params = JSON.stringify(params, null, '\t');
