@@ -348,22 +348,7 @@ function getUserNotificationsHeader(){
                                     '</div>');
             }
 
-            
-            /*
-             * 6-SEP-2014 - need to get these into one single constants file
-             * 2-OCT-2014 - udpated to allow for constants file for environments 
-             */
-            var poll_delay;
-            $.getScript('/memreas/js/constants.js', function()
-            		{
-            		    // script is now loaded and executed.
-            		    // put your dependent JS here.
-                		poll_delay = LISTNOTIFICATIONSPOLLTIME;
-            		});
-
-            //setTimeout(function(){ getUserNotificationsHeader() }, poll_delay); //see constants.js
-            setTimeout(function(){ getUserNotificationsHeader() }, 15000); //15s
-            //setTimeout(function(){ getUserNotificationsHeader() }, 120000); //2mins
+            setTimeout(function(){ getUserNotificationsHeader() }, LISTNOTIFICATIONSPOLLTIME);
         }, 'undefined', true
     );
 }

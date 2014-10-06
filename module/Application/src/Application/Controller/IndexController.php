@@ -233,6 +233,9 @@ error_log("callback_json----->".$callback_json.PHP_EOL);
         $data['base64Policy'] = $this->getS3Policy();
         $data['signature'] = $this->hex2b64($this->hmacsha1($data['secret'], $data['base64Policy']));
 
+        //Pass constant global variables to js global constant
+        $this->writeJsConstants();
+
         $path = "application/index/memreas.phtml";
         $view = new ViewModel(array(
             'data' => $data,
@@ -242,6 +245,24 @@ error_log("callback_json----->".$callback_json.PHP_EOL);
         ));
         $view->setTemplate($path); // path to phtml file under view folder
         return $view;
+    }
+
+    /*
+     * Write constant to javascript
+     * */
+    public function writeJsConstants(){
+
+        //Put constant variables here
+        $JsConstantVariables = array(
+            'S3BUCKET' => MemreasConstants::S3BUCKET,
+            'LISTNOTIFICATIONSPOLLTIME' => MemreasConstants::LISTNOTIFICATIONSPOLLTIME
+        );
+        $content = '';
+        foreach ($JsConstantVariables as $variable => $value)
+            $content .= "var {$variable} = '{$value}';\n";
+        $fileHandle = fopen( $_SERVER['DOCUMENT_ROOT'] . '/memreas/js/constants.js', 'w');
+        fwrite($fileHandle, $content, strlen($content));
+        fclose($fileHandle);
     }
 
    /*
