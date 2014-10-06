@@ -244,10 +244,6 @@ function aviarySpace(updateMode){   //updateMode is get or return
     }
 }
 
-function ajaxRequestHeaderNotification(){
-    getUserNotificationsHeader();
-}
-
 function getUserNotificationsHeader(){
     var user_id = $("input[name=user_id]").val();
     var jTargetElement = $(".notification-head ul");
