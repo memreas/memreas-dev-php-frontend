@@ -245,7 +245,7 @@ function showEventDetail(eventId, userId){
                             jcarousel_element.append ('<li data-preview="' + _media_url + '"  media-id="' + mediaId + '"><a href="#"><img src="' + _media_url + '" alt="image01" download="' + _media_url + '" /></a></li>');
                         }
                         else {
-                            target_element.append ('<li  media-id="' + mediaId + '"><a href="' + _media_url + '" class="swipebox" title="photo-2"><img src="' + _media_url + '" alt=""></a></li>');
+                            target_element.append ('<li  media-id="' + mediaId + '"><a href="' + _main_media + '" class="swipebox" title="photo-2"><img src="' + _media_url + '" alt=""></a></li>');
                             jcarousel_element.append ('<li data-preview="' + _main_media + '"  media-id="' + mediaId + '"><a href="#"><img src="' + _media_url + '" alt="image01" download="' + _media_url + '" /></a></li>');
                         }
                     }
