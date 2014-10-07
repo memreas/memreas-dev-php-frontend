@@ -123,7 +123,7 @@ li.working-upload .progress-text{
 .aviary-edit-wrapper{
     height: 120px; position: relative;
     width: 80%;
-    float: left;
+    margin: 0 auto;
 }
 .aviary-thumbs li, .galleries-location li{
     margin-bottom: 10px !important;
@@ -345,7 +345,7 @@ input[name="account_repassword"]{ width: 42%; margin-right: 10px; float: left; }
     left: 130px;
     width: 130px;
 }
-.avpw_mode_action_right{
+.avpw_mode_action_right,.avpw_mode_action_left{
     box-shadow: none !important;
     -webkit-box-shadow: none !important;
 }
@@ -365,6 +365,11 @@ input[name="account_repassword"]{ width: 42%; margin-right: 10px; float: left; }
 #avpw_footer, .avpw_close_button, #avpw_tool_content_header{ display: none !important; }
 .avpw_mode_action_right {
     /*left: 0px !important;*/
+}
+@media (max-width: 1212px){
+    .aviary-edit-wrapper{
+        margin-left: -15px;
+    }
 }
 
 /*.avpw_prev { *//* This sets left arrow when effects are not selected */
