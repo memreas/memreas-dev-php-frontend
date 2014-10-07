@@ -14,6 +14,8 @@ class MemreasConstants {
     const S3_APPKEY = 'AKIAJMXGGG4BNFS42LZA';
     const S3_APPSEC = 'xQfYNvfT0Ar+Wm/Gc4m6aacPwdT5Ors9YHE/d38H';
 	const S3BUCKET = "memreasprdsec";
+	const LISTNOTIFICATIONSPOLLTIME = 180000; //3minutes
+	
 
     //Enable / Disable payment tabs at more page
     const PAYMENT_TAB_SUBSCRIPTION = true;

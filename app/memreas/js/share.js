@@ -724,7 +724,7 @@ share_makeGroup = function() {
                                 { tag: 'friend_name',         value: mr_friendsInfo[i].name },
                                 { tag: 'friend_id',         value: mr_friendsInfo[i].id },
                                 { tag: 'network_name',         value: 'memreas' },
-                                { tag: 'profile_pic_url',     value: mr_friendsInfo[i].photo }
+                                { tag: 'profile_pic_url',     value: '' }
                             ]
                 };
             }

@@ -111,10 +111,6 @@ a {
 	outline: 0;
 	color: #d84429;
 }
-a:
-input, textarea {
-outline:0;
-}
 .error {
 	font: normal 15px Arial, Helvetica, sans-serif !important;
 	color: #F33;
@@ -1643,7 +1639,7 @@ ul.image_upload_box li {
 	position: absolute;
 	top: 380px !important;
 	left: 45px;
-	z-index: 9999px;
+	z-index: 9999;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 	border-radius: 5px;
@@ -2081,7 +2077,7 @@ ul.memreas_results li .event_members .event_gallery_pro{
 	width: 97% !important;
 }
 
-@media screen (width: 1920px) {
+@media screen and (width: 1920px) {
 nav {
 	min-height: 155%!important;
 }
@@ -3112,7 +3108,7 @@ select{ width: 184px; height: 30px; }
         display: none;
     }
 
-    .share_memreas_details.sell_media_form input {
+    .share_memreas_details.sell_media_form input, .sell_media_bank input {
         margin-left: 6%;
         width: 74%;
     }
@@ -3211,7 +3207,6 @@ select{ width: 184px; height: 30px; }
 	#tab-content-memreas,
 	#tab-content-memreas-detail,
 	#tab-content-more {
-		min-height: initial;
 		margin-bottom: 0px;
 	}
 	.fotorama__nav-wrap{

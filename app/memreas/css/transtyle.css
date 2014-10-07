@@ -1,4 +1,4 @@
-Tran developer will style here*/
+/* Tran developer will style here*/
 .row-choose-file{ position: relative; margin: 0 auto; width: 590px; }
 li.setchoosed, img.setchoosed{ border: 1px solid #10FA2C !important; position: relative; }
 .description{
@@ -31,7 +31,7 @@ li.setchoosed, img.setchoosed{ border: 1px solid #10FA2C !important; position: r
 .upload-dropzone{
     width: 100%;
     height: 100px;
-    background: url(/memreas/img/drop-zone.png) no-repeat top center;
+    background: url('/memreas/img/drop-zone.png') no-repeat top center;
     cursor: pointer;
     border-top: 1px solid #254C77;
     border-bottom: 1px solid #254C77;
@@ -285,7 +285,7 @@ img.loading-small{
     height: auto;
 }
 .carousel-area-aviary .elastislide-wrapper navs span{
-    background: url(../img/arrows-top-down.png) no-repeat 0px 0px;
+    background: url('../img/arrows-top-down.png') no-repeat 0px 0px;
     left: 45%;
     width: 45px;
     height: 14px;

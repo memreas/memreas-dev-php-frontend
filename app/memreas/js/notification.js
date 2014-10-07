@@ -68,6 +68,7 @@ function notification_status_to_class(status_code){
 }
 
 function updateNotification(notification_id, update_status){
+	
     switch (update_status){
         case 'accept':
             var params = [

@@ -14,7 +14,11 @@ class MemreasConstants {
     const S3_APPKEY = 'AKIAJMXGGG4BNFS42LZA';
     const S3_APPSEC = 'xQfYNvfT0Ar+Wm/Gc4m6aacPwdT5Ors9YHE/d38H';
 	const S3BUCKET = "memreasdevsec";
-	
+    const LISTNOTIFICATIONSPOLLTIME = 15000; //15s
+
+    const FREE_ACCOUNT_FILE_LIMIT = 100; // 100MB limited upload for free user
+    const PAID_ACCOUNT_FILE_LIMIT = 5000; // 5GB limited upload for free user
+
     //Enable / Disable payment tabs at more page
     const PAYMENT_TAB_SUBSCRIPTION = true;
     const PAYMENT_TAB_BUY_CREDIT = true;

@@ -195,7 +195,7 @@ jQuery.fetch_server_media = function (){
                       //Fetch user's notification header
                       getUserDetail();
                       getUserNotificationsHeader();
-                  }, 1000);
+                  }, 10000);
                   $(".swipebox").swipebox();
 
                   //Show edit and delete tabs
@@ -242,10 +242,6 @@ function aviarySpace(updateMode){   //updateMode is get or return
             }
         }
     }
-}
-
-function ajaxRequestHeaderNotification(){
-    getUserNotificationsHeader();
 }
 
 function getUserNotificationsHeader(){
@@ -348,7 +344,7 @@ function getUserNotificationsHeader(){
                                     '</div>');
             }
 
-            setTimeout(function(){ getUserNotificationsHeader() }, 15000); //15s
+            setTimeout(function(){ getUserNotificationsHeader() }, LISTNOTIFICATIONSPOLLTIME);
         }, 'undefined', true
     );
 }
