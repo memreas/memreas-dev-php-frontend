@@ -681,4 +681,27 @@ error_log("userid---->".$userid.PHP_EOL);
         die();
     }
 
+    /*
+     * For image downloading
+     * */
+    public function downloadMediaAction(){
+        $requestUrl = $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+        $requestUrl = explode("?", $requestUrl);
+        $requestUrl = str_replace("file=", "", $requestUrl[1]) . '?' . $requestUrl[2];
+        $image_size = strlen(file_get_contents($requestUrl));
+        $filename = explode("?", $_GET['file']);
+        $filename = explode("/", $filename[0]);
+        $filename = $filename[count($filename) - 1];
+        header ("Content-Description: File Transfer");
+        header ("Content-Type: application/force-download");
+        header ("Content-Disposition: attachment;filename=" . $filename);
+        header ("Content-Transfer-Encoding: binary");
+        header ("Expires: 0");
+        header ("Cache-Control: must-revalidate");
+        header ("Pragma: public");
+        header ("Content-Length:" . $image_size);
+        echo file_get_contents($requestUrl);
+        die();
+    }
+
 } // end class IndexController

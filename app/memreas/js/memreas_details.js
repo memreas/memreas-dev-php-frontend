@@ -130,8 +130,8 @@ function updateMemreasMediaDetailsScript(){
 
                 //Set download button
                 var download_url = el.find('img').attr('download');
+                download_url = "/index/downloadMedia?file=" +  download_url;
                 $(".memreas-detail-download").attr("href", download_url);
-                $(".memreas-detail-download").attr("download", download_url);
 
                 updateMediaLike();
                 getMediaComment();
@@ -148,8 +148,8 @@ function updateMemreasMediaDetailsScript(){
 
                 //Set download button
                 var download_url = el.find('img').attr('download');
+                download_url = "/index/downloadMedia?file=" +  download_url;
                 $(".memreas-detail-download").attr("href", download_url);
-                $(".memreas-detail-download").attr("download", download_url);
                 //$(".memreas-detail-download").swipebox();
 
                 updateMediaLike();
@@ -168,13 +168,6 @@ $(function(){
     $("a.memreas").click(function(){
         $(".memreas-detail").hide();
         $(".memreas-main").fadeIn(500);
-    });
-
-    $(".memreas-detail-download").click(function(){
-        var download_url = $(this).attr('download');
-        $.post('/index/downloadMedia', {file:download_url}, function(data){
-
-        });
     });
 });
 
