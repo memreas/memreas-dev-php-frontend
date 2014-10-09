@@ -419,9 +419,7 @@ share_addComment = function() {
             if (media_ids.length > 0)
                 media_id = media_ids[0];
 
-            audio_media_id	= "";
-
-            // send the request.
+            var audio_media_id	= "";
 
             //Prepair request params
             var request_params = [
@@ -432,7 +430,7 @@ share_addComment = function() {
             ];
 
             var count = 3;
-            for (key in media_ids){
+            for (var key in media_ids){
                 request_params[++count] = new Array();
                 request_params[count]['tag'] = 'media_id';
                 request_params[count]['value'] = media_ids[key];
