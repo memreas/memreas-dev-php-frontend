@@ -8,18 +8,6 @@
         </ul>
         <div id="tab-content" class="clearfix">
             <div id="tab1" class="hideCls hidden-onload">
-                <input type="hidden" name="current_user_id" value="<?php echo $user_id; ?>">
-                <div class="preload-server">
-                    <div class="marks"></div>
-                    <div class="choose-details"><img src="/memreas/img/loader.gif" /><br/>Fetching media...</div>
-                </div>
-                <div class="browse-file">
-                    <div class="marks"></div>
-                    <div class="choose-details"><h3>Choose the location which you want to share</h3>
-                        <input  type="file" id="dir" webkitdirectory="" style="display: none;"/>
-                        <a class="btn-browse-file" href="#" onclick="$('#dir').click();">Browse files</a>
-                    </div>
-                </div>
                 <div class="user-resources fotorama" data-click="false" data-swipe="true" data-ratio="800/325" data-max-width="100%"  data-allow-full-screen="true" data-fit="cover" data-click="true"  data-nav="thumbs">
                     <!-- USER RESOURCES WILL BE LOADED HERE -->
                 </div>
@@ -50,9 +38,7 @@
                     </div>
                     <div class="aviary-toolbox"></div>
                 </div>
-                
 
-                
             </div>
             <div id="tab4" class="hideCls hidden-onload">
                 <div class="gallery-address-box input-wrap">
@@ -82,9 +68,5 @@
     <?php include('bottom_advertising.phtml'); ?>
     <!-- End Bottom Ads -->
 
-    <div class="row-fluid">
-        <!-- <input type="local_directory" class="hidden-input" webkitdirectory> -->
-        <!-- <input type="file" id="local_directory" webkitdirectory="" directory=""> -->
-    </div>
 </div>
 <a class="black_btn_skin exit-aviary-fullscreen" href="javascript:;" onclick="switch_mode();">Exit fullscreen</a>

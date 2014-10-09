@@ -154,11 +154,23 @@ jQuery.fetch_server_media = function (){
                             }
 
                             if (web_transcoded){
-
+                                //Get screen area display height
+                                var active_video_size = {
+                                    width: parseInt($("#tab-content").width()),
+                                    height: parseInt($("#tab-content").height()) - 100
+                                };
                                 //Ignore if has no enough info or media is corrupted
                                 if (typeof (_media_url) != 'undefined'){
                                     var mediaThumbnail = getMediaThumbnail(media, '/memreas/img/small/1.jpg');
-                                    $.post('/index/buildvideocache', {video_url:_media_url, thumbnail:mediaThumbnail, media_id:mediaId, hls_media:_media_url, mp4_media:_media_url}, function(response_data){
+                                    var data = {
+                                        video_url:_media_url,
+                                        thumbnail:mediaThumbnail,
+                                        media_id:mediaId,
+                                        hls_media:_media_url,
+                                        mp4_media:_media_url,
+                                        video_size: active_video_size
+                                    };
+                                    $.post('/index/buildvideocache', data, function(response_data){
                                         response_data = JSON.parse (response_data);
                                         $(".user-resources").append('<a data-video="true" href="/memreas/js/jwplayer/jwplayer_cache/' + response_data.video_link + '"><img src="' + response_data.thumbnail + '"/></a>');
                                         $(".edit-area-scroll").append ('<li class="video-media"><a class="video-resource image-sync" id="' + response_data.media_id + '" onclick="return imageChoosed(this.id);" href="' + response_data.thumbnail + '"><img src="' + response_data.thumbnail + '"/><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a><img src="/memreas/img/gallery-select.png"></li>');
