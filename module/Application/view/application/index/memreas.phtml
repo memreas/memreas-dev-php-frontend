@@ -31,13 +31,24 @@
                 <img id="loadingimg" src="/memreas/img/loading_animate.gif">
             </div>
         </div>
-        <div class="overlay voice-comment-load">
-            <div class="overlay-inner">
-                <img src="/memreas/img/speaking-icon.gif" /><br/>
-                <a class="black_btn_skin process-voice" href="javascript:voiceCommentStart();">Start</a> &nbsp;
+
+        <div id="popupAudioComment" class="popups voice-comment-load">
+            <a id="popupAudioCommentClose" onClick="disablePopup('popupAudioComment');" class='popupClose'>x</a>
+            <h2>comments</h2>
+            <div style="text-align: center; position: relative;" class="audio-control">
+                <img src="/memreas/img/audio-comment.jpg" style="width: 400px; margin-top: 20px; margin-bottom: 20px;" />
+                <div class="control-buttons">
+                    <a class="button-start-stop" href="javascript:voiceCommentStart();"><img src="/memreas/img/audio-start.png" border="0" /></a>
+                    <span class="recording-timer">00:00</span>
+                </div>
+            </div>
+            <div style="text-align: center;">
+                <a class="black_btn_skin" href="javascript:completeComment();">Ok</a> &nbsp;
                 <a class="black_btn_skin" href="javascript:voiceCommentCancel();">Cancel</a>
             </div>
         </div>
+        <div id="bgpopupAudioComment" class="backgroundPopup"></div>
+
         <input type="hidden" name="user_id" value="<?php echo $data['userid']; ?>">
         <input type="hidden" name="username" value="">
             <?php include 'header.phtml'; ?>

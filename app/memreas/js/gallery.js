@@ -83,7 +83,7 @@ var checkHasImage = false;
 jQuery.fetch_server_media = function (){
     var verticalHeight = window.innerHeight;
     $(".user-resources").remove();
-    $(".preload-files .pics").empty();
+    $(".preload-files .pics").empty().show();
     // Khan Changes
     if(!document.documentElement.classList.contains('noads')){
         if(verticalHeight <= 690){
@@ -176,14 +176,14 @@ jQuery.fetch_server_media = function (){
                                         response_data = JSON.parse (response_data);
                                         $(".user-resources").append('<a data-video="true" href="/memreas/js/jwplayer/jwplayer_cache/' + response_data.video_link + '"><img src="' + response_data.thumbnail + '"/></a>');
                                         $(".edit-area-scroll").append ('<li class="video-media"><a class="video-resource image-sync" id="' + response_data.media_id + '" onclick="return imageChoosed(this.id);" href="' + response_data.thumbnail + '"><img src="' + response_data.thumbnail + '"/><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a><img src="/memreas/img/gallery-select.png"></li>');
-                                        $(".preload-files .pics").append('<li class="video-media"><a class="video-resource image-sync" id="' + response_data.media_id + '" onclick="return imageChoosed(this.id);" href="' + response_data.thumbnail + '"><img src="' + response_data.thumbnail + '"/><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a><img src="/memreas/img/gallery-select.png"></li>');
+                                        $(".preload-files .pics").append('<li class="video-media"><img src="' + response_data.thumbnail + '"/></li>');
                                     });
                                 }
                                 else $(".edit-area-scroll").append ('<li class="video-media"><a class="video-resource image-sync" id="' + mediaId + '" onclick="return imageChoosed(this.id);" href="/memreas/img/large-pic-1.jpg"><img src="/memreas/img/large-pic-1.jpg"/><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a><img src="/memreas/img/gallery-select.png"></li>');
                             }
                             else{
                                 $(".user-resources").append('<img src="/memreas/img/TrascodingIcon.gif" />');
-                                $(".preload-files .pics").append('<li class="video-media"><a class="video-resource image-sync" id="' + mediaId + '" onclick="return imageChoosed(this.id);" href="/memreas/img/transcode-icon.png"><img src="/memreas/img/transcode-icon.png"/></a><img src="/memreas/img/gallery-select.png"></li>');
+                                $(".preload-files .pics").append('<li class="video-media"><img src="/memreas/img/transcode-icon.png"/></li>');
                                 $(".edit-area-scroll").append ('<li class="video-media"><a class="video-resource image-sync" id="' + mediaId + '" onclick="return imageChoosed(this.id);" href="/memreas/img/transcode-icon.png"><img src="/memreas/img/transcode-icon.png"/></a><img src="/memreas/img/gallery-select.png"></li>');
                             }
                         }
@@ -191,7 +191,7 @@ jQuery.fetch_server_media = function (){
                     else {
                         $(".user-resources").append('<img src="' + _media_url + '"/>');
                         $(".edit-area-scroll").append ('<li><a class="image-sync" id="' + mediaId + '" onclick="return imageChoosed(this.id);" href="' + _media_url + '"><img src="' + _media_url + '"/></a></li>');
-                        $(".preload-files .pics").append ('<li><a class="image-sync" id="' + mediaId + '" onclick="return imageChoosed(this.id);" href="' + _media_url + '"><img src="' + _media_url + '"/></a></li>');
+                        $(".preload-files .pics").append ('<li><img src="' + _media_url + '"/></li>');
                         $(".aviary-thumbs").append('<li><img id="edit' + mediaId + '" src="' + _media_url + '" onclick="openEditMedia(this.id, \'' + _media_url + '\');"/></li>');
                         $(".galleries-location").append('<li><img id="location' + mediaId + '" class="img-gallery" src="' + _media_url + '" /></li>');
                         checkHasImage = true;
@@ -633,7 +633,7 @@ function deleteFiles(confirmed){
 function success_deletephoto(xml_response){
 
     //If there is no more medias to be deleted, reload resources
-    if (getValueFromXMLTag(xml_response) == 'success'){
+    if (getValueFromXMLTag(xml_response, 'status') == 'success'){
         var media_id = getValueFromXMLTag(xml_response, 'media_id');
         $("#" + media_id).parents('li').remove();
         --deleteMediasChecked;
