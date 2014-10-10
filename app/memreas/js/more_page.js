@@ -659,7 +659,7 @@ function acceptAddFriendNetwork(){
         case 'twitter':
             var count_friend = tw_friendsInfo.length;
             var network_name = 'twitter';
-            for (i = 0;i < count_friend;i++){
+            for (var i = 0;i < count_friend;i++){
                 if (tw_friendsInfo[i].selected){
                     selected_friend[increase++] = {
                         tag: 'friend',
@@ -674,11 +674,11 @@ function acceptAddFriendNetwork(){
         case 'memreas':
             var count_friend = mr_friendsInfo.length;
             var network_name = 'memreas';
-            for (i = 0;i < count_friend;i++){
+            for (var i = 0;i < count_friend;i++){
                 if (mr_friendsInfo[i].selected){
                     if (mr_friendsInfo[i].photo == 'null')
-                        friend_photo = '/memreas/img/profile-pic.jpg';
-                    else friend_photo = mr_friendsInfo[i].photo;
+                        var friend_photo = '/memreas/img/profile-pic.jpg';
+                    else var friend_photo = mr_friendsInfo[i].photo;
                     selected_friend[increase++] = {
                         tag: 'friend',
                         value: [
@@ -814,7 +814,7 @@ function getAccountMemreas(){
                 {tag: 'limit', value: '20'}
             ],function (response){
                 if (getValueFromXMLTag(response, 'status') == "Success"){
-                    events = getSubXMLFromTag(response, 'event');
+                    var events = getSubXMLFromTag(response, 'event');
                     var event_count = events.length;
                     var html_str = '';
                     for (var i = 0;i < event_count;i++){
@@ -922,9 +922,9 @@ function getMemreasEventMedia(){
                 var medias = getSubXMLFromTag(response, 'media');
                 var media_count = medias.length;
                 for (var i=0;i < media_count;i++) {
-                    var media = medias[i].innerHTML;
-                    var media_type = $(media).filter('type').html();
-                    var media_id = $(media).filter('media_id').html();
+                    var media = medias[i];
+                    var media_type = getValueFromXMLTag(media,  'type');
+                    var media_id = getValueFromXMLTag(media,  'media_id');
                     var _media_url = getMediaThumbnail(media, '/memreas/img/small/1.jpg');
                     if (media_type == 'video')
                         jMemreasEventMedia.append ('<li class="event_img video-media" id="moremedia-' + media_id + '" onclick="more_clickMedia(this.id);"><img src="' + _media_url + '"/><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></li>');
@@ -1015,14 +1015,15 @@ function getMorepageEventFriends(){
             if (getValueFromXMLTag(xml_response, 'status') == 'Success'){
                 var friends = getSubXMLFromTag(xml_response, 'friend');
                 var count_people = friends.length;
-                for (i = 0;i < count_people;i++){
-                    friend = friends[i];
+                for (var i = 0;i < count_people;i++){
+                    var friend = friends[i];
                     if (getValueFromXMLTag(friend, 'photo') == '' || getValueFromXMLTag(friend, 'photo') == 'null')
-                        friend_photo = '/memreas/img/profile-pic.jpg';
-                    else friend_photo = getValueFromXMLTag(friend, 'photo');
-                    friend_id = getValueFromXMLTag(friend, 'friend_id');
-                    friend_name = getValueFromXMLTag(friend, 'friend_name');
-                    html_str = '<li>';
+                        var friend_photo = '/memreas/img/profile-pic.jpg';
+                    else var friend_photo = getValueFromXMLTag(friend, 'photo');
+                    friend_photo = removeCdataCorrectLink(friend_photo);
+                    var friend_id = getValueFromXMLTag(friend, 'friend_id');
+                    var friend_name = getValueFromXMLTag(friend, 'friend_name');
+                    var html_str = '<li>';
                     html_str += '<figure class="pro-pics2" id="morefriend-' + friend_id + '" onclick="javascript:morepage_clickFriends(this.id);"><img class="morepage-friend-thumb" src="' + friend_photo + '" alt="" ></figure>';
                     html_str += '<aside class="pro-pic_names2" name="' + friend_name + '" id="a' + friend_id + '" onclick="javascript:share_clickFriends(this.id.substr(1));">' + friend_name + '</aside>';
                     html_str += '</li>';

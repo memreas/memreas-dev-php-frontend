@@ -1,4 +1,5 @@
 (function (window) {
+    var blobCommentObject = '';
     var WORKER_PATH = '/memreas/js/record/recorderWorker.js';
     var Recorder = function (source, cfg) {
         var config = cfg || {};
@@ -60,7 +61,7 @@
         var link = window.document.getElementById('download-audio');
         link.href = url;
         link.download = filename || 'output.wav';
-
+        blobCommentObject = blob;
         if ($("a.share").hasClass('active'))
             uploadAudio(blob, 'share');
         else uploadAudio(blob, 'memreas');

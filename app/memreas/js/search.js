@@ -192,7 +192,7 @@ var h = function(item) {
         case '!':
             var photo = map[item].event_photo;
             photo = removeCdataCorrectLink(photo);
-            var name = map[item].name;
+            var name = map[item].name + "!";
             break;
         case '#':
             var photo = map[item].event_photo;

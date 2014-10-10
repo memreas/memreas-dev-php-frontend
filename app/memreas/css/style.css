@@ -2749,7 +2749,6 @@ nav {
     top: 25%;
     text-align: center;
 }
-.voice-comment-load img{ width: 200px; }
 #loadingimg {
 	width: 55px;
 	height: 55px;
@@ -3215,3 +3214,16 @@ select{ width: 184px; height: 30px; }
 }
 .hideCls{ display: none; }
 .member-guidelines, .privacy-policy, .terms-service, .dmca-policy{ height: 300px; }
+.control-buttons{
+    position: absolute;
+    bottom: 15%;
+    left: 33%;
+}
+.control-buttons img{ width: 25px; }
+.control-buttons span{
+    color: #FFF;
+    font-size: 14px;
+    margin-left: 65px;
+    margin-top: -22px;
+    display: block;
+}

@@ -130,8 +130,8 @@ function updateMemreasMediaDetailsScript(){
 
                 //Set download button
                 var download_url = el.find('img').attr('download');
+                download_url = "/index/downloadMedia?file=" +  download_url;
                 $(".memreas-detail-download").attr("href", download_url);
-                $(".memreas-detail-download").attr("download", download_url);
 
                 updateMediaLike();
                 getMediaComment();
@@ -148,8 +148,8 @@ function updateMemreasMediaDetailsScript(){
 
                 //Set download button
                 var download_url = el.find('img').attr('download');
+                download_url = "/index/downloadMedia?file=" +  download_url;
                 $(".memreas-detail-download").attr("href", download_url);
-                $(".memreas-detail-download").attr("download", download_url);
                 //$(".memreas-detail-download").swipebox();
 
                 updateMediaLike();
@@ -168,13 +168,6 @@ $(function(){
     $("a.memreas").click(function(){
         $(".memreas-detail").hide();
         $(".memreas-main").fadeIn(500);
-    });
-
-    $(".memreas-detail-download").click(function(){
-        var download_url = $(this).attr('download');
-        $.post('/index/downloadMedia', {file:download_url}, function(data){
-
-        });
     });
 });
 
@@ -245,7 +238,7 @@ function showEventDetail(eventId, userId){
                             jcarousel_element.append ('<li data-preview="' + _media_url + '"  media-id="' + mediaId + '"><a href="#"><img src="' + _media_url + '" alt="image01" download="' + _media_url + '" /></a></li>');
                         }
                         else {
-                            target_element.append ('<li  media-id="' + mediaId + '"><a href="' + _media_url + '" class="swipebox" title="photo-2"><img src="' + _media_url + '" alt=""></a></li>');
+                            target_element.append ('<li  media-id="' + mediaId + '"><a href="' + _main_media + '" class="swipebox" title="photo-2"><img src="' + _media_url + '" alt=""></a></li>');
                             jcarousel_element.append ('<li data-preview="' + _main_media + '"  media-id="' + mediaId + '"><a href="#"><img src="' + _media_url + '" alt="image01" download="' + _media_url + '" /></a></li>');
                         }
                     }

@@ -93,6 +93,7 @@ error_log("Enter FE indexAction".PHP_EOL);
             if ($hls_media) $video_name .= $hls_media;
             $cache_file = $this->generateVideoCacheFile ($cache_dir, $video_name);
             $file_handle = fopen ($cache_dir . $cache_file, 'w');
+            $video_size = $_POST['video_size'];
             if ($hls_media){
                 $thumbnail = explode(",", $_POST['thumbnail']);
                 $thumbnail = str_replace('"', "", $thumbnail[0]);
@@ -106,16 +107,17 @@ error_log("Enter FE indexAction".PHP_EOL);
                                                     {label: "1080p", file:"' . $_POST['mp4_media'] . '"},
                                                 ]
                                             }],
-                                        "width": 500, "height": 300, "aspectratio": "16:9", "primary":"flash",
+                                        "width": ' . $video_size['width'] . ', "height": ' . $video_size['height'] . ', "aspectratio": "16:9", "primary":"flash",
                                          "skin": "/memreas/js/jwplayer/bekle.xml", allowfullscreen: true, autostart: true';
             }
             else{
                 $flashPlayerContent = 'flashplayer: "../jwplayer.flash.swf", file: "' . $_POST['video_url'] . '",
                                     "autostart": "true", "controlbar.position":"bottom", "controlbar.idlehide":"false",
-                                    "width": 500, "height": 300, aspectratio: "16:9",
+                                    "width": ' . $video_size['width'] . ', "height": ' . $video_size['height'] . ', aspectratio: "16:9",
                                     "skin": "/memreas/js/jwplayer/bekle.xml"';
             }
-            $content = $this->renderJWPlayerCache($flashPlayerContent);
+            $data = array('{VIDEO_HEIGHT}' => $video_size['height']);
+            $content = $this->renderJWPlayerCache($flashPlayerContent, $data);
             fwrite ($file_handle, $content, 5000);
             fclose ($file_handle);
             $response = array ('video_link' => $cache_file, 'thumbnail' => isset ($_POST['thumbnail']) ? $thumbnail : '/memreas/img/large-pic-1.jpg', 'media_id' => $_POST['media_id']);
@@ -124,11 +126,13 @@ error_log("Enter FE indexAction".PHP_EOL);
         exit();
     }
 
-    private function renderJWPlayerCache($initContent){
+    private function renderJWPlayerCache($initContent, $data){
         $jwPlayerTemplate = $_SERVER['DOCUMENT_ROOT'] . '/memreas/js/jwplayer/template.phtml';
         $fileHandle = fopen($jwPlayerTemplate, 'r');
         $content = fread($fileHandle, filesize($jwPlayerTemplate));
         $content = str_replace('{CONTENT_FLASH}', $initContent, $content);
+        foreach ($data as $search => $replace)
+            $content = str_replace($search, $replace, $content);
         return $content;
     }
 
@@ -255,7 +259,9 @@ error_log("callback_json----->".$callback_json.PHP_EOL);
         //Put constant variables here
         $JsConstantVariables = array(
             'S3BUCKET' => MemreasConstants::S3BUCKET,
-            'LISTNOTIFICATIONSPOLLTIME' => MemreasConstants::LISTNOTIFICATIONSPOLLTIME
+            'LISTNOTIFICATIONSPOLLTIME' => MemreasConstants::LISTNOTIFICATIONSPOLLTIME,
+            'FREE_ACCOUNT_FILE_LIMIT' => MemreasConstants::FREE_ACCOUNT_FILE_LIMIT,
+            'PAID_ACCOUNT_FILE_LIMIT' => MemreasConstants::PAID_ACCOUNT_FILE_LIMIT
         );
         $content = '';
         foreach ($JsConstantVariables as $variable => $value)
@@ -672,6 +678,29 @@ error_log("userid---->".$userid.PHP_EOL);
     public function setTokenAction(){
         $session = new Container('user');
         $session->offsetSet('sid',  $_POST ['sid']);
+        die();
+    }
+
+    /*
+     * For image downloading
+     * */
+    public function downloadMediaAction(){
+        $requestUrl = $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+        $requestUrl = explode("?", $requestUrl);
+        $requestUrl = str_replace("file=", "", $requestUrl[1]) . '?' . $requestUrl[2];
+        $image_size = strlen(file_get_contents($requestUrl));
+        $filename = explode("?", $_GET['file']);
+        $filename = explode("/", $filename[0]);
+        $filename = $filename[count($filename) - 1];
+        header ("Content-Description: File Transfer");
+        header ("Content-Type: application/force-download");
+        header ("Content-Disposition: attachment;filename=" . $filename);
+        header ("Content-Transfer-Encoding: binary");
+        header ("Expires: 0");
+        header ("Cache-Control: must-revalidate");
+        header ("Pragma: public");
+        header ("Content-Length:" . $image_size);
+        echo file_get_contents($requestUrl);
         die();
     }
 
