@@ -63,6 +63,7 @@ function getMediaComment(){
             {tag: 'limit', value: '100'},
             {tag: 'page', value: '1'}
         ], function(ret_xml){
+            console.log(ret_xml)
             var jComment_element = $('.memreas-detail-comments');
             if (jComment_element.hasClass('mCustomScrollbar'))
                 jComment_element = $('.memreas-detail-comments .mCSB_container');

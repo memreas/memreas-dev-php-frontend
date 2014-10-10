@@ -98,8 +98,9 @@
             <ul id="content_1" class="commentpopup scrollpopup">
                 <!-- Ajax Comment will load here -->
             </ul>
-            <div class="input-wrap input-text popup-addcomment-text">
+            <div class="input-wrap input-text popup-addcomment-text" style="position: relative;">
                 <input name="comment_txtfield" type="text" class="comment_txtfield" value="your comment here" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'your comment here')this.value = '';"/>
+                <a href="javascript:voiceComment();" class="voice-icon" style="left: 320px;"></a>
             </div>
             <a class="black_btn_skin f-left" href="javascript:memreasAddComment();">ok</a> <a class="black_btn_skin f-right" href="javascript:disablePopup('popupcomment');">cancel</a>
         </div>
