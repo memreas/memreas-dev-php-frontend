@@ -31,7 +31,34 @@ $(document).ready( function() {
             autoUpload: true,
             maxFileSize: 5000000,
             add: function (event, data){
+                console.log(data.files[0]); return;
                 filename = data.files[0].name;
+                var filetype = data.files[0].type;
+
+                //Get file size
+                var file_size = data.files[0].size; //In bytes
+
+                if (userObject.plan == 'FREE'){
+                    var limited_file_size = FREE_ACCOUNT_FILE_LIMIT * 1000000; //Convert to bytes
+                    var limited_size_message = "Free account has been limited to " + FREE_ACCOUNT_FILE_LIMIT + " MB per upload";
+
+                    //Check if file is video and match limit of duration
+                    if (filetype.indexOf('video') >= 0){
+
+                    }
+                }
+                else{
+                    var limited_file_size = PAID_ACCOUNT_FILE_LIMIT * 1000000; //Convert to bytes
+                    var limited_size_message = "File size has been limited to " + PAID_ACCOUNT_FILE_LIMIT + " MB per upload";
+                }
+
+                if (file_size > limited_file_size){
+                    jconfirm(limited_size_message, "$.jNotify._close();");
+                    return false;
+                }
+
+
+
                 filename = correctUploadFilename(filename);
                 currentUploadFileCount = uploadFilesInstance.length;
                 if (currentUploadFileCount > 10){
@@ -63,7 +90,6 @@ $(document).ready( function() {
                     }
                 });
 
-                var filetype = data.files[0].type;
                 var key_value = filename;
 
                 /*
