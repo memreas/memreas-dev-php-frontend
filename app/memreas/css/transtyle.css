@@ -349,6 +349,9 @@ input[name="account_repassword"]{ width: 42%; margin-right: 10px; float: left; }
     box-shadow: none !important;
     -webkit-box-shadow: none !important;
 }
+.avpw_is_embed #avpw_controls{
+    left: 41px !important;
+}
 /*
 #avpw_controls{
     z-index: initial !important;
@@ -365,6 +368,9 @@ input[name="account_repassword"]{ width: 42%; margin-right: 10px; float: left; }
 #avpw_footer, .avpw_close_button, #avpw_tool_content_header{ display: none !important; }
 .avpw_mode_action_right {
     /*left: 0px !important;*/
+}
+@media (max-height: 650px){
+    #gallery-location{ height: 250px; }
 }
 @media (max-width: 1212px){
     .aviary-edit-wrapper{

@@ -1534,7 +1534,7 @@ ul.image_upload_box {
 	margin: 0;
 	padding: 0;
 	overflow: auto;
-	height: 290px;
+	min-height: 240px;
 }
 ul.image_upload_box li {
 	margin: 10px 0px;
@@ -2985,7 +2985,7 @@ margin-left: 15%;
     float: left;
     margin-left: 2%;
     width: 98%;
-    margin-bottom: 50px; /* Khan Changes */
+    margin-bottom: 40px; /* Khan Changes */
     margin-top: 5px;
 
 }
