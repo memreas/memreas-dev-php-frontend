@@ -3164,7 +3164,7 @@ select{ width: 184px; height: 30px; }
 		min-height: 375px;
 		margin-bottom: 0px;
 	}
-	ul.pics{
+	html.ads ul.pics{
 		min-height: 317px;
 	}
 }
@@ -3190,8 +3190,11 @@ select{ width: 184px; height: 30px; }
 	#tab-content-more {
 		/*max-height: 388px;*/
 	}
-	ul.pics{
+	html.ads ul.pics{
 		min-height: 270px;
+	}
+	html.ads ul.pics{
+		min-height: 350px;
 	}
 }
 
