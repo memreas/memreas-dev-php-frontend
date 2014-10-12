@@ -80,14 +80,21 @@ function voiceComment() {
         jerror('your browser is not supported or you must allow to accesss your microphone');
         return;
     }
-    if (event_id == ''){
+    if (event_id == '' && $("a.share").hasClass('active')){
         jerror("Please complete event detail page");
         return false;
     }
     $("a.button-start-stop").attr("href", "javascript:voiceCommentStart();");
     $("a.button-start-stop").html('<img src="/memreas/img/audio-start.png" border="0" />');
     audioRecorder.clear();
-    popup("popupAudioComment");
+
+    //Audio comment on share tab
+    if ($("a.share").hasClass('active'))
+        popup("popupAudioComment");
+    else {
+        disablePopup("popupcomment");
+        popup("popupAudioComment");
+    }
 }
 function voiceCommentStart() {
     ar_start();

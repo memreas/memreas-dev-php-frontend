@@ -1,6 +1,7 @@
 /*
 * Server side
 */
+var userObject = [];
 var notificationHeaderObject = new Object(); //This variable stored header notification and compare with a new for checking
 
 function getUserDetail(){
@@ -39,6 +40,15 @@ function getUserDetail(){
                 }
 
                 $("input[name=account_email]").val(useremail);
+                var plan = getValueFromXMLTag(xml_response, 'plan');
+                //Assign user detail into local object
+                userObject.email = useremail;
+                userObject.username = username;
+                userObject.userprofile = userprofile;
+                userObject.alternate_email = alternate_email;
+                userObject.gender = gender;
+                userObject.dob = dob;
+                userObject.plan = plan;
             }
             else jerror (getValueFromXMLTag(xml_response, 'messsage'));
         }, 'undefined', true);
