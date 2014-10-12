@@ -3125,7 +3125,7 @@ select{ width: 184px; height: 30px; }
 
 @media (min-height: 667px){
 	div#gallery > .ad{
-		margin-top: 15px;
+		margin-top: 12px;
 	}
 	.fotorama__nav-wrap{
 		/*margin-top: -71px;*/

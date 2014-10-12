@@ -369,8 +369,21 @@ input[name="account_repassword"]{ width: 42%; margin-right: 10px; float: left; }
 .avpw_mode_action_right {
     /*left: 0px !important;*/
 }
-@media (max-height: 650px){
+
+@media (max-height: 730px){
+    #gallery-location{ height: 313px; }
+}
+@media (max-height: 700px){
+    #gallery-location{ height: 283px; }
+}
+@media (max-height: 697px){
     #gallery-location{ height: 250px; }
+}
+@media (max-height: 657px){
+    #gallery-location{ height: 235px; }
+}
+@media (max-height: 641px){
+    #gallery-location{ height: 220px; }
 }
 @media (max-width: 1212px){
     .aviary-edit-wrapper{

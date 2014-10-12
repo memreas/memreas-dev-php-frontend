@@ -13,7 +13,7 @@
 .elastislide-vertical ul li{display:block;}
 .elastislide-carousel ul li a{display:inline-block;width:100%;}
 .elastislide-carousel ul li a img{display:block;border:1px solid #CCC;max-width:100%;margin:5px;}
-.elastislide-wrapper navs span{position:absolute;background:url(../img/arrows.png) no-repeat 0px 0px;width:14px;height:34px;text-indent:-9000px;cursor:pointer;opacity:0.8;}
+.elastislide-wrapper navs span{position:absolute;background:url(../img/arrows.png) no-repeat 0px 0px;width:14px;height:34px;text-indent:-9000px;cursor:pointer;opacity:0.8;text-indent:100%;white-space: nowrap;overflow: hidden;}
 .elastislide-wrapper navs span:hover{opacity:1.0}
 .elastislide-horizontal navs span{top:50%;left:10px;margin-top:-11px;}
 .elastislide-vertical navs span{top:10px;left:50%;margin-left:-11px;background-position:-14px 0px;}
