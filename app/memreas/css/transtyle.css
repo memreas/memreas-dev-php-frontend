@@ -189,6 +189,7 @@ li.working-upload .progress-text{
     bottom: 15px;
     cursor: pointer;
 }
+
 .tab-slide-nav .slide-right{
     display: inline-block;
     position: absolute;
@@ -371,23 +372,30 @@ input[name="account_repassword"]{ width: 42%; margin-right: 10px; float: left; }
 }
 
 @media (max-height: 730px){
-    #gallery-location{ height: 313px; }
+    body.ads #gallery-location{ height: 313px; }
 }
 @media (max-height: 700px){
-    #gallery-location{ height: 283px; }
+    body.ads #gallery-location{ height: 283px; }
 }
 @media (max-height: 697px){
-    #gallery-location{ height: 250px; }
+    body.ads #gallery-location{ height: 250px; }
 }
 @media (max-height: 657px){
-    #gallery-location{ height: 235px; }
+    body.ads #gallery-location{ height: 235px; }
 }
 @media (max-height: 641px){
-    #gallery-location{ height: 220px; }
+    body.ads #gallery-location{ height: 220px; }
 }
 @media (max-width: 1212px){
     .aviary-edit-wrapper{
         margin-left: -15px;
+    }
+}
+@media(min-width:1039px){
+    #memreas-detail-tab3{
+        max-width: 812px;
+        display: block;
+        margin: 0 auto;
     }
 }
 
