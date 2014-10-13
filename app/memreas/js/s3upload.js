@@ -31,7 +31,6 @@ $(document).ready( function() {
             autoUpload: true,
             maxFileSize: 5000000,
             add: function (event, data){
-                console.log(data.files[0]); return;
                 filename = data.files[0].name;
                 var filetype = data.files[0].type;
 
