@@ -40,7 +40,9 @@ function planChange(choose_plan_id){
             $(".step1-next").addClass("button-disabled");
         $(".step1-next").removeAttr("href").removeAttr("onclick");
     }
-    else $(".step1-next").removeClass("button-disabled").attr("href", 'javascript:;').attr("activeAkordeon('subscription-payment-method-tab', subscription_step2);");
+    else $(".step1-next").removeClass("button-disabled")
+                            .attr("href", 'javascript:;')
+                            .attr('onclick', "activeAkordeon('subscription-payment-method-tab', subscription_step2);");
 
 }
 function resetPlanChoose(){
