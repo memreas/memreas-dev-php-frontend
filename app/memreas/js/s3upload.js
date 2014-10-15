@@ -345,9 +345,9 @@ $(document).ready( function() {
                     class_upload = ".upload-" + class_upload[0];
                     $(class_upload).find(".progress-text").html('completed');
                     setTimeout(function(){ $(class_upload).fadeOut(1000).remove(); }, 3000);
+                    pushReloadItem('listallmedia');
                     if (currentUploadFileCount == 0){
                         $(".image_upload_box").mCustomScrollbar("update");
-                        pushReloadItem('listallmedia');
                     }
                 }, 'undefined', true);
             },

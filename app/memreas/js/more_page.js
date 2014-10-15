@@ -356,7 +356,7 @@ function getUserGroups(){
         if (getValueFromXMLTag(xml_response, 'status') == 'Success'){
             var groups = getSubXMLFromTag(xml_response, 'group');
             var total_record = groups.length;
-            for (i = 0;i < total_record;i++){
+            for (var i = 0;i < total_record;i++){
                 $("select.account-groups").append('<option value="' + getValueFromXMLTag(groups[i], 'group_id') + '">' + getValueFromXMLTag(groups[i], 'group_name') + '</option>');
             }
         }
@@ -597,8 +597,6 @@ function network_fillFriends(info){
             friendList = $(".network-friends .mCSB_container");
         else friendList = $('.network-friends');
     }
-    friendList.empty();
-
     friendList.empty();
 
     var i = 0, el;
@@ -1311,9 +1309,16 @@ function saveAddGroup(){
 
     networkFriendsSelected = [];
     increase = 0;
-    for (i = 0;i < network_friend_count;i++){
+    for (var i = 0;i < network_friend_count;i++){
         if ($("#" + networkfriendsInfo[i].id).hasClass('nw-friend-selected'))
-            networkFriendsSelected[increase++] = { tag: 'friend', value:[{tag: 'friend_id', value: networkfriendsInfo[i].id}]  };
+            networkFriendsSelected[increase++] = {
+                tag: 'friend',
+                value:[
+                    {tag: 'friend_id', value: networkfriendsInfo[i].id},
+                    {tag: 'friend_name', value: networkfriendsInfo[i].name},
+                    {tag: 'network_name', value: $("select[name=friend_network]").val()}
+                ]
+            };
 
     }
     var friendSelected = networkFriendsSelected.length;
@@ -1335,6 +1340,16 @@ function saveAddGroup(){
             var message  = getValueFromXMLTag(ret_xml, 'message');
             if (status.toLowerCase() == 'success'){
                 jsuccess('group was created successfully.');
+
+                //Empty friend list
+                if (friendList == null){
+                    if ($('.network-friends').hasClass('mCustomScrollbar'))
+                        friendList = $(".network-friends .mCSB_container");
+                    else friendList = $('.network-friends');
+                }
+                friendList.empty();
+                activeAkordeon("manage-group-select");
+
                 cancelAddGroup();
                 getUserGroups();
             }
