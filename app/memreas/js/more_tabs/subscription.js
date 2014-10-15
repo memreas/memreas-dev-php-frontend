@@ -333,7 +333,7 @@ function getPlans(){
                     plans_payment[i] = new Object();
                     var params = {plan_id:plans[i].id, selected:0, data:plans[i]};
                     plans_payment[i] = params;
-                    var html_element = '<li><label class="label_text2"><input type="radio" id="plan-' + plans[i].id + '" name="radio_plans" class="regular-radio" onchange="planChange(this.id);" /><label for="plan-' + plans[i].id + '"></label>' + plans[i].name + ' - ' + (plans[i].amount / 100) + ' ' + plans[i].currency + '</label></li>';
+                    var html_element = '<li><label class="label_text2"><input type="radio" id="plan-' + plans[i].id + '" name="radio_plans" class="regular-radio" onchange="planChange(this.id);" /><label for="plan-' + plans[i].id + '"></label>' + plans[i].name + ' - $' + (plans[i].amount / 100) + '</label></li>';
                     jSubscriptionPlans.append(html_element);
                 }
                 //Get customer info based on this account
