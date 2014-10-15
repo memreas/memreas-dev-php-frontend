@@ -382,6 +382,7 @@ input[name="account_repassword"]{ width: 42%; margin-right: 10px; float: left; }
 }
 @media (max-height: 657px){
     body.ads #gallery-location{ height: 235px; }
+    body.noads #gallery-location{ height: 317px; }
 }
 @media (max-height: 641px){
     body.ads #gallery-location{ height: 220px; }

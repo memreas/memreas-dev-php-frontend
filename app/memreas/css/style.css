@@ -828,7 +828,7 @@ a.black_btn_skin, #avpw_save_button, #avpw_apply_container {
 	border: 1px solid #451c1b;
 	margin: 20px 10px;
 }
-a.black_btn_skin:hover, a.black_btn_skin:active, #avpw_save_button:hover, #avpw_save_button:active,
+a.black_btn_skin:hover,a.black_btn_skin:focus, a.black_btn_skin:active, #avpw_save_button:hover, #avpw_save_button:active,
 #avpw_apply_container:hover, #avpw_apply_container:active{
 	color: #fff;
 	text-decoration: none;

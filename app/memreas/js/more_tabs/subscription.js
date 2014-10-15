@@ -160,7 +160,8 @@ function subscription_step3(){
     jOrderSummary.find('#order-summary-zip').val(orderCard.zip_code);
 
     jOrderSummary.find('#choose-plan-name').html(orderPlan.name);
-    jOrderSummary.find('#choose-plan-cost').html('$'+(orderPlan.amount / 100) + ' ' + orderPlan.currency);
+    // jOrderSummary.find('#choose-plan-cost').html('$'+(orderPlan.amount / 100) + ' ' + orderPlan.currency);
+    jOrderSummary.find('#choose-plan-cost').html('$'+(orderPlan.amount / 100));
     updateAkordeonContent($('.subscription-order-summary-tab'));
 }
 
