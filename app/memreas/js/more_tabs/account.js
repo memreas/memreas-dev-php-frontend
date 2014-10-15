@@ -276,7 +276,7 @@ function accountAddCard(){
                     pushReloadItem('reload_buy_credit_cards');
                 }
                 else jerror(response.message);
-                $('#loadingpopup').fadeOut(500);
+                $('.stripe-payment').fadeOut(500);
             },
             error:function(){
                 jerror('Card adding failure. Please check card\'s information.');

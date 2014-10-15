@@ -63,7 +63,6 @@ function getMediaComment(){
             {tag: 'limit', value: '100'},
             {tag: 'page', value: '1'}
         ], function(ret_xml){
-            console.log(ret_xml)
             var jComment_element = $('.memreas-detail-comments');
             if (jComment_element.hasClass('mCustomScrollbar'))
                 jComment_element = $('.memreas-detail-comments .mCSB_container');
@@ -102,8 +101,8 @@ function getMediaComment(){
                 ajaxScrollbarElement('.memreas-detail-comments');
             }
             else{
-                jComment_element.append('<li style="color: #FFF;">No comment yet!</li>');
-                jComment_popup.append('<li style="color: #FFF;">No comment yet!</li>');
+                jComment_element.append('<li style="color: #FFF;" class="no-comment">No comment yet!</li>');
+                jComment_popup.append('<li style="color: #FFF;" class="no-comment">No comment yet!</li>');
                 jComment_element.find('.loading').remove();
                 jComment_popup.find('.loading').remove();
             }
@@ -130,7 +129,7 @@ function updateMemreasMediaDetailsScript(){
                 $(".image-preview .swipebox").swipebox();
 
                 //Set download button
-                var download_url = el.find('img').attr('download');
+                var download_url = el.data( 'preview' );
                 download_url = "/index/downloadMedia?file=" +  download_url;
                 $(".memreas-detail-download").attr("href", download_url);
 
@@ -148,7 +147,7 @@ function updateMemreasMediaDetailsScript(){
                 $(".image-preview .swipebox").swipebox();
 
                 //Set download button
-                var download_url = el.find('img').attr('download');
+                var download_url = el.data( 'preview' );
                 download_url = "/index/downloadMedia?file=" +  download_url;
                 $(".memreas-detail-download").attr("href", download_url);
                 //$(".memreas-detail-download").swipebox();
@@ -755,7 +754,7 @@ function memreasAddComment(){
             '<textarea name="memreas_popup_comment" cols="" rows=""' +
             ' readonly="readonly">' + comment_txt + '</textarea>' +
         '</li>');
-
+        $(".no-comment").remove();
         $(".commentpopup").mCustomScrollbar("update");
         $(".commentpopup").mCustomScrollbar("scrollTo","top");
 

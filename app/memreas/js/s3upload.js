@@ -1,7 +1,6 @@
 
 var uploadFilesInstance = []; //Used for store all file name for uploading
 var currentUploadFileCount = 0; //Count for all current files selected for upload
-var filename = '';
 $(document).ready( function() {
 
     //Check if IOS only allow 1 file per upload
@@ -31,7 +30,8 @@ $(document).ready( function() {
             autoUpload: true,
             maxFileSize: 5000000,
             add: function (event, data){
-                filename = data.files[0].name;
+                var filename = data.files[0].name;
+                filename = correctUploadFilename(filename);
                 var filetype = data.files[0].type;
 
                 //Get file size
@@ -40,11 +40,6 @@ $(document).ready( function() {
                 if (userObject.plan == 'FREE'){
                     var limited_file_size = FREE_ACCOUNT_FILE_LIMIT * 1000000; //Convert to bytes
                     var limited_size_message = "Free account has been limited to " + FREE_ACCOUNT_FILE_LIMIT + " MB per upload";
-
-                    //Check if file is video and match limit of duration
-                    if (filetype.indexOf('video') >= 0){
-
-                    }
                 }
                 else{
                     var limited_file_size = PAID_ACCOUNT_FILE_LIMIT * 1000000; //Convert to bytes
@@ -56,9 +51,6 @@ $(document).ready( function() {
                     return false;
                 }
 
-
-
-                filename = correctUploadFilename(filename);
                 currentUploadFileCount = uploadFilesInstance.length;
                 if (currentUploadFileCount > 10){
                     jerror("Only allow to upload limited 10 files per session.");
@@ -175,8 +167,7 @@ $(document).ready( function() {
 
                 form.find('input[name=Content-Type]').val(filetype);
                 var userid = $("input[name=user_id]").val();
-                key_value = userid + '/' + target + '/' + key_value;
-                $('input[name=ContentName]').val(userid + '/' + target + '/' + filename);
+                key_value = userid + '/' + target + '/' + correctUploadFilename('${filename}');
                 $(this).find('input[name=key]').val(key_value);
                 // Use XHR, fallback to iframe
                 options = $(this).fileupload('option');
@@ -189,8 +180,8 @@ $(document).ready( function() {
                 }
 
                 //For upload
-
-                var tpl2 = $('<li class="working-upload">' +
+                var class_upload = filename.split('.');
+                var tpl2 = $('<li class="working-upload upload-' + class_upload[0] + '">' +
                                 '<div class="upload_progress" id="table">' +
                                     '<div class="upload_progress_img">' +
                                         '<img src="/memreas/img/loading-line.gif" class="loading-small">' +
@@ -247,10 +238,11 @@ $(document).ready( function() {
                     {tag: 'filename', value: filename}
                 ];
 
-                var jqXHR = '';
                 data.context.find('.progress-text').html('Checking file exist');
 
                 ajaxRequest('checkexistmedia', params, function(xml_response){
+                    var filename = data.files[0].name;
+                    filename = correctUploadFilename(filename);
                     if (getValueFromXMLTag(xml_response, 'status') == 'Failure'){
                         data.context.find('.progress-text').html('This file has already existed. Uploading will abort!');
                         removeItem(uploadFilesInstance, filename);
@@ -258,9 +250,19 @@ $(document).ready( function() {
                         return false;
                     }
                     else {
-                         jqXHR = data.submit();
+                        //Checking if file name has space
+                        if (filename.indexOf(" ") >= 0){
+                            data.context.find('.progress-text').html('Please remove space in file name. Uploading will abort!');
+                            removeItem(uploadFilesInstance, filename);
+                            setTimeout(function(){ tpl2.remove(); }, 4000);
+                            return false;
+                        }
+
+                         var jqXHR = data.submit();
                          data.context.find('.progress-text').html('Ok! Uploading...');
                          data.context.find("a.cancel-upload").click (function(){
+                             var filename = data.files[0].name;
+                             filename = correctUploadFilename(filename);
                             if(data.context.hasClass('working-upload')){
                                 var currentPercent = data.context.find(".upload_progress_bar .progress").width() / data.context.find(".upload_progress_bar .progress").parent().width() * 100;
                                 if (currentPercent < 100){
@@ -281,9 +283,6 @@ $(document).ready( function() {
                         });
                     }
                 }, 'undefined', true);
-            },
-            send: function(e, data) {
-
             },
             progress: function(e, data){
                 var percent = Math.round((data.loaded / data.total) * 100);
@@ -307,19 +306,19 @@ $(document).ready( function() {
                 else addEvent = '';
                 var s3_filename = getValueFromXMLTag(jqXHR.responseText, 'Key');
                 var s3_filename_split = s3_filename.split("/");
-                var filename = s3_filename_split[s3_filename_split.length - 1];
-                var s3_path_split = s3_filename.split(filename);
+                var base_filename = s3_filename_split[s3_filename_split.length - 1];
+                var s3_path_split = s3_filename.split(base_filename);
                 var s3_path = s3_path_split[0];
 
                 var S3URL = "https://" + S3BUCKET + ".s3.amazonaws.com/";
                 var server_url = _media_url.replace(S3URL, '');
 
 				var params = [
-                                {tag: 's3url', value: filename},
+                                {tag: 's3url', value: base_filename},
                                 {tag: 'is_server_image', value: '0'},
                                 {tag: 'content_type', value : media_type},
                                 {tag: 's3path', value: s3_path},
-                                {tag: 's3file_name', value: filename},
+                                {tag: 's3file_name', value: base_filename},
                                 {tag: 'device_id', value: ''},
                                 {tag: 'event_id', value: addEvent},
                                 {tag: 'media_id', value: ''},
@@ -340,13 +339,15 @@ $(document).ready( function() {
                 }
 
                 ajaxRequest('addmediaevent', params, function(xml_response){
-                    removeItem(uploadFilesInstance, filename);
+                    removeItem(uploadFilesInstance, base_filename);
                     currentUploadFileCount = uploadFilesInstance.length;
+                    var class_upload = correctUploadFilename(base_filename).split('.');
+                    class_upload = ".upload-" + class_upload[0];
+                    $(class_upload).find(".progress-text").html('completed');
+                    setTimeout(function(){ $(class_upload).fadeOut(1000).remove(); }, 3000);
+                    pushReloadItem('listallmedia');
                     if (currentUploadFileCount == 0){
-                        $(".image_upload_box .mCSB_container").empty();
                         $(".image_upload_box").mCustomScrollbar("update");
-                        pushReloadItem('listallmedia');
-                        jsuccess('Medias uploaded successfully');
                     }
                 }, 'undefined', true);
             },
