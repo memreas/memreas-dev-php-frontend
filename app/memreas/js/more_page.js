@@ -313,8 +313,13 @@ function saveUserDetail(){
 
 /*Function Save user detail*/
 function saveChangePassword(){
-    var account_old_password = $("input[name=account_password]").val();
+    var account_old_password = $("input[name=account_old_password]").val();
     var account_password = $("input[name=account_password]").val();
+
+    if (account_old_password == ''){
+        jerror('please enter old password');
+        return false;
+    }
 
     if (account_password != 'password' && account_password != ''){
         var retype_account_password = $("input[name=account_repassword]").val();
@@ -324,8 +329,11 @@ function saveChangePassword(){
         }
     }
     else {
-        if (account_password == 'password')
+        if (account_password == 'password') {
+            jerror("please input your new password");
             account_password = '';
+            return false;
+        }
     }
 
     var userId = $("input[name=user_id]").val();
