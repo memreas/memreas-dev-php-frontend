@@ -1,5 +1,5 @@
 $(function(){
-    $("#account_dob").datepicker();
+    $("#account_dob").datepicker('top');
     $(".account-card-section").click(function(){
 
         var jMemberCard = $(".account-payment");
