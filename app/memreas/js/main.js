@@ -29,9 +29,7 @@ $(function(){
 
     calculateNavHeight();
 
-    $('body').bind('click', function(){
-        calculateNavHeight();
-    });
+    window.addEventListener('resize', calculateNavHeight);
 
     $("ul.scrollClass").mCustomScrollbar({
             scrollButtons:{
