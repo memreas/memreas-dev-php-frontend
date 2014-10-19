@@ -3190,11 +3190,16 @@ select{ width: 184px; height: 30px; }
 	#tab-content-more {
 		/*max-height: 388px;*/
 	}
-	html.ads ul.pics{
-		min-height: 270px;
+	html.noads #tab-content,
+	html.noads #tab-content-queue,
+	html.noads #tab-content-share,
+	html.noads #tab-content-memreas,
+	html.noads #tab-content-memreas-detail,
+	html.noads #tab-content-more {
+		max-height: 465px;
 	}
 	html.ads ul.pics{
-		min-height: 350px;
+		min-height: 270px;
 	}
 }
 

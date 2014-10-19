@@ -370,22 +370,31 @@ input[name="account_repassword"]{ width: 42%; margin-right: 10px; float: left; }
 .avpw_mode_action_right {
     /*left: 0px !important;*/
 }
+.group:before,
+.group:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.group:after {
+    clear: both;
+}
 
 @media (max-height: 730px){
-    body.ads #gallery-location{ height: 313px; }
+    html.ads #gallery-location{ height: 313px; }
 }
 @media (max-height: 700px){
-    body.ads #gallery-location{ height: 283px; }
+    html.ads #gallery-location{ height: 283px; }
 }
 @media (max-height: 697px){
-    body.ads #gallery-location{ height: 250px; }
+    html.ads #gallery-location{ height: 250px; }
 }
 @media (max-height: 657px){
-    body.ads #gallery-location{ height: 235px; }
-    body.noads #gallery-location{ height: 317px; }
+    html.ads #gallery-location{ height: 235px; }
+    html.noads #gallery-location{ height: 317px; }
 }
 @media (max-height: 641px){
-    body.ads #gallery-location{ height: 220px; }
+    html.ads #gallery-location{ height: 220px; }
 }
 @media (max-width: 1212px){
     .aviary-edit-wrapper{
