@@ -252,6 +252,19 @@ error_log("callback_json----->".$callback_json.PHP_EOL);
     }
 
     /*
+     * Canvas page
+     * */
+    public function canvasAction(){
+        $event_id = $_GET['event'];
+        $path = "application/index/canvas.phtml";
+        $view = new ViewModel(array(
+            "event_id" => $event_id
+        ));
+        $view->setTemplate($path);
+        return $view;
+    }
+
+    /*
      * Write constant to javascript
      * */
     public function writeJsConstants(){
