@@ -256,7 +256,7 @@ error_log("callback_json----->".$callback_json.PHP_EOL);
      * */
     public function canvasAction(){
         $event_id = $_GET['event'];
-        $path = "application/index/canvas.phtml";
+        $path =  $this->security("application/index/canvas.phtml");
         $view = new ViewModel(array(
             "event_id" => $event_id
         ));
