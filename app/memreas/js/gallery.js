@@ -336,7 +336,7 @@ function getUserNotificationsHeader(){
 
                             }
                             else{
-
+                                var notification_updated = new Date((getValueFromXMLTag(ret_xml, 'notification_updated')) * 1000);
                                 if (notification_status == '0')
                                     var link_action = '<a href="javascript:;" class="reply" onclick="updateNotificationHeader(\'' + notification_id + '\', \'ignore\');">Ignore</a> <a href="javascript:;" class="reply" onclick="showUpdateNotification(\'' + notification_id + '\', \'accept\');">ok</a>';
                                 else var link_action = '';
@@ -344,8 +344,10 @@ function getUserNotificationsHeader(){
                                                         '<div class="notification-pic"><img src="' + user_profile_pic +'" /></div>' +
                                                         '<div class="noti-content">' +
                                                             '<div class="noti-content">' +
-                                                                '<p>' + meta_text + '</p>' +
+                                                                '<p>' + meta_text + '</p><div class="clear"></div>' +
                                                             '</div>' +
+                                                            '<span class="notification-time">' + notification_updated.getHours() + ':' + correctDateNumber(notification_updated.getMinutes()) + ' am <br/>' +
+                                                            correctDateNumber(notification_updated.getDate()) + '/' + correctDateNumber(notification_updated.getMonth()) + '/' + notification_updated.getFullYear() + '</span>' +
                                                         '</div>' +
                                                         link_action +
                                                     '</div></li>';

@@ -415,16 +415,16 @@ function getGroupFriends(friend_network){
             var friend_list = getSubXMLFromTag(xml_response, 'friend');
             var count_friend = friend_list.length;
             networkfriendsInfo = [];
-            for (i = 0;i < count_friend;i++){
+            for (var i = 0; i < count_friend; i++) {
                 if (getValueFromXMLTag(friend_list[i], 'friend_photo') == '' || getValueFromXMLTag(friend_list[i], 'friend_photo') == 'null')
                     friend_photo = '/memreas/img/profile-pic.jpg';
                 else friend_photo = getValueFromXMLTag(friend_list[i], 'friend_photo');
                 networkfriendsInfo[i] = {
-                    'id':         getValueFromXMLTag(friend_list[i], 'friend_id'),
-                    'div_id':    getValueFromXMLTag(friend_list[i], 'friend_id'),
-                    'name':     getValueFromXMLTag(friend_list[i], 'friend_name'),
-                    'photo':     friend_photo,
-                    'selected':    false
+                    'id': getValueFromXMLTag(friend_list[i], 'friend_id'),
+                    'div_id': getValueFromXMLTag(friend_list[i], 'friend_id'),
+                    'name': getValueFromXMLTag(friend_list[i], 'friend_name'),
+                    'photo': friend_photo,
+                    'selected': false
                 };
             }
             network_fillFriends(networkfriendsInfo);
@@ -432,6 +432,7 @@ function getGroupFriends(friend_network){
         else {
             jerror(getValueFromXMLTag(xml_response, 'message'));
             $('.network-friends').empty();
+            $('.network-friends').append('<li>You have no friend on this network at this time</li>');
         }
     });
 }
