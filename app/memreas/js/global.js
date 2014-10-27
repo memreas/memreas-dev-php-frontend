@@ -111,6 +111,9 @@ function getMediaThumbnail(element_object, default_value){
         if ((element_object.innerHTML).indexOf(media_tags[i]) >= 0){
             found_link = getValueFromXMLTag(element_object, media_tags[i]);
             found_link = removeCdataCorrectLink(found_link);
+            found_link = found_link.split(',');
+            found_link = found_link[0];
+            found_link = found_link.replace('"', '');
         }
 
         if (found_link != '') break;

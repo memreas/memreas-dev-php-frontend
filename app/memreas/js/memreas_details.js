@@ -383,6 +383,7 @@ function getPopupMemreasFriends(){
                 if (getValueFromXMLTag(friend, 'photo') == '' || getValueFromXMLTag(friend, 'photo') == 'null')
                     friend_photo = '/memreas/img/profile-pic.jpg';
                 else friend_photo = getValueFromXMLTag(friend, 'photo');
+                friend_photo = removeCdataCorrectLink(friend_photo);
                 mr_friendsInfo[i] = {
                                         'id': getValueFromXMLTag(friend, 'friend_id'),
                                         'div_id': 'mrmemreas_' + i,

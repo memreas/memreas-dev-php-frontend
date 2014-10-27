@@ -343,7 +343,7 @@ function saveChangePassword(){
         {tag: 'new', value: account_password},
         {tag: 'retype', value: retype_account_password}
     ];
-    ajaxRequest('saveuserdetails', params, function(xml_response){
+    ajaxRequest('updatepassword', params, function(xml_response){
         if (getValueFromXMLTag(xml_response, 'status') == "Success"){
             jsuccess(getValueFromXMLTag(xml_response, 'message'));
             fillUserDetail($("input[name=user_id]").val());
