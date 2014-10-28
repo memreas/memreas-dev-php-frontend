@@ -47,6 +47,15 @@
                          <label for="ckb_selfdestruct" name="demo_lbl_5" class="css-label margin-none" >ghost :</label>
                          <input name="input" type="text" id="dtp_selfdestruct" class="share-txtfield-2 date-picker" readonly value="" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == '')this.value = '';"/>
                         </li>
+                        <li>
+                            <label class="textfield_names" style="width: 175px;">Price :</label>
+                            <div class="input-wrap share-media-price">
+                                <p class="italic-description">
+                                    You can sell media if you have registered as a seller <span class="share-register-seller">(<a href="javascript:;" onclick="registerSeller();">Register now</a>)</span> - Your account type : <strong class="share-account-type"></strong>
+                                    <br/> And you have an activated paid subscription <span class="share-register-plan">(<a href="javascript:;" onclick="activeSubscription();">Active now</a>)</span> - Your plan : <strong class="share-account-plan"></strong>
+                                </p>
+                            </div>
+                        </li>
                     </ul>
                     <span class="clear"></span>
                     <div class="mr-auto">

@@ -41,6 +41,7 @@ function getUserDetail(){
 
                 $("input[name=account_email]").val(useremail);
                 var plan = getValueFromXMLTag(xml_response, 'plan');
+
                 //Assign user detail into local object
                 userObject.email = useremail;
                 userObject.username = username;
@@ -49,6 +50,21 @@ function getUserDetail(){
                 userObject.gender = gender;
                 userObject.dob = dob;
                 userObject.plan = plan;
+                userObject.plan_name = getValueFromXMLTag(xml_response, 'plan_name');
+                userObject.type = getValueFromXMLTag(xml_response, 'account_type');
+
+                $(".share-account-type").html(userObject.type);
+                $(".share-account-plan").html(userObject.plan_name);
+
+                if (userObject.plan != 'FREE')
+                    $(".share-register-plan").remove();
+
+                if (userObject.type != 'Free user' && (userObject.type).indexOf('seller') >= 0)
+                    $(".share-register-seller").remove();
+
+                var checkSellMedia = shareCheckSellMedia();
+                if (checkSellMedia)
+                    $(".share-media-price").html('<input name="input" style="width: 20% !important;" type="text" id="share-sell-price" class="share-txtfield" value="0" />');
             }
             else jerror (getValueFromXMLTag(xml_response, 'messsage'));
         }, 'undefined', true);

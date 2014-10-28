@@ -83,6 +83,8 @@ $(function(){
     //Sell mediatab
     $("a.sell-media-tab").one("click", function(){
         $('#buttons9-moretab').akordeon();
+        $("#sell-media-username").val(userObject.username);
+        $("#sell-media-email").val(userObject.email);
     });
 
     /*Action tabs click*/
@@ -431,8 +433,11 @@ function getGroupFriends(friend_network){
         }
         else {
             jerror(getValueFromXMLTag(xml_response, 'message'));
-            $('.network-friends').empty();
-            $('.network-friends').append('<li>You have no friend on this network at this time</li>');
+
+            if ($('.network-friends').hasClass('mCustomScrollbar'))
+                friendList = $(".network-friends .mCSB_container");
+            else friendList = $('.network-friends');
+            friendList.empty().append('<li>You have no friend on this network at this time</li>');
         }
     });
 }
@@ -601,11 +606,10 @@ function network_fillPopupFriends(info){
 }
 
 function network_fillFriends(info){
-    if (friendList == null){
-        if ($('.network-friends').hasClass('mCustomScrollbar'))
-            friendList = $(".network-friends .mCSB_container");
-        else friendList = $('.network-friends');
-    }
+    if ($('.network-friends').hasClass('mCustomScrollbar'))
+        friendList = $(".network-friends .mCSB_container");
+    else friendList = $('.network-friends');
+
     friendList.empty();
 
     var i = 0, el;

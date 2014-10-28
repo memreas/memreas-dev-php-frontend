@@ -63,6 +63,7 @@ function fetchMyMemreas(){
             {tag: 'page', value: '1'},
             {tag: 'limit', value: '20'}
         ],function (response){
+            console.log(response);
             if (getValueFromXMLTag(response, 'status') == "Success"){
                 var events = getSubXMLFromTag(response, 'event');
 
@@ -203,6 +204,7 @@ function fetchFriendsMemreas(friendMemreasType){
             {tag: 'page', value: '1'},
             {tag: 'limit', value: '20'}
         ], function(response){
+            console.log(response);
             if (friendMemreasType == 'private'){
                 if ($(".event_images").hasClass("mCustomScrollbar"))
                     var target_object = ".event_images .mCSB_container";

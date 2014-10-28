@@ -45,7 +45,7 @@ function register_sell_media(){
                         city: $("#sell-media-city").val(),
                         state: $("#sell-media-state").val(),
                         zip_code: $("#sell-media-zip").val(),
-                        stripe_email_address: $("#sell-media-semail").val(),
+                        stripe_email_address: $("#sell-media-email").val(),
                         sell_media_bank: $("#sell-media-bank").val(),
                         bank_routing: $("#sell-media-bank-routing").val(),
                         account_number: $("#sell-media-account-number").val()

@@ -304,6 +304,11 @@ share_addEvent = function() {
  	    var ckb_viewable 	 	= getCheckBoxValue('ckb_viewable');
 	    var ckb_selfdestruct 	= getCheckBoxValue('ckb_selfdestruct');
 
+        //Checking for selling media
+        if ($("#share-sell-price").length > 0)
+            var price = $("#share-sell-price").val();
+        else var price = 0;
+
 	    // send the request.
         shareDisableFields();
 	    ajaxRequest(
@@ -318,7 +323,8 @@ share_addEvent = function() {
 			    { tag: 'is_friend_can_add_friend', 	value: ckb_canadd },
 			    { tag: 'is_friend_can_post_media', 	value: ckb_canpost },
 			    { tag: 'event_self_destruct', 		value: formatDateToDMY(date_selfdestruct) },
-			    { tag: 'is_public', 				value: ckb_public }
+			    { tag: 'is_public', 				value: ckb_public },
+			    { tag: 'price', 				    value: price.toString() }
 		    ],
 		    function(ret_xml) {
 			    // parse the returned xml.
@@ -913,4 +919,24 @@ function checkValidDateFromTo(isSubmit){
         }
         return true;
     }
+}
+
+//Click to register seller from share tab
+function registerSeller(){
+    $("a.more").trigger('click');
+    $(".sell-media-tab").trigger('click');
+}
+
+//Click to active subscription
+function activeSubscription(){
+    $("a.more").trigger('click');
+    $("a.subscription-tab").trigger('click');
+}
+
+function shareCheckSellMedia(){
+    if (userObject.plan != 'FREE'
+        && userObject.type != 'Free user'
+        && (userObject.type).indexOf('seller') >= 0)
+        return true;
+    else return false;
 }
