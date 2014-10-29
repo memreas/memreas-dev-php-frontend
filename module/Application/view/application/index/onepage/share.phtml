@@ -48,7 +48,8 @@
                          <input name="input" type="text" id="dtp_selfdestruct" class="share-txtfield-2 date-picker" readonly value="" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == '')this.value = '';"/>
                         </li>
                         <li>
-                            <label class="textfield_names" style="width: 175px;">Price :</label>
+                            <input id="ckb_sellmedia" class="css-checkbox" type="checkbox" />
+                            <label id="lbl-sellmedia" for="ckb_sellmedia" name="demo_lbl_6" class="css-label margin-none" >Price :</label>
                             <div class="input-wrap share-media-price">
                                 <p class="italic-description">
                                     You can sell media if you have registered as a seller <span class="share-register-seller">(<a href="javascript:;" onclick="registerSeller();">Register now</a>)</span> - Your account type : <strong class="share-account-type"></strong>
@@ -144,6 +145,45 @@
             </div>
         </div>
     </div>
+    <div id="popupSellMedia" class="popups">
+        <a id="popupSellMediaClose" onClick="disablePopup('popupSellMedia');" class='popupClose'>x</a>
+        <h2>Sell media</h2>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <ul id="content_1" class="scrollpopup give-message-form">
+            <li>
+                <label class="textfield_names">Price</label>
+                <select name="sellmedia_price" id="sellmedia_price">
+                    <option value="">-Choose-</option>
+                    <option value="0.25">$0.25</option>
+                    <option value="0.5">$0.5</option>
+                    <option value="1">$1</option>
+                    <option value="2">$2</option>
+                    <option value="5">$5</option>
+                </select>
+            </li>
+            <li>
+                <label class="textfield_names">duration :</label>
+                <input style="width: 42% !important; float: left;" name="input3" type="text" id="sellmedia_duration" class="share-txtfield" value="duration" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'duration')this.value = '';" />
+                <select name="duration_type" id="duration_type" style="width: 100px; margin-left: 10px;">
+                    <option value="">-Choose-</option>
+                    <option value="hour">hour</option>
+                    <option value="day">day</option>
+                    <option value="month">month</option>
+                    <option value="year">year</option>
+                </select>
+            </li>
+            <li>
+                <input id="ckb_sellmedia_agree" class="css-checkbox" type="checkbox" />
+                <label id="lbl-sellmedia" for="ckb_sellmedia_agree" name="demo_lbl_6" class="css-label margin-none" style="height: 100px;" >
+                    By checking this box I certify that I own the appropriate copyrights for any media within this memeas share.  Full terms are available here (link).
+                </label>
+            </li>
+        </ul>
+        <a class="black_btn_skin f-left" href="javascript:;" id="accept-notification" onclick="share_addEvent();">OK</a> <a class="black_btn_skin f-right" href="javascript:disablePopup('popupSellMedia');">close</a>
+    </div>
+    <div id="bgpopupSellMedia" class="backgroundPopup"></div>
     <!-- Ads Section -->
     <?php include('right_advertising.phtml'); ?>
     <!-- End Ads Section -->

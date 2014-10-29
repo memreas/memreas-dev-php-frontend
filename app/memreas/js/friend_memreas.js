@@ -9,8 +9,9 @@ memreas_getFriendList = function(){
             for (i = 0;i < friendCount;i++){
                 var friend = friends[i];
                 if (getValueFromXMLTag(friend, 'photo') == '' || getValueFromXMLTag(friend, 'photo') == 'null')
-                    friend_photo = '/memreas/img/profile-pic.jpg';
-                else friend_photo = getValueFromXMLTag(friend, 'photo');
+                    var friend_photo = '/memreas/img/profile-pic.jpg';
+                else var friend_photo = getValueFromXMLTag(friend, 'photo');
+                friend_photo = removeCdataCorrectLink(friend_photo);
                 mr_friendsInfo[i] = {
                                         'id': getValueFromXMLTag(friend, 'friend_id'),
                                         'div_id': 'mr_' + i,

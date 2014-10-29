@@ -305,7 +305,7 @@ function saveUserDetail(){
         {tag: 'profile_picture', value: ''}
     ];
     ajaxRequest('saveuserdetails', params, function(xml_response){
-        if (getValueFromXMLTag(xml_response, 'status') == "Success"){
+        if (getValueFromXMLTag(xml_response, 'status') == "success"){
             jsuccess(getValueFromXMLTag(xml_response, 'message'));
             fillUserDetail($("input[name=user_id]").val());
         }

@@ -63,7 +63,6 @@ function fetchMyMemreas(){
             {tag: 'page', value: '1'},
             {tag: 'limit', value: '20'}
         ],function (response){
-            console.log(response);
             if (getValueFromXMLTag(response, 'status') == "Success"){
                 var events = getSubXMLFromTag(response, 'event');
 
@@ -204,7 +203,6 @@ function fetchFriendsMemreas(friendMemreasType){
             {tag: 'page', value: '1'},
             {tag: 'limit', value: '20'}
         ], function(response){
-            console.log(response);
             if (friendMemreasType == 'private'){
                 if ($(".event_images").hasClass("mCustomScrollbar"))
                     var target_object = ".event_images .mCSB_container";
@@ -259,10 +257,23 @@ function fetchFriendsMemreas(friendMemreasType){
                                 var friend_resource = friend_resources[key].innerHTML;
                                 var eventId = $(friend_resource).filter('event_id').html();
                                 var resource_media = $(friend_resource).filter('event_media_98x78').html();
-                                resource_media = resource_media.replace("<!--[CDATA[", "").replace("]]-->", "");
+                                resource_media = removeCdataCorrectLink(resource_media);
                                 if (resource_media == '') resource_media = '/memreas/img/small/1.jpg';
                                 var event_name = $(friend_resource).filter ('event_name').html();
-                                $("#" + friend_row).append ('<div class="event_img"><img src="' + resource_media + '" alt=""><span class="event_name_box"><a style="color:#FFF;" href="javascript:showEventDetail(\'' + eventId + '\', \'' + creator_id + '\');">!' + event_name + '</a></span></div>');
+                                var event_metadata = $(friend_resource).filter ('event_metadata').html();
+
+                                //Check if event is selling or not
+                                var sell_price = 0;
+                                if (event_metadata != ''){
+                                    event_metadata = JSON.parse(event_metadata);
+                                    if (typeof (event_metadata.price) != 'undefined'){
+                                        if (event_metadata.price != 0)
+                                        sell_price = event_metadata.price;
+                                    }
+                                }
+                                if (sell_price ==0)
+                                    $("#" + friend_row).append ('<div class="event_img"><img src="' + resource_media + '" alt=""><span class="event_name_box"><a style="color:#FFF;" href="javascript:showEventDetail(\'' + eventId + '\', \'' + creator_id + '\');">!' + event_name + '</a></span></div>');
+                                else $("#" + friend_row).append ('<div class="event_img" onclick="buyMedia(\'' + eventId + '\', \'' + sell_price + '\');"><div class="sell-event-overlay"></div><span class="sell-event-buyme">Buy me</span><img src="' + resource_media + '" alt=""><span class="event_name_box"><a style="color:#FFF;" href="javascript:;">!' + event_name + '</a></span></div>');
                             }
 
                             if (total_event_row_width > global_width){

@@ -21,6 +21,9 @@ var device_id = "";				// current device id
 var media_page_index  = '1';		// page index number for media
 var media_limit_count = '200';	// limit count of media
 
+//For selling media
+var sell_media_price = 0;
+
 var friendList = null;
 var current_sharefriendnw_selected = '';
 
@@ -285,6 +288,31 @@ share_initGoogleMap = function(div_id) {
 
 // add the new event by request to the server.
 share_addEvent = function() {
+    //Precheck for selling media is popup or not and check for correction
+    if ($("#popupSellMedia").is(":visible")){
+        var sellmedia_price_select = $("#sellmedia_price").val();
+        if (sellmedia_price_select == ''){
+            jerror("please select the price");
+            return false;
+        }
+
+        var sellmedia_duration = $("#sellmedia_duration").val();
+        if (sellmedia_duration != '' && sellmedia_duration != 'duration'){
+            var sellmedia_duration_type = $("#duration_type").val();
+            if (sellmedia_duration_type == ''){
+                jerror("please choose duration type");
+                return false;
+            }
+        }
+
+        if (!$("#ckb_sellmedia_agree").is(":checked")){
+            jerror("You must agree with our terms and conditions");
+            return false;
+        }
+        sell_media_price = sellmedia_price_select;
+    }
+
+    disablePopup('popupSellMedia');
 	var name = getElementValue('txt_name');
 	if (name == "") {
 		jerror("You have to input the name.");
@@ -305,9 +333,10 @@ share_addEvent = function() {
 	    var ckb_selfdestruct 	= getCheckBoxValue('ckb_selfdestruct');
 
         //Checking for selling media
-        if ($("#share-sell-price").length > 0)
-            var price = $("#share-sell-price").val();
-        else var price = 0;
+        if ($("#ckb_sellmedia").is(":checked") && sell_media_price == 0){
+            popup("popupSellMedia");
+            return false;
+        }
 
 	    // send the request.
         shareDisableFields();
@@ -324,7 +353,9 @@ share_addEvent = function() {
 			    { tag: 'is_friend_can_post_media', 	value: ckb_canpost },
 			    { tag: 'event_self_destruct', 		value: formatDateToDMY(date_selfdestruct) },
 			    { tag: 'is_public', 				value: ckb_public },
-			    { tag: 'price', 				    value: price.toString() }
+			    { tag: 'price', 				    value: sell_media_price.toString() },
+			    { tag: 'duration', 				    value: sellmedia_duration.toString() },
+                { tag: 'duration_type', 		    value: sellmedia_duration_type },
 		    ],
 		    function(ret_xml) {
 			    // parse the returned xml.
@@ -337,6 +368,7 @@ share_addEvent = function() {
 				    jsuccess('Event "' + name + '" was registered successfully.');
                     pushReloadItem('view_my_events');
 			        setTimeout(function(){ share_gotoPage(SHAREPAGE_TAB_MEDIA); }, 2000);
+                    sell_media_price = 0;
 			    }
 			    else {
 				    jerror(message);
@@ -346,6 +378,25 @@ share_addEvent = function() {
 	    , 'undefined', true);
     }
 }
+
+//Prevent enter invalid character to duration media selling price
+$(function(){
+    $("#sellmedia_duration").keydown(function (e) {
+        // Allow: backspace, delete, tab, escape, enter and .
+        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+                // Allow: Ctrl+A
+            (e.keyCode == 65 && e.ctrlKey === true) ||
+                // Allow: home, end, left, right
+            (e.keyCode >= 35 && e.keyCode <= 39)) {
+            // let it happen, don't do anything
+            return;
+        }
+        // Ensure that it is a number and stop the keypress
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
+        }
+    });
+});
 
 function shareDisableFields(){
     addLoading(".share-event-name", 'input', '');

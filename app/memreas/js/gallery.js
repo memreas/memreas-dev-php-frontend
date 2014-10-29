@@ -64,7 +64,7 @@ function getUserDetail(){
 
                 var checkSellMedia = shareCheckSellMedia();
                 if (checkSellMedia)
-                    $(".share-media-price").html('<input name="input" style="width: 20% !important;" type="text" id="share-sell-price" class="share-txtfield" value="0" />');
+                    $(".share-media-price .italic-description").html('Check this option if you want to sell this event');
             }
             else jerror (getValueFromXMLTag(xml_response, 'messsage'));
         }, 'undefined', true);

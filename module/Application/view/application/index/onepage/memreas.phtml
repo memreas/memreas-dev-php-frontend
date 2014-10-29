@@ -1,40 +1,57 @@
 <div class="span11 tabcontent-detail" id="memreas" style="display: none;">
     <div class="memreas-main">
-        <div class="<?php echo ($this->enableAdvertising) ? 'span9' : 'span11';?>">
-          <div class="row-fluid">
-            <ul id="tabs-memreas" class="medium_tabs">
-                <li><a href="#" title="memreas-tab1">me</a></li>
-                <li><a href="#" title="memreas-tab2">friends</a></li>
-                <li><a href="#" title="memreas-tab3">public</a></li>
-            </ul>
+        <div class="<?php echo ($this->enableAdvertising) ? 'span9' : 'span11'; ?>">
+            <div class="row-fluid">
+                <ul id="tabs-memreas" class="medium_tabs">
+                    <li><a href="#" title="memreas-tab1">me</a></li>
+                    <li><a href="#" title="memreas-tab2">friends</a></li>
+                    <li><a href="#" title="memreas-tab3">public</a></li>
+                </ul>
 
-            <div id="tab-content-memreas">
-                <div id="memreas-tab1" class="hideCls">
-                          <ul id="content_1" class="pics scroll-area myMemreas scrollClass">
+                <div id="tab-content-memreas">
+                    <div id="memreas-tab1" class="hideCls">
+                              <ul id="content_1" class="pics scroll-area myMemreas scrollClass">
 
-                          </ul>
-                      <a class="black_btn_skin f-left" href="javascript:addMemreas(); share_clearMemreas(true);">add memreas</a>
-                </div>
-                <div id="memreas-tab2" class="hideCls">
-                        <ul id="content_1" class="pics scroll-area event_images friendMemreas scrollClass">
+                              </ul>
+                          <a class="black_btn_skin f-left" href="javascript:addMemreas(); share_clearMemreas(true);">add memreas</a>
+                    </div>
+                    <div id="memreas-tab2" class="hideCls">
+                            <ul id="content_1" class="pics scroll-area event_images friendMemreas scrollClass">
 
-                          </ul>
-                      <a class="black_btn_skin f-left" href="javascript:addMemreas();">add memreas</a>
-                </div>
-                <div id="memreas-tab3" class="hideCls">
-                    <ul id="content_1" class="pics scrollClass event_images_public publicMemreas scroll-area">
+                              </ul>
+                          <a class="black_btn_skin f-left" href="javascript:addMemreas();">add memreas</a>
+                    </div>
+                    <div id="memreas-tab3" class="hideCls">
+                        <ul id="content_1" class="pics scrollClass event_images_public publicMemreas scroll-area">
 
-                          </ul>
-                      <a class="black_btn_skin f-left" href="javascript:addMemreas();">add memreas</a>
+                              </ul>
+                          <a class="black_btn_skin f-left" href="javascript:addMemreas();">add memreas</a>
+                    </div>
                 </div>
             </div>
         </div>
-      </div>
-     <!-- Ads Section -->
-    <?php include('right_advertising.phtml'); ?>
+        <div id="popupBuyMedia" class="popups">
+            <a id="popupBuyMediaClose" onClick="disablePopup('popupBuyMedia');" class='popupClose'>x</a>
+            <h2>Buying private media</h2>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <ul id="content_1" class="scrollpopup give-message-form">
+                <li>
+                    <label class="textfield_names">Select Card</label>
+                    <select name="buymedia_card" id="buymedia_card">
+                        <option value="">-Choose-</option>
+                    </select>
+                </li>
+            </ul>
+            <a class="black_btn_skin f-left" href="javascript:;" id="accept-notification" onclick="updateNotificationHeader(1, 'accept');">Update</a> <a class="black_btn_skin f-right" href="javascript:disablePopup('popupGiveMessage');">close</a>
+        </div>
+        <div id="bgpopupBuyMedia" class="backgroundPopup"></div>
+    <!-- Ads Section -->
+        <?php include ('right_advertising.phtml'); ?>
     <!-- End Ads Section -->
 
     <!-- Bottom Ads -->
-    <?php include('bottom_advertising.phtml'); ?>
+        <?php include ('bottom_advertising.phtml'); ?>
     <!-- End Bottom Ads -->
-</div>
+    </div>
