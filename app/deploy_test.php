@@ -1,5 +1,5 @@
 <?php
 
-echo "Deploy for frontend v1.3.3";
+echo "Deploy for frontend v1.3.4";
 
 ?>
