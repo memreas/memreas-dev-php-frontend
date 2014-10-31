@@ -1,2 +1,6 @@
 var S3BUCKET = 'memreasdevsec';
+var LOGGED_USER_ID = '0ef94cc9-57ad-4ba2-b007-148705101b56';
 var LISTNOTIFICATIONSPOLLTIME = '15000';
+var FREE_ACCOUNT_FILE_LIMIT = '0.01';
+var PAID_ACCOUNT_FILE_LIMIT = '5000';
+var CLOUDFRONT_DOWNLOAD_HOST = 'https://d3sisat5gdssl6.cloudfront.net/';
