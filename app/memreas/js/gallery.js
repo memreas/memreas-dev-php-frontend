@@ -59,8 +59,15 @@ function getUserDetail(){
                 if (userObject.plan != 'FREE')
                     $(".share-register-plan").remove();
 
-                if (userObject.type != 'Free user' && (userObject.type).indexOf('seller') >= 0)
+                if (userObject.type != 'Free user' && ((userObject.type).indexOf('seller') >= 0 || (userObject.type).indexOf('buyer') >= 0)){
+                    userObject.buyer_balance = getValueFromXMLTag(xml_response, 'buyer_balance');
+                    userObject.seller_balance = getValueFromXMLTag(xml_response, 'seller_balance');
                     $(".share-register-seller").remove();
+                }
+                else{
+                    userObject.buyer_balance = 0;
+                    userObject.seller_balance = 0;
+                }
 
                 var checkSellMedia = shareCheckSellMedia();
                 if (checkSellMedia)
@@ -399,10 +406,6 @@ function updateNotificationHeader(notification_id, update_status){
     switch (update_status){
         case 'accept':
             var message_feedback = $(".notification-popup-message").val();
-            if (message_feedback == ''){
-                jerror("Please fill your message detail");
-                return false;
-            }
             var params = [
                 {tag: 'notification', value:
                     [

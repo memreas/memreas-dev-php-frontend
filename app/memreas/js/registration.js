@@ -138,7 +138,7 @@ function validateRegstration(){
         return false;
     }
     if (!legal_agree.is (":checked")){
-        jerror ('You must agree with legal disclaimer');
+        jerror ('You must agree with our terms of service');
         return false;
     }
 

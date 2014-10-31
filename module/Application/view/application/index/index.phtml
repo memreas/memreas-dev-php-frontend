@@ -331,7 +331,7 @@
 
                     reader.onload = (function(theFile) {
                         return function(e) {
-                            document.getElementById('list').innerHTML = ['<img src="', e.target.result,'" title="', theFile.name, '" width="75" height="75" />'].join('');
+                            document.getElementById('list').innerHTML = ['<img src="', e.target.result,'" title="', theFile.name, '" style="width: 75px; height: 75px;" />'].join('');
                         };
                     })(f);
 

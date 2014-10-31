@@ -282,10 +282,6 @@ function fillUserDetail(currentUserId){
 
 /*Function Save user detail*/
 function saveUserDetail(){
-    if ($("input[name=account_alternate_email]").val() == '' || $("input[name=account_alternate_email]").val() == 'alternate email'){
-        jerror('Please sepecify alternate email');
-        return false;
-    }
 
     if ($("#gender-male").is(":checked"))
         var account_gender = 'male';
@@ -305,7 +301,7 @@ function saveUserDetail(){
         {tag: 'profile_picture', value: ''}
     ];
     ajaxRequest('saveuserdetails', params, function(xml_response){
-        if (getValueFromXMLTag(xml_response, 'status') == "success"){
+        if (getValueFromXMLTag(xml_response, 'status') == "Success"){
             jsuccess(getValueFromXMLTag(xml_response, 'message'));
             fillUserDetail($("input[name=user_id]").val());
         }

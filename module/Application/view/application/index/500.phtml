@@ -150,7 +150,7 @@
                         {tag: 'message', value: comment}
                     ];
                     ajaxRequest('feedback', params, function(response){
-                        if (getValueFromXMLTag(response, 'status') == 'Success'){
+                        if (getValueFromXMLTag(response, 'status') == 'success'){
                             jsuccess(getValueFromXMLTag(response, 'message'));
                             $("input[name=email]").val('your email');
                             $("input[name=subject]").val('subject');

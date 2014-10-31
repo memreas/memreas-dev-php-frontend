@@ -268,10 +268,11 @@ error_log("callback_json----->".$callback_json.PHP_EOL);
      * Write constant to javascript
      * */
     public function writeJsConstants(){
-
+        $session = new Container('user');
         //Put constant variables here
         $JsConstantVariables = array(
             'S3BUCKET' => MemreasConstants::S3BUCKET,
+            'LOGGED_USER_ID' => $session->user_id,
             'LISTNOTIFICATIONSPOLLTIME' => MemreasConstants::LISTNOTIFICATIONSPOLLTIME,
             'FREE_ACCOUNT_FILE_LIMIT' => MemreasConstants::FREE_ACCOUNT_FILE_LIMIT,
             'PAID_ACCOUNT_FILE_LIMIT' => MemreasConstants::PAID_ACCOUNT_FILE_LIMIT,

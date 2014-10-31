@@ -30,23 +30,176 @@
                 </div>
             </div>
         </div>
+        <!-- Memreas tab popup section -->
         <div id="popupBuyMedia" class="popups">
             <a id="popupBuyMediaClose" onClick="disablePopup('popupBuyMedia');" class='popupClose'>x</a>
             <h2>Buying private media</h2>
             <p>&nbsp;</p>
             <p>&nbsp;</p>
             <p>&nbsp;</p>
-            <ul id="content_1" class="scrollpopup give-message-form">
+            <ul id="content_1" class="give-message-form buying-media-detail">
                 <li>
-                    <label class="textfield_names">Select Card</label>
-                    <select name="buymedia_card" id="buymedia_card">
-                        <option value="">-Choose-</option>
-                    </select>
+                    <label class="textfield_names" style="width: 150px;">Event name: </label>
+                    <span class="popup-event-name">Event name</span>
+                    <div class="clear"></div>
+                </li>
+                <li>
+                    <label class="textfield_names" style="width: 150px;">Your credits: </label>
+                    <span class="popup-buymedia-credit">$5</span>
+                    <a class="addcredit-popup-btn" href="javascript:;" onclick="popupBuyCredit();">Buy more</a>
+                    -
+                    <a href="javascript:;" onclick="popupReloadAccountBalance();"><img src="/memreas/img/syns.png" width="30" border="0" /></a>
+                    <div class="clear"></div>
+                </li>
+                <li>
+                    <label class="textfield_names" style="width: 150px;">Event price: </label>
+                    <span class="popup-buymedia-price">$5</span>
+                    <div class="clear"></div>
+                </li>
+                 <li>
+                    <input id="ckb_buymedia_agree" class="css-checkbox" type="checkbox" />
+                    <label id="lbl-sellmedia" for="ckb_buymedia_agree" name="demo_lbl_6" class="css-label margin-none" style="height: 100px; line-height: 21px;" >
+                        By checking this box I certify that I own the appropriate copyrights for any media within this memeas share.  Full terms are available here (link).
+                    </label>
                 </li>
             </ul>
-            <a class="black_btn_skin f-left" href="javascript:;" id="accept-notification" onclick="updateNotificationHeader(1, 'accept');">Update</a> <a class="black_btn_skin f-right" href="javascript:disablePopup('popupGiveMessage');">close</a>
+            <div class="clear"></div>
+            <a class="black_btn_skin f-left" href="javascript:;" id="accept-buymedia" onclick="">Buy now</a> <a class="black_btn_skin f-right" href="javascript:disablePopup('popupBuyMedia');">close</a>
         </div>
         <div id="bgpopupBuyMedia" class="backgroundPopup"></div>
+
+        <div id="popupBuyCredit" class="popups">
+            <a id="popupBuyCreditClose" onClick="disablePopup('popupBuyCredit');" class='popupClose'>x</a>
+            <h2>Buy credits</h2>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <ul id="content_1" class="give-message-form buying-credit-detail">
+                <li>
+                    <label class="textfield_names" style="width: 150px;">Select card: </label>
+                    <select name="popup_buycredit_card">
+                        <option value="">-Choose-</option>
+                    </select>
+                    <div class="clear"></div>
+                </li>
+                <li>
+                    <label class="textfield_names" style="width: 150px;">Select amount: </label>
+                    <select name="popup_buycredit_amount">
+                        <option value="5">$5</option>
+                        <option value="10">$10</option>
+                        <option value="15">$15</option>
+                        <option value="20">$20</option>
+                        <option value="50">$50</option>
+                        <option value="100">$100</option>
+                    </select>
+                    <div class="clear"></div>
+                </li>
+                 <li>
+                    <input id="ckb_buycredit_agree" class="css-checkbox" type="checkbox" />
+                    <label id="lbl-sellmedia" for="ckb_buycredit_agree" name="demo_lbl_6" class="css-label margin-none" style="height: 100px; line-height: 21px;" >
+                        By checking this box I certify that I own the appropriate copyrights for any media within this memeas share.  Full terms are available here (link).
+                    </label>
+                </li>
+            </ul>
+            <div class="clear"></div>
+            <a class="black_btn_skin f-left" href="javascript:;" id="accept-buycredit" onclick="acceptBuyCredit();">Buy now</a> <a class="black_btn_skin f-right" href="javascript:disablePopup('popupBuyCredit');">close</a>
+        </div>
+        <div id="bgpopupBuyCredit" class="backgroundPopup"></div>
+
+        <div id="popupCreditAddCard" class="popups">
+            <a id="popupCreditAddCardClose" onClick="disablePopup('popupCreditAddCard');" class='popupClose'>x</a>
+            <h2>Add new card</h2>
+            <ul id="content_1" class="scrollpopup memreasAddCardForm">
+                <li>
+                    <label class="textfield_names">Card type*</label>
+                    <select name="addcard_cctype" id="addcard_cctype">
+                        <option value="">-Choose-</option>
+                        <option value="visa">Visa Card</option>
+                        <option value="master">Master Card</option>
+                        <option value="discover">Discover Card</option>
+                        <option value="amex">Amex Card</option>
+                    </select>
+                </li>
+                <li>
+                    <label class="textfield_names">Card no.*</label>
+                    <input name="input" type="text" id="addcard_ccnum" class="" value="Card number" default="Card number" onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }" onFocus="if(this.value == 'Card number'){ this.value = ''; $(this).css('color', '#000'); }"/>
+                </li>
+                <li>
+                    <label class="textfield_names">Exp mon.*</label>
+                    <select name="addcard_expmonth" id="addcard_expmonth">
+                        <option value="">-Choose-</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
+                </li>
+                <li>
+                    <label class="textfield_names">Exp year*</label>
+                    <select name="addcard_expyear" id="addcard_expyear">
+                        <option value="">-Choose-</option>
+                        <option value="2014">2014</option>
+                        <option value="2015">2015</option>
+                        <option value="2016">2016</option>
+                        <option value="2017">2017</option>
+                        <option value="2018">2018</option>
+                        <option value="2019">2019</option>
+                        <option value="2020">2020</option>
+                        <option value="2021">2021</option>
+                        <option value="2022">2022</option>
+                        <option value="2023">2023</option>
+                        <option value="2024">2024</option>
+                        <option value="2025">2025</option>
+                        <option value="2026">2026</option>
+                    </select>
+                </li>
+                <li>
+                    <label class="textfield_names">Card CVC*</label>
+                    <input name="input" type="text" id="addcard_ccv" class="" value="Card code" onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }" onFocus="if(this.value == 'Card code'){ this.value = ''; $(this).css('color', '#000'); }"/>
+                </li>
+                <li>
+                    <label class="textfield_names">First name*</label>
+                    <input name="input" type="text" id="addcard_fname" class="" value="first name" default="first name" onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#A0A0A0'); }" onFocus="if(this.value == 'first name'){ this.value = ''; $(this).css('color', '#000'); }"/>
+                </li>
+                <li>
+                    <label class="textfield_names">Last name*</label>
+                    <input name="input" type="text" id="addcard_lname" class="" value="last name" default="last name" onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }" onFocus="if(this.value == 'last name'){ this.value = ''; $(this).css('color', '#000'); }"/>
+                </li>
+                 <li>
+                    <label class="textfield_names">Address 1*</label>
+                    <input name="input" type="text" id="addcard_address1" class="" value="Address line 1" default="Address line 1" onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }" onFocus="if(this.value == 'Address line 1'){ this.value = ''; $(this).css('color', '#000'); }"/>
+                </li>
+                <li>
+                    <label class="textfield_names">Address 2</label>
+                    <input name="input" type="text" id="addcard_address2" class="" value="Address line 2" default="Address line 2" onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }" onFocus="if(this.value == 'Address line 2'){ this.value = ''; $(this).css('color', '#000'); }"/>
+                </li>
+                <li>
+                    <label class="textfield_names">City*</label>
+                    <input name="input" type="text" id="addcard_city" class="" value="City" default="City" onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }" onFocus="if(this.value == 'City'){ this.value = ''; $(this).css('color', '#000'); }"/>
+                </li>
+                <li>
+                    <label class="textfield_names">State*</label>
+                    <input name="input" type="text" id="addcard_state" class="" value="State" default="State" onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }" onFocus="if(this.value == 'State'){ this.value = ''; $(this).css('color', '#000'); }"/>
+                </li>
+                <li>
+                    <label class="textfield_names">Zip*</label>
+                    <input name="input" type="text" id="addcard_zip" class="" value="Zip" default="Zip" onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }" onFocus="if(this.value == 'Zip'){ this.value = ''; $(this).css('color', '#000'); }"/>
+                </li>
+
+            </ul>
+            <a class="black_btn_skin f-left" href="javascript:;" onclick="popupCreditAddCard();">ok</a> <a class="black_btn_skin f-right" href="javascript:disablePopup('popupCreditAddCard');">cancel</a>
+        </div>
+        <div id="bgpopupCreditAddCard" class="backgroundPopup" onclick="disablePopup('popupCreditAddCard');"></div>
+        <!-- END Memreas tab popup section -->
+
     <!-- Ads Section -->
         <?php include ('right_advertising.phtml'); ?>
     <!-- End Ads Section -->
