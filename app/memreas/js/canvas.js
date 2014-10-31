@@ -16,7 +16,16 @@ $(function(){
             {tag: 'metadata', value: '1'}
         ], function (response){
             if (getValueFromXMLTag(response, 'status') == "Success") {
-
+                var owner_event = getValueFromXMLTag(response, 'user_id');
+                var owner_name = getValueFromXMLTag(response, 'username');
+                $(".pro-name").html(owner_name);
+                var params = [{tag: 'user_id', value: owner_event}];
+                ajaxRequest('getuserdetails', params, function(xml_response){
+                        if (getValueFromXMLTag(xml_response, 'status') == 'Success'){
+                            var userprofile = getValueFromXMLTag(xml_response, 'profile');
+                            $(".pro-pic img").attr("src", removeCdataCorrectLink(userprofile)).css({"width":"75px", "height":"75px"});
+                        }
+                }, 'undefined', true);
                 var medias = getSubXMLFromTag(response, 'media');
                 var count_media = medias.length;
 
