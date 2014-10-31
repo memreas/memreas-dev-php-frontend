@@ -273,7 +273,33 @@ function fetchFriendsMemreas(friendMemreasType){
                                 }
                                 if (sell_price ==0)
                                     $("#" + friend_row).append ('<div class="event_img"><img src="' + resource_media + '" alt=""><span class="event_name_box"><a style="color:#FFF;" href="javascript:showEventDetail(\'' + eventId + '\', \'' + creator_id + '\');">!' + event_name + '</a></span></div>');
-                                else $("#" + friend_row).append ('<div class="event_img" onclick="popupBuyMedia(\'' + eventId + '\', \'' + sell_price + '\', \'' + event_name  + '\');"><div class="sell-event-overlay"></div><span class="sell-event-buyme">Buy me</span><img src="' + resource_media + '" alt=""><span class="event_name_box"><a style="color:#FFF;" href="javascript:;">!' + event_name + '</a></span></div>');
+                                else {
+                                    $("#" + friend_row).append ('<div class="event_img" id="selling-' + eventId + '" data-owner="' + creator_id + '" data-click="popupBuyMedia(\'' + eventId + '\', \'' + sell_price + '\', \'' + event_name  + '\');"><div class="sell-event-overlay"></div><span class="sell-event-buyme">Buy me</span><img src="' + resource_media + '" alt=""><span class="event_name_box"><a style="color:#FFF;" href="javascript:;">!' + event_name + '</a></span></div>');
+
+                                    //Start requesting to pay server for checking event is bought or not
+                                    var params = new Object;
+                                    params.user_id = LOGGED_USER_ID;
+                                    params.event_id = eventId;
+                                    var params_json = JSON.stringify(params, null, '\t');
+                                    var data = '{"action": "check_own_event", ' +
+                                        '"type":"jsonp", ' +
+                                        '"json": ' + params_json  +
+                                        '}';
+
+                                    var stripeActionUrl = STRIPE_SERVER_URL + '/stripe/checkOwnEvent';
+                                    $.ajax({
+                                        url: stripeActionUrl,
+                                        type: 'POST',
+                                        dataType: 'jsonp',
+                                        data: 'json=' + data,
+                                        success: function(response){
+                                            if (response.status == 'Success'){
+
+                                            }
+                                            else {}
+                                        }
+                                    });
+                                }
                             }
 
                             if (total_event_row_width > global_width){

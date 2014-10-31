@@ -505,10 +505,6 @@ footer {
         text-align: center;
         width: 18%;
     }
-
-    footer.rel  {
-        position: fixed!important;
-    }
 }
 
 /* =1024 These are the styling that match the width of 10" screens */

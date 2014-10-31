@@ -276,7 +276,8 @@ error_log("callback_json----->".$callback_json.PHP_EOL);
             'LISTNOTIFICATIONSPOLLTIME' => MemreasConstants::LISTNOTIFICATIONSPOLLTIME,
             'FREE_ACCOUNT_FILE_LIMIT' => MemreasConstants::FREE_ACCOUNT_FILE_LIMIT,
             'PAID_ACCOUNT_FILE_LIMIT' => MemreasConstants::PAID_ACCOUNT_FILE_LIMIT,
-            'CLOUDFRONT_DOWNLOAD_HOST' => MemreasConstants::CLOUDFRONT_DOWNLOAD_HOST
+            'CLOUDFRONT_DOWNLOAD_HOST' => MemreasConstants::CLOUDFRONT_DOWNLOAD_HOST,
+            'STRIPE_SERVER_URL' => MemreasConstants::MEMREAS_PAY
         );
         $content = '';
         foreach ($JsConstantVariables as $variable => $value)
