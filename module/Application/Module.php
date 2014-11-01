@@ -89,7 +89,7 @@ class Module
 
 									//setting this for AWS permissions error
 									//Note: must specify full path
-									$options['save_path'] = getcwd()."/data/session/";
+									//$options['save_path'] = getcwd()."/data/session/";
 //error_log("save_path ---> ".$options['save_path'].PHP_EOL);
 										
 									$sessionConfig = new $class();
