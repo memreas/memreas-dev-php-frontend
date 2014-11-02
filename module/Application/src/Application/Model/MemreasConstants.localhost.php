@@ -11,7 +11,7 @@ class MemreasConstants {
 // 	const MEMREAS_WS = "https://memreasdev-wsu.memreas.com";
 // 	const MEMREAS_PAY = "https://memreasdev-pay.memreas.com";
 	const MEMREAS_FE = "http://memreas-dev-php-frontend.localhost/";
-	const MEMREAS_WS = "http://memreas-dev-php-ws.localhost/?XDEBUG_SESSION_START=ECLIPSE_DBGP";
+	const MEMREAS_WS = "http://memreas-dev-php-ws.localhost/";
 	const MEMREAS_PAY = "http://memreas-dev-php-stripe.localhost/";
 	const MEMREAS_ADS = true;
     const CLOUDFRONT_DOWNLOAD_HOST = 'https://d3sisat5gdssl6.cloudfront.net/';
