@@ -264,7 +264,7 @@ function fetchFriendsMemreas(friendMemreasType){
 
                                 //Check if event is selling or not
                                 var sell_price = 0;
-                                if (event_metadata != ''){
+                                if (event_metadata != '' && typeof (event_metadata) != 'undefined'){
                                     event_metadata = JSON.parse(event_metadata);
                                     if (typeof (event_metadata.price) != 'undefined'){
                                         if (event_metadata.price != 0)

@@ -157,63 +157,15 @@ function validateRegstration(){
         if (getValueFromXMLTag(response, 'status') == 'Success'){
             jsuccess(getValueFromXMLTag(response, 'message'));
             user_id = getValueFromXMLTag(response, 'userid');
-            if ($("input[name=profile_image]").val() == 1){
-                var current_key = $("#frm-profile-pic").find('input[name=key]').val();
-                current_key = user_id + '/' + current_key;
-                $("#frm-profile-pic").find('input[name=key]').val(current_key);
-                $("#form-user-login").find('input[name=username]').val(input_uname);
-                $("#form-user-login").find('input[name=password]').val(input_upass);
-
-
-                //Submit form for getting sid
-                var loginname = $("#form-user-login").find('input[name=username]').val();
-                var loginpass = $("#form-user-login").find('input[name=password]').val();
-
-                var params = [
-                    {tag: 'username', value: loginname},
-                    {tag: 'password', value: loginpass},
-                    {tag: 'devicetype', value: 1}
-                ];
-
-                var jqXHR;
-                ajaxRequest('login', params, function(xml_response){
-                    if (getValueFromXMLTag(xml_response, 'status') == 'success'){
-
-                        var sid = getValueFromXMLTag(xml_response, 'sid');
-                        $.post('/index/setToken', {sid:sid}, function(){
-                            jqXHR = uploadHandle.submit();
-                        });
-
-                    }
-                    else jerror(getValueFromXMLTag(xml_response, 'message'));
-                });
-
-            }
-            else {
-                setTimeout(function(){
-                    $("#form-user-login").find('input[name=username]').val(input_uname);
-                    $("#form-user-login").find('input[name=password]').val(input_upass);
-                    $("#form-user-login").trigger('submit');
-                }, 1500);
-            }
+            if ($("input[name=profile_image]").val() == 1)
+                var jqXHR = uploadHandle.submit();
         }
         else jerror(getValueFromXMLTag(response, 'message'));
+        document.register.reset();
     });
     return false;
 }
-function autoLogin(handle_username, handle_user_id){
-    $("#form-user-login").find('input[name=username]').val(handle_username);
-    $("#form-user-login").find('input[name=password]').val(Math.random());
-    $("#form-user-login").find('input[name=status_user_id]').val(handle_user_id);
 
-    //Reset profile picture
-    $("input[name=profile_image]").val(0);
-    $(".profile_picture #list").html('');
-
-    $("span.password-level").hide();
-    document.register.reset();
-    document.user_login_frm.submit();
-}
 function validateRegisterForm(input_uname, input_upass){
     if (input_uname.length < 4){
         jerror ('Username must greater than 4 charaters');
@@ -366,9 +318,7 @@ $(function(){
                                 ];
                 ajaxRequest('addmediaevent', params, function(){
                     jsuccess('Your profile picture updated');
-                    setTimeout(function(){
-                        $("#form-user-login").trigger('submit');
-                    }, 1500);
+                    document.register.reset();
                 });
             },
             done: function (event, data) {
