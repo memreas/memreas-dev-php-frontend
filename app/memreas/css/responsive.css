@@ -78,7 +78,12 @@
     }
     .memreas-detail-owner{ margin-top: 2%; width: 60% !important; }
 }
-
+@media (max-width: 806px){
+	[class*="span"]{
+    	float:none;
+    	width:100%;
+    }
+}
 @media (max-width: 768px){     
 
     .search-sec {
@@ -135,4 +140,6 @@
     #main-tab nav {
         /*padding-bottom: 45em!important; KHC*/
     }
+    
 }
+

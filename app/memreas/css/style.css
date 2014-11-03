@@ -11,7 +11,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 }
 .container {
 	position: relative!important;
-	width: 100%;
+	width: 100%;min-width:768px !important;
 }
 /*.....:HTML5 display-role reset for older browsers:.....*/
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
@@ -178,7 +178,7 @@ header {
     background: -ms-linear-gradient(top,  #b0bccd 0%,#7e92ad 100%); /* IE10+ Khan Changes*/
     background: linear-gradient(to bottom,  #b0bccd 0%,#7e92ad 100%); /* W3C Khan Changes*/
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b0bccd', endColorstr='#7e92ad',GradientType=0 ); /* IE6-9 Khan Changes*/
-
+	min-width:768px;
 	height: 60px;
 	padding-top: 5px;
 	position: relative;
@@ -777,11 +777,10 @@ ul.pics li {
     background: #112A4B;
 }
 ul.pics li img, .aviary-thumbs img, .galleries-location img{
-    height: 98px;
+    height: auto;
     width: 180px;
-    /*height: 64px;
-    width: 64px;*/
     cursor: pointer;
+    max-width:100%;
 }
 #memreas-detail-tab1 ul.pics li img, #share_medialist img{ width: 100%; }
 ul.pics li a{
@@ -2843,7 +2842,7 @@ margin-left: 15%;
 #maintab-content {
     float: right;
     padding: 1em 0 0;
-    width: 93%;
+    width: 92% !important;
 }
 .adbox {
     background: none repeat scroll 0 0 #274567;
@@ -3161,7 +3160,7 @@ select{ width: 184px; height: 30px; }
 	#tab-content-memreas,
 	#tab-content-memreas-detail,
 	#tab-content-more {
-		min-height: 375px;
+		min-height: 100%;
 		margin-bottom: 0px;
 	}
 	html.ads ul.pics{
