@@ -890,7 +890,7 @@ function checkValidDateFromTo(isSubmit){
         var current_date = ("0" + (cdate.getMonth() + 1)).slice(-2) + '/' + ("0" + cdate.getDate()).slice(-2) + '/' + cdate.getFullYear();
         current_date = new Date(current_date);
         if (date_from > date_to){
-            jerror('Viewable date must valid. From date must less then to date.');
+            jerror('Viewable date must valid. From date must less than to date.');
             $("#dtp_to").val('').focus();
             return false;
         }

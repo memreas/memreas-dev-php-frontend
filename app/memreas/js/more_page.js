@@ -292,6 +292,14 @@ function saveUserDetail(){
     }
     var account_dob = $("input[name=account_dob]").val();
 
+    var cdate = new Date();
+    var current_date = ("0" + (cdate.getMonth() + 1)).slice(-2) + '/' + ("0" + cdate.getDate()).slice(-2) + '/' + cdate.getFullYear();
+    if (account_dob > current_date){
+        jerror('date of birth can not larger than today.');
+        $("#account_dob").val('').focus();
+        return false;
+    }
+
     var userId = $("input[name=user_id]").val();
     var params = [
         {tag: 'user_id', value: userId},
