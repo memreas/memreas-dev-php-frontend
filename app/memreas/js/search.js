@@ -176,7 +176,8 @@ $(document).ready(function() {
         },
         highlighter: function(item) {
             return h(item);
-        }
+        },
+        minLength: 4
 
     });
 });
