@@ -206,10 +206,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4e8dd4', end
     width: 34.5%; /* Khan Changes MFE-458*/
 }
 #slider {
-    left: 7em;
-    top: 6em;
+    left: 87px;
+    top: 66px;
     z-index: 1;
 }
+
 form input[type=text], form input[type=password],  form input[type=email] {
     background-color: #fffffd;
     border: medium none;
@@ -436,12 +437,10 @@ footer {
 }
 
     #slider{
-       left: 5.4em;
+       left: 87px;
+   	   top: 65px;
        z-index: 1;
-       top: 4.1em;
        width: 51.9%;
-
-
     }
     .rslides{
         width: 88%;
@@ -532,8 +531,8 @@ footer {
         padding-bottom: 0; /* Khan Change MFE-452 */
     }
     #slider {
-        left: 4.2em;
-        top: 2.9em;
+        left: 63px;
+   		top: 43px;
         width: 59.5%;
     }
     .rslides img {
@@ -592,8 +591,8 @@ footer {
         width: 50%;
     }
     #slider {
-        top: 3.1em;
-        left: 4.3em;
+        left: 70.5px;
+    	top: 50px;
         width: 44%;
     }
     #slider img{
@@ -718,20 +717,23 @@ footer {
 }
 @media (max-width: 725px) {
     #slider {
-        top: 11%;
+        left: 65.3px;
+    	top: 45px;
         width: 43%;
     }
 }
 
 @media (max-width: 675px) {
     #slider {
-        top: 9.7%;
+        left: 63px;
+   		top: 43px;
         width: 43%;
     }
 }
 @media (max-width: 635px) {
     #slider {
-        top: 8.7%;
+        left: 58px;
+    	top: 38px;
         width: 44.5%;
     }
 }
