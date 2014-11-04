@@ -38,10 +38,6 @@ class IndexController extends AbstractActionController
     protected $user_id;
     protected $storage;
     protected $authservice;
-    protected $userTable;
-    protected $eventTable;
-    protected $mediaTable;
-    protected $friendmediaTable;
     protected $session;
 
 
