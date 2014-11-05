@@ -311,6 +311,10 @@ share_addEvent = function() {
         }
         sell_media_price = sellmedia_price_select;
     }
+    else{
+        var sellmedia_duration = '';
+        var sellmedia_duration_type = '';
+    }
 
     disablePopup('popupSellMedia');
 	var name = getElementValue('txt_name');

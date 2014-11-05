@@ -54,7 +54,7 @@ function getUserDetail(){
                 userObject.type = getValueFromXMLTag(xml_response, 'account_type');
 
                 $(".share-account-type").html(userObject.type);
-                $(".share-account-plan").html(userObject.plan_name);
+                $(".share-account-plan").html(userObject.plan);
 
                 if (userObject.plan != 'FREE')
                     $(".share-register-plan").remove();
