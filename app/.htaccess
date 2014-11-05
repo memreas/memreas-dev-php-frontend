@@ -23,8 +23,8 @@ RewriteRule ^(.*)$ %{ENV:BASE}index.php [NC,L]
 ## BASIC PASSWORD PROTECTION
 #AuthType basic
 #AuthName "secure-content"
-#AuthUserFile /var/app/current/apache_passwords
-#Require valid-user
+AuthUserFile /var/app/current/apache_passwords
+Require valid-user
 
 #Set Browser caching
 ## EXPIRES CACHING ##
