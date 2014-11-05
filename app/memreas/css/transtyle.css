@@ -567,23 +567,30 @@ input[name="account_repassword"]{ width: 42%; margin-right: 10px; float: left; }
 .avpw_resize_constrain{
 	width: 20% !important;
 }
-@media (max-width:800px){
-	#avpw_colorsplash_brushes,#avpw_drawing_brushes{margin-top:0px;}
-	.avpw_inset_button_label{display:none !Important;}
+#avpw_colorsplash_brushes,#avpw_drawing_brushes{margin-top:5px;}
+	
 	.avpw_inset_button_first, .avpw_inset_button_last{
-		width: 76px !important;
+		width:45% !important;
 	}
 	.avpw_inset_button{
-		width: 76px !important;
+		width: 45% !important;
 	}
-	.avpw_inset_group_spacer,.avpw_inset_group_mini_spacer{display:none !important;}
+	
 	#avpw_font_browser{left:35px !important;}
 	.avpw_inset_button_mini{
-		width: 51px !important;
+		width: 42px !important;
 	}
 	.avpw_outer-center{float:left !important;}
-}
-#avpw_controlpanel_colorsplash .avpw_outer-center{
+	.avpw_inset_button_label{
+		width: 64px !important;
+	}
+	.avpw_crop_custom_control .avpw_number_input{
+		height: 13px !important;
+	}
+	
+	.avpw_inset_group_spacer,.avpw_inset_group_mini_spacer{display:none !important;}
+	
+.avpw_outer-center{
 	 margin-top: 0 !important;
 }
 .avpw_tool_cutout_centered_drawing{
@@ -608,7 +615,8 @@ input[name="account_repassword"]{ width: 42%; margin-right: 10px; float: left; }
 	 margin-left: 0 !important;
 }
 .avpw_inset_group{
-	 margin-left: 5px !important;
+	margin-left: 5px !important;
+    
 }
 .avpw_checkmark_button, .avpw_checkmark_button .avpw_inset_button{
 	left: 50% !important;
@@ -616,6 +624,7 @@ input[name="account_repassword"]{ width: 42%; margin-right: 10px; float: left; }
     margin-top: -20px !important;
     top: 50% !important;
 }
+/*avpw_controlpanel_textwithfont*/
 #avpw_controlpanel_textwithfont .avpw_outer-center,#avpw_controlpanel_textwithfont .avpw_inner-center{
 	width:100% !important;
 }
@@ -624,3 +633,125 @@ input[name="account_repassword"]{ width: 42%; margin-right: 10px; float: left; }
     width: 100% !important;
     max-width: 100% !important;margin-left: 0 !important;
 }
+#avpw_controlpanel_colorsplash .avpw_outer-center,#avpw_controlpanel_colorsplash .avpw_outer-center .avpw_inner-center{width:100% !important;}
+#avpw_controlpanel_colorsplash .avpw_inset_button_group,#avpw_controlpanel_colorsplash .avpw_inset_button_label,
+#avpw_controlpanel_drawing .avpw_inset_button_group,#avpw_controlpanel_drawing .avpw_inset_button_label
+{
+	width:18% !important;
+	text-align: left;
+}
+#avpw_controlpanel_colorsplash .avpw_inset_button_group:first-child,#avpw_controlpanel_colorsplash .avpw_clear,
+#avpw_controlpanel_drawing .avpw_inset_button_group:first-child,#avpw_controlpanel_drawing .avpw_clear
+{
+	width:36% !important;
+}
+#avpw_controlpanel_colorsplash #avpw_colorsplash_brushes,
+#avpw_controlpanel_drawing #avpw_drawing_brushes
+{
+	width:36% !important; margin-top: 0 !important;
+}
+#avpw_controlpanel_colorsplash .avpw_clear .avpw_inset_button_label,
+#avpw_controlpanel_drawing .avpw_clear .avpw_inset_button_label
+{
+	width:45% !important;
+}
+#avpw_controlpanel_drawing .avpw_inset_color_widget_label{
+	margin-left: 0 !important;
+    margin-right: 0 !important;
+    width:100% !important;
+}
+#avpw_controlpanel_colorsplash .avpw_inset_button_label_mini_5:last-child,
+#avpw_controlpanel_drawing .avpw_inset_button_label_mini_5:last-child
+{
+	width:30% !important;
+}
+#avpw_controlpanel_colorsplash .avpw_colorsplash_eraser,
+#avpw_controlpanel_drawing .avpw_inset_button
+{
+	width:90% !important;
+}
+
+#avpw_controlpanel_colorsplash .avpw_inset_button_mini,
+#avpw_controlpanel_drawing .avpw_inset_button_mini
+{width:31% !important;}
+
+#avpw_controlpanel_textwithfont .avpw_inset_color_widget,#avpw_controlpanel_textwithfont #avpw_font_browser,#avpw_controlpanel_textwithfont #avpw_textwithfont_addtext{
+	width:30% !important;
+}
+#avpw_controlpanel_textwithfont  .avpw_inset_color_widget .avpw_inset_color_picker{
+	width:90% !important;
+}
+#avpw_controlpanel_textwithfont #avpw_font_browser .avpw_inset_button_first{
+	width:90% !important;
+}
+#avpw_controlpanel_textwithfont #avpw_textwithfont_addtext .avpw_inset_button_with_plus{
+	 width: 61% !important;
+}
+#avpw_controlpanel_textwithfont .avpw_inset_button{
+	width:70% !important;
+}
+/*avpw_controlpanel_focus*/
+#avpw_controlpanel_focus .avpw_tool_cutout_centered_tiltshift{
+    left: 0 !important;
+    margin-left: 0 !important;
+    width: 100% !important;
+}
+#avpw_controlpanel_focus .avpw_inset_button_group{
+	width:60% !important;
+}
+/*avpw_controlpanel_orientation*/
+#avpw_controlpanel_orientation .avpw_inset_button_group,#avpw_controlpanel_orientation .avpw_inset_button_label{
+	width:46% !important;
+}
+/*avpw_controlpanel_enhance*/
+#avpw_controlpanel_enhance .avpw_tool_cutout_centered_enhance{
+	left: 0 !important;
+    margin-left: 0 !important;
+    width: 100% !important;
+}
+#avpw_controlpanel_enhance .avpw_inset_button_group,#avpw_controlpanel_enhance .avpw_inset_group{
+	width:100% !important;
+}
+#avpw_controlpanel_enhance .avpw_inset_button{
+	width:31% !important;
+}
+#avpw_controlpanel_enhance .avpw_inset_button_label{
+	width:30% !important;
+}
+/*avpw_controlpanel_resize*/
+.avpw_checkmark_button, .avpw_checkmark_button .avpw_inset_button{
+	left: 0 !important;
+    margin-left: 0 !important;
+    margin-top: 0 !important;
+    top: 6% !important;
+    width: 94% !important;
+}
+#avpw_controlpanel_drawing .avpw_outer-center,#avpw_controlpanel_drawing .avpw_outer-center .avpw_inner-center{width:100% !Important;}
+/*@media (min-width:1200px){
+		.avpw_inset_group {
+		    margin-left: 5px !important;
+		    min-width: 62px !important;
+		    width: auto !important;
+		}
+		.avpw_inset_button_mini {
+		    width: 75px !important;
+		}
+		.avpw_inset_button {
+		    width: 75px !important;
+		}
+		.avpw_inset_button_label {
+		    width: 80px !important;
+		}
+}
+@media (max-width:1199px){
+	.avpw_inset_button {
+	    width: 70px !important;
+	}
+	.avpw_inset_button_first, .avpw_inset_button_last {
+	    width: 70px !important;
+	}
+}
+@media (max-width:800px){
+	.avpw_inset_button_label{display:none !Important;}
+	
+}*/
