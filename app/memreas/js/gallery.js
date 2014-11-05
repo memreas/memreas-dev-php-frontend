@@ -59,14 +59,18 @@ function getUserDetail(){
                 if (userObject.plan != 'FREE')
                     $(".share-register-plan").remove();
 
-                if (userObject.type != 'Free user' && ((userObject.type).indexOf('seller') >= 0 || (userObject.type).indexOf('buyer') >= 0)){
+                if ((userObject.type).indexOf('seller') >= 0 || (userObject.type).indexOf('buyer') >= 0){
                     userObject.buyer_balance = getValueFromXMLTag(xml_response, 'buyer_balance');
                     userObject.seller_balance = getValueFromXMLTag(xml_response, 'seller_balance');
-                    $(".share-register-seller").remove();
                 }
                 else{
                     userObject.buyer_balance = 0;
                     userObject.seller_balance = 0;
+                }
+
+                //Seller able to sell media
+                if (userObject.type != 'Free user' && ((userObject.type).indexOf('seller') >= 0)){
+                    $(".share-register-seller").remove();
                 }
 
                 var checkSellMedia = shareCheckSellMedia();
