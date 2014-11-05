@@ -17,7 +17,7 @@ class MemreasConstants {
 	const S3BUCKET = "memreasdevsec";
 	const LISTNOTIFICATIONSPOLLTIME = 15000; //15s
 	
-	const FREE_ACCOUNT_FILE_LIMIT = 2000; // 2GB limited upload for free user
+	const FREE_ACCOUNT_FILE_LIMIT = 300; // 300MB limited upload for free user
 	const PAID_ACCOUNT_FILE_LIMIT = 5000; // 5GB limited upload for free user
 	
     //Enable / Disable payment tabs at more page
