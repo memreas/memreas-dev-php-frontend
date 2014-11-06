@@ -5,7 +5,6 @@
 
 var base_url = '/index/sampleAjax/';
 var isUserNameValid = false;
-var user_id = '';
 var assigned_event = 0;
 var uploadHandle = '';
 
@@ -156,14 +155,24 @@ function validateRegstration(){
     ajaxRequest('registration', params, function(response){
         if (getValueFromXMLTag(response, 'status') == 'Success'){
             jsuccess(getValueFromXMLTag(response, 'message'));
-            user_id = getValueFromXMLTag(response, 'userid');
-            if ($("input[name=profile_image]").val() == 1)
+            $("input[name=register_user_id]").val(getValueFromXMLTag(response, 'userid'));
+            if ($("input[name=profile_image]").val() == 1) {
+                var key_value = $("#frm-profile-pic").find('input[name=key]').val();
+                key_value = $("input[name=register_user_id]").val() + key_value;
+                $("#frm-profile-pic").find('input[name=key]').val(key_value);
                 var jqXHR = uploadHandle.submit();
+            }
         }
         else jerror(getValueFromXMLTag(response, 'message'));
-        document.register.reset();
+        resetRegisterForm();
     });
     return false;
+}
+
+function resetRegisterForm(){
+    document.register.reset();
+    $("#list").html("");
+    $(".password-level").html("");
 }
 
 function validateRegisterForm(input_uname, input_upass){
@@ -265,7 +274,7 @@ $(function(){
                     var target = 'image';
                 else target = 'media';
 
-                key_value = target + '/' + key_value;
+                key_value = '/' + target + '/' + key_value;
                 $(this).find('input[name=key]').val(key_value);
                 // Use XHR, fallback to iframe
                 options = $(this).fileupload('option');
@@ -302,7 +311,7 @@ $(function(){
                 var s3_filename_split = s3_filename.split("/");
                 var filename = s3_filename_split[s3_filename_split.length - 1];
                 var s3_path_split = s3_filename.split(filename);
-                var s3_path = s3_path_split[0];
+                var s3_path = $("input[name=register_user_id]").val() + '/' + s3_path_split[0];
                 var params = [
                                 {tag: 's3url', value: filename},
                                 {tag: 'is_server_image', value: '0'},
@@ -312,13 +321,13 @@ $(function(){
                                 {tag: 'device_id', value: ''},
                                 {tag: 'event_id', value: ''},
                                 {tag: 'media_id', value: ''},
-                                {tag: 'user_id', value: user_id},
+                                {tag: 'user_id', value: $("input[name=register_user_id]").val()},
                                 {tag: 'is_profile_pic', value: '1'},
                                 {tag: 'location', value: ''}
                                 ];
                 ajaxRequest('addmediaevent', params, function(){
                     jsuccess('Your profile picture updated');
-                    document.register.reset();
+                    resetRegisterForm();
                 });
             },
             done: function (event, data) {
