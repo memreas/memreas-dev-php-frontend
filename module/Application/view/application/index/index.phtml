@@ -323,6 +323,14 @@
 
         <!--Script for File-->
         <script>
+        <?php if(isset($_GET['email_verified']) && $_GET['email_verified']== 1){
+            echo "jsuccess('Your account has been verified successfully');";
+
+        }?>
+         <?php if(isset($_GET['email_verified']) && $_GET['email_verified']== 0){
+            echo "jerror('Your account has not been verified');";
+
+        }?>
             if (window.FileReader) {
                 function handleFileSelect(evt) {
                     var files = evt.target.files;
