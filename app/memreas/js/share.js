@@ -333,6 +333,11 @@ share_addEvent = function() {
 	    var ckb_canpost 	 	= getCheckBoxValue('ckb_canpost');
 	    var ckb_canadd 		 	= getCheckBoxValue('ckb_canadd');
 	    var ckb_public 		 	= getCheckBoxValue('ckb_public');
+
+        //Sell media public as default
+        if (sell_media_price > 0)
+            ckb_public = 1;
+
  	    var ckb_viewable 	 	= getCheckBoxValue('ckb_viewable');
 	    var ckb_selfdestruct 	= getCheckBoxValue('ckb_selfdestruct');
 

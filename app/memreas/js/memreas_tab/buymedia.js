@@ -52,7 +52,7 @@ function buyMedia(event_id){
             params.user_id = LOGGED_USER_ID;
             params.amount = price.toString();
             params.seller_id = event_owner;
-            params.event_id = event_owner;
+            params.event_id = event_id;
 
             var params_json = JSON.stringify(params, null, '\t');
             var data = '{"action": "buyMedia", ' +
@@ -71,6 +71,19 @@ function buyMedia(event_id){
                     if (response.status == 'Success'){
                         jsuccess(response.message);
                         disablePopup("popupBuyMedia");
+                        var current_event = response.event_id;
+
+                        //Checking for handling public tab or friend tab is activated
+                        if ($("a[title=memreas-tab3]").parent('li').attr("id") == "current")
+                            var sell_class = "public-";
+                        else var sell_class = "private-";
+
+                        var jElement = $("#selling-" + current_event);
+                        var creator_id = jElement.attr("data-owner");
+                        jElement.removeAttr("data-owner").removeAttr("data-click")
+                            .find("a").attr("href", "javascript:showEventDetail('" + current_event + "', '" + creator_id + "');");
+                        jElement.find(".sell-event-overlay").remove();
+                        jElement.find(".sell-event-buyme").remove();
                     }
                     else jerror(response.message);
                     $('.stripe-payment').fadeOut(500);

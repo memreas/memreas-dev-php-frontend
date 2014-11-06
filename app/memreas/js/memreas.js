@@ -189,9 +189,11 @@ function fetchFriendsMemreas(friendMemreasType){
     if (friendMemreasType == 'private'){
             var showPublic = '0';
             var showAccepted = '1';
+            var sell_class = 'private-';
         }else{
             var showPublic = '1';
             var showAccepted = '1';
+            var sell_class = 'public-';
         } 
     ajaxRequest(
         'viewevents',
@@ -274,7 +276,7 @@ function fetchFriendsMemreas(friendMemreasType){
                                 if (sell_price ==0)
                                     $("#" + friend_row).append ('<div class="event_img"><img src="' + resource_media + '" alt=""><span class="event_name_box"><a style="color:#FFF;" href="javascript:showEventDetail(\'' + eventId + '\', \'' + creator_id + '\');">!' + event_name + '</a></span></div>');
                                 else {
-                                    $("#" + friend_row).append ('<div class="event_img" id="selling-' + eventId + '" data-owner="' + creator_id + '" data-click="popupBuyMedia(\'' + eventId + '\', \'' + sell_price + '\', \'' + event_name  + '\');"><div class="sell-event-overlay"></div><span class="sell-event-buyme">Buy me</span><img src="' + resource_media + '" alt=""><span class="event_name_box"><a style="color:#FFF;" href="javascript:;">!' + event_name + '</a></span></div>');
+                                    $("#" + friend_row).append ('<div class="event_img" id="' + sell_class + 'selling-' + eventId + '" data-owner="' + creator_id + '" data-click="popupBuyMedia(\'' + eventId + '\', \'' + sell_price + '\', \'' + event_name  + '\');"><div class="sell-event-overlay"></div><span class="sell-event-buyme"><i>checking...</i></span><img src="' + resource_media + '" alt=""><span class="event_name_box"><a style="color:#FFF;" href="javascript:;">!' + event_name + '</a></span></div>');
 
                                     //Start requesting to pay server for checking event is bought or not
                                     var params = new Object;
@@ -293,10 +295,20 @@ function fetchFriendsMemreas(friendMemreasType){
                                         dataType: 'jsonp',
                                         data: 'json=' + data,
                                         success: function(response){
-                                            if (response.status == 'Success'){
-
+                                            var current_event = response.event_id;
+                                            var jElement = $("#" + sell_class + "selling-" + current_event);
+                                            if (response.status == 'Success') {
+                                                jElement.removeAttr("data-owner").removeAttr("data-click")
+                                                    .find("a").attr("href", "javascript:showEventDetail('" + eventId + "', '" + creator_id + "');");
+                                                jElement.find(".sell-event-overlay").remove();
+                                                jElement.find(".sell-event-buyme").remove();
                                             }
-                                            else {}
+                                            else {
+                                                jElement.attr("onclick", jElement.attr("data-click"))
+                                                    .removeAttr("data-click").removeAttr("data-owner");
+                                                jElement.find(".sell-event-buyme").html("buy me");
+                                            }
+
                                         }
                                     });
                                 }
