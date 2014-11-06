@@ -7,16 +7,17 @@ namespace Application\Model;
 
 class MemreasConstants {
 	
-	const MEMREAS_FE = "https://memreasprod-fe.memreas.com";
-	const MEMREAS_WS = "https://memreasprod-wsr.memreas.com";
-	const MEMREAS_PAY = "https://memreasprod-pay.memreas.com";
-	const MEMREAS_ADS = false;
+	const MEMREAS_FE = "https://fe2.memreas.com";
+	const MEMREAS_WS = "https://memreasdev-wsg.memreas.com";
+	const MEMREAS_PAY = "https://memreasdev-pay.memreas.com";
+	const MEMREAS_ADS = true;
+    const CLOUDFRONT_DOWNLOAD_HOST = 'https://d3sisat5gdssl6.cloudfront.net/';
     const S3_APPKEY = 'AKIAJMXGGG4BNFS42LZA';
     const S3_APPSEC = 'xQfYNvfT0Ar+Wm/Gc4m6aacPwdT5Ors9YHE/d38H';
-	const S3BUCKET = "memreasprdsec";
-	const LISTNOTIFICATIONSPOLLTIME = 180000; //3minutes
+	const S3BUCKET = "memreasdevsec";
+	const LISTNOTIFICATIONSPOLLTIME = 15000; //15s
 	
-	const FREE_ACCOUNT_FILE_LIMIT = 100; // 100MB limited upload for free user
+	const FREE_ACCOUNT_FILE_LIMIT = 300; // 300MB limited upload for free user
 	const PAID_ACCOUNT_FILE_LIMIT = 5000; // 5GB limited upload for free user
 	
     //Enable / Disable payment tabs at more page
