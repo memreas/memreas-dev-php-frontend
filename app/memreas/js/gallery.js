@@ -68,6 +68,11 @@ function getUserDetail(){
                     userObject.seller_balance = 0;
                 }
 
+                //Update user detail on share page
+                $(".morepage-account-type").html(userObject.type);
+                $(".morepage-account-buyerbalance").html("$" + userObject.buyer_balance);
+                $(".morepage-account-sellerbalance").html("$" + userObject.seller_balance);
+
                 //Seller able to sell media
                 if (userObject.type != 'Free user' && ((userObject.type).indexOf('seller') >= 0)){
                     $(".share-register-seller").remove();

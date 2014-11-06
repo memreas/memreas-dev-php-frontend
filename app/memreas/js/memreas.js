@@ -105,10 +105,14 @@ function fetchMyMemreas(){
                             if (comment_owner_pic == '')
                                 comment_owner_pic = '/memreas/img/profile-pic.jpg';
                             var comment_text = $(event_comment).filter('comment_text').html();
-                            html_comment += '<div class="swipebox_comment">' +
-                                          '<div class="event_pro"><img src="' + comment_owner_pic + '"></div>' +
-                                          '<textarea class="event_textarea" readonly="readonly">' + comment_text + '</textarea>' +
-                                        '</div>';
+                            var comment_type = $(event_comment).filter('type').html();
+
+                            if (comment_type == 'text') {
+                                html_comment += '<div class="swipebox_comment">' +
+                                '<div class="event_pro"><img src="' + comment_owner_pic + '"></div>' +
+                                '<textarea class="event_textarea" readonly="readonly">' + comment_text + '</textarea>' +
+                                '</div>';
+                            }
                         }
                         jCommentElement.empty().html(html_comment);
                     }

@@ -148,12 +148,13 @@ function completeComment(){
     ar_saveAudio();
     $(".recording-timer").html("0:00");
 }
-
+var fileObject;
+var dataObject;
 function uploadAudio(blobObject, tabActive) {
     voiceCommentCancel();
     $('#loadingpopup').show();
-    var file2 = new FileReader();
-    file2.readAsDataURL(blobObject);
+    fileObject = new FileReader();
+    fileObject.readAsDataURL(blobObject);
     if (tabActive == 'share'){
         if (event_id == ''){
             audioRecorder.stop();
@@ -163,16 +164,18 @@ function uploadAudio(blobObject, tabActive) {
             $("#loadingpopup").hide();
             return false;
         }
-        var data = {
-            file_data: file2.result,
+        dataObject = {
+            file_data: fileObject.result,
             user_id: $('input[name=user_id]').val(),
             media_id:'',
             comment_event_id: event_id
         };
-        file2.onloadend = function (e) {
+        fileObject.onloadend = function (e) {
+            dataObject.file_data = fileObject.result;
             $.ajax({
                 url: "/index/audiocomment",
-                type: "POST", data: data ,
+                type: "POST",
+                data: dataObject ,
                 dataType: "html",
                 success: function (response) {
                     $('#loadingpopup').hide();
@@ -182,21 +185,23 @@ function uploadAudio(blobObject, tabActive) {
         };
     }
     else{
-        var data = {
-            file_data: file2.result,
+        dataObject = {
+            file_data: fileObject.result.toString(),
             user_id: $('input[name=user_id]').val(),
             comment_event_id: eventdetail_id,
             media_id:eventdetail_media_id
         };
-        file2.onloadend = function (e) {
+        fileObject.onloadend = function (e) {
+            dataObject.file_data = fileObject.result;
             $.ajax({
                 url: "/index/audiocomment",
                 type: "POST",
-                data: data,
+                data: dataObject,
                 dataType: "html",
                 success: function (response) {
                     $('#loadingpopup').hide();
                     jsuccess(response);
+                    getMediaComment();
                 }
             });
         };
