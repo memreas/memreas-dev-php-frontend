@@ -678,7 +678,7 @@ error_log("userid---->".$userid.PHP_EOL);
                 $result = $this->fetchXML('addcomments', $xml_add_comment);
                 $data = simplexml_load_string($result);
 
-                $message = $data->addcommentresponse->message;
+                $message = "Comment added";
             }
             else $message = $data->addmediaeventresponse->message;
             header ("Content-type: text/plain");

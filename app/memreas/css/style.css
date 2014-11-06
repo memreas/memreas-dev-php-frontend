@@ -3286,4 +3286,4 @@ select{ width: 184px; height: 30px; }
 .morepage-account-type, .morepage-account-buyerbalance, .morepage-account-sellerbalance{ color: #F5FF00; }
 .memreas-detail-comments li{ clear: both; }
 .memreas-detail-audio{ width: 70%; float: right; }
-.memreas-popup-detail-audio{ padding-top: 13px; }
+.memreas-popup-detail-audio, .memreas-detail-audio{ padding-top: 13px; }
