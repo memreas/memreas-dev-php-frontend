@@ -637,7 +637,7 @@ error_log("userid---->".$userid.PHP_EOL);
 
             //begin upload to S3
             $s3Object = new S3(MemreasConstants::S3_APPKEY, MemreasConstants::S3_APPSEC);
-            $target_file = $user_id . '/media/audio/' . $filename;
+            $target_file = $user_id . '/media/' . $filename;
 
             $s3Object->putBucket(MemreasConstants::S3BUCKET, $s3Object::ACL_PUBLIC_READ_WRITE);
 
@@ -663,9 +663,26 @@ error_log("userid---->".$userid.PHP_EOL);
             $result = $this->fetchXML($action, $xml);
 
             $data = simplexml_load_string($result);
-            if ($data->addmediaeventresponse->status == 'Success')
-                echo 'Comment added successfully';
-            else echo 'Error while saving your media please try again';
+            if ($data->addmediaeventresponse->status == 'Success') {
+                $audio_comment_id = $data->addmediaeventresponse->media_id;
+                $xml_add_comment = '<xml>';
+                $xml_add_comment .= '<addcomment>';
+                $xml_add_comment .= '<event_id>' . $event_id . '</event_id>';
+                $xml_add_comment .= '<media_id>' . $media_id . '</media_id>';
+                $xml_add_comment .= '<user_id>' . $user_id . '</user_id>';
+                $xml_add_comment .= '<comments>audio comment</comments>';
+                $xml_add_comment .= '<audio_media_id>' . $audio_comment_id . '</audio_media_id >';
+                $xml_add_comment .= '</addcomment>';
+                $xml_add_comment .= '</xml>';
+
+                $result = $this->fetchXML('addcomments', $xml_add_comment);
+                $data = simplexml_load_string($result);
+
+                $message = "Comment added";
+            }
+            else $message = $data->addmediaeventresponse->message;
+            header ("Content-type: text/plain");
+            echo $message;
             die(); // For ajax calling only
         }
         die();

@@ -457,6 +457,7 @@ ul.commentpopup {
 	padding: 5px;
 }
 ul.commentpopup li {
+    clear: both;
 	border: none;
 	margin: 10px 0px 0px 0px;
 }
@@ -3278,3 +3279,11 @@ select{ width: 184px; height: 30px; }
     font-size: 16px;
     font-style: italic;
 }
+.morepage-account-detail{
+    line-height: 150%;
+    font-size: 16px;
+}
+.morepage-account-type, .morepage-account-buyerbalance, .morepage-account-sellerbalance{ color: #F5FF00; }
+.memreas-detail-comments li{ clear: both; }
+.memreas-detail-audio{ width: 70%; float: right; }
+.memreas-popup-detail-audio, .memreas-detail-audio{ padding-top: 13px; }

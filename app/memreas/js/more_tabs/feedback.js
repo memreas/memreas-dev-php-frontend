@@ -29,7 +29,7 @@ function submitFeedback(){
                     {tag:'message', value: feedbackMessage}
                 ];
     ajaxRequest('feedback', params, function(response){
-        if (getValueFromXMLTag(response, 'status') == 'Success'){
+        if (getValueFromXMLTag(response, 'status') == 'success'){
             jsuccess(getValueFromXMLTag(response, 'message'));
             $("input[name=name_feedback]").val('your name');
             $("input[name=email_feedback]").val('your email');

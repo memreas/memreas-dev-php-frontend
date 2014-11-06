@@ -78,21 +78,45 @@ function getMediaComment(){
             $(".memreas-detail-commentcount span").html(comment_count);
             if (comment_count > 0){
                 for (var i = 0;i < comment_count;i++){
-                    var event_comment = event_comments[i].innerHTML;
-                    var comment_owner_pic = $(event_comment).filter('profile_pic').html();
+                    var event_comment = event_comments[i];
+                    var comment_owner_pic = getValueFromXMLTag(event_comment, 'profile_pic');
                     comment_owner_pic = removeCdataCorrectLink(comment_owner_pic);
                     if (comment_owner_pic == '')
                         comment_owner_pic = '/memreas/img/profile-pic.jpg';
-                    var comment_text = $(event_comment).filter('comment_text').html();
+                    var comment_text = getValueFromXMLTag(event_comment, 'comment_text');
+                    var comment_type = getValueFromXMLTag(event_comment, 'type');
                     var html_str = '<li>' +
-                        '<figure class="pro-pics"><img src="' + comment_owner_pic + '" alt=""></figure>' +
-                        '<textarea readonly="readonly">' + comment_text + '</textarea>' +
-                        '</li>';
+                        '<figure class="pro-pics"><img src="' + comment_owner_pic + '" alt=""></figure>';
+
+                    //Comment is text or audio
+                    if (comment_type == 'text')
+                        html_str += '<textarea readonly="readonly">' + comment_text + '</textarea>';
+                    else{
+                        var audio_media_url = getValueFromXMLTag(event_comment, 'audio_media_url');
+                        audio_media_url = removeCdataCorrectLink(audio_media_url);
+                        html_str += '<audio controls class="memreas-detail-audio">' +
+                        '<source src="' + audio_media_url + '" type="audio/wav" />' +
+                        'Your browser does not support the audio element' +
+                        '</audio>';
+                    }
+                    html_str += '</li>';
+
                     var html_popup_str = '<li>' +
-                        '<div class="event_pro"><img src="' + comment_owner_pic + '"></div>' +
-                        '<textarea name="memreas_popup_comment" cols="" rows=""' +
-                        ' readonly="readonly">' +  comment_text + '</textarea>' +
-                        '</li>';
+                        '<div class="event_pro"><img src="' + comment_owner_pic + '"></div>';
+
+                    //Comment is text or audio
+                    if (comment_type == 'text')
+                        html_popup_str += '<textarea name="memreas_popup_comment" cols="" rows="" readonly="readonly">' +  comment_text + '</textarea>';
+                    else{
+                        var audio_media_url = getValueFromXMLTag(event_comment, 'audio_media_url');
+                        audio_media_url = removeCdataCorrectLink(audio_media_url);
+                        html_popup_str += '<audio controls class="memreas-popup-detail-audio">' +
+                        '<source src="' + audio_media_url + '" type="audio/wav" />' +
+                        'Your browser does not support the audio element' +
+                        '</audio>';
+                    }
+                    html_popup_str += '</li>';
+
                     jComment_element.append(html_str);
                     jComment_popup.append(html_popup_str);
                 }
