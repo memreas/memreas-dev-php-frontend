@@ -165,14 +165,11 @@
             </li>
             <li>
                 <label class="textfield_names">duration :</label>
-                <input style="width: 42% !important; float: left;" name="input3" type="text" id="sellmedia_duration" class="share-txtfield" value="duration" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'duration')this.value = '';" />
-                <select name="duration_type" id="duration_type" style="width: 100px; margin-left: 10px;">
-                    <option value="">-Choose-</option>
-                    <option value="hour">hour</option>
-                    <option value="day">day</option>
-                    <option value="month">month</option>
-                    <option value="year">year</option>
-                </select>
+                <input name="input3" type="text" id="sellmedia_duration_from" class="share-txtfield date-picker" value="available from" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'available from')this.value = '';" />
+            </li>
+            <li class="clear">
+                <label class="textfield_names">&nbsp;</label>
+                <input name="input3" type="text" id="sellmedia_duration_to" class="share-txtfield date-picker" value="available to" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'available to')this.value = '';" />
             </li>
             <li>
                 <input id="ckb_sellmedia_agree" class="css-checkbox" type="checkbox" />

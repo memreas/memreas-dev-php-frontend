@@ -47,12 +47,16 @@ function buyMedia(event_id){
 
             var event_owner = getValueFromXMLTag(response, 'event_owner');
             var event_id = getValueFromXMLTag(response,  'event_id');
+            var duration_from = getValueFromXMLTag(response, 'duration_from');
+            var duration_to = getValueFromXMLTag(response, 'duration_to');
 
             var params = new Object;
             params.user_id = LOGGED_USER_ID;
             params.amount = price.toString();
             params.seller_id = event_owner;
             params.event_id = event_id;
+            params.duration_from = duration_from;
+            params.duration_to = duration_to;
 
             var params_json = JSON.stringify(params, null, '\t');
             var data = '{"action": "buyMedia", ' +
