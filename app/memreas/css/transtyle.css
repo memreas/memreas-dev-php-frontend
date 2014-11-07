@@ -726,6 +726,13 @@ input[name="account_repassword"]{ width: 42%; margin-right: 10px; float: left; }
     top: 6% !important;
     width: 94% !important;
 }
+.nomedia{position:absolute;background:#FBE3E4 url('../img/error.png') no-repeat 15px center;color:#8a1f11;border:1px solid #FBC2C4;padding:10px;padding-left:50px;margin:15px;z-index:9999;-moz-border-radius:5px;border-radius:5px;-webkit-border-radius:5px;}
+.avpw_crop_custom_control_right{
+	padding-top: 18px !important;
+}
+.avpw_crop_custom_control_left{
+	width:75px !important;
+}
 #avpw_controlpanel_drawing .avpw_outer-center,#avpw_controlpanel_drawing .avpw_outer-center .avpw_inner-center{width:100% !Important;}
 /*@media (min-width:1200px){
 		.avpw_inset_group {
