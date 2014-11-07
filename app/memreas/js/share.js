@@ -286,6 +286,44 @@ share_initGoogleMap = function(div_id) {
 	}
 }
 
+//Check valid duration
+function checkSellMediaDuration(){
+    var sellmedia_duration_from = $("#sellmedia_duration_from").val();
+    var sellmedia_duration_to = $("#sellmedia_duration_to").val();
+
+    //Reset default values
+    if (sellmedia_duration_from == 'available from')
+        sellmedia_duration_from = '';
+    if (sellmedia_duration_to == 'available to')
+        sellmedia_duration_to = '';
+
+
+
+    if (sellmedia_duration_from != '' || sellmedia_duration_to != ''){
+        if (sellmedia_duration_from == ''){
+            jerror("please input available from");
+            return false;
+        }
+        if (sellmedia_duration_to == ''){
+            jerror('please input available to');
+            return false;
+        }
+
+        var date_from = new Date(sellmedia_duration_from);
+        var date_to = new Date(sellmedia_duration_to);
+
+        if (date_to <= date_from){
+            jerror("Date to must be larger than date from");
+            return false;
+        }
+        else return true;
+    }
+    else {
+        jerror("Please specify media available for viewing");
+        return false;
+    }
+}
+
 // add the new event by request to the server.
 share_addEvent = function() {
     //Precheck for selling media is popup or not and check for correction
@@ -296,14 +334,11 @@ share_addEvent = function() {
             return false;
         }
 
-        var sellmedia_duration = $("#sellmedia_duration").val();
-        if (sellmedia_duration != '' && sellmedia_duration != 'duration'){
-            var sellmedia_duration_type = $("#duration_type").val();
-            if (sellmedia_duration_type == ''){
-                jerror("please choose duration type");
-                return false;
-            }
-        }
+        var passDuration = checkSellMediaDuration();
+        if (!passDuration) return false;
+
+        var sellmedia_duration_from = $("#sellmedia_duration_from").val();
+        var sellmedia_duration_to = $("#sellmedia_duration_to").val();
 
         if (!$("#ckb_sellmedia_agree").is(":checked")){
             jerror("You must agree with our terms and conditions");
@@ -363,8 +398,8 @@ share_addEvent = function() {
 			    { tag: 'event_self_destruct', 		value: formatDateToDMY(date_selfdestruct) },
 			    { tag: 'is_public', 				value: ckb_public },
 			    { tag: 'price', 				    value: sell_media_price.toString() },
-			    { tag: 'duration', 				    value: sellmedia_duration.toString() },
-                { tag: 'duration_type', 		    value: sellmedia_duration_type },
+                { tag: 'duration_from', 		    value: sellmedia_duration_from },
+                { tag: 'duration_to', 		        value: sellmedia_duration_to }
 		    ],
 		    function(ret_xml) {
 			    // parse the returned xml.
@@ -863,6 +898,8 @@ $(function(){
     $("#dtp_from").datepicker();
     $("#dtp_to").datepicker();
     $("#dtp_selfdestruct").datepicker();
+    $("#sellmedia_duration_from").datepicker();
+    $("#sellmedia_duration_to").datepicker();
     $("#dtp_from").change (function(){
         var filledin = $(this).val();
         if (filledin != '')

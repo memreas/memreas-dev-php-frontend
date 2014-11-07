@@ -34,13 +34,13 @@ function buyMedia(event_id){
             var metadata = getValueFromXMLTag(response, 'event_metadata');
             metadata = JSON.parse(metadata);
 
-            if (typeof (metadata.duration) != 'undefined')
-                var duration = metadata.duration;
-            else var duration = 0;
+            if (typeof (metadata.duration_from) != 'undefined')
+                var duration_from = metadata.duration_from;
+            else var duration_from = '';
 
-            if (typeof (metadata.duration_type) != 'undefined')
-                var duration_type = metadata.duration_type;
-            else var duration_type = 0;
+            if (typeof (metadata.duration_to) != 'undefined')
+                var duration_to = metadata.duration_to;
+            else var duration_to = '';
 
             var price = metadata.price;
             $('#loadingpopup').hide();
@@ -53,6 +53,8 @@ function buyMedia(event_id){
             params.amount = price.toString();
             params.seller_id = event_owner;
             params.event_id = event_id;
+            params.duration_from = duration_from;
+            params.duration_to = duration_to;
 
             var params_json = JSON.stringify(params, null, '\t');
             var data = '{"action": "buyMedia", ' +
