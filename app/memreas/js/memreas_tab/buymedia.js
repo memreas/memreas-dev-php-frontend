@@ -34,21 +34,19 @@ function buyMedia(event_id){
             var metadata = getValueFromXMLTag(response, 'event_metadata');
             metadata = JSON.parse(metadata);
 
-            if (typeof (metadata.duration) != 'undefined')
-                var duration = metadata.duration;
-            else var duration = 0;
+            if (typeof (metadata.duration_from) != 'undefined')
+                var duration_from = metadata.duration_from;
+            else var duration_from = '';
 
-            if (typeof (metadata.duration_type) != 'undefined')
-                var duration_type = metadata.duration_type;
-            else var duration_type = 0;
+            if (typeof (metadata.duration_to) != 'undefined')
+                var duration_to = metadata.duration_to;
+            else var duration_to = '';
 
             var price = metadata.price;
             $('#loadingpopup').hide();
 
             var event_owner = getValueFromXMLTag(response, 'event_owner');
             var event_id = getValueFromXMLTag(response,  'event_id');
-            var duration_from = getValueFromXMLTag(response, 'duration_from');
-            var duration_to = getValueFromXMLTag(response, 'duration_to');
 
             var params = new Object;
             params.user_id = LOGGED_USER_ID;
