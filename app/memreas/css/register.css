@@ -850,9 +850,15 @@ footer {
         margin: 0 auto;
         min-height: 350px;
     }
-    .body-top.register{/* KHan changes : MFE-470 */
-        display: none;
+    .body-top.register .container{/* KHan changes : MFE-470 */
+        /*display: none;*/
+        max-width: 300px;
     }
+    .slogan h2{
+    	padding:21px 0 0 ;
+    	margin:0;
+    }
+    .body-top.register form{background:none !Important;}
     .pull-right.sign-up { /* KHan changes : MFE-470 */
         margin-top: 0;
     }
