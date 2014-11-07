@@ -33,6 +33,13 @@ function register_sell_media(){
     formPass = checkSellerBasicInformation("sell_media_bank", true);
 
     if (formPass){
+
+        //Check order confirm checkbox
+        if (!($("#register-seller-agree").is(":checked"))){
+            jerror("You must agree with our terms of service");
+            return false;
+        }
+
         var address_line_2 = ($("#sell-media-address2").val() == ''
                                 || $("#sell-media-address2").val() == $("#sell-media-address2").attr('default'))
                                 ? '' : $("#sell-media-address2").val();
