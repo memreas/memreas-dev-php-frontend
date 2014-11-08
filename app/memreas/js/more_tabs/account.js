@@ -1,6 +1,10 @@
 $(function(){
     $("#account_dob").datepicker();
 
+    $(".member-trasnsaction-head").one("click", function(){
+        getAccountOrderHistory();
+    });
+
     $(".account-card-section").click(function(){
 
         var jMemberCard = $(".account-payment");
@@ -511,4 +515,50 @@ function getAccountPlans(){
             $('#loadingpopup').fadeOut(500);
         }
     });
+}
+
+/*
+* Get account order histories from stripe
+* */
+function getAccountOrderHistory(){
+    var params = [
+        {tag: 'user_id', value: LOGGED_USER_ID},
+        {tag: 'page', value: '1'},
+        {tag: 'limit', value: '100'}
+    ];
+    var jElement = $(".transaction-details");
+    jElement.empty();
+    ajaxRequest('getorderhistory', params, function(response) {
+        if (getValueFromXMLTag(response, 'status') == 'Success'){
+            var transactions = getSubXMLFromTag(response, 'order');
+            console.log(transactions);
+            for (var i = 0;i < transactions.length;i++) {
+                var transaction = transactions[i];
+                var amount = getValueFromXMLTag(transaction, 'amount');
+                var transaction_type = getValueFromXMLTag(transaction, 'transaction_type');
+                transaction_type = transaction_type.split("_").join(" ");
+                var html = '<tr class="transaction-row">' +
+                    '<td class="transaction-no">' + (i+1) + '</td>' +
+                    '<td class="transaction-type">' + transaction_type + '</td>' +
+                    '<td class="transaction-detail">' + getValueFromXMLTag(transaction, '') + '</td>';
+                if (amount) {
+                    html += '<td class="transaction-begin-balance">' + getValueFromXMLTag(transaction, 'starting_balance') + '</td>' +
+                    '<td class="transaction-amount">' + amount + '</td>' +
+                    '<td class="transaction-ending-balance">' + getValueFromXMLTag(transaction, 'ending_balance') + '</td>';
+                }
+                else {
+                    html += '<td class="transaction-begin-balance">..</td>' +
+                    '<td class="transaction-amount">' + ((amount) ? amount : '..') +  '</td>' +
+                    '<td class="transaction-ending-balance">..</td>';
+                }
+
+                html += '<td class="transaction-ending-currency">USD</td>' +
+                    '<td class="transaction-date">11/11/2011</td>' +
+                    '</tr>';
+                jElement.append(html);
+            }
+            $(".member-transaction").mCustomScrollbar({scrollButtons:{enable:true }});
+        }
+        else jElement.append('<tr class="transaction-row"><td colspan="8">no record</td></tr>');
+    })
 }

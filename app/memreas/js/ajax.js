@@ -119,6 +119,7 @@ getXMLStringFromParamArray = function(action, params) {
         case "checkevent":       action_tag = "checkevent"; break;
         //Update password
         case "updatepassword":       action_tag = "updatepassword"; break;
+        case "getorderhistory":       action_tag = "getorderhistory"; break;
 
 
 		default: break;
