@@ -3290,3 +3290,22 @@ select{ width: 184px; height: 30px; }
 #sellmedia_duration_from, #sellmedia_duration_to{
     width: 30% !important;
 }
+.member-transaction{ height: 300px }
+.transaction-header{
+    background: #505050;
+    border: 1px solid #6D6D6D;
+}
+.transaction-header td, .transaction-details td{
+    padding: 7px;
+    display: inline-block;
+}
+.transaction-details{}
+.transaction-row{}
+.transaction-no{ width: 2%; }
+.transaction-type{ width: 14%; }
+.transaction-detail{ width: 15%; }
+.transaction-begin-balance{ width: 12%; }
+.transaction-amount{ width: 5%;  }
+.transaction-ending-balance{ width: 13%; }
+.transaction-ending-currency{ width: 7%; }
+.transaction-date{ width: 13%; }
