@@ -457,5 +457,73 @@ splitByDelimeters = function(val, delims) {
 }
 
 
+/*Pham */
+$(document).ready(function () {
+
+    var length = $('#main-tab').offset().top;
+    var length2 = $('.right-ads').offset().top;
+    $(window).scroll(function () {
+    	var height = $('#main-tab').height() + 'px';
+        var scroll = $(this).scrollTop();
+        if(scroll >= length){
+        	$('#main-tab').css({
+                'position': 'fixed',
+                'top': '0',
+                'left': '0',
+                'height': height
+            });
+        } else{
+        	
+        	$('#main-tab').css({
+                'position': 'relative',
+                'top': '0',
+                'height': height
+            });
+        }
+        
+        if(scroll >= 80){
+        	$('.right-ads').css({
+                'position': 'fixed',
+                'top': 'auto',
+                'bottom': '120px',
+                'right':'1.5%',
+                'height': height
+            });
+        }else{
+        	$('.right-ads').css({
+                'position': 'relative',
+                'top': '0',
+                'height': height
+            });
+        }
+        /*var height = $('#main-tab').height() + 'px';
+
+        if (scroll < $('#main-tab').offset().top) {
+
+            $('#main-tab').css({
+                'position': 'absolute',
+                'top': '0'
+            });
+
+        } else if (scroll > length) {
+
+            $('#main-tab').css({
+                'position': 'absolute',
+                'bottom': '40px',
+                'top': 'auto'
+            });
+
+        } else {
+
+            $('#main-tab').css({
+                'position': 'fixed',
+                'top': '0',
+                'height': height
+            });
+
+        }*/
+    });
+
+});
 
 
