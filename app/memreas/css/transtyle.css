@@ -341,7 +341,10 @@ input[name="account_repassword"]{ width: 42%; margin-right: 10px; float: left; }
     -moz-box-shadow:none;
 }
 #avpw_controls{
-	min-width: 100% !important;
+	min-width: 86% !important;
+}
+.avpw_is_fullscreen #avpw_controls{
+	left: 7% !important;right: 7% !important;
 }
 .gallery-edit{
     position: relative;

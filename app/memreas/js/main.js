@@ -1,7 +1,7 @@
 $(document).ready(function(){
     //Prefetch for image location
     $.fetch_server_media();
-
+    
     $(document).bgStretcher({
             images: ['/memreas/img/bg.jpg'],
             imageWidth: 1366, imageHeight: 700
@@ -17,6 +17,11 @@ $(document).ready(function(){
     $(".memreas-detail-gallery").mCustomScrollbar(
                 {scrollButtons:{enable:true }}
     );
+    if($("#avpw_tool_options_container").length){
+    	var pwidth = $("#avpw_tool_options_container").width();
+    	var sowidth = parseInt(pwidth - 238);
+    	$("#avpw_tool_container").width(sowidth);
+    }
 });
 
 $(function(){
@@ -43,10 +48,32 @@ $(function(){
     $('#tabs a').click(function(e) {
         e.preventDefault();
         $("#tab-content div.hideCls").hide(); //Hide all content
-        $("#tabs li").attr("id",""); //Reset id's
-        $(this).parent().attr("id","current"); // Activate this
-        $('#' + $(this).attr('title')).fadeIn(); // Show content for current tab
-        ajaxScrollbarElement('#' + $(this).attr('title') + " .scroll-area");
+        // Activate this
+        if($(this).attr('title') != "tab3"){
+        	$("#tabs li").attr("id",""); //Reset id's
+            $(this).parent().attr("id","current"); 
+        	$('#' + $(this).attr('title')).fadeIn(); // Show content for current tab
+            ajaxScrollbarElement('#' + $(this).attr('title') + " .scroll-area");
+        }else{
+        	$("#loadingpopup").fadeIn(); 
+        	var imgid= '';var imgsrc = '';
+        	 $("div.user-resources").find("div.fotorama__active").find("div.fotorama__thumb").find("img.fotorama__img").each(function(){
+        		 imgid = $(this).attr("id");
+        		 imgsrc = $(this).attr("src");
+              });
+        	 
+        	openEditMedia(imgid,imgsrc);
+        	setTimeout(function(){switch_mode();}, 500);
+        	$("#loadingpopup").fadeOut(); 
+        	$('#tab1').fadeIn(); 
+        	$("#tabs li").attr("id",""); //Reset id's
+        	$('#tabs').find("a[title='tab1']").parent().attr("id","current"); 
+        }
+        
+        /*$("#tabs li").attr("id",""); //Reset id's
+        $(this).parent().attr("id","current"); 
+    	$('#' + $(this).attr('title')).fadeIn(); // Show content for current tab
+        ajaxScrollbarElement('#' + $(this).attr('title') + " .scroll-area");*/
     });
 
     //ajax demo fn
