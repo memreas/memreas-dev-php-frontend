@@ -260,7 +260,7 @@ span.absolute{
     background-origin: padding-box !important;
     background-position: 0 0 !important;
     background-repeat: no-repeat !important;
-    background-size: 100% 100%;
+    background-size: 100% 100% !important;
     cursor: pointer;
     width: 100%;
 }
@@ -742,8 +742,14 @@ footer {
     .splash {
         display: none;
     }
+    
 }
-@media (max-width: 600px){
+@media(max-width: 600px){
+	 .profile .btn-lg{
+    	width:100%;
+    }
+}
+@media (max-width: 413px){
     .container {
     width: 320px;
     width: auto; /* KHan changes : MFE-470 */
@@ -879,7 +885,7 @@ footer {
         height: 100%;
         z-index: 1000;
     }
-    
+   
 }
 
 @media (max-width: 414px){
