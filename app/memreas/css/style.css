@@ -1434,12 +1434,12 @@ ul.share_memreas_details li {
     width: 99%;
 }
 .styled-select {
-    background: url("../img/new_arrow.png") no-repeat scroll right center #fff;
+    /*background: url("../img/new_arrow.png") no-repeat scroll right center #fff;
     border-radius: 5px;
-    box-shadow: 0 2px 2px #666 inset !important;
-    height: 34px;
+    box-shadow: 0 2px 2px #666 inset !important;*/
+    height: auto;
     margin: 0 auto;
-    overflow: hidden;
+    overflow: visible;
     width: 68%;
 }
 ul.popupContact {

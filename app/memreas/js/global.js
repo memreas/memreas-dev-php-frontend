@@ -459,76 +459,85 @@ splitByDelimeters = function(val, delims) {
 
 /*Pham */
 $(document).ready(function () {
+	 $(".chosen").chosen({
+	    disable_search_threshold: 10,
+	    no_results_text: "Oops, nothing found!",
+	    width: "95%"
+	  });
 	if($('#avpw_controlpanel_textwithfont').length){
 		$('#avpw_controlpanel_textwithfont').find("div.avpw_inset_color_widget").each(function(){
 			$(this).append("<div class='avpw_inset_color_widget_label'>Color picker</div>");
 		});
 	}
-    var length = $('#main-tab').offset().top;
-    var length2 = $('.right-ads').offset().top;
-    $(window).scroll(function () {
-    	var height = $('#main-tab').height() + 'px';
-        var scroll = $(this).scrollTop();
-        if(scroll >= length){
-        	$('#main-tab').css({
-                'position': 'fixed',
-                'top': '0',
-                'left': '0',
-                'height': height
-            });
-        } else{
-        	
-        	$('#main-tab').css({
-                'position': 'relative',
-                'top': '0',
-                'height': height
-            });
-        }
-        var rightadw = parseInt($(window).width())*0.9/5;
-        if(scroll >= 80){
-        	$('.right-ads').css({
-                'position': 'fixed',
-                'top': '0',
-                'bottom': '0',
-                'right':'3%',
-                'height': height,
-                'width' : rightadw
-            });
-        }else{
-        	$('.right-ads').css({
-                'position': 'relative',
-                'top': '0',
-                'height': height,
-                'width' : rightadw
-            });
-        }
-        /*var height = $('#main-tab').height() + 'px';
+	if( $('#main-tab').length){
+		var length = $('#main-tab').offset().top;
+	    var length2 = $('.right-ads').offset().top;
+	    $(window).scroll(function () {
+	    	var height = $('#main-tab').height() + 'px';
+	        var scroll = $(this).scrollTop();
+	        if(scroll >= length){
+	        	$('#main-tab').css({
+	                'position': 'fixed',
+	                'top': '0',
+	                'left': '0',
+	                'height': height
+	            });
+	        } else{
+	        	
+	        	$('#main-tab').css({
+	                'position': 'relative',
+	                'top': '0',
+	                'height': height
+	            });
+	        }
+	        var rightadw = parseInt($(window).width())*0.9/5;
+	        if(scroll >= 80){
+	        	$('.right-ads').css({
+	                'position': 'fixed',
+	                'top': '0',
+	                'bottom': '0',
+	                'right':'3%',
+	                'height': height,
+	                'width' : rightadw
+	            });
+	        }else{
+	        	$('.right-ads').css({
+	                'position': 'relative',
+	                'top': '0',
+	                'right':'0',
+	                'height': height,
+	                'width' : '20%'
+	            });
+	        }
+	        /*var height = $('#main-tab').height() + 'px';
 
-        if (scroll < $('#main-tab').offset().top) {
+	        if (scroll < $('#main-tab').offset().top) {
 
-            $('#main-tab').css({
-                'position': 'absolute',
-                'top': '0'
-            });
+	            $('#main-tab').css({
+	                'position': 'absolute',
+	                'top': '0'
+	            });
 
-        } else if (scroll > length) {
+	        } else if (scroll > length) {
 
-            $('#main-tab').css({
-                'position': 'absolute',
-                'bottom': '40px',
-                'top': 'auto'
-            });
+	            $('#main-tab').css({
+	                'position': 'absolute',
+	                'bottom': '40px',
+	                'top': 'auto'
+	            });
 
-        } else {
+	        } else {
 
-            $('#main-tab').css({
-                'position': 'fixed',
-                'top': '0',
-                'height': height
-            });
+	            $('#main-tab').css({
+	                'position': 'fixed',
+	                'top': '0',
+	                'height': height
+	            });
 
-        }*/
-    });
+	        }*/
+	    });
+	}
+    
 
 });
 
