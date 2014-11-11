@@ -840,9 +840,19 @@ function getAccountMemreas(){
                     }
                     jSelectEventName.html(html_str);
                     $("#cmd_MorepageEvents").change();
+                    setTimeout(function(){
+                    	$("#cmd_MorepageEvents").chosen({
+                    	    disable_search_threshold: 10,
+                    	    no_results_text: "Oops, nothing found!",
+                    	    width: "100%"
+                    	  });
+                    }, 500);
+                    
                 }
                 else jerror('You have no event at this time');
         });
+        
+         
     }
 }
 
