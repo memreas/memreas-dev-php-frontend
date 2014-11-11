@@ -455,8 +455,6 @@ splitByDelimeters = function(val, delims) {
     }
     return ret;
 }
-
-
 /*Pham */
 $(document).ready(function () {
 	 $(".chosen").chosen({
