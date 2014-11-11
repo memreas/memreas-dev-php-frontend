@@ -457,11 +457,7 @@ splitByDelimeters = function(val, delims) {
 }
 /*Pham */
 $(document).ready(function () {
-	 $(".chosen").chosen({
-	    disable_search_threshold: 10,
-	    no_results_text: "Oops, nothing found!",
-	    width: "95%"
-	  });
+	 
 	if($('#avpw_controlpanel_textwithfont').length){
 		$('#avpw_controlpanel_textwithfont').find("div.avpw_inset_color_widget").each(function(){
 			$(this).append("<div class='avpw_inset_color_widget_label'>Color picker</div>");
