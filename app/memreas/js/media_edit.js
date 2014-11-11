@@ -18,7 +18,6 @@ var featherEditor = new Aviary.Feather({
     tools: 'enhance,effects,frames,stickers,orientation,focus,resize,crop,warmth,brightness,contrast,saturation,sharpness,colorsplash,draw,text,redeye,whiten,blemish',
     appendTo: 'aviary',
     onSave: function(imageID, newURL) {
-
         //Edit completed and save by user
         var s3_source_file = $("#" + imageID).attr('src');
         var remote_file = newURL;

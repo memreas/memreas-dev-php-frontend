@@ -459,7 +459,11 @@ splitByDelimeters = function(val, delims) {
 
 /*Pham */
 $(document).ready(function () {
-
+	if($('#avpw_controlpanel_textwithfont').length){
+		$('#avpw_controlpanel_textwithfont').find("div.avpw_inset_color_widget").each(function(){
+			$(this).append("<div class='avpw_inset_color_widget_label'>Color picker</div>");
+		});
+	}
     var length = $('#main-tab').offset().top;
     var length2 = $('.right-ads').offset().top;
     $(window).scroll(function () {
@@ -480,20 +484,22 @@ $(document).ready(function () {
                 'height': height
             });
         }
-        
+        var rightadw = parseInt($(window).width())*0.9/5;
         if(scroll >= 80){
         	$('.right-ads').css({
                 'position': 'fixed',
-                'top': 'auto',
-                'bottom': '120px',
-                'right':'1.5%',
-                'height': height
+                'top': '0',
+                'bottom': '0',
+                'right':'3%',
+                'height': height,
+                'width' : rightadw
             });
         }else{
         	$('.right-ads').css({
                 'position': 'relative',
                 'top': '0',
-                'height': height
+                'height': height,
+                'width' : rightadw
             });
         }
         /*var height = $('#main-tab').height() + 'px';
