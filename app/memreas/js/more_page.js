@@ -357,7 +357,21 @@ function saveChangePassword(){
         else jerror(getValueFromXMLTag(xml_response, 'message'));
     });
 }
-
+function switchoffothertabs(){
+	var te = 0;var te2 = 0;
+	$("#buttons2-moretab").find("div.manage-group-friend").find("div.akordeon-icon").each(function(){
+    	if(te ==0){
+    		$(this).html("<span>+</span>");
+    	}
+    	te++;
+    });
+    $("#buttons2-moretab").find("div.manage-group-friend").find("div.akordeon-item-body").each(function(){
+    	if(te2 ==0){
+    		$(this).css({"height":"0px"});
+    	}
+    	te2++;
+    });
+}
 /*
 * Group Tab
 * Action on second more tab - account group tab
@@ -373,6 +387,9 @@ function getUserGroups(){
             for (var i = 0;i < total_record;i++){
                 $("select.account-groups").append('<option value="' + getValueFromXMLTag(groups[i], 'group_id') + '">' + getValueFromXMLTag(groups[i], 'group_name') + '</option>');
             }
+            
+           
+            
         }
         else jerror(getValueFromXMLTag(xml_response, 'message'));
     });
@@ -382,6 +399,21 @@ $(function(){
     //Network heading click
     $(".network-heading").click(function(){
         $("select[name=friend_network]").trigger('change');
+        setTimeout(function(){
+        	var te = 0;var te2 = 0;
+        	$("#buttons2-moretab").find("div.akordeon-icon").each(function(){
+            	if(te ==0){
+            		$(this).html("<span>–</span>");
+            	}
+            	te++;
+            });
+            $("#buttons2-moretab").find("div.akordeon-item-body").each(function(){
+            	if(te2 ==0){
+            		$(this).css({"height":"70px"});
+            	}
+            	te2++;
+            });
+        }, 2000);
     });
 
     //Friend network selection changed
@@ -443,6 +475,20 @@ function getGroupFriends(friend_network){
             else friendList = $('.network-friends');
             friendList.empty().append('<li>You have no friend on this network at this time</li>');
         }
+    });
+    
+    var te = 0;var te2 = 0;
+	$("#buttons2-moretab").find("div.manage-group-friend").find("div.akordeon-icon").each(function(){
+    	if(te ==0){
+    		$(this).html("<span>–</span>");
+    	}
+    	te++;
+    });
+    $("#buttons2-moretab").find("div.manage-group-friend").find("div.akordeon-item-body").each(function(){
+    	if(te2 ==0){
+    		$(this).css({"height":"180px"});
+    	}
+    	te2++;
     });
 }
 

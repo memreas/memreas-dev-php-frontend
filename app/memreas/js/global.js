@@ -156,7 +156,7 @@ function jerror (str_msg){
             autoHide : true, // added in v2.0
             clickOverlay : false, // added in v2.0
             MinWidth : 250,
-            TimeShown : 3000,
+            TimeShown : 5000,
             ShowTimeEffect : 200,
             HideTimeEffect : 200,
             LongTrip :20,
@@ -232,7 +232,7 @@ function detectBrowser(){
         if (isChrome) return [{'ios':0},{'browser':'Chrome'}];
         if (isSafari) return [{'ios':0},{'browser':'Safari'}];
         if (isSafari) return [{'ios':0},{'browser':'Opera'}];
-        if (isIE) return [{'ios':0},{'browser':'IE'}];
+        if (isIE) {return [{'ios':0},{'browser':'IE'}]};
     }
 }
 
@@ -455,15 +455,22 @@ splitByDelimeters = function(val, delims) {
     }
     return ret;
 }
-
-
 /*Pham */
 $(document).ready(function () {
-	 $(".chosen").chosen({
-	    disable_search_threshold: 10,
-	    no_results_text: "Oops, nothing found!",
-	    width: "95%"
-	  });
+	if (($.browser.mozilla==true && $.browser.version <= "11.0") || ($.browser.msie && $.browser.version <= 6) || ($.browser.msie && $.browser.version > 6)){
+		$( "#form-user-login" ).find("input").each(function(){
+			$(this).prop( "disabled", true );
+		});
+		$( "#register" ).find("input").each(function(){
+			$(this).prop( "disabled", true );
+		});
+		$( "#frm-profile-pic" ).find("input").each(function(){
+			$(this).prop( "disabled", true );
+		});
+		$("a.forgot-password").remove();
+		jerror("Memreas is optimized for the latest versions of Chrome, Safari, and Firefox");
+	}
+        
 	if($('#avpw_controlpanel_textwithfont').length){
 		$('#avpw_controlpanel_textwithfont').find("div.avpw_inset_color_widget").each(function(){
 			$(this).append("<div class='avpw_inset_color_widget_label'>Color picker</div>");
