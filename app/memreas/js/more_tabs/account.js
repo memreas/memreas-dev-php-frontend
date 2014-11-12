@@ -541,16 +541,9 @@ function getAccountOrderHistory(){
                     '<td class="transaction-no">' + (i+1) + '</td>' +
                     '<td class="transaction-type">' + transaction_type + '</td>' +
                     '<td class="transaction-detail">' + getValueFromXMLTag(transaction, '') + '</td>';
-                if (amount) {
-                    html += '<td class="transaction-begin-balance">' + getValueFromXMLTag(transaction, 'starting_balance') + '</td>' +
-                    '<td class="transaction-amount">' + amount + '</td>' +
-                    '<td class="transaction-ending-balance">' + getValueFromXMLTag(transaction, 'ending_balance') + '</td>';
-                }
-                else {
-                    html += '<td class="transaction-begin-balance">..</td>' +
-                    '<td class="transaction-amount">' + ((amount) ? amount : '..') +  '</td>' +
-                    '<td class="transaction-ending-balance">..</td>';
-                }
+
+                html += '<td class="transaction-begin-status">Success</td>' +
+                    '<td class="transaction-amount">' + ((amount) ? amount : '..') +  '</td>';
 
                 html += '<td class="transaction-ending-currency">USD</td>' +
                     '<td class="transaction-date">11/11/2011</td>' +
