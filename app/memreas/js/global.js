@@ -455,8 +455,48 @@ splitByDelimeters = function(val, delims) {
     }
     return ret;
 }
+function randomShowAds(){
+	var rightadarr = new Array();var bottomadarr = new Array();
+	rightadarr[0] = {link:"#", img:"/memreas/img/ads/DepartmentStoreSale banner ads 1.png"};
+	rightadarr[1] = {link:"#", img:"/memreas/img/ads/ElectronicsStoreSale banner ads 1.png"};
+	rightadarr[2] = {link:"#", img:"/memreas/img/ads/Hotel banner ads 1.png"};
+	rightadarr[3] = {link:"#", img:"/memreas/img/ads/Hotel banner ads 2.png"};
+	rightadarr[4] = {link:"#", img:"/memreas/img/ads/restaurant banner ads 1.png"};
+	rightadarr[5] =  {link:"#", img:"/memreas/img/ads/restaurant banner ads 2.png"};
+	
+	/*bottomad*/
+	bottomadarr[0] = {link:"#", img:"/memreas/img/ads/amen+.png"};
+	bottomadarr[1] = {link:"#", img:"/memreas/img/ads/ElectronicsStoreSale banner ads.png"};
+	bottomadarr[2] = {link:"#", img:"/memreas/img/ads/Hotel banner ads.png"};
+	bottomadarr[3] = {link:"#", img:"/memreas/img/ads/memreas login admin.png"};
+	bottomadarr[4] = {link:"#", img:"/memreas/img/ads/restaurant banner ads.png"};
+	if($(".right-ads-section").length){
+		$(".right-ads-section").each(function(){
+			var rad1 = rightadarr[Math.floor(Math.random() * rightadarr.length)];
+			var rad2 = rightadarr[Math.floor(Math.random() * rightadarr.length)];
+			var radhtml = '<div class="adbox"><a href="'+rad1.link+'"><img src="'+rad1.img+'"/></a></div>';
+			radhtml+='<div class="adbox"><a href="'+rad2.link+'"><img src="'+rad2.img+'"/></a></div>';
+			$(this).fadeOut();
+			$(this).empty().append(radhtml);
+			$(this).fadeIn();
+		});
+		
+	}
+	if($(".bottom-ads-secion").length){
+		$(".bottom-ads-secion").each(function(){
+			var bad1 = bottomadarr[Math.floor(Math.random() * bottomadarr.length)];
+			var badhtml = '<div class="adbox"><a href="'+bad1.link+'"><img src="'+bad1.img+'"/></a></div>';
+			$(this).fadeOut();
+			$(this).empty().append(badhtml);
+			$(this).fadeIn();
+		});
+	}
+	setTimeout (function(){ randomShowAds(); }, 9000);
+}
 /*Pham */
 $(document).ready(function () {
+	randomShowAds();
+	
 	if (($.browser.mozilla==true && $.browser.version <= "11.0") || ($.browser.msie && $.browser.version <= 6) || ($.browser.msie && $.browser.version > 6)){
 		$( "#form-user-login" ).find("input").each(function(){
 			$(this).prop( "disabled", true );
@@ -516,32 +556,7 @@ $(document).ready(function () {
 	                'width' : '20%'
 	            });
 	        }
-	        /*var height = $('#main-tab').height() + 'px';
-
-	        if (scroll < $('#main-tab').offset().top) {
-
-	            $('#main-tab').css({
-	                'position': 'absolute',
-	                'top': '0'
-	            });
-
-	        } else if (scroll > length) {
-
-	            $('#main-tab').css({
-	                'position': 'absolute',
-	                'bottom': '40px',
-	                'top': 'auto'
-	            });
-
-	        } else {
-
-	            $('#main-tab').css({
-	                'position': 'fixed',
-	                'top': '0',
-	                'height': height
-	            });
-
-	        }*/
+	       
 	    });
 	}
     

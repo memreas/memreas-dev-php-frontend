@@ -607,14 +607,16 @@ function toogleEditThumb(){
 
 /*function for sync tab image */
 function imageChoosed(media_id){
-	if (jQuery("li#" + media_id+"-parent").hasClass ('setchoosed')){
-        jQuery("li#" + media_id+"-parent").removeClass ('setchoosed');
-        jQuery("li#" + media_id+"-parent").find("img.selected-gallery").remove();
-    }
-    else {
-        jQuery("li#" + media_id+"-parent").addClass ('setchoosed');
-        jQuery("li#" + media_id+"-parent").append ('<img class="selected-gallery" src="/memreas/img/gallery-select.png">');
-    }
+	if(jQuery("li#" + media_id+"-parent").length){
+		if (jQuery("li#" + media_id+"-parent").hasClass ('setchoosed')){
+	        jQuery("li#" + media_id+"-parent").removeClass ('setchoosed');
+	        jQuery("li#" + media_id+"-parent").find("img.selected-gallery").remove();
+	    }
+	    else {
+	        jQuery("li#" + media_id+"-parent").addClass ('setchoosed');
+	        jQuery("li#" + media_id+"-parent").append ('<img class="selected-gallery" src="/memreas/img/gallery-select.png">');
+	    }
+	}
     return false;
 }
 
