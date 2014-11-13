@@ -38,6 +38,7 @@ $(function(){
     user_id = $("input[name=user_id]").val();
     share_initObjects();
     share_customScrollbar();
+    $("#cmb_socialtype").chosen({ width:"95%" }); 
 });
 
 // initialize the share page objects.

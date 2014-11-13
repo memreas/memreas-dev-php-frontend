@@ -1203,7 +1203,7 @@ select{ height: 30px; }
 }
 label.event-name{
     height: 26px;
-    display: inline-block;
+    display: none !Important;
     font-family: "Century Gothic";
     font-size: 18px;
     color: #FFF;
@@ -1218,4 +1218,5 @@ label.event-name{
     background: #7A7A7A;
     border-radius: 15px;
     margin-bottom: 9px;
+    
 }
