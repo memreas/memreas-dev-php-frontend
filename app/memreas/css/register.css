@@ -268,7 +268,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4e8dd4', end
 	 bottom: 23%;
 	}
 }
-@media (max-width:538px){
+@media (max-width:450px){
 	.filminner{
 	 bottom: 28.5%;
 	}
