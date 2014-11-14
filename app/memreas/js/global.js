@@ -23,7 +23,38 @@ var stackAjaxInstance = []; //This variable is used for stacking ajax request(s)
 * */
 var reloadItems = ['view_my_events', 'view_friend_events', 'view_public_events', 'share_listmedia',
                     'reload_account_cards', 'reload_subscription_cards', 'reload_buy_credit_cards'];
-
+function checkUserresourcesHasid(){
+	var countitems = $("div.user-resources").find("div.fotorama__wrap").find("div.fotorama__nav-wrap").find("div.fotorama__nav").find("div.fotorama__nav__shaft").find("div.fotorama__nav__frame").find("div.fotorama__thumb").length;
+	var c = 1;
+	$("div.user-resources").find("div.fotorama__wrap").find("div.fotorama__nav-wrap").find("div.fotorama__nav").find("div.fotorama__nav__shaft").find("div.fotorama__nav__frame").find("div.fotorama__thumb").each(function(){
+		 $(this).find("img.fotorama__img").each(function(){
+             if($(this).attr("id")){
+            	 c++;
+             }
+   	  	});
+	 });
+	if(c <countitems){
+		return false;
+	}else{
+		return true;
+	}
+}
+function checkUserresourcesId(medias){
+	var c = 0;
+ 	$("div.user-resources").find("div.fotorama__wrap").find("div.fotorama__nav-wrap").find("div.fotorama__nav").find("div.fotorama__nav__shaft").find("div.fotorama__nav__frame").find("div.fotorama__thumb").each(function(){
+ 		 $(this).find("img.fotorama__img").each(function(){
+    		  var media = medias[c];
+              var mediaId = getValueFromXMLTag(media, 'media_id');
+              $(this).attr("id",mediaId);
+    	  });
+ 		c++;
+ 	 });
+ 	if(!checkUserresourcesHasid()){
+ 		setTimeout(function(){
+ 			checkUserresourcesId(medias);
+ 	    }, 1000);
+ 	}
+}
 
 function checkReloadItem(itemName){
     if (reloadItems.length > 0){

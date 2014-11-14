@@ -256,18 +256,10 @@ jQuery.fetch_server_media = function (){
                       //Fetch user's notification header
                       getUserDetail();
                       getUserNotificationsHeader();
-                      setTimeout(function(){
-                    	  var c = 0;
-                    	 $("div.user-resources").find("div.fotorama__wrap").find("div.fotorama__nav-wrap").find("div.fotorama__nav").find("div.fotorama__nav__shaft").find("div.fotorama__nav__frame").find("div.fotorama__thumb").each(function(){
-                    		 $(this).find("img.fotorama__img").each(function(){
-                       		  	 var media = medias[c];
-                                 var mediaId = getValueFromXMLTag(media, 'media_id');
-                                 $(this).attr("id",mediaId);
-                       	  	 });
-                    		c++;
-                    	 });
-                      }, 2500);
                   }, 1000);
+                  	setTimeout(function(){
+           				checkUserresourcesId(medias);
+           	    	}, 2000);
                   $(".swipebox").swipebox();
 
                   //Show edit and delete tabs
