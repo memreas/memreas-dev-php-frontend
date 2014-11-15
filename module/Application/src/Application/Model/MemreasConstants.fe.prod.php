@@ -24,4 +24,6 @@ class MemreasConstants {
     const PAYMENT_TAB_BUY_CREDIT = true;
     const PAYMENT_TAB_SELL_MEDIA = true;
 
+    const VERSION = '0.987';
+
 }

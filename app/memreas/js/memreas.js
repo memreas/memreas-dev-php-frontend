@@ -101,7 +101,7 @@ function fetchMyMemreas(){
                             var event_comment = $(event_comments.prevObject[j]).html();
                             if (typeof (event_comment) == 'undefined') continue;
                             var comment_owner_pic = $(event_comment).filter('profile_pic').html();
-                            comment_owner_pic = comment_owner_pic.replace("<!--[CDATA[", "").replace("]]-->", "");
+                            comment_owner_pic = removeCdataCorrectLink(comment_owner_pic);
                             if (comment_owner_pic == '')
                                 comment_owner_pic = '/memreas/img/profile-pic.jpg';
                             var comment_text = $(event_comment).filter('comment_text').html();
@@ -173,7 +173,7 @@ function fetchMyMemreas(){
                                     else friend_photo = getValueFromXMLTag(friend, 'photo');
                                     friend_photo = removeCdataCorrectLink(friend_photo);
                                     var friend_name = getValueFromXMLTag(friend, 'friend_name');
-                                    html_people += '<div class="event_gallery_pro"><img src="' + friend_photo + '" alt="' + friend_name + '" title="' + friend_name + '"></div>';
+                                    html_people += '<div class="event_gallery_pro"><img src="' + friend_photo + '" alt="' + friend_name + '" title="' + friend_name + '" /></div>';
                                 }
                                 jEvent_people.html(html_people);
                             }
