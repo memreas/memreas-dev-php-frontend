@@ -45,6 +45,11 @@ function buyMedia(event_id){
             var price = metadata.price;
             $('#loadingpopup').hide();
 
+            if (userObject.buyer_balance < price){
+                jerror("Please add credit to your account");
+                return false;
+            }
+
             var event_owner = getValueFromXMLTag(response, 'event_owner');
             var event_id = getValueFromXMLTag(response,  'event_id');
 
