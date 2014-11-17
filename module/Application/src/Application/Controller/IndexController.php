@@ -241,7 +241,8 @@ error_log("callback_json----->".$callback_json.PHP_EOL);
             'data' => $data,
             'enableAdvertising' => $enableAdvertising,
             'stripeUrl' => $this->stripe_url,
-            'PaymentTabs' => $payment_tabs
+            'PaymentTabs' => $payment_tabs,
+            'app_version' => MemreasConstants::VERSION
         ));
         $view->setTemplate($path); // path to phtml file under view folder
         return $view;

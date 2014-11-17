@@ -192,13 +192,43 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4e8dd4', end
     margin-left: 1em;
     /*margin-top: 3em; */
     margin-top: 1em; /* Khan Changes MFE-458*/
-    min-height: 436px;
+    min-height: 610px;
 }
 .film {
-    left: 1px;
-    top: -15px;
+    /*left: 1px;
+    top: -15px;*/
     z-index: 999;
+    width:283px;
+    height:297.5px;
+    background:url(../img/logo-1-1.png) no-repeat scroll 50% 0%;
+   padding:149.5px 0 0;
+    transform: rotate(-14deg);
+    -moz-transform: rotate(-18deg);
+    -webkit-transform: rotate(-18deg);
+    -o-transform: rotate(-18deg);
+    max-width: 100%;
+    background-size:100%;
+    padding-bottom:95px !important;
 }
+.filminner{
+	width:283px;
+	background:url(../img/logo_1_part_2.png) no-repeat scroll 0 0;
+	 background-size:100%;
+	height: 137px;
+    max-width: 100%;
+    position: absolute;
+    top: auto;
+    bottom: 0;
+    width: 100%;right: 18%;
+    transform: rotate(18deg);
+    -moz-transform: rotate(18deg);
+    -webkit-transform: rotate(18deg);
+    -o-transform: rotate(18deg);
+}
+@media (max-width:999px){
+	
+}
+
 .film img{
     width: 100%;
 }
@@ -206,11 +236,46 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4e8dd4', end
     width: 34.5%; /* Khan Changes MFE-458*/
 }
 #slider {
-    left: 87px;
-    top: 66px;
     z-index: 1;
+    width:46.6%;
+   
+    margin:0 auto;
 }
-
+.imabsolute{
+	position:absolute;z-index:1000;top: 35%;
+}
+@media (max-width:768px){
+	.film {
+		 padding:52.5% 0 0;
+	}
+	.filminner {
+	    bottom: 14.3%;
+	}
+	.imabsolute{
+		position:absolute;z-index:1000;top: 25%;
+	}
+}
+@media (max-width:670px){
+	.filminner{
+	 bottom: 21%;
+	}
+	.imabsolute{
+		top: 21%;
+	}
+}
+@media (max-width:600px){
+	.filminner{
+	 bottom: 23%;
+	}
+}
+@media (max-width:450px){
+	.filminner{
+	 bottom: 28.5%;
+	}
+	.imabsolute{
+		top: 17%;
+	}
+}
 form input[type=text], form input[type=password],  form input[type=email] {
     background-color: #fffffd;
     border: medium none;
@@ -437,26 +502,23 @@ footer {
 }
 
     #slider{
-       left: 87px;
-   	   top: 65px;
        z-index: 1;
-       width: 51.9%;
     }
     .rslides{
-        width: 88%;
+        width: 100%;
     }
 
 /****Responsive Styles****/
 /****=MQH ****/
 /*Khan Changes */
-@media (min-height:661px){
+/*@media (min-height:661px){
     .filmstrip .film img{
         width: 308px;
     }
     #slider {
         width: 49%;
     }
-}
+}*/
 @media (max-height:660px){
     .filmstrip{
         width: 32.5%;
@@ -515,11 +577,11 @@ footer {
         margin: 10px auto;
     }
     .feature {
-        margin-left: 3em;
+        margin-left: 12%;
         margin-top: 2em;
     }
     .film  img {
-        width: 79%!important;
+        /*width: 79%!important;*/
     }
     .body-bottom {
         min-height: 485px;
@@ -530,7 +592,7 @@ footer {
     .profile_picture{
         padding-bottom: 0; /* Khan Change MFE-452 */
     }
-    #slider {
+    /*#slider {
         left: 63px;
    		top: 43px;
         width: 59.5%;
@@ -538,7 +600,7 @@ footer {
     .rslides img {
         width: 82.4%!important;
         width: 68.4%!important; /* Khan Change MFE-452 */
-    }
+    }*/
     .file form{     /* Khan Change MFE-452 */
         width: 100%;
         height: 32px;
@@ -590,14 +652,14 @@ footer {
     .filmstrip{
         width: 50%;
     }
-    #slider {
+    /*#slider {
         left: 70.5px;
     	top: 50px;
         width: 44%;
     }
     #slider img{
         width: 93% !important;
-    }
+    }*/
     .create-accnt {
         width: 49%;
     }
@@ -700,11 +762,11 @@ footer {
         width: 40%;
     }
 
-    #slider {
+    /*#slider {
         left: 22.2%;
         top: 12%;
         width: 43.8%;
-    }
+    }*/
     .create-accnt {
         font-size: 14px;
         font-weight: normal;
@@ -716,26 +778,26 @@ footer {
     }
 }
 @media (max-width: 725px) {
-    #slider {
+    /*#slider {
         left: 69px;
     	top: 47px;
         width: 43%;
-    }
+    }*/
 }
 
 @media (max-width: 675px) {
-    #slider {
+    /*#slider {
         left: 63px;
    		top: 43px;
         width: 43%;
-    }
+    }*/
 }
 @media (max-width: 635px) {
-    #slider {
+    /*#slider {
         left: 58px;
     	top: 38px;
         width: 44.5%;
-    }
+    }*/
 }
 
 @media(min-width: 601px){
@@ -816,14 +878,14 @@ footer {
     .signup form label{
         display: block;
     }
-    #slider {
+    /*#slider {
         left: 4.7em;
         top: 3.4em;
         width: 48%;
     }
     #slider img {
         width: 112% !important;
-    }
+    }*/
     .profile_picture {
     float: left;/* Khan Changes - MFE-470 */
     margin: 0 auto;
@@ -1006,7 +1068,6 @@ footer {
 .pop_forgot label{
     font-family: "Century Gothic";
     font-size: 16px;
-    float: left;
     color: #FFF;
 }
 .popups .more-input{
@@ -1203,7 +1264,7 @@ select{ height: 30px; }
 }
 label.event-name{
     height: 26px;
-    display: inline-block;
+    display: none !Important;
     font-family: "Century Gothic";
     font-size: 18px;
     color: #FFF;
@@ -1218,4 +1279,5 @@ label.event-name{
     background: #7A7A7A;
     border-radius: 15px;
     margin-bottom: 9px;
+    
 }
