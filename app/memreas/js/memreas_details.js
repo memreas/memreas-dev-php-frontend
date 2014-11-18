@@ -320,9 +320,9 @@ function popupAddMemreasGallery(){
                     if (_media_type == 'video'){
                         var _main_video_media = getValueFromXMLTag(media, 'main_media_url');
                         _main_video_media = removeCdataCorrectLink(_main_video_media);
-                        jtarget_element.append('<li class="video-media" media-url="' + _main_video_media + '"><a href="javascript:;" id="memreas-addgallery-' + _media_id + '" onclick="return imageChoosed(this.id);"><img src="' + _media_url + '" alt=""><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a></li>');
+                        jtarget_element.append('<li id="' + _media_id + '-parent" class="video-media" media-url="' + _main_video_media + '"><a href="javascript:;" id="memreas-addgallery-' + _media_id + '" onclick="return imageChoosed(this.id);"><img src="' + _media_url + '" alt=""><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a></li>');
                     }
-                    else jtarget_element.append('<li><a href="javascript:;" id="memreas-addgallery-' + _media_id + '" onclick="return imageChoosed(this.id);"><img src="' + _media_url + '" alt=""></a></li>');
+                    else jtarget_element.append('<li id="' + _media_id + '-parent"><a href="javascript:;" id="memreas-addgallery-' + _media_id + '" onclick="return imageChoosed(this.id);"><img src="' + _media_url + '" alt=""></a></li>');
                 }
             }
             else jerror("This is no media");
