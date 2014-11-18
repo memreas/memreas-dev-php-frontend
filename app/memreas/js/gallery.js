@@ -95,15 +95,6 @@ $(function(){
         if (checkReloadItem('listallmedia')){
             $.fetch_server_media();
         }
-      
-    });
-
-    $(".aviary-tab").click(function(){
-        if (detectHandheldIOSDevice())
-            aviarySpace('get');
-        if (!($(".aviary-thumbs").parent(".elastislide-carousel").length > 0))
-            $('.aviary-thumbs').elastislide({orientation : 'vertical', minItems: 3});
-        $('.aviary-thumbs').find('li:eq(0) img').trigger("click");
     });
 
     $(".location-tab").click(function(){

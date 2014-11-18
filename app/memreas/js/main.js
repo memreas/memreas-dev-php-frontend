@@ -56,12 +56,9 @@ $(function(){
             ajaxScrollbarElement('#' + $(this).attr('title') + " .scroll-area");
         }else{
         	$("#loadingpopup").fadeIn(); 
-        	var imgid= '';var imgsrc = '';
-        	 $("div.user-resources").find("div.fotorama__active").find("div.fotorama__thumb").find("img.fotorama__img").each(function(){
-        		 imgid = $(this).attr("id");
-        		 imgsrc = $(this).attr("src");
-              });
-        	 
+        	var imgid= 'temp-aviary-img';
+            var imgsrc = $("div.user-resources").find("div.fotorama__active").find("img").attr('src');
+            $("#" + imgid).attr('src', imgsrc);
         	openEditMedia(imgid,imgsrc);
         	setTimeout(function(){switch_mode();}, 500);
         	$("#loadingpopup").fadeOut(); 
