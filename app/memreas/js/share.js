@@ -1039,3 +1039,22 @@ function shareCheckSellMedia(){
         return true;
     else return false;
 }
+
+function sharePopupMarketTerm(){
+    //checking for sell media popup is activated
+    if ($("#popupSellMedia").is(":visible"))
+        var callBackTab = "popupSellMedia";
+    if ($("#popupBuyMedia").is(":visible"))
+        var callBackTab = "popupBuyMedia";
+    if ($("#popupBuyCredit").is(":visible"))
+        var callBackTab = "popupBuyCredit";
+
+    $("#popupMarketTerms").find("a.callback-btn").attr("onclick", "reactiveLastMarketTab('" + callBackTab +  "');")
+    disablePopup(callBackTab);
+    popup("popupMarketTerms");
+}
+
+function reactiveLastMarketTab(callbackId){
+    disablePopup("popupMarketTerms");
+    popup(callbackId);
+}

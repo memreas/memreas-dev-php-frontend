@@ -174,7 +174,7 @@
             <li>
                 <input id="ckb_sellmedia_agree" class="css-checkbox" type="checkbox" />
                 <label id="lbl-sellmedia" for="ckb_sellmedia_agree" name="demo_lbl_6" class="css-label margin-none" style="height: 100px;" >
-                    By checking this box I certify that I own the appropriate copyrights for any media within this memeas share.  Full terms are available here (link).
+                    By checking this box I certify that I own the appropriate copyrights for any media within this memeas share.  Full terms are available <a href="javascript:;" onclick="sharePopupMarketTerm();">here</a>.
                 </label>
             </li>
         </ul>
@@ -191,7 +191,7 @@
 </div>
 
 <div id="dlg_locationmap" class="popups2">
-    <a id="btn_locationmap_close" onClick="javascript:share_closeGoogleMap(false);" class='popupClose'>x</a>
+    <a id="btn_locationmap_close" onClick="javascript:share_closeGoogleMap(false);" class='popupClose '>x</a>
     <h2>location</h2>
     <a id="btn_locationmap_ok" class="black_btn_skin btn_locationmap_ok" href="javascript:share_closeGoogleMap(true);">OK</a>
     <input id="txt_locationmap_address" class="txt_locationmap_address " name="input" type="text" />
@@ -199,3 +199,13 @@
     <div id="div_locationmap_maparea" class="map_box"></div>
 </div>
 <div id="div_locationmap_back" class="backgroundPopup"></div>
+
+<div id="popupMarketTerms" class="popups">
+  <a id="popupMarketTermsClose" onclick="" class='popupTermsAndService callback-btn'>x</a>
+    <h2>Marketplace Terms of Service</h2>
+    <ul id="TermsAndServiceContent" class="popup_legal scrollpopup">
+        <?php include 'more_tabs/help/marketplace-terms-service.phtml'; ?>
+    </ul>
+    <a class="black_btn_skin f-left callback-btn" href="javascript:;" onclick="">ok</a>
+</div>
+<div id="bgpopupMarketTerms" class="backgroundPopup"></div>
