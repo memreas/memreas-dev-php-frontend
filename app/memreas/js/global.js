@@ -595,7 +595,7 @@ $(document).ready(function () {
 	        }else{
 	        	$('.right-ads').css({
 	                'position': 'relative',
-	                'top': '0',
+	                'top': '29px',
 	                'right':'0',
 	                'height': height,
 	                'width' : '20%'

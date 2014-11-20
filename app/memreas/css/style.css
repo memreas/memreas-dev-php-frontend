@@ -3025,8 +3025,11 @@ nav ul li img {
 .fotorama__wrap  {
 	width: 100%!important;
 }
+.right-ads{
+	top: 29px;position:relative;
+}
 #ad {
-	margin-top: 12px;
+	
 }
 textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
     background-color: #fff;
@@ -3151,7 +3154,7 @@ select{ width: 184px; height: 30px; }
 
 	.adbox{
 		padding: 0 0px;
-		margin-bottom: 12px;
+		margin-bottom: 8px;
 	}
 	.fotorama__nav-wrap{
 		/*margin-top: -45px;*/
@@ -3162,8 +3165,11 @@ select{ width: 184px; height: 30px; }
 	#tab-content-memreas,
 	#tab-content-memreas-detail,
 	#tab-content-more {
-		min-height: 100%;
+		min-height: 418px;
 		margin-bottom: 0px;
+	}
+	#tab-content div.hideCls{
+		min-height: 418px !important;
 	}
 	html.ads ul.pics{
 		min-height: 317px;
