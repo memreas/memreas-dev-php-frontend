@@ -44,6 +44,10 @@ function buyMedia(event_id){
 
             var price = metadata.price;
             $('#loadingpopup').hide();
+            if (parseFloat(userObject.buyer_balance) < price){
+                jerror("Please add credit to your account");
+                return false;
+            }
 
             var event_owner = getValueFromXMLTag(response, 'event_owner');
             var event_id = getValueFromXMLTag(response,  'event_id');
@@ -104,52 +108,49 @@ function popupBuyCredit(){
     popup("popupBuyCredit");
 
     var jCardSelectElement = $("select[name=popup_buycredit_card]");
-    if (jCardSelectElement.html() == '<option value="">-Choose-</option>' || checkReloadItem('reload_account_cards')) {
-        if (checkReloadItem('reload_account_cards'))
-            jCardSelectElement.html('<option value="">-Choose-</option>');
+    jCardSelectElement.html('<option value="">-Choose-</option>');
 
-        var stripeActionUrl = $("input[name=stripe_url]").val() + '/stripe/listCards';
-        var obj = new Object();
-        obj = {userid: LOGGED_USER_ID};
-        var json_listCard = JSON.stringify(obj, null, '\t');
-        var data = '{"action": "listcards", ' +
-            '"type":"jsonp", ' +
-            '"json": ' + json_listCard +
-            '}';
-        $('.stripe-payment').fadeIn(1000);
-        $.ajax({
-            url: stripeActionUrl,
-            type: 'POST',
-            dataType: 'jsonp',
-            data: 'json=' + data,
-            success: function (response) {
-                if (response.status == 'Success') {
-                    var cards = response.payment_methods;
-                    var number_of_cards = response.NumRows;
-                    if (number_of_cards > 0) {
-                        for (var i = 0; i < number_of_cards; i++) {
-                            var row_card_id = cards[i].stripe_card_reference_id;
-                            var row_card_type = cards[i].card_type;
-                            var row_card_obfuscated = cards[i].obfuscated_card_number;
-                            var html_element = '<option value="' + row_card_id + '">';
-                            html_element += row_card_type + ' | ' + row_card_obfuscated + '</option>';
-                            jCardSelectElement.append(html_element);
-                        }
-                        removeItem(reloadItems, 'reload_account_cards');
+    var stripeActionUrl = $("input[name=stripe_url]").val() + '/stripe/listCards';
+    var obj = new Object();
+    obj = {userid: LOGGED_USER_ID};
+    var json_listCard = JSON.stringify(obj, null, '\t');
+    var data = '{"action": "listcards", ' +
+        '"type":"jsonp", ' +
+        '"json": ' + json_listCard +
+        '}';
+    $('.stripe-payment').fadeIn(1000);
+    $.ajax({
+        url: stripeActionUrl,
+        type: 'POST',
+        dataType: 'jsonp',
+        data: 'json=' + data,
+        success: function (response) {
+            if (response.status == 'Success') {
+                var cards = response.payment_methods;
+                var number_of_cards = response.NumRows;
+                if (number_of_cards > 0) {
+                    for (var i = 0; i < number_of_cards; i++) {
+                        var row_card_id = cards[i].stripe_card_reference_id;
+                        var row_card_type = cards[i].card_type;
+                        var row_card_obfuscated = cards[i].obfuscated_card_number;
+                        var html_element = '<option value="' + row_card_id + '">';
+                        html_element += row_card_type + ' | ' + row_card_obfuscated + '</option>';
+                        jCardSelectElement.append(html_element);
                     }
-                    else {
-                        jerror("You have no card at this time");
-                        setTimeout(function(){ jconfirm('Add card to your account?', 'popup(\'popupCreditAddCard\')')}, 3000);
-                    }
+                    removeItem(reloadItems, 'reload_account_cards');
                 }
                 else {
                     jerror("You have no card at this time");
                     setTimeout(function(){ jconfirm('Add card to your account?', 'popup(\'popupCreditAddCard\')')}, 3000);
                 }
-                $('.stripe-payment').fadeOut(500);
             }
-        });
-    }
+            else {
+                jerror("You have no card at this time");
+                setTimeout(function(){ jconfirm('Add card to your account?', 'popup(\'popupCreditAddCard\')')}, 3000);
+            }
+            $('.stripe-payment').fadeOut(500);
+        }
+    });
 }
 
 function popupCreditAddCard(){
@@ -257,7 +258,7 @@ function acceptBuyCredit(){
         data: 'json=' + data,
         success: function(response){
             if (response.status == 'Success'){
-                jsuccess("Transaction is successful, an confirmation email has been sent to your mailbox");
+                jsuccess(jsuccess.message);
                 $(".popup-buymedia-credit").html("$" + userObject.buyer_balance);
                 popup("popupBuyMedia");
             }

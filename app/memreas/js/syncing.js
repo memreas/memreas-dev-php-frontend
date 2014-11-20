@@ -55,19 +55,6 @@ function success_addmedia(response){
 }
 function error_addmedia(){}
 
-/*function for sync tab image */
-function imageChoosed(media_id){
-    if (jQuery("a#" + media_id).parent('li').hasClass ('setchoosed')){
-        jQuery("a#" + media_id).parent('li').removeClass ('setchoosed');
-        jQuery("a#" + media_id).parent('li').find("img.selected-gallery").remove();
-    }
-    else {
-        jQuery("a#" + media_id).parent('li').addClass ('setchoosed');
-        jQuery("a#" + media_id).parent('li').append ('<img class="selected-gallery" src="/memreas/img/gallery-select.png">');
-    }
-    return false;
-}
-
 var deleteMediasChecked = 0;
 function deleteFiles(confirmed){
     if (!($(".edit-area").find(".setchoosed").length > 0)){

@@ -95,15 +95,6 @@ $(function(){
         if (checkReloadItem('listallmedia')){
             $.fetch_server_media();
         }
-      
-    });
-
-    $(".aviary-tab").click(function(){
-        if (detectHandheldIOSDevice())
-            aviarySpace('get');
-        if (!($(".aviary-thumbs").parent(".elastislide-carousel").length > 0))
-            $('.aviary-thumbs').elastislide({orientation : 'vertical', minItems: 3});
-        $('.aviary-thumbs').find('li:eq(0) img').trigger("click");
     });
 
     $(".location-tab").click(function(){
@@ -155,7 +146,8 @@ jQuery.fetch_server_media = function (){
             {tag: 'limit', value: '200'},
             {tag: 'page', value: '1'},
             {tag: 'metadata', value: '1'}
-        ], function (response){
+        ],
+        function (response){
             if (getValueFromXMLTag(response, 'status') == "Success") {
             		
                 var medias = getSubXMLFromTag(response, 'media');
@@ -216,78 +208,85 @@ jQuery.fetch_server_media = function (){
                                     $.post('/index/buildvideocache', data, function(response_data){
                                         response_data = JSON.parse (response_data);
                                         $(".user-resources").append('<a data-video="true" href="/memreas/js/jwplayer/jwplayer_cache/' + response_data.video_link + '"><img src="' + response_data.thumbnail + '"/></a>');
-                                        $(".edit-area-scroll").append ('<li id="' + response_data.media_id + '-parent" class="video-media"><a class="video-resource image-sync" id="' + response_data.media_id + '" onclick="return imageChoosed(this.id);" href="' + response_data.thumbnail + '"><img src="' + response_data.thumbnail + '"/><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a><img src="/memreas/img/gallery-select.png"></li>');
+                                        $(".edit-area-scroll").append ('<li class="video-media"><a class="video-resource image-sync" id="' + response_data.media_id + '" onclick="return imageChoosed(this.id);" href="' + response_data.thumbnail + '"><img src="' + response_data.thumbnail + '"/><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a><img src="/memreas/img/gallery-select.png"></li>');
                                         $(".preload-files .pics").append('<li class="video-media"><img src="' + response_data.thumbnail + '"/></li>');
                                     });
                                 }
                                 else {
-                                	$(".edit-area-scroll").append ('<li class="video-media" id="' + mediaId + '-parent"><a class="video-resource image-sync" id="' + mediaId + '" onclick="return imageChoosed(this.id);" href="/memreas/img/large-pic-1.jpg"><img src="/memreas/img/large-pic-1.jpg"/><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a><img src="/memreas/img/gallery-select.png"></li>');
+                                	$(".edit-area-scroll").append ('<li><a class="video-resource image-sync" id="' + mediaId + '" onclick="return imageChoosed(this.id);" href="/memreas/img/large-pic-1.jpg"><img src="/memreas/img/large-pic-1.jpg"/><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a><img src="/memreas/img/gallery-select.png"></li>');
                                 }
                             }
                             else{
                                 $(".user-resources").append('<img src="/memreas/img/TrascodingIcon.gif" />');
                                 $(".preload-files .pics").append('<li class="video-media"><img src="/memreas/img/transcode-icon.png"/></li>');
-                                $(".edit-area-scroll").append ('<li id="' + mediaId + '-parent" class="video-media"><a class="video-resource image-sync" id="' + mediaId + '" onclick="return imageChoosed(this.id);" href="/memreas/img/transcode-icon.png"><img src="/memreas/img/transcode-icon.png"/></a><img src="/memreas/img/gallery-select.png"></li>');
+                                $(".edit-area-scroll").append ('<li class="video-media"><a class="video-resource image-sync" id="' + mediaId + '" onclick="return imageChoosed(this.id);" href="/memreas/img/transcode-icon.png"><img src="/memreas/img/transcode-icon.png"/></a><img src="/memreas/img/gallery-select.png"></li>');
                             }
                         }
                     }
                     else {
                         $(".user-resources").append('<img src="' + _media_url + '"/>');
-                        $(".edit-area-scroll").append ('<li id="' + mediaId + '-parent"><a class="image-sync" id="' + mediaId + '" onclick="return imageChoosed(this.id);" href="' + _media_url + '"><img src="' + _media_url + '"/></a></li>');
+                        $(".edit-area-scroll").append ('<li><a class="image-sync" id="' + mediaId + '" onclick="return imageChoosed(this.id);" href="' + _media_url + '"><img src="' + _media_url + '"/></a></li>');
                         $(".preload-files .pics").append ('<li><img src="' + _media_url + '"/></li>');
-                       // $(".aviary-thumbs").append('<li><img id="edit' + mediaId + '" src="' + _media_url + '" onclick="openEditMedia(this.id, \'' + _media_url + '\');"/></li>');
+                        $(".aviary-thumbs").append('<li><img id="edit' + mediaId + '" src="' + _media_url + '" onclick="openEditMedia(this.id, \'' + _media_url + '\');"/></li>');
                         $(".galleries-location").append('<li><img id="location' + mediaId + '" class="img-gallery" src="' + _media_url + '" /></li>');
                         checkHasImage = true;
                     }
                   }
 
-                  setTimeout(function(){
-                      $(".preload-files").hide();
-                      $(".user-resources").fotorama({width: '800', height: '350', 'max-width': '100%'}).fadeIn(500);
-                      
-                      if (!$(".edit-area-scroll").hasClass ('mCustomScrollbar'))
-                          $(".edit-area-scroll").mCustomScrollbar({ scrollButtons:{ enable:true }});
-                      $(".edit-area-scroll").mCustomScrollbar ('update');
+                setTimeout(function(){
+                    $(".preload-files").hide();
+                    $(".user-resources").fotorama({width: '800', height: '350', 'max-width': '100%'}).fadeIn(500);
 
-                      if (!$(".edit-areamedia-scroll").hasClass ('mCustomScrollbar'))
-                          $(".edit-areamedia-scroll").mCustomScrollbar({ scrollButtons:{ enable:true }});
-                      $(".edit-areamedia-scroll").mCustomScrollbar ('update');
-                      	//pham
-                      //Fetch user's notification header
-                      getUserDetail();
-                      getUserNotificationsHeader();
-                  }, 1000);
-                  	setTimeout(function(){
-           				checkUserresourcesId(medias);
-           	    	}, 2000);
-                  $(".swipebox").swipebox();
+                    if (!$(".edit-area-scroll").hasClass ('mCustomScrollbar'))
+                      $(".edit-area-scroll").mCustomScrollbar({ scrollButtons:{ enable:true }});
+                    $(".edit-area-scroll").mCustomScrollbar ('update');
 
-                  //Show edit and delete tabs
-                  $("a[title=tab2], a[title=tab3]").show();
+                    if (!$(".edit-areamedia-scroll").hasClass ('mCustomScrollbar'))
+                      $(".edit-areamedia-scroll").mCustomScrollbar({ scrollButtons:{ enable:true }});
+                    $(".edit-areamedia-scroll").mCustomScrollbar ('update');
 
-                  //If there is no image media => disable edit tab
-                  if (!checkHasImage)
-                    $("a[title=tab3]").hide();
-                }
-                else{
-                    jerror ('There is no media on your account! Please use upload tab on leftside you can add some resources!');
-
-                    //Go to queue page
-                    $("a.queue").trigger('click');
-
-                    //If there is no media hide edit & delete tabs
-                    $("a[title=tab2], a[title=tab3]").hide();
-                    $("#gallery #tabs").find("li").removeClass('current');
-                    $("#gallery #tabs").find("li:eq(0)").addClass('current');
-
-                    $("#gallery #tab-content").find(".hideCls").hide();
-                    $("#gallery #tab-content").find(".hideCls:eq(0)").show();
                     //Fetch user's notification header
                     getUserDetail();
                     getUserNotificationsHeader();
-                }
-                return true;
+                }, 1000);
+                setTimeout(function(){
+                    checkUserresourcesId(medias);
+                }, 2000);
+                $(".swipebox").swipebox();
+
+                //Show edit and delete tabs
+                $("a[title=tab2], a[title=tab3]").show();
+
+                  //If there is no image media => disable edit tab
+                if (!checkHasImage)
+                    $("a[title=tab3]").hide();
             }
+            else{
+                jerror ('There is no media on your account! Please use upload tab on leftside you can add some resources!');
+
+                //Go to queue page
+                $("a.queue").trigger('click');
+
+                //If there is no media hide edit & delete tabs
+                $("a[title=tab2], a[title=tab3]").hide();
+                $("#gallery #tabs").find("li").removeClass('current');
+                $("#gallery #tabs").find("li:eq(0)").addClass('current');
+
+                $("#gallery #tab-content").find(".hideCls").hide();
+                $("#gallery #tab-content").find(".hideCls:eq(0)").show();
+                //Fetch user's notification header
+                getUserDetail();
+                getUserNotificationsHeader();
+            }
+
+            //Correcting height for right advertising and no scroll bar for gallery page
+            setTimeout(function(){
+                if ($(".right-ads").length > 0){
+                    $(".right-ads").height($(".left-gallery").height());
+                }
+            }, 1500);
+            return true;
+        }
     );
 }
 
@@ -595,22 +594,6 @@ function toggleBottomAviary(){
 }
 function toogleEditThumb(){
     $(".aviary-thumbs").parents('.carousel-area').slideToggle(500);
-}
-
-/*function for sync tab image */
-function imageChoosed(media_id){
-
-	if(jQuery("li#" + media_id+"-parent").length){
-		if (jQuery("li#" + media_id+"-parent").hasClass ('setchoosed')){
-	        jQuery("li#" + media_id+"-parent").removeClass ('setchoosed');
-	        jQuery("li#" + media_id+"-parent").find("img.selected-gallery").remove();
-	    }
-	    else {
-	        jQuery("li#" + media_id+"-parent").addClass ('setchoosed');
-	        jQuery("li#" + media_id+"-parent").append ('<img class="selected-gallery" src="/memreas/img/gallery-select.png">');
-	    }
-	}
-    return false;
 }
 
 var deleteMediasChecked = 0;

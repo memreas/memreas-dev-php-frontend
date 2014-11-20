@@ -56,6 +56,20 @@ function checkUserresourcesId(medias){
  	}
 }
 
+/*function for sync tab image */
+function imageChoosed(media_id){
+
+    if (jQuery("a#" + media_id).parent('li').hasClass ('setchoosed')){
+        jQuery("a#" + media_id).parent('li').removeClass ('setchoosed');
+        jQuery("a#" + media_id).parent('li').find("img.selected-gallery").remove();
+    }
+    else {
+        jQuery("a#" + media_id).parent('li').addClass ('setchoosed');
+        jQuery("a#" + media_id).parent('li').append ('<img class="selected-gallery" src="/memreas/img/gallery-select.png">');
+    }
+    return false;
+}
+
 function checkReloadItem(itemName){
     if (reloadItems.length > 0){
         for (var i = 0;i < reloadItems.length;i++){
@@ -581,7 +595,7 @@ $(document).ready(function () {
 	        }else{
 	        	$('.right-ads').css({
 	                'position': 'relative',
-	                'top': '0',
+	                'top': '29px',
 	                'right':'0',
 	                'height': height,
 	                'width' : '20%'
