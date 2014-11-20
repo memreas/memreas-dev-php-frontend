@@ -2689,6 +2689,15 @@ nav {
 		width: 1.5em;
 	}
 }
+@media screen and (max-width:768px) and (min-width:620px){
+	.right-ads .adbox{
+		margin-right: 2% !important;
+    	max-width: 48% !important;width: auto !important;float: left !important;
+	}
+	.right-ads{
+		max-height:310px !important;
+	}
+}
 .browse-file, .preload-server{
     position: absolute;
     width: 100%;
@@ -3295,7 +3304,7 @@ select{ width: 184px; height: 30px; }
 .memreas-detail-audio{ width: 70%; float: right; }
 .memreas-popup-detail-audio, .memreas-detail-audio{ padding-top: 13px; }
 #sellmedia_duration_from, #sellmedia_duration_to{
-    width: 30% !important;
+    width: 42% !important;
 }
 .member-transaction{ height: 300px }
 .transaction-header{

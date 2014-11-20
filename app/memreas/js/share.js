@@ -318,7 +318,22 @@ function checkSellMediaDuration(){
             jerror("Date to must be larger than date from");
             return false;
         }
-        else return true;
+
+        var cdate = new Date();
+        var current_date = ("0" + (cdate.getMonth() + 1)).slice(-2) + '/' + ("0" + cdate.getDate()).slice(-2) + '/' + cdate.getFullYear();
+        current_date = new Date(current_date);
+
+        if (date_from < current_date){
+            jerror("Date from must be larger than date today");
+            return false;
+        }
+
+        if (date_to < current_date){
+            jerror("Date to must be larger than date today");
+            return false;
+        }
+
+        return true;
     }
     else {
         jerror("Please specify media available for viewing");
@@ -372,8 +387,11 @@ share_addEvent = function() {
 	    var ckb_public 		 	= getCheckBoxValue('ckb_public');
 
         //Sell media public as default
-        if (sell_media_price > 0)
+        if (sell_media_price > 0) {
             ckb_public = 1;
+            ckb_canpost = 0;
+            ckb_canadd = 0;
+        }
 
  	    var ckb_viewable 	 	= getCheckBoxValue('ckb_viewable');
 	    var ckb_selfdestruct 	= getCheckBoxValue('ckb_selfdestruct');
