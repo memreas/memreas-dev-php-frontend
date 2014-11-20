@@ -79,8 +79,11 @@ function getUserDetail(){
                 }
 
                 var checkSellMedia = shareCheckSellMedia();
-                if (checkSellMedia)
+                if (checkSellMedia) {
                     $(".share-media-price .italic-description").html('Check this option if you want to sell this event');
+                    $("#lbl-sellmedia").show();
+                }
+                else $("#lbl-sellmedia").remove();
             }
             else jerror (getValueFromXMLTag(xml_response, 'messsage'));
         }, 'undefined', true);

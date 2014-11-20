@@ -3304,7 +3304,7 @@ select{ width: 184px; height: 30px; }
 .memreas-detail-audio{ width: 70%; float: right; }
 .memreas-popup-detail-audio, .memreas-detail-audio{ padding-top: 13px; }
 #sellmedia_duration_from, #sellmedia_duration_to{
-    width: 30% !important;
+    width: 42% !important;
 }
 .member-transaction{ height: 300px }
 .transaction-header{

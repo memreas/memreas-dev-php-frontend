@@ -207,6 +207,18 @@ function showEventDetail(eventId, userId){
         eventdetail_object.friends_can_post = getValueFromXMLTag(response, 'friends_can_post');
         eventdetail_object.friends_can_share = getValueFromXMLTag(response, 'friends_can_share');
         eventdetail_object.public = getValueFromXMLTag(response, 'public');
+
+        var event_metadata = getValueFromXMLTag(response, 'event_metadata');
+        var sell_price = 0;
+        event_metadata = JSON.parse(event_metadata);
+        if (typeof (event_metadata.price) != 'undefined'){
+            if (event_metadata.price != 0)
+                sell_price = event_metadata.price;
+        }
+
+        if (sell_price > 0){
+            $(".memreas-detail-commentcount").hide();
+        }
     }, 'undefined', true);
 
     //Show gallery details
@@ -274,7 +286,7 @@ function showEventDetail(eventId, userId){
             ajaxScrollbarElement('.memreas-detail-gallery');
         }
     );
-    $("#popupAddMedia a.accept-btn").attr ("href", "javascript:addMemreasPopupGallery('" + eventId + "')");
+    $("#popupAddMedia a.accept-btn").attr ("onclick", "addMemreasPopupGallery('" + eventId + "')");
 
     $(".memreas-main").hide();
     $(".memreas-detail").fadeIn(500);
