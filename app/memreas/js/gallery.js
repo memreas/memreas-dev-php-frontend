@@ -235,7 +235,7 @@ jQuery.fetch_server_media = function (){
 
                 setTimeout(function(){
                     $(".preload-files").hide();
-                    $(".user-resources").fotorama({width: '800', height: '350', 'max-width': '100%'}).fadeIn(500);
+                    $(".user-resources").fotorama({width: '800', height: '350', 'max-width': '100%','width':'100%'}).fadeIn(500);
 
                     if (!$(".edit-area-scroll").hasClass ('mCustomScrollbar'))
                       $(".edit-area-scroll").mCustomScrollbar({ scrollButtons:{ enable:true }});
