@@ -2689,6 +2689,15 @@ nav {
 		width: 1.5em;
 	}
 }
+@media screen and (max-width:768px) and (min-width:620px){
+	.right-ads .adbox{
+		margin-right: 2% !important;
+    	max-width: 48% !important;width: auto !important;float: left !important;
+	}
+	.right-ads{
+		max-height:310px !important;
+	}
+}
 .browse-file, .preload-server{
     position: absolute;
     width: 100%;
