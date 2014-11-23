@@ -392,7 +392,7 @@ function popupMemreasAddfriends(){
             return;
         }
     }
-
+    $("#memreas-dropfriend").chosen({width: "95%"});
     var friend_list = $("#memreas-dropfriend").val();
     //Reset friend element
     friendList = null;

@@ -81,8 +81,21 @@ $(document).ready(function() {
                         });
                         $('#search-result ul').removeClass().addClass('personresults');
                         ajaxScrollbarElement(".personresults");
-                        paginationlink();
-
+                       // paginationlink();
+                        $("#linkpaginations").pagination({
+                            items: objs.count,
+                            itemsOnPage: 5,
+                            cssStyle: 'light-theme',
+                            currentPage:parseInt($('.current').not('.prev, .next').text()) - 1,
+                            onPageClick:function(){
+                            	var pClicked = parseInt($('.current').not('.prev, .next').text());
+                                var param = [{tag: "tag", value: q},
+                                    {tag: "page", value: pClicked.toString()}
+                                ];
+                                var action = 'findtag';
+                                ajaxRequest(action, param, reqhandler);
+                            }
+                        });
 
                     }
                     break;
@@ -91,7 +104,6 @@ $(document).ready(function() {
                     var action = 'findevent';
                     //  var param  = [{tag: "tag", value: this.query}];
                     var reqhandler = function(data) {
-
                         $(".tabcontent-detail").hide();
                         $("#search-result").show();
                         $(target).empty();
@@ -103,7 +115,21 @@ $(document).ready(function() {
                         });
                         $('#search-result ul').removeClass().addClass('memreas_results');
                         ajaxScrollbarElement(".memreas_results");
-                        paginationlink();
+                        //paginationlink();
+                        $("#linkpaginations").pagination({
+                            items: objs.count,
+                            itemsOnPage: 5,
+                            cssStyle: 'light-theme',
+                            currentPage:parseInt($('.current').not('.prev, .next').text()) - 1,
+                            onPageClick:function(){
+                            	var pClicked = parseInt($('.current').not('.prev, .next').text());
+                                var param = [{tag: "tag", value: q},
+                                    {tag: "page", value: pClicked.toString()}
+                                ];
+                                var action = 'findtag';
+                                ajaxRequest(action, param, reqhandler);
+                            }
+                        });
                     }
                     break;
                 case '#':
@@ -123,13 +149,27 @@ $(document).ready(function() {
                         });
                         $('#search-result ul').removeClass().addClass('discover_results');
                         ajaxScrollbarElement(".discover_results");
-                        paginationlink();
+                        $("#linkpaginations").pagination({
+                            items: objs.count,
+                            itemsOnPage: 5,
+                            cssStyle: 'light-theme',
+                            currentPage:parseInt($('.current').not('.prev, .next').text()) - 1,
+                            onPageClick:function(){
+                            	var pClicked = parseInt($('.current').not('.prev, .next').text());
+                                var param = [{tag: "tag", value: q},
+                                    {tag: "page", value: pClicked.toString()}
+                                ];
+                                var action = 'findtag';
+                                ajaxRequest(action, param, reqhandler);
+                            }
+                        });
+                        //paginationlink();
                     }
 
                     break;
             }
 
-            var paginationlink = function() {
+            /*var paginationlink = function() {
 
                 if(totalPage == 1){
                    $(".btn-event-n").hide();
@@ -164,12 +204,12 @@ $(document).ready(function() {
                             ];
                             ajaxRequest(action, param, reqhandler);
 
-                        };
+                        };*/
 
             ajaxRequest(action, param, reqhandler);
 
-            $( ".btn-event-n" ).unbind('click').bind( "click", nextbtn );
-            $(".btn-event-p").unbind('click').bind( "click",prevbtn);
+           //$( ".btn-event-n" ).unbind('click').bind( "click", nextbtn );
+           // $(".btn-event-p").unbind('click').bind( "click",prevbtn);
 
 
             return item;

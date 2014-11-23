@@ -365,7 +365,7 @@ function getUserNotificationsHeader(){
                                                         '<div class="noti-content">' +
                                                             '<p>' + comment_text + '</p>' +
                                                         '</div>' +
-                                                        '<span class="notification-time">' + comment_time.getHours() + ':' + correctDateNumber(comment_time.getMinutes()) + ' am <br/>' +
+                                                        '<span class="notification-time">' + comment_time.getHours() + ':' + correctDateNumber(comment_time.getMinutes()) + '<br/>' +
                                                         correctDateNumber(comment_time.getDate()) + '/' + correctDateNumber(comment_time.getMonth()) + '/' + comment_time.getFullYear() + '</span>' +
                                                         '<a href="javascript:;" onclick="updateNotificationHeader(\'' + notification_id + '\', \'ignore\');" class="close">x</a>' +
                                                         '<a href="javascript:;" onclick="gotoEventDetail(\'' + event_id + '\', \'' + notification_id + '\');" class="reply">reply</a>' +
@@ -384,7 +384,7 @@ function getUserNotificationsHeader(){
                                                             '<div class="noti-content">' +
                                                                 '<p>' + meta_text + '</p><div class="clear"></div>' +
                                                             '</div>' +
-                                                            '<span class="notification-time">' + notification_updated.getHours() + ':' + correctDateNumber(notification_updated.getMinutes()) + ' am <br/>' +
+                                                            '<span class="notification-time">' + notification_updated.getHours() + ':' + correctDateNumber(notification_updated.getMinutes()) + '<br/>' +
                                                             correctDateNumber(notification_updated.getDate()) + '/' + correctDateNumber(notification_updated.getMonth()) + '/' + notification_updated.getFullYear() + '</span>' +
                                                         '</div>' +
                                                         link_action +

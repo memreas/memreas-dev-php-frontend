@@ -499,7 +499,6 @@ share_clearMemreas = function(confirmed) {
 	    var checkbox_ids = ['ckb_canpost', 'ckb_canadd', 'ckb_public', 'ckb_viewable', 'ckb_selfdestruct'];
 
 	    clearTextField(text_ids);
-	    clearCheckBox(checkbox_ids);
         $("a[title=share]").click();
     }
     else{
