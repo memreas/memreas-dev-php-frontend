@@ -80,14 +80,18 @@ function buyMedia(event_id){
                         var current_event = response.event_id;
 
                         //Checking for handling public tab or friend tab is activated
+                        var sell_class = '';
                         if ($("a[title=memreas-tab3]").parent('li').attr("id") == "current")
-                            var sell_class = "public-";
-                        else var sell_class = "private-";
+                            sell_class = "public-";
+                        else sell_class = "private-";
 
-                        var jElement = $("#selling-" + current_event);
+                        var jElement = $("#" + sell_class + "selling-" + current_event);
                         var creator_id = jElement.attr("data-owner");
+                        var divaTagClick = "showEventDetail('" + current_event + "', '" + creator_id + "');";
+                        var aTagClick = "javascript:showEventDetail('" + current_event + "', '" + creator_id + "');";
                         jElement.removeAttr("data-owner").removeAttr("data-click")
-                            .find("a").attr("href", "javascript:showEventDetail('" + current_event + "', '" + creator_id + "');");
+                            .find("a").attr("href", aTagClick);
+                        jElement.attr('onclick', divaTagClick);
                         jElement.find(".sell-event-overlay").remove();
                         jElement.find(".sell-event-buyme").remove();
                     }

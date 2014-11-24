@@ -496,7 +496,6 @@ share_clearMemreas = function(confirmed) {
     if (confirmed){
 	    var i = 0;
 	    var text_ids 	 = ['txt_name', 'txt_location', 'dtp_date', 'dtp_from', 'dtp_to', 'dtp_selfdestruct'];
-	    var checkbox_ids = ['ckb_canpost', 'ckb_canadd', 'ckb_public', 'ckb_viewable', 'ckb_selfdestruct'];
 
 	    clearTextField(text_ids);
         $("a[title=share]").click();
