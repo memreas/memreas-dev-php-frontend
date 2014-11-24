@@ -1060,7 +1060,9 @@ a.black_btn_skin:hover,a.black_btn_skin:focus, a.black_btn_skin:active, #avpw_sa
 	min-height: 490px;
 	margin-bottom: 10px;
 }
-
+#tab-content{
+	z-index: 0;
+}
 .noads #tab-content{
 	margin-bottom: 50px;
 }
