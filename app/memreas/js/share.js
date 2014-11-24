@@ -35,6 +35,10 @@ $(function(){
         event_id = '';
         $("#ckb_canpost").attr('checked', true);
         $("#ckb_canadd").attr('checked', true);
+        $("#ckb_public").attr('checked', false);
+        $("#ckb_viewable").attr('checked', false);
+        $("#ckb_selfdestruct").attr('checked', false);
+        $("#ckb_sellmedia").attr('checked', false);
     });
     user_id = $("input[name=user_id]").val();
     share_initObjects();
