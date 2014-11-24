@@ -218,6 +218,7 @@ $(function(){
                             userprofile = removeCdataCorrectLink(userprofile);
                             var alternate_email = getValueFromXMLTag(xml_response, 'alternate_email');
                             var gender = getValueFromXMLTag(xml_response, 'gender');
+                        
                             var dob = getValueFromXMLTag(xml_response, 'dob');
                             var username_length = username.length;
                             if (username_length > 10){
@@ -231,7 +232,7 @@ $(function(){
                             }
                             $("input[name=account_email]").val(useremail);
                             $("input[name=account_alternate_email]").val(alternate_email);
-                            $("input[name=dob]").val(dob);
+                            $("input[name=account_dob]").val(dob);
 
                             if (gender == 'male')
                                 $("#gender-male").attr("checked", "checked");
@@ -268,7 +269,7 @@ function fillUserDetail(currentUserId){
                 $("#setting-userprofile img").attr('src', userprofile);
             $("input[name=account_email]").val(useremail);
             $("input[name=account_alternate_email]").val(alternate_email);
-            $("input[name=dob]").val(dob);
+            $("input[name=account_dob]").val(dob);
 
             if (gender == 'male')
                 $("#gender-male").attr("checked", "checked");
@@ -282,14 +283,20 @@ function fillUserDetail(currentUserId){
 
 /*Function Save user detail*/
 function saveUserDetail(){
-
-    if ($("#gender-male").is(":checked"))
+	var account_gender = 'male';
+    /*if ($("#gender-male").is(":checked"))
         var account_gender = 'male';
     else{
         if ($("#gender-female").is(":checked"))
             var account_gender = 'male';
         else var account_gender = '';
-    }
+    }*/
+	if ($("#gender-female").is(":checked")){
+		account_gender = 'female';
+	}else{
+		account_gender = 'male';
+	}
+        
     var account_dob = $("input[name=account_dob]").val();
 
     var cdate = new Date();
@@ -299,7 +306,21 @@ function saveUserDetail(){
         $("#account_dob").val('').focus();
         return false;
     }
-
+    
+    if($("input[name=account_email]").length){
+    	var orginal_email = $("input[name=account_email]").val();
+    	var alternate_email = $("input[name=account_alternate_email]").val();
+    	var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    	if(!regex.test(alternate_email)){
+    		jerror('your email address does not correct format.');
+    		return false;
+    	}else{
+    		if($.trim(orginal_email) == $.trim(alternate_email)){
+    			jerror('alternate email should not same as orginal email.');
+        		return false;
+    		}
+    	}
+    }
     var userId = $("input[name=user_id]").val();
     var params = [
         {tag: 'user_id', value: userId},

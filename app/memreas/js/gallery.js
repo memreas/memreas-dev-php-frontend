@@ -31,7 +31,7 @@ function getUserDetail(){
                 }
                 $("input[name=account_email]").val(useremail);
                 $("input[name=account_alternate_email]").val(alternate_email);
-                $("input[name=dob]").val(dob);
+                $("input[name=account_dob]").val(dob);
 
                 if (gender == 'male')
                     $("#gender-male").attr("checked", "checked");
