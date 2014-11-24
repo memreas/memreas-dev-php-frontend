@@ -9,6 +9,11 @@ function switch_mode(){
         $('#avpw_fullscreen_bg').remove();
         $(".exit-aviary-fullscreen").hide();
     }
+    setTimeout(function(){
+    	if( $(".exit-aviary-fullscreen").length){
+    		$(".exit-aviary-fullscreen").html('Exit full screen');
+    	}
+    }, 500);
 }
 
 var featherEditor = new Aviary.Feather({
