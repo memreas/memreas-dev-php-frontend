@@ -3,7 +3,6 @@
 */
 var userObject = [];
 var notificationHeaderObject = new Object(); //This variable stored header notification and compare with a new for checking
-
 function getUserDetail(){
     if ($("input[name=user_id]").val() == "")
         document.location.href = "/index";
