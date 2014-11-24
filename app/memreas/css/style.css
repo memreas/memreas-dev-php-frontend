@@ -429,8 +429,11 @@ ul.right textarea {
 .menu ul li a:hover, .menu ul li a.active {
 	background: url(../img/menu-act.png);
 }
+#bottomad{
+	 margin-bottom: 0 !important;
+}
 footer {
-	position: fixed;
+	position: relative;
 	z-index: 2;
 	left: 0;
 	bottom: 0;

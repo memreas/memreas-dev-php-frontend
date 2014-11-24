@@ -192,7 +192,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4e8dd4', end
     margin-left: 1em;
     /*margin-top: 3em; */
     margin-top: 1em; /* Khan Changes MFE-458*/
-    min-height: 610px;
+    min-height: 580px;
 }
 .film {
     /*left: 1px;
@@ -629,7 +629,7 @@ footer {
         font-size: 15px;
     }
     footer.rel {
-        position: fixed!important;
+        position: relative !important;
     }
 }
 
