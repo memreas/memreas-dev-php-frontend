@@ -91,8 +91,8 @@ function fetchMyMemreas(){
                     '</div>' +
                    '</div>';
                     jTarget_object.append(element);
-
-                    var event_comments = $(event).filter('comments').html();
+                    
+                    /*var event_comments = $(event).filter('comments').html();
                     if (event_comments != ''){
                         var event_comments = getSubXMLFromTag(event_comments, 'comment');
                         var jCommentElement = $("#swipebox-comment-" + eventId);
@@ -115,7 +115,7 @@ function fetchMyMemreas(){
                             }
                         }
                         jCommentElement.empty().html(html_comment);
-                    }
+                    }*/
 
                     //get event medias
                     ajaxRequest(
@@ -136,14 +136,79 @@ function fetchMyMemreas(){
                                     var media_count = medias.length;
                                     for (var i=0;i < media_count;i++) {
                                         var media = medias[i];
+                                        var mediaid = $(media).find('media_id')[0].innerHTML;
                                         var media_type = $(media).filter('type').html();
                                         var _media_url = getMediaThumbnail(media, '/memreas/img/small/1.jpg');
                                         if (media_type == 'video')
-                                            html_media += '<div class="event_img video-media"><img src="' + _media_url + '"/><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></div>';
-                                        else html_media += '<div class="event_img"><img src="' + _media_url + '"/></div>';
+                                            html_media += '<div id="emedia-'+mediaid+'" class="event_img video-media"><a href="javascript:;"  eventid="'+eventId+'"  data="'+mediaid+'"><img src="' + _media_url + '"/><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a></div>';
+                                        else html_media += '<div id="emedia-'+mediaid+'" class="event_img"><a href="javascript:;"  eventid="'+eventId+'"  data="'+mediaid+'"><img  src="' + _media_url + '"/></a></div>';
                                     }
                                     if (html_media != ''){
                                         jMediaElement.empty().html(html_media);
+                                        if($("#viewport .event_img").length){
+                                        	$("#viewport .event_img a").each(function(){
+                                        		$(this).click(function(){
+                                        			$(".modal-backdrop").removeClass("out").addClass("in");
+                        			                $(".modal-backdrop").fadeIn();
+                        			                $(".modal-backdrop").html('<p class="loading" style="clear: both;width:100%;text-align:center;padding-top:20%"><img src="/memreas/img/loading_animate.gif" style="width:55px;"/></p>');
+                                        			var eventdetail_media_id = $(this).attr("data");
+                                        			var eventdetail_id = $(this).attr("eventid"); 
+                                        			//get media comments
+                                        			ajaxRequest('listcomments',
+                                        			        [
+                                        			            {tag: 'event_id', value: eventdetail_id},
+                                        			            {tag: 'media_id', value: eventdetail_media_id},
+                                        			            {tag: 'limit', value: '100'},
+                                        			            {tag: 'page', value: '1'}
+                                        			        ], function(ret_xml){
+                                        			            
+                                        			            var event_comments = getSubXMLFromTag(ret_xml, 'comment');
+                                        			            var comment_count = event_comments.length;
+                                        			            if (comment_count > 0){
+                                        			            	var html_str = '<ul class="commitems">';
+                                        			                for (var i = 0;i < comment_count;i++){
+                                        			                    var event_comment = event_comments[i];
+                                        			                    var comment_owner_pic = getValueFromXMLTag(event_comment, 'profile_pic');
+                                        			                    comment_owner_pic = removeCdataCorrectLink(comment_owner_pic);
+                                        			                    if (comment_owner_pic == '')
+                                        			                        comment_owner_pic = '/memreas/img/profile-pic.jpg';
+                                        			                    var comment_text = getValueFromXMLTag(event_comment, 'comment_text');
+                                        			                    var comment_type = getValueFromXMLTag(event_comment, 'type');
+                                        			                    html_str += '<li>' +
+                                        			                        '<figure class="pro-pics"><img src="' + comment_owner_pic + '" alt=""></figure>';
+
+                                        			                    //Comment is text or audio
+                                        			                    if (comment_type == 'text')
+                                        			                        html_str += '<textarea readonly="readonly">' + comment_text + '</textarea>';
+                                        			                    else{
+                                        			                        var audio_media_url = getValueFromXMLTag(event_comment, 'audio_media_url');
+                                        			                        audio_media_url = removeCdataCorrectLink(audio_media_url);
+                                        			                        html_str += '<audio controls class="memreas-detail-audio">' +
+                                        			                        '<source src="' + audio_media_url + '" type="audio/wav" />' +
+                                        			                        'Your browser does not support the audio element' +
+                                        			                        '</audio>';
+                                        			                    }
+                                        			                    html_str += '</li>';
+                                        			                    
+                                        			                    
+                                        			                }
+                                        			                html_str += '</ul><div style="clear:both"></div>';
+                                        			                
+                                        			                popupDetailMedia(eventdetail_media_id,html_str,comment_count);
+                                                                	
+                                        			                /*if( $("#myEvent-"+eventdetail_id).find("ul.commitems").length){
+                                        			                	$("#myEvent-"+eventdetail_id).find("ul.commitems").each(function(){$(this).remove();});
+                                        			                }
+                                        			                $("#myEvent-"+eventdetail_id).append(html_str);*/
+                                        			            }
+                                        			            else{
+                                        			                var html_str = '<p style="color: #FFF;" class="no-comment">No comment yet!</p>';
+                                        			                popupDetailMedia(eventdetail_media_id,html_str,0);
+                                        			            }
+                                        			        }, 'undefined', true);
+                                        		});
+                                        	});
+                                        }
                                     }
                                     else jMediaElement.empty().html('<div class="event_img video-media">There is no media on this event</div>');
                                 }
@@ -187,6 +252,31 @@ function fetchMyMemreas(){
             else jerror('You have no event at this time. Try add some event at share tab');
         });
     $(".myMemreas").mCustomScrollbar('update');
+}
+function popupDetailMedia(eventdetail_media_id,html_str,comment_count){
+	var pophtml = '<div id="pop-'+eventdetail_media_id+'" class="modal fade in" style="display: none;">';
+		pophtml += '<div class="modal-dialog">';
+			pophtml += '<div class="modal-content">';
+				pophtml += '<form class="form-horizontal" role="form">';
+					pophtml += '<div class="modal-header">';
+						pophtml += '<button class="close" data-dismiss="modal" type="button"><span aria-hidden="true">×</span></button>';
+						pophtml += '<h4 id="myModalLabel" class="modal-title">Have '+comment_count+' comments</h4>';
+					pophtml += '</div>';
+					pophtml += '<div class="modal-body">';
+						pophtml += '<div class="row-fluid">';
+								pophtml += '<div class="form-group">';
+								pophtml += html_str;
+								pophtml += '</div>';
+						pophtml += '</div>';
+					pophtml += '</div>';
+					
+	pophtml += '</div>';
+	$("body").append(pophtml);$(".modal-backdrop").html('');
+	$("#pop-"+eventdetail_media_id).fadeIn();
+	
+	$(".close").click(function(){
+	closeModals(eventdetail_media_id);
+	});
 }
 function fetchFriendsMemreas(friendMemreasType){
     var user_id = $("input[name=user_id]").val();
