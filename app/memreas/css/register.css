@@ -325,7 +325,7 @@ span.absolute{
     background-origin: padding-box !important;
     background-position: 0 0 !important;
     background-repeat: no-repeat !important;
-    background-size: 100% 100% !important;
+    background-size: 100% !important;
     cursor: pointer;
     width: 100%;
 }
