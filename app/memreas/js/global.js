@@ -58,14 +58,13 @@ function checkUserresourcesId(medias){
 
 /*function for sync tab image */
 function imageChoosed(media_id){
-
-    if (jQuery("a#" + media_id).parent('li').hasClass ('setchoosed')){
-        jQuery("a#" + media_id).parent('li').removeClass ('setchoosed');
-        jQuery("a#" + media_id).parent('li').find("img.selected-gallery").remove();
+    if ($("a[id='"+media_id+"']").closest('li').hasClass ('setchoosed')){
+        $("a[id='"+media_id+"']").closest('li').removeClass ('setchoosed');
+        $("a[id='"+media_id+"']").closest('li').find("img.selected-gallery").remove();
     }
     else {
-        jQuery("a#" + media_id).parent('li').addClass ('setchoosed');
-        jQuery("a#" + media_id).parent('li').append ('<img class="selected-gallery" src="/memreas/img/gallery-select.png">');
+        $("a[id='"+media_id+"']").closest('li').addClass ('setchoosed');
+        $("a[id='"+media_id+"']").closest('li').append ('<img class="selected-gallery" src="/memreas/img/gallery-select.png">');
     }
     return false;
 }

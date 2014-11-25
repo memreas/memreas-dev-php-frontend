@@ -309,7 +309,7 @@ function fetchFriendsMemreas(friendMemreasType){
                                             }
                                             else {
                                                 jElement.attr("onclick", jElement.attr("data-click"))
-                                                    .removeAttr("data-click").removeAttr("data-owner");
+                                                    .removeAttr("data-click");
                                                 jElement.find(".sell-event-buyme").html("buy me");
                                             }
 

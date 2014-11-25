@@ -35,6 +35,10 @@ $(function(){
         event_id = '';
         $("#ckb_canpost").attr('checked', true);
         $("#ckb_canadd").attr('checked', true);
+        $("#ckb_public").attr('checked', false);
+        $("#ckb_viewable").attr('checked', false);
+        $("#ckb_selfdestruct").attr('checked', false);
+        $("#ckb_sellmedia").attr('checked', false);
     });
     user_id = $("input[name=user_id]").val();
     share_initObjects();
@@ -496,7 +500,6 @@ share_clearMemreas = function(confirmed) {
     if (confirmed){
 	    var i = 0;
 	    var text_ids 	 = ['txt_name', 'txt_location', 'dtp_date', 'dtp_from', 'dtp_to', 'dtp_selfdestruct'];
-	    var checkbox_ids = ['ckb_canpost', 'ckb_canadd', 'ckb_public', 'ckb_viewable', 'ckb_selfdestruct'];
 
 	    clearTextField(text_ids);
         $("a[title=share]").click();

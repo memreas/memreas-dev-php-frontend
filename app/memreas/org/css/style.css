@@ -905,7 +905,7 @@ a.black_btn_skin:hover, a.black_btn_skin:active {
 	background: rgba(0,0,0,.5);
 	padding: 1em;
 	position: relative;
-	z-index: 2;
+	z-index: 0;
 	min-height: 360px;
 	height: auto;
 	margin-bottom: 10px;

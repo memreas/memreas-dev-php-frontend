@@ -77,7 +77,49 @@ $(document).ready(function() {
                             personalSearchLi(target, obj);
                         });
                         $('.btn-friends').click(function() {
-                            addFriend($(this).attr('id'));
+                        	var mid = $(this).attr('id');
+                        	var photo = map[mid].profile_photo;
+                        	photo = removeCdataCorrectLink(photo);
+                        	$(".modal-backdrop").removeClass("out").addClass("in");
+                        	$(".modal-backdrop").fadeIn();
+                        	var pophtml = '<div id="pop-'+mid.replace("@", "")+'" class="modal fade in" style="display: none;">';
+		                        	pophtml += '<div class="modal-dialog">';
+		                        		pophtml += '<div class="modal-content">';
+		                        			pophtml += '<form class="form-horizontal" role="form">';
+		                        				pophtml += '<div class="modal-header">';
+		                        					pophtml += '<button class="close" data-dismiss="modal" type="button"><span aria-hidden="true">×</span></button>';
+		                        					pophtml += '<h4 id="myModalLabel" class="modal-title">Add '+mid.replace("@", "")+' as a friend?</h4>';
+		                        				pophtml += '</div>';
+		                        				pophtml += '<div class="modal-body">';
+		                        					pophtml += '<div class="row-fluid">';
+		                        							pophtml += '<div class="form-group">';
+		                        								pophtml += '<div class="span3" for="inputLogin"><img src="'+photo+'"/></div>';
+		                        								pophtml += '<div class="span9">';
+		                        									pophtml += '<p style="padding-bottom:20px">'+mid.replace("@", "")+' will have to confirm that you are friends.</p>';
+		                        									pophtml += '<p>add a persional message: </p>';
+		                        									pophtml += '<textarea id="msg-'+mid.replace("@", "")+'" class="input-group-lg uniform" style="width:100%;height:100px;" rows="1" cols="1"></textarea>';
+		                        								pophtml += '</div><div style="clear:both"></div>';
+		                        							pophtml += '</div>';
+		                        					pophtml += '</div>';
+		                        				pophtml += '</div>';
+		                        				pophtml += '<div class="modal-footer">';
+		                        					pophtml += '<button class="btn btn-primary addfriendbutton" type="button">add friend</button>';
+		                        					pophtml += '<button class="btn btn-default canclemodal" type="button">cancle</button>';
+		                        				pophtml += '</div>';
+		                        				
+                        	pophtml += '</div>';
+                        	$("body").append(pophtml);
+                        	$("#pop-"+mid.replace("@", "")).fadeIn();
+                        	$(".canclemodal").click(function(){
+                        		closeModals(mid.replace("@", ""));
+                        	});
+                        	$(".close").click(function(){
+                        		closeModals(mid.replace("@", ""));
+                        	});
+                        	$(".addfriendbutton").click(function(){
+                        		addFriend(mid);
+                        	});
+                            //addFriend($(this).attr('id'));
                         });
                         $('#search-result ul').removeClass().addClass('personresults');
                         ajaxScrollbarElement(".personresults");
@@ -263,7 +305,7 @@ function personalSearchLi(target, item) {
         var photo = item.profile_photo;
         photo = removeCdataCorrectLink(photo);
         var name = $.trim(item.username);
-        var op = '<li><figure class="pro-pics"><img src="'
+        var op = '<li id="search-'+name.replace('@', '')+'"><figure class="pro-pics"><img src="'
                 + photo + '" alt=""></figure><div class="user-names">'
                 + name + '</div>';
                 if(typeof item.friend_request_sent  === 'undefined'){
@@ -297,9 +339,14 @@ function eventSearchLi(target, item) {
     op += '</div></li>';
     $(target).append(op);
 }
-
+function closeModals(modalid){
+	$(".modal-backdrop").removeClass("in").addClass("out").fadeOut();
+	$("#pop-"+modalid).remove();
+}
 function addFriend(name) {
     var user_id = $("input[name=user_id]").val();
+    var persionalMsg = $("#msg-"+name.replace("@", "")).val();
+    
     var photo = map[name].profile_photo;
     var selFriends = [];
     selFriends[0] = {
@@ -322,7 +369,10 @@ function addFriend(name) {
                 var status = getValueFromXMLTag(ret_xml, 'status');
                 var message = getValueFromXMLTag(ret_xml, 'message');
                 if (status.toLowerCase() == 'success') {
-
+                	if($.trim(persionalMsg) != ""){
+                		
+                	}
+                	closeModals(name.replace("@", ""));
                     //jsuccess('your friends added successfully.');
                     jsuccess(message);
                     var link_object = "a[title='user-" + name.replace('@', '') + "']";
@@ -333,8 +383,11 @@ function addFriend(name) {
                         .unbind('click');
                     //$(".popupContact li").each (function(){ $(this).removeClass ('setchoosed');});
                 }
-                else
-                    jerror(message);
+                else{
+                	closeModals(name.replace("@", ""));
+                	jerror(message);
+                }
+                    
             }
     );
 
