@@ -134,7 +134,7 @@ header {
 }
 #body {
     left: 0;
-    position: fixed;
+    position: relative;
     top: 75px;
     width: 100%;
 
@@ -325,7 +325,7 @@ span.absolute{
     background-origin: padding-box !important;
     background-position: 0 0 !important;
     background-repeat: no-repeat !important;
-    background-size: 100% !important;
+  	min-width:222px;
     cursor: pointer;
     width: 100%;
 }
@@ -531,8 +531,8 @@ footer {
     }
     .file form{
         width: 81%;
-        -webkit-background-size: cover;
-        background-size: cover;
+       /* -webkit-background-size: cover;
+        background-size: cover;*/
     }
     .signup form input{
         margin: 0 auto 10px 40px;
@@ -776,6 +776,7 @@ footer {
     .signup h2{
     	padding-left:32px;
     }
+    .profile .btn-lg {float:left !important;}
 }
 @media (max-width: 725px) {
     /*#slider {

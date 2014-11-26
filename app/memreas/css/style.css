@@ -3641,3 +3641,18 @@ select{ width: 184px; height: 30px; }
     right: 0;
     top: 25px;
 }
+.commitems{float:left;width:100%;}
+.commitems li{
+	float:left;
+	width:48%;
+	margin-right:1%;margin-left:1%;
+	height:80px;
+}
+@media screen and (max-width: 767px) {
+	.commitems li{
+		float:left;
+		width:100%;
+		margin-right:0;margin-left:0;
+		height:80px;
+	}
+}

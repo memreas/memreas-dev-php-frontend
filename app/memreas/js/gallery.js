@@ -12,6 +12,7 @@ function getUserDetail(){
             if (getValueFromXMLTag(xml_response, 'status') == 'Success'){
                 var useremail = getValueFromXMLTag(xml_response, 'email');
                 var username = getValueFromXMLTag(xml_response, 'username');
+                var password = getValueFromXMLTag(xml_response, 'password');
                 $("input[name=username]").val(username);
                 var userprofile = getValueFromXMLTag(xml_response, 'profile');
                 userprofile = removeCdataCorrectLink(userprofile);
@@ -44,6 +45,7 @@ function getUserDetail(){
                 //Assign user detail into local object
                 userObject.email = useremail;
                 userObject.username = username;
+                userObject.password = password;
                 userObject.userprofile = userprofile;
                 userObject.alternate_email = alternate_email;
                 userObject.gender = gender;

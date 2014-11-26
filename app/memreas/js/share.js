@@ -372,7 +372,7 @@ share_addEvent = function() {
         var sellmedia_duration_type = '';
     }
 
-    disablePopup('popupSellMedia');
+    disablePopup('popupSellMedia');share_closeGoogleMap(true);
 	var name = getElementValue('txt_name');
 	if (name == "") {
 		jerror("You have to input the name.");

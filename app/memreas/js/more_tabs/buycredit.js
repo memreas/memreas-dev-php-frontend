@@ -5,7 +5,14 @@ var buycredit_account_cards = new Object();
 var account_user = new Object();
 
 $(function(){
+	if( $("#credit-amount").length){
+		
+		//$(".akordeon-item .akordeon-item-body").css({overflow:"visible"});
+		//$("#credit-amount").closest("div.akordeon-item-body").css({height:"357px"});
+		$("#credit-amount").chosen({width:"95%"});
+	}
     $(".buycredit-order").click(function(){ fill_account_detail(); });
+   
 });
 
 function buycredit_cardChange(choose_card_id){

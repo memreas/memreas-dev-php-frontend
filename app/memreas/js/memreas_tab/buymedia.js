@@ -243,6 +243,18 @@ function acceptBuyCredit(){
         return false;
     }
 
+    var password_confirm = $("#buycredit_confirm_password").val();
+    if (password_confirm == ''){
+        jerror("Please enter your password to confirm payment");
+        return false;
+    }
+
+    password_confirm = md5(password_confirm);
+    if (password_confirm != userObject.password){
+        jerror("Password confirm is invalid");
+        return false;
+    }
+
     var params = new Object;
     params.userid = LOGGED_USER_ID;
     params.stripe_card_reference_id = buycredit_card;
@@ -262,7 +274,7 @@ function acceptBuyCredit(){
         data: 'json=' + data,
         success: function(response){
             if (response.status == 'Success'){
-                jsuccess(jsuccess.message);
+                jsuccess(response.message);
                 $(".popup-buymedia-credit").html("$" + userObject.buyer_balance);
                 popup("popupBuyMedia");
             }
