@@ -928,7 +928,7 @@ function fillmorepage_eventDetail(morepage_event_id){
     var jMorepageEventLocation = $("#morepage_eventLocation");
     var jMorepageEventFriendsCanPost = $("#morepage_eventFriendsCanPost");
     var jMorepageEventFreindsCanAdd = $("#morepage_friendsCanAdd");
-    var jMorepage_EventPublic = $("#morepage_public");
+    //var jMorepage_EventPublic = $("#morepage_public");
     var jMorepage_isviewable = $("#morepage_isviewable");
     var jMoredate_eventDateFrom = $("#moredate_eventDateFrom");
     var jMoredate_eventDateTo = $("#moredate_eventDateTo");
@@ -966,7 +966,16 @@ function fillmorepage_eventDetail(morepage_event_id){
                 jMoredate_eventDateFrom.val('from');
                 jMorepage_isviewable.removeAttr('checked');
             }
-
+            
+            /*if (getValueFromXMLTag(response, 'public') != '0'){
+            	jMorepage_EventPublic.val(getValueFromXMLTag(response, 'self_destruct'));
+            	jMorepage_EventPublic.attr('checked', true);
+            }
+            else{
+            	jMorepage_EventPublic.val(0);
+                jMorepage_IsSelfDestruct.removeAttr('checked');
+            }*/
+            
             if (getValueFromXMLTag(response, 'viewable_to') != '')
                 jMoredate_eventDateTo.val(getValueFromXMLTag(response, 'viewable_to'));
             else jMoredate_eventDateTo.val('to');
@@ -1052,11 +1061,10 @@ function morepage_saveEvent(){
         var split_date = self_destruct.split('/');
         self_destruct = split_date[1] + '-' + split_date[0] + '-' + split_date[2]; //Correct date format to d-m-Y
     }
-
+    var friend_can_post = 0;
     if ($("#morepage_eventFriendsCanPost").is(":checked"))
-        var friend_can_post = 1;
+        friend_can_post = 1;
     else friend_can_post = 0;
-
     if ($("#morepage_friendsCanAdd").is(":checked"))
         var friend_can_add = 1;
     else var friend_can_add = 0;
@@ -1077,9 +1085,20 @@ function morepage_saveEvent(){
                     {tag: 'is_friend_can_add_friend', value: friend_can_add.toString()},
                     {tag: 'event_self_destruct', value: self_destruct}
                 ];
-    ajaxRequest('editevent', params, function(response){
-        if (getValueFromXMLTag(response, 'status'))
-            jsuccess(getValueFromXMLTag(response, 'message'));
+    	ajaxRequest('editevent', params, function(response){
+        if (getValueFromXMLTag(response, 'status')){
+        	var ssMsg = getValueFromXMLTag(response, 'message');
+        	
+        	if($.trim(ssMsg).toLowerCase() == 'record not updated'){
+        		ssMsg = "No record to update";
+        	}
+        	jsuccess(ssMsg);
+        	if(ssMsg.toLowerCase() == "no record to update"){
+        		$("#jSuccess").css("background-image","none");
+        		$("#jSuccess").css("padding-left","10px");
+        	}
+        }
+            
         else jerror(getValueFromXMLTag(response, 'message'));
     });
 }
