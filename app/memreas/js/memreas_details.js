@@ -217,7 +217,7 @@ function showEventDetail(eventId, userId){
         }
 
         if (sell_price > 0){
-            $(".memreas-detail-commentcount").hide();
+            $(".memreas-detail-commentcount, .memreas-detail-download").hide();
         }
     }, 'undefined', true);
 
