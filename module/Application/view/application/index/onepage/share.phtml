@@ -39,13 +39,13 @@
                         <li>
                              <input id="ckb_viewable" class="css-checkbox" type="checkbox" />
                              <label id="lbl-viewable" for="ckb_viewable" name="demo_lbl_4" class="css-label margin-none" >viewable :</label>
-                             <input name="input" type="text" id="dtp_from" class="date-picker" readonly value="from" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'from')this.value = '';"/>
-                             <input name="input" type="text" id="dtp_to" class="date-picker" readonly value="to" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'to')this.value = '';"/>
+                             <input name="input" type="text" id="dtp_from" class="date-picker" readonly value="from" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'from')this.value = '';" disabled />
+                             <input name="input" type="text" id="dtp_to" class="date-picker" readonly value="to" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'to')this.value = '';" disabled />
                         </li>
                         <li>
                          <input id="ckb_selfdestruct" class="css-checkbox" type="checkbox" />
                          <label for="ckb_selfdestruct" name="demo_lbl_5" class="css-label margin-none" >ghost :</label>
-                         <input name="input" type="text" id="dtp_selfdestruct" class="share-txtfield-2 date-picker" readonly value="" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == '')this.value = '';"/>
+                         <input name="input" type="text" id="dtp_selfdestruct" class="share-txtfield-2 date-picker" readonly value="" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == '')this.value = '';" disabled />
                         </li>
                         <li>
                             <input id="ckb_sellmedia" class="css-checkbox" type="checkbox" />
@@ -139,7 +139,7 @@
                         </li>
                     </ul>
                     <div class="clear"></div>
-                    <a class="black_btn_skin f-center" href="javascript:;" onclick="return share_makeGroup();">ok</a>
+                    <a class="black_btn_skin f-center" href="javascript:;" onclick="return share_makeGroup();">done</a>
                     <a class="black_btn_skin f-middle" href="javascript:backToMedia();">cancel</a>
                 </div>
             </div>
