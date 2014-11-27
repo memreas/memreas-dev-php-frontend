@@ -240,6 +240,7 @@ error_log("callback_json----->".$callback_json.PHP_EOL);
         $view = new ViewModel(array(
             'data' => $data,
             'enableAdvertising' => $enableAdvertising,
+            'enableSellMedia' => MemreasConstants::MEMREAS_SELL_MEDIA,
             'stripeUrl' => $this->stripe_url,
             'PaymentTabs' => $payment_tabs,
             'app_version' => MemreasConstants::VERSION
@@ -274,7 +275,8 @@ error_log("callback_json----->".$callback_json.PHP_EOL);
             'FREE_ACCOUNT_FILE_LIMIT' => MemreasConstants::FREE_ACCOUNT_FILE_LIMIT,
             'PAID_ACCOUNT_FILE_LIMIT' => MemreasConstants::PAID_ACCOUNT_FILE_LIMIT,
             'CLOUDFRONT_DOWNLOAD_HOST' => MemreasConstants::CLOUDFRONT_DOWNLOAD_HOST,
-            'STRIPE_SERVER_URL' => MemreasConstants::MEMREAS_PAY
+            'STRIPE_SERVER_URL' => MemreasConstants::MEMREAS_PAY,
+            'ENABLE_SELL_MEDIA' => MemreasConstants::MEMREAS_SELL_MEDIA
         );
         $content = '';
         foreach ($JsConstantVariables as $variable => $value)
