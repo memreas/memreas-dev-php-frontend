@@ -588,7 +588,7 @@ $(document).ready(function () {
 		        if(scroll >= length){
 		        	$('#main-tab').css({
 		                'position': 'fixed',
-		                'top': '0',
+		                'top': '75px',
 		                'left': '0',
 		                'height': height
 		            });
@@ -605,7 +605,7 @@ $(document).ready(function () {
 			        if(scroll >= 80){
 			        	$('.right-ads').css({
 			                'position': 'fixed',
-			                'top': '0',
+			                'top': '75px',
 			                'bottom': '0',
 			                'right':'3%',
 			                'height': height,

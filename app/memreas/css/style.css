@@ -601,6 +601,14 @@ nav ul li a:hover, nav ul li a.active {
 #maintab-content .notification-area{
 	padding-bottom:170px !Important;
 }
+.rowfixed{
+	position:fixed;
+	z-index:1000;
+	width:100%
+}
+.top75{
+	top:75px;
+}
 .event_details {
 	margin: 0;
 	padding: 0;
@@ -706,7 +714,7 @@ ul.right textarea {
 	bottom: 42px;
     margin-bottom: 0 !important;
     position: fixed;
-    z-index: 1000;
+    z-index: 2;
 }
 footer {
 	position: fixed;
