@@ -29,6 +29,19 @@ function buyMedia(event_id){
         jerror("you must agree with our terms and conditions");
         return false;
     }
+
+    var buymedia_password_confirm = $("#buymedia_confirm_password").val();
+    if (buymedia_password_confirm == ''){
+        jerror("Please confirm password");
+        return false;
+    }
+
+    buymedia_password_confirm = md5(buymedia_password_confirm);
+    if (buymedia_password_confirm != userObject.password){
+        jerror("Confirm password is incorrect");
+        return false;
+    }
+
     ajaxRequest('geteventdetails', [{tag: 'event_id', value: event_id}], function(response){
         if (getValueFromXMLTag(response, 'status') == 'Success'){
             var metadata = getValueFromXMLTag(response, 'event_metadata');

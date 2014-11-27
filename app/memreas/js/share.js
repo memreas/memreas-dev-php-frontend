@@ -43,7 +43,26 @@ $(function(){
     user_id = $("input[name=user_id]").val();
     share_initObjects();
     share_customScrollbar();
-    $("#cmb_socialtype").chosen({ width:"95%" }); 
+    $("#cmb_socialtype").chosen({ width:"95%" });
+
+    //Handle for checkbox viewable and self destruct
+    $("#ckb_viewable").change(function(){
+        if ($(this).is(":checked")) {
+            $("#dtp_from").removeAttr('disabled');
+            $("#dtp_to").removeAttr('disabled');
+        }
+        else {
+            $("#dtp_from").val('').attr('disabled', true);
+            $("#dtp_to").val('').attr('disabled', true);
+        }
+    });
+
+    $("#ckb_selfdestruct").change(function(){
+        if ($(this).is(":checked"))
+            $("#dtp_selfdestruct").removeAttr('disabled');
+        else $("#dtp_selfdestruct").val('').attr('disabled', true);
+
+    });
 });
 
 // initialize the share page objects.
