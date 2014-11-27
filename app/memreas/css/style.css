@@ -597,6 +597,10 @@ nav ul li a:hover, nav ul li a.active {
 #maintab-content {
 	padding-top: 1em;
 }
+#maintab-content .tabcontent-detail,
+#maintab-content .notification-area{
+	padding-bottom:170px !Important;
+}
 .event_details {
 	margin: 0;
 	padding: 0;
@@ -699,11 +703,14 @@ ul.right textarea {
 	background: url(../img/menu-act.png);
 }
 #bottomad{
-	 margin-bottom: 0 !important;
+	bottom: 42px;
+    margin-bottom: 0 !important;
+    position: fixed;
+    z-index: 1000;
 }
 footer {
-	position: relative;
-	z-index: 2;
+	position: fixed;
+	z-index: 2000;
 	left: 0;
 	bottom: 0;
 	right: 0;
