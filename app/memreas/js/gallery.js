@@ -74,17 +74,18 @@ function getUserDetail(){
                 $(".morepage-account-buyerbalance").html("$" + userObject.buyer_balance);
                 $(".morepage-account-sellerbalance").html("$" + userObject.seller_balance);
 
-                //Seller able to sell media
-                if (userObject.type != 'Free user' && ((userObject.type).indexOf('seller') >= 0)){
-                    $(".share-register-seller").remove();
+                if (ENABLE_SELL_MEDIA) {
+                    //Seller able to sell media
+                    if (userObject.type != 'Free user' && ((userObject.type).indexOf('seller') >= 0)) {
+                        $(".share-register-seller").remove();
+                    }
+                    var checkSellMedia = shareCheckSellMedia();
+                    if (checkSellMedia) {
+                        $(".share-media-price .italic-description").html('Check this option if you want to sell this event');
+                        $("#lbl-sellmedia").show();
+                    }
+                    else $("#lbl-sellmedia").remove();
                 }
-
-                var checkSellMedia = shareCheckSellMedia();
-                if (checkSellMedia) {
-                    $(".share-media-price .italic-description").html('Check this option if you want to sell this event');
-                    $("#lbl-sellmedia").show();
-                }
-                else $("#lbl-sellmedia").remove();
             }
             else jerror (getValueFromXMLTag(xml_response, 'messsage'));
         }, 'undefined', true);

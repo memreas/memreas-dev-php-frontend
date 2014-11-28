@@ -14,6 +14,8 @@ class MemreasConstants {
 	const MEMREAS_WS = "http://memreas-dev-php-ws.localhost/";
 	const MEMREAS_PAY = "http://memreas-dev-php-stripe.localhost/";
 	const MEMREAS_ADS = true;
+    const MEMREAS_SELL_MEDIA = true; //Enable or Disable selling media
+
     const CLOUDFRONT_DOWNLOAD_HOST = 'https://d3sisat5gdssl6.cloudfront.net/';
     const S3_APPKEY = 'AKIAJMXGGG4BNFS42LZA';
     const S3_APPSEC = 'xQfYNvfT0Ar+Wm/Gc4m6aacPwdT5Ors9YHE/d38H';

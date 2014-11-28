@@ -47,6 +47,7 @@
                          <label for="ckb_selfdestruct" name="demo_lbl_5" class="css-label margin-none" >ghost :</label>
                          <input name="input" type="text" id="dtp_selfdestruct" class="share-txtfield-2 date-picker" readonly value="" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == '')this.value = '';" disabled />
                         </li>
+                        <?php if ($this->enableSellMedia) : ?>
                         <li>
                             <input id="ckb_sellmedia" class="css-checkbox" type="checkbox" />
                             <label id="lbl-sellmedia" for="ckb_sellmedia" name="demo_lbl_6" class="css-label margin-none" style="display: none;">Price :</label>
@@ -57,6 +58,7 @@
                                 </p>
                             </div>
                         </li>
+                        <?php endif ?>
                     </ul>
                     <span class="clear"></span>
                     <div class="mr-auto">
