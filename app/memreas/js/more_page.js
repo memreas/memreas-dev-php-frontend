@@ -302,7 +302,7 @@ function saveUserDetail(){
     var cdate = new Date();
     var current_date = ("0" + (cdate.getMonth() + 1)).slice(-2) + '/' + ("0" + cdate.getDate()).slice(-2) + '/' + cdate.getFullYear();
     if (account_dob > current_date){
-        jerror('date of birth can not larger than today.');
+        jerror('Date of birth cannot be in future.');
         $("#account_dob").val('').focus();
         return false;
     }
@@ -316,7 +316,7 @@ function saveUserDetail(){
     		return false;
     	}else{
     		if($.trim(orginal_email) == $.trim(alternate_email)){
-    			jerror('alternate email should not same as orginal email.');
+    			jerror('alternate email should not be the same as orginal email.');
         		return false;
     		}
     	}

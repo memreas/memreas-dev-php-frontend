@@ -5,3 +5,4 @@ var FREE_ACCOUNT_FILE_LIMIT = '300';
 var PAID_ACCOUNT_FILE_LIMIT = '5000';
 var CLOUDFRONT_DOWNLOAD_HOST = 'https://d3sisat5gdssl6.cloudfront.net/';
 var STRIPE_SERVER_URL = 'https://memreasdev-pay.memreas.com';
+var ENABLE_SELL_MEDIA = '';
