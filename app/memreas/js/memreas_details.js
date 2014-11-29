@@ -861,7 +861,11 @@ function reportMedia(userConfirm){
         jconfirm('report this media?', 'reportMedia(true)');
     else{
         ajaxRequest('mediainappropriate',
-            [{tag: 'media_id', value: eventdetail_media_id.toString()},{tag: 'is_appropriate', value: '1'}]
+            [
+                {tag: 'media_id', value: eventdetail_media_id.toString()},
+                {tag: 'is_appropriate', value: '1'},
+                {tag: 'user_id', value: LOGGED_USER_ID.toString()}
+            ]
         , function(response){
 
             if (getValueFromXMLTag(response,  'status') == 'Success')
