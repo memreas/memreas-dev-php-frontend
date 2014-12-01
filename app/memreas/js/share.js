@@ -453,7 +453,7 @@ share_addEvent = function() {
 			    if (status.toLowerCase() == 'success') {
 				    jsuccess('Event "' + name + '" was registered successfully.');
                     pushReloadItem('view_my_events');
-			        setTimeout(function(){ share_gotoPage(SHAREPAGE_TAB_MEDIA); }, 2000);
+			        setTimeout(function(){ share_clearMemreas(true); share_gotoPage(SHAREPAGE_TAB_MEDIA); }, 2000);
                     sell_media_price = 0;
 			    }
 			    else {
@@ -710,7 +710,7 @@ share_getAllMedia = function() {
 
                     ajaxScrollbarElement('#share_medialist');
                 }
-                else jerror("This is no media");
+                else jerror("There is no media");
             }
         );
     }
