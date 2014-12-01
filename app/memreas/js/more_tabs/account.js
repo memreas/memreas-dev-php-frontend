@@ -537,6 +537,7 @@ function getAccountOrderHistory(){
                 var amount = getValueFromXMLTag(transaction, 'amount');
                 var transaction_type = getValueFromXMLTag(transaction, 'transaction_type');
                 transaction_type = transaction_type.split("_").join(" ");
+                var transaction_sent = getValueFromXMLTag(transaction, 'transaction_sent');
                 var html = '<tr class="transaction-row">' +
                     '<td class="transaction-no">' + (i+1) + '</td>' +
                     '<td class="transaction-type">' + transaction_type + '</td>' +
@@ -546,7 +547,7 @@ function getAccountOrderHistory(){
                     '<td class="transaction-amount">' + ((amount) ? amount : '..') +  '</td>';
 
                 html += '<td class="transaction-ending-currency">USD</td>' +
-                    '<td class="transaction-date">11/11/2011</td>' +
+                    '<td class="transaction-date">' + transaction_sent + '</td>' +
                     '</tr>';
                 jElement.append(html);
             }

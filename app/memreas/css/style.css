@@ -3633,7 +3633,7 @@ select{ width: 184px; height: 30px; }
 .transaction-amount{ width: 5%;  }
 .transaction-ending-balance{ width: 13%; }
 .transaction-ending-currency{ width: 7%; }
-.transaction-date{ width: 13%; }
+.transaction-date{ width: 20% !important; }
 .right-ads{
     overflow: hidden;
     height: 300px;
