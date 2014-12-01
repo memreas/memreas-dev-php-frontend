@@ -61,7 +61,6 @@ $(function(){
         if ($(this).is(":checked"))
             $("#dtp_selfdestruct").removeAttr('disabled');
         else $("#dtp_selfdestruct").val('').attr('disabled', true);
-
     });
 });
 
@@ -1045,7 +1044,7 @@ function checkValidDateFromTo(isSubmit){
                     }
                 }
 
-                if (date_viewable_to != 'to' || date_viewablt_to != ''){
+                if (date_viewable_to != 'to' || date_viewable_to != ''){
                     var date_to = new Date(date_viewable_to);
                     if (destruct_date < date_to){
                         jerror('Destruct date must larger than viewable date to');
