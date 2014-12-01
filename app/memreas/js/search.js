@@ -104,7 +104,7 @@ $(document).ready(function() {
 		                        				pophtml += '</div>';
 		                        				pophtml += '<div class="modal-footer">';
 		                        					pophtml += '<button class="btn btn-primary addfriendbutton" type="button">add friend</button>';
-		                        					pophtml += '<button class="btn btn-default canclemodal" type="button">cancle</button>';
+		                        					pophtml += '<button class="btn btn-default canclemodal" type="button">cancel</button>';
 		                        				pophtml += '</div>';
 		                        				
                         	pophtml += '</div>';

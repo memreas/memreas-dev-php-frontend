@@ -499,19 +499,19 @@ function getAccountPlans(){
                 if (account_stripe.exist == 1){
                     var total_subscriptions = account_stripe.info.subscriptions.total_count;
                     if (total_subscriptions > 0){
-                        jAccountPlans.append('<li><label class="label_text2"><label for="account-plan-1"></label>Your current actived plans:</label></li>');
+                        jAccountPlans.append('<li><label class="label_text2"><label for="account-plan-1"></label>Your current active plans:</label></li>');
                         var active_subscriptions = account_stripe.info.subscriptions.data;
                         for (var i = 0;i < total_subscriptions;i++){
                             var plan = active_subscriptions[i].plan;
-                            var html_element = '<li><label class="label_text2"><input type="radio" id="account-plan-1" name="radio-4-set" class="regular-radio" readonly /><label for="account-plan-1"></label>'  + plan.name + '</label></li>';
+                            var html_element = '<li><label class="label_text2"><label for="account-plan-1"></label>'  + plan.name + '</label></li>';
                             jAccountPlans.append(html_element);
                         }
                     }
-                    else jAccountPlans.html('You have no any actived plan');
+                    else jAccountPlans.html('You have no any activated plan');
                 }
                 else jAccountPlans.html('Your account has not existed or deleted before on Stripe');
             }
-            else jAccountPlans.html('You have no any actived plan');
+            else jAccountPlans.html('You have no any activated plan');
             $('#loadingpopup').fadeOut(500);
         }
     });
