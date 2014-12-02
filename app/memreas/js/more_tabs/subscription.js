@@ -149,10 +149,11 @@ function subscription_step3(){
     }
 
     var card_data = orderCard.stripe_card_response;
-
-    jOrderSummary.find('#order-summary-name').val(orderCard.first_name + ' ' + orderCard.last_name);
-    jOrderSummary.find('#order-summary-address1').val(orderCard.address_line_1);
-    jOrderSummary.find('#order-summary-address2').val(orderCard.address_line_2);
+    var card_name = card_data.name;
+    card_name = card_name.split(' ');
+    jOrderSummary.find('#order-summary-name').val(card_name[0] + ' ' + card_name[1]);
+    jOrderSummary.find('#order-summary-address1').val(card_data.address_line1);
+    jOrderSummary.find('#order-summary-address2').val(card_data.address_line2);
     jOrderSummary.find('#order-card-type').html(orderCard.card_type);
     jOrderSummary.find('#order-summary-ccnum').val(orderCard.obfuscated_card_number);
     jOrderSummary.find('#order-summary-expdate').val(card_data.exp_month);

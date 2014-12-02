@@ -453,7 +453,10 @@ share_addEvent = function() {
 			    if (status.toLowerCase() == 'success') {
 				    jsuccess('Event "' + name + '" was registered successfully.');
                     pushReloadItem('view_my_events');
-			        setTimeout(function(){ share_clearMemreas(true); share_gotoPage(SHAREPAGE_TAB_MEDIA); }, 2000);
+			        setTimeout(function(){
+                        var text_ids 	 = ['txt_name', 'txt_location', 'dtp_date', 'dtp_from', 'dtp_to', 'dtp_selfdestruct'];
+                        clearTextField(text_ids);
+                        share_gotoPage(SHAREPAGE_TAB_MEDIA); }, 2000);
                     sell_media_price = 0;
 			    }
 			    else {
