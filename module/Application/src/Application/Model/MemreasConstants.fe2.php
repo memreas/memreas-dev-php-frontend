@@ -11,7 +11,7 @@ class MemreasConstants {
 	const MEMREAS_WS = "https://memreasdev-ws2.memreas.com";
 	const MEMREAS_PAY = "https://memreasdev-pay.memreas.com";
 	const MEMREAS_ADS = false;
-    const MEMREAS_SELL_MEDIA = 1; //Enable or Disable selling media
+    const MEMREAS_SELL_MEDIA = 0; //Enable or Disable selling media
 
     const CLOUDFRONT_DOWNLOAD_HOST = 'https://d3sisat5gdssl6.cloudfront.net/';
     const S3_APPKEY = 'AKIAJMXGGG4BNFS42LZA';
