@@ -50,6 +50,10 @@ $(function(){
         if ($(this).is(":checked")) {
             $("#dtp_from").removeAttr('disabled');
             $("#dtp_to").removeAttr('disabled');
+
+            if ($("#ckb_selfdestruct").is(":checked")) {
+                $("#ckb_selfdestruct").removeAttr("checked").change();
+            }
         }
         else {
             $("#dtp_from").val('').attr('disabled', true);
@@ -58,8 +62,12 @@ $(function(){
     });
 
     $("#ckb_selfdestruct").change(function(){
-        if ($(this).is(":checked"))
+        if ($(this).is(":checked")) {
             $("#dtp_selfdestruct").removeAttr('disabled');
+            if ($("#ckb_viewable").is(":checked")) {
+                $("#ckb_viewable").removeAttr("checked").change();
+            }
+        }
         else $("#dtp_selfdestruct").val('').attr('disabled', true);
     });
 });
@@ -1028,7 +1036,7 @@ function checkValidDateFromTo(isSubmit){
                 if (event_create_date != '' || event_create_date != 'from'){
                     var date_from = new Date(event_create_date);
                     if (destruct_date < date_from){
-                        jerror('Destruct date must larger date create.');
+                        jerror('Ghost date must be larger or equal to the event date.');
                         jDestructElement.focus();
                         return false;
                     }
