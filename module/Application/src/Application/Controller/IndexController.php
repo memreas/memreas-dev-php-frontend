@@ -279,8 +279,11 @@ error_log("callback_json----->".$callback_json.PHP_EOL);
             'ENABLE_SELL_MEDIA' => MemreasConstants::MEMREAS_SELL_MEDIA
         );
         $content = '';
-        foreach ($JsConstantVariables as $variable => $value)
-            $content .= "var {$variable} = '{$value}';\n";
+        foreach ($JsConstantVariables as $variable => $value) {
+            if (is_numeric($value))
+                $content .= "var {$variable} = {$value};\n";
+            else $content .= "var {$variable} = '{$value}';\n";
+        }
         $fileHandle = fopen( $_SERVER['DOCUMENT_ROOT'] . '/memreas/js/constants.js', 'w');
         fwrite($fileHandle, $content, strlen($content));
         fclose($fileHandle);

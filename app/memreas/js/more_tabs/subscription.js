@@ -141,7 +141,7 @@ function subscription_step3(){
 
     //Fetch the card
     var orderCard = new Object();
-    for (i in account_cards){
+    for (var i in account_cards){
         if (account_cards[i].selected == 1){
             orderCard = account_cards[i].data;
             break;
