@@ -634,7 +634,7 @@ function networkAuthTwFriends(){
     var friend_list = $.cookie ('twitter_friends');
     if (typeof (friend_list) == 'undefined'){
         $('#loadingpopup').hide();
-        jerror ('authentication failed! please try again');
+        //jerror ('authentication failed! please try again');
         $("#network-dropfriend").val('fb');
         return false;
     }

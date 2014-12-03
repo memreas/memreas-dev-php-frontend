@@ -285,7 +285,10 @@ function fill_account_detail(){
         return false;
     }
     $('#loadingpopup').show();
-    jBuyerName.html(orderCard.first_name + ' ' + orderCard.last_name);
+    var stripe_card = orderCard.stripe_card_response;
+    var card_name = stripe_card.name;
+    card_name = card_name.split(' ');
+    jBuyerName.html(card_name[0] + ' ' + card_name[1]);
 
     if (account_user.balance == '' || typeof (account_user.balance) == 'undefined')
         var balance = 0
