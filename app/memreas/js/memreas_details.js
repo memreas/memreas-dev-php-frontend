@@ -245,12 +245,10 @@ function showEventDetail(eventId, userId){
         ], function (response){
             var eventId = getValueFromXMLTag(response, 'event_id');
             if (getValueFromXMLTag(response, 'status') == "Success") {
-                console.log(response);
                 var medias = getSubXMLFromTag(response, 'media');
                 if (typeof (eventId != 'undefined')){
                     event_owner_name = getValueFromXMLTag(response, 'username');
                     eventdetail_user_pic = getValueFromXMLTag(response, 'profile_pic');
-                    alert(eventdetail_user_pic);
                     if (eventdetail_user_pic != '')
                         eventdetail_user_pic = removeCdataCorrectLink(eventdetail_user_pic);
                     else eventdetail_user_pic = '/memreas/img/profile-pic.jpg';
