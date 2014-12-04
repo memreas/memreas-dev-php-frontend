@@ -574,57 +574,6 @@ $(document).ready(function () {
 			$(this).append("<div class='avpw_inset_color_widget_label'>Color picker</div>");
 		});
 	}
-	if( $('#main-tab').length){
-		var length = $('#main-tab').offset().top;
-		if($('.right-ads').length){
-			var length2 = $('.right-ads').offset().top;
-		}
-	    
-	    $(window).scroll(function () {
-	    	var wWidth = $(window).width();
-	    	if(wWidth > 768){
-	    		var height = $('#main-tab').height() + 'px';
-		        var scroll = $(this).scrollTop();
-		        if(scroll >= length){
-		        	$('#main-tab').css({
-		                'position': 'fixed',
-		                'top': '75px',
-		                'left': '0',
-		                'height': height
-		            });
-		        } else{
-		        	
-		        	$('#main-tab').css({
-		                'position': 'relative',
-		                'top': '0',
-		                'height': height
-		            });
-		        }
-		        if($('.right-ads').length){
-			        var rightadw = parseInt($(window).width())*0.9/5;
-			        if(scroll >= 80){
-			        	$('.right-ads').css({
-			                'position': 'fixed',
-			                'top': '75px',
-			                'bottom': '0',
-			                'right':'3%',
-			                'height': height,
-			                'width' : rightadw
-			            });
-			        }else{
-			        	$('.right-ads').css({
-			                'position': 'relative',
-			                'top': '29px',
-			                'right':'0',
-			                'height': height,
-			                'width' : '20%'
-			            });
-			        }
-		        }
-	    	}
-	    });
-	}
-    
 
 });
 

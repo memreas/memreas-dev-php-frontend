@@ -3671,3 +3671,5 @@ select{ width: 184px; height: 30px; }
 		height:80px;
 	}
 }
+input.disabled{ background: #C8C8C8; }
+.sell_media_form input{ color: #A0A0A0; }

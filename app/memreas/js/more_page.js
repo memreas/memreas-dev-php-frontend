@@ -83,9 +83,11 @@ $(function(){
     //Sell mediatab
     $("a.sell-media-tab").one("click", function(){
         $('#buttons9-moretab').akordeon();
+    }).bind("click", function(){
         $("#sell-media-username").val(userObject.username);
         $("#sell-media-email").val(userObject.email);
     });
+
 
     /*Action tabs click*/
     var accountTabAkordenon = false;

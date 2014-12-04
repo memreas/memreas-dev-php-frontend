@@ -81,3 +81,9 @@ function register_sell_media(){
         });
     }
 }
+
+function resetSellMedia(){
+    var text_ids 	 = ['sell-media-fname', 'sell-media-lname', 'sell-media-address1', 'sell-media-address2', 'sell-media-city', 'sell-media-state',
+                        'sell-media-zip', 'sell-media-bank', 'sell-media-bank-routing', 'sell-media-account-number'];
+    clearTextField(text_ids);
+}
