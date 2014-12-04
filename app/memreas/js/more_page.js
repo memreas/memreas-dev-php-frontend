@@ -410,9 +410,6 @@ function getUserGroups(){
             for (var i = 0;i < total_record;i++){
                 $("select.account-groups").append('<option value="' + getValueFromXMLTag(groups[i], 'group_id') + '">' + getValueFromXMLTag(groups[i], 'group_name') + '</option>');
             }
-            
-           
-            
         }
         else jerror(getValueFromXMLTag(xml_response, 'message'));
     });
