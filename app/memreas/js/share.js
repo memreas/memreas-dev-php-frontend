@@ -373,6 +373,10 @@ function checkSellMediaDuration(){
 
 // add the new event by request to the server.
 share_addEvent = function() {
+
+    var sellmedia_duration_from = '';
+    var sellmedia_duration_to = ''
+
     //Precheck for selling media is popup or not and check for correction
     if ($("#popupSellMedia").is(":visible")){
         var sellmedia_price_select = $("#sellmedia_price").val();
@@ -384,18 +388,14 @@ share_addEvent = function() {
         var passDuration = checkSellMediaDuration();
         if (!passDuration) return false;
 
-        var sellmedia_duration_from = $("#sellmedia_duration_from").val();
-        var sellmedia_duration_to = $("#sellmedia_duration_to").val();
+        sellmedia_duration_from = $("#sellmedia_duration_from").val();
+        sellmedia_duration_to = $("#sellmedia_duration_to").val();
 
         if (!$("#ckb_sellmedia_agree").is(":checked")){
             jerror("You must agree with our terms and conditions");
             return false;
         }
         sell_media_price = sellmedia_price_select;
-    }
-    else{
-        var sellmedia_duration = '';
-        var sellmedia_duration_type = '';
     }
 
     disablePopup('popupSellMedia');share_closeGoogleMap(true);
@@ -443,10 +443,10 @@ share_addEvent = function() {
 			    { tag: 'event_location', 			value: location },
 			    { tag: 'event_from', 				value: formatDateToDMY(date_from) },
 			    { tag: 'event_to', 					value: formatDateToDMY(date_to) },
-			    { tag: 'is_friend_can_add_friend', 	value: ckb_canadd },
-			    { tag: 'is_friend_can_post_media', 	value: ckb_canpost },
+			    { tag: 'is_friend_can_add_friend', 	value: ckb_canadd.toString() },
+			    { tag: 'is_friend_can_post_media', 	value: ckb_canpost.toString() },
 			    { tag: 'event_self_destruct', 		value: formatDateToDMY(date_selfdestruct) },
-			    { tag: 'is_public', 				value: ckb_public },
+			    { tag: 'is_public', 				value: ckb_public.toString() },
 			    { tag: 'price', 				    value: sell_media_price.toString() },
                 { tag: 'duration_from', 		    value: sellmedia_duration_from },
                 { tag: 'duration_to', 		        value: sellmedia_duration_to }
