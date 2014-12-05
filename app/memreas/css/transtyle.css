@@ -132,7 +132,10 @@ li.working-upload .progress-text{
 }
 .aviary-thumbs li, .galleries-location li{
     margin-bottom: 10px !important;
+    margin-left: 10px !important;
+    float: left;
 }
+.galleries-location li img{ width: 140px; height: 120px; }
 /*.aviary-thumbs li{ border: 1px solid #FFF; } kH*/
 .change-profile-btn{ float: right; }
 .exit-aviary-fullscreen{
