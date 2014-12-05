@@ -713,7 +713,6 @@ ul.right textarea {
 #bottomad{
 	bottom: 42px;
     margin-bottom: 0 !important;
-    position: fixed;
     z-index: 2;
 }
 footer {
@@ -3302,7 +3301,7 @@ margin-left: 15%;
 .ad {
     float: left;
     margin-left: 2%;
-    width: 88%;
+    width: 100%;
     margin-bottom: 40px; /* Khan Changes */
     margin-top: 5px;
 
@@ -3636,7 +3635,7 @@ select{ width: 184px; height: 30px; }
 .transaction-date{ width: 20% !important; }
 .right-ads{
     overflow: hidden;
-    height: 300px;
+    height: auto;
 }
 .btn-event-p{
 	background: none repeat scroll 0 0 #fff;

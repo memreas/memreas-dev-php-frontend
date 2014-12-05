@@ -283,13 +283,6 @@ jQuery.fetch_server_media = function (){
                 getUserDetail();
                 getUserNotificationsHeader();
             }
-
-            //Correcting height for right advertising and no scroll bar for gallery page
-            setTimeout(function(){
-                if ($(".right-ads").length > 0){
-                    $(".right-ads").height($(".left-gallery").height());
-                }
-            }, 1500);
             return true;
         }
     );
