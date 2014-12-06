@@ -2208,7 +2208,7 @@ ul.group li {
 }
 .group-select select {
 	background: none !important;
-	width: 895px;
+	width: 102%;
 	padding: 5px;
 	font-size: 16px;
 	line-height: 1;
@@ -2219,6 +2219,7 @@ ul.group li {
 	border: 0px;
 	font-family: "Century Gothic";
 	font-size: 15px;
+    overflow: hidden;
 }
 .group-select {
 	width: 98%;
