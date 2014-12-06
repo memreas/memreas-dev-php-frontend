@@ -254,7 +254,9 @@ error_log("callback_json----->".$callback_json.PHP_EOL);
      * */
     public function canvasAction(){
         $event_id = $_GET['event'];
-        $path =  $this->security("application/index/canvas.phtml");
+        if (empty($event_id))
+            $path =  $this->security("application/index/fb_default.phtml");
+        else $path =  $this->security("application/index/canvas.phtml");
         $view = new ViewModel(array(
             "event_id" => $event_id
         ));
