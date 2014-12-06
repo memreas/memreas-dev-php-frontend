@@ -48,11 +48,11 @@
           <div class="akordeon" id="buttons2-moretab">
               <?php include('more_tabs/group.phtml'); ?>
           </div>
-         <!-- <a class="black_btn_skin f-center" href="javascript:;" onclick="addFriendNetwork();" style="margin-left: 10% !important;">Add friend</a> -->
         <div style="clear: both; margin-top: 30px;" class="group-default-actions">
-            <a class="black_btn_skin" href="javascript:;" onclick="AddGroup();" style="margin-left: 10% !important;">Add</a>
+            <a class="black_btn_skin" href="javascript:;" onclick="AddGroup();" style="margin-left: 5% !important;">Add new</a>
             <a class="black_btn_skin" href="javascript:;" onclick="updateNetworkFriends(false);">update</a>
-            <a class="black_btn_skin" href="javascript:;" onclick="removeGroup(false);">delete</a>
+            <a class="black_btn_skin" href="javascript:;" onclick="removeGroup(false);">remove</a>
+            <a class="black_btn_skin" href="javascript:;" onclick="addFriendNetwork();">Add friend</a>
         </div>
         <div style="clear: both; margin-top: 30px; display: none;" class="group-add-actions">
             <a class="black_btn_skin" href="javascript:;" onclick="saveAddGroup();" style="margin-left: 10% !important;">Save</a>
@@ -64,10 +64,10 @@
             <a id="popupNetworkFriendsClose" onClick="disablePopup('popupNetworkFriends')" class='popupClose'>x</a>
             <h2>select friends</h2>
             <div class="styled-select">
-                <select style="width: 390px" id="network-dropfriend">
-                  <option value="facebook">facebook</option>
-                  <option value="twitter">twitter</option>
-                  <option value="memreas">memreas</option>
+                <select id="network-dropfriend">
+                    <option value="memreas">memreas</option>
+                    <option value="facebook">facebook</option>
+                    <option value="twitter">twitter</option>
                 </select>
             </div>
             <ul id="content_1" class="popupContact popupNetworkFriends_list scrollpopup">
@@ -76,7 +76,8 @@
             <div style="clear: both;">
                 <h2 id="network-groupname" name="demo_lbl_6">Group: <span></span></h2>
             </div>
-            <a class="black_btn_skin f-left memreas-addfriend-btn" href="javascript:;" onclick="acceptAddFriendNetwork();">ok</a> <a class="black_btn_skin f-right" href="javascript:;" onClick="disablePopup('popupNetworkFriends')">cancel</a>
+            <a class="black_btn_skin f-left memreas-addfriend-btn" href="javascript:;" onclick="acceptAddFriendNetwork();">ok</a>
+             <a class="black_btn_skin f-right" href="javascript:;" onClick="disablePopup('popupNetworkFriends')">cancel</a>
         </div>
         <div id="bgpopupNetworkFriends" class="backgroundPopup"></div>
          <!-- END POPUP FRIEND -->

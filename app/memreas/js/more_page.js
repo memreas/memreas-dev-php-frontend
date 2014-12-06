@@ -523,23 +523,27 @@ $(function(){
             case 'memreas': networkPopupMemreasFriends(); break;
             default: jerror('Please choose friend network');
         }
-        if (!$("#popupNetworkFriends").is (":visible")) popup('popupNetworkFriends');
+        if (!$("#popupNetworkFriends").is (":visible")) {
+            popup('popupNetworkFriends');
+            $("select#network-dropfriend").chosen({width: "95%"});
+        }
         ajaxScrollbarElement(".popupNetworkFriends_list");
     });
 });
 
 function networkPopupMemreasFriends(){
-    var params = [{tag: 'user_id', value: ''}];
+    var params = [{tag: 'user_id', value: LOGGED_USER_ID}];
     ajaxRequest('listmemreasfriends', params, function(xml_response){
         if (getValueFromXMLTag(xml_response, 'status')){
             var friends = getSubXMLFromTag(xml_response, 'friend');
             var friendCount = friends.length;
             mr_friendsInfo = [];
-            for (i = 0;i < friendCount;i++){
+            for (var i = 0;i < friendCount;i++){
                 var friend = friends[i];
                 if (getValueFromXMLTag(friend, 'photo') == '' || getValueFromXMLTag(friend, 'photo') == 'null')
-                    friend_photo = '/memreas/img/profile-pic.jpg';
-                else friend_photo = getValueFromXMLTag(friend, 'photo');
+                    var friend_photo = '/memreas/img/profile-pic.jpg';
+                else var friend_photo = getValueFromXMLTag(friend, 'photo');
+                friend_photo = removeCdataCorrectLink(friend_photo);
                 mr_friendsInfo[i] = {
                     'id': getValueFromXMLTag(friend, 'friend_id'),
                     'div_id': 'mr_' + i,
@@ -764,7 +768,7 @@ function acceptAddFriendNetwork(){
                         tag: 'friend',
                         value: [
                             { tag: 'friend_name',         value: mr_friendsInfo[i].name },
-                            { tag: 'profile_pic_url',     value: mr_friendsInfo[i].photo }
+                            { tag: 'profile_pic_url',     value: '' }
                         ]
                     };
                 }
