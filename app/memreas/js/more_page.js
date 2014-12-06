@@ -885,6 +885,7 @@ $(function(){
     });
 });
 function getAccountMemreas(){
+    $("#morepage_event_sellmedia").hide();
     var jSelectEventName = $("#cmd_MorepageEvents");
 
     if (jSelectEventName.html() == ''){
@@ -937,6 +938,9 @@ function fillmorepage_eventDetail(morepage_event_id){
     var jMoredate_eventDateTo = $("#moredate_eventDateTo");
     var jMorepage_IsSelfDestruct = $("#morepage_isselfdestruct");
     var jmorepage_eventSelfDestruct = $("#morepage_eventSelfDestruct");
+
+    $("#morepage_event_sellmedia").hide();
+    $("input#morepage_ckb_sellmedia").removeAttr("checked");
 
     ajaxRequest('geteventdetails',
         [{tag: 'event_id', value: morepage_event_id}],
@@ -992,6 +996,15 @@ function fillmorepage_eventDetail(morepage_event_id){
                 jMorepage_IsSelfDestruct.removeAttr('checked');
             }
 
+            var metadata = getValueFromXMLTag(response, 'event_metadata');
+            metadata = JSON.parse(metadata);
+            var price = metadata.price;
+
+            if (price > 0){
+                $("input#morepage_ckb_sellmedia").attr("checked", true);
+                $("#morepage_event_sellmedia").show();
+            }
+
         }
         else jerror(getValueFromXMLTag(response, 'message'));
     });
@@ -1041,7 +1054,7 @@ function getMemreasEventMedia(){
     });
 }
 
-function morepage_saveEvent(){
+function morepage_saveEvent(confirmed){
     var viewable_from = (($("#moredate_eventDateFrom").val() != ''
                                                 && $("#moredate_eventDateFrom").val() != 'from')
                                                 ? $("#moredate_eventDateFrom").val() : '');
@@ -1072,6 +1085,20 @@ function morepage_saveEvent(){
         var friend_can_add = 1;
     else var friend_can_add = 0;
 
+    //Check if event has selling event and check box, confirm
+    if ($("#morepage_event_sellmedia").is(":visible")){
+        if (!$("input#morepage_ckb_sellmedia").is(":checked") && !confirmed){
+            jconfirm("Your event will become free. Are you sure?", "morepage_saveEvent(true)");
+            return false;
+        }
+
+        if ($("input#morepage_ckb_sellmedia").is(":checked"))
+            var sell_media = 1;
+        else var sell_media = 0;
+    }
+    else var sell_media = 0;
+
+
     var params = [
                     {tag: 'event_id', value: $("#cmd_MorepageEvents").val()},
                     {tag: 'event_name', value: $("#cmd_MorepageEvents option[value='" + $("#cmd_MorepageEvents").val() +"']").html()},
@@ -1086,7 +1113,8 @@ function morepage_saveEvent(){
                     {tag: 'event_to', value: viewable_to},
                     {tag: 'is_friend_can_post_media', value: friend_can_post.toString()},
                     {tag: 'is_friend_can_add_friend', value: friend_can_add.toString()},
-                    {tag: 'event_self_destruct', value: self_destruct}
+                    {tag: 'event_self_destruct', value: self_destruct},
+                    {tag: 'sell_media', value: sell_media.toString()}
                 ];
     	ajaxRequest('editevent', params, function(response){
         if (getValueFromXMLTag(response, 'status')){

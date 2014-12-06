@@ -46,11 +46,15 @@
                     <label for="morepage_isselfdestruct" name="demo_lbl_5" class="css-label margin-none" >ghost :</label>
                     <input name="input" type="text" id="morepage_eventSelfDestruct" class="share-txtfield-2 date-picker" readonly value="" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == '')this.value = '';"/>
                 </li>
+                <li id="morepage_event_sellmedia">
+                    <input id="morepage_ckb_sellmedia" class="css-checkbox" type="checkbox" />
+                    <label id="lbl-sellmedia" for="morepage_ckb_sellmedia" name="demo_lbl_6" class="css-label margin-none">Sell media</label>
+                </li>
             </ul>
             <div style="clear: both; margin-top: 10px; margin-bottom: 10px; padding-top: 10px;"></div>
             <div class="btn">
 
-            <a class="black_btn_skin" href="javascript:;" onclick="morepage_saveEvent();">ok</a>
+            <a class="black_btn_skin" href="javascript:;" onclick="morepage_saveEvent(false);">ok</a>
             <a class="black_btn_skin" href="javascript:;">cancel</a>
             </div>
         </div>
