@@ -130,6 +130,9 @@ li.working-upload .progress-text{
 .avpw_tool_pager .avpw_clip{
 	min-width:80px;
 }
+.galleries-location{
+    width: 10000px;
+}
 .aviary-thumbs li, .galleries-location li{
     margin-bottom: 10px !important;
     margin-left: 10px !important;

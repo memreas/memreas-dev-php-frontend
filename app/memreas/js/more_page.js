@@ -475,8 +475,10 @@ function getGroupFriends(friend_network){
             networkfriendsInfo = [];
             for (var i = 0; i < count_friend; i++) {
                 if (getValueFromXMLTag(friend_list[i], 'friend_photo') == '' || getValueFromXMLTag(friend_list[i], 'friend_photo') == 'null')
-                    friend_photo = '/memreas/img/profile-pic.jpg';
-                else friend_photo = getValueFromXMLTag(friend_list[i], 'friend_photo');
+                    var friend_photo = '/memreas/img/profile-pic.jpg';
+                else var friend_photo = getValueFromXMLTag(friend_list[i], 'friend_photo');
+                friend_photo = removeCdataCorrectLink(friend_photo);
+                friend_photo = friend_photo.split("&amp;").join("&");
                 networkfriendsInfo[i] = {
                     'id': getValueFromXMLTag(friend_list[i], 'friend_id'),
                     'div_id': getValueFromXMLTag(friend_list[i], 'friend_id'),
@@ -947,8 +949,14 @@ function fillmorepage_eventDetail(morepage_event_id){
         function(response){
         if (getValueFromXMLTag(response, 'status') == "Success") {
 
-            if (getValueFromXMLTag(response, 'date') != '')
-                jMorepageEventDate.val(getValueFromXMLTag(response, 'date'));
+            if (getValueFromXMLTag(response, 'date') != '') {
+                var event_date = getValueFromXMLTag(response, 'date');
+
+                //Convert date format to mm/dd/yyyy
+                event_date = event_date.split("/");
+                event_date = event_date[1] + "/" + event_date[0] + "/" + event_date[2];
+                jMorepageEventDate.val(event_date);
+            }
             else jMorepageEventDate.val('from');
 
             if (getValueFromXMLTag(response, 'location') != '')
@@ -964,9 +972,13 @@ function fillmorepage_eventDetail(morepage_event_id){
                 jMorepageEventFreindsCanAdd.attr('checked', true);
             else jMorepageEventFreindsCanAdd.removeAttr('checked');
 
-            //jMorepage_isviewable.val(getValueFromXMLTag(response, ))
             if (getValueFromXMLTag(response, 'viewable_from') != ''){
-                jMoredate_eventDateFrom.val(getValueFromXMLTag(response, 'viewable_from'));
+                var viewable_from = getValueFromXMLTag(response, 'viewable_from');
+
+                //Convert date format to mm/dd/yyyy
+                viewable_from = viewable_from.split("/");
+                viewable_from = viewable_from[1] + "/" + viewable_from[0] + "/" + viewable_from[2];
+                jMoredate_eventDateFrom.val(viewable_from);
                 jMorepage_isviewable.attr('checked', true)
             }
             else {
@@ -983,8 +995,14 @@ function fillmorepage_eventDetail(morepage_event_id){
                 jMorepage_IsSelfDestruct.removeAttr('checked');
             }*/
             
-            if (getValueFromXMLTag(response, 'viewable_to') != '')
-                jMoredate_eventDateTo.val(getValueFromXMLTag(response, 'viewable_to'));
+            if (getValueFromXMLTag(response, 'viewable_to') != '') {
+                var viewable_to = getValueFromXMLTag(response, 'viewable_to');
+
+                //Convert date format to mm/dd/yyyy
+                viewable_to = viewable_to.split("/");
+                viewable_to = viewable_to[1] + "/" + viewable_to[0] + "/" + viewable_to[2];
+                jMoredate_eventDateTo.val(viewable_to);
+            }
             else jMoredate_eventDateTo.val('to');
 
             if (getValueFromXMLTag(response, 'self_destruct') != ''){
