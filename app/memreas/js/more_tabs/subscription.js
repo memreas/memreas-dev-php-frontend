@@ -10,6 +10,11 @@ var default_plan = 'PLAN_A_2GB_MONTHLY';
 $(function(){
 
     //Step 1
+    if (userObject.plan != 'FREE'){
+        $(".step1-next").removeClass("button-disabled")
+            .attr("href", 'javascript:;')
+            .attr('onclick', "activeAkordeon('subscription-payment-method-tab', subscription_step2);");
+    }
 
     //Step 2
     $(".subscription-payment-method").click(function(){
@@ -35,14 +40,17 @@ function planChange(choose_plan_id){
             plans_payment[i].selected = 1;
         }
     }
-    if (real_plan_id == default_plan){
-        if (!$(".step1-next").hasClass('button-disabled'))
-            $(".step1-next").addClass("button-disabled");
-        $(".step1-next").removeAttr("href").removeAttr("onclick");
+
+    if (userObject.plan == 'FREE') {
+        if (real_plan_id == default_plan) {
+            if (!$(".step1-next").hasClass('button-disabled'))
+                $(".step1-next").addClass("button-disabled");
+            $(".step1-next").removeAttr("href").removeAttr("onclick");
+        }
+        else $(".step1-next").removeClass("button-disabled")
+            .attr("href", 'javascript:;')
+            .attr('onclick', "activeAkordeon('subscription-payment-method-tab', subscription_step2);");
     }
-    else $(".step1-next").removeClass("button-disabled")
-                            .attr("href", 'javascript:;')
-                            .attr('onclick', "activeAkordeon('subscription-payment-method-tab', subscription_step2);");
 
 }
 function resetPlanChoose(){

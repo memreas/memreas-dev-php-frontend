@@ -904,6 +904,7 @@ share_makeGroup = function() {
     if (emailTags.length == 0 && selFriends.length == 0){
         share_clearMemreas(true);
         $("a.memreas").click();
+        return;
     }
 
     //Add friend to event
