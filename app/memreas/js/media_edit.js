@@ -35,7 +35,7 @@ var featherEditor = new Aviary.Feather({
         $.post('/index/editmedia', {file_source:s3_source_file, file_url:remote_file, user_id:from_user}, function(response){
             jsuccess(response);
             switch_mode();
-            fetch_selected_media();
+            $.fetch_server_media();
             $("#loadingpopup").hide();
         });
     },
