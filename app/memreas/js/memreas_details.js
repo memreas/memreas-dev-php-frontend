@@ -41,6 +41,27 @@ $(function(){
         ajaxScrollbarElement(".memreas-detail-comments");
         checkMemreasDetailCarousel();
     });
+
+    //Memreas detail location tab click
+    $("a[title=memreas-detail-tab4]").click(function(){
+        if (eventdetail_media_id == ''){
+            jerror("Please choose a media from detail tab to view it's location");
+            return false;
+        }
+        $("#memreas-detail-location").empty().removeAttr('style');
+        ajaxRequest("viewmediadetails", [
+            {tag: 'event_id', value: ''},
+            {tag: 'media_id', value: eventdetail_media_id}
+        ], function (response){
+            var lng = getValueFromXMLTag(response, 'longitude');
+            var lat = getValueFromXMLTag(response,  'latitude');
+            if (lng == '' || lat == ''){
+                jerror('There is no location for this media');
+                return false;
+            }
+            gallery_initGoogleMap("memreas-detail-location", lat, lng);
+        });
+    });
 });
 
 function getMediaComment(){

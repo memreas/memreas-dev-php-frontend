@@ -51,7 +51,7 @@ gallery_initGoogleMap = function(div_id, mediaLat, mediaLng) {
         var newLocation = [
                                 {tag: 'lat', value: mediaLat},
                                 {tag: 'lng', value: mediaLng}
-                            ];;
+                            ];
 
         google.maps.event.addListener(autocomplete, 'place_changed', function (event) {
              infowindow.close();
@@ -66,10 +66,35 @@ gallery_initGoogleMap = function(div_id, mediaLat, mediaLng) {
                  location_map.setCenter(place.geometry.location);
                  location_map.setZoom(17);
              }
+
+            var newPlace = place.geometry.location;
+            var LAT = '';
+            for (var i = 0;i <= 4;i++){
+                switch (i){
+                    case 0:
+                        LAT = newPlace.A;
+                        break;
+                    case 1:
+                        LAT = newPlace.B;
+                        break;
+                    case 2:
+                        LAT = newPlace.C;
+                        break;
+                    case 4:
+                        LAT = newPlace.D;
+                        break;
+                }
+                if (typeof (LAT) != 'undefined')
+                    break;
+            }
+            var LNG = newPlace.k;
+
              newLocation = [
-                                {tag: 'lat', value: place.geometry.location.B},
-                                {tag: 'lng', value: place.geometry.location.k}
+                                {tag: 'lat', value: LAT},
+                                {tag: 'lng', value: LNG}
                             ];
+            console.log(newLocation);
+
              moveMarker(place.name, place.geometry.location);
          });
 

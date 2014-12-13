@@ -70,6 +70,13 @@ $(function(){
         }
         else $("#dtp_selfdestruct").val('').attr('disabled', true);
     });
+
+    $("#ckb_sellmedia").change(function(){
+        if ($(this).is(":checked")){
+            $("#ckb_public").attr("checked", true);
+            $("#ckb_viewable").attr("checked", true);
+        }
+    });
 });
 
 // initialize the share page objects.
