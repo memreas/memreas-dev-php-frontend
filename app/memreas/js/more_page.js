@@ -652,6 +652,7 @@ function networkAuthTwFriends(){
     }
     tw_friendsInfo = friend_list;
     network_fillPopupFriends (friend_list);
+    updateAkordeonContent($(".manage-group-friend"));
     $('#loadingpopup').hide();
 }
 
