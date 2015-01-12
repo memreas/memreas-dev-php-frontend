@@ -8,7 +8,7 @@ namespace Application\Model;
 class MemreasConstants {
 	
 	const MEMREAS_FE = "https://fe2.memreas.com";
-	const MEMREAS_WS = "https://memreasdev-ws2.memreas.com";
+	const MEMREAS_WS = "https://memreasdev-wsm.memreas.com";
 	const MEMREAS_PAY = "https://memreasdev-pay.memreas.com";
 	const MEMREAS_ADS = false;
     const MEMREAS_SELL_MEDIA = 0; //Enable or Disable selling media

@@ -8,7 +8,7 @@ namespace Application\Model;
 class MemreasConstants {
 	
 // 	const MEMREAS_FE = "https://fe.memreas.com";
-// 	const MEMREAS_WS = "https://memreasdev-ws1.memreas.com";
+// 	const MEMREAS_WS = "https://memreasdev-wsj.memreas.com";
 // 	const MEMREAS_PAY = "https://memreasdev-pay.memreas.com";
 	const MEMREAS_FE = "http://memreas-dev-php-frontend.localhost/";
 	const MEMREAS_WS = "http://memreas-dev-php-ws.localhost/";
