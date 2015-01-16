@@ -1,6 +1,8 @@
 
 var uploadFilesInstance = []; //Used for store all file name for uploading
 var currentUploadFileCount = 0; //Count for all current files selected for upload
+var contentTypeOfFile="";
+var mimeTypeOfFile="";
 $(document).ready( function() {
 
     //Check if IOS only allow 1 file per upload
@@ -156,6 +158,8 @@ $(document).ready( function() {
                 }
                 //Check if valid type is image or video are allowed
                 //if  (!(filetype.indexOf('image') >= 0 || filetype.indexOf('video') >= 0 || filetype.indexOf('audio') >= 0)){
+                contentTypeOfFile = filetype;
+                mimeTypeOfFile = filetype + '/' + extension.toLowerCase()
                 if  (!is_valid) {
                     jerror('file type is not allowed');
                     return false;
@@ -167,7 +171,8 @@ $(document).ready( function() {
 
                 form.find('input[name=Content-Type]').val(filetype);
                 var userid = $("input[name=user_id]").val();
-                key_value = userid + '/' + target + '/' + correctUploadFilename('${filename}');
+                //key_value = userid + '/' + target + '/' + correctUploadFilename('${filename}');
+                key_value = userid + '/' + correctUploadFilename('${filename}');
                 $(this).find('input[name=key]').val(key_value);
                 // Use XHR, fallback to iframe
                 options = $(this).fileupload('option');
@@ -298,7 +303,7 @@ $(document).ready( function() {
             },
             success: function(data, status, jqXHR) {
                 var _media_url = getValueFromXMLTag(jqXHR.responseText, 'Location');
-                var media_type = get_type_url(_media_url);
+                var media_type = contentTypeOfFile;
 
                 var userid = $("input[name=user_id]").val();
                 if ($("a.share").hasClass ("active"))
@@ -309,14 +314,15 @@ $(document).ready( function() {
                 var base_filename = s3_filename_split[s3_filename_split.length - 1];
                 var s3_path_split = s3_filename.split(base_filename);
                 var s3_path = s3_path_split[0];
-
+                
                 var S3URL = "https://" + S3BUCKET + ".s3.amazonaws.com/";
                 var server_url = _media_url.replace(S3URL, '');
 
 				var params = [
                                 {tag: 's3url', value: base_filename},
                                 {tag: 'is_server_image', value: '0'},
-                                {tag: 'content_type', value : media_type},
+                                {tag: 'content_type', value : mimeTypeOfFile},
+                                //{tag: 'content_type', value : contentTypeOfFile},
                                 {tag: 's3path', value: s3_path},
                                 {tag: 's3file_name', value: base_filename},
                                 {tag: 'device_id', value: ''},
@@ -368,28 +374,3 @@ var image_types = [
     {ext:   'jpg'  , type: 'jpeg'}
 ];
 var video_types = [];
-
-function get_type_url(_media_url){
-    //Determine S3 url type is image or video
-    var _media_extension = _media_url.split(".");
-    var file_ext = _media_extension[_media_extension.length - 1];
-    if (_media_url.indexOf('image') >= 0)
-        var type_upload = 'image';
-    else var type_upload = 'video';
-
-    //If type of file is image
-    if (type_upload == 'image'){
-        for (var i = 0;i < image_types.length;i++){
-            if (file_ext == image_types[i].ext)
-                return type_upload + '/' + image_types[i].type;
-        }
-        return type_upload + '/' + file_ext;
-    }
-
-    //If type of file is video
-    for (var i = 0;i < video_types.length;i++){
-        if (file_ext == video_types[i].ext)
-            return type_upload + '/' + video_types[i].type;
-    }
-    return type_upload + '/' + file_ext;
-}

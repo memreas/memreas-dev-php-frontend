@@ -7,6 +7,7 @@ var base_url = '/index/sampleAjax/';
 var isUserNameValid = false;
 var assigned_event = 0;
 var uploadHandle = '';
+var fileType='';
 
 $(function(){
     var event_id = getURLParameter('event_id');
@@ -270,11 +271,17 @@ $(function(){
                     return false;
                 }
                 $("input[name=profile_image]").val(1);
-                if (filetype.indexOf ('image') >= 0)
-                    var target = 'image';
-                else target = 'media';
+//                if (filetype.indexOf ('image') >= 0)
+//                    var target = 'image';
+//                else target = 'media';
 
-                key_value = '/' + target + '/' + key_value;
+                if (filetype.indexOf ('image') >= 0)
+                		fileType ='image';
+                else 
+                		fileType='video';
+                
+                //key_value = '/' + target + '/' + key_value;
+                key_value = '/' + key_value;
                 $(this).find('input[name=key]').val(key_value);
                 // Use XHR, fallback to iframe
                 options = $(this).fileupload('option');
@@ -303,7 +310,8 @@ $(function(){
                 _media_extension = _media_extension[_media_extension.length - 1];
 
                 var media_type = '';
-                if (_media_url.indexOf('image') >= 0)
+//                if (_media_url.indexOf('image') >= 0)
+                	if (fileType == 'image')
                     media_type = 'image/' + _media_extension;
                 else media_type = 'video/' + _media_extension;
 

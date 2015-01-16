@@ -17,7 +17,7 @@ class MemreasConstants {
     const S3_APPKEY = 'AKIAJMXGGG4BNFS42LZA';
     const S3_APPSEC = 'xQfYNvfT0Ar+Wm/Gc4m6aacPwdT5Ors9YHE/d38H';
 	const S3BUCKET = "memreasdevsec";
-	const LISTNOTIFICATIONSPOLLTIME = 15000; //15s
+	const LISTNOTIFICATIONSPOLLTIME = 180000; //3 mins
 	
 	const FREE_ACCOUNT_FILE_LIMIT = 300; // 300MB limited upload for free user
 	const PAID_ACCOUNT_FILE_LIMIT = 5000; // 5GB limited upload for free user
