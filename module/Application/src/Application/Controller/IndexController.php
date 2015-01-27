@@ -32,9 +32,7 @@ class IndexController extends AbstractActionController
 {
 	//Updated....
     protected $url = MemreasConstants::MEMREAS_WS; //Local development
-    //protected $url = 'http://memreas-dev-ws.localhost'; //Local development
     protected $stripe_url = MemreasConstants::MEMREAS_PAY;
-    //protected $stripe_url = "http://memreas-dev-stripe.localhost";
     protected $user_id;
     protected $storage;
     protected $authservice;
@@ -44,10 +42,15 @@ class IndexController extends AbstractActionController
     public function fetchXML($action, $xml) {
         $session = $this->getAuthService()->getIdentity();
 	    $guzzle = new Client();
-//error_log("Inside fetch XML request url ---> " . $this->url . PHP_EOL);
-//error_log("Inside fetch XML request action ---> " . $action . PHP_EOL);
-//error_log("Inside fetch XML request XML ---> " . $xml . PHP_EOL);
 
+error_log("inside fe fetchxml sid --> ".$this->getToken().PHP_EOL);
+if ( isset($_COOKIE["PHPSESSID"]) && !empty($_COOKIE["PHPSESSID"]) ) {
+	error_log ( 'COOKIE is set....'.$_COOKIE["PHPSESSID"].PHP_EOL );
+} else {
+	error_log ( 'COOKIE is NOT set....'.PHP_EOL );
+}
+
+	    
         $request = $guzzle->post(
 		    $this->url,
 		    null,
@@ -60,13 +63,19 @@ class IndexController extends AbstractActionController
 	        )
 	    );
 	    $response = $request->send();
-//error_log("Inside fetch XML response ---> " . $response->getBody(true) . PHP_EOL);
-//error_log("Exit fetchXML".PHP_EOL);
 		return $data = $response->getBody(true);
 	}
 
     public function indexAction() {
 error_log("Enter FE indexAction".PHP_EOL);
+//Checking headers for cookie info
+$headers = apache_request_headers();
+
+foreach ($headers as $header => $value) {
+	error_log("FE header: $header :: value: $value".PHP_EOL);
+}
+//End Checking headers for cookie info
+
 
         $path = $this->security("application/index/index.phtml");
         $data['bucket'] = MemreasConstants::S3BUCKET;

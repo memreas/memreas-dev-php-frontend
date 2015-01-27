@@ -253,10 +253,10 @@ jQuery.fetch_server_media = function (){
                     //Fetch user's notification header
                     getUserDetail();
                     getUserNotificationsHeader();
-                }, 1000);
+                }, LISTNOTIFICATIONSPOLLTIME);
                 setTimeout(function(){
                     checkUserresourcesId(medias);
-                }, 2000);
+                }, LISTNOTIFICATIONSPOLLTIME);
                 $(".swipebox").swipebox();
 
                 //Show edit and delete tabs

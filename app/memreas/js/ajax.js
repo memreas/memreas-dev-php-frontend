@@ -24,8 +24,10 @@ ajaxRequest = function (action, params, success_func, error_func, disableLoading
         $('#loadingpopup').fadeIn(1000);
         pushStackAjax(action);
     }
-
 	$.ajax( {
+//		xhrFields: {
+//		     withCredentials: true
+//		   },
 	  	type:'post',
 	  	url: wsurl,
 	  	dataType: 'jsonp',
@@ -104,7 +106,6 @@ getXMLStringFromParamArray = function(action, params) {
         case "updatenotification":  action_tag = "updatenotification"; break;
         case "mediainappropriate":  action_tag = "mediainappropriate"; break;
         case "removegroup":  action_tag = "removegroup"; break;
-
         case "checkexistmedia":     action_tag = "checkexistmedia"; break;
         case "findevent":           action_tag = "findevent"; break;
         case "getDiscover":         action_tag = "getDiscover"; break;

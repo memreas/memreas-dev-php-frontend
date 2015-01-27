@@ -17,7 +17,7 @@ return array(
         'config' => array(
             'class' => 'Zend\Session\Config\SessionConfig',
             'options' => array(
-                'name' => 'myapp',
+                'name' => 'fe',
             ),
         ),
         'storage' => 'Zend\Session\Storage\SessionArrayStorage',
