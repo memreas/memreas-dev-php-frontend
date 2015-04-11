@@ -1,7 +1,6 @@
-/////////////////////////////////
-// Author: David Kang
-// Copyright memreas llc 2013
-/////////////////////////////////
+/*
+ * Copyright memreas llc 2013 
+ */
 
 var wsurl = '/index.php/index/execAjax';
 var xml_str = "";
@@ -25,9 +24,9 @@ ajaxRequest = function (action, params, success_func, error_func, disableLoading
         pushStackAjax(action);
     }
 	$.ajax( {
-//		xhrFields: {
-//		     withCredentials: true
-//		   },
+		xhrFields: {
+		     withCredentials: true
+		   },
 	  	type:'post',
 	  	url: wsurl,
 	  	dataType: 'jsonp',

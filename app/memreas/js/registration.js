@@ -148,7 +148,7 @@ function validateRegstration(){
                     {tag: 'email', value: input_email},
                     {tag: 'username', value: input_uname},
                     {tag: 'password', value: input_upass},
-                    {tag: 'device_token', value: ''},
+                    {tag: 'device_id', value: ''},
                     {tag: 'device_type', value: ''},
                     {tag: 'invited_by', value: ''},
                     {tag: 'event_id', value: assigned_event}
@@ -354,8 +354,8 @@ $(function(){
             var params = [
                             {tag: 'username', value: loginname},
                             {tag: 'password', value: loginpass},
-                            {tag: 'devicetype', value: 1},
-                            {tag: 'devicetoken', value: ''}
+                            {tag: 'device_type', value: 1},
+                            {tag: 'device_id', value: ''}
                             ];
             ajaxRequest('login', params, function(xml_response){
             	if (getValueFromXMLTag(xml_response, 'status') == 'success'){
