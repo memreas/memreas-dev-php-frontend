@@ -13,3 +13,4 @@ composer.lock
 *.log
 app/.htaccess
 php_errors.log
+app/memreas/js/jwplayer/jwplayer_cache/

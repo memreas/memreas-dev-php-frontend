@@ -54,9 +54,8 @@ class IndexController extends AbstractActionController {
 		$data = simplexml_load_string ($xml);
 //error_log ( '$this->getToken() --->' . $this->getToken() . PHP_EOL );
 //error_log ( '$data->sid --->' . $data->sid . PHP_EOL );
-		if (!isset($data->sid) && !empty($this->getToken())) {
-			$data->addChild('sid', $this->getToken());
-			
+		if (!isset($data->sid) && !empty($this->fetchSid())) {
+			$data->addChild('sid', $this->fetchSid());
 			$xml = $data->asXML();
 		}
 		
@@ -91,6 +90,62 @@ error_log ( 'outbound xml --->' . $xml . PHP_EOL );
 		$view->setTemplate ( $path ); // path to phtml file under view folder
 		
 		return $view;
+	}
+	
+	public function execAjaxAction() {
+		if (isset ( $_REQUEST ['callback'] )) {
+				
+			// Fetch parms
+			$callback = $_REQUEST ['callback'];
+			$json = $_REQUEST ['json'];
+			$message_data = json_decode ( $json, true );
+				
+			// Setup the URL and action
+			$ws_action = $message_data ['ws_action'];
+			$type = $message_data ['type'];
+			$xml = $message_data ['json'];
+				
+			// Guzzle the Web Service
+			error_log("guzzle web service ws_action--->".$ws_action.PHP_EOL);
+			error_log("guzzle web service $xml--->".$xml.PHP_EOL);
+			$result = $this->fetchXML ( $ws_action, $xml );
+			$json = json_encode ( $result );
+				
+			// Handle logout
+			$this->handleWSSession ( $ws_action, $result );
+				
+			// Return the ajax call...
+			$callback_json = $callback . "(" . $json . ")";
+			$output = ob_get_clean ();
+			header ( "Content-type: plain/text" );
+			echo $callback_json;
+			error_log ( "callback_json----->" . $callback_json . PHP_EOL );
+				
+			// Need to exit here to avoid ZF2 framework view.
+			exit ();
+		} else {
+			$path = $this->security ( "application/index/sample-ajax.phtml" );
+			$view = new ViewModel ();
+			$view->setTemplate ( $path ); // path to phtml file under view folder
+		}
+	
+		return $view;
+	}
+	private function handleWSSession($action, $result) {
+		if ($action = 'login') {
+			$data = simplexml_load_string ( trim($result) );
+			$session = new Container ( 'user' );
+			$session->offsetSet ( 'user_id', $data->user_id );
+			$session->offsetSet ( 'sid', $data->sid );
+		} else if ($action = 'logout') {
+			$session = new Container ( 'user' );
+			$session->getManager()->destroy();
+		}
+	}
+	
+	private function fetchSid() {
+		$session = new Container ( 'user' );
+		return (isset ($session->sid)) ? $session->sid : '';
 	}
 	
 	/*
@@ -164,51 +219,8 @@ error_log ( 'outbound xml --->' . $xml . PHP_EOL );
 		else
 			$this->generateVideoCacheFile ( $cache_dir, $video_name );
 	}
-	public function execAjaxAction() {
-		if (isset ( $_REQUEST ['callback'] )) {
-			
-			// Fetch parms
-			$callback = $_REQUEST ['callback'];
-			$json = $_REQUEST ['json'];
-			$message_data = json_decode ( $json, true );
-			
-			// Setup the URL and action
-			$ws_action = $message_data ['ws_action'];
-			$type = $message_data ['type'];
-			$xml = $message_data ['json'];
-			
-			// Guzzle the Web Service
-error_log("guzzle web service ws_action--->".$ws_action.PHP_EOL);
-error_log("guzzle web service $xml--->".$xml.PHP_EOL);
-			$result = $this->fetchXML ( $ws_action, $xml );
-			$json = json_encode ( $result );
-			
-			// Handle logout
-			$this->handleWSSession ( $ws_action, $result );
-			
-			// Return the ajax call...
-			$callback_json = $callback . "(" . $json . ")";
-			$output = ob_get_clean ();
-			header ( "Content-type: plain/text" );
-			echo $callback_json;
-			error_log ( "callback_json----->" . $callback_json . PHP_EOL );
-			
-			// Need to exit here to avoid ZF2 framework view.
-			exit ();
-		} else {
-			$path = $this->security ( "application/index/sample-ajax.phtml" );
-			$view = new ViewModel ();
-			$view->setTemplate ( $path ); // path to phtml file under view folder
-		}
-		
-		return $view;
-	}
-	private function handleWSSession($action, $xml) {
-		if ($action = 'logout') {
-			$session = new Container ( 'user' );
-			$session->getManager()->destroy();
-		}
-	}
+	
+	
 	private function getS3Key() {
 		$action = 'memreas_tvm';
 		$xml = '<xml><memreas_tvm></memreas_tvm></xml>';
