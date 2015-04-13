@@ -46,7 +46,7 @@ $domain = "http://d1ckv7o9k6o3x9.cloudfront.net/";
 										</div>
 									</li>
 									<li class="drop-3"><a href="javascript:;" onclick="goMoreTab();">More</a></li>
-									<li class="drop-4"><a href="/index/logout">Log Out</a></li>
+									<li class="drop-4"><a href="/index/logout" onClick = "logout();">Log Out</a></li>
 								</ul>	
 							</li>
 						</ul>
@@ -75,6 +75,23 @@ $domain = "http://d1ckv7o9k6o3x9.cloudfront.net/";
 </div>
 <div id="bgpopupGiveMessage" class="backgroundPopup"></div>
 <!-- End : Header -->
+
+<!-- Script for logout --> 
+function logout()
+{
+    var user_id = $("input[name=user_id]").val();
+		ajaxRequest(
+        'logout',
+        [
+            {tag: 'user_id', value: user_id}
+        ],function (response){
+            if (getValueFromXMLTag(response, 'status') == "Success"){
+            		alert('logging you out...');
+            }
+        });            
+
+}
+<!-- End script for logout --> 
 
 <!--Script for toggle down-->
 <script>

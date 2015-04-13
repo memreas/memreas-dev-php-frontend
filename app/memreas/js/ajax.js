@@ -2,7 +2,6 @@
  * Copyright memreas llc 2013 
  */
 
-//var wsurl = '/index.php/index/execAjax';
 var wsurl = '/index/execAjax';
 var xml_str = "";
 
@@ -89,6 +88,8 @@ ajaxRequest = function(action, params, success_func, error_func,
 }
 
 getXMLStringFromParamArray = function(action, params) {
+	
+	//alert("action-->"+action + " params-->" + JSON.stringify(params));
 	var i = 0;
 	var action_tag = "";
 	xml_str = "<xml>";

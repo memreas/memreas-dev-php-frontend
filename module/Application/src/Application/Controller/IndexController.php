@@ -44,10 +44,10 @@ class IndexController extends AbstractActionController {
 		 * If sid is available and missing inject it...
 		 */
 		$data = simplexml_load_string ( $xml );
-		if (!empty( $data->sid )) {
+		if (! empty ( $data->sid )) {
 			error_log ( 'adding sid to outbound xml...' . PHP_EOL );
 			$data->addChild ( 'fesid', session_id );
-			$data->addChild ( 'clientIPAddress', $this->fetchUserIPAddress() );
+			$data->addChild ( 'clientIPAddress', $this->fetchUserIPAddress () );
 			$xml = $data->asXML ();
 		}
 		
@@ -71,7 +71,7 @@ class IndexController extends AbstractActionController {
 	}
 	public function indexAction() {
 		error_log ( "Enter FE indexAction" . PHP_EOL );
-		//Initiate session
+		// Initiate session
 		$session = new Container ( 'user' );
 		
 		// Checking headers for cookie info
@@ -136,22 +136,15 @@ class IndexController extends AbstractActionController {
 	private function handleWSSession($action, $result) {
 		if ($action == 'login') {
 			$data = simplexml_load_string ( trim ( $result ) );
-			// $session = $this->getAuthService ()->getIdentity();
 			$session = new Container ( 'user' );
 			$session->offsetSet ( 'user_id', ( string ) $data->user_id );
-			
-			error_log ( 'fe handleWSSession sid->' . session_id () . PHP_EOL );
-			error_log ( 'fe handleWSSession ws sid->' . $session->offsetGet ( 'sid' ) . PHP_EOL );
-			error_log ( 'fe handleWSSession ws sid as ( string ) $data->loginresponse->sid->' . ( string ) $data->loginresponse->sid . PHP_EOL );
 		} else if ($action = 'logout') {
+			$data = simplexml_load_string ( trim ( $result ) );
 			$session = new Container ( 'user' );
 			$session->getManager ()->destroy ();
-		} else {
-			error_log ( 'fe handleWSSession after login sid->' . session_id () . PHP_EOL );
-			error_log ( 'fe handleWSSession after login ws sid->' . $session->offsetGet ( 'sid' ) . PHP_EOL );
 		}
 	}
-
+	
 	/*
 	 * Prepare cache for video viewing on main Gallery Page
 	 * @Return: file with video has been cached
@@ -349,7 +342,7 @@ class IndexController extends AbstractActionController {
 	 */
 	public function loginAction() {
 		error_log ( "Inside loginAction" . PHP_EOL );
-
+		
 		// Fetch the post data
 		$request = $this->getRequest ();
 		$postData = $request->getPost ()->toArray ();
@@ -365,13 +358,16 @@ class IndexController extends AbstractActionController {
 			$session = new Container ( 'user' );
 			$session->offsetSet ( 'user_id', $userid );
 			$session->offsetSet ( 'username', $username );
-			$session->offsetSet ( 'ipAddress', $this->fetchUserIPAddress() );
+			$session->offsetSet ( 'ipAddress', $this->fetchUserIPAddress () );
 			return $this->redirect ()->toRoute ( 'index', array (
 					'action' => 'memreas' 
 			) );
 		}
 	}
 	public function logoutAction() {
+		/**
+		 * Logout FE Server
+		 */
 		$this->getSessionStorage ()->forgetMe ();
 		$this->getAuthService ()->clearIdentity ();
 		$session = new Container ( 'user' );
@@ -437,16 +433,7 @@ class IndexController extends AbstractActionController {
 		return $this->storage;
 	}
 	public function security($path) {
-		// if already login do nothing
-		// $session = new Container("user");
-		// if(!$session->offsetExists('user_id')){
-		// error_log("Not there so logout");
-		// $this->logoutAction();
-		// return "application/index/index.phtml";
-		// }
-		error_log ( 'path-------->' . $path . PHP_EOL );
 		return $path;
-		// return $this->redirect()->toRoute('index', array('action' => 'login'));
 	}
 	
 	/* For S3 */
@@ -688,7 +675,6 @@ class IndexController extends AbstractActionController {
 		echo file_get_contents ( $requestUrl );
 		die ();
 	}
-	
 	public function fetchUserIPAddress() {
 		/*
 		 * Fetch the user's ip address
@@ -702,8 +688,7 @@ class IndexController extends AbstractActionController {
 			$this->ipAddress = $_SERVER ['REMOTE_ADDR'];
 		}
 		error_log ( 'ip is ' . $this->ipAddress );
-	
+		
 		return $this->ipAddress;
 	}
-	
 } // end class IndexController
