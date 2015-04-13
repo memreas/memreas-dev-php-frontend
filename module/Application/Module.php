@@ -35,14 +35,13 @@ class Module {
 		$this->bootstrapSession ( $e );
 	}
 	public function bootstrapSession($e) {
-		$session = $e->getApplication ()->getServiceManager ()->get ( 'Zend\Session\SessionManager' );
-		$session->start ();
-		
-		$container = new Container ( 'user' );
-		if (! isset ( $container->init )) {
-			$session->regenerateId ( true );
-			$container->init = 1;
-		}
+		//$session = $e->getApplication ()->getServiceManager ()->get ( 'Zend\Session\SessionManager' );
+		//$session->start ();
+		//$container = new Container ( 'user' );
+		 //if (! isset ( $container->init )) {
+		 //	$session->regenerateId ( true );
+		 //	$container->init = 1;
+		 //}
 	}
 	public function getConfig() {
 		return include __DIR__ . '/config/module.config.php';
@@ -139,8 +138,8 @@ class Module {
 							$resultSetPrototype->setArrayObjectPrototype ( new User () );
 							return new TableGateway ( 'user', $dbAdapter, null, $resultSetPrototype );
 						} 
-				)
-				 
-		);
+				) 
+		)
+		;
 	}
 }

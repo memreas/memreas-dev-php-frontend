@@ -20,7 +20,6 @@ use Application\Model;
 use Application\Model\UserTable;
 use Application\Form;
 use Zend\Mail\Message;
-use Zend\Mail\Transport\Sendmail as SendmailTransport;
 use Guzzle\Http\Client;
 use Application\View\Helper\S3Service;
 use Application\View\Helper\S3;
@@ -37,36 +36,34 @@ class IndexController extends AbstractActionController {
 	protected $authservice;
 	protected $session;
 	protected $sid;
+	protected $ipAddress;
 	public function fetchXML($action, $xml) {
-		$session = $this->getAuthService ()->getIdentity ();
-		$guzzle = new Client ();
-		
-		error_log ( "inside fe fetchxml sid --> " . $this->getToken () . PHP_EOL );
-		if (isset ( $_COOKIE ["PHPSESSID"] ) && ! empty ( $_COOKIE ["PHPSESSID"] )) {
-			error_log ( 'COOKIE is set....' . $_COOKIE ["PHPSESSID"] . PHP_EOL );
-		} else {
-			error_log ( 'COOKIE is NOT set....' . PHP_EOL );
-		}
+		$session = new Container ( 'user' );
 		
 		/*
 		 * If sid is available and missing inject it...
 		 */
-		$data = simplexml_load_string ($xml);
-//error_log ( '$this->getToken() --->' . $this->getToken() . PHP_EOL );
-//error_log ( '$data->sid --->' . $data->sid . PHP_EOL );
-		if (!isset($data->sid) && !empty($this->fetchSid())) {
-			$data->addChild('sid', $this->fetchSid());
-			$xml = $data->asXML();
+		$data = simplexml_load_string ( $xml );
+		if (!empty( $data->sid )) {
+			error_log ( 'adding sid to outbound xml...' . PHP_EOL );
+			$data->addChild ( 'fesid', session_id );
+			$data->addChild ( 'clientIPAddress', $this->fetchUserIPAddress() );
+			$xml = $data->asXML ();
 		}
 		
-error_log ( 'outbound xml --->' . $xml . PHP_EOL );
+		error_log ( 'outbound xml --->' . $xml . PHP_EOL );
+		/*
+		 * Fetch guzzle and post...
+		 */
+		$guzzle = new Client ();
 		$request = $guzzle->post ( $this->url, null, array (
 				'action' => $action,
 				// 'cache_me' => true,
-				'xml' => $xml,
-				'sid' => $this->getToken (),
-				'user_id' => empty ( $_SESSION ['user'] ['user_id'] ) ? '' : $_SESSION ['user'] ['user_id'] 
+				'xml' => $xml 
 		) );
+		// 'sid' => $this->fetchSid(),
+		// 'user_id' => empty ( $_SESSION ['user'] ['user_id'] ) ? '' : $_SESSION ['user'] ['user_id']
+		
 		$response = $request->send ();
 		$data = $response->getBody ( true );
 		
@@ -74,9 +71,11 @@ error_log ( 'outbound xml --->' . $xml . PHP_EOL );
 	}
 	public function indexAction() {
 		error_log ( "Enter FE indexAction" . PHP_EOL );
-		// Checking headers for cookie info
-		$headers = apache_request_headers ();
+		//Initiate session
+		$session = new Container ( 'user' );
 		
+		// Checking headers for cookie info
+		// $headers = apache_request_headers ();
 		// foreach ( $headers as $header => $value ) {
 		// error_log ( "FE header: $header :: value: $value" . PHP_EOL );
 		// }
@@ -91,36 +90,39 @@ error_log ( 'outbound xml --->' . $xml . PHP_EOL );
 		
 		return $view;
 	}
-	
 	public function execAjaxAction() {
 		if (isset ( $_REQUEST ['callback'] )) {
-				
+			
+			// $headers = apache_request_headers ();
+			// foreach ( $headers as $header => $value ) {
+			// error_log ( "callback header: $header :: value: $value" . PHP_EOL );
+			// }
+			
 			// Fetch parms
 			$callback = $_REQUEST ['callback'];
 			$json = $_REQUEST ['json'];
 			$message_data = json_decode ( $json, true );
-				
+			
 			// Setup the URL and action
 			$ws_action = $message_data ['ws_action'];
 			$type = $message_data ['type'];
 			$xml = $message_data ['json'];
-				
+			
 			// Guzzle the Web Service
-			error_log("guzzle web service ws_action--->".$ws_action.PHP_EOL);
-			error_log("guzzle web service $xml--->".$xml.PHP_EOL);
+			error_log ( "guzzle web service ws_action--->" . $ws_action . PHP_EOL );
+			error_log ( "guzzle web service $xml--->" . $xml . PHP_EOL );
 			$result = $this->fetchXML ( $ws_action, $xml );
 			$json = json_encode ( $result );
-				
+			
 			// Handle logout
 			$this->handleWSSession ( $ws_action, $result );
-				
+			
 			// Return the ajax call...
 			$callback_json = $callback . "(" . $json . ")";
 			$output = ob_get_clean ();
 			header ( "Content-type: plain/text" );
 			echo $callback_json;
-			error_log ( "callback_json----->" . $callback_json . PHP_EOL );
-				
+			
 			// Need to exit here to avoid ZF2 framework view.
 			exit ();
 		} else {
@@ -128,26 +130,28 @@ error_log ( 'outbound xml --->' . $xml . PHP_EOL );
 			$view = new ViewModel ();
 			$view->setTemplate ( $path ); // path to phtml file under view folder
 		}
-	
+		
 		return $view;
 	}
 	private function handleWSSession($action, $result) {
-		if ($action = 'login') {
-			$data = simplexml_load_string ( trim($result) );
+		if ($action == 'login') {
+			$data = simplexml_load_string ( trim ( $result ) );
+			// $session = $this->getAuthService ()->getIdentity();
 			$session = new Container ( 'user' );
-			$session->offsetSet ( 'user_id', $data->user_id );
-			$session->offsetSet ( 'sid', $data->sid );
+			$session->offsetSet ( 'user_id', ( string ) $data->user_id );
+			
+			error_log ( 'fe handleWSSession sid->' . session_id () . PHP_EOL );
+			error_log ( 'fe handleWSSession ws sid->' . $session->offsetGet ( 'sid' ) . PHP_EOL );
+			error_log ( 'fe handleWSSession ws sid as ( string ) $data->loginresponse->sid->' . ( string ) $data->loginresponse->sid . PHP_EOL );
 		} else if ($action = 'logout') {
 			$session = new Container ( 'user' );
-			$session->getManager()->destroy();
+			$session->getManager ()->destroy ();
+		} else {
+			error_log ( 'fe handleWSSession after login sid->' . session_id () . PHP_EOL );
+			error_log ( 'fe handleWSSession after login ws sid->' . $session->offsetGet ( 'sid' ) . PHP_EOL );
 		}
 	}
-	
-	private function fetchSid() {
-		$session = new Container ( 'user' );
-		return (isset ($session->sid)) ? $session->sid : '';
-	}
-	
+
 	/*
 	 * Prepare cache for video viewing on main Gallery Page
 	 * @Return: file with video has been cached
@@ -219,8 +223,6 @@ error_log ( 'outbound xml --->' . $xml . PHP_EOL );
 		else
 			$this->generateVideoCacheFile ( $cache_dir, $video_name );
 	}
-	
-	
 	private function getS3Key() {
 		$action = 'memreas_tvm';
 		$xml = '<xml><memreas_tvm></memreas_tvm></xml>';
@@ -256,6 +258,7 @@ error_log ( 'outbound xml --->' . $xml . PHP_EOL );
 	 * @ Tran Tuan
 	 */
 	public function memreasAction() {
+		error_log ( 'Inside memreasAction...' . PHP_EOL );
 		// Configure Ads on page
 		$enableAdvertising = MemreasConstants::MEMREAS_ADS;
 		$payment_tabs = array (
@@ -291,6 +294,8 @@ error_log ( 'outbound xml --->' . $xml . PHP_EOL );
 				'PaymentTabs' => $payment_tabs,
 				'app_version' => MemreasConstants::VERSION 
 		) );
+		error_log ( 'Inside memreasAction path---->' . $path . PHP_EOL );
+		
 		$view->setTemplate ( $path ); // path to phtml file under view folder
 		return $view;
 	}
@@ -340,107 +345,18 @@ error_log ( 'outbound xml --->' . $xml . PHP_EOL );
 	}
 	
 	/*
-	 * Twitter authentication and fetching friends
-	 * @Return: friend list after user has been authenticated
-	 */
-	public function twitterAction() {
-		$server_url = $this->getRequest ()->getServer ( 'HTTP_HOST' );
-		$callback_url = (strpos ( $server_url, 'localhost' )) ? 'http://memreas-dev-php-frontend.localhost/index/twitter' : MemreasConstants::MEMREAS_FE . "/index/twitter";
-		$config = new \Application\OAuth\Config ();
-		
-		if (strpos ( $server_url, 'localhost' )) {
-			// Localhost development
-			$appKey = '1bqpAfSWfZFuEeY3rbsKrw';
-			$appSecret = 'wM0gGBCzZKl5dLRB8TQydRDfTD5ocf2hGRKSQwag';
-		} else {
-			// Live development
-			$appKey = '9jwg1vX4MgH7rfBzxqkcjI90f';
-			$appSecret = 'bDqOeHkJ7OIQ4QPNnT1PA9oz55gf51YW0REBo12aazGA0CBrbY';
-		}
-		$config->setConsumerKey ( $appKey )->setConsumerSecret ( $appSecret )->setRequestTokenUrl ( 'https://api.twitter.com/oauth/request_token' )->setAuthorizeUrl ( 'https://api.twitter.com/oauth/authenticate' )->setAccessTokenUrl ( 'https://api.twitter.com/oauth/access_token' )->setCallbackUrl ( $callback_url );
-		
-		if (! empty ( $_GET ['oauth_token'] )) {
-			$authorizeToken = new \Application\OAuth\Token\Authorize ( $_GET );
-			if (! $authorizeToken->isValid ()) {
-				throw new Exception ( 'Authorization failed' );
-			}
-			
-			// fetch previously stored request token
-			$requestToken = unserialize ( $_SESSION ['twitter_request_token'] );
-			if (! $requestToken instanceof \Application\OAuth\Token\Request) {
-				throw new Exception ( 'Request token not found' );
-				error_log ( 'Twitter action : Request token not found' );
-			}
-			
-			// a possible CSRF attack
-			if ($requestToken->getToken () !== $authorizeToken->getToken ()) {
-				throw new Exception ( 'Tokens do not match' );
-				error_log ( 'Twitter action : Tokens do not match' );
-			}
-			
-			$accessToken = new \Application\OAuth\Token\Access ( $config, $authorizeToken, true );
-			if (! $accessToken->isValid ()) {
-				throw new Exception ( 'Could not fetch access token' );
-				error_log ( 'Twitter action : Could not fetch access token' );
-			}
-			
-			unset ( $_SESSION ['twitter_request_token'] );
-			
-			// at this point authentication is successful and you will have the following
-			// two properties available on the access token object if you authenticated on Twitter:
-			$userId = $accessToken ['user_id'];
-			$screenName = $accessToken ['screen_name'];
-			$config = array ();
-			if (strpos ( $server_url, 'localhost' )) {
-				// Localhost development
-				$config ['consumer_key'] = '1bqpAfSWfZFuEeY3rbsKrw';
-				$config ['consumer_secret'] = 'wM0gGBCzZKl5dLRB8TQydRDfTD5ocf2hGRKSQwag';
-			} else {
-				$config ['consumer_key'] = '9jwg1vX4MgH7rfBzxqkcjI90f';
-				$config ['consumer_secret'] = 'bDqOeHkJ7OIQ4QPNnT1PA9oz55gf51YW0REBo12aazGA0CBrbY';
-			}
-			$config ['oauth_token'] = $accessToken ['oauth_token'];
-			$config ['oauth_token_secret'] = $accessToken ['oauth_token_secret'];
-			$config ['output_format'] = 'object';
-			$tw = new TwitterOAuth ( $config );
-			
-			$params = array (
-					'cursor' => - 1,
-					'skip_status' => true,
-					'include_user_entities' => false 
-			);
-			
-			$response = $tw->get ( 'friends/list', $params );
-			$view = new ViewModel ( array (
-					'data' => $response 
-			) );
-			$path = $this->security ( "application/index/twitter.phtml" );
-			$view->setTemplate ( $path );
-			return $view;
-		} else {
-			$requestToken = new \Application\OAuth\Token\Request ( $config, true );
-			$_SESSION ['twitter_request_token'] = serialize ( $requestToken );
-			
-			// redirect to Twitter for authentication
-			$targetUrl = $config->getAuthorizeUrl ( $requestToken ['oauth_token'] );
-			$targetUrl;
-			header ( 'Location:' . $targetUrl );
-			exit ();
-		}
-	}
-	
-	/*
 	 * Login Action
 	 */
 	public function loginAction() {
 		error_log ( "Inside loginAction" . PHP_EOL );
+
 		// Fetch the post data
 		$request = $this->getRequest ();
 		$postData = $request->getPost ()->toArray ();
+		
 		$username = $postData ['username'];
 		// $password = $postData ['password'];
 		$userid = $postData ['status_user_id'];
-		error_log ( "userid---->" . $userid . PHP_EOL );
 		if (empty ( $userid )) {
 			return $this->redirect ()->toRoute ( 'index', array (
 					'action' => "index" 
@@ -449,7 +365,7 @@ error_log ( 'outbound xml --->' . $xml . PHP_EOL );
 			$session = new Container ( 'user' );
 			$session->offsetSet ( 'user_id', $userid );
 			$session->offsetSet ( 'username', $username );
-			$session->offsetSet ( 'sid', $postData ['sid'] );
+			$session->offsetSet ( 'ipAddress', $this->fetchUserIPAddress() );
 			return $this->redirect ()->toRoute ( 'index', array (
 					'action' => 'memreas' 
 			) );
@@ -476,8 +392,6 @@ error_log ( 'outbound xml --->' . $xml . PHP_EOL );
 		error_log ( "Inside setSession got new Container..." );
 		$session->offsetSet ( 'user_id', $user->user_id );
 		$session->offsetSet ( 'username', $username );
-		$session->offsetSet ( 'user', json_encode ( $user ) );
-		error_log ( "Inside setSession set user data..." );
 	}
 	
 	/*
@@ -530,6 +444,7 @@ error_log ( 'outbound xml --->' . $xml . PHP_EOL );
 		// $this->logoutAction();
 		// return "application/index/index.phtml";
 		// }
+		error_log ( 'path-------->' . $path . PHP_EOL );
 		return $path;
 		// return $this->redirect()->toRoute('index', array('action' => 'login'));
 	}
@@ -578,9 +493,8 @@ error_log ( 'outbound xml --->' . $xml . PHP_EOL );
 		$key = str_pad ( $key, $blocksize, chr ( 0x00 ) );
 		$ipad = str_repeat ( chr ( 0x36 ), $blocksize );
 		$opad = str_repeat ( chr ( 0x5c ), $blocksize );
-		$hmac = pack ( 'H*', $hashfunc ( ($key ^ $opad) . pack ( 'H*', $hashfunc ( ($key ^ $ipad) . $data ) )
-
-		 ) );
+		$hmac = pack ( 'H*', $hashfunc ( ($key ^ $opad) . pack ( 'H*', $hashfunc ( ($key ^ $ipad) . $data ) ) ) );
+		
 		return bin2hex ( $hmac );
 	}
 	
@@ -595,17 +509,16 @@ error_log ( 'outbound xml --->' . $xml . PHP_EOL );
 		}
 		return base64_encode ( $raw );
 	}
-	public function getToken() {
-		$session = new Container ( 'user' );
-		error_log ( 'fe-session -> ' . print_r ( $session ['sid'], true ) );
-		return empty ( $session ['sid'] ) ? '' : $session ['sid'];
-	}
-	public function setToken($sid) {
-		$session = new Container ( 'user' );
-		$session->setId ( $sid );
-		error_log ( 'set fe-session with ws-session-sid-> ' . print_r ( $_SESSION, true ) );
-		return empty ( $session ['sid'] ) ? '' : $session ['sid'];
-	}
+	// public function getToken() {
+	// $session = new Container ( 'user' );
+	// error_log ( 'fe-session -> ' . print_r ( $session ['sid'], true ) );
+	// return empty ( $session ['sid'] ) ? '' : $session ['sid'];
+	// }
+	// public function setToken($sid) {
+	// $session = new Container ( 'user' );
+	// $session->setId ( $sid );
+	// return empty ( $session ['sid'] ) ? '' : $session ['sid'];
+	// }
 	public function editmediaAction() {
 		$target_dir = getcwd () . '/app/memreas/temps_media_edit/';
 		$s3Object = new S3 ( MemreasConstants::S3_APPKEY, MemreasConstants::S3_APPSEC );
@@ -775,4 +688,22 @@ error_log ( 'outbound xml --->' . $xml . PHP_EOL );
 		echo file_get_contents ( $requestUrl );
 		die ();
 	}
+	
+	public function fetchUserIPAddress() {
+		/*
+		 * Fetch the user's ip address
+		 */
+		$this->ipAddress = $this->getServiceLocator ()->get ( 'Request' )->getServer ( 'REMOTE_ADDR' );
+		if (! empty ( $_SERVER ['HTTP_CLIENT_IP'] )) {
+			$this->ipAddress = $_SERVER ['HTTP_CLIENT_IP'];
+		} else if (! empty ( $_SERVER ['HTTP_X_FORWARDED_FOR'] )) {
+			$this->ipAddress = $_SERVER ['HTTP_X_FORWARDED_FOR'];
+		} else {
+			$this->ipAddress = $_SERVER ['REMOTE_ADDR'];
+		}
+		error_log ( 'ip is ' . $this->ipAddress );
+	
+		return $this->ipAddress;
+	}
+	
 } // end class IndexController

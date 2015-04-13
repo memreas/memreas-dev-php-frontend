@@ -60,9 +60,9 @@
                             <h2>sharing memories just got easier!</h2>
                         </div>
                         <div class="pull-right">
-                            <form action="<?php echo $this->url('index',array('action'=>'login'));?>" method="post" name="user_login_frm" id="form-user-login" >
+                            <form action="<?php echo $this->url('index',array('action'=>'login'));?>" method="post" name="user_login_frm" id="form-user-login">
                                 <div class="login-top clearfix">
-                                    <input name="username" type="text" placeholder="Username" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Username')this.value = '';"/>
+                                    <input name="username" type="text" placeholder="Username" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Email')this.value = '';"/>
                                     <input name="password" type="password" placeholder="Password"  onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Password')this.value = '';"/>
                                     <input type="hidden" name="status_user_id" value="" />
                                     <input type="hidden" name="sid" value="" />

@@ -348,13 +348,14 @@ $(function(){
     $("#form-user-login").submit(function(){
         var loginname = $(this).find('input[name=username]').val();
         var loginpass = $(this).find('input[name=password]').val();
+
         if (loginname == '' || loginname == 'username' || loginpass == '' || loginpass == 'password')
             jerror ('Please complete all fields');
         else{
             var params = [
                             {tag: 'username', value: loginname},
                             {tag: 'password', value: loginpass},
-                            {tag: 'device_type', value: 1},
+                            {tag: 'device_type', value: "web"},
                             {tag: 'device_id', value: ''}
                             ];
             ajaxRequest('login', params, function(xml_response){

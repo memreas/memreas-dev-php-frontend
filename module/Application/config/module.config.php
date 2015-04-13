@@ -10,10 +10,11 @@ namespace Application;
  */
 return array(
     'session' => array(
-        'use_cookies' => true,
-        'cookie_httponly' => true,
-        //'cookie_lifetime' => 0 //session
-    		'cookie_path' => getcwd () . '/data/session/'
+        'use_cookies' => false,
+    		'use_trans_sid' => true
+        //'cookie_httponly' => true,
+        //'cookie_lifetime' => 0, //session
+    		//'cookie_path' => getcwd () . '/data/session/'
     ),
     'router' => array(
         'routes' => array(
