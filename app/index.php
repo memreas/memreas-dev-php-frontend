@@ -5,6 +5,9 @@
  */
 chdir(dirname(__DIR__));
 
+ini_set('session.save_path', getcwd().'/data/session');
+ini_set('session.use_only_cookies', "Off");
+
 // Setup autoloading
 require 'init_autoloader.php';
 

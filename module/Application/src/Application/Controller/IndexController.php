@@ -11,7 +11,7 @@
 namespace Application\Controller;
 
 use Zend\Session\SessionManager;
-//use Zend\Db\Adapter\Adapter;
+// use Zend\Db\Adapter\Adapter;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\ViewModel\JsonModel;
@@ -38,15 +38,18 @@ class IndexController extends AbstractActionController {
 	protected $sid;
 	protected $ipAddress;
 	public function fetchXML($action, $xml) {
-		$session = new Container ( 'user' );
+		
+		/**
+		 * Handle session and fetch sid
+		 */
 		
 		/*
 		 * If sid is available and missing inject it...
 		 */
 		$data = simplexml_load_string ( $xml );
-		if (! empty ( $data->sid )) {
+		if (empty ( $data->fecookie )) {
 			error_log ( 'adding sid to outbound xml...' . PHP_EOL );
-			$data->addChild ( 'fesid', session_id );
+			$data->addChild ( 'fecookie', $_COOKIE ['fe'] );
 			$data->addChild ( 'clientIPAddress', $this->fetchUserIPAddress () );
 			$xml = $data->asXML ();
 		}
@@ -61,8 +64,6 @@ class IndexController extends AbstractActionController {
 				// 'cache_me' => true,
 				'xml' => $xml 
 		) );
-		// 'sid' => $this->fetchSid(),
-		// 'user_id' => empty ( $_SESSION ['user'] ['user_id'] ) ? '' : $_SESSION ['user'] ['user_id']
 		
 		$response = $request->send ();
 		$data = $response->getBody ( true );
@@ -71,8 +72,6 @@ class IndexController extends AbstractActionController {
 	}
 	public function indexAction() {
 		error_log ( "Enter FE indexAction" . PHP_EOL );
-		// Initiate session
-		$session = new Container ( 'user' );
 		
 		// Checking headers for cookie info
 		// $headers = apache_request_headers ();
@@ -135,13 +134,26 @@ class IndexController extends AbstractActionController {
 	}
 	private function handleWSSession($action, $result) {
 		if ($action == 'login') {
+			/**
+			 * Handle login
+			 */
+			session_start ();
+			error_log ( 'handleWSSession.result--->' . $result . PHP_EOL );
 			$data = simplexml_load_string ( trim ( $result ) );
-			$session = new Container ( 'user' );
-			$session->offsetSet ( 'user_id', ( string ) $data->user_id );
-		} else if ($action = 'logout') {
+			error_log ( 'handleWSSession.user_id--->' . ( string ) $data->loginresponse->user_id . PHP_EOL );
+			error_log ( 'handleWSSession.username--->' . ( string ) $data->loginresponse->username . PHP_EOL );
+			$_SESSION ['user_id'] = ( string ) $data->loginresponse->user_id;
+			$_SESSION ['username'] = ( string ) $data->loginresponse->username;
+			error_log ( 'handleWSSession.session_id--->' . session_id () . PHP_EOL );
+			error_log ( 'handleWSSession.user_id--->' . $_SESSION ['user_id'] . PHP_EOL );
+			error_log ( 'handleWSSession.username--->' . $_SESSION ['username'] . PHP_EOL );
+			error_log ( '_SESSION vars inside handleWSSession start...' . print_r ( $_SESSION, true ) . PHP_EOL );
+		} else if ($action == 'logout') {
+			/**
+			 * Handle logout
+			 */
 			$data = simplexml_load_string ( trim ( $result ) );
-			$session = new Container ( 'user' );
-			$session->getManager ()->destroy ();
+			session_destroy ();
 		}
 	}
 	
@@ -261,12 +273,12 @@ class IndexController extends AbstractActionController {
 		);
 		
 		// Guzzle the LoginWeb Service
-		$session = new Container ( 'user' );
-		$user_id = $session->user_id;
+		// $session = new Container ( 'user' );
+		$user_id = $_SESSION ['user_id'];
 		
 		// if (!$user) return $this->redirect()->toRoute('index', array('action' => "index"));
 		$data ['userid'] = $user_id;
-		$data ['sid'] = $session->sid;
+		$data ['sid'] = $_SESSION ['sid'];
 		
 		$data ['bucket'] = MemreasConstants::S3BUCKET;
 		$data ['accesskey'] = MemreasConstants::S3_APPKEY;
@@ -313,11 +325,11 @@ class IndexController extends AbstractActionController {
 	 * Write constant to javascript
 	 */
 	public function writeJsConstants() {
-		$session = new Container ( 'user' );
+		// $session = new Container ( 'user' );
 		// Put constant variables here
 		$JsConstantVariables = array (
 				'S3BUCKET' => MemreasConstants::S3BUCKET,
-				'LOGGED_USER_ID' => $session->user_id,
+				'LOGGED_USER_ID' => $_SESSION ['user_id'],
 				'LISTNOTIFICATIONSPOLLTIME' => MemreasConstants::LISTNOTIFICATIONSPOLLTIME,
 				'FREE_ACCOUNT_FILE_LIMIT' => MemreasConstants::FREE_ACCOUNT_FILE_LIMIT,
 				'PAID_ACCOUNT_FILE_LIMIT' => MemreasConstants::PAID_ACCOUNT_FILE_LIMIT,
@@ -355,10 +367,6 @@ class IndexController extends AbstractActionController {
 					'action' => "index" 
 			) );
 		} else {
-			$session = new Container ( 'user' );
-			$session->offsetSet ( 'user_id', $userid );
-			$session->offsetSet ( 'username', $username );
-			$session->offsetSet ( 'ipAddress', $this->fetchUserIPAddress () );
 			return $this->redirect ()->toRoute ( 'index', array (
 					'action' => 'memreas' 
 			) );
@@ -368,27 +376,27 @@ class IndexController extends AbstractActionController {
 		/**
 		 * Logout FE Server
 		 */
-		$this->getSessionStorage ()->forgetMe ();
-		$this->getAuthService ()->clearIdentity ();
-		$session = new Container ( 'user' );
-		$session->getManager ()->destroy ();
+		// $this->getSessionStorage ()->forgetMe ();
+		// $this->getAuthService ()->clearIdentity ();
+		// $session = new Container ( 'user' );
+		session_destroy ();
 		
 		return $this->redirect ()->toRoute ( 'index', array (
 				'action' => "index" 
 		) );
 	}
-
+	
 	/*
 	 * Support for Zend Table Gateway instance model
 	 */
-// 	public function getUserTable() {
-// 		if (! $this->userTable) {
-// 			$sm = $this->getServiceLocator ();
-// 			$this->dbAdapter = $sm->get ( 'doctrine.entitymanager.orm_default' );
-// 			$this->userTable = $this->dbAdapter->getRepository ( 'Application\Entity\User' );
-// 		}
-// 		return $this->userTable;
-// 	}
+	// public function getUserTable() {
+	// if (! $this->userTable) {
+	// $sm = $this->getServiceLocator ();
+	// $this->dbAdapter = $sm->get ( 'doctrine.entitymanager.orm_default' );
+	// $this->userTable = $this->dbAdapter->getRepository ( 'Application\Entity\User' );
+	// }
+	// return $this->userTable;
+	// }
 	public function changepasswordAction() {
 		$request = $this->getRequest ();
 		$postData = $request->getPost ()->toArray ();
@@ -485,12 +493,12 @@ class IndexController extends AbstractActionController {
 		return base64_encode ( $raw );
 	}
 	// public function getToken() {
-	// $session = new Container ( 'user' );
+	// //$session = new Container ( 'user' );
 	// error_log ( 'fe-session -> ' . print_r ( $session ['sid'], true ) );
 	// return empty ( $session ['sid'] ) ? '' : $session ['sid'];
 	// }
 	// public function setToken($sid) {
-	// $session = new Container ( 'user' );
+	// //$session = new Container ( 'user' );
 	// $session->setId ( $sid );
 	// return empty ( $session ['sid'] ) ? '' : $session ['sid'];
 	// }
@@ -636,8 +644,8 @@ class IndexController extends AbstractActionController {
 	
 	// This is used for add profile pic at registration page when user still login
 	public function setTokenAction() {
-		$session = new Container ( 'user' );
-		$session->offsetSet ( 'sid', $_POST ['sid'] );
+		// $session = new Container ( 'user' );
+		$_SESSION [".$_POST ['sid']."];
 		die ();
 	}
 	

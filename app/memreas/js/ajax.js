@@ -243,7 +243,7 @@ getXMLStringFromParamArray = function(action, params) {
 	default:
 		break;
 	}
-	xml_str += "<fesid>" + getCookie("fe") + "</fesid>";
+	xml_str += "<fecookie>" + getCookie("fe") + "</fecookie>";
 	xml_str += "<" + action_tag + ">";
 	getSubXMLStringFromParamArray(params);
 	xml_str += "</" + action_tag + ">";

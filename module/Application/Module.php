@@ -35,9 +35,9 @@ class Module {
 		$this->bootstrapSession ( $e );
 	}
 	public function bootstrapSession($e) {
-		$session = $e->getApplication ()->getServiceManager ()->get ( 'Zend\Session\SessionManager' );
-		$session->start ();
-		$container = new Container ( 'user' );
+		session_start ();
+		//$session = $e->getApplication ()->getServiceManager ()->get ( 'Zend\Session\SessionManager' );
+		//$container = new Container ( 'user' );
 		 //if (! isset ( $container->init )) {
 		 //	$session->regenerateId ( true );
 		 //	$container->init = 1;
@@ -58,7 +58,7 @@ class Module {
 	public function getServiceConfig() {
 		return array (
 				'factories' => array (
-						// ZF2 Session Setup...
+// 						// ZF2 Session Setup...
 						'Zend\Session\SessionManager' => function ($sm) {
 							$config = $sm->get ( 'config' );
 							if (isset ( $config ['session'] )) {
