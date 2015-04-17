@@ -17,11 +17,11 @@ use Zend\Session\Config\SessionConfig;
 use Zend\Session\SessionManager;
 use Zend\Authentication\Storage;
 use Zend\Authentication\AuthenticationService;
-use Zend\Authentication\Adapter\DbTable as DbTableAuthAdapter;
-use Zend\Db\ResultSet\ResultSet;
-use Zend\Db\TableGateway\TableGateway;
-use Application\Model\User;
-use Application\Model\UserTable;
+// use Zend\Authentication\Adapter\DbTable as DbTableAuthAdapter;
+// use Zend\Db\ResultSet\ResultSet;
+// use Zend\Db\TableGateway\TableGateway;
+// use Application\Model\User;
+// use Application\Model\UserTable;
 use Application\Model\MyAuthStorage;
 use Application\Model;
 
@@ -35,9 +35,9 @@ class Module {
 		$this->bootstrapSession ( $e );
 	}
 	public function bootstrapSession($e) {
-		//$session = $e->getApplication ()->getServiceManager ()->get ( 'Zend\Session\SessionManager' );
-		//$session->start ();
-		//$container = new Container ( 'user' );
+		$session = $e->getApplication ()->getServiceManager ()->get ( 'Zend\Session\SessionManager' );
+		$session->start ();
+		$container = new Container ( 'user' );
 		 //if (! isset ( $container->init )) {
 		 //	$session->regenerateId ( true );
 		 //	$container->init = 1;
@@ -72,7 +72,6 @@ class Module {
 									// setting this for AWS permissions error
 									// Note: must specify full path
 									$options ['save_path'] = getcwd () . "/data/session/";
-									
 									$sessionConfig = new $class ();
 									$sessionConfig->setOptions ( $options );
 								}
@@ -127,17 +126,17 @@ class Module {
 						},
 						
 						// Tables
-						'Application\Model\UserTable' => function ($sm) {
-							$tableGateway = $sm->get ( 'UserTableGateway' );
-							$table = new UserTable ( $tableGateway );
-							return $table;
-						},
-						'UserTableGateway' => function ($sm) {
-							$dbAdapter = $sm->get ( 'Zend\Db\Adapter\Adapter' );
-							$resultSetPrototype = new \Zend\Db\ResultSet\ResultSet ();
-							$resultSetPrototype->setArrayObjectPrototype ( new User () );
-							return new TableGateway ( 'user', $dbAdapter, null, $resultSetPrototype );
-						} 
+// 						'Application\Model\UserTable' => function ($sm) {
+// 							$tableGateway = $sm->get ( 'UserTableGateway' );
+// 							$table = new UserTable ( $tableGateway );
+// 							return $table;
+// 						},
+// 						'UserTableGateway' => function ($sm) {
+// 							$dbAdapter = $sm->get ( 'Zend\Db\Adapter\Adapter' );
+// 							$resultSetPrototype = new \Zend\Db\ResultSet\ResultSet ();
+// 							$resultSetPrototype->setArrayObjectPrototype ( new User () );
+// 							return new TableGateway ( 'user', $dbAdapter, null, $resultSetPrototype );
+// 						} 
 				) 
 		)
 		;

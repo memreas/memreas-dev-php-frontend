@@ -332,11 +332,12 @@ function getUserNotificationsHeader(){
 
                             var notification_id = getValueFromXMLTag(notifications[i], 'notification_id');
                             var notification_type = getValueFromXMLTag(notifications[i], 'notification_type');
-                            var meta_text = $(notifications[i]).wrap('meta')
-                                .html().split('<meta>')[1]
-                                .split('<notification_type>')[0];
+                            //var meta_text = $(notifications[i]).wrap('meta')
+                            //    .html().split('<meta>')[1]
+                            //    .split('<notification_type>')[0];
+                            var meta_text = getValueFromXMLTag(notifications[i], 'message');
                             meta_text = '<span>' + meta_text + '</span>';
-                            meta_text = removeCdataCorrectLink(meta_text);
+                            //meta_text = removeCdataCorrectLink(meta_text);
                             meta_text = $('<div/>').html(meta_text).text();
 
                             var user_profile_pic = removeCdataCorrectLink(getValueFromXMLTag(notifications[i], 'profile_pic'));

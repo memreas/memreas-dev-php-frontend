@@ -6,11 +6,12 @@
 
 use Guzzle\Http\Client;
 use Zend\Session\Container;
+use Application\Model\MemreasConstants;
 
-$session = new Container('user');
-$user_id = $session->offsetGet('user_id');
+$username = $_SESSION['username'];
+$user_id = $_SESSION['user_id'];
+$domain = MemreasConstants::CLOUDFRONT_DOWNLOAD_HOST;
 echo "user_id ----> " . $user_id;
-$domain = "http://d1ckv7o9k6o3x9.cloudfront.net/";
 
 ?>
 <!doctype html>

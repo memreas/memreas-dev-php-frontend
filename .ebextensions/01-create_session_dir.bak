@@ -1,4 +1,0 @@
-commands:
-
-  01mkdir:
-    command: mkdir -p -m 0766 data/session

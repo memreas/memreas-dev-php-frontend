@@ -11,7 +11,7 @@
 namespace Application\Controller;
 
 use Zend\Session\SessionManager;
-use Zend\Db\Adapter\Adapter;
+//use Zend\Db\Adapter\Adapter;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\ViewModel\JsonModel;
@@ -377,30 +377,18 @@ class IndexController extends AbstractActionController {
 				'action' => "index" 
 		) );
 	}
-	public function setSession($username) {
-		// Fetch the user's data and store it in the session...
-		error_log ( "Inside setSession ..." );
-		$user = $this->getUserTable ()->findOneBy ( array (
-				'username' => $username 
-		) );
-		
-		$session = new Container ( 'user' );
-		error_log ( "Inside setSession got new Container..." );
-		$session->offsetSet ( 'user_id', $user->user_id );
-		$session->offsetSet ( 'username', $username );
-	}
-	
+
 	/*
 	 * Support for Zend Table Gateway instance model
 	 */
-	public function getUserTable() {
-		if (! $this->userTable) {
-			$sm = $this->getServiceLocator ();
-			$this->dbAdapter = $sm->get ( 'doctrine.entitymanager.orm_default' );
-			$this->userTable = $this->dbAdapter->getRepository ( 'Application\Entity\User' );
-		}
-		return $this->userTable;
-	}
+// 	public function getUserTable() {
+// 		if (! $this->userTable) {
+// 			$sm = $this->getServiceLocator ();
+// 			$this->dbAdapter = $sm->get ( 'doctrine.entitymanager.orm_default' );
+// 			$this->userTable = $this->dbAdapter->getRepository ( 'Application\Entity\User' );
+// 		}
+// 		return $this->userTable;
+// 	}
 	public function changepasswordAction() {
 		$request = $this->getRequest ();
 		$postData = $request->getPost ()->toArray ();

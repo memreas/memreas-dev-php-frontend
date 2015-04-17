@@ -11,13 +11,12 @@
  * file.
  * I will try test on commit
  */
-
 return array(
     'session' => array(
         'config' => array(
             'class' => 'Zend\Session\Config\SessionConfig',
             'options' => array(
-                'name' => 'fe',
+                'name' => 'memreas',
             ),
         ),
         'storage' => 'Zend\Session\Storage\SessionArrayStorage',

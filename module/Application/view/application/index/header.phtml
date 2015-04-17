@@ -1,97 +1,108 @@
 <?php
-/////////////////////////////////
-// Author: David Kang
-// Copyright memreas llc 2013
-/////////////////////////////////
-
+/**
+ * Copyright memreas llc 2013
+ */
 use Guzzle\Http\Client;
-use Zend\Session\Container;
+use Application\Model\MemreasConstants;
 
-$session = new Container('user');
-$username = $session->offsetGet('username');
-$domain = "http://d1ckv7o9k6o3x9.cloudfront.net/";
+$username = $_SESSION['username'];
+$domain = MemreasConstants::CLOUDFRONT_DOWNLOAD_HOST;
 ?>
 
 <!-- Begin : Header -->
 <div class="row-fluid rowfixed">
 	<header>
 		<div class="container clearfix">
-        <div class="header-inner">
-			<h1 id="logo"><a href="">memreas</a></h1>
+			<div class="header-inner">
+				<h1 id="logo">
+					<a href="">memreas</a>
+				</h1>
 
-			<div class="search-sec">
-				<div class="relative">
-					<div class="input-wrap top-search">
-                        <input data-provide="typeahead" id="search" name="input" type="text" class="search_bar" value="@person, #hastag, !memreas" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == '@person, #hastag, !memreas')this.value = '';"/>
-                    </div>
+				<div class="search-sec">
+					<div class="relative">
+						<div class="input-wrap top-search">
+							<input data-provide="typeahead" id="search" name="input"
+								type="text" class="search_bar"
+								value="@person, #hastag, !memreas"
+								onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue"
+								onFocus="if(this.value == '@person, #hastag, !memreas')this.value = '';" />
+						</div>
+						<span class="clear"></span>
+					</div>
+				</div>
+				<div class="pro-info clicker">
+					<div class="noti left">
+						<a href="javascript:;" class="notification_icon"></a>
+					</div>
+					<div class="right toggle">
+						<figure class="pro-pic">
+							<img id="profile_picture" src="/memreas/img/profile-pic.jpg"
+								alt="">
+							<span id="noti" class="notification-count"><img
+								src="/memreas/img/loading-line.gif" class="small-loading" /></span>
+						</figure>
+						<div class="pro-name">
+							<img src="/memreas/img/loading-line.gif" class="loading-small" />
+						</div>
+
+						<div class="drop-inner click-nav slide-down">
+							<ul class="no-js">
+								<li>
+									<ul>
+										<li class="drop-1"><a href="javascript:;"
+											onclick="goHomeTab();">HOME</a></li>
+										<li class="drop-2"><a href="javascript:;"
+											onclick="toggleNotification();"> <span class="arrow toggle-1"></span>Notification
+										</a>
+											<div class="slide-down-1 notification-head">
+												<ul>
+
+												</ul>
+											</div></li>
+										<li class="drop-3"><a href="javascript:;"
+											onclick="goMoreTab();">More</a></li>
+										<li class="drop-4"><a href="/index/logout" onClick="logout();">Log
+												Out</a></li>
+									</ul>
+								</li>
+							</ul>
+							<span></span>
+						</div>
+					</div>
 					<span class="clear"></span>
 				</div>
 			</div>
-			<div class="pro-info clicker">
-				<div class="noti left"><a href="javascript:;" class="notification_icon"></a></div>
-				<div class="right toggle">
-					<figure class="pro-pic"><img id="profile_picture" src="/memreas/img/profile-pic.jpg" alt=""><span id="noti" class="notification-count"><img src="/memreas/img/loading-line.gif" class="small-loading" /></span></figure>
-					<div class="pro-name"><img src="/memreas/img/loading-line.gif" class="loading-small" /></div>
-
-					<div class="drop-inner click-nav slide-down">
-						<ul class="no-js">
-							<li>
-								<ul>
-									<li class="drop-1"><a href="javascript:;" onclick="goHomeTab();">HOME</a></li>
-									<li class="drop-2"><a href="javascript:;" onclick="toggleNotification();"> <span class="arrow toggle-1"></span>Notification</a>
-										<div class="slide-down-1 notification-head">
-                                            <ul>
-
-                                            </ul>
-										</div>
-									</li>
-									<li class="drop-3"><a href="javascript:;" onclick="goMoreTab();">More</a></li>
-									<li class="drop-4"><a href="/index/logout" onClick = "logout();">Log Out</a></li>
-								</ul>	
-							</li>
-						</ul>
-						<span></span>
-					</div>
-				</div>
-				<span class="clear"></span>
-			</div>
-        </div>
-	  </div>
+		</div>
 	</header>
 </div>
 <div id="popupGiveMessage" class="popups">
-    <a id="popupaccountviewcardClose" onClick="disablePopup('popupGiveMessage');" class='popupClose'>x</a>
-    <h2>Give your message</h2>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <ul id="content_1" class="scrollpopup give-message-form">
-        <li>
-            <input type="hidden" name="card_id" id="card_id" value="">
-            <textarea name="notification-popup-message" class="notification-popup-message" style="width: 389px; height: 150px;" placeholder="Your message"></textarea>
-        </li>
-    </ul>
-    <a class="black_btn_skin f-left" href="javascript:;" id="accept-notification" onclick="updateNotificationHeader(1, 'accept');">Update</a> <a class="black_btn_skin f-right" href="javascript:disablePopup('popupGiveMessage');">close</a>
+	<a id="popupaccountviewcardClose"
+		onClick="disablePopup('popupGiveMessage');" class='popupClose'>x</a>
+	<h2>Give your message</h2>
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+	<ul id="content_1" class="scrollpopup give-message-form">
+		<li><input type="hidden" name="card_id" id="card_id" value=""> <textarea
+				name="notification-popup-message" class="notification-popup-message"
+				style="width: 389px; height: 150px;" placeholder="Your message"></textarea>
+		</li>
+	</ul>
+	<a class="black_btn_skin f-left" href="javascript:;"
+		id="accept-notification"
+		onclick="updateNotificationHeader(1, 'accept');">Update</a> <a
+		class="black_btn_skin f-right"
+		href="javascript:disablePopup('popupGiveMessage');">close</a>
 </div>
 <div id="bgpopupGiveMessage" class="backgroundPopup"></div>
 <!-- End : Header -->
 
-<!-- Script for logout --> 
-function logout()
-{
-    var user_id = $("input[name=user_id]").val();
-		ajaxRequest(
-        'logout',
-        [
-            {tag: 'user_id', value: user_id}
-        ],function (response){
-            if (getValueFromXMLTag(response, 'status') == "Success"){
-            		alert('logging you out...');
-            }
-        });            
-
-}
-<!-- End script for logout --> 
+<!-- Script for logout -->
+function logout() { var user_id = $("input[name=user_id]").val();
+ajaxRequest( 'logout', [ {tag: 'user_id', value: user_id} ],function
+(response){ if (getValueFromXMLTag(response, 'status') == "Success"){
+alert('logging you out...'); } }); }
+<!-- End script for logout -->
 
 <!--Script for toggle down-->
 <script>
