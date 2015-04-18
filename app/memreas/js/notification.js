@@ -22,7 +22,6 @@ $(function() {
 								}, ],
 								function(ret_xml) {
 									if (getValueFromXMLTag(ret_xml, 'status') == 'success') {
-alert("hi");										
 										var notifications = getSubXMLFromTag(
 												ret_xml, 'notification');
 										var notification_count = notifications.length;
@@ -52,6 +51,7 @@ alert("hi");
 											var notification_status = getValueFromXMLTag(
 													notifications[i],
 													'notification_status');
+											console.log("hello world");
 											if (user_profile_pic == '')
 												user_profile_pic = '/memreas/img/profile-pic.jpg';
 											if (notification_status == '0')

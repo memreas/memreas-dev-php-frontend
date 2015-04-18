@@ -158,7 +158,6 @@ jQuery.fetch_server_media = function() {
 	var verticalHeight = window.innerHeight;
 	$(".user-resources").remove();
 	$(".preload-files .pics").empty().show();
-	// Khan Changes
 	if (!document.documentElement.classList.contains('noads')) {
 		if (verticalHeight <= 690) {
 			$("#tab-content #tab1")
@@ -441,532 +440,526 @@ function aviarySpace(updateMode) { // updateMode is get or return
 }
 
 function getUserNotificationsHeader() {
+	var user_id = $("input[name=user_id]").val();
+	var jTargetElement = $(".notification-head ul");
+	if (jTargetElement.hasClass("mCustomScrollbar"))
+		jTargetElement = $(".notification-head ul .mCSB_container");
+
 	// Check if user has new notification
-	if (document.hasFocus()) {
+	// if (document.hasFocus()) {
+	// var item = new Date();
+	// alert("has focus @" + item.toTimeString());
 
-		var user_id = $("input[name=user_id]").val();
-		var jTargetElement = $(".notification-head ul");
-		if (jTargetElement.hasClass("mCustomScrollbar"))
-			jTargetElement = $(".notification-head ul .mCSB_container");
+	ajaxRequest(
+			'listnotification',
+			[ {
+				tag : 'user_id',
+				value : user_id
+			} ],
+			function(ret_xml) {
+				if (getValueFromXMLTag(ret_xml, 'status') == 'success') {
+					var notifications = getSubXMLFromTag(ret_xml,
+							'notification');
 
-		ajaxRequest(
-				'listnotification',
-				[ {
-					tag : 'user_id',
-					value : user_id
-				} ],
-				function(ret_xml) {
-					if (getValueFromXMLTag(ret_xml, 'status') == 'success') {
-						var notifications = getSubXMLFromTag(ret_xml,
-								'notification');
+					if (notificationHeaderObject.length != notifications.length) {
+						notificationHeaderObject = notifications;
+						var notification_count = notifications.length;
+						$(".notification-count").html(notification_count);
+						if (notification_count > 0) {
+							var html_content = '';
+							for (var i = 0; i < notification_count; i++) {
+								var notification = notifications[i].innerHTML;
 
-						if (notificationHeaderObject.length != notifications.length) {
-							notificationHeaderObject = notifications;
-							var notification_count = notifications.length;
-							$(".notification-count").html(notification_count);
-							if (notification_count > 0) {
-								var html_content = '';
-								for (var i = 0; i < notification_count; i++) {
-									var notification = notifications[i].innerHTML;
+								var notification_id = getValueFromXMLTag(
+										notifications[i], 'notification_id');
+								var notification_type = getValueFromXMLTag(
+										notifications[i], 'notification_type');
+								// var meta_text =
+								// $(notifications[i]).wrap('meta')
+								// .html().split('<meta>')[1]
+								// .split('<notification_type>')[0];
+								var meta_text = getValueFromXMLTag(
+										notifications[i], 'message');
+								meta_text = '<span>' + meta_text + '</span>';
+								// meta_text =
+								// removeCdataCorrectLink(meta_text);
+								meta_text = $('<div/>').html(meta_text).text();
 
-									var notification_id = getValueFromXMLTag(
-											notifications[i], 'notification_id');
-									var notification_type = getValueFromXMLTag(
-											notifications[i],
-											'notification_type');
-									// var meta_text =
-									// $(notifications[i]).wrap('meta')
-									// .html().split('<meta>')[1]
-									// .split('<notification_type>')[0];
-									var meta_text = getValueFromXMLTag(
-											notifications[i], 'message');
-									meta_text = '<span>' + meta_text
-											+ '</span>';
-									// meta_text =
-									// removeCdataCorrectLink(meta_text);
-									meta_text = $('<div/>').html(meta_text)
-											.text();
+								var user_profile_pic = removeCdataCorrectLink(getValueFromXMLTag(
+										notifications[i], 'profile_pic'));
+								var notification_status = getValueFromXMLTag(
+										notifications[i], 'notification_status');
+								if (user_profile_pic == '')
+									user_profile_pic = '/memreas/img/profile-pic.jpg';
 
-									var user_profile_pic = removeCdataCorrectLink(getValueFromXMLTag(
-											notifications[i], 'profile_pic'));
-									var notification_status = getValueFromXMLTag(
-											notifications[i],
-											'notification_status');
-									if (user_profile_pic == '')
-										user_profile_pic = '/memreas/img/profile-pic.jpg';
+								var notification_type = getValueFromXMLTag(
+										notifications[i], 'notification_type');
+								// Check if notification is comment or not
+								// if (notification.indexOf('comment_id') >=
+								// 0)
+								// {
+								if ([ 'ADD_MEDIA', 'ADD_COMMENT',
+										'ADD_FRIEND_TO_EVENT_RESPONSE' ]
+										.indexOf(notification_type) >= 0) {
+									var comment_id = getValueFromXMLTag(
+											notifications[i], 'comment_id');
+									var comment_text = getValueFromXMLTag(
+											notifications[i], 'comment');
+									var event_id = getValueFromXMLTag(
+											notifications[i], 'event_id');
+									comment_text = removeCdataCorrectLink(comment_text);
 
-									// Check if notification is comment or not
+									var comment_time = new Date(
+											(getValueFromXMLTag(ret_xml,
+													'comment_time')) * 1000);
 
-									if (notification.indexOf('comment_id') >= 0) {
-										var comment_id = getValueFromXMLTag(
-												notifications[i], 'comment_id');
-										var comment_text = getValueFromXMLTag(
-												notifications[i], 'comment');
-										var event_id = getValueFromXMLTag(
-												notifications[i], 'event_id');
-										comment_text = removeCdataCorrectLink(comment_text);
+									html_content += '<li id="notification-header-'
+											+ notification_id
+											+ '"><div class="notifications-all clearfix">'
+											+ '<div class="notification-pic"><img src="'
+											+ user_profile_pic
+											+ '" /></div>'
+											+ '<div class="notification-right">'
+											+ '<div class="noti-title">'
+											+ meta_text
+											+ '</div>'
+											+ '<div class="noti-content">'
+											+ '<p>'
+											+ comment_text
+											+ '</p>'
+											+ '</div>'
+											+ '<span class="notification-time">'
+											+ comment_time.getHours()
+											+ ':'
+											+ correctDateNumber(comment_time
+													.getMinutes())
+											+ '<br/>'
+											+ correctDateNumber(comment_time
+													.getDate())
+											+ '/'
+											+ correctDateNumber(comment_time
+													.getMonth())
+											+ '/'
+											+ comment_time.getFullYear()
+											+ '</span>'
+											+ '<a href="javascript:;" onclick="updateNotificationHeader(\''
+											+ notification_id
+											+ '\', \'ignore\');" class="close">x</a>'
+											+ '<a href="javascript:;" onclick="gotoEventDetail(\''
+											+ event_id
+											+ '\', \''
+											+ notification_id
+											+ '\');" class="reply">reply</a>'
+											+ '</div>' + '</div></li>';
 
-										var comment_time = new Date(
-												(getValueFromXMLTag(ret_xml,
-														'comment_time')) * 1000);
-
-										html_content += '<li id="notification-header-'
-												+ notification_id
-												+ '"><div class="notifications-all clearfix">'
-												+ '<div class="notification-pic"><img src="'
-												+ user_profile_pic
-												+ '" /></div>'
-												+ '<div class="notification-right">'
-												+ '<div class="noti-title">'
-												+ meta_text
-												+ '</div>'
-												+ '<div class="noti-content">'
-												+ '<p>'
-												+ comment_text
-												+ '</p>'
-												+ '</div>'
-												+ '<span class="notification-time">'
-												+ comment_time.getHours()
-												+ ':'
-												+ correctDateNumber(comment_time
-														.getMinutes())
-												+ '<br/>'
-												+ correctDateNumber(comment_time
-														.getDate())
-												+ '/'
-												+ correctDateNumber(comment_time
-														.getMonth())
-												+ '/'
-												+ comment_time.getFullYear()
-												+ '</span>'
-												+ '<a href="javascript:;" onclick="updateNotificationHeader(\''
-												+ notification_id
-												+ '\', \'ignore\');" class="close">x</a>'
-												+ '<a href="javascript:;" onclick="gotoEventDetail(\''
-												+ event_id
-												+ '\', \''
-												+ notification_id
-												+ '\');" class="reply">reply</a>'
-												+ '</div>' + '</div></li>';
-
-									} else {
-										var notification_updated = new Date(
-												(getValueFromXMLTag(ret_xml,
-														'notification_updated')) * 1000);
-										if (notification_status == '0')
-											var link_action = '<a href="javascript:;" class="reply" onclick="updateNotificationHeader(\''
-													+ notification_id
-													+ '\', \'ignore\');">Ignore</a> <a href="javascript:;" class="reply" onclick="showUpdateNotification(\''
-													+ notification_id
-													+ '\', \'accept\');">ok</a>';
-										else
-											var link_action = '';
-										html_content += '<li id="notification-header-'
-												+ notification_id
-												+ '"><div class="notifications-all clearfix">'
-												+ '<div class="notification-pic"><img src="'
-												+ user_profile_pic
-												+ '" /></div>'
-												+ '<div class="noti-content">'
-												+ '<div class="noti-content">'
-												+ '<p>'
-												+ meta_text
-												+ '</p><div class="clear"></div>'
-												+ '</div>'
-												+ '<span class="notification-time">'
-												+ notification_updated
-														.getHours()
-												+ ':'
-												+ correctDateNumber(notification_updated
-														.getMinutes())
-												+ '<br/>'
-												+ correctDateNumber(notification_updated
-														.getDate())
-												+ '/'
-												+ correctDateNumber(notification_updated
-														.getMonth())
-												+ '/'
-												+ notification_updated
-														.getFullYear()
-												+ '</span>'
-												+ '</div>'
-												+ link_action + '</div></li>';
-									}
-								}
-								jTargetElement.empty().html(html_content);
-								jTargetElement.mCustomScrollbar({
-									scrollButtons : {
-										enable : true
-									}
-								});
-							} else {
-								jTargetElement
-										.html('<div class="notifications-all clearfix">'
-												+ '<div class="noti-content">'
-												+ '<p>You have no notification.</p>'
-												+ '</div>' + '</div>');
-							}
-						}
-					} else {
-						$(".notification-count").html(0);
-						jTargetElement
-								.html('<div class="notifications-all clearfix">'
-										+ '<div class="noti-content">'
-										+ '<p>You have no notification.</p>'
-										+ '</div>' + '</div>');
-					}
-
-					setTimeout(function() {
-						getUserNotificationsHeader()
-					}, LISTNOTIFICATIONSPOLLTIME);
-				}, 'undefined', true);
-	}
-
-	function updateNotificationHeader(notification_id, update_status) {
-		switch (update_status) {
-		case 'accept':
-			var message_feedback = $(".notification-popup-message").val();
-			var params = [ {
-				tag : 'notification',
-				value : [ {
-					tag : 'notification_id',
-					value : notification_id
-				}, {
-					tag : 'status',
-					value : '1'
-				}, {
-					tag : 'message',
-					value : message_feedback
-				} ]
-			} ];
-			disablePopup("popupGiveMessage");
-			ajaxRequest('updatenotification', params, function(response) {
-				if (getValueFromXMLTag(response, 'status') == 'success') {
-					jsuccess(getValueFromXMLTag(response, 'message'));
-					$("#notification-header-" + notification_id).fadeOut(500)
-							.delay(500).remove();
-				} else
-					jerror(getValueFromXMLTag(response, 'message'));
-				removeLoading("#notification-header-" + notification_id
-						+ " .notifications-all");
-			});
-			break;
-		case 'ignore':
-			var params = [ {
-				tag : 'notification',
-				value : [ {
-					tag : 'notification_id',
-					value : notification_id
-				}, {
-					tag : 'status',
-					value : '2'
-				} ]
-			} ];
-
-			addLoading("#notification-header-" + notification_id
-					+ " .notifications-all", 'div',
-					'notification-header-loading');
-			ajaxRequest('updatenotification', params, function(response) {
-				if (getValueFromXMLTag(response, 'status') == 'success') {
-					jsuccess(getValueFromXMLTag(response, 'message'));
-					$("#notification-header-" + notification_id).fadeOut(500)
-							.delay(500).remove();
-				} else
-					jerror(getValueFromXMLTag(response, 'message'));
-				removeLoading("#notification-header-" + notification_id
-						+ " .notifications-all");
-			}, 'undefined', true);
-			break;
-		default:
-			jerror('No action performed');
-		}
-	}
-
-	function showUpdateNotification(notification_id) {
-		$("#accept-notification").attr(
-				'onclick',
-				'updateNotificationHeader(\'' + notification_id
-						+ '\', \'accept\');')
-		popup("popupGiveMessage");
-	}
-
-	function gotoEventDetail(eventId, notification_id) {
-
-		updateNotificationHeader(notification_id, 'accept');
-
-		eventdetail_id = eventId;
-		eventdetail_user = $('input[name=user_id]').val();
-		userId = eventdetail_user;
-
-		// Show gallery details
-		var target_element = $(".memreas-detail-gallery");
-		if (target_element.hasClass('mCustomScrollbar'))
-			target_element = $(".memreas-detail-gallery .mCSB_container");
-		target_element.empty();
-
-		/* Update details_tab also */
-		$(".carousel-memrease-area").empty();
-		$(".carousel-memrease-area").append(
-				'<ul id="carousel" class="elastislide-list"></ul>');
-		var jcarousel_element = $("ul#carousel");
-		jcarousel_element.empty();
-
-		removeItem(reloadItems, 'view_my_events');
-		$("a.memreas").trigger('click');
-		$(".memreas-main").hide();
-		$(".memreas-detail").fadeIn(500);
-		pushReloadItem('view_my_events');
-
-		ajaxRequest(
-				'listallmedia',
-				[ {
-					tag : 'event_id',
-					value : eventId
-				}, {
-					tag : 'user_id',
-					value : userId
-				}, {
-					tag : 'device_id',
-					value : device_id
-				}, {
-					tag : 'limit',
-					value : media_limit_count
-				}, {
-					tag : 'page',
-					value : media_page_index
-				} ],
-				function(response) {
-
-					var eventId = getValueFromXMLTag(response, 'event_id');
-					if (getValueFromXMLTag(response, 'status') == "Success") {
-						var medias = getSubXMLFromTag(response, 'media');
-						if (typeof (eventId != 'undefined')) {
-							event_owner_name = getValueFromXMLTag(response,
-									'username');
-							eventdetail_user_pic = getValueFromXMLTag(response,
-									'profile_pic');
-							eventdetail_user_pic = removeCdataCorrectLink(eventdetail_user_pic);
-
-							$(
-									".memreas-detail-comments .event-owner .pro-pics img")
-									.attr(
-											'src',
-											$("header")
-													.find("#profile_picture")
-													.attr('src'));
-							$(".memreas-detail-comments .pro-names").html(
-									event_owner_name);
-
-							var media_count = medias.length;
-							for (var i = 0; i < media_count; i++) {
-								var media = medias[i];
-								var _main_media = getMediaUrl(media);
-
-								var _media_url = getMediaThumbnail(media,
-										'/memreas/img/small/1.jpg');
-
-								var _media_type = getValueFromXMLTag(media,
-										'type');
-
-								var mediaId = getValueFromXMLTag(media,
-										'media_id');
-								if (_media_type == 'video') {
-									target_element
-											.append('<li class="video-media" id="memreasvideo-'
-													+ mediaId
-													+ '" media-url="'
-													+ _main_media
-													+ '"><a href=\'javascript:popupVideoPlayer("memreasvideo-'
-													+ mediaId
-													+ '");\' id="button"><img src="'
-													+ _media_url
-													+ '" alt=""><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a></li>');
-									jcarousel_element
-											.append('<li data-preview="'
-													+ _media_url
-													+ '"  media-id="'
-													+ mediaId
-													+ '"><a href="#"><img src="'
-													+ _media_url
-													+ '" alt="image01" /></a></li>');
 								} else {
-									target_element
-											.append('<li  media-id="'
-													+ mediaId
-													+ '"><a href="'
-													+ _media_url
-													+ '" class="swipebox" title="photo-2"><img src="'
-													+ _media_url
-													+ '" alt=""></a></li>');
-									jcarousel_element
-											.append('<li data-preview="'
-													+ _main_media
-													+ '"  media-id="'
-													+ mediaId
-													+ '"><a href="#"><img src="'
-													+ _media_url
-													+ '" alt="image01" /></a></li>');
+									var notification_updated = new Date(
+											(getValueFromXMLTag(ret_xml,
+													'notification_updated')) * 1000);
+									if (notification_status == '0')
+										var link_action = '<a href="javascript:;" class="reply" onclick="updateNotificationHeader(\''
+												+ notification_id
+												+ '\', \'ignore\');">ignore</a> <a href="javascript:;" class="reply" onclick="showUpdateNotification(\''
+												+ notification_id
+												+ '\', \'accept\');">ok</a>';
+									else
+										var link_action = '';
+									html_content += '<li id="notification-header-'
+											+ notification_id
+											+ '"><div class="notifications-all clearfix">'
+											+ '<div class="notification-pic"><img src="'
+											+ user_profile_pic
+											+ '" /></div>'
+											+ '<div class="noti-content">'
+											+ '<div class="noti-content">'
+											+ '<p>'
+											+ meta_text
+											+ '</p><div class="clear"></div>'
+											+ '</div>'
+											+ '<span class="notification-time">'
+											+ notification_updated.getHours()
+											+ ':'
+											+ correctDateNumber(notification_updated
+													.getMinutes())
+											+ '<br/>'
+											+ correctDateNumber(notification_updated
+													.getDate())
+											+ '/'
+											+ correctDateNumber(notification_updated
+													.getMonth())
+											+ '/'
+											+ notification_updated
+													.getFullYear()
+											+ '</span>'
+											+ '</div>'
+											+ link_action
+											+ '</div></li>';
 								}
 							}
-						}
-					} else
-						jerror(getValueFromXMLTag(response, 'message'));
-					$(".memreas-addfriend-btn").attr('href',
-							"javascript:addFriendToEvent('" + eventId + "');");
-					$(".memreas-detail-gallery .swipebox").swipebox();
-					ajaxScrollbarElement('.memreas-detail-gallery');
-					$("a[title=memreas-detail-tab3]").trigger('click');
-
-					var checkCommentLoaded = setInterval(
-							function() {
-
-								// Make sure comment is loaded
-								if (!($('.memreas-detail-comments').find(
-										'.loading') > 0)) {
-									showPopupComment();
-									clearInterval(checkCommentLoaded);
-								}
-							}, 3000);
-				});
-		$("#popupAddMedia a.accept-btn").attr("href",
-				"javascript:addMemreasPopupGallery('" + eventId + "')");
-
-		// Show comment count/event count
-		ajaxRequest('geteventcount', [ {
-			tag : 'event_id',
-			value : eventdetail_id
-		} ], function(response) {
-			var jTargetLikeCount = $(".memreas-detail-likecount span");
-			var jTargetCommentCount = $(".memreas-detail-commentcount span");
-			if (getValueFromXMLTag(response, 'status') == "Success") {
-				var comment_count = getValueFromXMLTag(response,
-						'comment_count');
-				var like_count = getValueFromXMLTag(response, 'like_count');
-			} else {
-				var comment_count = 0;
-				var like_count = 0;
-			}
-			jTargetLikeCount.html(like_count)
-			jTargetCommentCount.html(comment_count);
-		}, 'undefined', true);
-	}
-
-	function toggleBottomAviary() {
-		var jToolInner = $(".aviary-edit-tools .tool-inner");
-		var jToolToggle = $(".aviary-edit-tools .tool-navigate a");
-		var currentToolMargin = parseInt(jToolInner.css('margin-left'));
-
-		// Is hidden
-		if (currentToolMargin < 0) {
-			jToolInner.animate({
-				'margin-left' : '0px'
-			}, 300);
-			jToolToggle.html("&laquo; tools");
-		} else {
-			jToolInner.animate({
-				'margin-left' : '-65px'
-			}, 300);
-			jToolToggle.html("&raquo; tools");
-		}
-	}
-	function toogleEditThumb() {
-		$(".aviary-thumbs").parents('.carousel-area').slideToggle(500);
-	}
-
-	var deleteMediasChecked = 0;
-	function deleteFiles(confirmed) {
-		if (!($(".edit-area").find(".setchoosed").length > 0)) {
-			jerror('There is no media selected');
-			return false;
-		}
-		if (!confirmed) {
-			// Confirm to delete
-			jNotify(
-					'<div class="notify-box"><p>Are you sure want to delete them?</p><a href="javascript:;" class="btn" onclick="deleteFiles(true);">OK</a>&nbsp;<a href="javascript:;" class="btn" onclick="$.jNotify._close();">Close</a></div>',
-					{
-						autoHide : false, // added in v2.0
-						clickOverlay : true, // added in v2.0
-						MinWidth : 250,
-						TimeShown : 3000,
-						ShowTimeEffect : 200,
-						HideTimeEffect : 0,
-						LongTrip : 20,
-						HorizontalPosition : 'center',
-						VerticalPosition : 'top',
-						ShowOverlay : true,
-						ColorOverlay : '#FFF',
-						OpacityOverlay : 0.3,
-						onClosed : function() { // added in v2.0
-
-						},
-						onCompleted : function() { // added in v2.0
-
-						}
-					});
-		}
-		if (confirmed) {
-			$.jNotify._close();
-			disableButtons('.edit-area');
-			// Store data to javascript
-			$(".edit-area a").each(function() {
-				if ($(this).parent('li').hasClass("setchoosed")) {
-					var media_id = $(this).attr("id");
-					var xml_data = new Array();
-					xml_data[0] = new Array();
-					xml_data[0]['tag'] = 'mediaid';
-					xml_data[0]['value'] = media_id.trim();
-
-					// Put to management object
-					++deleteMediasChecked;
-				}
-			});
-
-			// Delete medias
-			$(".edit-area a")
-					.each(
-							function() {
-								if ($(this).parent('li').hasClass("setchoosed")) {
-									var media_id = $(this).attr("id");
-									var xml_data = new Array();
-									xml_data[0] = new Array();
-									xml_data[0]['tag'] = 'mediaid';
-									xml_data[0]['value'] = media_id.trim();
-									$(this)
-											.parent('li')
-											.find('a')
-											.append(
-													'<img src="/memreas/img/loading-line.gif" class="loading-small loading" />');
-
-									ajaxRequest('deletephoto', xml_data,
-											success_deletephoto,
-											error_deletephoto, true);
+							jTargetElement.empty().html(html_content);
+							jTargetElement.mCustomScrollbar({
+								scrollButtons : {
+									enable : true
 								}
 							});
+						} else {
+							jTargetElement
+									.html('<div class="notifications-all clearfix">'
+											+ '<div class="noti-content">'
+											+ '<p>You have no notification.</p>'
+											+ '</div>' + '</div>');
+						}
+					}
+				} else {
+					$(".notification-count").html(0);
+					jTargetElement
+							.html('<div class="notifications-all clearfix">'
+									+ '<div class="noti-content">'
+									+ '<p>You have no notification.</p>'
+									+ '</div>' + '</div>');
+				}
+
+				setTimeout(function() {
+					getUserNotificationsHeader()
+				}, LISTNOTIFICATIONSPOLLTIME);
+			}, 'undefined', true);
+	// }// end if hasFocus
+}
+
+function updateNotificationHeader(notification_id, update_status) {
+	switch (update_status) {
+	case 'accept':
+		var message_feedback = $(".notification-popup-message").val();
+		var params = [ {
+			tag : 'notification',
+			value : [ {
+				tag : 'notification_id',
+				value : notification_id
+			}, {
+				tag : 'status',
+				value : '1'
+			}, {
+				tag : 'message',
+				value : message_feedback
+			} ]
+		} ];
+		disablePopup("popupGiveMessage");
+		ajaxRequest('updatenotification', params, function(response) {
+			if (getValueFromXMLTag(response, 'status') == 'success') {
+				jsuccess(getValueFromXMLTag(response, 'message'));
+				$("#notification-header-" + notification_id).fadeOut(500)
+						.delay(500).remove();
+			} else
+				jerror(getValueFromXMLTag(response, 'message'));
+			removeLoading("#notification-header-" + notification_id
+					+ " .notifications-all");
+		});
+		break;
+	case 'ignore':
+		var params = [ {
+			tag : 'notification',
+			value : [ {
+				tag : 'notification_id',
+				value : notification_id
+			}, {
+				tag : 'status',
+				value : '2'
+			} ]
+		} ];
+
+		addLoading("#notification-header-" + notification_id
+				+ " .notifications-all", 'div', 'notification-header-loading');
+		ajaxRequest('updatenotification', params, function(response) {
+			if (getValueFromXMLTag(response, 'status') == 'success') {
+				jsuccess(getValueFromXMLTag(response, 'message'));
+				$("#notification-header-" + notification_id).fadeOut(500)
+						.delay(500).remove();
+			} else
+				jerror(getValueFromXMLTag(response, 'message'));
+			removeLoading("#notification-header-" + notification_id
+					+ " .notifications-all");
+		}, 'undefined', true);
+		break;
+	default:
+		jerror('No action performed');
+	}
+}
+
+function showUpdateNotification(notification_id) {
+	$("#accept-notification").attr(
+			'onclick',
+			'updateNotificationHeader(\'' + notification_id
+					+ '\', \'accept\');')
+	popup("popupGiveMessage");
+}
+
+function gotoEventDetail(eventId, notification_id) {
+
+	updateNotificationHeader(notification_id, 'accept');
+
+	eventdetail_id = eventId;
+	eventdetail_user = $('input[name=user_id]').val();
+	userId = eventdetail_user;
+
+	// Show gallery details
+	var target_element = $(".memreas-detail-gallery");
+	if (target_element.hasClass('mCustomScrollbar'))
+		target_element = $(".memreas-detail-gallery .mCSB_container");
+	target_element.empty();
+
+	/* Update details_tab also */
+	$(".carousel-memrease-area").empty();
+	$(".carousel-memrease-area").append(
+			'<ul id="carousel" class="elastislide-list"></ul>');
+	var jcarousel_element = $("ul#carousel");
+	jcarousel_element.empty();
+
+	removeItem(reloadItems, 'view_my_events');
+	$("a.memreas").trigger('click');
+	$(".memreas-main").hide();
+	$(".memreas-detail").fadeIn(500);
+	pushReloadItem('view_my_events');
+
+	ajaxRequest(
+			'listallmedia',
+			[ {
+				tag : 'event_id',
+				value : eventId
+			}, {
+				tag : 'user_id',
+				value : userId
+			}, {
+				tag : 'device_id',
+				value : device_id
+			}, {
+				tag : 'limit',
+				value : media_limit_count
+			}, {
+				tag : 'page',
+				value : media_page_index
+			} ],
+			function(response) {
+
+				var eventId = getValueFromXMLTag(response, 'event_id');
+				if (getValueFromXMLTag(response, 'status') == "Success") {
+					var medias = getSubXMLFromTag(response, 'media');
+					if (typeof (eventId != 'undefined')) {
+						event_owner_name = getValueFromXMLTag(response,
+								'username');
+						eventdetail_user_pic = getValueFromXMLTag(response,
+								'profile_pic');
+						eventdetail_user_pic = removeCdataCorrectLink(eventdetail_user_pic);
+
+						$(".memreas-detail-comments .event-owner .pro-pics img")
+								.attr(
+										'src',
+										$("header").find("#profile_picture")
+												.attr('src'));
+						$(".memreas-detail-comments .pro-names").html(
+								event_owner_name);
+
+						var media_count = medias.length;
+						for (var i = 0; i < media_count; i++) {
+							var media = medias[i];
+							var _main_media = getMediaUrl(media);
+
+							var _media_url = getMediaThumbnail(media,
+									'/memreas/img/small/1.jpg');
+
+							var _media_type = getValueFromXMLTag(media, 'type');
+
+							var mediaId = getValueFromXMLTag(media, 'media_id');
+							if (_media_type == 'video') {
+								target_element
+										.append('<li class="video-media" id="memreasvideo-'
+												+ mediaId
+												+ '" media-url="'
+												+ _main_media
+												+ '"><a href=\'javascript:popupVideoPlayer("memreasvideo-'
+												+ mediaId
+												+ '");\' id="button"><img src="'
+												+ _media_url
+												+ '" alt=""><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a></li>');
+								jcarousel_element.append('<li data-preview="'
+										+ _media_url + '"  media-id="'
+										+ mediaId + '"><a href="#"><img src="'
+										+ _media_url
+										+ '" alt="image01" /></a></li>');
+							} else {
+								target_element
+										.append('<li  media-id="'
+												+ mediaId
+												+ '"><a href="'
+												+ _media_url
+												+ '" class="swipebox" title="photo-2"><img src="'
+												+ _media_url
+												+ '" alt=""></a></li>');
+								jcarousel_element.append('<li data-preview="'
+										+ _main_media + '"  media-id="'
+										+ mediaId + '"><a href="#"><img src="'
+										+ _media_url
+										+ '" alt="image01" /></a></li>');
+							}
+						}
+					}
+				} else
+					jerror(getValueFromXMLTag(response, 'message'));
+				$(".memreas-addfriend-btn").attr('href',
+						"javascript:addFriendToEvent('" + eventId + "');");
+				$(".memreas-detail-gallery .swipebox").swipebox();
+				ajaxScrollbarElement('.memreas-detail-gallery');
+				$("a[title=memreas-detail-tab3]").trigger('click');
+
+				var checkCommentLoaded = setInterval(function() {
+
+					// Make sure comment is loaded
+					if (!($('.memreas-detail-comments').find('.loading') > 0)) {
+						showPopupComment();
+						clearInterval(checkCommentLoaded);
+					}
+				}, 3000);
+			});
+	$("#popupAddMedia a.accept-btn").attr("href",
+			"javascript:addMemreasPopupGallery('" + eventId + "')");
+
+	// Show comment count/event count
+	ajaxRequest('geteventcount', [ {
+		tag : 'event_id',
+		value : eventdetail_id
+	} ], function(response) {
+		var jTargetLikeCount = $(".memreas-detail-likecount span");
+		var jTargetCommentCount = $(".memreas-detail-commentcount span");
+		if (getValueFromXMLTag(response, 'status') == "Success") {
+			var comment_count = getValueFromXMLTag(response, 'comment_count');
+			var like_count = getValueFromXMLTag(response, 'like_count');
+		} else {
+			var comment_count = 0;
+			var like_count = 0;
 		}
+		jTargetLikeCount.html(like_count)
+		jTargetCommentCount.html(comment_count);
+	}, 'undefined', true);
+}
+
+function toggleBottomAviary() {
+	var jToolInner = $(".aviary-edit-tools .tool-inner");
+	var jToolToggle = $(".aviary-edit-tools .tool-navigate a");
+	var currentToolMargin = parseInt(jToolInner.css('margin-left'));
+
+	// Is hidden
+	if (currentToolMargin < 0) {
+		jToolInner.animate({
+			'margin-left' : '0px'
+		}, 300);
+		jToolToggle.html("&laquo; tools");
+	} else {
+		jToolInner.animate({
+			'margin-left' : '-65px'
+		}, 300);
+		jToolToggle.html("&raquo; tools");
+	}
+}
+
+function toogleEditThumb() {
+	$(".aviary-thumbs").parents('.carousel-area').slideToggle(500);
+}
+
+var deleteMediasChecked = 0;
+
+function deleteFiles(confirmed) {
+	if (!($(".edit-area").find(".setchoosed").length > 0)) {
+		jerror('There is no media selected');
 		return false;
 	}
-	function success_deletephoto(xml_response) {
+	if (!confirmed) {
+		// Confirm to delete
+		jNotify(
+				'<div class="notify-box"><p>Are you sure want to delete them?</p><a href="javascript:;" class="btn" onclick="deleteFiles(true);">OK</a>&nbsp;<a href="javascript:;" class="btn" onclick="$.jNotify._close();">Close</a></div>',
+				{
+					autoHide : false, // added in v2.0
+					clickOverlay : true, // added in v2.0
+					MinWidth : 250,
+					TimeShown : 3000,
+					ShowTimeEffect : 200,
+					HideTimeEffect : 0,
+					LongTrip : 20,
+					HorizontalPosition : 'center',
+					VerticalPosition : 'top',
+					ShowOverlay : true,
+					ColorOverlay : '#FFF',
+					OpacityOverlay : 0.3,
+					onClosed : function() { // added in v2.0
 
-		// If there is no more medias to be deleted, reload resources
-		if (getValueFromXMLTag(xml_response, 'status') == 'success') {
-			var media_id = getValueFromXMLTag(xml_response, 'media_id');
-			$("#" + media_id).parents('li').remove();
-			--deleteMediasChecked;
-			if (deleteMediasChecked == 0) {
-				pushReloadItem('listallmedia');
-				jsuccess('Media deleted');
-				ajaxScrollbarElement('.edit-areamedia-scroll');
-				enableButtons('.edit-area');
+					},
+					onCompleted : function() { // added in v2.0
+
+					}
+				});
+	}
+	if (confirmed) {
+		$.jNotify._close();
+		disableButtons('.edit-area');
+		// Store data to javascript
+		$(".edit-area a").each(function() {
+			if ($(this).parent('li').hasClass("setchoosed")) {
+				var media_id = $(this).attr("id");
+				var xml_data = new Array();
+				xml_data[0] = new Array();
+				xml_data[0]['tag'] = 'mediaid';
+				xml_data[0]['value'] = media_id.trim();
+
+				// Put to management object
+				++deleteMediasChecked;
 			}
-		} else {
-			--deleteMediasChecked;
-			jerror(getValueFromXMLTag(xml_response, 'message'));
-			$("a#" + getValueFromXMLTag(xml_response, 'media_id')).find(
-					".loading-small").hide();
+		});
+
+		// Delete medias
+		$(".edit-area a")
+				.each(
+						function() {
+							if ($(this).parent('li').hasClass("setchoosed")) {
+								var media_id = $(this).attr("id");
+								var xml_data = new Array();
+								xml_data[0] = new Array();
+								xml_data[0]['tag'] = 'mediaid';
+								xml_data[0]['value'] = media_id.trim();
+								$(this)
+										.parent('li')
+										.find('a')
+										.append(
+												'<img src="/memreas/img/loading-line.gif" class="loading-small loading" />');
+
+								ajaxRequest('deletephoto', xml_data,
+										success_deletephoto, error_deletephoto,
+										true);
+							}
+						});
+	}
+	return false;
+}
+
+function success_deletephoto(xml_response) {
+
+	// If there is no more medias to be deleted, reload resources
+	if (getValueFromXMLTag(xml_response, 'status') == 'success') {
+		var media_id = getValueFromXMLTag(xml_response, 'media_id');
+		$("#" + media_id).parents('li').remove();
+		--deleteMediasChecked;
+		if (deleteMediasChecked == 0) {
+			pushReloadItem('listallmedia');
+			jsuccess('Media deleted');
+			ajaxScrollbarElement('.edit-areamedia-scroll');
 			enableButtons('.edit-area');
 		}
+	} else {
+		--deleteMediasChecked;
+		jerror(getValueFromXMLTag(xml_response, 'message'));
+		$("a#" + getValueFromXMLTag(xml_response, 'media_id')).find(
+				".loading-small").hide();
+		enableButtons('.edit-area');
 	}
-	function error_deletephoto() {
-		jerror("error delete photo");
-	}
+}
+
+function error_deletephoto() {
+	jerror("error delete photo");
 }

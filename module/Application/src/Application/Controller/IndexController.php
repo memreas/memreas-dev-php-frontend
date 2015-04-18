@@ -101,6 +101,8 @@ class IndexController extends AbstractActionController {
 			$callback = $_REQUEST ['callback'];
 			$json = $_REQUEST ['json'];
 			$message_data = json_decode ( $json, true );
+			// error_log('$callback--->'.$callback.PHP_EOL);
+			// error_log('$json--->'.$json.PHP_EOL);
 			
 			// Setup the URL and action
 			$ws_action = $message_data ['ws_action'];
@@ -122,6 +124,8 @@ class IndexController extends AbstractActionController {
 			header ( "Content-type: plain/text" );
 			echo $callback_json;
 			
+			// error_log('$callback_json--->'.$callback_json.PHP_EOL);
+			
 			// Need to exit here to avoid ZF2 framework view.
 			exit ();
 		} else {
@@ -138,16 +142,10 @@ class IndexController extends AbstractActionController {
 			 * Handle login
 			 */
 			session_start ();
-			error_log ( 'handleWSSession.result--->' . $result . PHP_EOL );
 			$data = simplexml_load_string ( trim ( $result ) );
-			error_log ( 'handleWSSession.user_id--->' . ( string ) $data->loginresponse->user_id . PHP_EOL );
-			error_log ( 'handleWSSession.username--->' . ( string ) $data->loginresponse->username . PHP_EOL );
 			$_SESSION ['user_id'] = ( string ) $data->loginresponse->user_id;
 			$_SESSION ['username'] = ( string ) $data->loginresponse->username;
-			error_log ( 'handleWSSession.session_id--->' . session_id () . PHP_EOL );
-			error_log ( 'handleWSSession.user_id--->' . $_SESSION ['user_id'] . PHP_EOL );
-			error_log ( 'handleWSSession.username--->' . $_SESSION ['username'] . PHP_EOL );
-			error_log ( '_SESSION vars inside handleWSSession start...' . print_r ( $_SESSION, true ) . PHP_EOL );
+			error_log ( 'handleWSSession.user_id--->' . print_r ( $_SESSION, true ) . PHP_EOL );
 		} else if ($action == 'logout') {
 			/**
 			 * Handle logout
