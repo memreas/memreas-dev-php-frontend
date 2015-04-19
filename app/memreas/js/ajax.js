@@ -43,12 +43,12 @@ ajaxRequest = function(action, params, success_func, error_func,
 					withCredentials : true
 				},
 				crossDomain : true,
-//				beforeSend : function(xhr) {
+				beforeSend : function(xhr) {
 //					for (var i = 0; i < cookies.length; i++) {
 //						//alert("cookies["+i+"]::"+cookies[i]);
 //						xhr.setRequestHeader("Cookie", cookies[i]);
 //					}
-//				},
+				},
 				type : 'post',
 				url : wsurl,
 				dataType : 'jsonp',
@@ -88,8 +88,6 @@ ajaxRequest = function(action, params, success_func, error_func,
 }
 
 getXMLStringFromParamArray = function(action, params) {
-	
-	//alert("action-->"+action + " params-->" + JSON.stringify(params));
 	var i = 0;
 	var action_tag = "";
 	xml_str = "<xml>";
@@ -123,6 +121,9 @@ getXMLStringFromParamArray = function(action, params) {
 		break;
 	case "viewallfriends":
 		action_tag = "viewallfriends";
+		break;
+	case "addfriend":
+		action_tag = "addfriend";
 		break;
 	case "addfriendtoevent":
 		action_tag = "addfriendtoevent";
@@ -243,7 +244,8 @@ getXMLStringFromParamArray = function(action, params) {
 	default:
 		break;
 	}
-	xml_str += "<fecookie>" + getCookie("fe") + "</fecookie>";
+	//alert(getCookie("memreas"));
+	xml_str += "<memreascookie>" + getCookie("memreas") + "</memreascookie>";
 	xml_str += "<" + action_tag + ">";
 	getSubXMLStringFromParamArray(params);
 	xml_str += "</" + action_tag + ">";

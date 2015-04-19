@@ -18,7 +18,6 @@ $(document).ready(function() {
                     users = [];
                     map = {};
                     var objs = jQuery.parseJSON(data);
-
                     switch (q.charAt(0))
                     {
                         case '@':
@@ -253,14 +252,12 @@ $(document).ready(function() {
            //$( ".btn-event-n" ).unbind('click').bind( "click", nextbtn );
            // $(".btn-event-p").unbind('click').bind( "click",prevbtn);
 
-
             return item;
         },
         highlighter: function(item) {
             return h(item);
         },
         minLength: 4
-
     });
 });
 
@@ -269,8 +266,8 @@ var h = function(item) {
     switch (item.charAt(0)) {
         case '@':
             var photo = map[item].profile_photo;
-            photo = removeCdataCorrectLink(photo);
             var name = map[item].username;
+            photo = removeCdataCorrectLink(photo);
             break;
         case '!':
             var photo = map[item].event_photo;
@@ -345,9 +342,10 @@ function closeModals(modalid){
 }
 function addFriend(name) {
     var user_id = $("input[name=user_id]").val();
-    var persionalMsg = $("#msg-"+name.replace("@", "")).val();
+    var personalMsg = $("#msg-"+name.replace("@", "")).val();
     
     var photo = map[name].profile_photo;
+    var friend_id = map[name].user_id;
     var selFriends = [];
     selFriends[0] = {
         tag: 'friend',
@@ -358,18 +356,17 @@ function addFriend(name) {
         ]
     };
     ajaxRequest(
-            'addfriendtoevent',
+            'addfriend',
             [
                 {tag: 'user_id', value: user_id},
-                {tag: 'event_id', value: ''},
-                {tag: 'friends', value: selFriends}
+                {tag: 'friend_id', value: friend_id},
             ],
             function(ret_xml) {
                 // parse the returned xml.
                 var status = getValueFromXMLTag(ret_xml, 'status');
                 var message = getValueFromXMLTag(ret_xml, 'message');
                 if (status.toLowerCase() == 'success') {
-                	if($.trim(persionalMsg) != ""){
+                	if($.trim(personalMsg) != ""){
                 		
                 	}
                 	closeModals(name.replace("@", ""));

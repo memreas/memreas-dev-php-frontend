@@ -453,7 +453,7 @@ function getUserNotificationsHeader() {
 	ajaxRequest(
 			'listnotification',
 			[ {
-				tag : 'user_id',
+				tag : 'receiver_uid',
 				value : user_id
 			} ],
 			function(ret_xml) {

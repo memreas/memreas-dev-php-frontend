@@ -51,15 +51,18 @@ $(function() {
 											var notification_status = getValueFromXMLTag(
 													notifications[i],
 													'notification_status');
-											console.log("hello world");
 											if (user_profile_pic == '')
 												user_profile_pic = '/memreas/img/profile-pic.jpg';
 											if (notification_status == '0')
 												var link_action = '<a class="black_btn_skin" href="javascript:;" onclick="updateNotification(\''
 														+ notification_id
-														+ '\', \'accept\');">Ok</a> <a class="black_btn_skin" href="javascript:;" onclick="updateNotification(\''
+														+ '\', \'accept\');">accept</a>'
+														+ '<a class="black_btn_skin" href="javascript:;" onclick="updateNotification(\''
 														+ notification_id
-														+ '\', \'ignore\');">Ignore</a>'
+														+ '\', \'decline\');">decline</a>'
+														+ '<a class="black_btn_skin" href="javascript:;" onclick="updateNotification(\''
+														+ notification_id
+														+ '\', \'ignore\');">ignore</a>';
 											else
 												var link_action = '';
 											if ($(".notificationresults")
