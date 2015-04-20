@@ -11,13 +11,25 @@ $(document).ready(function() {
             }
         }
 
+//var output = '';
+//for (var property in obj) {
+//output += property + ': ' + object[property]+'; ';
+//}
+//alert(output);                    
+         
         addLoading('.top-search', 'input', '');
         ajaxRequest('findtag', [{tag: "tag", value: query},  {tag: 'user_id', value: user_id} ]
                 , function(data) {
                     var q = $('#search').val();
                     users = [];
                     map = {};
-                    var objs = jQuery.parseJSON(data);
+                    var objs;
+                    try {
+                    	objs = jQuery.parseJSON(data);
+                    }
+                    catch(err) {
+                        alert(err.message);
+                    }           
                     switch (q.charAt(0))
                     {
                         case '@':
