@@ -11,31 +11,21 @@ $(document).ready(function() {
             }
         }
 
-//var output = '';
-//for (var property in obj) {
-//output += property + ': ' + object[property]+'; ';
-//}
-//alert(output);                    
-         
         addLoading('.top-search', 'input', '');
         ajaxRequest('findtag', [{tag: "tag", value: query},  {tag: 'user_id', value: user_id} ]
                 , function(data) {
                     var q = $('#search').val();
                     users = [];
                     map = {};
-                    var objs;
-                    try {
-                    	objs = jQuery.parseJSON(data);
-                    }
-                    catch(err) {
-                        alert(err.message);
-                    }           
+                    var objs = jQuery.parseJSON(data);
+                    var username = '@';
                     switch (q.charAt(0))
                     {
                         case '@':
                             $.each(objs.search, function(i, obj) {
-                                map[obj.username] = obj;
-                                users.push(obj.username);
+                            	username += obj.username;
+                                map[username] = obj;
+                                users.push(username);
                             });
                             break;
                         case '!':
@@ -312,6 +302,7 @@ function personalSearchLi(target, item) {
     //Prevent yourself listing
     if (('@' + $("input[name=username]").val()) != item.username){
         var photo = item.profile_photo;
+        alert(photo);
         photo = removeCdataCorrectLink(photo);
         var name = $.trim(item.username);
         var op = '<li id="search-'+name.replace('@', '')+'"><figure class="pro-pics"><img src="'

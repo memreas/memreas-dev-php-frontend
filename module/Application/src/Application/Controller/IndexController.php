@@ -47,9 +47,9 @@ class IndexController extends AbstractActionController {
 		 * If sid is available and missing inject it...
 		 */
 		$data = simplexml_load_string ( $xml );
-		if (empty ( $data->fecookie )) {
+		if (empty ( $data->memreascookie )) {
 			error_log ( 'adding sid to outbound xml...' . PHP_EOL );
-			$data->addChild ( 'fecookie', $_COOKIE ['fe'] );
+			$data->addChild ( 'memreascookie', $_COOKIE ['memreascookie'] );
 			$data->addChild ( 'clientIPAddress', $this->fetchUserIPAddress () );
 			$xml = $data->asXML ();
 		}
@@ -276,7 +276,7 @@ class IndexController extends AbstractActionController {
 		
 		// if (!$user) return $this->redirect()->toRoute('index', array('action' => "index"));
 		$data ['userid'] = $user_id;
-		$data ['sid'] = $_SESSION ['sid'];
+		//$data ['sid'] = $_SESSION ['sid'];
 		
 		$data ['bucket'] = MemreasConstants::S3BUCKET;
 		$data ['accesskey'] = MemreasConstants::S3_APPKEY;

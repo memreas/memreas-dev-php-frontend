@@ -31,7 +31,7 @@ ajaxRequest = function(action, params, success_func, error_func,
 	data.type = "jsonp";
 	data.json = xml_input;
 	data.callback = '';
-
+	
 	var json_data = JSON.stringify(data);
 	var cookies = document.cookie.split(";");
 	if (!disableLoadingScreen) {
@@ -39,16 +39,16 @@ ajaxRequest = function(action, params, success_func, error_func,
 		pushStackAjax(action);
 	}
 	$.ajax({
-				xhrFields : {
-					withCredentials : true
-				},
-				crossDomain : true,
-				beforeSend : function(xhr) {
+//				xhrFields : {
+//					withCredentials : true
+//				},
+//				beforeSend : function(xhr) {
 //					for (var i = 0; i < cookies.length; i++) {
 //						//alert("cookies["+i+"]::"+cookies[i]);
 //						xhr.setRequestHeader("Cookie", cookies[i]);
 //					}
-				},
+//				},
+				crossDomain : true,
 				type : 'post',
 				url : wsurl,
 				dataType : 'jsonp',
