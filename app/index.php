@@ -6,6 +6,7 @@
 chdir(dirname(__DIR__));
 
 ini_set('session.save_path', getcwd().'/data/session');
+//error_log('session.save_path----->'. getcwd().'/data/session'.PHP_EOL);
 
 // Setup autoloading
 require 'init_autoloader.php';

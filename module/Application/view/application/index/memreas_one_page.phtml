@@ -46,15 +46,15 @@
         </div>
         <div id="bgpopupAudioComment" class="backgroundPopup"></div>
 
-        <input type="hidden" name="user_id" value="<?php echo $data['userid']; ?>">
+        <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
         <input type="hidden" name="username" value="">
-            <?php include 'header.phtml'; ?>
+            <?php include 'onepage/header.phtml'; ?>
         <!-- Begin : Container -->
         <div class="container clearfix top75">
 
             <!-- Begin : Content - For Tab-->
             <div class="row-fluid content" >
-                <?php include('nav.phtml'); ?>
+                <?php include('onepage/nav.phtml'); ?>
 
                 <!-- Main Tab Content -->
                 <div id="maintab-content">
@@ -94,7 +94,7 @@
         </div>
         <!-- End : Content -->
         </div>
-        <?php include 'footer.phtml'; ?>
+        <?php include 'onepage/footer.phtml'; ?>
         <?php include('onepage/js_section.phtml'); ?>
         <!-- End : Container -->
         <script src="/memreas/js/main.js"></script>

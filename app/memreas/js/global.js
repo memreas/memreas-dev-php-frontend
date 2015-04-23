@@ -105,8 +105,8 @@ function ajaxScrollbarElement(element_object){
 }
 
 function getMediaUrl(element_object, mediatype){
-    var photo_tags = ['media_url_web', 'main_media_url'];
-    var video_tags = ['media_url_web', 'media_url_1080p', 'main_media_url'];
+    var photo_tags = ['media_url_448x306', 'media_url_1280x720'];
+    var video_tags = ['media_url_web', 'media_url_1080p'];
 
     switch (mediatype){
         case 'image':
@@ -147,7 +147,7 @@ function removeCdataCorrectLink(media_link){
 }
 
 function getMediaThumbnail(element_object, default_value){
-    var media_tags = ['media_url_98x78', 'media_url_79x80', 'media_url_448x306', 'event_media_video_thum', 'media_url_web','main_media_url'];
+    var media_tags = ['media_url_98x78', 'media_url_79x80', 'media_url_448x306', 'media_url_1280x720'];
     var total_media_response = media_tags.length;
     var found_link = '';
     for (var i = 0;i < total_media_response;i++){

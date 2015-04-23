@@ -10,12 +10,9 @@
  */
 namespace Application\Controller;
 
-use Zend\Session\SessionManager;
-// use Zend\Db\Adapter\Adapter;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\ViewModel\JsonModel;
-use Zend\Session\Container;
 use Application\Model;
 use Application\Model\UserTable;
 use Application\Form;
@@ -38,7 +35,7 @@ class IndexController extends AbstractActionController {
 	protected $sid;
 	protected $ipAddress;
 	public function fetchXML($action, $xml) {
-		
+		$this->memreas_session ();
 		/**
 		 * Handle session and fetch sid
 		 */
@@ -48,13 +45,13 @@ class IndexController extends AbstractActionController {
 		 */
 		$data = simplexml_load_string ( $xml );
 		if (empty ( $data->memreascookie )) {
-			error_log ( 'adding sid to outbound xml...' . PHP_EOL );
+			// error_log ( 'adding sid to outbound xml...' . PHP_EOL );
 			$data->addChild ( 'memreascookie', $_COOKIE ['memreascookie'] );
 			$data->addChild ( 'clientIPAddress', $this->fetchUserIPAddress () );
 			$xml = $data->asXML ();
 		}
 		
-		error_log ( 'outbound xml --->' . $xml . PHP_EOL );
+		// error_log ( 'outbound xml --->' . $xml . PHP_EOL );
 		/*
 		 * Fetch guzzle and post...
 		 */
@@ -71,8 +68,8 @@ class IndexController extends AbstractActionController {
 		return $data;
 	}
 	public function indexAction() {
-		error_log ( "Enter FE indexAction" . PHP_EOL );
-		
+		$this->memreas_session ();
+		// error_log ( "Enter FE indexAction" . PHP_EOL );
 		// Checking headers for cookie info
 		// $headers = apache_request_headers ();
 		// foreach ( $headers as $header => $value ) {
@@ -90,6 +87,7 @@ class IndexController extends AbstractActionController {
 		return $view;
 	}
 	public function execAjaxAction() {
+		$this->memreas_session ();
 		if (isset ( $_REQUEST ['callback'] )) {
 			
 			// $headers = apache_request_headers ();
@@ -110,8 +108,8 @@ class IndexController extends AbstractActionController {
 			$xml = $message_data ['json'];
 			
 			// Guzzle the Web Service
-			error_log ( "guzzle web service ws_action--->" . $ws_action . PHP_EOL );
-			error_log ( "guzzle web service $xml--->" . $xml . PHP_EOL );
+			// error_log ( "guzzle web service ws_action--->" . $ws_action . PHP_EOL );
+			// error_log ( "guzzle web service $xml--->" . $xml . PHP_EOL );
 			$result = $this->fetchXML ( $ws_action, $xml );
 			$json = json_encode ( $result );
 			
@@ -137,15 +135,15 @@ class IndexController extends AbstractActionController {
 		return $view;
 	}
 	private function handleWSSession($action, $result) {
+		$this->memreas_session ();
 		if ($action == 'login') {
 			/**
 			 * Handle login
 			 */
-			session_start ();
 			$data = simplexml_load_string ( trim ( $result ) );
 			$_SESSION ['user_id'] = ( string ) $data->loginresponse->user_id;
 			$_SESSION ['username'] = ( string ) $data->loginresponse->username;
-			error_log ( 'handleWSSession.user_id--->' . print_r ( $_SESSION, true ) . PHP_EOL );
+			// error_log ( 'handleWSSession.user_id--->' . print_r ( $_SESSION, true ) . PHP_EOL );
 		} else if ($action == 'logout') {
 			/**
 			 * Handle logout
@@ -160,6 +158,7 @@ class IndexController extends AbstractActionController {
 	 * @Return: file with video has been cached
 	 */
 	public function buildvideocacheAction() {
+		$this->memreas_session ();
 		if (isset ( $_POST ['video_url'] )) {
 			$cache_dir = $_SERVER ['DOCUMENT_ROOT'] . '/memreas/js/jwplayer/jwplayer_cache/';
 			$hls_media = $_POST ['hls_media'];
@@ -207,6 +206,7 @@ class IndexController extends AbstractActionController {
 		exit ();
 	}
 	private function renderJWPlayerCache($initContent, $data) {
+		$this->memreas_session ();
 		$jwPlayerTemplate = $_SERVER ['DOCUMENT_ROOT'] . '/memreas/js/jwplayer/template.phtml';
 		$fileHandle = fopen ( $jwPlayerTemplate, 'r' );
 		$content = fread ( $fileHandle, filesize ( $jwPlayerTemplate ) );
@@ -220,6 +220,7 @@ class IndexController extends AbstractActionController {
 	 * Support sub function for buildvideocache function
 	 */
 	private function generateVideoCacheFile($cache_dir, $video_name) {
+		$this->memreas_session ();
 		$cache_file = uniqid ( 'jwcache_' ) . substr ( md5 ( $video_name ), 0, 10 ) . '.html';
 		if (! file_exists ( $cache_file ))
 			return $cache_file;
@@ -227,6 +228,7 @@ class IndexController extends AbstractActionController {
 			$this->generateVideoCacheFile ( $cache_dir, $video_name );
 	}
 	private function getS3Key() {
+		$this->memreas_session ();
 		$action = 'memreas_tvm';
 		$xml = '<xml><memreas_tvm></memreas_tvm></xml>';
 		$s3Authenticate = $this->fetchXML ( $action, $xml );
@@ -239,6 +241,7 @@ class IndexController extends AbstractActionController {
 	 * @ Return: json Object
 	 */
 	public function s3signedAction() {
+		$this->memreas_session ();
 		$data ['bucket'] = MemreasConstants::S3BUCKET;
 		
 		$data ['accesskey'] = MemreasConstants::S3_APPKEY;
@@ -260,8 +263,9 @@ class IndexController extends AbstractActionController {
 	 * Main page for frontend
 	 * @ Tran Tuan
 	 */
-	public function memreasAction() {
-		error_log ( 'Inside memreasAction...' . PHP_EOL );
+	public function memreasOnePageAction() {
+		$this->memreas_session ();
+		// error_log ( 'Inside memreasAction...' . PHP_EOL );
 		// Configure Ads on page
 		$enableAdvertising = MemreasConstants::MEMREAS_ADS;
 		$payment_tabs = array (
@@ -271,12 +275,11 @@ class IndexController extends AbstractActionController {
 		);
 		
 		// Guzzle the LoginWeb Service
-		// $session = new Container ( 'user' );
 		$user_id = $_SESSION ['user_id'];
 		
 		// if (!$user) return $this->redirect()->toRoute('index', array('action' => "index"));
 		$data ['userid'] = $user_id;
-		//$data ['sid'] = $_SESSION ['sid'];
+		// $data ['sid'] = $_SESSION ['sid'];
 		
 		$data ['bucket'] = MemreasConstants::S3BUCKET;
 		$data ['accesskey'] = MemreasConstants::S3_APPKEY;
@@ -288,7 +291,9 @@ class IndexController extends AbstractActionController {
 		// Pass constant global variables to js global constant
 		$this->writeJsConstants ();
 		
-		$path = "application/index/memreas.phtml";
+		$path = "application/index/memreas_one_page.phtml";
+error_log('routing to $path--->'.$path);
+		
 		$view = new ViewModel ( array (
 				'data' => $data,
 				'enableAdvertising' => $enableAdvertising,
@@ -297,7 +302,7 @@ class IndexController extends AbstractActionController {
 				'PaymentTabs' => $payment_tabs,
 				'app_version' => MemreasConstants::VERSION 
 		) );
-		error_log ( 'Inside memreasAction path---->' . $path . PHP_EOL );
+		// error_log ( 'Inside memreasAction path---->' . $path . PHP_EOL );
 		
 		$view->setTemplate ( $path ); // path to phtml file under view folder
 		return $view;
@@ -307,6 +312,7 @@ class IndexController extends AbstractActionController {
 	 * Canvas page
 	 */
 	public function canvasAction() {
+		$this->memreas_session ();
 		$event_id = $_GET ['event'];
 		if (empty ( $event_id ))
 			$path = $this->security ( "application/index/fb_default.phtml" );
@@ -323,7 +329,7 @@ class IndexController extends AbstractActionController {
 	 * Write constant to javascript
 	 */
 	public function writeJsConstants() {
-		// $session = new Container ( 'user' );
+		$this->memreas_session ();
 		// Put constant variables here
 		$JsConstantVariables = array (
 				'S3BUCKET' => MemreasConstants::S3BUCKET,
@@ -351,7 +357,8 @@ class IndexController extends AbstractActionController {
 	 * Login Action
 	 */
 	public function loginAction() {
-		error_log ( "Inside loginAction" . PHP_EOL );
+		$this->memreas_session ();
+		// error_log ( "Inside loginAction" . PHP_EOL );
 		
 		// Fetch the post data
 		$request = $this->getRequest ();
@@ -361,16 +368,19 @@ class IndexController extends AbstractActionController {
 		// $password = $postData ['password'];
 		$userid = $postData ['status_user_id'];
 		if (empty ( $userid )) {
+error_log('routing to index');			
 			return $this->redirect ()->toRoute ( 'index', array (
 					'action' => "index" 
 			) );
 		} else {
+error_log('routing to memreasOnePage');			
 			return $this->redirect ()->toRoute ( 'index', array (
-					'action' => 'memreas' 
+					'action' => 'memreasOnePage' 
 			) );
 		}
 	}
 	public function logoutAction() {
+		$this->memreas_session ();
 		/**
 		 * Logout FE Server
 		 */
@@ -383,19 +393,8 @@ class IndexController extends AbstractActionController {
 				'action' => "index" 
 		) );
 	}
-	
-	/*
-	 * Support for Zend Table Gateway instance model
-	 */
-	// public function getUserTable() {
-	// if (! $this->userTable) {
-	// $sm = $this->getServiceLocator ();
-	// $this->dbAdapter = $sm->get ( 'doctrine.entitymanager.orm_default' );
-	// $this->userTable = $this->dbAdapter->getRepository ( 'Application\Entity\User' );
-	// }
-	// return $this->userTable;
-	// }
 	public function changepasswordAction() {
+		$this->memreas_session ();
 		$request = $this->getRequest ();
 		$postData = $request->getPost ()->toArray ();
 		
@@ -414,24 +413,14 @@ class IndexController extends AbstractActionController {
 		echo json_encode ( $data );
 		return '';
 	}
-	public function getAuthService() {
-		if (! $this->authservice) {
-			$this->authservice = $this->getServiceLocator ()->get ( 'AuthService' );
-		}
-		return $this->authservice;
-	}
-	public function getSessionStorage() {
-		if (! $this->storage) {
-			$this->storage = $this->getServiceLocator ()->get ( 'application\Model\MyAuthStorage' );
-		}
-		return $this->storage;
-	}
 	public function security($path) {
+		$this->memreas_session ();
 		return $path;
 	}
 	
 	/* For S3 */
 	private function getS3Policy() {
+		$this->memreas_session ();
 		$now = strtotime ( date ( "Y-m-d\TG:i:s" ) );
 		$expire = date ( 'Y-m-d\TG:i:s\Z', strtotime ( '+30 minutes', $now ) );
 		$policy = '{
@@ -467,6 +456,7 @@ class IndexController extends AbstractActionController {
 	 * See http://www.faqs.org/rfcs/rfc2104.html
 	 */
 	private function hmacsha1($key, $data) {
+		$this->memreas_session ();
 		$blocksize = 64;
 		$hashfunc = 'sha1';
 		if (strlen ( $key ) > $blocksize)
@@ -484,23 +474,15 @@ class IndexController extends AbstractActionController {
 	 * (taken from the Amazon S3 PHP example library)
 	 */
 	private function hex2b64($str) {
+		$this->memreas_session ();
 		$raw = '';
 		for($i = 0; $i < strlen ( $str ); $i += 2) {
 			$raw .= chr ( hexdec ( substr ( $str, $i, 2 ) ) );
 		}
 		return base64_encode ( $raw );
 	}
-	// public function getToken() {
-	// //$session = new Container ( 'user' );
-	// error_log ( 'fe-session -> ' . print_r ( $session ['sid'], true ) );
-	// return empty ( $session ['sid'] ) ? '' : $session ['sid'];
-	// }
-	// public function setToken($sid) {
-	// //$session = new Container ( 'user' );
-	// $session->setId ( $sid );
-	// return empty ( $session ['sid'] ) ? '' : $session ['sid'];
-	// }
 	public function editmediaAction() {
+		$this->memreas_session ();
 		$target_dir = getcwd () . '/app/memreas/temps_media_edit/';
 		$s3Object = new S3 ( MemreasConstants::S3_APPKEY, MemreasConstants::S3_APPSEC );
 		$file_source = $_POST ['file_source'];
@@ -548,6 +530,7 @@ class IndexController extends AbstractActionController {
 	
 	// Process user add comment
 	public function audiocommentAction() {
+		$this->memreas_session ();
 		if (isset ( $_POST ['file_data'] )) {
 			$user_id = $_POST ['user_id'];
 			$event_id = $_POST ['comment_event_id'];
@@ -625,6 +608,7 @@ class IndexController extends AbstractActionController {
 		die ();
 	}
 	private function createAudioFilename($user_id) {
+		$this->memreas_session ();
 		$unique = uniqid ();
 		$today = date ( 'm-d-Y' );
 		$filename = $user_id . '-' . $unique . '-comment-' . $today . '.wav';
@@ -634,6 +618,7 @@ class IndexController extends AbstractActionController {
 			return $filename;
 	}
 	public function error500Action() {
+		$this->memreas_session ();
 		$path = "application/index/500.phtml";
 		$view = new ViewModel ();
 		$view->setTemplate ( $path ); // path to phtml file under view folder
@@ -642,7 +627,7 @@ class IndexController extends AbstractActionController {
 	
 	// This is used for add profile pic at registration page when user still login
 	public function setTokenAction() {
-		// $session = new Container ( 'user' );
+		$this->memreas_session ();
 		$_SESSION [".$_POST ['sid']."];
 		die ();
 	}
@@ -651,6 +636,7 @@ class IndexController extends AbstractActionController {
 	 * For image downloading
 	 */
 	public function downloadMediaAction() {
+		$this->memreas_session ();
 		$requestUrl = $_SERVER ['SERVER_NAME'] . $_SERVER ['REQUEST_URI'];
 		$requestUrl = explode ( "?", $requestUrl );
 		$requestUrl = str_replace ( "file=", "", $requestUrl [1] ) . '?' . $requestUrl [2];
@@ -670,6 +656,7 @@ class IndexController extends AbstractActionController {
 		die ();
 	}
 	public function fetchUserIPAddress() {
+		$this->memreas_session ();
 		/*
 		 * Fetch the user's ip address
 		 */
@@ -681,8 +668,15 @@ class IndexController extends AbstractActionController {
 		} else {
 			$this->ipAddress = $_SERVER ['REMOTE_ADDR'];
 		}
-		error_log ( 'ip is ' . $this->ipAddress );
+		// error_log ( 'ip is ' . $this->ipAddress );
 		
 		return $this->ipAddress;
+	}
+	public function memreas_session() {
+		if (session_status() !== PHP_SESSION_ACTIVE) {
+			session_start ();
+			// error_log('$_COOKIE---->'.print_r($_COOKIE, true));
+			// error_log('$_SESSION---->'.print_r($_SESSION, true));
+		}
 	}
 } // end class IndexController

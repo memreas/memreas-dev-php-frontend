@@ -280,22 +280,30 @@ function showEventDetail(eventId, userId){
                     var media_count = medias.length;
                     for (var i=0;i < media_count;i++) {
                         var media = medias[i];
-                        var _main_media = getValueFromXMLTag(media, 'main_media_url');
-                        _main_media = removeCdataCorrectLink(_main_media);
-
-                        var _media_url = getMediaThumbnail(media, '/memreas/img/small/1.jpg');
-                        var _media_type = getValueFromXMLTag(media, 'type');
-
-                        var _download_url = getValueFromXMLTag(media, 'media_url_download');
-                        if (_download_url == '') _download_url = _media_url;
-
                         var mediaId = getValueFromXMLTag(media, 'media_id');
+                        var _media_type = getValueFromXMLTag(media, 'type');
                         if (_media_type == 'video'){
-                            target_element.append ('<li class="video-media" id="memreasvideo-' + mediaId + '" media-url="' + _main_media + '"><a href=\'javascript:popupVideoPlayer("memreasvideo-' + mediaId + '");\' id="button"><img src="' + _media_url + '" alt=""><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a></li>');
+                            var _main_media = getValueFromXMLTag(media, 'media_url_1080p');
+                            _main_media = removeCdataCorrectLink(_main_media);
+                            var _main_media = getValueFromXMLTag(media, 'media_url_1080p');
+                            _main_media = removeCdataCorrectLink(_main_media);
+                            var _media_url = getMediaThumbnail(media, '/memreas/img/small/1.jpg');
+                            var _download_url = getValueFromXMLTag(media, 'media_url_download');
+                            if (_download_url == '') _download_url = _media_url;
+                        	
+                        	target_element.append ('<li class="video-media" id="memreasvideo-' + mediaId + '" media-url="' + _main_media + '"><a href=\'javascript:popupVideoPlayer("memreasvideo-' + mediaId + '");\' id="button"><img src="' + _media_url + '" alt=""><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a></li>');
                             jcarousel_element.append ('<li data-preview="' + _media_url + '"  media-id="' + mediaId + '"><a href="javascript:;"><img src="' + _media_url + '" alt="image01" download="' + _media_url + '" /></a></li>');
                         }
                         else {
-                            target_element.append ('<li  media-id="' + mediaId + '"><a href="' + _main_media + '" class="swipebox" title="photo-2"><img src="' + _media_url + '" alt=""></a></li>');
+                            var _main_media = getValueFromXMLTag(media, 'media_url_1280x720');
+                            _main_media = removeCdataCorrectLink(_main_media);
+                            var _main_media = getValueFromXMLTag(media, 'media_url_1280x720');
+                            _main_media = removeCdataCorrectLink(_main_media);
+                            var _media_url = getMediaThumbnail(media, '/memreas/img/small/1.jpg');
+                            var _download_url = getValueFromXMLTag(media, 'media_url_download');
+                            if (_download_url == '') _download_url = _media_url;
+
+                        	target_element.append ('<li  media-id="' + mediaId + '"><a href="' + _main_media + '" class="swipebox" title="photo-2"><img src="' + _media_url + '" alt=""></a></li>');
                             jcarousel_element.append ('<li data-preview="' + _main_media + '"  media-id="' + mediaId + '"><a href="javascript:;"><img src="' + _media_url + '" alt="image01" download="' + _media_url + '" /></a></li>');
                         }
                     }
@@ -351,7 +359,7 @@ function popupAddMemreasGallery(){
                     var _media_url = getMediaThumbnail(media, '/memreas/img/small-pic-3.jpg');
                     var _media_id = getValueFromXMLTag(media, 'media_id');
                     if (_media_type == 'video'){
-                        var _main_video_media = getValueFromXMLTag(media, 'main_media_url');
+                        var _main_video_media = getValueFromXMLTag(media, 'media_url_1080p');
                         _main_video_media = removeCdataCorrectLink(_main_video_media);
                         jtarget_element.append('<li id="' + _media_id + '-parent" class="video-media" media-url="' + _main_video_media + '"><a href="javascript:;" id="memreas-addgallery-' + _media_id + '" onclick="return imageChoosed(this.id);"><img src="' + _media_url + '" alt=""><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a></li>');
                     }

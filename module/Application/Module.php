@@ -12,17 +12,6 @@ namespace Application;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
-use Zend\Session\Container;
-use Zend\Session\Config\SessionConfig;
-use Zend\Session\SessionManager;
-use Zend\Authentication\Storage;
-use Zend\Authentication\AuthenticationService;
-// use Zend\Authentication\Adapter\DbTable as DbTableAuthAdapter;
-// use Zend\Db\ResultSet\ResultSet;
-// use Zend\Db\TableGateway\TableGateway;
-// use Application\Model\User;
-// use Application\Model\UserTable;
-use Application\Model\MyAuthStorage;
 use Application\Model;
 
 class Module {
@@ -32,16 +21,16 @@ class Module {
 		$serviceManager = $e->getApplication ()->getServiceManager ();
 		$moduleRouteListener = new ModuleRouteListener ();
 		$moduleRouteListener->attach ( $eventManager );
-		$this->bootstrapSession ( $e );
+		//$this->bootstrapSession ( $e );
 	}
 	public function bootstrapSession($e) {
-		session_start ();
-		//$session = $e->getApplication ()->getServiceManager ()->get ( 'Zend\Session\SessionManager' );
-		//$container = new Container ( 'user' );
-		 //if (! isset ( $container->init )) {
-		 //	$session->regenerateId ( true );
-		 //	$container->init = 1;
-		 //}
+		//session_start ();
+		// $session = $e->getApplication ()->getServiceManager ()->get ( 'Zend\Session\SessionManager' );
+		// $container = new Container ( 'user' );
+		// if (! isset ( $container->init )) {
+		// $session->regenerateId ( true );
+		// $container->init = 1;
+		// }
 	}
 	public function getConfig() {
 		return include __DIR__ . '/config/module.config.php';
@@ -58,87 +47,88 @@ class Module {
 	public function getServiceConfig() {
 		return array (
 				'factories' => array (
-// 						// ZF2 Session Setup...
-						'Zend\Session\SessionManager' => function ($sm) {
-							$config = $sm->get ( 'config' );
-							if (isset ( $config ['session'] )) {
-								$session = $config ['session'];
+						// // ZF2 Session Setup...
+// 						'Zend\Session\SessionManager' => function ($sm) {
+// 							$config = $sm->get ( 'config' );
+// 							if (isset ( $config ['session'] )) {
+// 								$session = $config ['session'];
 								
-								$sessionConfig = null;
-								if (isset ( $session ['config'] )) {
-									$class = isset ( $session ['config'] ['class'] ) ? $session ['config'] ['class'] : 'Zend\Session\Config\SessionConfig';
-									$options = isset ( $session ['config'] ['options'] ) ? $session ['config'] ['options'] : array ();
+// 								$sessionConfig = null;
+// 								if (isset ( $session ['config'] )) {
+// 									$class = isset ( $session ['config'] ['class'] ) ? $session ['config'] ['class'] : 'Zend\Session\Config\SessionConfig';
+// 									$options = isset ( $session ['config'] ['options'] ) ? $session ['config'] ['options'] : array ();
 									
-									// setting this for AWS permissions error
-									// Note: must specify full path
-									$options ['save_path'] = getcwd () . "/data/session/";
-									$sessionConfig = new $class ();
-									$sessionConfig->setOptions ( $options );
-								}
+// 									// setting this for AWS permissions error
+// 									// Note: must specify full path
+// 									$options ['save_path'] = getcwd () . "/data/session/";
+// 									$sessionConfig = new $class ();
+// 									$sessionConfig->setOptions ( $options );
+// 								}
 								
-								$sessionStorage = null;
-								if (isset ( $session ['storage'] )) {
-									$class = $session ['storage'];
-									$sessionStorage = new $class ();
-								}
+// 								$sessionStorage = null;
+// 								if (isset ( $session ['storage'] )) {
+// 									$class = $session ['storage'];
+// 									$sessionStorage = new $class ();
+// 								}
 								
-								$sessionSaveHandler = null;
-								if (isset ( $session ['save_handler'] )) {
-									// class should be fetched from service manager since it will require constructor arguments
-									$sessionSaveHandler = $sm->get ( $session ['save_handler'] );
-								}
+// 								$sessionSaveHandler = null;
+// 								if (isset ( $session ['save_handler'] )) {
+// 									// class should be fetched from service manager since it will require constructor arguments
+// 									$sessionSaveHandler = $sm->get ( $session ['save_handler'] );
+// 								}
 								
-								$sessionManager = new SessionManager ( $sessionConfig, $sessionStorage, $sessionSaveHandler );
+// 								$sessionManager = new SessionManager ( $sessionConfig, $sessionStorage, $sessionSaveHandler );
 								
-								if (isset ( $session ['validator'] )) {
-									$chain = $sessionManager->getValidatorChain ();
-									foreach ( $session ['validator'] as $validator ) {
-										$validator = new $validator ();
-										$chain->attach ( 'session.validate', array (
-												$validator,
-												'isValid' 
-										) );
-									}
-								}
-							} else {
-								$sessionManager = new SessionManager ();
-							}
-							Container::setDefaultManager ( $sessionManager );
-							return $sessionManager;
-						},
-						
-						'Application\Model\MyAuthStorage' => function ($sm) {
-							return new \Application\Model\MyAuthStorage ( 'memreas' );
-						},
-						'AuthService' => function ($sm) {
-							// My assumption, you've alredy set dbAdapter
-							// and has users table with columns : user_name and pass_word
-							// that password hashed with md5
-							// $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-							// $dbTableAuthAdapter = new DbTableAuthAdapter($dbAdapter,
-							// 'user', 'username', 'password', 'MD5(?)');
-							$AuthAdapter = new \Application\Model\MyAuthAdapter ();
-							$authService = new AuthenticationService ();
-							$authService->setAdapter ( $AuthAdapter );
-							$authService->setStorage ( $sm->get ( 'Application\Model\MyAuthStorage' ) );
-							
-							return $authService;
-						},
-						
-						// Tables
-// 						'Application\Model\UserTable' => function ($sm) {
-// 							$tableGateway = $sm->get ( 'UserTableGateway' );
-// 							$table = new UserTable ( $tableGateway );
-// 							return $table;
+// 								if (isset ( $session ['validator'] )) {
+// 									$chain = $sessionManager->getValidatorChain ();
+// 									foreach ( $session ['validator'] as $validator ) {
+// 										$validator = new $validator ();
+// 										$chain->attach ( 'session.validate', array (
+// 												$validator,
+// 												'isValid' 
+// 										) );
+// 									}
+// 								}
+// 							} else {
+// 								$sessionManager = new SessionManager ();
+// 							}
+// 							Container::setDefaultManager ( $sessionManager );
+// 							return $sessionManager;
 // 						},
-// 						'UserTableGateway' => function ($sm) {
-// 							$dbAdapter = $sm->get ( 'Zend\Db\Adapter\Adapter' );
-// 							$resultSetPrototype = new \Zend\Db\ResultSet\ResultSet ();
-// 							$resultSetPrototype->setArrayObjectPrototype ( new User () );
-// 							return new TableGateway ( 'user', $dbAdapter, null, $resultSetPrototype );
-// 						} 
-				) 
+						
+// 						'Application\Model\MyAuthStorage' => function ($sm) {
+// 							return new \Application\Model\MyAuthStorage ( 'memreas' );
+// 						},
+// 						'AuthService' => function ($sm) {
+// 							// My assumption, you've alredy set dbAdapter
+// 							// and has users table with columns : user_name and pass_word
+// 							// that password hashed with md5
+// 							// $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+// 							// $dbTableAuthAdapter = new DbTableAuthAdapter($dbAdapter,
+// 							// 'user', 'username', 'password', 'MD5(?)');
+// 							$AuthAdapter = new \Application\Model\MyAuthAdapter ();
+// 							$authService = new AuthenticationService ();
+// 							$authService->setAdapter ( $AuthAdapter );
+// 							$authService->setStorage ( $sm->get ( 'Application\Model\MyAuthStorage' ) );
+							
+// 							return $authService;
+// 						},
+						
+// 						// Tables
+// // 						'Application\Model\UserTable' => function ($sm) {
+// // 							$tableGateway = $sm->get ( 'UserTableGateway' );
+// // 							$table = new UserTable ( $tableGateway );
+// // 							return $table;
+// // 						},
+// // 						'UserTableGateway' => function ($sm) {
+// // 							$dbAdapter = $sm->get ( 'Zend\Db\Adapter\Adapter' );
+// // 							$resultSetPrototype = new \Zend\Db\ResultSet\ResultSet ();
+// // 							$resultSetPrototype->setArrayObjectPrototype ( new User () );
+// // 							return new TableGateway ( 'user', $dbAdapter, null, $resultSetPrototype );
+// // 						} 
+ 				) 
 		)
+		
 		;
 	}
 }

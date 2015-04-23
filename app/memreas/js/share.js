@@ -718,7 +718,7 @@ share_getAllMedia = function() {
                             }
 
                             if (web_transcoded){
-                                var _main_video_media = getValueFromXMLTag(media, 'main_media_url');
+                                var _main_video_media = getValueFromXMLTag(media, 'media_url_1080p');
                                 _main_video_media = removeCdataCorrectLink(_main_video_media);
                                 jtarget_element.append('<li class="video-media" id="share-'+_media_id+'-parent" media-url="' + _main_video_media + '"><a href="javascript:;" id="share-' + _media_id + '" class="image-sync" onclick="return imageChoosed(this.id);"><img src="' + _media_url + '" alt=""><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a></li>');
                             }
