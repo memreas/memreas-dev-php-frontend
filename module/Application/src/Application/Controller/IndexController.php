@@ -22,6 +22,8 @@ use Application\View\Helper\S3Service;
 use Application\View\Helper\S3;
 use Application\TwitterOAuth\TwitterOAuth;
 use \Exception;
+use Aws\Common\Aws;
+use Aws\Common\Signature\SignatureV4;
 use Application\Model\MemreasConstants;
 
 class IndexController extends AbstractActionController {
@@ -69,7 +71,7 @@ class IndexController extends AbstractActionController {
 	}
 	public function indexAction() {
 		$this->memreas_session ();
-		// error_log ( "Enter FE indexAction" . PHP_EOL );
+		error_log ( "Enter FE indexAction" . PHP_EOL );
 		// Checking headers for cookie info
 		// $headers = apache_request_headers ();
 		// foreach ( $headers as $header => $value ) {
@@ -122,7 +124,7 @@ class IndexController extends AbstractActionController {
 			header ( "Content-type: plain/text" );
 			echo $callback_json;
 			
-			// error_log('$callback_json--->'.$callback_json.PHP_EOL);
+			//error_log ( '$callback_json--->' . $callback_json . PHP_EOL );
 			
 			// Need to exit here to avoid ZF2 framework view.
 			exit ();
@@ -230,32 +232,13 @@ class IndexController extends AbstractActionController {
 	private function getS3Key() {
 		$this->memreas_session ();
 		$action = 'memreas_tvm';
-		$xml = '<xml><memreas_tvm></memreas_tvm></xml>';
+		$xml = '<xml><username>'.$_SESSION ['username'].'</username><memreas_tvm></memreas_tvm></xml>';
 		$s3Authenticate = $this->fetchXML ( $action, $xml );
-		return json_decode ( $s3Authenticate );
+		return $s3Authenticate;
 	}
-	
-	/*
-	 * Generate S3 signatures and credentials
-	 * @ Tran Tuan
-	 * @ Return: json Object
-	 */
-	public function s3signedAction() {
-		$this->memreas_session ();
-		$data ['bucket'] = MemreasConstants::S3BUCKET;
-		
-		$data ['accesskey'] = MemreasConstants::S3_APPKEY;
-		$data ['secret'] = MemreasConstants::S3_APPSEC;
-		
-		$policy = $this->getS3Policy ();
-		$hmac = $this->hmacsha1 ( $data ['secret'], $policy );
-		$json_object = array (
-				'accessKey' => $data ['accesskey'],
-				'policy' => $policy,
-				'signature' => $this->hex2b64 ( $hmac ) 
-		);
+	public function fetchMemreasTVMAction() {
 		header ( 'ContentType: application/json' );
-		echo json_encode ( $json_object );
+		echo $this->getS3Key();
 		die ();
 	}
 	
@@ -282,20 +265,22 @@ class IndexController extends AbstractActionController {
 		// $data ['sid'] = $_SESSION ['sid'];
 		
 		$data ['bucket'] = MemreasConstants::S3BUCKET;
-		$data ['accesskey'] = MemreasConstants::S3_APPKEY;
-		$data ['secret'] = MemreasConstants::S3_APPSEC;
-		
-		$data ['base64Policy'] = $this->getS3Policy ();
-		$data ['signature'] = $this->hex2b64 ( $this->hmacsha1 ( $data ['secret'], $data ['base64Policy'] ) );
+		$s3Token = $this->getS3Key();
+error_log('$s3Token---->'.$s3Token);
+				
+		//$data ['accesskey'] = MemreasConstants::S3_APPKEY;
+		//$data ['secret'] = MemreasConstants::S3_APPSEC;
+		// $data ['base64Policy'] = $this->getS3Policy ();
+		// $data ['signature'] = $this->hex2b64 ( $this->hmacsha1 ( $data ['secret'], $data ['base64Policy'] ) );
 		
 		// Pass constant global variables to js global constant
 		$this->writeJsConstants ();
 		
 		$path = "application/index/memreas_one_page.phtml";
-error_log('routing to $path--->'.$path);
+		error_log ( 'routing to $path--->' . $path );
 		
 		$view = new ViewModel ( array (
-				'data' => $data,
+				'data' => $s3Token,
 				'enableAdvertising' => $enableAdvertising,
 				'enableSellMedia' => MemreasConstants::MEMREAS_SELL_MEDIA,
 				'stripeUrl' => $this->stripe_url,
@@ -368,12 +353,12 @@ error_log('routing to $path--->'.$path);
 		// $password = $postData ['password'];
 		$userid = $postData ['status_user_id'];
 		if (empty ( $userid )) {
-error_log('routing to index');			
+			error_log ( 'routing to index' );
 			return $this->redirect ()->toRoute ( 'index', array (
 					'action' => "index" 
 			) );
 		} else {
-error_log('routing to memreasOnePage');			
+			error_log ( 'routing to memreasOnePage' );
 			return $this->redirect ()->toRoute ( 'index', array (
 					'action' => 'memreasOnePage' 
 			) );
@@ -416,70 +401,6 @@ error_log('routing to memreasOnePage');
 	public function security($path) {
 		$this->memreas_session ();
 		return $path;
-	}
-	
-	/* For S3 */
-	private function getS3Policy() {
-		$this->memreas_session ();
-		$now = strtotime ( date ( "Y-m-d\TG:i:s" ) );
-		$expire = date ( 'Y-m-d\TG:i:s\Z', strtotime ( '+30 minutes', $now ) );
-		$policy = '{
-                    "expiration": "' . $expire . '",
-                    "conditions": [
-                        {
-                            "bucket": "' . MemreasConstants::S3BUCKET . '"
-    					},
-                        {
-                            "acl": "public-read"
-                        },
-                        [
-                            "starts-with",
-                            "$key",
-                            ""
-                        ],
-                        {
-                            "success_action_status": "201"
-                        },
-                        ["starts-with", "$Content-Type", ""],
-                        ["content-length-range", 0, 5000000000]
-                    ]
-                }';
-		/*
-		 * Changed support 5GB
-		 */
-		// 4GB file supported
-		return base64_encode ( $policy );
-	}
-	
-	/*
-	 * Calculate HMAC-SHA1 according to RFC2104
-	 * See http://www.faqs.org/rfcs/rfc2104.html
-	 */
-	private function hmacsha1($key, $data) {
-		$this->memreas_session ();
-		$blocksize = 64;
-		$hashfunc = 'sha1';
-		if (strlen ( $key ) > $blocksize)
-			$key = pack ( 'H*', $hashfunc ( $key ) );
-		$key = str_pad ( $key, $blocksize, chr ( 0x00 ) );
-		$ipad = str_repeat ( chr ( 0x36 ), $blocksize );
-		$opad = str_repeat ( chr ( 0x5c ), $blocksize );
-		$hmac = pack ( 'H*', $hashfunc ( ($key ^ $opad) . pack ( 'H*', $hashfunc ( ($key ^ $ipad) . $data ) ) ) );
-		
-		return bin2hex ( $hmac );
-	}
-	
-	/*
-	 * Used to encode a field for Amazon Auth
-	 * (taken from the Amazon S3 PHP example library)
-	 */
-	private function hex2b64($str) {
-		$this->memreas_session ();
-		$raw = '';
-		for($i = 0; $i < strlen ( $str ); $i += 2) {
-			$raw .= chr ( hexdec ( substr ( $str, $i, 2 ) ) );
-		}
-		return base64_encode ( $raw );
 	}
 	public function editmediaAction() {
 		$this->memreas_session ();
@@ -673,10 +594,93 @@ error_log('routing to memreasOnePage');
 		return $this->ipAddress;
 	}
 	public function memreas_session() {
-		if (session_status() !== PHP_SESSION_ACTIVE) {
+		if (session_status () !== PHP_SESSION_ACTIVE) {
 			session_start ();
 			// error_log('$_COOKIE---->'.print_r($_COOKIE, true));
 			// error_log('$_SESSION---->'.print_r($_SESSION, true));
 		}
 	}
+	
 } // end class IndexController
+
+// /* For S3 */
+// 	public function s3signedAction() {
+// 		$this->memreas_session ();
+// 		$data ['bucket'] = MemreasConstants::S3BUCKET;
+		
+// 		$data ['accesskey'] = MemreasConstants::S3_APPKEY;
+// 		$data ['secret'] = MemreasConstants::S3_APPSEC;
+		
+// 		$policy = $this->getS3Policy ();
+// 		$hmac = $this->hmacsha1 ( $data ['secret'], $policy );
+// 		$json_object = array (
+// 				'accessKey' => $data ['accesskey'],
+// 				'policy' => $policy,
+// 				'signature' => $this->hex2b64 ( $hmac ) 
+// 		);
+// 		header ( 'ContentType: application/json' );
+// 		echo json_encode ( $json_object );
+// 		die ();
+// 	}
+// private function getS3Policy() {
+// 	$this->memreas_session ();
+// 	$now = strtotime ( date ( "Y-m-d\TG:i:s" ) );
+// 	$expire = date ( 'Y-m-d\TG:i:s\Z', strtotime ( '+30 minutes', $now ) );
+// 	$policy = '{
+//                     "expiration": "' . $expire . '",
+//                     "conditions": [
+//                         {
+//                             "bucket": "' . MemreasConstants::S3BUCKET . '"
+//     					},
+//                         {
+//                             "acl": "public-read"
+//                         },
+//                         [
+//                             "starts-with",
+//                             "$key",
+//                             ""
+//                         ],
+//                         {
+//                             "success_action_status": "201"
+//                         },
+//                         ["starts-with", "$Content-Type", ""],
+//                         ["content-length-range", 0, 5000000000]
+//                     ]
+//                 }';
+// 	/*
+// 	 * Changed support 5GB
+// 	 */
+// 	// 4GB file supported
+// 	return base64_encode ( $policy );
+// }
+
+// /*
+//  * Calculate HMAC-SHA1 according to RFC2104
+//  * See http://www.faqs.org/rfcs/rfc2104.html
+//  */
+// private function hmacsha1($key, $data) {
+// 	$this->memreas_session ();
+// 	$blocksize = 64;
+// 	$hashfunc = 'sha1';
+// 	if (strlen ( $key ) > $blocksize)
+// 		$key = pack ( 'H*', $hashfunc ( $key ) );
+// 	$key = str_pad ( $key, $blocksize, chr ( 0x00 ) );
+// 	$ipad = str_repeat ( chr ( 0x36 ), $blocksize );
+// 	$opad = str_repeat ( chr ( 0x5c ), $blocksize );
+// 	$hmac = pack ( 'H*', $hashfunc ( ($key ^ $opad) . pack ( 'H*', $hashfunc ( ($key ^ $ipad) . $data ) ) ) );
+
+// 	return bin2hex ( $hmac );
+// }
+
+// /*
+//  * Used to encode a field for Amazon Auth
+//  * (taken from the Amazon S3 PHP example library)
+//  */
+// private function hex2b64($str) {
+// 	$this->memreas_session ();
+// 	$raw = '';
+// 	for($i = 0; $i < strlen ( $str ); $i += 2) {
+// 		$raw .= chr ( hexdec ( substr ( $str, $i, 2 ) ) );
+// 	}
+// 	return base64_encode ( $raw );
+// }

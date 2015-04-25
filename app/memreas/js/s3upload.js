@@ -68,27 +68,41 @@ $(document).ready( function() {
                 }
                 uploadFilesInstance[currentUploadFileCount] = filename;
 
-                //Get signed credentials
                 $.ajax({
-                    url: "/index/s3signed",
+                    url: "/index/fetchMemreasTVM",
                     type: 'GET',
                     dataType: 'json',
                     data: {title: filename}, // send the file name to the server so it can generate the key param
                     async: false,
+                    error: function (jqXHR, status, thrownError) {
+                        alert(jqXHR.status);
+                        alert(jqXHR.responseText);
+                        alert(status);
+                        alert(thrownError);
+                      },
                     success: function(data) {
+//debgging...
+alert("s3Token.AccessKeyId-->"+data.AccessKeyId);                    
+alert("s3Token.SecretAccessKey-->"+data.SecretAccessKey);                    
+alert("s3Token.SessionToken-->"+data.SessionToken);                    
+alert("s3Token.Expiration-->"+data.Expiration);                    
+
                     // Now that we have our data, we update the form so it contains all
                     // the needed data to sign the request
-                    form.find('input[name=policy]').val(data.policy)
-                    form.find('input[name=signature]').val(data.signature)
+                    form.find('input[name=AccessKeyId]').val(data.AccessKeyId)
+                    form.find('input[name=SecretAccessKey]').val(data.SecretAccessKey)
+                    form.find('input[name=SessionToken]').val(data.SessionToken)
+                    form.find('input[name=Expiration]').val(data.Expiration)
                     }
                 });
-
-                var key_value = filename;
-
+                
+                                
+                
                 /*
                  * 28-SEP-2014 JM: Modified for allowed file types
                  */
                 //Check here is file is valid - matches checking on server
+                var key_value = filename;
                 var extension = filename.substr( (filename.lastIndexOf('.') +1) );
                 var is_valid = false;
                 switch(extension.toLowerCase()) {
@@ -156,8 +170,6 @@ $(document).ready( function() {
                     default:
                         jerror('file type is not allowed');
                 }
-                //Check if valid type is image or video are allowed
-                //if  (!(filetype.indexOf('image') >= 0 || filetype.indexOf('video') >= 0 || filetype.indexOf('audio') >= 0)){
                 contentTypeOfFile = filetype;
                 mimeTypeOfFile = filetype + '/' + extension.toLowerCase()
                 if  (!is_valid) {
@@ -171,7 +183,6 @@ $(document).ready( function() {
 
                 form.find('input[name=Content-Type]').val(filetype);
                 var userid = $("input[name=user_id]").val();
-                //key_value = userid + '/' + target + '/' + correctUploadFilename('${filename}');
                 key_value = userid + '/' + correctUploadFilename('${filename}');
                 $(this).find('input[name=key]').val(key_value);
                 // Use XHR, fallback to iframe
@@ -296,8 +307,14 @@ $(document).ready( function() {
                 if (percent == 100){
                     data.context.find('.progress-text').html('<img src="/memreas/img/loading-line.gif" class="loading-small"> Please wait while adding media to your account.');
                     data.context.find('.close_progress').html('<span><img src="/memreas/img/arrow-gray.png" /></span>');
-                }
+                }                
             },
+            error: function (jqXHR, status, thrownError) {
+                alert(jqXHR.status);
+                alert(jqXHR.responseText);
+                alert(status);
+                alert(thrownError);
+              },
             fail: function(e, data) {
                 window.onbeforeunload = null;
             },
@@ -326,6 +343,7 @@ $(document).ready( function() {
                                 {tag: 's3path', value: s3_path},
                                 {tag: 's3file_name', value: base_filename},
                                 {tag: 'device_id', value: ''},
+                                {tag: 'device_type', value: 'web'},
                                 {tag: 'event_id', value: addEvent},
                                 {tag: 'media_id', value: ''},
                                 {tag: 'user_id', value: userid},
@@ -355,6 +373,7 @@ $(document).ready( function() {
                     if (currentUploadFileCount == 0){
                         $(".image_upload_box").mCustomScrollbar("update");
                     }
+                    alert(xml_response);
                 }, 'undefined', true);
             },
             done: function (event, data) {}

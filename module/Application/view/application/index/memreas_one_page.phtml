@@ -5,7 +5,8 @@
     header('Access-Control-Allow-Origin: *');
     header("Access-Control-Allow-Methods: POST, GET");
     header("Access-Control-Allow-Headers: x-requested-with");
-    $user_id = $_SESSION['user_id'];
+    $user_id = !empty ($_SESSION['user_id']) ? ($_SESSION['user_id']) : '' ;
+    $username = !empty ($_SESSION['username']) ? ($_SESSION['username']) : '' ;
 ?>
 <!doctype html>
 <?php if ($this->enableAdvertising) : ?>
@@ -47,7 +48,7 @@
         <div id="bgpopupAudioComment" class="backgroundPopup"></div>
 
         <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
-        <input type="hidden" name="username" value="">
+        <input type="hidden" name="username" value="<?php echo $username; ?>">
             <?php include 'onepage/header.phtml'; ?>
         <!-- Begin : Container -->
         <div class="container clearfix top75">

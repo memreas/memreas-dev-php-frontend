@@ -1,3 +1,6 @@
+<?php
+use Application\Model\MemreasConstants;
+?>
 <div class="span11 tabcontent-detail" id="queue" style="display: none;">
     <div class="<?php echo ($this->enableAdvertising) ? 'span9' : 'span11';?>">
         <div class="row-fluid">
@@ -11,14 +14,18 @@
                       <li class="first-upload"></li>
                     </ul>
                       <!-- Direct Upload to S3 -->
-                    <form action="https://<?php echo $data['bucket']; ?>.s3.amazonaws.com/" method="POST" enctype="multipart/form-data" class="media-upload">
+                    <form action="https://<?php echo MemreasConstants::S3BUCKET; ?>.s3.amazonaws.com/" method="POST" enctype="multipart/form-data" class="media-upload">
 
-                        <input type="hidden" name="key" value="<?php echo $data['userid']; ?>/image/${filename}">
-                        <input type="hidden" name="AWSAccessKeyId" value="<?php echo $data['accesskey']; ?>">
+                        <input type="hidden" name="key" value="<?php echo $_SESSION['user_id']; ?>/image/${filename}">
                         <input type="hidden" name="acl" value="public-read">
                         <input type="hidden" name="success_action_status" value="201">
-                        <input type="hidden" name="policy" value="">
-                        <input type="hidden" name="signature" value="">
+                        <input type="hidden" name="AccessKeyId" value="">
+                        <input type="hidden" name="SecretAccessKey" value="">
+                        <input type="hidden" name="SessionToken" value="">
+                        <input type="hidden" name="Expiration" value="">
+                        <!-- <input type="hidden" name="AWSAccessKeyId" value=""> -->
+    					<!-- <input type="hidden" name="policy" value=""> -->
+                        <!-- <input type="hidden" name="signature" value=""> -->
 
                         <input type="file" name="file" multiple="" style="opacity: 0; -moz-opacity:0; -webkit-opacity: 0; filter: alpha(opacity = 0);"/>
                         <input type="hidden" name="Content-Type" value="" />

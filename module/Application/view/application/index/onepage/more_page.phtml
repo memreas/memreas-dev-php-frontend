@@ -1,3 +1,6 @@
+<?php
+use Application\Model\MemreasConstants; 
+?>
 <div class="span11 tabcontent-detail" id="more" style="display: none;">
       <div class="<?php echo ($this->enableAdvertising) ? 'span9' : 'span11';?>">
           <div class="row-fluid">
@@ -28,7 +31,7 @@
     <div id="tab1-more" class="hideCls account">
           <figure class="pro-pics" id="setting-userprofile"><img src="/memreas/img/profile-pic.jpg" alt=""></figure>
           <div class="pro-names2" id="setting-username">User Name</div>
-          <form name="frm_profile_pic" id="frm-profile-pic" enctype="multipart/form-data" action="https://<?php echo $data['bucket']; ?>.s3.amazonaws.com/">
+          <form name="frm_profile_pic" id="frm-profile-pic" enctype="multipart/form-data" action="https://<?php echo MemreasConstants::S3BUCKET; ?>.s3.amazonaws.com/">
             <input type="hidden" name="key" value="{$filename}">
             <input type="hidden" name="AWSAccessKeyId" value="">
             <input type="hidden" name="acl" value="public-read">
