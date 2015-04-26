@@ -48,6 +48,7 @@ class IndexController extends AbstractActionController {
 		$data = simplexml_load_string ( $xml );
 		if (empty ( $data->memreascookie )) {
 			// error_log ( 'adding sid to outbound xml...' . PHP_EOL );
+error_log('$_COOKIE-->'.$_COOKIE);			
 			$data->addChild ( 'memreascookie', $_COOKIE ['memreascookie'] );
 			$data->addChild ( 'clientIPAddress', $this->fetchUserIPAddress () );
 			$xml = $data->asXML ();
@@ -246,7 +247,7 @@ class IndexController extends AbstractActionController {
 	 * Main page for frontend
 	 * @ Tran Tuan
 	 */
-	public function memreasOnePageAction() {
+	public function memreasAction() {
 		$this->memreas_session ();
 		// error_log ( 'Inside memreasAction...' . PHP_EOL );
 		// Configure Ads on page
@@ -266,7 +267,6 @@ class IndexController extends AbstractActionController {
 		
 		$data ['bucket'] = MemreasConstants::S3BUCKET;
 		$s3Token = $this->getS3Key();
-error_log('$s3Token---->'.$s3Token);
 				
 		//$data ['accesskey'] = MemreasConstants::S3_APPKEY;
 		//$data ['secret'] = MemreasConstants::S3_APPSEC;
@@ -324,7 +324,7 @@ error_log('$s3Token---->'.$s3Token);
 				'PAID_ACCOUNT_FILE_LIMIT' => MemreasConstants::PAID_ACCOUNT_FILE_LIMIT,
 				'CLOUDFRONT_DOWNLOAD_HOST' => MemreasConstants::CLOUDFRONT_DOWNLOAD_HOST,
 				'STRIPE_SERVER_URL' => MemreasConstants::MEMREAS_PAY,
-				'ENABLE_SELL_MEDIA' => MemreasConstants::MEMREAS_SELL_MEDIA 
+				'ENABLE_SELL_MEDIA' => MemreasConstants::MEMREAS_SELL_MEDIA
 		);
 		$content = '';
 		foreach ( $JsConstantVariables as $variable => $value ) {
@@ -358,9 +358,8 @@ error_log('$s3Token---->'.$s3Token);
 					'action' => "index" 
 			) );
 		} else {
-			error_log ( 'routing to memreasOnePage' );
 			return $this->redirect ()->toRoute ( 'index', array (
-					'action' => 'memreasOnePage' 
+					'action' => 'memreas' 
 			) );
 		}
 	}
