@@ -81,12 +81,6 @@ $(document).ready( function() {
                         alert(thrownError);
                       },
                     success: function(data) {
-//debgging...
-alert("s3Token.AccessKeyId-->"+data.AccessKeyId);                    
-alert("s3Token.SecretAccessKey-->"+data.SecretAccessKey);                    
-alert("s3Token.SessionToken-->"+data.SessionToken);                    
-alert("s3Token.Expiration-->"+data.Expiration);                    
-
                     // Now that we have our data, we update the form so it contains all
                     // the needed data to sign the request
                     form.find('input[name=AccessKeyId]').val(data.AccessKeyId)

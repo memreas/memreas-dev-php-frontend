@@ -221,7 +221,20 @@ jQuery.fetch_server_media = function() {
 					for (var json_key = 0; json_key < count_media; json_key++) {
 						var media = medias[json_key];
 						var _media_type = getValueFromXMLTag(media, 'type');
-						var _media_url = getMediaUrl(media, _media_type);
+						
+						var _media_url = '';
+						var _media_url_1080p = '';
+						var _media_url_web = '';
+						if (_media_type == 'image') {
+							_media_url = getMediaUrl(media, _media_type);
+						} else if (_media_type == 'video') {
+							_media_url = getValueFromXMLTag(media, 'media_url_hls');
+							_media_url = removeCdataCorrectLink(_media_url);
+							_media_url_1080p = getValueFromXMLTag(media, 'media_url_1080p');
+							_media_url_1080p = removeCdataCorrectLink(_media_url_1080p);
+							_media_url_web = getValueFromXMLTag(media, 'media_url_web');
+							_media_url_web = removeCdataCorrectLink(_media_url_web);
+						}
 
 						var mediaId = getValueFromXMLTag(media, 'media_id');
 						// Build video thumbnail
@@ -275,7 +288,7 @@ jQuery.fetch_server_media = function() {
 											thumbnail : mediaThumbnail,
 											media_id : mediaId,
 											hls_media : _media_url,
-											mp4_media : _media_url,
+											mp4_media : _media_url_1080p,
 											video_size : active_video_size
 										};
 										$

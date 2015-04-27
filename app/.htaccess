@@ -23,7 +23,7 @@ RewriteRule ^(.*)$ %{ENV:BASE}index.php [NC,L]
 #
 # Change session cookie name
 #
-php_value session.name "memreas"
+php_value session.name "memreascookie"
 
 ## BASIC PASSWORD PROTECTION
 ##AuthType basic

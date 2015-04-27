@@ -48,10 +48,13 @@ class IndexController extends AbstractActionController {
 		$data = simplexml_load_string ( $xml );
 		if (empty ( $data->memreascookie )) {
 			// error_log ( 'adding sid to outbound xml...' . PHP_EOL );
-error_log('$_COOKIE-->'.$_COOKIE);			
-			$data->addChild ( 'memreascookie', $_COOKIE ['memreascookie'] );
+			error_log ( '$_COOKIE-->' . print_r ( $_COOKIE, true ) );
+			$data->memreascookie = $_COOKIE ['memreascookie'];
+			//$data->addChild ( 'memreascookie', $_COOKIE ['memreascookie'] );
 			$data->addChild ( 'clientIPAddress', $this->fetchUserIPAddress () );
 			$xml = $data->asXML ();
+			error_log ( '$xml-->' . $xml );
+				
 		}
 		
 		// error_log ( 'outbound xml --->' . $xml . PHP_EOL );
@@ -125,7 +128,7 @@ error_log('$_COOKIE-->'.$_COOKIE);
 			header ( "Content-type: plain/text" );
 			echo $callback_json;
 			
-			//error_log ( '$callback_json--->' . $callback_json . PHP_EOL );
+			// error_log ( '$callback_json--->' . $callback_json . PHP_EOL );
 			
 			// Need to exit here to avoid ZF2 framework view.
 			exit ();
@@ -165,6 +168,7 @@ error_log('$_COOKIE-->'.$_COOKIE);
 		if (isset ( $_POST ['video_url'] )) {
 			$cache_dir = $_SERVER ['DOCUMENT_ROOT'] . '/memreas/js/jwplayer/jwplayer_cache/';
 			$hls_media = $_POST ['hls_media'];
+			$mp4_media = $_POST ['mp4_media'];
 			$video_name = explode ( "/", $_POST ['video_url'] );
 			$video_name = $video_name [count ( $video_name ) - 1];
 			if ($hls_media)
@@ -172,31 +176,53 @@ error_log('$_COOKIE-->'.$_COOKIE);
 			$cache_file = $this->generateVideoCacheFile ( $cache_dir, $video_name );
 			$file_handle = fopen ( $cache_dir . $cache_file, 'w' );
 			$video_size = $_POST ['video_size'];
+			/*
+			 * existing flash based setup...
+			 */
+			// if ($hls_media) {
+			// $thumbnail = explode ( ",", $_POST ['thumbnail'] );
+			// $thumbnail = str_replace ( '"', "", $thumbnail [0] );
+			// $flashPlayerContent = 'flashplayer: "../jwplayer.flash.swf",
+			// "controlbar":"bottom",
+			// "playlist":[
+			// {image:"' . $thumbnail . '",
+			// sources:[
+			// {label: "480p", file:"' . $_POST ['video_url'] . '", default:true},
+			// {label: "720p", file:"' . $_POST ['video_url'] . '"},
+			// {label: "1080p", file:"' . $_POST ['mp4_media'] . '"},
+			// ]
+			// }],
+			// "width": ' . $video_size ['width'] . ', "height": ' . $video_size ['height'] . ', "aspectratio": "16:9", "primary":"flash",
+			// "skin": "/memreas/js/jwplayer/bekle.xml", allowfullscreen: true, autostart: true';
+			// } else {
+			// $flashPlayerContent = 'flashplayer: "../jwplayer.flash.swf", file: "' . $_POST ['video_url'] . '",
+			// "autostart": "true", "controlbar.position":"bottom", "controlbar.idlehide":"false",
+			// "width": ' . $video_size ['width'] . ', "height": ' . $video_size ['height'] . ', aspectratio: "16:9",
+			// "skin": "/memreas/js/jwplayer/bekle.xml"';
+			// }
+			/**
+			 * Testing hls support
+			 */
 			if ($hls_media) {
 				$thumbnail = explode ( ",", $_POST ['thumbnail'] );
 				$thumbnail = str_replace ( '"', "", $thumbnail [0] );
-				$flashPlayerContent = 'flashplayer: "../jwplayer.flash.swf",
-                                        "controlbar":"bottom",
+				$hlsPlayerContent = '
                                         "playlist":[
                                             {image:"' . $thumbnail . '",
                                                 sources:[
-                                                    {label: "480p", file:"' . $_POST ['video_url'] . '", default:true},
-                                                    {label: "720p", file:"' . $_POST ['video_url'] . '"},
-                                                    {label: "1080p", file:"' . $_POST ['mp4_media'] . '"},
+                                                    {label: "hls", file:"' . $_POST ['video_url'] . '", default:true},
                                                 ]
-                                            }],
-                                        "width": ' . $video_size ['width'] . ', "height": ' . $video_size ['height'] . ', "aspectratio": "16:9", "primary":"flash",
+                                                sources:[
+                                                    {label: "mp4", file:"' . $_POST ['video_url'] . '"},
+                                                ]
+											}],
+                                        "width": ' . $video_size ['width'] . ', "height": ' . $video_size ['height'] . ', "aspectratio": "16:9",
                                          "skin": "/memreas/js/jwplayer/bekle.xml", allowfullscreen: true, autostart: true';
-			} else {
-				$flashPlayerContent = 'flashplayer: "../jwplayer.flash.swf", file: "' . $_POST ['video_url'] . '",
-                                    "autostart": "true", "controlbar.position":"bottom", "controlbar.idlehide":"false",
-                                    "width": ' . $video_size ['width'] . ', "height": ' . $video_size ['height'] . ', aspectratio: "16:9",
-                                    "skin": "/memreas/js/jwplayer/bekle.xml"';
 			}
 			$data = array (
 					'{VIDEO_HEIGHT}' => $video_size ['height'] 
 			);
-			$content = $this->renderJWPlayerCache ( $flashPlayerContent, $data );
+			$content = $this->renderJWPlayerCache ( $hlsPlayerContent, $data );
 			fwrite ( $file_handle, $content, 5000 );
 			fclose ( $file_handle );
 			$response = array (
@@ -233,13 +259,13 @@ error_log('$_COOKIE-->'.$_COOKIE);
 	private function getS3Key() {
 		$this->memreas_session ();
 		$action = 'memreas_tvm';
-		$xml = '<xml><username>'.$_SESSION ['username'].'</username><memreas_tvm></memreas_tvm></xml>';
+		$xml = '<xml><username>' . $_SESSION ['username'] . '</username><memreas_tvm></memreas_tvm></xml>';
 		$s3Authenticate = $this->fetchXML ( $action, $xml );
 		return $s3Authenticate;
 	}
 	public function fetchMemreasTVMAction() {
 		header ( 'ContentType: application/json' );
-		echo $this->getS3Key();
+		echo $this->getS3Key ();
 		die ();
 	}
 	
@@ -260,18 +286,9 @@ error_log('$_COOKIE-->'.$_COOKIE);
 		
 		// Guzzle the LoginWeb Service
 		$user_id = $_SESSION ['user_id'];
-		
-		// if (!$user) return $this->redirect()->toRoute('index', array('action' => "index"));
 		$data ['userid'] = $user_id;
-		// $data ['sid'] = $_SESSION ['sid'];
-		
 		$data ['bucket'] = MemreasConstants::S3BUCKET;
-		$s3Token = $this->getS3Key();
-				
-		//$data ['accesskey'] = MemreasConstants::S3_APPKEY;
-		//$data ['secret'] = MemreasConstants::S3_APPSEC;
-		// $data ['base64Policy'] = $this->getS3Policy ();
-		// $data ['signature'] = $this->hex2b64 ( $this->hmacsha1 ( $data ['secret'], $data ['base64Policy'] ) );
+		$s3Token = $this->getS3Key ();
 		
 		// Pass constant global variables to js global constant
 		$this->writeJsConstants ();
@@ -324,7 +341,7 @@ error_log('$_COOKIE-->'.$_COOKIE);
 				'PAID_ACCOUNT_FILE_LIMIT' => MemreasConstants::PAID_ACCOUNT_FILE_LIMIT,
 				'CLOUDFRONT_DOWNLOAD_HOST' => MemreasConstants::CLOUDFRONT_DOWNLOAD_HOST,
 				'STRIPE_SERVER_URL' => MemreasConstants::MEMREAS_PAY,
-				'ENABLE_SELL_MEDIA' => MemreasConstants::MEMREAS_SELL_MEDIA
+				'ENABLE_SELL_MEDIA' => MemreasConstants::MEMREAS_SELL_MEDIA 
 		);
 		$content = '';
 		foreach ( $JsConstantVariables as $variable => $value ) {
@@ -599,7 +616,6 @@ error_log('$_COOKIE-->'.$_COOKIE);
 			// error_log('$_SESSION---->'.print_r($_SESSION, true));
 		}
 	}
-	
 } // end class IndexController
 
 // /* For S3 */
