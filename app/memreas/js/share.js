@@ -125,21 +125,6 @@ share_changeSocialType = function() {
     //Reset friend element
     friendList = null;
 	switch (socialType) {
-		case "facebook":
-			if (fb_friendsInfo == null) {
-				facebook_getFriendList();
-			}
-			else
-				share_addFriends(fb_friendsInfo);
-			break;
-
-		case "twitter":
-			if (tw_friendsInfo == null) {
-				twitter_getFriendList();
-			}
-			else
-				share_addFriends(tw_friendsInfo);
-			break;
         case "memreas":
             if (mr_friendsInfo == null)
                 memreas_getFriendList();
@@ -775,29 +760,7 @@ share_clickFriends = function(id) {
     if (isNaN(idx))
         idx = (id.substr(10));
 
-	if (type == "fb") {
-		fb_friendsInfo[idx].selected = !fb_friendsInfo[idx].selected;
-		if (fb_friendsInfo[idx].selected) {
-            $('#' + id + ' img').addClass('setchoosed');
-			$('#' + id).next ('aside').css('border', '3px solid green');
-		}
-		else {
-			$('#' + id + ' img').removeClass('setchoosed');
-            $('#' + id).next ('aside').css('border', '3px solid #FFF');
-		}
-	}
-	else if (type == "tw") {
-		tw_friendsInfo[idx].selected = !tw_friendsInfo[idx].selected;
-		if (tw_friendsInfo[idx].selected) {
-			$('#' + id + ' img').addClass('setchoosed');
-            $('#' + id).next ('aside').css('border', '3px solid green');
-		}
-		else {
-			$('#' + id + ' img').removeClass('setchoosed');
-            $('#' + id).next ('aside').css('border', '3px solid #FFF');
-		}
-	}
-    else if(type == "mr"){
+    if(type == "mr"){
         mr_friendsInfo[idx].selected = !mr_friendsInfo[idx].selected;
         if (mr_friendsInfo[idx].selected) {
             $('#' + id + ' img').addClass('setchoosed');
@@ -808,13 +771,6 @@ share_clickFriends = function(id) {
             $('#' + id).next ('aside').css('border', '3px solid #FFF');
         }
     }
-    /*
-    var jElement = $("#" + id);
-    var jImg_profile = jElement.find ('img');
-    if (jImg_profile.hasClass ('setchoosed'))
-        jImg_profile.removeClass ('setchoosed');
-    else jImg_profile.addClass ('setchoosed');
-    */
 }
 
 // make the group with selected friends and e-mail list.
@@ -838,39 +794,6 @@ share_makeGroup = function() {
 	var groupName	= getElementValue('txt_groupname');
 	var selFriends  = [];
 	var i = 0, count = 0;
-
-	// get all information of selected friends (facebook and twitter).
-	if (fb_friendsInfo) {
-		for (i = 0; i < fb_friendsInfo.length; i++) {
-			if (fb_friendsInfo[i].selected) {
-				selFriends[count++] = {
-					tag: 'friend',
-					value: [
-                                { tag: 'friend_name',         value: fb_friendsInfo[i].name },
-								{ tag: 'friend_id', 		value: fb_friendsInfo[i].id },
-								{ tag: 'network_name', 		value: 'facebook' },
-								{ tag: 'profile_pic_url', 	value: fb_friendsInfo[i].photo }
-							]
-				};
-			}
-		}
-	}
-
-	if (tw_friendsInfo) {
-		for (i = 0; i < tw_friendsInfo.length; i++) {
-			if (tw_friendsInfo[i].selected) {
-				selFriends[count++] = {
-					tag: 'friend',
-					value: [
-								{ tag: 'friend_name', 		value: tw_friendsInfo[i].name },
-                                { tag: 'friend_id',         value: tw_friendsInfo[i].id.toString() },
-								{ tag: 'network_name', 		value: 'twitter' },
-								{ tag: 'profile_pic_url', 	value: tw_friendsInfo[i].photo }
-							]
-				};
-			}
-		}
-	}
 
     if (mr_friendsInfo) {
         for (i = 0; i < mr_friendsInfo.length; i++) {

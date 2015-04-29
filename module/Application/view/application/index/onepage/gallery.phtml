@@ -3,8 +3,7 @@
         <ul id="tabs" class="medium_tabs">
             <li><a href="#" title="tab1">view</a></li>
             <li><a href="#" title="tab2" class="delete-tab">delete</a></li>
-            <li><a href="#" title="tab3" class="aviary-tab">edit</a></li>
-            <li><a href="#" title="tab4" class="location-tab">location</a></li>
+            <li><a href="#" title="tab3" class="location-tab">location</a></li>
         </ul>
         <div id="tab-content" class="clearfix">
             <div id="tab1" class="hideCls hidden-onload">
@@ -23,27 +22,7 @@
                     <a class="black_btn_skin" href="javascript:;" onclick="deleteFiles(false);">Delete</a>&nbsp;<a class="black_btn_skin" href="javascript:;" id="btn-upload" onclick="$('a[title=queue]').click();">Upload</a>
                 </div>
             </div>
-            <div id="tab3" class="group gallery-edit hideCls hidden-onload">
-                <div class="row-fluid carousel-area-aviary">
-                    <ul class="elastislide-list aviary-thumbs">
-                        <!-- Gallery detail will load here -->
-                    </ul>
-                </div>
-                <div class="aviary-edit-tools">
-                    <span class="tool-inner">
-                        <a class="" href="javascript:;" onclick="switch_mode();">Fullscreen</a>
-                    </span>
-                    <span class="tool-navigate"><a href="javascript:;" onclick="toggleBottomAviary();">&raquo; tools</a></span>
-                </div>
-                <div class="aviary-edit-wrapper">
-                    <div class="aviary aviary-inner" id="aviary">
-                        <!-- AVIARY ELEMENT WILL LOAD HERE -->
-                    </div>
-                    <div class="aviary-toolbox"></div>
-                </div>
-
-            </div>
-            <div id="tab4" class="hideCls hidden-onload">
+            <div id="tab3" class="hideCls hidden-onload">
                 <div class="gallery-address-box input-wrap">
                     <input id="txt_gallery_address" name="input" type="text" /><a id="btn_gallerymap_ok" class="black_btn_skin" href="javascript:;">Update</a>
                 </div>
@@ -72,4 +51,3 @@
     <!-- End Bottom Ads -->
 
 </div>
-<a class="black_btn_skin exit-aviary-fullscreen" href="javascript:;" onclick="switch_mode();">Exit fullscreen</a>

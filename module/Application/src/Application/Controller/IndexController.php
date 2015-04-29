@@ -159,107 +159,10 @@ class IndexController extends AbstractActionController {
 		}
 	}
 	
-	/*
-	 * Prepare cache for video viewing on main Gallery Page
-	 * @Return: file with video has been cached
-	 */
-	public function buildvideocacheAction() {
-		$this->memreas_session ();
-		if (isset ( $_POST ['video_url'] )) {
-			$cache_dir = $_SERVER ['DOCUMENT_ROOT'] . '/memreas/js/jwplayer/jwplayer_cache/';
-			$hls_media = $_POST ['hls_media'];
-			$mp4_media = $_POST ['mp4_media'];
-			$video_name = explode ( "/", $_POST ['video_url'] );
-			$video_name = $video_name [count ( $video_name ) - 1];
-			if ($hls_media)
-				$video_name .= $hls_media;
-			$cache_file = $this->generateVideoCacheFile ( $cache_dir, $video_name );
-			$file_handle = fopen ( $cache_dir . $cache_file, 'w' );
-			$video_size = $_POST ['video_size'];
-			/*
-			 * existing flash based setup...
-			 */
-			// if ($hls_media) {
-			// $thumbnail = explode ( ",", $_POST ['thumbnail'] );
-			// $thumbnail = str_replace ( '"', "", $thumbnail [0] );
-			// $flashPlayerContent = 'flashplayer: "../jwplayer.flash.swf",
-			// "controlbar":"bottom",
-			// "playlist":[
-			// {image:"' . $thumbnail . '",
-			// sources:[
-			// {label: "480p", file:"' . $_POST ['video_url'] . '", default:true},
-			// {label: "720p", file:"' . $_POST ['video_url'] . '"},
-			// {label: "1080p", file:"' . $_POST ['mp4_media'] . '"},
-			// ]
-			// }],
-			// "width": ' . $video_size ['width'] . ', "height": ' . $video_size ['height'] . ', "aspectratio": "16:9", "primary":"flash",
-			// "skin": "/memreas/js/jwplayer/bekle.xml", allowfullscreen: true, autostart: true';
-			// } else {
-			// $flashPlayerContent = 'flashplayer: "../jwplayer.flash.swf", file: "' . $_POST ['video_url'] . '",
-			// "autostart": "true", "controlbar.position":"bottom", "controlbar.idlehide":"false",
-			// "width": ' . $video_size ['width'] . ', "height": ' . $video_size ['height'] . ', aspectratio: "16:9",
-			// "skin": "/memreas/js/jwplayer/bekle.xml"';
-			// }
-			/**
-			 * Testing hls support
-			 */
-			if ($hls_media) {
-				$thumbnail = explode ( ",", $_POST ['thumbnail'] );
-				$thumbnail = str_replace ( '"', "", $thumbnail [0] );
-				$hlsPlayerContent = '
-                                        "playlist":[
-                                            {image:"' . $thumbnail . '",
-                                                sources:[
-                                                    {label: "hls", file:"' . $_POST ['video_url'] . '", default:true},
-                                                ]
-                                                sources:[
-                                                    {label: "mp4", file:"' . $_POST ['video_url'] . '"},
-                                                ]
-											}],
-                                        "width": ' . $video_size ['width'] . ', "height": ' . $video_size ['height'] . ', "aspectratio": "16:9",
-                                         "skin": "/memreas/js/jwplayer/bekle.xml", allowfullscreen: true, autostart: true';
-			}
-			$data = array (
-					'{VIDEO_HEIGHT}' => $video_size ['height'] 
-			);
-			$content = $this->renderJWPlayerCache ( $hlsPlayerContent, $data );
-			fwrite ( $file_handle, $content, 5000 );
-			fclose ( $file_handle );
-			$response = array (
-					'video_link' => $cache_file,
-					'thumbnail' => isset ( $_POST ['thumbnail'] ) ? $thumbnail : '/memreas/img/large-pic-1.jpg',
-					'media_id' => $_POST ['media_id'] 
-			);
-			echo json_encode ( $response );
-		}
-		exit ();
-	}
-	private function renderJWPlayerCache($initContent, $data) {
-		$this->memreas_session ();
-		$jwPlayerTemplate = $_SERVER ['DOCUMENT_ROOT'] . '/memreas/js/jwplayer/template.phtml';
-		$fileHandle = fopen ( $jwPlayerTemplate, 'r' );
-		$content = fread ( $fileHandle, filesize ( $jwPlayerTemplate ) );
-		$content = str_replace ( '{CONTENT_FLASH}', $initContent, $content );
-		foreach ( $data as $search => $replace )
-			$content = str_replace ( $search, $replace, $content );
-		return $content;
-	}
-	
-	/*
-	 * Support sub function for buildvideocache function
-	 */
-	private function generateVideoCacheFile($cache_dir, $video_name) {
-		$this->memreas_session ();
-		$cache_file = uniqid ( 'jwcache_' ) . substr ( md5 ( $video_name ), 0, 10 ) . '.html';
-		if (! file_exists ( $cache_file ))
-			return $cache_file;
-		else
-			$this->generateVideoCacheFile ( $cache_dir, $video_name );
-	}
 	private function getS3Key() {
 		$this->memreas_session ();
 		$action = 'memreas_tvm';
-		$xml = '<xml><username>' . $_SESSION ['username'] . '</username><memreas_tvm></memreas_tvm></xml>';
+		$xml = '<xml><username>' . $_SESSION ['username'] . '</username><memreas_tvm>1</memreas_tvm></xml>';
 		$s3Authenticate = $this->fetchXML ( $action, $xml );
 		return $s3Authenticate;
 	}
@@ -337,6 +240,7 @@ class IndexController extends AbstractActionController {
 				'S3BUCKET' => MemreasConstants::S3BUCKET,
 				'LOGGED_USER_ID' => $_SESSION ['user_id'],
 				'LISTNOTIFICATIONSPOLLTIME' => MemreasConstants::LISTNOTIFICATIONSPOLLTIME,
+				'GALLERYDELAYTIME' => MemreasConstants::GALLERYDELAYTIME,
 				'FREE_ACCOUNT_FILE_LIMIT' => MemreasConstants::FREE_ACCOUNT_FILE_LIMIT,
 				'PAID_ACCOUNT_FILE_LIMIT' => MemreasConstants::PAID_ACCOUNT_FILE_LIMIT,
 				'CLOUDFRONT_DOWNLOAD_HOST' => MemreasConstants::CLOUDFRONT_DOWNLOAD_HOST,
@@ -351,7 +255,9 @@ class IndexController extends AbstractActionController {
 				$content .= "var {$variable} = '{$value}';\n";
 		}
 		$fileHandle = fopen ( $_SERVER ['DOCUMENT_ROOT'] . '/memreas/js/constants.js', 'w' );
+error_log('$fileHandle--->'+print_r($fileHandle));		
 		fwrite ( $fileHandle, $content, strlen ( $content ) );
+error_log('$content --->'+$content);		
 		fclose ( $fileHandle );
 	}
 	

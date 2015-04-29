@@ -426,8 +426,6 @@ function popupMemreasAddfriends(){
     //Reset friend element
     friendList = null;
     switch (friend_list){
-        case 'fb': getPopupFacebookFriends(); break;
-        case 'tw': getPopupTwitterFriends(); break;
         case 'mr': getPopupMemreasFriends(); break;
     }
     if (!$("#popupFriends").is (":visible")) popup('popupFriends');
@@ -474,29 +472,7 @@ memreas_clickFriends = function(id) {
     if (isNaN(idx))
         idx = (id.substr(10));
 
-    if (type == "fb") {
-        fb_friendsInfo[idx].selected = !fb_friendsInfo[idx].selected;
-        if (fb_friendsInfo[idx].selected) {
-            $('#' + id + ' img').addClass('setchoosed');
-            $('#' + id).next ('aside').css('border', '3px solid green');
-        }
-        else {
-            $('#' + id + ' img').removeClass('setchoosed');
-            $('#' + id).next ('aside').css('border', '3px solid #FFF');
-        }
-    }
-    else if (type == "tw") {
-        tw_friendsInfo[idx].selected = !tw_friendsInfo[idx].selected;
-        if (tw_friendsInfo[idx].selected) {
-            $('#' + id + ' img').addClass('setchoosed');
-            $('#' + id).next ('aside').css('border', '3px solid green');
-        }
-        else {
-            $('#' + id + ' img').removeClass('setchoosed');
-            $('#' + id).next ('aside').css('border', '3px solid #FFF');
-        }
-    }
-    else if(type == "mr"){
+    if(type == "mr"){
         mr_friendsInfo[idx].selected = !mr_friendsInfo[idx].selected;
         if (mr_friendsInfo[idx].selected) {
             $('#' + id + ' img').addClass('setchoosed');
@@ -507,81 +483,6 @@ memreas_clickFriends = function(id) {
             $('#' + id).next ('aside').css('border', '3px solid #FFF');
         }
     }
-    /*
-     var jElement = $("#" + id);
-     var jImg_profile = jElement.find ('img');
-     if (jImg_profile.hasClass ('setchoosed'))
-     jImg_profile.removeClass ('setchoosed');
-     else jImg_profile.addClass ('setchoosed');
-     */
-}
-
-function getPopupFacebookFriends(){
-    $('#loadingpopup').show();
-    FB.init({ appId: FACEBOOK_APPID,
-        status: true,
-        cookie: true,
-        xfbml: true,
-        oauth: true
-    });
-    function getFacebookInfo(response) {
-        var button = document.getElementById('fb-auth');
-        if (response.authResponse) { // in case if we are logged in
-            var userInfo = document.getElementById('user-info');
-            FB.api('/me', function(response) {
-                fb_accountInfo = {
-                    'id':         response.id,
-                    'name':     response.name,
-                    'photo':     'https://graph.facebook.com/' + response.id + '/picture'
-                };
-            });
-
-            // get friends
-            FB.api('/me/friends?limit=' + FACEBOOK_FRIENDSLIMIT, function(response) {
-                var i = 0, info = response.data.sort(sortMethod);
-                fb_friendsInfo = [];
-                for (i = 0; i < info.length; i++) {
-                    fb_friendsInfo[i] = {
-                        'id':         info[i].id,
-                        'div_id':    'fbmemreas_' + i,
-                        'name':     info[i].name,
-                        'photo':     'https://graph.facebook.com/' + info[i].id + '/picture',
-                        'selected':    false
-                    }
-                }
-                memreas_fillFriends(fb_friendsInfo);
-                current_friendnw_selected = 'fb';
-                $('#loadingpopup').hide();
-            });
-        }
-        else $('#loadingpopup').hide();
-    }
-
-    // run once with current status and whenever the status changes
-    FB.getLoginStatus(getFacebookInfo);
-    FB.login(function(response) {
-        if (response.authResponse) {
-        // get friends
-            FB.api('/me/friends?limit=' + FACEBOOK_FRIENDSLIMIT, function(response) {
-                var i = 0, info = response.data.sort(sortMethod);
-                fb_friendsInfo = [];
-
-                for (i = 0; i < info.length; i++) {
-                    fb_friendsInfo[i] = {
-                        'id':         info[i].id,
-                        'div_id':    'fbmemreas_' + i,
-                        'name':     info[i].name,
-                        'photo':     'https://graph.facebook.com/' + info[i].id + '/picture',
-                        'selected':    false
-                    }
-                }
-                memreas_fillFriends(fb_friendsInfo);
-                current_friendnw_selected = 'fb';
-                $('#loadingpopup').hide();
-            });
-        }
-        else $('#loadingpopup').hide();
-    }, {scope:'email'});
 }
 
 function memreas_fillFriends(info){
@@ -609,50 +510,6 @@ function memreas_fillFriends(info){
             $(imgList[i]).prop('src', info[i].photo);
     }
     $('#popupContact').mCustomScrollbar('update');
-}
-
-function getPopupTwitterFriends(){
-
-    $.removeCookie ('twitter_friends');
-
-    var isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
-    if (isSafari) {
-        jNotify(
-        '<div class="notify-box"><p>Click to begin Twitter Authentication </p><br/><a href="javascript:;" class="btn btnPopupTw" onclick="return popupAuthTw(\'memreas_detail\');">Authorize</a>&nbsp;<a href="javascript:;" class="btn" onclick="cancelTwitterFriend();">Close</a></div>',
-        {
-          autoHide : false, // added in v2.0
-          clickOverlay : true, // added in v2.0
-          MinWidth : 250,
-          TimeShown : 3000,
-          ShowTimeEffect : 200,
-          HideTimeEffect : 0,
-          LongTrip :20,
-          HorizontalPosition : 'center',
-          VerticalPosition : 'top',
-          ShowOverlay : true,
-          ColorOverlay : '#FFF',
-          OpacityOverlay : 0.3,
-          onClosed : function(){ // added in v2.0
-
-          },
-          onCompleted : function(){ // added in v2.0
-
-          }
-        });
-    }
-    else{
-        $.oauthpopup({
-            path: 'twitter',
-            callback: function(){
-                memreas_TwFriends();
-            }
-        });
-    }
-}
-
-function cancelTwitterFriend(){
-    $.jNotify._close();
-    $("#memreas-dropfriend").val(current_friendnw_selected);
 }
 
 function memreas_TwFriends(){
@@ -691,39 +548,6 @@ function addFriendToEvent(eventId){
                 tag: 'email',
                 value: emailList[i]
             };
-        }
-    }
-
-    // get all information of selected friends (facebook and twitter).
-    if (fb_friendsInfo) {
-        for (i = 0; i < fb_friendsInfo.length; i++) {
-            if (fb_friendsInfo[i].selected) {
-                selFriends[count++] = {
-                    tag: 'friend',
-                    value: [
-                                { tag: 'friend_name',         value: fb_friendsInfo[i].name },
-                                { tag: 'friend_id',         value: fb_friendsInfo[i].id },
-                                { tag: 'network_name',         value: 'facebook' },
-                                { tag: 'profile_pic_url',     value: '' }
-                            ]
-                };
-            }
-        }
-    }
-
-    if (tw_friendsInfo) {
-        for (i = 0; i < tw_friendsInfo.length; i++) {
-            if (tw_friendsInfo[i].selected) {
-                selFriends[count++] = {
-                    tag: 'friend',
-                    value: [
-                                { tag: 'friend_name',         value: tw_friendsInfo[i].name },
-                                { tag: 'friend_id',         value: tw_friendsInfo[i].id.toString() },
-                                { tag: 'network_name',         value: 'twitter' },
-                                { tag: 'profile_pic_url',     value: '' }
-                            ]
-                };
-            }
         }
     }
 

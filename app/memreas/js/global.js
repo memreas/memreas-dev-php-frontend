@@ -136,6 +136,11 @@ function getMediaUrl(element_object, mediatype){
     else return found_link;
 }
 
+function removeCdata(media_link){
+    media_link = media_link.replace("<!--[CDATA[", "").replace("]]-->", "");
+    return media_link;
+}
+
 function removeCdataCorrectLink(media_link){
     media_link = media_link.replace('<!--[CDATA[["', "").replace('"]]]-->', "")
         .replace("<!--[CDATA[", "").replace("]]-->", "")
@@ -285,10 +290,6 @@ function detectHandheldIOSDevice(){
         return true;
     else return false;
 }
-
-$(function(){
-
-});
 
 /*
 * Enable / Disable input field (for ajax calling and prevent user typing)

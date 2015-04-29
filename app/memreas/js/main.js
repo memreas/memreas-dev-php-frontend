@@ -17,11 +17,6 @@ $(document).ready(function(){
     $(".memreas-detail-gallery").mCustomScrollbar(
                 {scrollButtons:{enable:true }}
     );
-    if($("#avpw_tool_options_container").length){
-    	var pwidth = $("#avpw_tool_options_container").width();
-    	var sowidth = parseInt(pwidth - 238);
-    	$("#avpw_tool_container").width(sowidth);
-    }
 });
 
 $(function(){
@@ -66,11 +61,6 @@ $(function(){
         	$("#tabs li").attr("id",""); //Reset id's
         	$('#tabs').find("a[title='tab1']").parent().attr("id","current"); 
         }
-        
-        /*$("#tabs li").attr("id",""); //Reset id's
-        $(this).parent().attr("id","current"); 
-    	$('#' + $(this).attr('title')).fadeIn(); // Show content for current tab
-        ajaxScrollbarElement('#' + $(this).attr('title') + " .scroll-area");*/
     });
 
     //ajax demo fn

@@ -448,8 +448,6 @@ function networkFriendsChanged(friend_network){
     friendList = null;
     switch (friend_network){
         case 'memreas': getGroupFriends('memreas'); break;
-        case 'facebook': getGroupFriends('facebook'); break;
-        case 'twitter': getGroupFriends('twitter'); break;
     }
 }
 //Get friend based on group list
@@ -520,10 +518,8 @@ $(function(){
         var network_dropdown_selected = $(this).val();
         friendList = null;
         switch (network_dropdown_selected){
-            case 'facebook': networkPopupFacebookFriends(); break;
-            case 'twitter': networkPopupTwitterFriends(); break;
             case 'memreas': networkPopupMemreasFriends(); break;
-            default: jerror('Please choose friend network');
+            default: jerror('select friends');
         }
         if (!$("#popupNetworkFriends").is (":visible")) {
             popup('popupNetworkFriends');
@@ -559,102 +555,6 @@ function networkPopupMemreasFriends(){
     });
 }
 
-function networkPopupFacebookFriends(){
-    $('#loadingpopup').show();
-    FB.init({ appId: FACEBOOK_APPID,
-        status: true,
-        cookie: true,
-        xfbml: true,
-        oauth: true
-    });
-    function getFacebookInfo(response) {
-        var button = document.getElementById('fb-auth');
-        if (response.authResponse) { // in case if we are logged in
-            var userInfo = document.getElementById('user-info');
-            FB.api('/me', function(response) {
-                fb_accountInfo = {
-                    'id':         response.id,
-                    'name':     response.name,
-                    'photo':     'https://graph.facebook.com/' + response.id + '/picture'
-                };
-            });
-
-            // get friends
-            FB.api('/me/friends?limit=' + FACEBOOK_FRIENDSLIMIT, function(response) {
-                var i = 0, info = response.data.sort(sortMethod);
-                fb_friendsInfo = [];
-                for (i = 0; i < info.length; i++) {
-                    fb_friendsInfo[i] = {
-                        'id':         info[i].id,
-                        'div_id':    'fbmemreas_' + i,
-                        'name':     info[i].name,
-                        'photo':     'https://graph.facebook.com/' + info[i].id + '/picture',
-                        'selected':    false
-                    }
-                }
-                network_fillPopupFriends(fb_friendsInfo);
-                $('#loadingpopup').hide();
-            });
-        }
-        else $('#loadingpopup').hide();
-    }
-
-    // run once with current status and whenever the status changes
-    FB.getLoginStatus(getFacebookInfo);
-    FB.login(function(response) {
-        if (response.authResponse) {
-            // get friends
-            FB.api('/me/friends?limit=' + FACEBOOK_FRIENDSLIMIT, function(response) {
-                var i = 0, info = response.data.sort(sortMethod);
-                fb_friendsInfo = [];
-
-                for (i = 0; i < info.length; i++) {
-                    fb_friendsInfo[i] = {
-                        'id':         info[i].id,
-                        'div_id':    'fbmemreas_' + i,
-                        'name':     info[i].name,
-                        'photo':     'https://graph.facebook.com/' + info[i].id + '/picture',
-                        'selected':    false
-                    }
-                }
-                network_fillPopupFriends(fb_friendsInfo);
-                $('#loadingpopup').hide();
-            });
-        }
-        else $('#loadingpopup').hide();
-        }, {scope:'email'});
-}
-
-function networkPopupTwitterFriends(){
-    $.removeCookie ('twitter_friends');
-    $.oauthpopup({
-        path: 'twitter',
-        callback: function(){
-            networkAuthTwFriends();
-        }
-    });
-}
-
-function networkAuthTwFriends(){
-    var friend_list = $.cookie ('twitter_friends');
-    if (typeof (friend_list) == 'undefined'){
-        $('#loadingpopup').hide();
-        //jerror ('authentication failed! please try again');
-        $("#network-dropfriend").val('fb');
-        return false;
-    }
-    friend_list = JSON.parse (friend_list);
-    var friend_count = friend_list.length;
-    for (i = 0;i < friend_count;i++){
-        temp_id = friend_list[i]['div_id'];
-        temp_id = temp_id.split ('_');
-        friend_list[i]['div_id'] = 'twnetwork_' + temp_id[1];
-    }
-    tw_friendsInfo = friend_list;
-    network_fillPopupFriends (friend_list);
-    updateAkordeonContent($(".manage-group-friend"));
-    $('#loadingpopup').hide();
-}
 
 function network_fillPopupFriends(info){
     if (friendList == null)
@@ -729,36 +629,6 @@ function acceptAddFriendNetwork(){
     var selected_friend = [];
     var increase = 0;
     switch(friend_network){
-        case 'facebook':
-            var count_friend = fb_friendsInfo.length;
-            var network_name = 'facebook';
-            for (i = 0;i < count_friend;i++){
-                if (fb_friendsInfo[i].selected){
-                    selected_friend[increase++] = {
-                        tag: 'friend',
-                        value :[
-                            { tag: 'friend_name',         value: fb_friendsInfo[i].name },
-                            { tag: 'profile_pic_url',     value: fb_friendsInfo[i].photo }
-                        ]
-                    };
-                }
-            }
-            break;
-        case 'twitter':
-            var count_friend = tw_friendsInfo.length;
-            var network_name = 'twitter';
-            for (var i = 0;i < count_friend;i++){
-                if (tw_friendsInfo[i].selected){
-                    selected_friend[increase++] = {
-                        tag: 'friend',
-                        value: [
-                            { tag: 'friend_name',         value: tw_friendsInfo[i].name },
-                            { tag: 'profile_pic_url',     value: tw_friendsInfo[i].photo }
-                        ]
-                    };
-                }
-            }
-            break;
         case 'memreas':
             var count_friend = mr_friendsInfo.length;
             var network_name = 'memreas';

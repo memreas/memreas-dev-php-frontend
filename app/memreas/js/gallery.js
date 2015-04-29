@@ -139,17 +139,6 @@ $(function() {
 						// img').trigger("click");
 					});
 
-	// Return space for ads area
-	if (detectHandheldIOSDevice()) {
-		$("#gallery").find("#tabs").find("a").not(".aviary-tab").click(
-				function() {
-					aviarySpace('return');
-				});
-		$("#main-tab").find("a").click(function() {
-			aviarySpace('return');
-		});
-	}
-
 });
 
 var checkHasImage = false;
@@ -221,19 +210,30 @@ jQuery.fetch_server_media = function() {
 					for (var json_key = 0; json_key < count_media; json_key++) {
 						var media = medias[json_key];
 						var _media_type = getValueFromXMLTag(media, 'type');
-						
+
 						var _media_url = '';
 						var _media_url_1080p = '';
 						var _media_url_web = '';
+						var _media_thumbnail = ''
 						if (_media_type == 'image') {
 							_media_url = getMediaUrl(media, _media_type);
 						} else if (_media_type == 'video') {
-							_media_url = getValueFromXMLTag(media, 'media_url_hls');
-							_media_url = removeCdataCorrectLink(_media_url);
-							_media_url_1080p = getValueFromXMLTag(media, 'media_url_1080p');
+							_media_url_hls = getValueFromXMLTag(media,
+									'media_url_hls');
+							_media_url_hls = removeCdataCorrectLink(_media_url);
+							_media_url_1080p = getValueFromXMLTag(media,
+									'media_url_1080p');
 							_media_url_1080p = removeCdataCorrectLink(_media_url_1080p);
-							_media_url_web = getValueFromXMLTag(media, 'media_url_web');
+							_media_url_web = getValueFromXMLTag(media,
+									'media_url_web');
 							_media_url_web = removeCdataCorrectLink(_media_url_web);
+							_media_thumbnail = getValueFromXMLTag(media,
+									'media_url_1280x720');
+console.log(removeCdata(_media_thumbnail));							
+							_media_thumbnail = JSON
+									.parse(removeCdata(_media_thumbnail));
+							_media_thumbnail = _media_thumbnail[0];
+console.log(_media_thumbnail);							
 						}
 
 						var mediaId = getValueFromXMLTag(media, 'media_id');
@@ -245,90 +245,55 @@ jQuery.fetch_server_media = function() {
 
 							if (typeof (metadata) != 'undefined') {
 
-								metadata = removeCdataCorrectLink(metadata);
+								metadata = removeCdata(metadata);
+console.log('metadata--->'+metadata);							
+								metadata = JSON.parse(metadata);
 
-								// Check if transcode progress has provided
-								if (metadata.indexOf('transcode_progress') >= 0) {
-									var transcode_progress = metadata
-											.split('transcode_progress');
-									transcode_progress = transcode_progress[1];
-									transcode_progress = transcode_progress
-											.split(",");
-								} else
-									var transcode_progress = false;
-
-								// Check if web transcode is completed or not
-								var web_transcoded = false;
-								if (transcode_progress != false) {
-									for (var i = 0; i < transcode_progress.length; i++) {
-										if (transcode_progress[i]
-												.indexOf('transcode_web_completed') >= 0) {
-											web_transcoded = true;
-											break;
-										}
-									}
-								}
-
-								if (web_transcoded) {
+console.log('metadata.S3_files.transcode_status--->'+metadata.S3_files.transcode_status);							
+								if (metadata.S3_files.transcode_status == '1') {
 									// Get screen area display height
-									var active_video_size = {
-										width : parseInt($("#tab-content")
-												.width()),
-										height : parseInt($("#tab-content")
-												.height()) - 100
-									};
-									// Ignore if has no enough info or media is
-									// corrupted
-									if (typeof (_media_url) != 'undefined') {
-										var mediaThumbnail = getMediaThumbnail(
-												media,
-												'/memreas/img/small/1.jpg');
-										var data = {
-											video_url : _media_url,
-											thumbnail : mediaThumbnail,
-											media_id : mediaId,
-											hls_media : _media_url,
-											mp4_media : _media_url_1080p,
-											video_size : active_video_size
-										};
-										$
-												.post(
-														'/index/buildvideocache',
-														data,
-														function(response_data) {
-															response_data = JSON
-																	.parse(response_data);
-															$(".user-resources")
-																	.append(
-																			'<a data-video="true" href="/memreas/js/jwplayer/jwplayer_cache/'
-																					+ response_data.video_link
-																					+ '"><img src="'
-																					+ response_data.thumbnail
-																					+ '"/></a>');
-															$(
-																	".edit-area-scroll")
-																	.append(
-																			'<li class="video-media"><a class="video-resource image-sync" id="'
-																					+ response_data.media_id
-																					+ '" onclick="return imageChoosed(this.id);" href="'
-																					+ response_data.thumbnail
-																					+ '"><img src="'
-																					+ response_data.thumbnail
-																					+ '"/><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a><img src="/memreas/img/gallery-select.png"></li>');
-															$(
-																	".preload-files .pics")
-																	.append(
-																			'<li class="video-media"><img src="'
-																					+ response_data.thumbnail
-																					+ '"/></li>');
-														});
+									var width = parseInt($("#tab-content")
+											.width());
+									var height = parseInt($("#tab-content")
+											.height()) - 100;
+
+console.log('userBrowser[0].ios--->'+userBrowser[0].ios);							
+console.log('userBrowser[1].browser--->'+userBrowser[1].browser);							
+									/**
+									 * build video tag
+									 */
+									var source = '';
+									//var device = JSON.parse(userBrowser[0]);
+									//var desktop = JSON.parse(userBrowser[1]);
+									source += '<video controls poster="'
+											+ _media_thumbnail + '" width="'
+											+ width + '" height="' + height
+											+ '">';
+									if ((userBrowser[0].ios)
+											|| (userBrowser[1].browser == "Safari")) {
+										source += '<source  src="'
+												+ _media_url_hls
+												+ '" type="application/x-mpegurl">';
 									} else {
-										$(".edit-area-scroll")
-												.append(
-														'<li><a class="video-resource image-sync" id="'
-																+ mediaId
-																+ '" onclick="return imageChoosed(this.id);" href="/memreas/img/large-pic-1.jpg"><img src="/memreas/img/large-pic-1.jpg"/><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a><img src="/memreas/img/gallery-select.png"></li>');
+										source += '<source src="'
+												+ _media_url_1080p
+												+ '" type="video/mp4">';
 									}
+									source += '</video>';
+									$(".user-resources").append(source);
+									$(".edit-area-scroll")
+											.append(
+													'<li class="video-media"><a class="video-resource image-sync" id="'
+															+ mediaId
+															+ '" onclick="return imageChoosed(this.id);" href="'
+															+ _media_thumbnail
+															+ '"><img src="'
+															+ _media_thumbnail
+															+ '"/><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a><img src="/memreas/img/gallery-select.png"></li>');
+									$(".preload-files .pics").append(
+											'<li class="video-media"><img src="'
+													+ _media_thumbnail
+													+ '"/></li>');
 								} else {
 									$(".user-resources")
 											.append(
@@ -404,10 +369,10 @@ jQuery.fetch_server_media = function() {
 						// Fetch user's notification header
 						getUserDetail();
 						getUserNotificationsHeader();
-					}, LISTNOTIFICATIONSPOLLTIME);
+					}, GALLERYDELAYTIME);
 					setTimeout(function() {
 						checkUserresourcesId(medias);
-					}, LISTNOTIFICATIONSPOLLTIME);
+					}, GALLERYDELAYTIME);
 					$(".swipebox").swipebox();
 
 					// Show edit and delete tabs
@@ -435,21 +400,6 @@ jQuery.fetch_server_media = function() {
 				}
 				return true;
 			});
-}
-
-// Funtion for aviary edit tab space
-function aviarySpace(updateMode) { // updateMode is get or return
-	if ($(".right-ads").length > 0) { // Run only advertising enabled
-		if (updateMode == 'get') {
-			$("#gallery div:eq(0)").removeClass("span9").addClass("span11");
-			$(".right-ads").hide();
-		} else {
-			if (updateMode == "return") {
-				$("#gallery div:eq(0)").removeClass("span11").addClass("span9");
-				$(".right-ads").show();
-			}
-		}
-	}
 }
 
 function getUserNotificationsHeader() {
@@ -487,10 +437,6 @@ function getUserNotificationsHeader() {
 										notifications[i], 'notification_id');
 								var notification_type = getValueFromXMLTag(
 										notifications[i], 'notification_type');
-								// var meta_text =
-								// $(notifications[i]).wrap('meta')
-								// .html().split('<meta>')[1]
-								// .split('<notification_type>')[0];
 								var meta_text = getValueFromXMLTag(
 										notifications[i], 'message');
 								meta_text = '<span>' + meta_text + '</span>';
@@ -507,10 +453,6 @@ function getUserNotificationsHeader() {
 
 								var notification_type = getValueFromXMLTag(
 										notifications[i], 'notification_type');
-								// Check if notification is comment or not
-								// if (notification.indexOf('comment_id') >=
-								// 0)
-								// {
 								if ([ 'ADD_MEDIA', 'ADD_COMMENT',
 										'ADD_FRIEND_TO_EVENT_RESPONSE' ]
 										.indexOf(notification_type) >= 0) {
@@ -852,29 +794,6 @@ function gotoEventDetail(eventId, notification_id) {
 		jTargetLikeCount.html(like_count)
 		jTargetCommentCount.html(comment_count);
 	}, 'undefined', true);
-}
-
-function toggleBottomAviary() {
-	var jToolInner = $(".aviary-edit-tools .tool-inner");
-	var jToolToggle = $(".aviary-edit-tools .tool-navigate a");
-	var currentToolMargin = parseInt(jToolInner.css('margin-left'));
-
-	// Is hidden
-	if (currentToolMargin < 0) {
-		jToolInner.animate({
-			'margin-left' : '0px'
-		}, 300);
-		jToolToggle.html("&laquo; tools");
-	} else {
-		jToolInner.animate({
-			'margin-left' : '-65px'
-		}, 300);
-		jToolToggle.html("&raquo; tools");
-	}
-}
-
-function toogleEditThumb() {
-	$(".aviary-thumbs").parents('.carousel-area').slideToggle(500);
 }
 
 var deleteMediasChecked = 0;
