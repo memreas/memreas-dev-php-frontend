@@ -255,9 +255,7 @@ class IndexController extends AbstractActionController {
 				$content .= "var {$variable} = '{$value}';\n";
 		}
 		$fileHandle = fopen ( $_SERVER ['DOCUMENT_ROOT'] . '/memreas/js/constants.js', 'w' );
-error_log('$fileHandle--->'+print_r($fileHandle));		
 		fwrite ( $fileHandle, $content, strlen ( $content ) );
-error_log('$content --->'+$content);		
 		fclose ( $fileHandle );
 	}
 	

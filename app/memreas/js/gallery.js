@@ -220,7 +220,7 @@ jQuery.fetch_server_media = function() {
 						} else if (_media_type == 'video') {
 							_media_url_hls = getValueFromXMLTag(media,
 									'media_url_hls');
-							_media_url_hls = removeCdataCorrectLink(_media_url);
+							_media_url_hls = removeCdataCorrectLink(_media_url_hls);
 							_media_url_1080p = getValueFromXMLTag(media,
 									'media_url_1080p');
 							_media_url_1080p = removeCdataCorrectLink(_media_url_1080p);
@@ -229,11 +229,9 @@ jQuery.fetch_server_media = function() {
 							_media_url_web = removeCdataCorrectLink(_media_url_web);
 							_media_thumbnail = getValueFromXMLTag(media,
 									'media_url_1280x720');
-console.log(removeCdata(_media_thumbnail));							
 							_media_thumbnail = JSON
 									.parse(removeCdata(_media_thumbnail));
 							_media_thumbnail = _media_thumbnail[0];
-console.log(_media_thumbnail);							
 						}
 
 						var mediaId = getValueFromXMLTag(media, 'media_id');
@@ -246,10 +244,8 @@ console.log(_media_thumbnail);
 							if (typeof (metadata) != 'undefined') {
 
 								metadata = removeCdata(metadata);
-console.log('metadata--->'+metadata);							
 								metadata = JSON.parse(metadata);
 
-console.log('metadata.S3_files.transcode_status--->'+metadata.S3_files.transcode_status);							
 								if (metadata.S3_files.transcode_status == '1') {
 									// Get screen area display height
 									var width = parseInt($("#tab-content")
@@ -257,14 +253,13 @@ console.log('metadata.S3_files.transcode_status--->'+metadata.S3_files.transcode
 									var height = parseInt($("#tab-content")
 											.height()) - 100;
 
-console.log('userBrowser[0].ios--->'+userBrowser[0].ios);							
-console.log('userBrowser[1].browser--->'+userBrowser[1].browser);							
 									/**
 									 * build video tag
 									 */
 									var source = '';
-									//var device = JSON.parse(userBrowser[0]);
-									//var desktop = JSON.parse(userBrowser[1]);
+									var edit_source = '';
+									var preload_source = '';
+									//.user-resources
 									source += '<video controls poster="'
 											+ _media_thumbnail + '" width="'
 											+ width + '" height="' + height
@@ -281,19 +276,28 @@ console.log('userBrowser[1].browser--->'+userBrowser[1].browser);
 									}
 									source += '</video>';
 									$(".user-resources").append(source);
-									$(".edit-area-scroll")
-											.append(
-													'<li class="video-media"><a class="video-resource image-sync" id="'
-															+ mediaId
-															+ '" onclick="return imageChoosed(this.id);" href="'
-															+ _media_thumbnail
-															+ '"><img src="'
-															+ _media_thumbnail
-															+ '"/><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a><img src="/memreas/img/gallery-select.png"></li>');
-									$(".preload-files .pics").append(
-											'<li class="video-media"><img src="'
-													+ _media_thumbnail
-													+ '"/></li>');
+console.log('source---->' + source);
+									//edit-area-scroll
+									edit_source += '<li class="video-media">';
+									edit_source += '<a class="video-resource image-sync" id="'
+											+ mediaId
+											+ '" onclick="return imageChoosed(this.id);" href="'
+											+ _media_thumbnail
+											+ '">'
+											+ '<img src="'
+											+ _media_thumbnail
+											+ '"/>'
+											+ '<img class="overlay-videoimg" src="/memreas/img/video-overlay.png" />'
+											+ '</a><img src="/memreas/img/gallery-select.png"></li>'
+console.log('edit_source---->' + edit_source);
+									$(".edit-area-scroll").append(edit_source);
+									//.preload-files.pics
+									preload_source += 
+										'<li class="video-media"><img src="'
+										+ _media_thumbnail
+										+ '"/></li>';
+console.log('preload_source---->' + preload_source);
+									$(".preload-files.pics").append(preload_source);
 								} else {
 									$(".user-resources")
 											.append(
@@ -378,9 +382,6 @@ console.log('userBrowser[1].browser--->'+userBrowser[1].browser);
 					// Show edit and delete tabs
 					$("a[title=tab2], a[title=tab3]").show();
 
-					// If there is no image media => disable edit tab
-					if (!checkHasImage)
-						$("a[title=tab3]").hide();
 				} else {
 					jerror('There is no media on your account! Please use upload tab on leftside you can add some resources!');
 
