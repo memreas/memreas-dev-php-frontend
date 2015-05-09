@@ -38,16 +38,19 @@ ajaxRequest = function(action, params, success_func, error_func,
 		$('#loadingpopup').fadeIn(1000);
 		pushStackAjax(action);
 	}
+	
+	
 	$.ajax({
 //				xhrFields : {
 //					withCredentials : true
 //				},
-//				beforeSend : function(xhr) {
+				beforeSend : function(xhr) {
 //					for (var i = 0; i < cookies.length; i++) {
 //						//alert("cookies["+i+"]::"+cookies[i]);
 //						xhr.setRequestHeader("Cookie", cookies[i]);
 //					}
-//				},
+					console.log("hello world");
+				},
 				crossDomain : true,
 				type : 'post',
 				url : wsurl,
