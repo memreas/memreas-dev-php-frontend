@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8" />
         <title>Video Transcoder Testing</title>
-        <script src="/memreas/js/jquery-1.8.3.js"></script>
+        <script src="/memreas/js/jquery-1.11.3.js"></script>
         <script type="text/javascript" src="/memreas/js/jwplayer/jwplayer.js"></script>
         <script type="text/javascript" src="/memreas/js/jwplayer/jwplayer.html5.js"></script>
         <script type="text/javascript">

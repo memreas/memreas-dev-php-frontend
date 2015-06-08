@@ -89,6 +89,7 @@ function loadAccountCard(){
         '"json": ' + json_listCard  +
         '}';
 
+    
     $('.stripe-payment').fadeIn(1000);
     $.ajax({
         url: stripeActionUrl,
@@ -96,6 +97,7 @@ function loadAccountCard(){
         dataType: 'jsonp',
         data: 'json=' + data,
         success: function(response){
+        	alert(response);
             if (response.status == 'Success'){
                 var cards = response.payment_methods;
                 var number_of_cards = response.NumRows;
@@ -244,6 +246,7 @@ function accountAddCard(){
     else{
         var stripeActionUrl = $("input[name=stripe_url]").val() + '/stripe/storeCard';
         var obj = new Object();
+        console.log($('input[name=user_id]').val());
         obj.user_id = $('input[name=user_id]').val();
         obj.first_name = jAddCard.find("#addcard_fname").val();
         obj.last_name = jAddCard.find("#addcard_lname").val();

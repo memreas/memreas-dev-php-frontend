@@ -33,6 +33,7 @@ $(function(){
 });
 
 function planChange(choose_plan_id){
+	console.log('planChange(choose_plan_id)');
     var real_plan_id = choose_plan_id.replace('plan-', '');
     resetPlanChoose();
     for (var i in plans_payment){
@@ -54,12 +55,14 @@ function planChange(choose_plan_id){
 
 }
 function resetPlanChoose(){
+	console.log('resetPlanChoose()');
     for (var i in plans_payment){
         plans_payment[i].selected = 0;
     }
 }
 
 function cardChange(choose_card_id){
+	console.log('cardChange(choose_card_id)');
     choose_card_id = choose_card_id.replace('subscription-card-', '');
     resetCardChoose();
     for (var i in account_cards){
@@ -67,7 +70,6 @@ function cardChange(choose_card_id){
             account_cards[i].selected = 1;
         }
     }
-
 }
 function resetCardChoose(){
     for (var i in account_cards){
@@ -76,6 +78,7 @@ function resetCardChoose(){
 }
 
 function loadSubscriptionPlans(){
+	console.log('loadSubscriptionPlans()');
     var jSubscriptionPlans = $(".subscription-plans");
     if (jSubscriptionPlans.hasClass('preload-null'))
         getPlans();
@@ -83,6 +86,7 @@ function loadSubscriptionPlans(){
 
 //Subscription steps
 function subscription_step2(){
+	console.log('subscription_step2()');
     var jSubscriptionPlans = $(".subscription-plans");
     var checkPlanChoose = false;
     jSubscriptionPlans.find('input[type=radio]').each(function(){
@@ -398,6 +402,7 @@ function setUserDefaultPlan(){
 
 function listStripeCard(){
 
+	console.log('listStripeCard()');
     var jMemberCard = $(".subscription-payment");
     if (!jMemberCard.hasClass('preload-null')) return false;
     jMemberCard.removeClass('preload-null');
@@ -413,8 +418,9 @@ function listStripeCard(){
         '}';
     $('#loadingpopup').show();
     $.ajax({
+		crossDomain : true,
+        type: 'post',
         url: stripeActionUrl,
-        type: 'POST',
         dataType: 'jsonp',
         data: 'json=' + data,
         success: function(response){
@@ -471,6 +477,7 @@ function listStripeCard(){
     });
 }
 function addCardPopup(){
+	console.log('addCardPopup()');
     //Reset form;
     var jAddCard = $(".addCardForm");
     jAddCard.find('input[type=text]').each(function(){
@@ -481,6 +488,7 @@ function addCardPopup(){
 }
 
 function stripeAddCard(){
+	console.log('stripeAddCard()');
     var jAddCard = $(".addCardForm");
     var formPass = true;
 
@@ -505,6 +513,7 @@ function stripeAddCard(){
     else{
         var stripeActionUrl = $("input[name=stripe_url]").val() + '/stripe/storeCard';
         var obj = new Object();
+        console.log($('input[name=user_id]').val());
         obj.user_id = $('input[name=user_id]').val();
         obj.first_name = jAddCard.find("#addcard_fname").val();
         obj.last_name = jAddCard.find("#addcard_lname").val();
@@ -519,20 +528,20 @@ function stripeAddCard(){
         obj.state = jAddCard.find("#addcard_state").val();
         obj.zip_code = jAddCard.find("#addcard_zip").val();
 
-        var json_storeCard = JSON.stringify(obj);
-
-        var data = '{"action": "storeCard", ' +
-            '"type":"jsonp", ' +
-            '"json": ' + json_storeCard  +
-            '}';
-
+        var form = new Object();
+        form.action = 'storeCard';
+        form.json = obj;
+        var data = JSON.stringify(form);
+console.log(data);
         $('.stripe-payment').fadeIn(1000);
         $.ajax({
+    		crossDomain : true,
             type:'post',
             url: stripeActionUrl,
-            dataType: 'jsonp',
+            dataType: 'json',
             data: 'json=' + data,
             success: function(response){
+console.log(response);
                 if (response.status == 'Success'){
                     jsuccess("Your card added successfully");
                     disablePopup('popupaddcard');
