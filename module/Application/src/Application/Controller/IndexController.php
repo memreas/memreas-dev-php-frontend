@@ -114,7 +114,7 @@ class IndexController extends AbstractActionController {
 			$xml = $message_data ['json'];
 			
 			// Guzzle the Web Service
-			// error_log ( "guzzle web service ws_action--->" . $ws_action . PHP_EOL );
+			error_log ( "guzzle web service ws_action--->" . $ws_action . PHP_EOL );
 			// error_log ( "guzzle web service $xml--->" . $xml . PHP_EOL );
 			$result = $this->fetchXML ( $ws_action, $xml );
 			$json = json_encode ( $result );
