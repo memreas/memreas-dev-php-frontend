@@ -147,7 +147,39 @@ $(document).ready( function() {
 						filetype='video';
                 		is_valid = true;
 						break;
-
+					case 'mpg' :
+						filetype='video';
+                		is_valid = true;
+						break;
+					case 'avi' :
+						filetype='video';
+                		is_valid = true;
+						break;
+					case 'flv' :
+						filetype='video';
+                		is_valid = true;
+						break;
+					case 'wmv' :
+						filetype='video';
+                		is_valid = true;
+						break;
+					case 'divx' :
+						filetype='video';
+                		is_valid = true;
+						break;
+					case 'ogv' :
+						filetype='video';
+                		is_valid = true;
+						break;
+					case 'ogm' :
+						filetype='video';
+                		is_valid = true;
+						break;
+					case 'nut' :
+						filetype='video';
+                		is_valid = true;
+						break;
+						
 					//audio types allowed
 					case 'mp3' :
 						filetype='audio';

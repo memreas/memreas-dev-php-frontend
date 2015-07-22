@@ -50,11 +50,10 @@ class IndexController extends AbstractActionController {
 			// error_log ( 'adding sid to outbound xml...' . PHP_EOL );
 			error_log ( '$_COOKIE-->' . print_r ( $_COOKIE, true ) );
 			$data->memreascookie = $_COOKIE ['memreascookie'];
-			//$data->addChild ( 'memreascookie', $_COOKIE ['memreascookie'] );
+			// $data->addChild ( 'memreascookie', $_COOKIE ['memreascookie'] );
 			$data->addChild ( 'clientIPAddress', $this->fetchUserIPAddress () );
 			$xml = $data->asXML ();
 			error_log ( '$xml-->' . $xml );
-				
 		}
 		
 		// error_log ( 'outbound xml --->' . $xml . PHP_EOL );
@@ -74,23 +73,35 @@ class IndexController extends AbstractActionController {
 		return $data;
 	}
 	public function indexAction() {
-		$this->memreas_session ();
-		error_log ( "Enter FE indexAction" . PHP_EOL );
-		// Checking headers for cookie info
-		// $headers = apache_request_headers ();
-		// foreach ( $headers as $header => $value ) {
-		// error_log ( "FE header: $header :: value: $value" . PHP_EOL );
-		// }
-		// End Checking headers for cookie info
-		
-		$path = $this->security ( "application/index/index.phtml" );
-		$data ['bucket'] = MemreasConstants::S3BUCKET;
-		$view = new ViewModel ( array (
-				'data' => $data 
-		) );
-		$view->setTemplate ( $path ); // path to phtml file under view folder
-		
-		return $view;
+		$actionname = isset ( $_REQUEST ["action"] ) ? $_REQUEST ["action"] : '';
+		if ($actionname == "clearlog") {
+			/*
+			 * Cache Approach: N/a
+			 */
+			unlink ( getcwd () . '/php_errors.log' );
+			error_log ( "Log has been cleared!" );
+			echo '<pre>' . file_get_contents ( getcwd () . '/php_errors.log' );
+			exit ();
+		} else {
+			
+			$this->memreas_session ();
+			error_log ( "Enter FE indexAction" . PHP_EOL );
+			// Checking headers for cookie info
+			// $headers = apache_request_headers ();
+			// foreach ( $headers as $header => $value ) {
+			// error_log ( "FE header: $header :: value: $value" . PHP_EOL );
+			// }
+			// End Checking headers for cookie info
+			
+			$path = $this->security ( "application/index/index.phtml" );
+			$data ['bucket'] = MemreasConstants::S3BUCKET;
+			$view = new ViewModel ( array (
+					'data' => $data 
+			) );
+			$view->setTemplate ( $path ); // path to phtml file under view folder
+			
+			return $view;
+		}
 	}
 	public function execAjaxAction() {
 		$this->memreas_session ();
@@ -158,7 +169,6 @@ class IndexController extends AbstractActionController {
 			session_destroy ();
 		}
 	}
-	
 	private function getS3Key() {
 		$this->memreas_session ();
 		$action = 'memreas_tvm';

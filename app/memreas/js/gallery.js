@@ -228,7 +228,7 @@ jQuery.fetch_server_media = function() {
 									'media_url_web');
 							_media_url_web = removeCdataCorrectLink(_media_url_web);
 							_media_thumbnail = getValueFromXMLTag(media,
-									'media_url_1280x720');
+									'media_url_98x78');
 							_media_thumbnail = JSON
 									.parse(removeCdata(_media_thumbnail));
 							_media_thumbnail = _media_thumbnail[0];
@@ -276,6 +276,7 @@ jQuery.fetch_server_media = function() {
 									}
 									source += '</video>';
 									$(".user-resources").append(source);
+console.log('thumbnail---->' + _media_thumbnail);									
 console.log('source---->' + source);
 									//edit-area-scroll
 									edit_source += '<li class="video-media">';

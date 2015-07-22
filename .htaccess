@@ -37,10 +37,13 @@ php_value session.name "memreas"
 #Adding time zone setting to New York
 php_value date.timezone "America/New_York"
 
-<Files php_errors.log>
- Order allow,deny
- Deny from all
- Satisfy All
-</Files>
+        <Files php_errors.log>
+                 Order allow,deny
+                 Deny from all
+                 Satisfy All
+        </Files>
 
 </IfModule>
+
+
+
