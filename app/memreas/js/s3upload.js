@@ -89,11 +89,11 @@ $(document).ready( function() {
                     form.find('input[name=acl]').val(data.acl);
                     form.find('input[name=success_action_status]').val(data.successStatus);
                     form.find('input[name=policy]').val(data.base64Policy);
-                    form.find('input[name=X-amz-algorithm]').val(data.algorithm)
-                    form.find('input[name=X-amz-credential]').val(data.credentials)
-                    form.find('input[name=X-amz-date]').val(data.date)
-                    form.find('input[name=X-amz-expires]').val(data.expires)
-                    form.find('input[name=X-amz-signature]').val(data.signature)
+                    form.find('input[name=x-amz-algorithm]').val(data.algorithm)
+                    form.find('input[name=x-amz-credential]').val(data.credentials)
+                    form.find('input[name=x-amz-date]').val(data.date)
+                    form.find('input[name=x-amz-expires]').val(data.expires)
+                    form.find('input[name=x-amz-signature]').val(data.signature)
                     }
                 });
                 
