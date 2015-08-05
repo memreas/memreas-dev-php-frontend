@@ -2,47 +2,54 @@
 use Application\Model\MemreasConstants;
 ?>
 <div class="span11 tabcontent-detail" id="queue" style="display: none;">
-    <div class="<?php echo ($this->enableAdvertising) ? 'span9' : 'span11';?>">
-        <div class="row-fluid">
-            <ul id="tabs-queue" class="medium_tabs">
-                <li><a href="#" title="upload-queue" class="tabs2">uploads</a></li>
-                <li><a href="#" title="complete" class="tabs2">completed</a></li>
-            </ul>
-            <div id="tab-content-queue">
-                <div id="upload-queue" class="hideCls">
-                    <ul id="content_1" class="image_upload_box">
-                      <li class="first-upload"></li>
-                    </ul>
-                      <!-- Direct Upload to S3 -->
+	<div
+		class="<?php echo ($this->enableAdvertising) ? 'span9' : 'span11';?>">
+		<div class="row-fluid">
+			<ul id="tabs-queue" class="medium_tabs">
+				<li><a href="#" title="upload-queue" class="tabs2">uploads</a></li>
+				<li><a href="#" title="complete" class="tabs2">completed</a></li>
+			</ul>
+			<div id="tab-content-queue">
+				<div id="upload-queue" class="hideCls">
+					<ul id="content_1" class="image_upload_box">
+						<li class="first-upload"></li>
+					</ul>
+					<!-- Direct Upload to S3 -->
                     <form action="https://<?php echo MemreasConstants::S3BUCKET; ?>.s3.amazonaws.com/" method="POST" enctype="multipart/form-data" class="media-upload">
 
-                        <input type="hidden" name="key" value="<?php echo $_SESSION['user_id']; ?>/image/${filename}">
-                        <input type="hidden" name="acl" value="public-read">
-                        <input type="hidden" name="success_action_status" value="201">
-                        <input type="hidden" name="AccessKeyId" value="">
-                        <input type="hidden" name="SecretAccessKey" value="">
-                        <input type="hidden" name="SessionToken" value="">
-                        <input type="hidden" name="Expiration" value="">
+                    
+	                    <input type="hidden" name="key" value="">
+    	        				<input type="hidden" name="Content-Type" value="">
+	                    <input type="hidden" name="acl" value="">
+        		    			<input type="hidden" name="success_action_status" value="">
+            				<input type="hidden" name="policy" value="">
+            				<input type="hidden" name="X-amz-algorithm" value="">
+	            			<input type="hidden" name="X-amz-credential" value="">
+    	    	    				<input type="hidden" name="X-amz-date" value="">
+        		    			<input type="hidden" name="X-amz-expires" value="">
+    		        			<input type="hidden" name="X-amz-signature" value="">
+    		        			<!-- <input type="hidden" name="X-amz-server-side​-encryption" value="AES256"> -->
+    		        			
 
                         <input type="file" name="file" multiple="" style="opacity: 0; -moz-opacity:0; -webkit-opacity: 0; filter: alpha(opacity = 0);"/>
-                        <input type="hidden" name="Content-Type" value="" />
                         <div class="upload-dropzone upload-from-event"></div>
                     </form>
-                </div>
-                <div id="complete" class="hideCls">
-                    <ul id="content_1" class="pics completed-upload scroll-area">
-                        <div class="first-element"></div>
-                    </ul>
-                    <a class="black_btn_skin f-left" href="javascript:;" onclick="clearUploadedMedia();">clear</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Ads Section -->
+					</div>
+				<div id="complete" class="hideCls">
+					<ul id="content_1" class="pics completed-upload scroll-area">
+						<div class="first-element"></div>
+					</ul>
+					<a class="black_btn_skin f-left" href="javascript:;"
+						onclick="clearUploadedMedia();">clear</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Ads Section -->
     <?php include('right_advertising.phtml'); ?>
     <!-- End Ads Section -->
 
-    <!-- Bottom Ads -->
+	<!-- Bottom Ads -->
     <?php include('bottom_advertising.phtml'); ?>
     <!-- End Bottom Ads -->
 </div>

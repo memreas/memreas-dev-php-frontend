@@ -13,22 +13,17 @@ namespace Application\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\ViewModel\JsonModel;
+use Application\memreas\Mlog;
 use Application\Model;
 use Application\Model\UserTable;
 use Application\Form;
 use Zend\Mail\Message;
-use Guzzle\Http\Client;
-use Application\View\Helper\S3Service;
-use Application\View\Helper\S3;
 use Application\TwitterOAuth\TwitterOAuth;
 use \Exception;
-use Aws\Common\Aws;
-use Aws\Common\Signature\SignatureV4;
 use Application\Model\MemreasConstants;
 
 class IndexController extends AbstractActionController {
-	// Updated....
-	protected $url = MemreasConstants::MEMREAS_WS; // Local development
+	protected $url = MemreasConstants::MEMREAS_WS;
 	protected $stripe_url = MemreasConstants::MEMREAS_PAY;
 	protected $user_id;
 	protected $storage;
@@ -47,32 +42,27 @@ class IndexController extends AbstractActionController {
 		 */
 		$data = simplexml_load_string ( $xml );
 		if (empty ( $data->memreascookie )) {
-			// error_log ( 'adding sid to outbound xml...' . PHP_EOL );
-			error_log ( '$_COOKIE-->' . print_r ( $_COOKIE, true ) );
 			$data->memreascookie = $_COOKIE ['memreascookie'];
-			// $data->addChild ( 'memreascookie', $_COOKIE ['memreascookie'] );
 			$data->addChild ( 'clientIPAddress', $this->fetchUserIPAddress () );
 			$xml = $data->asXML ();
 			error_log ( '$xml-->' . $xml );
 		}
 		
-		// error_log ( 'outbound xml --->' . $xml . PHP_EOL );
 		/*
 		 * Fetch guzzle and post...
 		 */
-		$guzzle = new Client ();
-		$request = $guzzle->post ( $this->url, null, array (
-				'action' => $action,
-				// 'cache_me' => true,
-				'xml' => $xml 
-		) );
+		$guzzle = new \GuzzleHttp\Client ();
+		$response = $guzzle->post ( $this->url, [ 
+				'form_params' => [ 
+						'action' => $action,
+						'xml' => $xml 
+				] 
+		] );
 		
-		$response = $request->send ();
-		$data = $response->getBody ( true );
-		
-		return $data;
+		return $response->getBody ();
 	}
 	public function indexAction() {
+		Mlog::addone ( __CLASS__ . __METHOD__ . 'enter', '' );
 		$actionname = isset ( $_REQUEST ["action"] ) ? $_REQUEST ["action"] : '';
 		if ($actionname == "clearlog") {
 			/*
@@ -125,13 +115,12 @@ class IndexController extends AbstractActionController {
 			$xml = $message_data ['json'];
 			
 			// Guzzle the Web Service
-			error_log ( "guzzle web service ws_action--->" . $ws_action . PHP_EOL );
-			// error_log ( "guzzle web service $xml--->" . $xml . PHP_EOL );
 			$result = $this->fetchXML ( $ws_action, $xml );
 			$json = json_encode ( $result );
-			
-			// Handle logout
+				
+			// Handle session
 			$this->handleWSSession ( $ws_action, $result );
+			$json = json_encode(trim($result));
 			
 			// Return the ajax call...
 			$callback_json = $callback . "(" . $json . ")";
@@ -139,8 +128,9 @@ class IndexController extends AbstractActionController {
 			header ( "Content-type: plain/text" );
 			echo $callback_json;
 			
-			// error_log ( '$callback_json--->' . $callback_json . PHP_EOL );
+			//Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__ . '$callback_json', $callback_json );
 			
+			Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__, 'exit' );
 			// Need to exit here to avoid ZF2 framework view.
 			exit ();
 		} else {
@@ -180,6 +170,21 @@ class IndexController extends AbstractActionController {
 		header ( 'ContentType: application/json' );
 		echo $this->getS3Key ();
 		die ();
+	}
+	private function fetchMemreasTVMPreSignedURLAction() {
+		$this->memreas_session ();
+		$action = 'memreas_tvm';
+		$xml = '<xml><username>' . $_SESSION ['username'] . '</username><memreas_tvm>0</memreas_tvm><memreas_pre_signed_url>1</memreas_pre_signed_url></xml>';
+		$s3Authenticate = $this->fetchXML ( $action, $xml );
+		return $s3Authenticate;
+	}
+	private function generateMediaIdAction() {
+		$this->memreas_session ();
+		$action = 'generatemediaid';
+		// <xml><username>jmeah7</username><generatemediaid></generatemediaid></xml>
+		$xml = '<xml><username>' . $_SESSION ['username'] . '</username><generatemediaid></generatemediaid></xml>';
+		$s3Authenticate = $this->fetchXML ( $action, $xml );
+		return $s3Authenticate;
 	}
 	
 	/*

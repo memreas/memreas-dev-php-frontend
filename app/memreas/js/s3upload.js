@@ -3,6 +3,7 @@ var uploadFilesInstance = []; //Used for store all file name for uploading
 var currentUploadFileCount = 0; //Count for all current files selected for upload
 var contentTypeOfFile="";
 var mimeTypeOfFile="";
+var media_id;
 $(document).ready( function() {
 
     //Check if IOS only allow 1 file per upload
@@ -83,18 +84,20 @@ $(document).ready( function() {
                     success: function(data) {
                     // Now that we have our data, we update the form so it contains all
                     // the needed data to sign the request
-                    form.find('input[name=AccessKeyId]').val(data.AccessKeyId)
-                    form.find('input[name=SecretAccessKey]').val(data.SecretAccessKey)
-                    form.find('input[name=SessionToken]').val(data.SessionToken)
-                    form.find('input[name=Expiration]').val(data.Expiration)
+                    	media_id = data.media_id;
+                    	form.find('input[name=key]').val(data.media_id + '/' + filename);
+                    form.find('input[name=acl]').val(data.acl);
+                    form.find('input[name=success_action_status]').val(data.successStatus);
+                    form.find('input[name=policy]').val(data.base64Policy);
+                    form.find('input[name=X-amz-algorithm]').val(data.algorithm)
+                    form.find('input[name=X-amz-credential]').val(data.credentials)
+                    form.find('input[name=X-amz-date]').val(data.date)
+                    form.find('input[name=X-amz-expires]').val(data.expires)
+                    form.find('input[name=X-amz-signature]').val(data.signature)
                     }
                 });
                 
-                                
                 
-                /*
-                 * 28-SEP-2014 JM: Modified for allowed file types
-                 */
                 //Check here is file is valid - matches checking on server
                 var key_value = filename;
                 var extension = filename.substr( (filename.lastIndexOf('.') +1) );
@@ -209,7 +212,7 @@ $(document).ready( function() {
 
                 form.find('input[name=Content-Type]').val(filetype);
                 var userid = $("input[name=user_id]").val();
-                key_value = userid + '/' + correctUploadFilename('${filename}');
+                key_value = userid + '/' + media_id + '/' + correctUploadFilename('${filename}');
                 $(this).find('input[name=key]').val(key_value);
                 // Use XHR, fallback to iframe
                 options = $(this).fileupload('option');
@@ -331,6 +334,7 @@ $(document).ready( function() {
                 data.context.find(".upload_progress_bar .progress").css ("width", percent + "%");
                 data.context.find(".upload_progress_bar span").html (percent + "%");
                 if (percent == 100){
+                		console.log('Inside Progress function percent == 100');
                     data.context.find('.progress-text').html('<img src="/memreas/img/loading-line.gif" class="loading-small"> Please wait while adding media to your account.');
                     data.context.find('.close_progress').html('<span><img src="/memreas/img/arrow-gray.png" /></span>');
                 }                
@@ -345,6 +349,7 @@ $(document).ready( function() {
                 window.onbeforeunload = null;
             },
             success: function(data, status, jqXHR) {
+            		console.log('Inside Success function');
                 var _media_url = getValueFromXMLTag(jqXHR.responseText, 'Location');
                 var media_type = contentTypeOfFile;
 
@@ -362,7 +367,7 @@ $(document).ready( function() {
                 var server_url = _media_url.replace(S3URL, '');
 
 				var params = [
-                                {tag: 's3url', value: base_filename},
+                                {tag: 's3url', value: ''},
                                 {tag: 'is_server_image', value: '0'},
                                 {tag: 'content_type', value : mimeTypeOfFile},
                                 //{tag: 'content_type', value : contentTypeOfFile},
@@ -371,7 +376,7 @@ $(document).ready( function() {
                                 {tag: 'device_id', value: ''},
                                 {tag: 'device_type', value: 'web'},
                                 {tag: 'event_id', value: addEvent},
-                                {tag: 'media_id', value: ''},
+                                {tag: 'media_id', value: media_id},
                                 {tag: 'user_id', value: userid},
                                 {tag: 'is_profile_pic', value: '0'},
                                 {tag: 'location', value: ''}

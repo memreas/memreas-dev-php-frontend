@@ -243,6 +243,9 @@ getXMLStringFromParamArray = function(action, params) {
 	case "getorderhistory":
 		action_tag = "getorderhistory";
 		break;
+	case "fetchpresigneduploadurl":
+		action_tag = "fetchpresigneduploadurl";
+		break;
 
 	default:
 		break;
