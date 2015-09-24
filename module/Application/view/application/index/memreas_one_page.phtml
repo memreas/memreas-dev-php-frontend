@@ -1,105 +1,118 @@
 <?php
-    header('Cache-Control: no-cache, no-store, must-revalidate'); // HTTP 1.1.
-    header('Pragma: no-cache'); // HTTP 1.0.
-    header('Expires: 0'); // Proxies.
-    header('Access-Control-Allow-Origin: *');
-    header("Access-Control-Allow-Methods: POST, GET");
-    header("Access-Control-Allow-Headers: x-requested-with");
-    $user_id = !empty ($_SESSION['user_id']) ? ($_SESSION['user_id']) : '' ;
-    $username = !empty ($_SESSION['username']) ? ($_SESSION['username']) : '' ;
+header('Cache-Control: no-cache, no-store, must-revalidate'); // HTTP 1.1.
+header('Pragma: no-cache'); // HTTP 1.0.
+header('Expires: 0'); // Proxies.
+header('Access-Control-Allow-Origin: *');
+header("Access-Control-Allow-Methods: POST, GET");
+header("Access-Control-Allow-Headers: x-requested-with");
+$user_id = ! empty($_SESSION['user_id']) ? ($_SESSION['user_id']) : '';
+$username = ! empty($_SESSION['username']) ? ($_SESSION['username']) : '';
 ?>
 <!doctype html>
 <?php if ($this->enableAdvertising) : ?>
 <html class="ads">
 <?php else: ?>
+
+
 <html class="noads">
 <?php endif; ?>
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="user-scalable-no,initial-scale=1.0, minimum-scale=1.0,maximum-scale=1.0">
-        <title>memreas</title>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="user-scalable-no,initial-scale=1.0, minimum-scale=1.0,maximum-scale=1.0">
+<title>memreas</title>
 
         <?php include('onepage/css_section.phtml'); ?>
         <?php include('onepage/js_head.phtml'); ?>
     </head>
 
-    <body>
-        <div id="loadingpopup" class="loadingpopup">
-            <div id="loadingpopupinner" class="loadingpopupinner">
-                <img id="loadingimg" src="/memreas/img/loading_animate.gif">
-            </div>
-        </div>
+<body>
+	<div id="loadingpopup" class="loadingpopup">
+		<div id="loadingpopupinner" class="loadingpopupinner">
+			<img id="loadingimg" src="/memreas/img/loading_animate.gif">
+		</div>
+	</div>
 
-        <div id="popupAudioComment" class="popups voice-comment-load">
-            <a id="popupAudioCommentClose" onClick="disablePopup('popupAudioComment');" class='popupClose'>x</a>
-            <h2>comments</h2>
-            <div style="text-align: center; position: relative;" class="audio-control">
-                <img src="/memreas/img/audio-comment.jpg" style="width: 400px; margin-top: 20px; margin-bottom: 20px;" />
-                <div class="control-buttons">
-                    <a class="button-start-stop" href="javascript:voiceCommentStart();"><img src="/memreas/img/audio-start.png" border="0" /></a>
-                    <span class="recording-timer">00:00</span>
-                </div>
-            </div>
-            <div style="text-align: center;">
-                <a class="black_btn_skin" href="javascript:completeComment();">Ok</a> &nbsp;
-                <a class="black_btn_skin" href="javascript:voiceCommentCancel();">Cancel</a>
-            </div>
-        </div>
-        <div id="bgpopupAudioComment" class="backgroundPopup"></div>
+	<div id="popupAudioComment" class="popups voice-comment-load">
+		<a id="popupAudioCommentClose"
+			onClick="disablePopup('popupAudioComment');" class='popupClose'>x</a>
+		<h2>comments</h2>
+		<div style="text-align: center; position: relative;"
+			class="audio-control">
+			<img src="/memreas/img/audio-comment.jpg"
+				style="width: 400px; margin-top: 20px; margin-bottom: 20px;" />
+			<div class="control-buttons">
+				<a class="button-start-stop" href="javascript:voiceCommentStart();"><img
+					src="/memreas/img/audio-start.png" border="0" /></a> <span
+					class="recording-timer">00:00</span>
+			</div>
+		</div>
+		<div style="text-align: center;">
+			<a class="black_btn_skin" href="javascript:completeComment();">Ok</a>
+			&nbsp; <a class="black_btn_skin"
+				href="javascript:voiceCommentCancel();">Cancel</a>
+		</div>
+	</div>
+	<div id="bgpopupAudioComment" class="backgroundPopup"></div>
 
-        <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
-        <input type="hidden" name="username" value="<?php echo $username; ?>">
+	<input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
+	<input type="hidden" name="username" value="<?php echo $username; ?>">
             <?php include 'onepage/header.phtml'; ?>
         <!-- Begin : Container -->
-        <div class="container clearfix top75">
+	<div class="container clearfix top75">
 
-            <!-- Begin : Content - For Tab-->
-            <div class="row-fluid content" >
+		<!-- Begin : Content - For Tab-->
+		<div class="row-fluid content">
                 <?php include('onepage/nav.phtml'); ?>
 
                 <!-- Main Tab Content -->
-                <div id="maintab-content">
-                    <!-- Begin : Content - For search -->
+			<div id="maintab-content">
+				<!-- Begin : Content - For search -->
                     <?php include('onepage/search.phtml'); ?>
                     <!-- End : search -->
 
-                    <!-- Begin : Content - For notification -->
+				<!-- Begin : Content - For notification -->
                     <?php include('onepage/notification.phtml'); ?>
                     <!-- End : Notification -->
 
-                    <!-- Gallery Main Tab -->
+				<!-- Gallery Main Tab -->
                     <?php include('onepage/gallery.phtml'); ?>
                     <!-- End: Gallery Main Tab -->
 
-                    <!-- Queue Main Tab -->
+				<!-- Queue Main Tab -->
                     <?php include ('onepage/queue.phtml'); ?>
                     <!-- End: Queue Main Tab -->
 
-                    <!-- Share Main Tab -->
+				<!-- Share Main Tab -->
                     <?php include ('onepage/share.phtml'); ?>
                     <!-- End : Share Main Tab -->
 
-                    <!-- Memreas Main Tab -->
+				<!-- Memreas Main Tab -->
                     <?php include ('onepage/memreas.phtml'); ?>
                     <?php include ('onepage/memreas_detail.phtml'); ?>
                     <!-- End : Memreas Main Tab -->
 
-                    <!-- More Tab -->
+				<!-- More Tab -->
                     <?php include ('onepage/more_page.phtml'); ?>
                     <!-- End : More Tab -->
-                </div>
-                <!-- End: Main Tab Content -->
-                <div class="clear"></div>
-            </div>
+			</div>
+			<!-- End: Main Tab Content -->
+			<div class="clear"></div>
+		</div>
 
-        </div>
-        <!-- End : Content -->
-        </div>
-        <?php include 'onepage/footer.phtml'; ?>
-        <?php include('onepage/js_section.phtml'); ?>
-        <!-- End : Container -->
-        <script src="/memreas/js/main.js"></script>
-        <div style="clear: both;"></div>
-        <img src="" style="display: none;" id="temp-aviary-img" />
-    </body>
+	</div>
+	<!-- End : Content -->
+	</div>
+	<!-- Bottom Ads -->
+    <?php include('bottom_advertising.phtml'); ?>
+    <!-- End Bottom Ads -->
+
+        
+    <?php include 'onepage/footer.phtml'; ?>
+    <?php include('onepage/js_section.phtml'); ?>
+    <!-- End : Container -->
+	<script src="/memreas/js/main.js"></script>
+	<div style="clear: both;"></div>
+	<img src="" style="display: none;" id="temp-aviary-img" />
+</body>
 </html>

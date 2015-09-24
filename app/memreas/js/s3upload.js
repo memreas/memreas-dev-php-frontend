@@ -36,6 +36,9 @@ $(document).ready( function() {
                 var filename = data.files[0].name;
                 filename = correctUploadFilename(filename);
                 var filetype = data.files[0].type;
+                //Debugging
+                console.log('Inside upload...');
+                //End Debugging
 
                 //Get file size
                 var file_size = data.files[0].size; //In bytes
@@ -69,6 +72,10 @@ $(document).ready( function() {
                 }
                 uploadFilesInstance[currentUploadFileCount] = filename;
 
+                //Debugging
+                console.log('About to fetch TVM...');
+                //End Debugging
+                
                 $.ajax({
                     url: "/index/fetchMemreasTVM",
                     type: 'GET',
@@ -82,6 +89,10 @@ $(document).ready( function() {
                         alert(thrownError);
                       },
                     success: function(data) {
+                        //Debugging
+                        console.log('fetchMemreasTVM success');
+                        //End Debugging
+
                     // Now that we have our data, we update the form so it contains all
                     // the needed data to sign the request
                     	media_id = data.media_id;
@@ -97,11 +108,14 @@ $(document).ready( function() {
                     }
                 });
                 
-                
                 //Check here is file is valid - matches checking on server
                 var key_value = filename;
                 var extension = filename.substr( (filename.lastIndexOf('.') +1) );
                 var is_valid = false;
+                //Debugging
+                alert ('extension::'+extension);
+                console.log('extension::'+extension);
+                //End Debugging
                 switch(extension.toLowerCase()) {
                 	//image types allowed
                 	case 'jpeg':
@@ -179,6 +193,14 @@ $(document).ready( function() {
                 		is_valid = true;
 						break;
 					case 'nut' :
+						filetype='video';
+                		is_valid = true;
+						break;
+					case 'vob' :
+						filetype='video';
+                		is_valid = true;
+						break;
+					case 'vro' :
 						filetype='video';
                 		is_valid = true;
 						break;

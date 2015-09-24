@@ -146,7 +146,7 @@ var checkHasImage = false;
 jQuery.fetch_server_media = function() {
 	var verticalHeight = window.innerHeight;
 	$(".user-resources").remove();
-	$(".preload-files .pics").empty().show();
+	//$(".preload-files .pics").empty().show();
 	if (!document.documentElement.classList.contains('noads')) {
 		if (verticalHeight <= 690) {
 			$("#tab-content #tab1")
@@ -168,8 +168,11 @@ jQuery.fetch_server_media = function() {
 	} else {
 		$("#tab-content #tab1")
 				.append(
-						'<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/725" data-width="100%" data-height="68%" data-allow-full-screen="true"  data-nav="thumbs"></div>');
+						'<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/725" data-width="100%" data-height="80%" data-allow-full-screen="true"  data-nav="thumbs"></div>');
 	}
+	$(".preload-files").hide();
+	$(".user-resources fotorama").hide();
+	
 	$(".edit-area-scroll, .aviary-thumbs, .galleries-location").empty();
 	$(".user-resources, .scrollClass .mCSB_container, .sync .mCSB_container")
 			.html('');
@@ -260,7 +263,7 @@ jQuery.fetch_server_media = function() {
 									var edit_source = '';
 									var preload_source = '';
 									//.user-resources
-									source += '<video controls poster="'
+									source += '<div>.<video controls poster="'
 											+ _media_thumbnail + '" width="'
 											+ width + '" height="' + height
 											+ '">';
@@ -271,10 +274,10 @@ jQuery.fetch_server_media = function() {
 												+ '" type="application/x-mpegurl">';
 									} else {
 										source += '<source src="'
-												+ _media_url_1080p
+												+ _media_url_web
 												+ '" type="video/mp4">';
 									}
-									source += '</video>';
+									source += '</video><div>';
 									$(".user-resources").append(source);
 console.log('thumbnail---->' + _media_thumbnail);									
 console.log('source---->' + source);

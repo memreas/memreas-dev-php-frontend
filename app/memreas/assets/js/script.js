@@ -43,6 +43,10 @@ $(document).ready( function() {
                 }
                 uploadFilesInstance[currentUploadFileCount] = data.files[0].name;
 
+                //Debugging
+                console.log('filename'+data.files[0].name);
+                //End Debugging
+                
                 //Get signed credentials
                 $.ajax({
                   url: "/index/s3signed",
@@ -61,6 +65,12 @@ $(document).ready( function() {
                 var filetype = data.files[0].type;
                 var filename = data.files[0].name;
                 var key_value = '${filename}';
+                //Debugging
+                console.log('filetype'+filetype);
+                console.log('filename'+filename);
+                console.log('key_value'+key_value);
+                //End Debugging
+                
 
                 //Check if valid type is image or video are allowed
                 if  (!(filetype.indexOf('image') >= 0 || filetype.indexOf('video') >= 0)){

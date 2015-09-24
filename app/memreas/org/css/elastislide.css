@@ -1,5 +1,4 @@
 /* Elastislide Style */
-
 .elastislide-list {
 	list-style-type: none;
 	display: none;
@@ -83,7 +82,6 @@
 }
 
 /* Navigation Arrows */
-
 .elastislide-wrapper navs span {
 	position: absolute;
 	background: url(../img/arrows.png) no-repeat 0px 0px;
@@ -122,9 +120,11 @@
 	top: auto;
 	background-position: -17px -18px;
 }
-@media only screen and (min-device-width : 600px) and (max-device-width : 800px) and (orientation : portrait) {
-.elastislide-carousel ul li {
-	width: 100px !important;
-	margin: 7px;
-}
+
+@media only screen and (min-device-width : 600px) and (max-device-width
+	: 800px) and (orientation : portrait) {
+	.elastislide-carousel ul li {
+		width: 100px !important;
+		margin: 7px;
+	}
 }
