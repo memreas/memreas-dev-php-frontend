@@ -6,17 +6,19 @@
 <script type="text/javascript"> var global_event_id = "<?php echo $event_id; ?>";</script>
 <!--Custom css-->
 <link href="/memreas/org/css/style.css" rel="stylesheet" type="text/css">
-<link href="/memreas/org/css/jquery.mCustomScrollbar.css" rel="stylesheet" />
+<link href="/memreas/org/css/jquery.mCustomScrollbar.css"
+	rel="stylesheet" />
 <link href="/memreas/org/css/fotorama.css" rel="stylesheet">
 <link rel="stylesheet" href="/memreas/org/css/swipebox.css">
 
 <!--Bootstrap Css-->
-<link href="/memreas/org/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="/memreas/org/css/bootstrap.min.css" rel="stylesheet"
+	type="text/css">
 
 
-<!-- JW Player plugin -->     
-<script type="text/javascript" src="/memreas/js/jwplayer/jwplayer.js"></script>
-<script type="text/javascript" src="/memreas/js/jwplayer/jwplayer.html5.js"></script>
+<!-- JW Player plugin -->
+<!-- <script type="text/javascript" src="/memreas/js/jwplayer/jwplayer.js"></script> -->
+<!-- <script type="text/javascript" src="/memreas/js/jwplayer/jwplayer.html5.js"></script> -->
 
 
 <!--jQuery Lybrary-->
@@ -46,46 +48,57 @@ $(document).ready(function () {
 </head>
 
 <body>
-    <div id="loadingpopup" class="loadingpopup">
-        <div id="loadingpopupinner" class="loadingpopupinner">
-            <img id="loadingimg" src="/memreas/img/loading_animate.gif">
-        </div>
-    </div>
-<!-- Begin : Container -->
-<div class="container">
-  <!-- Begin : Header -->
-  <div class="row-fluid">
-  	<header>
-      <div class="like-btn"><div class="fb-like" data-href="https://fe.memreas.com" data-layout="standard" data-action="like" data-show-faces="false" data-share="false"></div></div>
-      <h1 id="logo"><a href="http://fe.memreas.com"><img src="/memreas/img/logo.png" /></a></h1>
-      <div class="pro-info">
-      	<figure class="pro-pic"><img src="/memreas/img/profile-pic.jpg" alt=""></figure>
-        <div class="pro-name">...</div>
-      </div>
-    </header>
-  </div>
-  <!-- End : Header -->
-  <!-- Begin : Content -->
-  	<div class="row-fluid content">
+	<div id="loadingpopup" class="loadingpopup">
+		<div id="loadingpopupinner" class="loadingpopupinner">
+			<img id="loadingimg" src="/memreas/img/loading_animate.gif">
+		</div>
+	</div>
+	<!-- Begin : Container -->
+	<div class="container">
+		<!-- Begin : Header -->
+		<div class="row-fluid">
+			<header>
+				<div class="like-btn">
+					<div class="fb-like" data-href="https://fe.memreas.com"
+						data-layout="standard" data-action="like" data-show-faces="false"
+						data-share="false"></div>
+				</div>
+				<h1 id="logo">
+					<a href="http://fe.memreas.com"><img src="/memreas/img/logo.png" /></a>
+				</h1>
+				<div class="pro-info">
+					<figure class="pro-pic">
+						<img src="/memreas/img/profile-pic.jpg" alt="">
+					</figure>
+					<div class="pro-name">...</div>
+				</div>
+			</header>
+		</div>
+		<!-- End : Header -->
+		<!-- Begin : Content -->
+		<div class="row-fluid content">
 
-        <div id="tab-content"> 
-    	  <div id="tab1" class="hideCls">
-            <div class="preload-files">
-                <ul class="pics">
-                    <!-- AJAX CONTENT WILL BE LOADED HERE -->
-                </ul>
-            </div>
-            <div class="user-resources fotorama" data-click="false" data-swipe="true" data-ratio="800/325" data-width="100%" data-max-width="100%" data-allow-full-screen="true" data-nav="thumbs">
-                <!-- AJAX CONTENT WILL BE LOADED HERE -->
-            </div>
-          </div>
-        </div>
-    </div>
-  <!-- End : Content -->
-</div>
-<!-- End : Container -->
-    <div id="fb-root"></div>
-    <script>(function(d, s, id) {
+			<div id="tab-content">
+				<div id="tab1" class="hideCls">
+					<div class="preload-files">
+						<ul class="pics">
+							<!-- AJAX CONTENT WILL BE LOADED HERE -->
+						</ul>
+					</div>
+					<div class="user-resources fotorama" data-click="false"
+						data-swipe="true" data-ratio="800/325" data-width="100%"
+						data-max-width="100%" data-allow-full-screen="true"
+						data-nav="thumbs">
+						<!-- AJAX CONTENT WILL BE LOADED HERE -->
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- End : Content -->
+	</div>
+	<!-- End : Container -->
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0];
         if (d.getElementById(id)) return;
         js = d.createElement(s); js.id = id;
