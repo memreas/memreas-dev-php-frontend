@@ -1,7 +1,7 @@
-/*
-*@Define global function here
-*@ Tran Tuan
-*/
+/////////////////////////////////
+// Copyright memreas llc 2013
+/////////////////////////////////
+
 var GLOBAL_ENV = 'development'; //development or live
 var CURRENT_URL = document.URL;
 if (CURRENT_URL.indexOf('localhost') < 0 && GLOBAL_ENV == 'development')
@@ -381,11 +381,6 @@ function correctDateNumber(date_number){
         return '0' + date_number.toString();
     else return date_number;
 }
-
-/////////////////////////////////
-// Author: David Kang
-// Copyright memreas llc 2013
-/////////////////////////////////
 
 // convert date string from MMDDYYY to DDMMYYYY.
 formatDateToDMY = function(date) {
