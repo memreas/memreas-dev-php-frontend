@@ -89,10 +89,6 @@ $(document).ready( function() {
                         alert(thrownError);
                       },
                     success: function(data) {
-                        //Debugging
-                        console.log('fetchMemreasTVM success');
-                        //End Debugging
-
                     // Now that we have our data, we update the form so it contains all
                     // the needed data to sign the request
                     	media_id = data.media_id;
