@@ -6,16 +6,11 @@ nbproject
 .idea
 .project
 .settings
-vendor/
-!data/session/temp.txt
-data/
+.log
 composer.lock
-*.log
-app/.htaccess
-php_errors.log
-app/memreas/js/jwplayer/jwplayer_cache/
+composer.phar
+data
+vendor
 
 # Elastic Beanstalk Files
-.elasticbeanstalk/*
-!.elasticbeanstalk/*.cfg.yml
-!.elasticbeanstalk/*.global.yml
+.elasticbeanstalk
