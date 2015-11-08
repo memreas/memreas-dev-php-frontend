@@ -109,7 +109,7 @@ $(document).ready( function() {
                 var extension = filename.substr( (filename.lastIndexOf('.') +1) );
                 var is_valid = false;
                 //Debugging
-                alert ('extension::'+extension);
+                //alert ('extension::'+extension);
                 console.log('extension::'+extension);
                 //End Debugging
                 switch(extension.toLowerCase()) {
@@ -422,7 +422,7 @@ $(document).ready( function() {
                     if (currentUploadFileCount == 0){
                         $(".image_upload_box").mCustomScrollbar("update");
                     }
-                    alert(xml_response);
+                    //alert(xml_response);
                 }, 'undefined', true);
             },
             done: function (event, data) {}

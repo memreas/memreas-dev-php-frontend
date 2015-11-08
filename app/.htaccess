@@ -24,6 +24,7 @@ RewriteRule ^(.*)$ %{ENV:BASE}index.php [NC,L]
 # Change session cookie name
 #
 php_value session.name "memreascookie"
+php_value session.gc_maxlifetime 3600
 
 ## BASIC PASSWORD PROTECTION
 AuthType basic

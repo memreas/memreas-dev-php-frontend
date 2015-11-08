@@ -73,6 +73,7 @@ function fetchMyMemreas(){
                     var comment_count = $(event).filter ('comment_count').html();
                     var eventId = $(event).filter ('event_id').html();
                     var event_name = $(event).filter ('event_name').html();
+                    console.log(i +":event name:" + event_name);
                     var element = '<div class="event_section">' +
                     '<aside class="event_name" onclick="showEventDetail(\'' + eventId + '\', \'' + user_id + '\');" style="cursor: pointer;">!' + event_name + '</aside>' +
                     '<div class="event_like"><span>' + like_count + '</span></div>' +
