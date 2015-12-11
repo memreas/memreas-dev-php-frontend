@@ -252,6 +252,14 @@ getXMLStringFromParamArray = function(action, params) {
 	}
 	//alert(getCookie("memreas"));
 	xml_str += "<memreascookie>" + getCookie("memreas") + "</memreascookie>";
+	// Show all cookies
+	var ca = document.cookie.split(';');
+	for(var i=0; i<ca.length; i++) {
+	    var c = ca[i];
+	    console.log("cookie::"+c);
+	}
+									
+
 	xml_str += "<" + action_tag + ">";
 	getSubXMLStringFromParamArray(params);
 	xml_str += "</" + action_tag + ">";

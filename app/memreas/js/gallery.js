@@ -210,6 +210,7 @@ jQuery.fetch_server_media = function() {
 							.html('');
 					var count_media = medias.length;
 
+					
 					for (var json_key = 0; json_key < count_media; json_key++) {
 						var media = medias[json_key];
 						var _media_type = getValueFromXMLTag(media, 'type');
@@ -258,7 +259,6 @@ console.log('inner media_transcode_status---->' + media_transcode_status);
 								//metadata = removeCdata(metadata);
 								//metadata = JSON.parse(metadata);
 
-								
 								//if (metadata.S3_files.transcode_status == '1') {
 								if (media_transcode_status == 'success') {
 console.log('inner media_transcode_status---->' + media_transcode_status);									
