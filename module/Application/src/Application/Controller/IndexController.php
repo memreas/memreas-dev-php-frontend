@@ -43,6 +43,13 @@ class IndexController extends AbstractActionController {
 		$data = simplexml_load_string ( $xml );
 		if (empty ( $data->memreascookie )) {
 			$data->memreascookie = $_COOKIE ['memreascookie'];
+			// $data->CloudFrontPolicy = $_COOKIE ['CloudFront-Signature'];
+			// $data->CloudFrontSignature = $_COOKIE ['CloudFront-Signature'];
+			// $data->CloudFrontKeyPairId = $_COOKIE ['CloudFront-Key-Pair-Id'];
+			// setrawcookie ( "CloudFront-Policy", $encodedCustomPolicy, 0, "/", $domain, 1, 1 );
+			// setrawcookie ( "CloudFront-Signature", $customPolicySignature, 0, "/", $domain, 1, 1 );
+			// setrawcookie ( "CloudFront-Key-Pair-Id", $this->key_pair_id, 0, "/", $domain, 1, 1 );
+			
 			$data->addChild ( 'clientIPAddress', $this->fetchUserIPAddress () );
 			$xml = $data->asXML ();
 			error_log ( '$xml-->' . $xml );
@@ -63,6 +70,13 @@ class IndexController extends AbstractActionController {
 	}
 	public function indexAction() {
 		Mlog::addone ( __CLASS__ . __METHOD__ . 'enter', '' );
+		// Start buffering so cookies are set
+		//
+		// Check Headers sent
+		//
+		error_log ( __CLASS__ . __METHOD__ . __LINE__ . "headers_list()" . print_r ( headers_list (), true ) . PHP_EOL );
+		
+		ob_start ();
 		$actionname = isset ( $_REQUEST ["action"] ) ? $_REQUEST ["action"] : '';
 		if ($actionname == "clearlog") {
 			/*
@@ -71,6 +85,8 @@ class IndexController extends AbstractActionController {
 			unlink ( getcwd () . '/php_errors.log' );
 			error_log ( "Log has been cleared!" );
 			echo '<pre>' . file_get_contents ( getcwd () . '/php_errors.log' );
+			// End buffering and flush
+			ob_end_clean ();
 			exit ();
 		} else {
 			
@@ -90,6 +106,9 @@ class IndexController extends AbstractActionController {
 			) );
 			$view->setTemplate ( $path ); // path to phtml file under view
 			                              // folder
+			                              
+			// End buffering and flush
+			ob_end_clean ();
 			
 			return $view;
 		}
@@ -158,9 +177,9 @@ class IndexController extends AbstractActionController {
 			// $this->setSignedCookie ( "CloudFront-Policy", $data->loginresponse->CloudFrontPolicy, $domain );
 			// $this->setSignedCookie ( "CloudFront-Signature", $data->loginresponse->CloudFrontSignature, $domain );
 			// $this->setSignedCookie ( "CloudFront-Key-Pair-Id", $data->loginresponse->CloudFrontKeyPairId, $domain );
-			setrawcookie ( "CloudFront-Policy", $data->loginresponse->CloudFrontPolicy, 0, "/", $domain, 1, 1 );
-			setrawcookie ( "CloudFront-Signature", $data->loginresponse->CloudFrontSignature, 0, "/", $domain, 1, 1 );
-			setrawcookie ( "CloudFront-Key-Pair-Id", $data->loginresponse->CloudFrontKeyPairId, 0, "/", $domain, 1, 1 );
+			setrawcookie ( "CloudFront-Policy", $data->loginresponse->CloudFrontPolicy, 0, "/*", $domain, 1, 1 );
+			setrawcookie ( "CloudFront-Signature", $data->loginresponse->CloudFrontSignature, 0, "/*", $domain, 1, 1 );
+			setrawcookie ( "CloudFront-Key-Pair-Id", $data->loginresponse->CloudFrontKeyPairId, 0, "/*", $domain, 1, 1 );
 			Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__ . '$data->loginresponse->CloudFrontPolicy', $data->loginresponse->CloudFrontPolicy );
 			Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__ . '$data->loginresponse->CloudFrontSignature', $data->loginresponse->CloudFrontSignature );
 			Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__ . '$data->loginresponse->CloudFrontKeyPairId', $data->loginresponse->CloudFrontKeyPairId );

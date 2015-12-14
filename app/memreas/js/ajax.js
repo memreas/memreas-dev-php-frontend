@@ -39,24 +39,50 @@ ajaxRequest = function(action, params, success_func, error_func,
 		pushStackAjax(action);
 	}
 	
-	
 	$.ajax({
-//				xhrFields : {
-//					withCredentials : true
-//				},
-//				beforeSend : function(xhr) {
-//					for (var i = 0; i < cookies.length; i++) {
-//						//alert("cookies["+i+"]::"+cookies[i]);
-//						xhr.setRequestHeader("Cookie", cookies[i]);
-//					}
-//					console.log("hello world");
-//				},
+				//xhrFields : {
+				//	withCredentials : true
+				//},
+				beforeSend : function(xhr) {
+					for (var i = 0; i < cookies.length; i++) {
+						console.log("cookies["+i+"]::"+cookies[i]);
+						xhr.setRequestHeader("Cookie", cookies[i]);
+					}
+					var cookies = '';
+					alert("request action->"+action + "\n cookies->" + cookies)
+				},
 				crossDomain : true,
 				type : 'post',
 				url : wsurl,
 				dataType : 'jsonp',
 				data : 'json=' + json_data,
 				success : function(ret_xml) {
+					if (action == 'login') {
+						// fetch values 
+						var strCloudFrontPolicy = getValueFromXMLTag(ret_xml, 'CloudFrontPolicy')
+						var strCloudFrontSignature = getValueFromXMLTag(ret_xml, 'CloudFrontSignature')
+						var strCloudFrontKeyPairId = getValueFromXMLTag(ret_xml, 'CloudFrontKeyPairId')
+						
+						if (strCloudFrontPolicy != '') {
+							//set cookies based on return xml - CORS not to be trusted :)
+							setCookie("CloudFront-Policy", strCloudFrontPolicy);
+							setCookie("CloudFront-Signature", strCloudFrontSignature);
+							setCookie("CloudFront-Key-Pair-Id", strCloudFrontKeyPairId);
+							//$.cookie("CloudFront-Policy", strCloudFrontPolicy, {expires : 0, path : '/',	domain  : 'memreas.com', secure : true});
+							//$.cookie("CloudFront-Signature", strCloudFrontSignature, {expires : 0, path : '/',	domain  : 'memreas.com', secure : true});
+							//$.cookie("CloudFront-Key-Pair-Id", strCloudFrontKeyPairId, {expires : 0, path : '/',	domain  : 'memreas.com', secure : true});
+						}
+						// Show all cookies
+						var ca = document.cookie.split(';');
+						var cookies = '';
+						for(var i=0; i<ca.length; i++) {
+						    var c = ca[i];
+						    console.log("action" + action + " cookie::"+c);
+						    cookies += "cookie::"+c + "\n"
+						}
+						alert("response action->"+action + "\n cookies->" + cookies)
+					} // end login specific entries
+					
 					if (action != 'findtag' && action != 'findevent') {
 						if (getValueFromXMLTag(ret_xml, 'error').trim() == 'Please Login') {
 							document.location.href = "/index";
@@ -88,6 +114,10 @@ ajaxRequest = function(action, params, success_func, error_func,
 				}
 			});
 	return false;
+}
+
+setCookie = function(cname,cvalue) {
+	document.cookie = cname + "=" + cvalue + "; path=/*; expires=" + 0 + " domain=memreas.com secure=true";
 }
 
 getXMLStringFromParamArray = function(action, params) {
@@ -252,14 +282,6 @@ getXMLStringFromParamArray = function(action, params) {
 	}
 	//alert(getCookie("memreas"));
 	xml_str += "<memreascookie>" + getCookie("memreas") + "</memreascookie>";
-	// Show all cookies
-	var ca = document.cookie.split(';');
-	for(var i=0; i<ca.length; i++) {
-	    var c = ca[i];
-	    console.log("cookie::"+c);
-	}
-									
-
 	xml_str += "<" + action_tag + ">";
 	getSubXMLStringFromParamArray(params);
 	xml_str += "</" + action_tag + ">";

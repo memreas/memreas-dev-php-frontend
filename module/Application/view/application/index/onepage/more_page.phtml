@@ -1,17 +1,19 @@
 <?php
-use Application\Model\MemreasConstants; 
+use Application\Model\MemreasConstants;
 ?>
 <div class="span11 tabcontent-detail" id="more" style="display: none;">
-      <div class="<?php echo ($this->enableAdvertising) ? 'span9' : 'span11';?>">
-          <div class="row-fluid">
-            <ul id="tabs-more" class="medium_tabs">
-                <li><a href="#" title="tab1-more" class="account-tab">account</a></li>
-                <li><a href="#" title="tab2-more" class="group-tab">groups</a></li>
-                <!-- <li><a href="#" title="tab3-more" class="network-tab">network</a></li> -->
-                <!--<li><a href="#" title="tab4-more" class="notification-tab">notification</a></li>-->
-                <li><a href="#" title="tab5-more" class="help-tab">help</a></li>
-                <li><a href="#" title="tab-friends" class="friends-tab">Friends</a></li>
-                <li><a href="#" title="tab6-more" class="event-tab">memreas</a></li>
+	<div
+		class="<?php echo ($this->enableAdvertising) ? 'span9' : 'span11';?>">
+		<div class="row-fluid">
+			<ul id="tabs-more" class="medium_tabs">
+				<li><a href="#" title="tab1-more" class="account-tab">account</a></li>
+				<li><a href="#" title="tab2-more" class="group-tab">groups</a></li>
+				<!-- <li><a href="#" title="tab3-more" class="network-tab">network</a></li> -->
+				<!--<li><a href="#" title="tab4-more" class="notification-tab">notification</a></li>-->
+				<li><a href="#" title="tab5-more" class="help-tab">help</a></li>
+				<li><a href="#" title="tab-friends" class="friends-tab">Friends</a></li>
+				<li><a href="#" title="tab6-more" class="event-tab">memreas</a></li>
+				<!-- 
                 <?php if ($PaymentTabs['Subscription']): ?>
                 <li><a href="#" title="tab7-more" class="subscription-tab">Subscriptions</a></li>
                 <?php endif ?>
@@ -21,135 +23,159 @@ use Application\Model\MemreasConstants;
                 <?php if ($PaymentTabs['SellMedia']): ?>
                 <li><a href="#" title="tab9-more" class="sell-media-tab">Sell media</a></li>
                 <?php endif ?>
-            </ul>
+                 -->
+			</ul>
 
-<div id="tab-content-more">
-    <div class="tab-slide-nav">
-        <span class="slide-left"><img src="/memreas/img/left-arrow.png" alt=""/></span>
-        <span class="slide-right"><img src="/memreas/img/right-arrow.png" alt="" /></span>
-    </div>
-    <div id="tab1-more" class="hideCls account">
-          <figure class="pro-pics" id="setting-userprofile"><img src="/memreas/img/profile-pic.jpg" alt=""></figure>
-          <div class="pro-names2" id="setting-username">User Name</div>
-          <form name="frm_profile_pic" id="frm-profile-pic" enctype="multipart/form-data" action="https://<?php echo MemreasConstants::S3BUCKET; ?>.s3.amazonaws.com/">
-            <input type="hidden" name="key" value="{$filename}">
-            <input type="hidden" name="AWSAccessKeyId" value="">
-            <input type="hidden" name="acl" value="public-read">
-            <input type="hidden" name="success_action_status" value="201">
-            <input type="hidden" name="policy" value="">
-            <input type="hidden" name="signature" value="">
-            <input type="hidden" name="Content-Type" value="">
-            <input type="file" name="file" id="file" style="opacity: 0; -moz-opacity:0; -webkit-opacity: 0; filter: alpha(opacity = 0); margin: 0;width: 1px;height: 1px;">
-        </form>
-          <a class="black_btn_skin f-center change-profile-btn" href="javascript:;">Change Picture</a>
-          <div class="clear"></div>
-          <div class="akordeon" id="buttons-moretab" style="margin-top: 10px;">
+			<div id="tab-content-more">
+				<div class="tab-slide-nav">
+					<span class="slide-left"><img src="/memreas/img/left-arrow.png"
+						alt="" /></span> <span class="slide-right"><img
+						src="/memreas/img/right-arrow.png" alt="" /></span>
+				</div>
+				<div id="tab1-more" class="hideCls account">
+					<figure class="pro-pics" id="setting-userprofile">
+						<img src="/memreas/img/profile-pic.jpg" alt="">
+					</figure>
+					<div class="pro-names2" id="setting-username">User Name</div>
+					<form name="frm_profile_pic" id="frm-profile-pic"
+						enctype="multipart/form-data"
+						action="https://<?php echo MemreasConstants::S3BUCKET; ?>.s3.amazonaws.com/">
+						<input type="hidden" name="key" value="{$filename}"> <input
+							type="hidden" name="AWSAccessKeyId" value=""> <input
+							type="hidden" name="acl" value="public-read"> <input
+							type="hidden" name="success_action_status" value="201"> <input
+							type="hidden" name="policy" value=""> <input type="hidden"
+							name="signature" value=""> <input type="hidden"
+							name="Content-Type" value=""> <input type="file" name="file"
+							id="file"
+							style="opacity: 0; -moz-opacity: 0; -webkit-opacity: 0; filter: alpha(opacity = 0); margin: 0; width: 1px; height: 1px;">
+					</form>
+					<a class="black_btn_skin f-center change-profile-btn"
+						href="javascript:;">Change Picture</a>
+					<div class="clear"></div>
+					<div class="akordeon" id="buttons-moretab"
+						style="margin-top: 10px;">
               <?php include('more_tabs/account.phtml'); ?>
           </div>
-    </div>
-    <div id="tab2-more" class="hideCls parent-global-akordeon">
-          <div class="akordeon" id="buttons2-moretab">
+				</div>
+				<div id="tab2-more" class="hideCls parent-global-akordeon">
+					<div class="akordeon" id="buttons2-moretab">
               <?php include('more_tabs/group.phtml'); ?>
           </div>
-        <div style="clear: both; margin-top: 30px;" class="group-default-actions">
-            <a class="black_btn_skin" href="javascript:;" onclick="AddGroup();" style="margin-left: 5% !important;">Add new</a>
-            <a class="black_btn_skin" href="javascript:;" onclick="updateNetworkFriends(false);">update</a>
-            <a class="black_btn_skin" href="javascript:;" onclick="removeGroup(false);">remove</a>
-            <a class="black_btn_skin" href="javascript:;" onclick="addFriendNetwork();">Add friend</a>
-        </div>
-        <div style="clear: both; margin-top: 30px; display: none;" class="group-add-actions">
-            <a class="black_btn_skin" href="javascript:;" onclick="saveAddGroup();" style="margin-left: 10% !important;">Save</a>
-            <a class="black_btn_skin" href="javascript:;" onclick="cancelAddGroup(false);">cancel</a>
-        </div>
+					<div style="clear: both; margin-top: 30px;"
+						class="group-default-actions">
+						<a class="black_btn_skin" href="javascript:;"
+							onclick="AddGroup();" style="margin-left: 5% !important;">Add new</a>
+						<a class="black_btn_skin" href="javascript:;"
+							onclick="updateNetworkFriends(false);">update</a> <a
+							class="black_btn_skin" href="javascript:;"
+							onclick="removeGroup(false);">remove</a> <a
+							class="black_btn_skin" href="javascript:;"
+							onclick="addFriendNetwork();">Add friend</a>
+					</div>
+					<div style="clear: both; margin-top: 30px; display: none;"
+						class="group-add-actions">
+						<a class="black_btn_skin" href="javascript:;"
+							onclick="saveAddGroup();" style="margin-left: 10% !important;">Save</a>
+						<a class="black_btn_skin" href="javascript:;"
+							onclick="cancelAddGroup(false);">cancel</a>
+					</div>
 
-         <!-- POPUP FRIEND HERE -->
-         <div id="popupNetworkFriends" class="popups">
-            <a id="popupNetworkFriendsClose" onClick="disablePopup('popupNetworkFriends')" class='popupClose'>x</a>
-            <h2>select friends</h2>
-            <div class="styled-select">
-                <select id="network-dropfriend">
-                    <option value="memreas">memreas</option>
-                </select>
-            </div>
-            <ul id="content_1" class="popupContact popupNetworkFriends_list scrollpopup">
-                <!-- Ajax friend will load here -->
-            </ul>
-            <div style="clear: both;">
-                <h2 id="network-groupname" name="demo_lbl_6">Group: <span></span></h2>
-            </div>
-            <a class="black_btn_skin f-left memreas-addfriend-btn" href="javascript:;" onclick="acceptAddFriendNetwork();">ok</a>
-             <a class="black_btn_skin f-right" href="javascript:;" onClick="disablePopup('popupNetworkFriends')">cancel</a>
-        </div>
-        <div id="bgpopupNetworkFriends" class="backgroundPopup"></div>
-         <!-- END POPUP FRIEND -->
+					<!-- POPUP FRIEND HERE -->
+					<div id="popupNetworkFriends" class="popups">
+						<a id="popupNetworkFriendsClose"
+							onClick="disablePopup('popupNetworkFriends')" class='popupClose'>x</a>
+						<h2>select friends</h2>
+						<div class="styled-select">
+							<select id="network-dropfriend">
+								<option value="memreas">memreas</option>
+							</select>
+						</div>
+						<ul id="content_1"
+							class="popupContact popupNetworkFriends_list scrollpopup">
+							<!-- Ajax friend will load here -->
+						</ul>
+						<div style="clear: both;">
+							<h2 id="network-groupname" name="demo_lbl_6">
+								Group: <span></span>
+							</h2>
+						</div>
+						<a class="black_btn_skin f-left memreas-addfriend-btn"
+							href="javascript:;" onclick="acceptAddFriendNetwork();">ok</a> <a
+							class="black_btn_skin f-right" href="javascript:;"
+							onClick="disablePopup('popupNetworkFriends')">cancel</a>
+					</div>
+					<div id="bgpopupNetworkFriends" class="backgroundPopup"></div>
+					<!-- END POPUP FRIEND -->
 
-    </div>
-    <div id="tab3-more" class="hideCls">
-         <div class="akordeon" id="buttons3-moretab">
+				</div>
+				<div id="tab3-more" class="hideCls">
+					<div class="akordeon" id="buttons3-moretab">
             <?php include ('more_tabs/network.phtml'); ?>
         </div>
-    </div>
-    <div id="tab4-more" class="hideCls">
-       <div class="akordeon" id="buttons4-moretab">
+				</div>
+				<div id="tab4-more" class="hideCls">
+					<div class="akordeon" id="buttons4-moretab">
             <?php include ('more_tabs/notification.phtml'); ?>
         </div>
-    </div>
-     <div id="tab5-more" class="hideCls parent-global-akordeon">
-      <div class="akordeon" id="buttons5-moretab">
+				</div>
+				<div id="tab5-more" class="hideCls parent-global-akordeon">
+					<div class="akordeon" id="buttons5-moretab">
         <?php include ('more_tabs/help.phtml'); ?>
       </div>
-    </div>
-     <div id="tab-friends" class="hideCls">
-      <div class="akordeon" id="buttons-friends-moretab">
+				</div>
+				<div id="tab-friends" class="hideCls">
+					<div class="akordeon" id="buttons-friends-moretab">
         <?php include ('more_tabs/friends.phtml'); ?>
       </div>
-    </div>
-    <div id="tab6-more" class="hideCls">
-       <div class="akordeon" id="buttons6-moretab">
+				</div>
+				<div id="tab6-more" class="hideCls">
+					<div class="akordeon" id="buttons6-moretab">
             <?php include ('more_tabs/manage_event.phtml'); ?>
         </div>
-    </div>
+				</div>
     <?php if ($PaymentTabs['Subscription']): ?>
     <div id="tab7-more" class="hideCls parent-global-akordeon">
-        <input type="hidden" name="stripe_url" value="<?php echo $this->stripeUrl; ?>" />
-       <div class="akordeon" id="buttons7-moretab">
+					<input type="hidden" name="stripe_url"
+						value="<?php echo $this->stripeUrl; ?>" />
+					<div class="akordeon" id="buttons7-moretab">
             <?php include ('more_tabs/subscription.phtml'); ?>
         </div>
-    </div>
+				</div>
     <?php endif ?>
     <?php if ($PaymentTabs['BuyCredit']): ?>
     <div id="tab8-more" class="hideCls parent-global-akordeon">
-        <div class="akordeon" id="buttons8-moretab">
+					<div class="akordeon" id="buttons8-moretab">
             <?php include ('more_tabs/buycredit.phtml'); ?>
         </div>
-    </div>
+				</div>
     <?php endif ?>
     <?php if ($PaymentTabs['SellMedia']): ?>
     <div id="tab9-more" class="hideCls parent-global-akordeon">
-        <div class="akordeon" id="buttons9-moretab">
+					<div class="akordeon" id="buttons9-moretab">
             <?php include ('more_tabs/sellmedia.phtml'); ?>
         </div>
-    </div>
+				</div>
     <?php endif ?>
 </div>
-        </div>
-      </div>
-        <!-- Ads Section -->
+		</div>
+	</div>
+	<!-- Ads Section -->
         <?php include('right_advertising.phtml'); ?>
         <!-- End Ads Section -->
 
-        <!-- Bottom Ads -->
+	<!-- Bottom Ads -->
         <?php include('bottom_advertising.phtml'); ?>
         <!-- End Bottom Ads -->
 </div>
 <div class="loadingpopup stripe-payment">
-    <div class="stripe-payment-processing">
-        <p class="stripe-logo">
-            <img src="/memreas/img/stripe-dark.png"/>
-        </p>
-        <p class="loading-image">
-            <img src="/memreas/img/loading-circle.gif"/>
-        </p>
-        <b>Processing! Please don't close browser until progress is completed.</b>
-    </div>
+	<div class="stripe-payment-processing">
+		<p class="stripe-logo">
+			<img src="/memreas/img/stripe-dark.png" />
+		</p>
+		<p class="loading-image">
+			<img src="/memreas/img/loading-circle.gif" />
+		</p>
+		<b>Processing! Please don't close browser until progress is completed.</b>
+	</div>
 </div>

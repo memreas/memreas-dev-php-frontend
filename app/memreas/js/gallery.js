@@ -275,6 +275,9 @@ console.log('inner media_transcode_status---->' + media_transcode_status);
 									var edit_source = '';
 									var preload_source = '';
 									//.user-resources
+									//
+									// video tag control
+									//
 									source += '<div><video controls poster="'
 											+ _media_thumbnail + '" width="'
 											+ width + '" height="' + height
