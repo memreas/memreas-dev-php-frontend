@@ -237,8 +237,6 @@ jQuery.fetch_server_media = function() {
 									.parse(removeCdata(_media_thumbnail));
 							_media_thumbnail = _media_thumbnail[0];
 						}
-console.log('thumbnail---->' + _media_thumbnail);									
-console.log('_media_type---->' + _media_type);									
 
 						var mediaId = getValueFromXMLTag(media, 'media_id');
 						// Build video thumbnail
@@ -251,17 +249,10 @@ console.log('_media_type---->' + _media_type);
 							//		'metadata');
 
 							var media_transcode_status = getValueFromXMLTag(media, 'media_transcode_status');
-console.log('outer media_transcode_status---->' + media_transcode_status);									
 							//if (typeof (metadata) != 'undefined') {
 							if (media_transcode_status == 'success') {
-console.log('inner media_transcode_status---->' + media_transcode_status);									
 
-								//metadata = removeCdata(metadata);
-								//metadata = JSON.parse(metadata);
-
-								//if (metadata.S3_files.transcode_status == '1') {
 								if (media_transcode_status == 'success') {
-console.log('inner media_transcode_status---->' + media_transcode_status);									
 									// Get screen area display height
 									var width = parseInt($("#tab-content")
 											.width());
@@ -281,7 +272,7 @@ console.log('inner media_transcode_status---->' + media_transcode_status);
 									source += '<div><video controls poster="'
 											+ _media_thumbnail + '" width="'
 											+ width + '" height="' + height
-											+ ' preload="none">';
+											+ ' preload="none" crossorigin="use-credentials">';
 									if ((userBrowser[0].ios)
 											|| (userBrowser[1].browser == "Safari")) {
 										source += '<source  src="'
@@ -294,8 +285,6 @@ console.log('inner media_transcode_status---->' + media_transcode_status);
 									}
 									source += '</video><div>';
 									$(".user-resources").append(source);
-console.log('thumbnail---->' + _media_thumbnail);									
-console.log('source---->' + source);
 									//edit-area-scroll
 									edit_source += '<li class="video-media">';
 									edit_source += '<a class="video-resource image-sync" id="'
@@ -308,14 +297,12 @@ console.log('source---->' + source);
 											+ '"/>'
 											+ '<img class="overlay-videoimg" src="/memreas/img/video-overlay.png" />'
 											+ '</a><img src="/memreas/img/gallery-select.png"></li>';
-console.log('edit_source---->' + edit_source);
 									$(".edit-area-scroll").append(edit_source);
 									//.preload-files.pics
 									preload_source += 
 										'<li class="video-media"><img src="'
 										+ _media_thumbnail
 										+ '"/></li>';
-console.log('preload_source---->' + preload_source);
 									$(".preload-files.pics").append(preload_source);
 								} else {
 									$(".user-resources")

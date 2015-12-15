@@ -173,13 +173,24 @@ class IndexController extends AbstractActionController {
 			$_SESSION ['user_id'] = ( string ) $data->loginresponse->user_id;
 			$_SESSION ['username'] = ( string ) $data->loginresponse->username;
 			
-			$domain = 'memreas.com';
+			$domain = '.memreas.com';
 			// $this->setSignedCookie ( "CloudFront-Policy", $data->loginresponse->CloudFrontPolicy, $domain );
 			// $this->setSignedCookie ( "CloudFront-Signature", $data->loginresponse->CloudFrontSignature, $domain );
 			// $this->setSignedCookie ( "CloudFront-Key-Pair-Id", $data->loginresponse->CloudFrontKeyPairId, $domain );
-			setrawcookie ( "CloudFront-Policy", $data->loginresponse->CloudFrontPolicy, 0, "/*", $domain, 1, 1 );
-			setrawcookie ( "CloudFront-Signature", $data->loginresponse->CloudFrontSignature, 0, "/*", $domain, 1, 1 );
-			setrawcookie ( "CloudFront-Key-Pair-Id", $data->loginresponse->CloudFrontKeyPairId, 0, "/*", $domain, 1, 1 );
+			$cloudFrontPolicy = $data->loginresponse->CloudFrontPolicy;
+			$cloudFrontSignature = $data->loginresponse->CloudFrontSignature;
+			$cloudFrontKeyPairId = $data->loginresponse->CloudFrontKeyPairId;
+			
+			// setrawcookie ( "CloudFront-Policy", "$cloudFrontPolicy", 0, "/", $domain, 1, 1 );
+			// setrawcookie ( "CloudFront-Signature", "$cloudFrontSignature", 0, "/", $domain, 1, 1 );
+			// setrawcookie ( "CloudFront-Key-Pair-Id", "$cloudFrontKeyPairId", 0, "/", $domain, 1, 1 );
+			setrawcookie ( "CloudFront-Policy", $cloudFrontPolicy );
+			setrawcookie ( "CloudFront-Signature", $cloudFrontSignature );
+			setrawcookie ( "CloudFront-Key-Pair-Id", $cloudFrontKeyPairId );
+			// header ( "Set-Cookie: CloudFront-Policy=$cloudFrontPolicy; path=/; domain=$domain; secure; httpOnly", false );
+			// header ( "Set-Cookie: CloudFront-Signature=$cloudFrontSignature; path=/; domain=$domain; secure; httpOnly", false );
+			// header ( "Set-Cookie: CloudFront-Key-Pair-Id=$cloudFrontPolicy; path=/; domain=$domain; secure; httpOnly", false );
+			
 			Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__ . '$data->loginresponse->CloudFrontPolicy', $data->loginresponse->CloudFrontPolicy );
 			Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__ . '$data->loginresponse->CloudFrontSignature', $data->loginresponse->CloudFrontSignature );
 			Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__ . '$data->loginresponse->CloudFrontKeyPairId', $data->loginresponse->CloudFrontKeyPairId );
@@ -256,6 +267,9 @@ class IndexController extends AbstractActionController {
 		
 		$path = "application/index/memreas_one_page.phtml";
 		error_log ( 'routing to $path--->' . $path );
+		Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__ . "::", "CloudFrontPolicy::" . $_COOKIE ["CloudFront-Policy"] );
+		Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__ . "::", "CloudFrontSignature::" . $_COOKIE ["CloudFront-Signature"] );
+		Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__ . "::", "CloudFrontKeyPairId::" . $_COOKIE ["CloudFront-Key-Pair-Id"] );
 		
 		$view = new ViewModel ( array (
 				'data' => $s3Token,
@@ -263,7 +277,10 @@ class IndexController extends AbstractActionController {
 				'enableSellMedia' => MemreasConstants::MEMREAS_SELL_MEDIA,
 				'stripeUrl' => $this->stripe_url,
 				'PaymentTabs' => $payment_tabs,
-				'app_version' => MemreasConstants::VERSION 
+				'app_version' => MemreasConstants::VERSION,
+				"CloudFrontPolicy" => $_COOKIE ["CloudFront-Policy"],
+				"CloudFrontSignature" => $_COOKIE ["CloudFront-Signature"],
+				"CloudFrontKeyPairId" => $_COOKIE ["CloudFront-Key-Pair-Id"] 
 		) );
 		// error_log ( 'Inside memreasAction path---->' . $path . PHP_EOL );
 		

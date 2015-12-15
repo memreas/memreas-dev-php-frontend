@@ -31,25 +31,29 @@ ajaxRequest = function(action, params, success_func, error_func,
 	data.type = "jsonp";
 	data.json = xml_input;
 	data.callback = '';
-	
+
 	var json_data = JSON.stringify(data);
 	var cookies = document.cookie.split(";");
 	if (!disableLoadingScreen) {
 		$('#loadingpopup').fadeIn(1000);
 		pushStackAjax(action);
 	}
-	
-	$.ajax({
-				//xhrFields : {
-				//	withCredentials : true
-				//},
+
+	$
+			.ajax({
+				// xhrFields : {
+				// withCredentials : true
+				// },
 				beforeSend : function(xhr) {
-					for (var i = 0; i < cookies.length; i++) {
-						console.log("cookies["+i+"]::"+cookies[i]);
-						xhr.setRequestHeader("Cookie", cookies[i]);
-					}
-					var cookies = '';
-					alert("request action->"+action + "\n cookies->" + cookies)
+					//var ca = document.cookie.split(';');
+					//var cookies = '';
+					//for (var i = 0; i < cookies.length; i++) {
+					//	console.log("cookies[" + i + "]::" + cookies[i]);
+					//	xhr.setRequestHeader("Cookie", cookies[i]);
+					//}
+					//console.log("before send request action->" + action
+					//		+ "\n cookies->" + cookies)
+					console.log("before send cookies---> " + document.cookie);
 				},
 				crossDomain : true,
 				type : 'post',
@@ -57,32 +61,49 @@ ajaxRequest = function(action, params, success_func, error_func,
 				dataType : 'jsonp',
 				data : 'json=' + json_data,
 				success : function(ret_xml) {
-					if (action == 'login') {
-						// fetch values 
-						var strCloudFrontPolicy = getValueFromXMLTag(ret_xml, 'CloudFrontPolicy')
-						var strCloudFrontSignature = getValueFromXMLTag(ret_xml, 'CloudFrontSignature')
-						var strCloudFrontKeyPairId = getValueFromXMLTag(ret_xml, 'CloudFrontKeyPairId')
-						
-						if (strCloudFrontPolicy != '') {
-							//set cookies based on return xml - CORS not to be trusted :)
-							setCookie("CloudFront-Policy", strCloudFrontPolicy);
-							setCookie("CloudFront-Signature", strCloudFrontSignature);
-							setCookie("CloudFront-Key-Pair-Id", strCloudFrontKeyPairId);
-							//$.cookie("CloudFront-Policy", strCloudFrontPolicy, {expires : 0, path : '/',	domain  : 'memreas.com', secure : true});
-							//$.cookie("CloudFront-Signature", strCloudFrontSignature, {expires : 0, path : '/',	domain  : 'memreas.com', secure : true});
-							//$.cookie("CloudFront-Key-Pair-Id", strCloudFrontKeyPairId, {expires : 0, path : '/',	domain  : 'memreas.com', secure : true});
-						}
-						// Show all cookies
-						var ca = document.cookie.split(';');
-						var cookies = '';
-						for(var i=0; i<ca.length; i++) {
-						    var c = ca[i];
-						    console.log("action" + action + " cookie::"+c);
-						    cookies += "cookie::"+c + "\n"
-						}
-						alert("response action->"+action + "\n cookies->" + cookies)
-					} // end login specific entries
-					
+
+					// if (action = 'login') {
+					// console.log('login return xml --->' + ret_xml);
+					//
+					// //
+					// // Login - set cookies
+					// //
+					// var strCloudFrontPolicy = getValueFromXMLTag(ret_xml,
+					// 'CloudFrontPolicy')
+					// if (strCloudFrontPolicy != '') {
+					// // fetch values
+					// var strCloudFrontSignature = getValueFromXMLTag(
+					// ret_xml, 'CloudFrontSignature')
+					// var strCloudFrontKeyPairId = getValueFromXMLTag(
+					// ret_xml, 'CloudFrontKeyPairId')
+					//
+					// console.log("CloudFront-Policy "
+					// + strCloudFrontPolicy);
+					// console.log("CloudFront-Signature "
+					// + strCloudFrontSignature);
+					// console.log("CloudFront-Key-Pair-Id "
+					// + strCloudFrontKeyPairId);
+					// // set cookies based on return xml - CORS not to be
+					// // trusted :)
+					// setCookie("CloudFront-Policy", strCloudFrontPolicy);
+					// setCookie("CloudFront-Signature",
+					// strCloudFrontSignature);
+					// setCookie("CloudFront-Key-Pair-Id",
+					// strCloudFrontKeyPairId);
+					//
+					// // Show all cookies
+					// var ca = document.cookie.split(';');
+					// var cookies = '';
+					// for (var i = 0; i < ca.length; i++) {
+					// var c = ca[i];
+					// console
+					// .log("action" + action + " cookie::"
+					// + c);
+					// cookies += "cookie::" + c + "\n"
+					// }
+					// }
+					// } // end login specific entries
+
 					if (action != 'findtag' && action != 'findevent') {
 						if (getValueFromXMLTag(ret_xml, 'error').trim() == 'Please Login') {
 							document.location.href = "/index";
@@ -116,8 +137,9 @@ ajaxRequest = function(action, params, success_func, error_func,
 	return false;
 }
 
-setCookie = function(cname,cvalue) {
-	document.cookie = cname + "=" + cvalue + "; path=/*; expires=" + 0 + " domain=memreas.com secure=true";
+setCookie = function(cname, cvalue) {
+	document.cookie = cname + "=" + cvalue + "; path=/*; expires=" + 0
+			+ " domain=memreas.com secure=true";
 }
 
 getXMLStringFromParamArray = function(action, params) {
@@ -280,7 +302,7 @@ getXMLStringFromParamArray = function(action, params) {
 	default:
 		break;
 	}
-	//alert(getCookie("memreas"));
+	// alert(getCookie("memreas"));
 	xml_str += "<memreascookie>" + getCookie("memreas") + "</memreascookie>";
 	xml_str += "<" + action_tag + ">";
 	getSubXMLStringFromParamArray(params);

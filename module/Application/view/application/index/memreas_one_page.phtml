@@ -13,6 +13,11 @@ $username = ! empty ( $_SESSION ['username'] ) ? ($_SESSION ['username']) : '';
 <html class="ads">
 <?php else: ?>
 
+
+
+
+
+
 <html class="noads">
 <?php endif; ?>
     <head>
@@ -21,6 +26,14 @@ $username = ! empty ( $_SESSION ['username'] ) ? ($_SESSION ['username']) : '';
 	content="user-scalable-no,initial-scale=1.0, minimum-scale=1.0,maximum-scale=1.0">
 <title>memreas</title>
 
+<script type="text/javascript">
+			console.log("entered memreas one page...");
+			<?php if (!empty($this->CloudFrontPolicy)) { ?>
+			console.log("$this->CloudFrontPolicy is not empty!!");
+			console.log("cookies set...");
+			console.log(document.cookie);
+			<?php } ?>
+		</script>	
         <?php include('onepage/css_section.phtml'); ?>
         <?php include('onepage/js_head.phtml'); ?>
     </head>
