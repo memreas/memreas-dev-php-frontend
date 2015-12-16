@@ -66,6 +66,8 @@ class IndexController extends AbstractActionController {
 				] 
 		] );
 		
+		error_log ( '$response->getBody ()---->' . $xml );
+		
 		return $response->getBody ();
 	}
 	public function indexAction() {
@@ -93,10 +95,10 @@ class IndexController extends AbstractActionController {
 			$this->memreas_session ();
 			error_log ( "Enter FE indexAction" . PHP_EOL );
 			// Checking headers for cookie info
-			// $headers = apache_request_headers ();
-			// foreach ( $headers as $header => $value ) {
-			// error_log ( "FE header: $header :: value: $value" . PHP_EOL );
-			// }
+			$headers = apache_request_headers ();
+			foreach ( $headers as $header => $value ) {
+				error_log ( "FE header: $header :: value: $value" . PHP_EOL );
+			}
 			// End Checking headers for cookie info
 			
 			$path = $this->security ( "application/index/index.phtml" );
@@ -136,7 +138,9 @@ class IndexController extends AbstractActionController {
 			$xml = $message_data ['json'];
 			
 			// Guzzle the Web Service
+			Mlog::addone ( '$this->fetchXML ( $ws_action, $xml )', "this->fetchXML ( $ws_action, $xml )" );
 			$result = $this->fetchXML ( $ws_action, $xml );
+			Mlog::addone ( '$result--->', $result );
 			$json = json_encode ( $result );
 			
 			// Handle session
@@ -177,9 +181,9 @@ class IndexController extends AbstractActionController {
 			// $this->setSignedCookie ( "CloudFront-Policy", $data->loginresponse->CloudFrontPolicy, $domain );
 			// $this->setSignedCookie ( "CloudFront-Signature", $data->loginresponse->CloudFrontSignature, $domain );
 			// $this->setSignedCookie ( "CloudFront-Key-Pair-Id", $data->loginresponse->CloudFrontKeyPairId, $domain );
-			$cloudFrontPolicy = $data->loginresponse->CloudFrontPolicy;
-			$cloudFrontSignature = $data->loginresponse->CloudFrontSignature;
-			$cloudFrontKeyPairId = $data->loginresponse->CloudFrontKeyPairId;
+			// $cloudFrontPolicy = $data->loginresponse->CloudFrontPolicy;
+			// $cloudFrontSignature = $data->loginresponse->CloudFrontSignature;
+			// $cloudFrontKeyPairId = $data->loginresponse->CloudFrontKeyPairId;
 			
 			// setrawcookie ( "CloudFront-Policy", "$cloudFrontPolicy", 0, "/", $domain, 1, 1 );
 			// setrawcookie ( "CloudFront-Signature", "$cloudFrontSignature", 0, "/", $domain, 1, 1 );
@@ -191,9 +195,9 @@ class IndexController extends AbstractActionController {
 			// header ( "Set-Cookie: CloudFront-Signature=$cloudFrontSignature; path=/; domain=$domain; secure; httpOnly", false );
 			// header ( "Set-Cookie: CloudFront-Key-Pair-Id=$cloudFrontPolicy; path=/; domain=$domain; secure; httpOnly", false );
 			
-			Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__ . '$data->loginresponse->CloudFrontPolicy', $data->loginresponse->CloudFrontPolicy );
-			Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__ . '$data->loginresponse->CloudFrontSignature', $data->loginresponse->CloudFrontSignature );
-			Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__ . '$data->loginresponse->CloudFrontKeyPairId', $data->loginresponse->CloudFrontKeyPairId );
+			// Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__ . '$data->loginresponse->CloudFrontPolicy', $data->loginresponse->CloudFrontPolicy );
+			// Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__ . '$data->loginresponse->CloudFrontSignature', $data->loginresponse->CloudFrontSignature );
+			// Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__ . '$data->loginresponse->CloudFrontKeyPairId', $data->loginresponse->CloudFrontKeyPairId );
 			error_log ( __CLASS__ . __METHOD__ . __LINE__ . "Cookies->" . print_r ( $_COOKIE, true ) . PHP_EOL );
 			
 			$this->memreas_session ();
@@ -338,6 +342,7 @@ class IndexController extends AbstractActionController {
 	 * Login Action
 	 */
 	public function loginAction() {
+		Mlog::addone('Enter::','loginAction()')
 		$this->memreas_session ();
 		// error_log ( "Inside loginAction" . PHP_EOL );
 		
@@ -349,11 +354,12 @@ class IndexController extends AbstractActionController {
 		// $password = $postData ['password'];
 		$userid = $postData ['status_user_id'];
 		if (empty ( $userid )) {
-			error_log ( 'routing to index' );
+			Mlog::addone ( 'Returning view::', 'this->redirect ()->toRoute ( index, array (action => index) )' );
 			return $this->redirect ()->toRoute ( 'index', array (
 					'action' => "index" 
 			) );
 		} else {
+			Mlog::addone ( 'Returning view::', 'this->redirect ()->toRoute ( index, array (action => memreas) )' );
 			return $this->redirect ()->toRoute ( 'index', array (
 					'action' => 'memreas' 
 			) );
