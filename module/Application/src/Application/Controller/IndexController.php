@@ -342,7 +342,7 @@ class IndexController extends AbstractActionController {
 	 * Login Action
 	 */
 	public function loginAction() {
-		Mlog::addone('Enter::','loginAction()')
+		Mlog::addone ( 'Enter::', 'loginAction()' );
 		$this->memreas_session ();
 		// error_log ( "Inside loginAction" . PHP_EOL );
 		
