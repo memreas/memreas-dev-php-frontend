@@ -272,7 +272,7 @@ jQuery.fetch_server_media = function() {
 									source += '<div><video controls poster="'
 											+ _media_thumbnail + '" width="'
 											+ width + '" height="' + height
-											+ ' preload="none" crossorigin="use-credentials">';
+											+ ' preload="none">';
 									if ((userBrowser[0].ios)
 											|| (userBrowser[1].browser == "Safari")) {
 										source += '<source  src="'
