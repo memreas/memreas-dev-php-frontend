@@ -278,6 +278,7 @@ jQuery.fetch_server_media = function() {
 										source += '<source  src="'
 												+ _media_url_hls
 												+ '" type="application/x-mpegurl">';
+										console.log("_media_url_hls" + _media_url_hls);
 									} else {
 										source += '<source src="'
 												+ _media_url_web
