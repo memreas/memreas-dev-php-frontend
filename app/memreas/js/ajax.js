@@ -62,48 +62,6 @@ ajaxRequest = function(action, params, success_func, error_func,
 				data : 'json=' + json_data,
 				success : function(ret_xml) {
 
-					// if (action = 'login') {
-					// console.log('login return xml --->' + ret_xml);
-					//
-					// //
-					// // Login - set cookies
-					// //
-					// var strCloudFrontPolicy = getValueFromXMLTag(ret_xml,
-					// 'CloudFrontPolicy')
-					// if (strCloudFrontPolicy != '') {
-					// // fetch values
-					// var strCloudFrontSignature = getValueFromXMLTag(
-					// ret_xml, 'CloudFrontSignature')
-					// var strCloudFrontKeyPairId = getValueFromXMLTag(
-					// ret_xml, 'CloudFrontKeyPairId')
-					//
-					// console.log("CloudFront-Policy "
-					// + strCloudFrontPolicy);
-					// console.log("CloudFront-Signature "
-					// + strCloudFrontSignature);
-					// console.log("CloudFront-Key-Pair-Id "
-					// + strCloudFrontKeyPairId);
-					// // set cookies based on return xml - CORS not to be
-					// // trusted :)
-					// setCookie("CloudFront-Policy", strCloudFrontPolicy);
-					// setCookie("CloudFront-Signature",
-					// strCloudFrontSignature);
-					// setCookie("CloudFront-Key-Pair-Id",
-					// strCloudFrontKeyPairId);
-					//
-					// // Show all cookies
-					// var ca = document.cookie.split(';');
-					// var cookies = '';
-					// for (var i = 0; i < ca.length; i++) {
-					// var c = ca[i];
-					// console
-					// .log("action" + action + " cookie::"
-					// + c);
-					// cookies += "cookie::" + c + "\n"
-					// }
-					// }
-					// } // end login specific entries
-
 					if (action != 'findtag' && action != 'findevent') {
 						if (getValueFromXMLTag(ret_xml, 'error').trim() == 'Please Login') {
 							document.location.href = "/index";
