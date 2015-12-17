@@ -73,7 +73,7 @@ class IndexController extends AbstractActionController {
 		return $response->getBody ();
 	}
 	public function indexAction() {
-		Mlog::addone ( __CLASS__ . __METHOD__ . 'enter', '' );
+		Mlog::addone ( __CLASS__ . __METHOD__ . 'enter', 'indexAction' );
 		// Start buffering so cookies are set
 		//
 		// Check Headers sent
@@ -593,7 +593,7 @@ class IndexController extends AbstractActionController {
 		} else {
 			$this->ipAddress = $_SERVER ['REMOTE_ADDR'];
 		}
-		// error_log ( 'ip is ' . $this->ipAddress );
+		error_log ( 'ip is ' . $this->ipAddress );
 		
 		return $this->ipAddress;
 	}
