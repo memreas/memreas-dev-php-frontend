@@ -53,12 +53,17 @@ class IndexController extends AbstractActionController {
 		 */
 		$guzzle = new \GuzzleHttp\Client ();
 		Mlog::addone ( __CLASS__ . __METHOD__ . 'about to guzzle url+action+xml', $this->url . $action . $xml );
-		$response = $guzzle->post ( $this->url, [ 
-				'form_params' => [ 
-						'action' => $action,
-						'xml' => $xml 
-				] 
-		] );
+		try {
+			$response = $guzzle->post ( $this->url, [ 
+					'form_params' => [ 
+							'action' => $action,
+							'xml' => $xml 
+					] 
+			] );
+		} catch ( \Exception $exc ) {
+			Mlog::addone ( __CLASS__ . __METHOD__ . 'guzzle exception::' . $e->getMessage () );
+		}
+		
 		Mlog::addone ( __CLASS__ . __METHOD__ . 'about to guzzle url+action+xml', $this->url . $action . $xml );
 		
 		error_log ( '$response->getBody ()---->' . $response->getBody () );
