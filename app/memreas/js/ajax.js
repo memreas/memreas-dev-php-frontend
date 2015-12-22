@@ -80,8 +80,8 @@ ajaxRequest = function(action, params, success_func, error_func,
 						$('#loadingpopup').fadeOut(500);
 				},
 				error : function(jqXHR, textStatus, errorThrown) {
-					// alert(jqXHR.responseText);
-					// alert(jqXHR.status);
+					//alert(jqXHR.responseText);
+					//alert(jqXHR.status);
 					if (!disableLoadingScreen)
 						removeItem(stackAjaxInstance, action);
 

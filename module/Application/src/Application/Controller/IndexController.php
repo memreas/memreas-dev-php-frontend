@@ -61,7 +61,7 @@ class IndexController extends AbstractActionController {
 					] 
 			] );
 		} catch ( \Exception $exc ) {
-			Mlog::addone ( __CLASS__ . __METHOD__ . 'guzzle exception::' . $e->getMessage () );
+			Mlog::addone ( __CLASS__ . __METHOD__ . 'guzzle exception::', $exc->getMessage () );
 		}
 		
 		Mlog::addone ( __CLASS__ . __METHOD__ . 'about to guzzle url+action+xml', $this->url . $action . $xml );
