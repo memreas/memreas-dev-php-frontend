@@ -9,7 +9,5 @@ nbproject
 .log
 composer.lock
 composer.phar
-data
+data/session/*
 
-# Elastic Beanstalk Files
-.elasticbeanstalk
