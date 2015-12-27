@@ -269,22 +269,51 @@ jQuery.fetch_server_media = function() {
 									//
 									// video tag control
 									//
-									source += '<div><video controls poster="'
+									/*source += '<video controls="" poster="'
 											+ _media_thumbnail + '" width="'
 											+ width + '" height="' + height
-											+ ' preload="none">';
-									if ((userBrowser[0].ios)
+											+ ' preload="none" autoplay="">';*/
+//                                                                        source += '<video controls="" poster="'
+//											+ _media_thumbnail + '" width="600" height="' + height
+//											+ ' preload="auto" autoplay="">';        
+//									if ((userBrowser[0].ios)
+//											|| (userBrowser[1].browser == "Safari")) {
+//										source += '<source  src="'
+//												+ _media_url_hls
+//												+ '" type="video/webm">';
+//										console.log("_media_url_hls-> " + _media_url_hls);
+//									} else {
+//										source += '<source src="'
+//												+ _media_url_web
+//												+ '" type="video/mp4">';
+//									}
+//									source += '</video>'; 
+
+                                                                            if ((userBrowser[0].ios)
 											|| (userBrowser[1].browser == "Safari")) {
-										source += '<source  src="'
-												+ _media_url_hls
-												+ '" type="application/x-mpegurl">';
-										console.log("_media_url_hls-> " + _media_url_hls);
-									} else {
+//										source += '<source  src="'
+//												+ _media_url_hls
+//												+ '" type="video/webm">';
+//										console.log("_media_url_hls-> " + _media_url_hls);
+
+                                                                                source +=' <a href="'+_media_url_web+'" data-img="'+_media_thumbnail+'"  data-video="true" ><img src="'+_media_thumbnail+'"></a>';
+									}else{
+                                                                           
+                                                                        source += '<video controls="" poster="'
+											+ _media_thumbnail + '"  width="'
+											+ width + '"  height="' + height
+											+ '" preload="auto" autoplay="">';        
+									
 										source += '<source src="'
 												+ _media_url_web
 												+ '" type="video/mp4">';
-									}
-									source += '</video><div>';
+									
+									source += '</video>'; 
+                                                                        }
+                                                                            
+                                                                         
+ 
+           
 									$(".user-resources").append(source);
 									//edit-area-scroll
 									edit_source += '<li class="video-media">';
