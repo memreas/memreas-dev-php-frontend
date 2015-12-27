@@ -100,8 +100,7 @@ class IndexController extends AbstractActionController {
 			$result = '<pre>' . file_get_contents ( getcwd () . '/php_errors.log' );
 			echo $result;
 			// End buffering and flush
-			ob_end_clean ();
-			ob_flush ();
+			ob_end_flush ();
 			exit ();
 		} else {
 			
