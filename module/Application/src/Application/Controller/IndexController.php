@@ -90,6 +90,16 @@ class IndexController extends AbstractActionController {
 			// End buffering and flush
 			ob_end_clean ();
 			exit ();
+		} else if ($actionname == "showlog") {
+			/*
+			 * Cache
+			 * Approach:
+			 * N/a
+			 */
+			echo '<pre>' . file_get_contents ( getcwd () . '/php_errors.log' );
+			// End buffering and flush
+			ob_end_clean ();
+			exit ();
 		} else {
 			
 			$this->memreas_session ();
