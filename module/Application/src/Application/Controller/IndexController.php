@@ -96,9 +96,12 @@ class IndexController extends AbstractActionController {
 			 * Approach:
 			 * N/a
 			 */
-			echo '<pre>' . file_get_contents ( getcwd () . '/php_errors.log' );
+			Mlog::addone ( __CLASS__ . __METHOD . __LINE . "showlog-->", "called..." );
+			$result = '<pre>' . file_get_contents ( getcwd () . '/php_errors.log' );
+			echo $result;
 			// End buffering and flush
 			ob_end_clean ();
+			ob_flush ();
 			exit ();
 		} else {
 			
