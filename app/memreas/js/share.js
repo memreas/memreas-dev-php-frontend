@@ -532,10 +532,26 @@ share_clearMemreas = function(confirmed) {
 
 // click event function for "public (anyone can add or post)" checkbox.
 share_clickCkbPublic = function() {
+     
+       $(this).toggleClass('public_ck_attr');
 	if (!getCheckBoxValue('ckb_public')) {
 		setCheckBoxValue('ckb_canpost', true);
 		setCheckBoxValue('ckb_canadd', true);
 	}
+        if($('#ckb_public').is(":checked")){
+           
+            $('#ckb_canpost').removeAttr('disabled');
+             $('#ckb_canadd').removeAttr('disabled');
+           
+           
+        }else{
+           
+             $('#ckb_canpost').removeAttr('checked');
+            $('#ckb_canadd').removeAttr('checked');
+            $('#ckb_canpost').attr('disabled','disabled');
+            $('#ckb_canadd').attr('disabled','disabled');
+            
+        }
 }
 
 // go to the other page (1: memreas details, 2: media, 3: friends)
