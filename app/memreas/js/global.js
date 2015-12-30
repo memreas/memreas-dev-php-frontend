@@ -48,7 +48,7 @@ function checkUserresourcesId(medias){
               $(this).attr("id",mediaId);
     	  });
  		c++;
- 	 });
+ 	 });      
  	if(!checkUserresourcesHasid()){
  		setTimeout(function(){
  			checkUserresourcesId(medias);
@@ -105,7 +105,7 @@ function ajaxScrollbarElement(element_object){
 }
 
 function getMediaUrl(element_object, mediatype){
-    var photo_tags = ['media_url_448x306', 'media_url_1280x720'];
+    var photo_tags = ['media_url_1280x720','media_url_448x306'];
     var video_tags = ['media_url_hls', 'media_url_web', 'media_url_1080p' ];
 
     switch (mediatype){

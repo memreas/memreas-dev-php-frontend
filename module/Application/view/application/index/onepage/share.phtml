@@ -3,7 +3,7 @@
         <div class="row-fluid">
             <ul id="tabs-share" class="medium_tabs">
                 <li><a href="#" title="tab1-share">memreas details</a></li>
-                <li><a href="#" title="tab2-share">media</a></li>
+                <li><a href="#" title="tab2-share" style="pointer-events: none; cursor: default;">media</a></li>
                 <li><a href="#" title="tab3-share">friends</a></li>
             </ul>
             <div id="tab-content-share">
@@ -13,12 +13,14 @@
                         <li>
                             <label class="textfield_names">name :</label>
                             <div class="input-wrap share-event-name">
-                                <input name="input" type="text" id="txt_name" class="share-txtfield" value="sample" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'sample')this.value = '';"/>
+<!--                                <input name="input" type="text" id="txt_name" class="share-txtfield" value="sample" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'sample')this.value = '';"/>-->
+                                <input name="input" type="text" id="txt_name" class="share-txtfield" value="" placeholder="sample" >
                             </div>
                         </li>
                         <li>
                             <label class="textfield_names">date :</label>
-                            <input name="input" type="text" id="dtp_date" class="share-txtfield date-picker" readonly value="from" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'from')this.value = '';"/>
+<!--                            <input name="input" type="text" id="dtp_date" class="share-txtfield date-picker" readonly value="from" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'from')this.value = '';"/>-->
+                            <input name="input" type="text" id="dtp_date" class="share-txtfield date-picker" readonly value="from" placeholder="From">
                         </li>
                         <li>
                             <label class="textfield_names">location :</label>
@@ -39,8 +41,8 @@
                         <li>
                              <input id="ckb_viewable" class="css-checkbox" type="checkbox" />
                              <label id="lbl-viewable" for="ckb_viewable" name="demo_lbl_4" class="css-label margin-none" >viewable :</label>
-                             <input name="input" type="text" id="dtp_from" class="date-picker" readonly value="from" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'from')this.value = '';" disabled />
-                             <input name="input" type="text" id="dtp_to" class="date-picker" readonly value="to" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'to')this.value = '';" disabled />
+                             <input name="input" type="text" id="dtp_from" class="date-picker" readonly value="from" placeholder="From" disabled />
+                             <input name="input" type="text" id="dtp_to" class="date-picker" readonly value="to" placeholder="To" disabled />
                         </li>
                         <li>
                          <input id="ckb_selfdestruct" class="css-checkbox" type="checkbox" />

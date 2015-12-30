@@ -149,26 +149,32 @@ jQuery.fetch_server_media = function() {
 	//$(".preload-files .pics").empty().show();
 	if (!document.documentElement.classList.contains('noads')) {
 		if (verticalHeight <= 690) {
+                    //alert('INVE :'+ verticalHeight);
 			$("#tab-content #tab1")
 					.append(
-							'<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/725" data-max-width="100%" data-height="50%" data-allow-full-screen="true"  data-nav="thumbs"></div>');
-		} else if (verticalHeight >= 691 || verticalHeight <= 750) {
-			$("#tab-content #tab1")
-					.append(
-							'<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/725" data-max-width="100%" data-height="53%" data-allow-full-screen="true"  data-nav="thumbs"></div>');
-		} else if (window.innerWidth > 1359 && verticalHeight > 800) {
-			$("#tab-content #tab1")
-					.append(
-							'<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/725" data-max-width="100%" data-height="55%" data-allow-full-screen="true"  data-nav="thumbs"></div>');
-		} else {
-			$("#tab-content #tab1")
-					.append(
-							'<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/725" data-max-width="100%" data-height="100%" data-allow-full-screen="true"  data-nav="thumbs"></div>');
-		}
-	} else {
+							'<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/725" data-max-width="100%" data-height="100%" data-width="100%" data-allow-full-screen="true"  data-nav="thumbs"></div>');
+		} 
+//                else if (verticalHeight >= 691 || verticalHeight <= 750) {
+//                    //alert('INVE2 :'+verticalHeight);
+//			$("#tab-content #tab1")
+//					.append(
+//							'<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/725" data-max-width="100%" data-height="53%" data-allow-full-screen="true"  data-nav="thumbs"></div>');
+//		} else if (window.innerWidth > 1359 && verticalHeight > 800) {
+//                    //alert('INVE3 :'+verticalHeight);
+//			$("#tab-content #tab1")
+//					.append(
+//							'<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/725" data-max-width="100%" data-height="55%" data-allow-full-screen="true"  data-nav="thumbs"></div>');
+//		} else {
+//                   // alert('INVE4 :'+verticalHeight);
+//			$("#tab-content #tab1")
+//					.append(
+//							'<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/725" data-max-width="100%" data-height="100%" data-allow-full-screen="true"  data-nav="thumbs"></div>');
+//		}
+	}
+        else {
 		$("#tab-content #tab1")
 				.append(
-						'<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/725" data-width="100%" data-height="80%" data-allow-full-screen="true"  data-nav="thumbs"></div>');
+						'<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/725" data-width="100%" data-height="100%" data-allow-full-screen="true"  data-nav="thumbs"></div>');
 	}
 	$(".preload-files").hide();
 	$(".user-resources fotorama").hide();
@@ -219,8 +225,10 @@ jQuery.fetch_server_media = function() {
 						var _media_url_1080p = '';
 						var _media_url_web = '';
 						var _media_thumbnail = ''
+                                                //var main_media_url='';
 						if (_media_type == 'image') {
 							_media_url = getMediaUrl(media, _media_type);
+                                                        //main_media_url=getMediaUrl(media,main_media_url);
 						} else if (_media_type == 'video') {
 							_media_url_hls = getValueFromXMLTag(media,
 									'media_url_hls');
@@ -298,17 +306,19 @@ jQuery.fetch_server_media = function() {
 
                                                                                 source +=' <a href="'+_media_url_web+'" data-img="'+_media_thumbnail+'"  data-video="true" ><img src="'+_media_thumbnail+'"></a>';
 									}else{
+                                                                            
+                                                                            source +=' <a href="'+_media_url_web+'" data-img="'+_media_thumbnail+'"  data-video="true" ><img src="'+_media_thumbnail+'"></a>';
                                                                            
-                                                                        source += '<video controls="" poster="'
-											+ _media_thumbnail + '"  width="'
-											+ width + '"  height="' + height
-											+ '" preload="auto" autoplay="">';        
-									
-										source += '<source src="'
-												+ _media_url_web
-												+ '" type="video/mp4">';
-									
-									source += '</video>'; 
+//                                                                        source += '<video controls="" poster="'
+//											+ _media_thumbnail + '"  width="'
+//											+ width + '"  height="' + height
+//											+ '" preload="auto" autoplay="">';        
+//									
+//										source += '<source src="'
+//												+ _media_url_web
+//												+ '" type="video/mp4">';
+//									
+//									source += '</video>'; 
                                                                         }
                                                                             
                                                                          
@@ -351,9 +361,10 @@ jQuery.fetch_server_media = function() {
 						} else {
 							//
 							// Image section
-							//
+							//alert(_media_url);
+                                                        console.log('Media URL:: '+_media_url);
 							$(".user-resources").append(
-									'<img src="' + _media_url + '"/>');
+									'<img src="' + _media_url + '" style="width:100% !important;"/>');
 							$(".edit-area-scroll")
 									.append(
 											'<li><a class="image-sync" id="'
@@ -387,8 +398,8 @@ jQuery.fetch_server_media = function() {
 						$(".user-resources").fotorama({
 							width : '800',
 							height : '350',
-							'max-width' : '100%',
-							'width' : '100%'
+							'max-width' : '100%'
+							
 						}).fadeIn(500);
 
 						if (!$(".edit-area-scroll")
