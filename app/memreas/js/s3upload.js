@@ -5,7 +5,7 @@
 
 var uploadFilesInstance = []; // Used for store all file name for uploading
 var currentUploadFileCount = 0; // Count for all current files selected for
-								// upload
+// upload
 var contentTypeOfFile = "";
 var mimeTypeOfFile = "";
 var media_id;
@@ -52,26 +52,21 @@ $(document)
 																var filename = data.files[0].name;
 																filename = correctUploadFilename(filename);
 																var filetype = data.files[0].type;
-																// Debugging
-																console
-																		.log('Inside upload...');
-																// End Debugging
-
 																// Get file size
 																var file_size = data.files[0].size; // In
-																									// bytes
+																// bytes
 
 																if (userObject.plan == 'FREE') {
 																	var limited_file_size = FREE_ACCOUNT_FILE_LIMIT * 1000000; // Convert
-																																// to
-																																// bytes
+																	// to
+																	// bytes
 																	var limited_size_message = "Free account has been limited to "
 																			+ FREE_ACCOUNT_FILE_LIMIT
 																			+ " MB per upload";
 																} else {
 																	var limited_file_size = PAID_ACCOUNT_FILE_LIMIT * 1000000; // Convert
-																																// to
-																																// bytes
+																	// to
+																	// bytes
 																	var limited_size_message = "File size has been limited to "
 																			+ PAID_ACCOUNT_FILE_LIMIT
 																			+ " MB per upload";
@@ -104,11 +99,6 @@ $(document)
 																}
 																uploadFilesInstance[currentUploadFileCount] = filename;
 
-																// Debugging
-																console
-																		.log('About to fetch TVM...');
-																// End Debugging
-
 																$
 																		.ajax({
 																			url : "/index/fetchMemreasTVM",
@@ -116,20 +106,12 @@ $(document)
 																			dataType : 'json',
 																			data : {
 																				title : filename
-																			}, // send
-																				// the
-																				// file
-																				// name
-																				// to
-																				// the
-																				// server
-																				// so
-																				// it
-																				// can
-																				// generate
-																				// the
-																				// key
-																				// param
+																			},
+																			/*-
+																			 * send the file name to the server so it
+																			 * can generate the key param
+																			 */
+
 																			async : false,
 																			error : function(
 																					jqXHR,
@@ -142,27 +124,11 @@ $(document)
 																			},
 																			success : function(
 																					data) {
-																				// Now
-																				// that
-																				// we
-																				// have
-																				// our
-																				// data,
-																				// we
-																				// update
-																				// the
-																				// form
-																				// so
-																				// it
-																				// contains
-																				// all
-																				// the
-																				// needed
-																				// data
-																				// to
-																				// sign
-																				// the
-																				// request
+																				/*-
+																				 * Now that we have our data, we update the form
+																				 * so it contains all the needed data
+																				 * to sign the request  
+																				 */
 																				media_id = data.media_id;
 																				form
 																						.find(
@@ -416,9 +382,9 @@ $(document)
 																		&& filetype
 																				.indexOf('image') >= 0) {
 																	var file = data.files[0]; // Files[0]
-																								// =
-																								// 1st
-																								// file
+																	// =
+																	// 1st
+																	// file
 																	var reader = new FileReader();
 																	reader
 																			.readAsDataURL(file);

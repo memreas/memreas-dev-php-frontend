@@ -21,7 +21,7 @@ $(function() {
 		$("#tabs-more li").attr("id", ""); // Reset id's
 		$(this).parent().attr("id", "current"); // Activate this
 		$('#' + $(this).attr('title')).fadeIn(); // Show content for current
-													// tab
+		// tab
 	});
 
 	$("a[title=more]").one('click', function() {
@@ -152,6 +152,66 @@ $(function() {
 								return false;
 							var form = $(this);
 							// Get signed credentials
+							$
+									.ajax({
+										url : "/index/fetchMemreasTVM",
+										type : 'GET',
+										dataType : 'json',
+										data : {
+											title : filename
+										},
+										/*-
+										 * send the file name to the server so it
+										 * can generate the key param
+										 */
+
+										async : false,
+										error : function(jqXHR, status,
+												thrownError) {
+											alert(jqXHR.status);
+											alert(jqXHR.responseText);
+											alert(status);
+											alert(thrownError);
+										},
+										success : function(data) {
+											/*-
+											 * Now that we have our data, we update the form
+											 * so it contains all the needed data
+											 * to sign the request  
+											 */
+											media_id = data.media_id;
+											form.find('input[name=key]').val(
+													data.media_id + '/'
+															+ filename);
+											form.find('input[name=acl]').val(
+													data.acl);
+											form
+													.find(
+															'input[name=success_action_status]')
+													.val(data.successStatus);
+											form.find('input[name=policy]')
+													.val(data.base64Policy);
+											form
+													.find(
+															'input[name=x-amz-algorithm]')
+													.val(data.algorithm)
+											form
+													.find(
+															'input[name=x-amz-credential]')
+													.val(data.credentials)
+											form.find('input[name=x-amz-date]')
+													.val(data.date)
+											form
+													.find(
+															'input[name=x-amz-expires]')
+													.val(data.expires)
+											form
+													.find(
+															'input[name=x-amz-signature]')
+													.val(data.signature)
+										}
+									});
+							/*
 							$.ajax({
 								url : "/index/s3signed",
 								type : 'GET',
@@ -159,7 +219,7 @@ $(function() {
 								data : {
 									title : profile_filename
 								}, // send the file name to the server so it
-									// can generate the key param
+								// can generate the key param
 								async : false,
 								success : function(data) {
 									// Now that we have our data, we update the
@@ -173,6 +233,8 @@ $(function() {
 											data.signature)
 								}
 							})
+							*/
+							
 
 							var filetype = data.files[0].type;
 							var key_value = profile_filename;
@@ -1251,10 +1313,10 @@ function morepage_saveEvent(confirmed) {
 	if (viewable_to != '') {
 		var split_date = viewable_to.split('/');
 		viewable_to = split_date[1] + '-' + split_date[0] + '-' + split_date[2]; // Correct
-																					// date
-																					// format
-																					// to
-																					// d-m-Y
+		// date
+		// format
+		// to
+		// d-m-Y
 	}
 
 	var self_destruct = (($("#morepage_eventSelfDestruct").val() != '') ? $(

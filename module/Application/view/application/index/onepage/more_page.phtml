@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Copyright (C) 2015 memreas llc. - All Rights Reserved
  * Unauthorized copying of this file, via any medium is strictly prohibited
@@ -6,6 +6,7 @@
  */
 ?>
 <?php
+
 use Application\Model\MemreasConstants;
 ?>
 <div class="span11 tabcontent-detail" id="more" style="display: none;">
@@ -48,15 +49,19 @@ use Application\Model\MemreasConstants;
 					<form name="frm_profile_pic" id="frm-profile-pic"
 						enctype="multipart/form-data"
 						action="https://<?php echo MemreasConstants::S3BUCKET; ?>.s3.amazonaws.com/">
-						<input type="hidden" name="key" value="{$filename}"> <input
-							type="hidden" name="AWSAccessKeyId" value=""> <input
-							type="hidden" name="acl" value="public-read"> <input
-							type="hidden" name="success_action_status" value="201"> <input
-							type="hidden" name="policy" value=""> <input type="hidden"
-							name="signature" value=""> <input type="hidden"
-							name="Content-Type" value=""> <input type="file" name="file"
-							id="file"
-							style="opacity: 0; -moz-opacity: 0; -webkit-opacity: 0; filter: alpha(opacity = 0); margin: 0; width: 1px; height: 1px;">
+
+	                    <input type="hidden" name="key" value="">
+    	        				<input type="hidden" name="Content-Type" value="">
+	                    <input type="hidden" name="acl" value="">
+        		    			<input type="hidden" name="success_action_status" value="">
+            				<input type="hidden" name="policy" value="">
+            				<input type="hidden" name="x-amz-algorithm" value="">
+	            			<input type="hidden" name="x-amz-credential" value="">
+    	    	    				<input type="hidden" name="x-amz-date" value="">
+        		    			<input type="hidden" name="x-amz-expires" value="">
+    		        			<input type="hidden" name="x-amz-signature" value="">
+    		        			<input type="hidden" name="x-amz-server-side-encryption" value="AES256">
+						<input type="file" name="file" id="file" style="opacity: 0; -moz-opacity: 0; -webkit-opacity: 0; filter: alpha(opacity = 0); margin: 0; width: 1px; height: 1px;">
 					</form>
 					<a class="black_btn_skin f-center change-profile-btn"
 						href="javascript:;">Change Picture</a>
