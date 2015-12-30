@@ -174,7 +174,7 @@ $(function() {
 										type : 'GET',
 										dataType : 'json',
 										data : {
-											title : filename
+											title : profile_filename
 										},
 										/*-
 										 * send the file name to the server so it
