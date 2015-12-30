@@ -23,8 +23,6 @@ use Application\Model\MemreasConstants;
 					</ul>
 					<!-- Direct Upload to S3 -->
                     <form action="https://<?php echo MemreasConstants::S3BUCKET; ?>.s3.amazonaws.com/" method="POST" enctype="multipart/form-data" class="media-upload">
-
-                    
 	                    <input type="hidden" name="key" value="">
     	        				<input type="hidden" name="Content-Type" value="">
 	                    <input type="hidden" name="acl" value="">

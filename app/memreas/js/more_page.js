@@ -150,6 +150,22 @@ $(function() {
 							profile_filename = correctUploadFilename(profile_filename);
 							if (!$("a[title=more]").hasClass('active'))
 								return false;
+							var filetype = data.files[0].type;
+							
+							var key_value = profile_filename;
+							if (!(filetype.indexOf('image') >= 0)) {
+								jerror('Only image type is allowed.');
+								$("input[name=profile_image]").val(0);
+								return false;
+							}
+							$("input[name=profile_image]").val(1);
+							if (filetype.indexOf('image') >= 0)
+								var target = 'image';
+							else
+								target = 'media';
+
+
+
 							var form = $(this);
 							// Get signed credentials
 							$
@@ -182,7 +198,7 @@ $(function() {
 											media_id = data.media_id;
 											form.find('input[name=key]').val(
 													data.media_id + '/'
-															+ filename);
+															+ profile_filename);
 											form.find('input[name=acl]').val(
 													data.acl);
 											form
@@ -209,54 +225,11 @@ $(function() {
 													.find(
 															'input[name=x-amz-signature]')
 													.val(data.signature)
+													form.find("input[name=Content-Type]").val(
+															filetype);
 										}
 									});
-							/*
-							$.ajax({
-								url : "/index/s3signed",
-								type : 'GET',
-								dataType : 'json',
-								data : {
-									title : profile_filename
-								}, // send the file name to the server so it
-								// can generate the key param
-								async : false,
-								success : function(data) {
-									// Now that we have our data, we update the
-									// form so it contains all
-									// the needed data to sign the request
-									form.find('input[name=AWSAccessKeyId]')
-											.val(data.accessKey);
-									form.find('input[name=policy]').val(
-											data.policy)
-									form.find('input[name=signature]').val(
-											data.signature)
-								}
-							})
-							*/
-							
 
-							var filetype = data.files[0].type;
-							var key_value = profile_filename;
-							$(this).find("input[name=Content-Type]").val(
-									filetype);
-
-							// Check if valid type is image or video are allowed
-							if (!(filetype.indexOf('image') >= 0)) {
-								jerror('Only image type is allowed.');
-								$("input[name=profile_image]").val(0);
-								return false;
-							}
-
-							$("input[name=profile_image]").val(1);
-							if (filetype.indexOf('image') >= 0)
-								var target = 'image';
-							else
-								target = 'media';
-
-							key_value = user_id + '/' + target + '/'
-									+ key_value;
-							$(this).find('input[name=key]').val(key_value);
 							// Use XHR, fallback to iframe
 							options = $(this).fileupload('option');
 							use_xhr = !options.forceIframeTransport
