@@ -1,3 +1,7 @@
+/**
+ * Copyright (C) 2015 memreas llc. - All Rights Reserved Unauthorized copying of
+ * this file, via any medium is strictly prohibited Proprietary and confidential
+ */
 /*
  * Server side
  */
@@ -146,39 +150,37 @@ var checkHasImage = false;
 jQuery.fetch_server_media = function() {
 	var verticalHeight = window.innerHeight;
 	$(".user-resources").remove();
-	//$(".preload-files .pics").empty().show();
+	// $(".preload-files .pics").empty().show();
 	if (!document.documentElement.classList.contains('noads')) {
 		if (verticalHeight <= 690) {
-                    //alert('INVE :'+ verticalHeight);
+			// alert('INVE :'+ verticalHeight);
 			$("#tab-content #tab1")
 					.append(
 							'<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/725" data-max-width="100%" data-height="100%" data-width="100%" data-allow-full-screen="true"  data-nav="thumbs"></div>');
-		} 
-                else if (verticalHeight >= 691 || verticalHeight <= 750) {
-                    //alert('INVE2 :'+verticalHeight);
+		} else if (verticalHeight >= 691 || verticalHeight <= 750) {
+			// alert('INVE2 :'+verticalHeight);
 			$("#tab-content #tab1")
 					.append(
 							'<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/725" data-max-width="100%" data-height="100%" data-width="100%" data-allow-full-screen="true"  data-nav="thumbs"></div>');
 		} else if (window.innerWidth > 1359 && verticalHeight > 800) {
-                    //alert('INVE3 :'+verticalHeight);
+			// alert('INVE3 :'+verticalHeight);
 			$("#tab-content #tab1")
 					.append(
 							'<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/725" data-max-width="100%" data-height="100%" data-width="100%" data-allow-full-screen="true"  data-nav="thumbs"></div>');
 		} else {
-                   // alert('INVE4 :'+verticalHeight);
+			// alert('INVE4 :'+verticalHeight);
 			$("#tab-content #tab1")
 					.append(
 							'<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/725" data-max-width="100%" data-height="100%" data-width="100%" data-allow-full-screen="true"  data-nav="thumbs"></div>');
 		}
-	}
-        else {
+	} else {
 		$("#tab-content #tab1")
 				.append(
 						'<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/725" data-width="100%" data-height="100%" data-allow-full-screen="true"  data-nav="thumbs"></div>');
 	}
 	$(".preload-files").hide();
 	$(".user-resources fotorama").hide();
-	
+
 	$(".edit-area-scroll, .aviary-thumbs, .galleries-location").empty();
 	$(".user-resources, .scrollClass .mCSB_container, .sync .mCSB_container")
 			.html('');
@@ -216,7 +218,6 @@ jQuery.fetch_server_media = function() {
 							.html('');
 					var count_media = medias.length;
 
-					
 					for (var json_key = 0; json_key < count_media; json_key++) {
 						var media = medias[json_key];
 						var _media_type = getValueFromXMLTag(media, 'type');
@@ -225,10 +226,10 @@ jQuery.fetch_server_media = function() {
 						var _media_url_1080p = '';
 						var _media_url_web = '';
 						var _media_thumbnail = ''
-                                                //var main_media_url='';
+						// var main_media_url='';
 						if (_media_type == 'image') {
 							_media_url = getMediaUrl(media, _media_type);
-                                                        //main_media_url=getMediaUrl(media,main_media_url);
+							// main_media_url=getMediaUrl(media,main_media_url);
 						} else if (_media_type == 'video') {
 							_media_url_hls = getValueFromXMLTag(media,
 									'media_url_hls');
@@ -253,11 +254,13 @@ jQuery.fetch_server_media = function() {
 							// Video section
 							//
 
-							//var metadata = getValueFromXMLTag(medias[json_key],
-							//		'metadata');
+							// var metadata =
+							// getValueFromXMLTag(medias[json_key],
+							// 'metadata');
 
-							var media_transcode_status = getValueFromXMLTag(media, 'media_transcode_status');
-							//if (typeof (metadata) != 'undefined') {
+							var media_transcode_status = getValueFromXMLTag(
+									media, 'media_transcode_status');
+							// if (typeof (metadata) != 'undefined') {
 							if (media_transcode_status == 'success') {
 
 								if (media_transcode_status == 'success') {
@@ -273,59 +276,72 @@ jQuery.fetch_server_media = function() {
 									var source = '';
 									var edit_source = '';
 									var preload_source = '';
-									//.user-resources
+									// .user-resources
 									//
 									// video tag control
 									//
-									/*source += '<video controls="" poster="'
-											+ _media_thumbnail + '" width="'
-											+ width + '" height="' + height
-											+ ' preload="none" autoplay="">';*/
-//                                                                        source += '<video controls="" poster="'
-//											+ _media_thumbnail + '" width="600" height="' + height
-//											+ ' preload="auto" autoplay="">';        
-//									if ((userBrowser[0].ios)
-//											|| (userBrowser[1].browser == "Safari")) {
-//										source += '<source  src="'
-//												+ _media_url_hls
-//												+ '" type="video/webm">';
-//										console.log("_media_url_hls-> " + _media_url_hls);
-//									} else {
-//										source += '<source src="'
-//												+ _media_url_web
-//												+ '" type="video/mp4">';
-//									}
-//									source += '</video>'; 
-
-                                                                            if ((userBrowser[0].ios)
+									/*
+									 * source += '<video controls="" poster="' +
+									 * _media_thumbnail + '" width="' + width + '"
+									 * height="' + height + ' preload="none"
+									 * autoplay="">';
+									 */
+									// source += '<video controls="" poster="'
+									// + _media_thumbnail + '" width="600"
+									// height="' + height
+									// + ' preload="auto" autoplay="">';
+									// if ((userBrowser[0].ios)
+									// || (userBrowser[1].browser == "Safari"))
+									// {
+									// source += '<source src="'
+									// + _media_url_hls
+									// + '" type="video/webm">';
+									// console.log("_media_url_hls-> " +
+									// _media_url_hls);
+									// } else {
+									// source += '<source src="'
+									// + _media_url_web
+									// + '" type="video/mp4">';
+									// }
+									// source += '</video>';
+									if ((userBrowser[0].ios)
 											|| (userBrowser[1].browser == "Safari")) {
-//										source += '<source  src="'
-//												+ _media_url_hls
-//												+ '" type="video/webm">';
-//										console.log("_media_url_hls-> " + _media_url_hls);
+										// source += '<source src="'
+										// + _media_url_hls
+										// + '" type="video/webm">';
+										// console.log("_media_url_hls-> " +
+										// _media_url_hls);
 
-                                                                                source +=' <a href="'+_media_url_web+'" data-img="'+_media_thumbnail+'"  data-video="true" ><img src="'+_media_thumbnail+'"></a>';
-									}else{
-                                                                            
-                                                                            source +=' <a href="'+_media_url_web+'" data-img="'+_media_thumbnail+'"  data-video="true" ><img src="'+_media_thumbnail+'"></a>';
-                                                                           
-//                                                                        source += '<video controls="" poster="'
-//											+ _media_thumbnail + '"  width="'
-//											+ width + '"  height="' + height
-//											+ '" preload="auto" autoplay="">';        
-//									
-//										source += '<source src="'
-//												+ _media_url_web
-//												+ '" type="video/mp4">';
-//									
-//									source += '</video>'; 
-                                                                        }
-                                                                            
-                                                                         
- 
-           
+										source += ' <a href="'
+												+ _media_url_web
+												+ '" data-img="'
+												+ _media_thumbnail
+												+ '"  data-video="true" ><img src="'
+												+ _media_thumbnail + '"></a>';
+									} else {
+
+										source += ' <a href="'
+												+ _media_url_web
+												+ '" data-img="'
+												+ _media_thumbnail
+												+ '"  data-video="true" ><img src="'
+												+ _media_thumbnail + '"></a>';
+
+										// source += '<video controls=""
+										// poster="'
+										// + _media_thumbnail + '" width="'
+										// + width + '" height="' + height
+										// + '" preload="auto" autoplay="">';
+										//									
+										// source += '<source src="'
+										// + _media_url_web
+										// + '" type="video/mp4">';
+										//									
+										// source += '</video>';
+									}
+
 									$(".user-resources").append(source);
-									//edit-area-scroll
+									// edit-area-scroll
 									edit_source += '<li class="video-media">';
 									edit_source += '<a class="video-resource image-sync" id="'
 											+ mediaId
@@ -338,12 +354,11 @@ jQuery.fetch_server_media = function() {
 											+ '<img class="overlay-videoimg" src="/memreas/img/video-overlay.png" />'
 											+ '</a><img src="/memreas/img/gallery-select.png"></li>';
 									$(".edit-area-scroll").append(edit_source);
-									//.preload-files.pics
-									preload_source += 
-										'<li class="video-media"><img src="'
-										+ _media_thumbnail
-										+ '"/></li>';
-									$(".preload-files.pics").append(preload_source);
+									// .preload-files.pics
+									preload_source += '<li class="video-media"><img src="'
+											+ _media_thumbnail + '"/></li>';
+									$(".preload-files.pics").append(
+											preload_source);
 								} else {
 									$(".user-resources")
 											.append(
@@ -361,10 +376,13 @@ jQuery.fetch_server_media = function() {
 						} else {
 							//
 							// Image section
-							//alert(_media_url);
-                                                        console.log('Media URL:: '+_media_url);
-							$(".user-resources").append(
-									'<img src="' + _media_url + '" style="width:100% !important;"/>');
+							// alert(_media_url);
+							console.log('Media URL:: ' + _media_url);
+							$(".user-resources")
+									.append(
+											'<img src="'
+													+ _media_url
+													+ '" style="width:100% !important;"/>');
 							$(".edit-area-scroll")
 									.append(
 											'<li><a class="image-sync" id="'
@@ -399,7 +417,7 @@ jQuery.fetch_server_media = function() {
 							width : '800',
 							height : '350',
 							'max-width' : '100%'
-							
+
 						}).fadeIn(500);
 
 						if (!$(".edit-area-scroll")

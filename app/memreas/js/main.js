@@ -1,3 +1,7 @@
+/**
+ * Copyright (C) 2015 memreas llc. - All Rights Reserved Unauthorized copying of
+ * this file, via any medium is strictly prohibited Proprietary and confidential
+ */
 $(document).ready(function() {
 	// Prefetch for image location
 	$.fetch_server_media();
@@ -61,7 +65,7 @@ $(function() {
 		$("#tabs li").attr("id", ""); // Reset id's
 		$(this).parent().attr("id", "current");
 		$('#' + $(this).attr('title')).fadeIn(); // Show content for current
-													// tab
+		// tab
 		ajaxScrollbarElement('#' + $(this).attr('title') + " .scroll-area");
 	});
 
@@ -74,12 +78,12 @@ $(function() {
 		$.get(url, function(data) {
 			$this.removeClass("loading");
 			$("ul.scrollClass .mCSB_container").html(data); // load new content
-															// inside
-															// .mCSB_container
+			// inside
+			// .mCSB_container
 			$("ul.scrollClass").mCustomScrollbar("update"); // update scrollbar
-															// according to
-															// newly loaded
-															// content
+			// according to
+			// newly loaded
+			// content
 			$("ul.scrollClass").mCustomScrollbar("scrollTo", "top", {
 				scrollInertia : 200
 			}); // scroll to top
@@ -92,13 +96,13 @@ $(function() {
 		$.get(url, function(data) {
 			$this.removeClass("loading");
 			$("ul.scrollClass .mCSB_container").append(data); // append new
-																// content
-																// inside
-																// .mCSB_container
+			// content
+			// inside
+			// .mCSB_container
 			$("ul.scrollClass").mCustomScrollbar("update"); // update scrollbar
-															// according to
-															// newly appended
-															// content
+			// according to
+			// newly appended
+			// content
 			$("ul.scrollClass").mCustomScrollbar("scrollTo", "h2:last", {
 				scrollInertia : 2500,
 				scrollEasing : "easeInOutQuad"

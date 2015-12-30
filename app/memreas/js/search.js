@@ -1,3 +1,8 @@
+/**
+ * Copyright (C) 2015 memreas llc. - All Rights Reserved
+ * Unauthorized copying of this file, via any medium is strictly prohibited
+ * Proprietary and confidential
+ */
 $(document).ready(function() {
  var user_id = $("input[name=user_id]").val();
      var throttledRequest = _.debounce(function(query, process)
