@@ -191,14 +191,7 @@ $(function() {
 										},
 										success : function(data) {
 											
-											console.log("data.acl-->"+acl);
-											console.log("data.successStatus-->"+successStatus);
-											console.log("data.base64Policy-->"+base64Policy);
-											console.log("data.algorithm-->"+algorithm);
-											console.log("data.credentials-->"+credentials);
-											console.log("data.expires-->"+expires);
-											console.log("data.date-->"+date);
-											console.log("data.signature-->"+signature);
+											console.log("data-->"+data);
 											
 											/*-
 											 * Now that we have our data, we update the form
