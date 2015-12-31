@@ -190,6 +190,16 @@ $(function() {
 											alert(thrownError);
 										},
 										success : function(data) {
+											
+											console.log("data.acl-->"+acl);
+											console.log("data.successStatus-->"+successStatus);
+											console.log("data.base64Policy-->"+base64Policy);
+											console.log("data.algorithm-->"+algorithm);
+											console.log("data.credentials-->"+credentials);
+											console.log("data.expires-->"+expires);
+											console.log("data.date-->"+date);
+											console.log("data.signature-->"+signature);
+											
 											/*-
 											 * Now that we have our data, we update the form
 											 * so it contains all the needed data
@@ -246,15 +256,17 @@ $(function() {
 							var jqXHR = data.submit();
 						},
 						send : function(e, data) {
-
+							console.log("send function called...");
 						},
 						progress : function(e, data) {
-
+							console.log("progress function called...");
 						},
 						fail : function(e, data) {
 							window.onbeforeunload = null;
 						},
 						success : function(data, status, jqXHR) {
+							console.log("data.submit success...");
+							console.log("data---->" + data);
 							var _media_url = getValueFromXMLTag(
 									jqXHR.responseText, 'Location');
 							var _media_extension = _media_url.split(".");
