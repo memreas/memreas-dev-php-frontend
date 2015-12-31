@@ -190,8 +190,8 @@ $(function() {
 											alert(thrownError);
 										},
 										success : function(data) {
-											
-											console.log("data.xml-->"+data.xml);
+											var xmlstr = data.xml ? data.xml : (new XMLSerializer()).serializeToString(data);
+											console.log("data.xmlstr-->"+xmlstr);
 											
 											/*-
 											 * Now that we have our data, we update the form
