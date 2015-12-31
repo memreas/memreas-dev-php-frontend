@@ -211,7 +211,7 @@ class IndexController extends AbstractActionController {
 	public function fetchMemreasTVMAction() {
 		header ( 'ContentType: application/json' );
 		echo $this->getS3Key ();
-		die ();
+		exit ();
 	}
 	private function fetchMemreasTVMPreSignedURLAction() {
 		$this->memreas_session ();

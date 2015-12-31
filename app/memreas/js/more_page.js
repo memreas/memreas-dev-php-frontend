@@ -312,10 +312,6 @@ $(function() {
 									'addmediaevent',
 									params,
 									function(ret_xml) {
-										
-										$(
-												"#setting-userprofile img, img#profile_picture")
-												.attr('src', _media_url);
 										jsuccess('Your profile picture updated');
 										setTimeout(
 												function() {
@@ -350,6 +346,10 @@ $(function() {
 																			xml_response,
 																			'profile');
 																	userprofile = removeCdataCorrectLink(userprofile);
+																	//update image
+																	$(
+																	"#setting-userprofile img, img#profile_picture")
+																	.attr('src', userprofile);
 																	var alternate_email = getValueFromXMLTag(
 																			xml_response,
 																			'alternate_email');
@@ -455,8 +455,11 @@ function fillUserDetail(currentUserId) {
 			var gender = getValueFromXMLTag(xml_response, 'gender');
 			var dob = getValueFromXMLTag(xml_response, 'dob');
 			$("#setting-username").html(username);
-			if (userprofile != '')
+			console.log('userprofile'+userprofile);
+
+			if (userprofile != '') {
 				$("#setting-userprofile img").attr('src', userprofile);
+			}
 			$("input[name=account_email]").val(useremail);
 			$("input[name=account_alternate_email]").val(alternate_email);
 			$("input[name=account_dob]").val(dob);

@@ -8,6 +8,9 @@ var isUserNameValid = false;
 var assigned_event = 0;
 var uploadHandle = '';
 var fileType = '';
+var s3path = '';
+var s3file = '';
+var media_id = '';
 
 $(function() {
 	var event_id = getURLParameter('event_id');
@@ -118,6 +121,7 @@ jQuery.logout = function() {
 }
 
 function validateRegstration() {
+	console.log("Entered function validateRegstration()");
 	var input_email = $("#register input[name=email]").val();
 	var input_uname = $("#register input[name=username]").val();
 	var input_upass = $("#register input[name=password]").val();
@@ -151,6 +155,11 @@ function validateRegstration() {
 	if (!validateRegisterForm(input_uname, input_upass))
 		return false;
 
+	// Check profile photo
+	var profile_photo = 0;
+	if ($("input[name=profile_image]").val() == 1) {
+		profile_photo = 1
+	} 
 	var params = [ {
 		tag : 'email',
 		value : input_email
@@ -165,7 +174,10 @@ function validateRegstration() {
 		value : ''
 	}, {
 		tag : 'device_type',
-		value : ''
+		value : 'web'
+	}, {
+		tag : 'profile_photo',
+		value : profile_photo
 	}, {
 		tag : 'invited_by',
 		value : ''
@@ -173,23 +185,42 @@ function validateRegstration() {
 		tag : 'event_id',
 		value : assigned_event
 	} ];
+	console.log("About to call registration via ajax");
+
 	ajaxRequest('registration', params,
 			function(response) {
 				if (getValueFromXMLTag(response, 'status') == 'Success') {
+					console.log("passed registration...")
 					jsuccess(getValueFromXMLTag(response, 'message'));
 					$("input[name=register_user_id]").val(
 							getValueFromXMLTag(response, 'userid'));
 					if ($("input[name=profile_image]").val() == 1) {
 						var key_value = $("#frm-profile-pic").find(
 								'input[name=key]').val();
-						key_value = $("input[name=register_user_id]").val()
-								+ key_value;
-						$("#frm-profile-pic").find('input[name=key]').val(
-								key_value);
+						
+						//
+						// Vars for s3path and filename...
+						//
+						s3path = $("input[name=register_user_id]").val() + '/' + media_id + '/';
+						s3file = s3path  + profile_filename;
+						form.find('input[name=key]').val(
+								userId
+								+ '/'
+								+ media_id
+								+ '/'
+								+  data.files[0].name);
+						
+						console.log("about to upload profile photo key--->" + $("#frm-profile-pic").find('input[name=key]').val())
+						//key_value = $("input[name=register_user_id]").val()
+						//		+ key_value;
+						//$("#frm-profile-pic").find('input[name=key]').val(
+						//		key_value);
 						var jqXHR = uploadHandle.submit();
 					}
-				} else
+				} else {
 					jerror(getValueFromXMLTag(response, 'message'));
+					console.log("Registration failed");
+				}
 				resetRegisterForm();
 			});
 	return false;
@@ -279,47 +310,61 @@ $(function() {
 											autoUpload : true,
 											add : function(event, data) {
 
+												console.log("About to call fetchMemreasTVM");
+												
+												
 												// Get signed credentials
 												$
 														.ajax({
-															url : "/index/s3signed",
+															url : "/index/fetchMemreasTVM",
 															type : 'GET',
 															dataType : 'json',
 															data : {
 																title : data.files[0].name
-															}, // send the file
-																// name to the
-																// server so it
-																// can generate
-																// the key param
+															},
+															/*-
+															 * send the file name to the
+															 * server so it can generate the key param
+															 */
 															async : false,
 															success : function(
 																	data) {
-																// Now that we
-																// have our
-																// data, we
-																// update the
-																// form so it
-																// contains all
-																// the needed
-																// data to sign
-																// the request
+																console.log("fetchMemreasTVM success function...");
+
+																/*-
+																 * Now that we have our data, we update the form so it
+																 * contains all the needed data to sign the request
+																 */
+
+																media_id = data.media_id;
+																form.find('input[name=acl]').val(
+																		data.acl);
 																form
 																		.find(
-																				'input[name=AWSAccessKeyId]')
-																		.val(
-																				data.accessKey);
+																				'input[name=success_action_status]')
+																		.val(data.successStatus);
+																form.find('input[name=policy]')
+																		.val(data.base64Policy);
 																form
 																		.find(
-																				'input[name=policy]')
-																		.val(
-																				data.policy)
+																				'input[name=x-amz-algorithm]')
+																		.val(data.algorithm)
 																form
 																		.find(
-																				'input[name=signature]')
-																		.val(
-																				data.signature)
-															}
+																				'input[name=x-amz-credential]')
+																		.val(data.credentials)
+																form.find('input[name=x-amz-date]')
+																		.val(data.date)
+																form
+																		.find(
+																				'input[name=x-amz-expires]')
+																		.val(data.expires)
+																form
+																		.find(
+																				'input[name=x-amz-signature]')
+																		.val(data.signature)
+																		form.find("input[name=Content-Type]").val(
+																				filetype);															}
 														})
 
 												var filetype = data.files[0].type;
@@ -342,11 +387,6 @@ $(function() {
 												}
 												$("input[name=profile_image]")
 														.val(1);
-												// if (filetype.indexOf
-												// ('image') >= 0)
-												// var target = 'image';
-												// else target = 'media';
-
 												if (filetype.indexOf('image') >= 0)
 													fileType = 'image';
 												else
@@ -354,9 +394,9 @@ $(function() {
 
 												// key_value = '/' + target +
 												// '/' + key_value;
-												key_value = '/' + key_value;
-												$(this).find('input[name=key]')
-														.val(key_value);
+												//key_value = '/' + key_value;
+												//$(this).find('input[name=key]')
+												//		.val(key_value);
 												// Use XHR, fallback to iframe
 												options = $(this).fileupload(
 														'option');
@@ -370,16 +410,19 @@ $(function() {
 												uploadHandle = data;
 											},
 											send : function(e, data) {
-
+												console.log("fileupload send function...");
 											},
 											progress : function(e, data) {
+												console.log("fileupload progress function...");
 												$("#loadingpopup").show();
 											},
 											fail : function(e, data) {
+												console.log("fileupload fail function...");
 												window.onbeforeunload = null;
 											},
 											success : function(data, status,
 													jqXHR) {
+												console.log("fileupload success function...");
 												var _media_url = getValueFromXMLTag(
 														jqXHR.responseText,
 														'Location');
@@ -406,57 +449,47 @@ $(function() {
 												var filename = s3_filename_split[s3_filename_split.length - 1];
 												var s3_path_split = s3_filename
 														.split(filename);
-												var s3_path = $(
-														"input[name=register_user_id]")
-														.val()
-														+ '/'
-														+ s3_path_split[0];
-												var params = [
-														{
-															tag : 's3url',
-															value : filename
-														},
-														{
-															tag : 'is_server_image',
-															value : '0'
-														},
-														{
-															tag : 'content_type',
-															value : media_type
-														},
-														{
-															tag : 's3path',
-															value : s3_path
-														},
-														{
-															tag : 's3file_name',
-															value : filename
-														},
-														{
-															tag : 'device_id',
-															value : ''
-														},
-														{
-															tag : 'event_id',
-															value : ''
-														},
-														{
-															tag : 'media_id',
-															value : ''
-														},
-														{
-															tag : 'user_id',
-															value : $(
-																	"input[name=register_user_id]")
-																	.val()
-														},
-														{
-															tag : 'is_profile_pic',
-															value : '1'
-														}, {
-															tag : 'location',
-															value : ''
-														} ];
+												var s3_path = s3_path_split[0];
+
+												
+												
+												var params = [ {
+													tag : 's3url',
+													value : s3url
+												}, {
+													tag : 'is_server_image',
+													value : '0'
+												}, {
+													tag : 'content_type',
+													value : media_type
+												}, {
+													tag : 's3path',
+													value : s3path
+												}, {
+													tag : 's3file_name',
+													value : s3file
+												}, {
+													tag : 'device_type',
+													value : 'web'
+												}, {
+													tag : 'device_id',
+													value : ''
+												}, {
+													tag : 'event_id',
+													value : ''
+												}, {
+													tag : 'media_id',
+													value : media_id
+												}, {
+													tag : 'user_id',
+													value : $("input[name=register_user_id]").val()
+												}, {
+													tag : 'is_profile_pic',
+													value : '1'
+												}, {
+													tag : 'location',
+													value : ''
+												} ];
 												ajaxRequest(
 														'addmediaevent',
 														params,
