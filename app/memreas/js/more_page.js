@@ -191,7 +191,7 @@ $(function() {
 										},
 										success : function(data) {
 											
-											console.log("data-->"+data);
+											console.log("data.xml-->"+data.xml);
 											
 											/*-
 											 * Now that we have our data, we update the form
