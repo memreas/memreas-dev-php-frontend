@@ -136,6 +136,9 @@ $(function() {
 		$("#frm-profile-pic").find('input[type=file]').click();
 	});
 	var profile_filename = '';
+	var s3path = '';
+	var s3file = '';
+	var media_id = '';
 	$("#frm-profile-pic")
 			.fileupload(
 					{
@@ -151,7 +154,6 @@ $(function() {
 							if (!$("a[title=more]").hasClass('active'))
 								return false;
 							var filetype = data.files[0].type;
-							
 							var key_value = profile_filename;
 							if (!(filetype.indexOf('image') >= 0)) {
 								jerror('Only image type is allowed.');
@@ -191,7 +193,7 @@ $(function() {
 										},
 										success : function(data, status, response) {
 											//var xmlstr = data.xml ? data.xml : (new XMLSerializer()).serializeToString(data);
-											console.log("response.text--->"+response.text);
+											console.log("response.responseText--->"+response.responseText);
 											
 											/*-
 											 * Now that we have our data, we update the form
@@ -199,6 +201,8 @@ $(function() {
 											 * to sign the request  
 											 */
 											media_id = data.media_id;
+											s3path = userId + '/' + media_id + '/';
+											s3file = s3path  + profile_filename;
 											form.find('input[name=key]').val(
 													userId
 													+ '/'
@@ -259,25 +263,17 @@ $(function() {
 						},
 						success : function(data, status, jqXHR) {
 							console.log("data.submit success...");
-							console.log("data---->" + data);
+							console.log("jqXHR.responseText--->"+jqXHR.responseText);
+
 							var _media_url = getValueFromXMLTag(
-									jqXHR.responseText, 'Location');
+									jqXHR.responseText, 'Key');
 							var _media_extension = _media_url.split(".");
 							_media_extension = _media_extension[_media_extension.length - 1];
-							var media_type = '';
-							if (_media_url.indexOf('image') >= 0)
-								media_type = 'image/' + _media_extension;
-							else
-								media_type = 'video/' + _media_extension;
-							var s3_filename = getValueFromXMLTag(
-									jqXHR.responseText, 'Key');
-							var s3_filename_split = s3_filename.split("/");
-							var filename = s3_filename_split[s3_filename_split.length - 1];
-							var s3_path_split = s3_filename.split(filename);
-							var s3_path = s3_path_split[0];
+							var media_type = 'image'; // only image allowed for profile pic...
+							var s3url = s3path + s3file;
 							var params = [ {
 								tag : 's3url',
-								value : filename
+								value : s3url
 							}, {
 								tag : 'is_server_image',
 								value : '0'
@@ -286,10 +282,13 @@ $(function() {
 								value : media_type
 							}, {
 								tag : 's3path',
-								value : s3_path
+								value : s3path
 							}, {
 								tag : 's3file_name',
-								value : filename
+								value : s3file
+							}, {
+								tag : 'device_type',
+								value : 'web'
 							}, {
 								tag : 'device_id',
 								value : ''
@@ -298,7 +297,7 @@ $(function() {
 								value : ''
 							}, {
 								tag : 'media_id',
-								value : ''
+								value : media_id
 							}, {
 								tag : 'user_id',
 								value : user_id
@@ -312,7 +311,8 @@ $(function() {
 							ajaxRequest(
 									'addmediaevent',
 									params,
-									function() {
+									function(ret_xml) {
+										
 										$(
 												"#setting-userprofile img, img#profile_picture")
 												.attr('src', _media_url);
@@ -330,6 +330,9 @@ $(function() {
 															params,
 															function(
 																	xml_response) {
+																//
+																console.log(xml_response);
+																//
 																if (getValueFromXMLTag(
 																		xml_response,
 																		'status') == 'Success') {

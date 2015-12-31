@@ -1,5 +1,6 @@
-/*
- * Copyright memreas llc 2013 
+/**
+ * Copyright (C) 2015 memreas llc. - All Rights Reserved Unauthorized copying of
+ * this file, via any medium is strictly prohibited Proprietary and confidential
  */
 
 var wsurl = '/index/execAjax';
@@ -45,15 +46,7 @@ ajaxRequest = function(action, params, success_func, error_func,
 				// withCredentials : true
 				// },
 				beforeSend : function(xhr) {
-					//var ca = document.cookie.split(';');
-					//var cookies = '';
-					//for (var i = 0; i < cookies.length; i++) {
-					//	console.log("cookies[" + i + "]::" + cookies[i]);
-					//	xhr.setRequestHeader("Cookie", cookies[i]);
-					//}
-					//console.log("before send request action->" + action
-					//		+ "\n cookies->" + cookies)
-					console.log("before send cookies---> " + document.cookie);
+					//console.log("before send cookies---> " + document.cookie);
 				},
 				crossDomain : true,
 				type : 'post',
@@ -61,6 +54,7 @@ ajaxRequest = function(action, params, success_func, error_func,
 				dataType : 'jsonp',
 				data : 'json=' + json_data,
 				success : function(ret_xml) {
+					
 
 					if (action != 'findtag' && action != 'findevent') {
 						if (getValueFromXMLTag(ret_xml, 'error').trim() == 'Please Login') {
