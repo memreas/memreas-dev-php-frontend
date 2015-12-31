@@ -131,7 +131,7 @@ $(function() {
 			});
 
 	/* Change profile picture */
-
+	var userId = $("input[name=user_id]").val();
 	$(".change-profile-btn").click(function() {
 		$("#frm-profile-pic").find('input[type=file]').click();
 	});
@@ -197,8 +197,11 @@ $(function() {
 											 */
 											media_id = data.media_id;
 											form.find('input[name=key]').val(
-													data.media_id + '/'
-															+ profile_filename);
+													userId
+													+ '/'
+													+ media_id
+													+ '/'
+													+ profile_filename);
 											form.find('input[name=acl]').val(
 													data.acl);
 											form
