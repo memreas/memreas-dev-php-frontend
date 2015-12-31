@@ -182,6 +182,7 @@ class IndexController extends AbstractActionController {
 			/**
 			 * Handle login
 			 */
+			$this->writeJsConstants ();
 			$data = simplexml_load_string ( trim ( $result ) );
 			$_SESSION ['user_id'] = ( string ) $data->loginresponse->user_id;
 			$_SESSION ['username'] = ( string ) $data->loginresponse->username;
@@ -291,28 +292,37 @@ class IndexController extends AbstractActionController {
 	 */
 	public function writeJsConstants() {
 		$this->memreas_session ();
-		// Put constant variables here
-		$JsConstantVariables = array (
-				'S3BUCKET' => MemreasConstants::S3BUCKET,
-				'LOGGED_USER_ID' => $_SESSION ['user_id'],
-				'LISTNOTIFICATIONSPOLLTIME' => MemreasConstants::LISTNOTIFICATIONSPOLLTIME,
-				'GALLERYDELAYTIME' => MemreasConstants::GALLERYDELAYTIME,
-				'FREE_ACCOUNT_FILE_LIMIT' => MemreasConstants::FREE_ACCOUNT_FILE_LIMIT,
-				'PAID_ACCOUNT_FILE_LIMIT' => MemreasConstants::PAID_ACCOUNT_FILE_LIMIT,
-				'CLOUDFRONT_DOWNLOAD_HOST' => MemreasConstants::CLOUDFRONT_DOWNLOAD_HOST,
-				'STRIPE_SERVER_URL' => MemreasConstants::MEMREAS_PAY,
-				'ENABLE_SELL_MEDIA' => MemreasConstants::MEMREAS_SELL_MEDIA 
-		);
-		$content = '';
-		foreach ( $JsConstantVariables as $variable => $value ) {
-			if (is_numeric ( $value ))
-				$content .= "var {$variable} = {$value};\n";
-			else
-				$content .= "var {$variable} = '{$value}';\n";
+		if (! file_exists ( $_SERVER ['DOCUMENT_ROOT'] . '/memreas/js/constants.js' )) {
+			Mlog::addone("writeJsConstants() - $ _ SERVER [DOCUMENT_ROOT]", $_SERVER ['DOCUMENT_ROOT']);
+			Mlog::addone("writeJsConstants()", "about to write constants.js file...");
+			// Put constant variables here
+			$JsConstantVariables = array (
+					'S3BUCKET' => MemreasConstants::S3BUCKET,
+					'LOGGED_USER_ID' => $_SESSION ['user_id'],
+					'LISTNOTIFICATIONSPOLLTIME' => MemreasConstants::LISTNOTIFICATIONSPOLLTIME,
+					'GALLERYDELAYTIME' => MemreasConstants::GALLERYDELAYTIME,
+					'FREE_ACCOUNT_FILE_LIMIT' => MemreasConstants::FREE_ACCOUNT_FILE_LIMIT,
+					'PAID_ACCOUNT_FILE_LIMIT' => MemreasConstants::PAID_ACCOUNT_FILE_LIMIT,
+					'CLOUDFRONT_DOWNLOAD_HOST' => MemreasConstants::CLOUDFRONT_DOWNLOAD_HOST,
+					'STRIPE_SERVER_URL' => MemreasConstants::MEMREAS_PAY,
+					'ENABLE_SELL_MEDIA' => MemreasConstants::MEMREAS_SELL_MEDIA 
+			);
+			$content = '';
+			foreach ( $JsConstantVariables as $variable => $value ) {
+				if (is_numeric ( $value ))
+					$content .= "var {$variable} = {$value};\n";
+				else
+					$content .= "var {$variable} = '{$value}';\n";
+			}
+			$fileHandle = fopen ( $_SERVER ['DOCUMENT_ROOT'] . '/memreas/js/constants.js', 'w' );
+			fwrite ( $fileHandle, $content, strlen ( $content ) );
+			fclose ( $fileHandle );
+		} else {
+			Mlog::addone("writeJsConstants() - $ _ SERVER [DOCUMENT_ROOT]", $_SERVER ['DOCUMENT_ROOT']);
+			Mlog::addone("writeJsConstants()", "constants.js file exists...");
 		}
-		$fileHandle = fopen ( $_SERVER ['DOCUMENT_ROOT'] . '/memreas/js/constants.js', 'w' );
-		fwrite ( $fileHandle, $content, strlen ( $content ) );
-		fclose ( $fileHandle );
+		
+		
 	}
 	
 	/*
