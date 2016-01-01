@@ -42,14 +42,14 @@ class IndexController extends AbstractActionController {
 			$data->memreascookie = $_COOKIE ['memreascookie'];
 			$data->addChild ( 'clientIPAddress', $this->fetchUserIPAddress () );
 			$xml = $data->asXML ();
-			error_log ( '$xml-->' . $xml );
+			//error_log ( '$xml-->' . $xml );
 		}
 		
 		/*
 		 * Fetch guzzle and post...
 		 */
 		$guzzle = new \GuzzleHttp\Client ();
-		Mlog::addone ( __CLASS__ . __METHOD__ . 'about to guzzle url+action+xml', $this->url . $action . $xml );
+		//Mlog::addone ( __CLASS__ . __METHOD__ . 'about to guzzle url+action+xml', $this->url . $action . $xml );
 		try {
 			$response = $guzzle->post ( $this->url, [ 
 					'form_params' => [ 
@@ -61,19 +61,18 @@ class IndexController extends AbstractActionController {
 			Mlog::addone ( __CLASS__ . __METHOD__ . 'guzzle exception::', $exc->getMessage () );
 		}
 		
-		Mlog::addone ( __CLASS__ . __METHOD__ . 'about to guzzle url+action+xml', $this->url . $action . $xml );
-		
-		error_log ( '$response->getBody ()---->' . $response->getBody () );
+		//Mlog::addone ( __CLASS__ . __METHOD__ . 'about to guzzle url+action+xml', $this->url . $action . $xml );	
+		//error_log ( '$response->getBody ()---->' . $response->getBody () );
 		
 		return $response->getBody ();
 	}
 	public function indexAction() {
-		Mlog::addone ( __CLASS__ . __METHOD__ . 'enter', 'indexAction' );
+		//Mlog::addone ( __CLASS__ . __METHOD__ . 'enter', 'indexAction' );
 		// Start buffering so cookies are set
 		//
 		// Check Headers sent
 		//
-		error_log ( __CLASS__ . __METHOD__ . __LINE__ . "headers_list()" . print_r ( headers_list (), true ) . PHP_EOL );
+		//error_log ( __CLASS__ . __METHOD__ . __LINE__ . "headers_list()" . print_r ( headers_list (), true ) . PHP_EOL );
 		
 		ob_start ();
 		$actionname = isset ( $_REQUEST ["action"] ) ? $_REQUEST ["action"] : '';
@@ -93,7 +92,7 @@ class IndexController extends AbstractActionController {
 			 * Approach:
 			 * N/a
 			 */
-			Mlog::addone ( __CLASS__ . __METHOD . __LINE . "showlog-->", "called..." );
+			//Mlog::addone ( __CLASS__ . __METHOD . __LINE . "showlog-->", "called..." );
 			$result = '<pre>' . file_get_contents ( getcwd () . '/php_errors.log' );
 			echo $result;
 			// End buffering and flush
@@ -102,7 +101,7 @@ class IndexController extends AbstractActionController {
 		} else {
 			
 			$this->memreas_session ();
-			error_log ( "Enter FE indexAction" . PHP_EOL );
+			//error_log ( "Enter FE indexAction" . PHP_EOL );
 			// Checking headers for cookie info
 			$headers = apache_request_headers ();
 			foreach ( $headers as $header => $value ) {
@@ -147,7 +146,7 @@ class IndexController extends AbstractActionController {
 			$xml = $message_data ['json'];
 			
 			// Guzzle the Web Service
-			Mlog::addone ( '$this->fetchXML ( $ws_action, $xml )', "this->fetchXML ( $ws_action, $xml )" );
+			//Mlog::addone ( '$this->fetchXML ( $ws_action, $xml )', "this->fetchXML ( $ws_action, $xml )" );
 			$result = $this->fetchXML ( $ws_action, $xml );
 			Mlog::addone ( '$result--->', $result );
 			$json = json_encode ( $result );
@@ -165,7 +164,7 @@ class IndexController extends AbstractActionController {
 			// Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__ .
 			// '$callback_json', $callback_json );
 			
-			Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__, 'exit' );
+			//Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__, 'exit' );
 			// Need to exit here to avoid ZF2 framework view.
 			exit ();
 		} else {
@@ -203,9 +202,25 @@ class IndexController extends AbstractActionController {
 	}
 	private function getS3Key() {
 		$this->memreas_session ();
+
+		
+		//Mlog::addone ( __CLASS__ . __METHOD__ . '$_REQUEST', $_REQUEST );
+		error_log("_REQUEST-->".print_r($_REQUEST,true).PHP_EOL);
+		$action='memreas_tvm';
+		if (isset ( $_REQUEST ['user_id'] )) {
+			// Fetch parms
+			$user_id = $_REQUEST ['user_id'];
+			$xml = '<xml><user_id>' . $user_id . '</user_id><memreas_tvm>0</memreas_tvm><memreas_pre_signed_url>1</memreas_pre_signed_url></xml>';
+			Mlog::addone ( __CLASS__ . __METHOD__ . 'REGISTRATION RELATED data->memreas_tvm->xml-->', $xml );
+		} else {
+			$xml = '<xml><username>' . $_SESSION ['username'] . '</username><memreas_tvm>0</memreas_tvm><memreas_pre_signed_url>1</memreas_pre_signed_url></xml>';
+			Mlog::addone ( __CLASS__ . __METHOD__ . 'REGISTRATION RELATED missing user_id data->memreas_tvm->xml-->', $xml );
+		}
+		
 		$action = 'memreas_tvm';
-		$xml = '<xml><username>' . $_SESSION ['username'] . '</username><memreas_tvm>1</memreas_tvm></xml>';
+		//$xml = '<xml><username>' . $_SESSION ['username'] . '</username><memreas_tvm>1</memreas_tvm></xml>';
 		$s3Authenticate = $this->fetchXML ( $action, $xml );
+		
 		return $s3Authenticate;
 	}
 	public function fetchMemreasTVMAction() {
@@ -215,8 +230,31 @@ class IndexController extends AbstractActionController {
 	}
 	private function fetchMemreasTVMPreSignedURLAction() {
 		$this->memreas_session ();
+		if (isset ( $_REQUEST ['json'] )) {
+			// Fetch parms
+			$json = $_REQUEST ['json'];
+			$jsonArr = json_decode ( $json, true );
+			$actionname = $jsonArr ['action'];
+			$type = $jsonArr ['type'];
+			$message_data = $jsonArr ['json'];
+			$_POST ['xml'] = $message_data ['xml'];
+			Mlog::addone ( __CLASS__ . __METHOD__ . '$_POST[xml]', $_POST ['xml'] );
+		} else {
+			$actionname = isset ( $_REQUEST ["action"] ) ? $_REQUEST ["action"] : '';
+			$message_data ['xml'] = '';
+		}
+		
+		Mlog::addone ( __CLASS__ . __METHOD__ . 'REGISTRATION RELATED ---->$_POST[xml]', $_POST ['xml'] );
+		$data = simplexml_load_string ( $_POST ['xml'] );
+		if (isset($data->memreas_tvm->user_id)) {
+			$xml = '<xml><user_id>' . $data->memreas_tvm->user_id . '</user_id><memreas_tvm>0</memreas_tvm><memreas_pre_signed_url>1</memreas_pre_signed_url></xml>';
+			Mlog::addone ( __CLASS__ . __METHOD__ . 'REGISTRATION RELATED data->memreas_tvm->user_id ---->$_POST[xml]', $_POST ['xml'] );
+		} else {
+			$xml = '<xml><username>' . $_SESSION ['username'] . '</username><memreas_tvm>0</memreas_tvm><memreas_pre_signed_url>1</memreas_pre_signed_url></xml>';
+			Mlog::addone ( __CLASS__ . __METHOD__ . 'REGISTRATION RELATED missing data->memreas_tvm->user_id ---->$_POST[xml]', $_POST ['xml'] );
+		}
+		
 		$action = 'memreas_tvm';
-		$xml = '<xml><username>' . $_SESSION ['username'] . '</username><memreas_tvm>0</memreas_tvm><memreas_pre_signed_url>1</memreas_pre_signed_url></xml>';
 		$s3Authenticate = $this->fetchXML ( $action, $xml );
 		return $s3Authenticate;
 	}

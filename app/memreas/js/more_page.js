@@ -166,7 +166,10 @@ $(function() {
 							else
 								target = 'media';
 
-
+							if (profile_filename.indexOf(" ") >= 0) {
+								alert("Please remove spaces from filename.");
+								return;
+							}
 
 							var form = $(this);
 							// Get signed credentials
@@ -191,24 +194,25 @@ $(function() {
 											alert(status);
 											alert(thrownError);
 										},
-										success : function(data, status, response) {
-											//var xmlstr = data.xml ? data.xml : (new XMLSerializer()).serializeToString(data);
-											console.log("response.responseText--->"+response.responseText);
-											
+										success : function(data, status,
+												response) {
+											// var xmlstr = data.xml ? data.xml
+											// : (new
+											// XMLSerializer()).serializeToString(data);
+											console
+													.log("response.responseText--->"
+															+ response.responseText);
 											/*-
 											 * Now that we have our data, we update the form
 											 * so it contains all the needed data
 											 * to sign the request  
 											 */
 											media_id = data.media_id;
-											s3path = userId + '/' + media_id + '/';
-											s3file = s3path  + profile_filename;
+											s3path = userId + '/' + media_id
+													+ '/';
+											s3file = profile_filename;
 											form.find('input[name=key]').val(
-													userId
-													+ '/'
-													+ media_id
-													+ '/'
-													+ profile_filename);
+													s3path + s3file);
 											form.find('input[name=acl]').val(
 													data.acl);
 											form
@@ -235,8 +239,9 @@ $(function() {
 													.find(
 															'input[name=x-amz-signature]')
 													.val(data.signature)
-													form.find("input[name=Content-Type]").val(
-															filetype);
+											form.find(
+													"input[name=Content-Type]")
+													.val(filetype);
 										}
 									});
 
@@ -263,13 +268,21 @@ $(function() {
 						},
 						success : function(data, status, jqXHR) {
 							console.log("data.submit success...");
-							console.log("jqXHR.responseText--->"+jqXHR.responseText);
+							console.log("jqXHR.responseText--->"
+									+ jqXHR.responseText);
 
 							var _media_url = getValueFromXMLTag(
 									jqXHR.responseText, 'Key');
 							var _media_extension = _media_url.split(".");
 							_media_extension = _media_extension[_media_extension.length - 1];
-							var media_type = 'image'; // only image allowed for profile pic...
+							var media_type = 'image/'
+									+ _media_extension.toLowerCase(); // only
+							// image
+							// allowed
+							// for
+							// profile
+							// pic...
+							console.log('media_type::' + media_type);
 							var s3url = s3path + s3file;
 							var params = [ {
 								tag : 's3url',
@@ -327,7 +340,8 @@ $(function() {
 															function(
 																	xml_response) {
 																//
-																console.log(xml_response);
+																console
+																		.log(xml_response);
 																//
 																if (getValueFromXMLTag(
 																		xml_response,
@@ -346,10 +360,13 @@ $(function() {
 																			xml_response,
 																			'profile');
 																	userprofile = removeCdataCorrectLink(userprofile);
-																	//update image
+																	// update
+																	// image
 																	$(
-																	"#setting-userprofile img, img#profile_picture")
-																	.attr('src', userprofile);
+																			"#setting-userprofile img, img#profile_picture")
+																			.attr(
+																					'src',
+																					userprofile);
 																	var alternate_email = getValueFromXMLTag(
 																			xml_response,
 																			'alternate_email');
@@ -455,7 +472,7 @@ function fillUserDetail(currentUserId) {
 			var gender = getValueFromXMLTag(xml_response, 'gender');
 			var dob = getValueFromXMLTag(xml_response, 'dob');
 			$("#setting-username").html(username);
-			console.log('userprofile'+userprofile);
+			console.log('userprofile' + userprofile);
 
 			if (userprofile != '') {
 				$("#setting-userprofile img").attr('src', userprofile);

@@ -85,12 +85,10 @@ $(document)
 																	return false;
 																}
 
-																// Check if
-																// current file
-																// with the same
-																// name is
-																// currently
-																// uploading
+																/*-
+																 * Check if current file with the same
+																 * name is currently uploading
+																 */
 																for (var i = 0; i < currentUploadFileCount; i++) {
 																	if (uploadFilesInstance[i] == filename) {
 																		jerror('not allowed to upload same files at same time');
@@ -180,11 +178,10 @@ $(document)
 																			}
 																		});
 
-																// Check here is
-																// file is valid
-																// - matches
-																// checking on
-																// server
+																/*-
+																 * Check here isfile is valid
+																 * - matches checking on server
+																 */
 																var key_value = filename;
 																var extension = filename
 																		.substr((filename
@@ -471,9 +468,9 @@ $(document)
 																					"last");
 																}
 
-																// Check if
-																// media exist
-																// or not
+																/*-
+																 * Check if media exist or not
+																 */
 																var params = [
 																		{
 																			tag : 'user_id',
@@ -518,12 +515,9 @@ $(document)
 																						2000);
 																				return false;
 																			} else {
-																				// Checking
-																				// if
-																				// file
-																				// name
-																				// has
-																				// space
+																				/*-
+																				 * Checking if file name has space
+																				 */
 																				if (filename
 																						.indexOf(" ") >= 0) {
 																					data.context
