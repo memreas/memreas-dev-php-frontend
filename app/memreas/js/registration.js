@@ -8,6 +8,7 @@ var isUserNameValid = false;
 var assigned_event = 0;
 var uploadHandle = '';
 var filetype = '';
+var s3url = '';
 var s3path = '';
 var s3file = '';
 var filename = '';
@@ -273,6 +274,7 @@ function validateRegstration() {
 														.toLowerCase();
 										s3path = user_id + '/' + media_id + '/';
 										s3file = filename;
+										s3url = s3path + s3file;
 										form.find('input[name=Content-Type]')
 												.val(media_type);
 										form.find('input[name=key]').val(
