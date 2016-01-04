@@ -3985,7 +3985,7 @@ select {
 	html.noads #tab-content, html.noads #tab-content-queue, html.noads #tab-content-share,
 		html.noads #tab-content-memreas, html.noads #tab-content-memreas-detail,
 		html.noads #tab-content-more {
-		max-height: 465px;
+		/*max-height: 465px;*/
 	}
 	html.ads ul.pics {
 		min-height: 270px;
@@ -4223,4 +4223,8 @@ input.disabled {
 
 #memreas-detail-location {
 	height: 400px;
+}
+
+.control-tab-share{
+    pointer-events: none; cursor: default;
 }
