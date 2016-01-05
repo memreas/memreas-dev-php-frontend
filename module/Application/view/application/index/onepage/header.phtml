@@ -18,6 +18,7 @@ error_log ( '_COOKIE---->' . print_r ( $_COOKIE, true ) );
 // error_log('_SESSION vars inside header.phtml start...'.print_r($_SESSION, true).PHP_EOL);
 $username = $_SESSION ['username'];
 $domain = MemreasConstants::CLOUDFRONT_DOWNLOAD_HOST;
+error_reporting(E_ERROR | E_PARSE);
 ?>
 
 <!-- Begin : Header -->
@@ -109,10 +110,10 @@ $domain = MemreasConstants::CLOUDFRONT_DOWNLOAD_HOST;
 <!-- End : Header -->
 
 <!-- Script for logout -->
-function logout() { var user_id = $("input[name=user_id]").val();
+<!--function logout() { var user_id = $("input[name=user_id]").val();
 ajaxRequest( 'logout', [ {tag: 'user_id', value: user_id} ],function
 (response){ if (getValueFromXMLTag(response, 'status') == "Success"){
-alert('logging you out...'); } }); }
+alert('logging you out...'); } }); }-->
 <!-- End script for logout -->
 
 <!--Script for toggle down-->
