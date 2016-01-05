@@ -4229,3 +4229,12 @@ input.disabled {
 .control-tab-share{
     pointer-events: none; cursor: default;
 }
+
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : portrait)
+{ 
+html.noads #tab-content, html.noads #tab-content-queue, html.noads #tab-content-share,
+		html.noads #tab-content-memreas, html.noads #tab-content-memreas-detail,
+                html.noads #tab-content-more {
+                    max-height: 470px;
+                }
+}
