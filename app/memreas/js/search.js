@@ -308,7 +308,6 @@ function personalSearchLi(target, item) {
     if (('@' + $("input[name=username]").val()) != item.username){
         var photo = item.profile_photo;
         photo = removeCdataCorrectLink(photo);
-        alert("user photo url -->"+photo);
         var name = $.trim(item.username);
         var op = '<li id="search-'+name.replace('@', '')+'"><figure class="pro-pics"><img src="'
                 + photo + '" alt=""></figure><div class="user-names">'
