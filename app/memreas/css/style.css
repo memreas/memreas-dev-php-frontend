@@ -703,7 +703,8 @@ nav ul li a:hover, nav ul li a.active {
 
 #maintab-content .tabcontent-detail, #maintab-content .notification-area
 	{
-	padding-bottom: 170px !Important;
+/*	padding-bottom: 170px !Important*/
+            padding-bottom: 20px !Important
 }
 
 .rowfixed {
