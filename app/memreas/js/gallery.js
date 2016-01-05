@@ -155,12 +155,12 @@ jQuery.fetch_server_media = function () {
     // $(".preload-files .pics").empty().show();
    
     //if (!document.documentElement.classList.contains('noads')) {
-        if(HorizontalWidth <=1080){
-            //alert(HorizontalWidth);
-            $("#tab-content #tab1")
-                    .append(
-                            '<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/725" data-max-width="100%"  data-height="80%" data-width="100%" data-allow-full-screen="true"  data-nav="thumbs"></div>');
-        }
+//        if(HorizontalWidth <=1080){
+//            //alert(HorizontalWidth);
+//            $("#tab-content #tab1")
+//                    .append(
+//                            '<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/725" data-max-width="100%"  data-height="80%" data-width="100%" data-allow-full-screen="true"  data-nav="thumbs"></div>');
+//        }
         
         
         if (verticalHeight <= 690) {
