@@ -159,7 +159,7 @@ jQuery.fetch_server_media = function () {
             //alert(HorizontalWidth);
             $("#tab-content #tab1")
                     .append(
-                            '<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/850" data-max-width="100%"  data-height="80%" data-width="100%" data-allow-full-screen="true"  data-nav="thumbs"></div>');
+                            '<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/725" data-max-width="100%"  data-height="80%" data-width="100%" data-allow-full-screen="true"  data-nav="thumbs"></div>');
         }
         
         
@@ -167,13 +167,13 @@ jQuery.fetch_server_media = function () {
             //alert('INVE :'+ verticalHeight);
             $("#tab-content #tab1")
                     .append(
-                            '<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/725" data-max-width="100%"  data-height="100%" data-width="100%" data-allow-full-screen="true"  data-nav="thumbs"></div>');
+                            '<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/725" data-max-width="100%"   data-allow-full-screen="true"  data-nav="thumbs"></div>');
         }
         else if (verticalHeight >= 691 || verticalHeight <= 750) {
            // alert('INVE2 :'+verticalHeight);
             $("#tab-content #tab1")
                     .append(
-                            '<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/725" data-max-width="100%" data-height="52%" data-width="100%" data-allow-full-screen="true"  data-nav="thumbs"></div>');
+                            '<div class="user-resources" data-click="false" data-swipe="true" data-ratio="800/725" data-max-width="100%" data-height="100%" data-width="100%" data-allow-full-screen="true"  data-nav="thumbs"></div>');
         } else if (window.innerWidth > 1359 && verticalHeight > 800) {
             //alert('INVE3 :'+verticalHeight);
             $("#tab-content #tab1")
@@ -392,11 +392,13 @@ jQuery.fetch_server_media = function () {
                             // Image section
                             // alert(_media_url);
                             console.log('Media URL:: ' + _media_url);
+//                            $('.fotorama__stage__frame fotorama__loaded fotorama__loaded--img').find('img').removeAttr('style');
+//                            $('.fotorama__stage__frame fotorama__loaded fotorama__loaded--img').find('img').attr('style','width:100% !important');
                             $(".user-resources")
                                     .append(
                                             '<img src="'
                                             + _media_url
-                                            + '" style="width:100% !important;"/>');
+                                            + '" />');
                             $(".edit-area-scroll")
                                     .append(
                                             '<li><a class="image-sync" id="'
