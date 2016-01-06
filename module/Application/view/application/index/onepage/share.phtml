@@ -71,7 +71,8 @@
                     </ul>
                     <span class="clear"></span>
                     <div class="mr-auto">
-                        <a class="black_btn_skin f-center" href="javascript:;" onclick="share_addEvent();">next</a>
+                        <a class="black_btn_skin" href="javascript:;" onclick="share_addEvent('done');">Done</a>
+                        <a class="black_btn_skin" href="javascript:;" onclick="share_addEvent('next');">next</a>
                         <a class="black_btn_skin" href="javascript:share_clearMemreas(false);">cancel</a>
                     </div>
                 </div>
@@ -101,12 +102,15 @@
 
                     </div>
                     <div class="add-comment-buttons">
-                        <a class="black_btn_skin f-center" href="javascript:share_addComment();">next</a>
-                        <a class="black_btn_skin f-middle" href="javascript:share_clearMemreas(false);">cancel</a>
+                        <a class="black_btn_skin" href="javascript:share_addComment('done');">Done</a>
+                        <a class="black_btn_skin" href="javascript:share_addComment('next');">next</a>
+                        <a class="black_btn_skin" href="javascript:share_clearMemreas(false);">cancel</a>
                     </div>
+                    <div class="clearfix"></div>
                     <div class="upload-event-buttons" style="display: none;">
                         <a class="black_btn_skin f-middle" href="javascript:hideUploadEvent();">back to media</a>
                     </div>
+                    <div class="clearfix"></div>
                 </div>
                 <div id="tab3-share" class="hideCls">
                     <div class="styled-select">

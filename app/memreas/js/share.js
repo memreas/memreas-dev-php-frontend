@@ -405,7 +405,7 @@ function checkSellMediaDuration() {
 }
 
 // add the new event by request to the server.
-share_addEvent = function() {
+share_addEvent = function(medianext) {
 
 	var sellmedia_duration_from = '';
 	var sellmedia_duration_to = ''
@@ -518,12 +518,16 @@ share_addEvent = function() {
 			if (status.toLowerCase() == 'success') {
 				jsuccess('Event "' + name + '" was registered successfully.');
 				pushReloadItem('view_my_events');
-				setTimeout(function() {
+                                
+                                if(medianext =='next'){
+                                          setTimeout(function() {
 					var text_ids = [ 'txt_name', 'txt_location', 'dtp_date',
 							'dtp_from', 'dtp_to', 'dtp_selfdestruct' ];
 					clearTextField(text_ids);
 					share_gotoPage(SHAREPAGE_TAB_MEDIA);
 				}, 2000);
+                                        }
+				
 				sell_media_price = 0;
 			} else {
 				jerror(message);
@@ -628,7 +632,7 @@ share_gotoPage = function(tab_no) {
 }
 
 // add the comment to Media when click "next" button on the Media Page.
-share_addComment = function() {
+share_addComment = function(next_step) {
 	if (event_id == '') {
 		jerror("Please complete event detail at step 1");
 		return false;
@@ -678,9 +682,13 @@ share_addComment = function() {
 
 				if (status.toLowerCase() == 'success') {
 					jsuccess('comments was added successfully.');
-					setTimeout(function() {
+                                        if(next_step =='next'){
+                                           setTimeout(function() {
 						share_gotoPage(SHAREPAGE_TAB_FRIENDS);
-					}, 2000);
+					}, 2000); 
+                                        }
+                                        
+					
 				} else {
 					jerror(message);
 				}
