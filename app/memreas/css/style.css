@@ -4238,3 +4238,6 @@ html.noads #tab-content, html.noads #tab-content-queue, html.noads #tab-content-
                     max-height: 470px;
                 }
 }
+@media only screen and(min-width :1400px) and (max-width:3850){
+    .fotorama__img{width:100% !important; height: 500px !important;}
+}
