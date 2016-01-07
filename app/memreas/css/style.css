@@ -3786,7 +3786,7 @@ nav ul li img {
 
 @media ( min-height : 800px) and (min-width:1359px) {
 	.fotorama__stage {
-		height: 475px !important;
+/*		height: 475px !important;*/
 	}
 }
 
