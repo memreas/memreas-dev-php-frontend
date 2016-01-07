@@ -3776,7 +3776,7 @@ nav ul li img {
 	position: relative;
 	top: 0;
 	max-width: 100% !important;
-	max-height: 100% !important;
+/*	max-height: 100% !important;*/
 }
 
 .fotorama__stage {
@@ -4239,5 +4239,5 @@ html.noads #tab-content, html.noads #tab-content-queue, html.noads #tab-content-
                 }
 }
 @media only screen and(min-width :700px) and (max-width:1400){
-    .fotorama__img{width:100% !important; height: 500px !important;}
+/*    .fotorama__img{width:100% !important; height: 500px !important;}*/
 }
