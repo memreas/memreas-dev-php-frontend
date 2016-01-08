@@ -4243,7 +4243,7 @@ html.noads #tab-content, html.noads #tab-content-queue, html.noads #tab-content-
 }
 @media (max-height:690px ){
     .fotorama__stage {
-		height: 390px !important;
+		height: 383px !important;
 	}
 }
 
