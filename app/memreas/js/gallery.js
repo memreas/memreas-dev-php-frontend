@@ -315,7 +315,7 @@ jQuery.fetch_server_media = function () {
                                         // _media_url_hls);
 
                                         source += ' <a href="'
-                                                + _media_url_hls
+                                                + _media_url_web
                                                 + '" data-img="'
                                                 + _media_thumbnail
                                                 + '"  data-video="true" ><img src="'
