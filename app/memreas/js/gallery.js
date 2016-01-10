@@ -214,6 +214,7 @@ jQuery.fetch_server_media = function () {
                 if (getValueFromXMLTag(response, 'status') == "Success") {
 
                     var medias = getSubXMLFromTag(response, 'media');
+                   
                     $(
                             ".user-resources, .scrollClass .mCSB_container, .sync-content .scrollClass")
                             .html('');
@@ -314,7 +315,7 @@ jQuery.fetch_server_media = function () {
                                         // _media_url_hls);
 
                                         source += ' <a href="'
-                                                + _media_url_web
+                                                + _media_url_hls
                                                 + '" data-img="'
                                                 + _media_thumbnail
                                                 + '"  data-video="true" ><img src="'
