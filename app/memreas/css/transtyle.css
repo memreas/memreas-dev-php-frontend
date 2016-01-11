@@ -621,6 +621,8 @@ input[name="account_email"], input[name="account_alternate_email"],
     left: 19% !important;
 }
 */
+
+#memreas-detail-tab3{margin:0 128px !important; }
 #avpw_footer, .avpw_close_button, #avpw_tool_content_header {
 	display: none !important;
 }
