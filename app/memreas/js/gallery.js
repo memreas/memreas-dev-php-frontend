@@ -317,7 +317,7 @@ jQuery.fetch_server_media = function () {
                                         source += '<video controls="" poster="'
                                          + _media_thumbnail + '"  style="width:100%; height:400px;" preload="none" autoplay="">';
                                      source += '<source src="'
-                                         + _media_url_hls
+                                         + _media_url_web
                                          + '" type="application/x-mpegURL">';
                                         									
                                          source += '</video>';
