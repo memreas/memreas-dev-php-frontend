@@ -4255,7 +4255,7 @@ html.noads #tab-content, html.noads #tab-content-queue, html.noads #tab-content-
 
 @media ( min-height : 800px) and (min-width:1359px) {
 	.fotorama__stage {
-height: 664px !important;
+/*height: 664px !important;*/
 	}
 }
 
