@@ -318,7 +318,7 @@ jQuery.fetch_server_media = function () {
                                          + _media_thumbnail + '"  style="width:100%; height:400px;" preload="none" autoplay="">';
                                      source += '<source src="'
                                          + _media_url_web
-                                         + '" type="application/x-mpegURL">';
+                                         + '" type="vnd.apple.mpegURL">';
                                         									
                                          source += '</video>';
                                         
