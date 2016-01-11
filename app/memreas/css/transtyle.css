@@ -685,7 +685,7 @@ input[name="account_email"], input[name="account_alternate_email"],
 		max-width: 812px;
 		display: block;
 /*		margin: 0 auto;*/
-margin: 0 128px;
+/*margin: 0 128px;*/
 	}
 }
 /*@media (max-width: 414px){  
