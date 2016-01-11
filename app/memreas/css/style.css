@@ -4253,10 +4253,13 @@ html.noads #tab-content, html.noads #tab-content-queue, html.noads #tab-content-
 	}
 }
 
-@media ( min-height : 800px) and (min-width:1359px) {
+@media ( min-height : 800px) and (max-width:1920px) {
 	.fotorama__stage {
 /*height: 664px !important;*/
 	}
+}
+@media (min-width:1921px){
+  height:900px;  
 }
 
 
