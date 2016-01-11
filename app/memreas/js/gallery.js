@@ -325,13 +325,13 @@ jQuery.fetch_server_media = function () {
                                         
                                         
                                         source += ' <a href="'
-                                                + _media_url_web
+                                                + _media_url_hls
                                                 + '" data-img="'
                                                 + _media_thumbnail
                                                 + '"  data-video="true" ><img src="'
                                                 + _media_thumbnail + '"></a>';
                                     } else {
-
+                                        //alert(_media_url_hls);
                                         source += ' <a href="'
                                                 + _media_url_web
                                                 + '" data-img="'
