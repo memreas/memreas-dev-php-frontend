@@ -314,22 +314,22 @@ jQuery.fetch_server_media = function () {
                                         // console.log("_media_url_hls-> " +
                                         // _media_url_hls);
                                         
-                                        source += '<video controls="" poster="'
-                                         + _media_thumbnail + '"  style="width:100%; height:400px;" preload="none" autoplay="">';
-                                     source += '<source src="'
-                                         + _media_url_web
-                                         + '" type="vnd.apple.mpegURL">';
-                                        									
-                                         source += '</video>';
+//                                        source += '<video controls="" poster="'
+//                                         + _media_thumbnail + '"  style="width:100%; height:400px;" preload="none" autoplay="">';
+//                                     source += '<source src="'
+//                                         + _media_url_web
+//                                         + '" type="vnd.apple.mpegURL">';
+//                                        									
+//                                         source += '</video>';
                                         
                                         
                                         
-                                        /*source += ' <a href="'
+                                        source += ' <a href="'
                                                 + _media_url_web
                                                 + '" data-img="'
                                                 + _media_thumbnail
                                                 + '"  data-video="true" ><img src="'
-                                                + _media_thumbnail + '"></a>';*/
+                                                + _media_thumbnail + '"></a>';
                                     } else {
 
                                         source += ' <a href="'
