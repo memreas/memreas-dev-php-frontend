@@ -4269,3 +4269,16 @@ html.noads #tab-content, html.noads #tab-content-queue, html.noads #tab-content-
 	}
 }*/
 
+
+.video-play-icon-memreas {
+    width: 32px;
+    height: 32px;
+    left: 35%;
+    top: -44px;
+    /* margin-left: -16px; */
+    margin-top: -16px;
+    background-position: 252px -13px;
+    display: block;
+    position: relative;
+    background: url('../img/fotorama.png') no-repeat;
+}

@@ -355,6 +355,7 @@ function showEventDetail(eventId, userId) {
 								event_owner_name);
 
 						var media_count = medias.length;
+                                                
 						for (var i = 0; i < media_count; i++) {
 							var media = medias[i];
 							var mediaId = getValueFromXMLTag(media, 'media_id');
@@ -372,6 +373,8 @@ function showEventDetail(eventId, userId) {
 										'media_url_download');
 								if (_download_url == '')
 									_download_url = _media_url;
+                                                                    
+                                                                  //target_element.append('<video  preload="none" autoplay="" style="width:100%; height:300px;"><source src="'+_media_url+'"  type="video/mp4" /> </video>')  
 
 								target_element
 										.append('<li class="video-media" id="memreasvideo-'
@@ -384,12 +387,12 @@ function showEventDetail(eventId, userId) {
 												+ _media_url
 												+ '" alt=""><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a></li>');
 								jcarousel_element.append('<li data-preview="'
-										+ _media_url + '"  media-id="'
+										+ _media_url + '" class=""  media-id="'
 										+ mediaId
 										+ '"><a href="javascript:;"><img src="'
 										+ _media_url
 										+ '" alt="image01" download="'
-										+ _media_url + '" /></a></li>');
+										+ _media_url + '" /></a> <span class="video-play-icon-memreas"></span></li>');
 							} else {
 								var _main_media = getValueFromXMLTag(media,
 										'media_url_1280x720');
@@ -951,3 +954,7 @@ function checkMemreasDetailCarousel() {
 	}
 
 }
+
+$('.elastislide-list > li >a').click(function(){
+   alert('hello');return false; 
+});
