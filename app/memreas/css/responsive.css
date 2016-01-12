@@ -89,7 +89,8 @@
 	}
 	.memreas-detail-owner {
 		margin-top: 2%;
-		width: 60% !important;
+/*		width: 60% !important;*/
+width: 49% !important;
 	}
 }
 
