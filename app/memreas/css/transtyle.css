@@ -146,8 +146,9 @@ ul.edit-area-scroll {
 }
 
 .image-preview img {
-	width: 430px;
-	height: 280px;
+	/*width: 430px;
+	height: 280px;*/
+        width: 100%;
 }
 
 .memreas-detail-comments .pro-pics img {
@@ -682,7 +683,7 @@ input[name="account_email"], input[name="account_alternate_email"],
 
 @media ( min-width :1039px) {
 	#memreas-detail-tab3 {
-		max-width: 812px;
+		max-width: 100%;
 		display: block;
 /*		margin: 0 auto;*/
 /*margin: 0 128px;*/
@@ -1119,3 +1120,5 @@ input[name="account_email"], input[name="account_alternate_email"],
 	.avpw_inset_button_label{display:none !Important;}
 	
 }*/
+
+.memreas-span-6{max-width: 49%;}
