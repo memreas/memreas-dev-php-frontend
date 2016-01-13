@@ -480,8 +480,8 @@ share_addEvent = function(medianext) {
 		// Checking for selling media
 		if ($("#ckb_sellmedia").is(":checked") && sell_media_price > 0 ) {
                     //alert('hello');
-			//popup("popupSellMedia");
-			//return false;
+			popup("popupSellMedia");
+			return false;
 		}
 
 		// send the request.
@@ -527,10 +527,11 @@ share_addEvent = function(medianext) {
 			value : sellmedia_duration_to
 		} ], function(ret_xml) {
 			// parse the returned xml.
+                        console.log('Sell Media: '+ret_xml);
 			var status = getValueFromXMLTag(ret_xml, 'status');
 			var message = getValueFromXMLTag(ret_xml, 'message');
 
-			event_id = getValueFromXMLTag(ret_xml, 'event_id');
+			var  event_id = getValueFromXMLTag(ret_xml, 'event_id');
 
 			if (status.toLowerCase() == 'success') {
 				jsuccess('Event "' + name + '" was registered successfully.');
