@@ -73,8 +73,14 @@ $(function() {
 
 	$("#ckb_sellmedia").change(function() {
 		if ($(this).is(":checked")) {
-			$("#ckb_public").attr("checked", true);
+                    
+                        $("#ckb_canpost").attr('checked', false);
+		        $("#ckb_canadd").attr('checked', false);
+                        $("#ckb_public").attr("checked", true);
 			$("#ckb_viewable").attr("checked", true);
+                                // alert('hello');
+			popup("popupSellMedia");
+			return false;
 		}
 	});
 });
@@ -376,6 +382,12 @@ function checkSellMediaDuration() {
 
 		var date_from = new Date(sellmedia_duration_from);
 		var date_to = new Date(sellmedia_duration_to);
+                
+                var date1 = new Date(date_from);
+                var date2 = new Date(date_to);
+                var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+                var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+                //alert(diffDays);
 
 		if (date_to <= date_from) {
 			jerror("Date to must be larger than date from");
@@ -396,6 +408,10 @@ function checkSellMediaDuration() {
 			jerror("Date to must be larger than date today");
 			return false;
 		}
+                if(diffDays >30){
+                    jerror('Date  should be selected only for 30 days ');
+                    return false;
+                }
 
 		return true;
 	} else {
@@ -462,9 +478,10 @@ share_addEvent = function(medianext) {
 		var ckb_selfdestruct = getCheckBoxValue('ckb_selfdestruct');
 
 		// Checking for selling media
-		if ($("#ckb_sellmedia").is(":checked") && sell_media_price == 0) {
-			popup("popupSellMedia");
-			return false;
+		if ($("#ckb_sellmedia").is(":checked") && sell_media_price > 0 ) {
+                    //alert('hello');
+			//popup("popupSellMedia");
+			//return false;
 		}
 
 		// send the request.
@@ -746,7 +763,7 @@ share_uploadMedias = function(success) {
 			enableButtons("#tab2-share");
 			setTimeout(function() {
 				share_gotoPage(SHAREPAGE_TAB_FRIENDS);
-			}, 2000);
+			}, 500);
 		} else {
 			enableButtons("#tab2-share");
 			jerror(getValueFromXMLTag(xml_response, 'message'));
@@ -980,10 +997,13 @@ share_makeGroup = function() {
 			// parse the returned xml.
 			var status = getValueFromXMLTag(ret_xml, 'status');
 			var message = getValueFromXMLTag(ret_xml, 'message');
-			if (status.toLowerCase() == 'success')
-				jsuccess('group was created successfully.');
-			else
-				jerror(message);
+			if (status.toLowerCase() == 'success'){
+                            jsuccess('group was created successfully.');
+                            share_gotoPage(SHAREPAGE_TAB_MEMREAS);
+                        }
+				
+			//else
+				//jerror(message);
 		});
 	}
 
