@@ -361,6 +361,7 @@ share_initGoogleMap = function(div_id) {
 
 // Check valid duration
 function checkSellMediaDuration() {
+    debugger;
 	var sellmedia_duration_from = $("#sellmedia_duration_from").val();
 	var sellmedia_duration_to = $("#sellmedia_duration_to").val();
 
@@ -422,7 +423,7 @@ function checkSellMediaDuration() {
 
 // add the new event by request to the server.
 share_addEvent = function(medianext) {
-
+    //debugger;
 	var sellmedia_duration_from = '';
 	var sellmedia_duration_to = ''
 
@@ -481,7 +482,7 @@ share_addEvent = function(medianext) {
 		if ($("#ckb_sellmedia").is(":checked") && sell_media_price > 0 ) {
                     //alert('hello');
 			popup("popupSellMedia");
-			return false;
+			return true;
 		}
 
 		// send the request.
@@ -527,11 +528,12 @@ share_addEvent = function(medianext) {
 			value : sellmedia_duration_to
 		} ], function(ret_xml) {
 			// parse the returned xml.
+                        
                         console.log('Sell Media: '+ret_xml);
 			var status = getValueFromXMLTag(ret_xml, 'status');
 			var message = getValueFromXMLTag(ret_xml, 'message');
 
-			var  event_id = getValueFromXMLTag(ret_xml, 'event_id');
+			 event_id = getValueFromXMLTag(ret_xml, 'event_id');
 
 			if (status.toLowerCase() == 'success') {
 				jsuccess('Event "' + name + '" was registered successfully.');
