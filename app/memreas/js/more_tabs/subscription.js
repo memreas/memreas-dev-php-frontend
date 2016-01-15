@@ -321,16 +321,22 @@ function subscription_step4(){
 function getPlans(){
     var jAccountPlans = $(".list-plans");
     jAccountPlans.empty();
+    var memreascookie = getCookie("memreascookie");
     var jSubscriptionPlans = $(".subscription-plans");
     jSubscriptionPlans.removeClass('.preload-null').empty();
     var stripeActionUrl = $("input[name=stripe_url]").val() + 'stripe_listPlan';
+    console.log("stripeActionUrl--->" + stripeActionUrl);
+    console.log("document.cookie--->" + document.cookie);
+    console.log("getCookie(memreascookie)--->" + getCookie("memreascookie"));
+    
     var obj = new Object();
-    obj.txt = "";
+    obj.memreascookie = memreascookie;
     var data_obj = JSON.stringify(obj, null, '\t');
-    var data = '{"action": "list", ' +
+    var data = '{"action": "listPlan", ' +
         '"type":"jsonp", ' +
         '"json": ' + data_obj  +
         '}';
+    console.log("about to call stripe_listPlan with data--->" + data);
     $('#loadingpopup').show();
     $.ajax({
         url: stripeActionUrl,
