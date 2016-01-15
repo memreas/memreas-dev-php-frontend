@@ -80,7 +80,7 @@ function loadAccountCard(){
 
     jMemberCard.empty();
     var stripeUserId = $("input[name=user_id]").val();
-    var stripeActionUrl = $("input[name=stripe_url]").val() + '/stripe_listCards';
+    var stripeActionUrl = $("input[name=stripe_url]").val() + 'stripe_listCards';
     var obj = new Object();
     obj = {userid:stripeUserId};
     var json_listCard = JSON.stringify(obj, null, '\t');
@@ -165,7 +165,7 @@ function accountRemoveCard(userConfirm){
     }// check whether userConfirm is set or true
 
     else{ // The card will be deleted now
-        var stripeActionUrl =  $("input[name=stripe_url]").val() + '/stripe_deleteCards';
+        var stripeActionUrl =  $("input[name=stripe_url]").val() + 'stripe_deleteCards';
 
         //Fetch the card
         var selectedCard = '';
@@ -244,7 +244,7 @@ function accountAddCard(){
         jerror('Please complete all require fields');
     }
     else{
-        var stripeActionUrl = $("input[name=stripe_url]").val() + '/stripe_storeCard';
+        var stripeActionUrl = $("input[name=stripe_url]").val() + 'stripe_storeCard';
         var obj = new Object();
         console.log($('input[name=user_id]').val());
         obj.user_id = $('input[name=user_id]').val();
@@ -322,7 +322,7 @@ function accountViewCard(){
     if (selectedCard == '' && !deleteBoolean)
         jerror('Please select a card');
     else{
-        var stripeActionUrl = $("input[name=stripe_url]").val() + '/stripe_viewCard';
+        var stripeActionUrl = $("input[name=stripe_url]").val() + 'stripe_viewCard';
         var params = new Object();
         params.user_id = $("input[name=user_id]").val();
         params.card_id = selectedCard;
@@ -428,7 +428,7 @@ function accountUpdateCard(){
         jerror('Please complete all require fields');
     }
     else{
-        var stripeActionUrl = $("input[name=stripe_url]").val() + '/stripe_updateCard';
+        var stripeActionUrl = $("input[name=stripe_url]").val() + 'stripe_updateCard';
         var obj = new Object();
         obj.user_id = $("input[name=user_id]").val();
         obj.id = jEditCard.find("#card_id").val();
@@ -488,7 +488,7 @@ function getAccountPlans(){
         '"json": ' + data_obj  +
         '}';
 
-    var stripeCustomerUrl = $("input[name=stripe_url]").val() + '/stripe_getCustomerInfo';
+    var stripeCustomerUrl = $("input[name=stripe_url]").val() + 'stripe_getCustomerInfo';
 
     $('#loadingpopup').fadeIn(1000);
     $.ajax({

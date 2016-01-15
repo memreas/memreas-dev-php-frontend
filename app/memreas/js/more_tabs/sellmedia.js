@@ -65,7 +65,7 @@ function register_sell_media(){
             '"json": ' + data_params  +
             '}';
 
-        var stripeActionUrl = $("input[name=stripe_url]").val() + '/stripe_addSeller';
+        var stripeActionUrl = $("input[name=stripe_url]").val() + 'stripe_addSeller';
         $('.stripe-payment').fadeIn(1000);
         $.ajax({
             url: stripeActionUrl,
