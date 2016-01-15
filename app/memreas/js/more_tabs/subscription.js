@@ -325,6 +325,8 @@ function getPlans(){
     jSubscriptionPlans.removeClass('.preload-null').empty();
     var stripeActionUrl = $("input[name=stripe_url]").val() + 'stripe_listPlan';
     var obj = new Object();
+    obj.user_id = $("input[name=user_id]").val();
+    var data_obj = JSON.stringify(obj, null, '\t');
     var data = '{"action": "listPlan", ' +
         '"type":"jsonp", ' + 
         '"memreascookie":"' + getCookie("memreascookie") + '", ' +
