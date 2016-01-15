@@ -61,7 +61,7 @@ function buycreditAddCard(){
         jerror('Please complete all require fields');
     }
     else{
-        var stripeActionUrl = $("input[name=stripe_url]").val() + '/stripe_storeCard';
+        var stripeActionUrl = $("input[name=stripe_url]").val() + 'stripe_storeCard';
         var obj = new Object();
         obj.user_id = $('input[name=user_id]').val();
         obj.first_name = jAddCard.find("#credit_addcard_fname").val();
@@ -122,7 +122,7 @@ function buycredit_listCard(){
 
     jMemberCard.empty();
     var stripeUserId = $("input[name=user_id]").val();
-    var stripeActionUrl = $("input[name=stripe_url]").val() + '/stripe_listCards';
+    var stripeActionUrl = $("input[name=stripe_url]").val() + 'stripe_listCards';
     var obj = new Object();
     obj = {userid:stripeUserId};
     var json_listCard = JSON.stringify(obj, null, '\t');
@@ -206,7 +206,7 @@ function buycredit_removeCard(){
     if (selectedCard == '')
         jerror('Please select a card');
     else{
-        var stripeActionUrl =  $("input[name=stripe_url]").val() + '/stripe_deleteCards';
+        var stripeActionUrl =  $("input[name=stripe_url]").val() + 'stripe_deleteCards';
         var cardSelected = new Array();
         cardSelected.push(selectedCard);
 
@@ -249,7 +249,7 @@ function fetch_customer(){
     '"type":"jsonp", ' +
     '"json": ' + data_obj  +
     '}';
-    var stripeCustomerUrl = $("input[name=stripe_url]").val() + '/stripe_getCustomerInfo';
+    var stripeCustomerUrl = $("input[name=stripe_url]").val() + 'stripe_getCustomerInfo';
     $.ajax({
         url: stripeCustomerUrl,
         type: 'POST',
@@ -326,7 +326,7 @@ function buycredit_confirmAmount(){
     '"json": ' + params_json  +
     '}';
 
-    var stripeActionUrl = $("input[name=stripe_url]").val() + '/stripe_addValue';
+    var stripeActionUrl = $("input[name=stripe_url]").val() + 'stripe_addValue';
 
     $('.stripe-payment').fadeIn(1000);
     $.ajax({
