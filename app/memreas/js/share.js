@@ -896,11 +896,12 @@ share_addFriends = function(info) {
 	var i = 0, el;
 
 	for (i = 0; i < info.length; i++) {
+            
 		el = '';
 		el += '<li>';
 		el += '<figure class="pro-pics2" id="'
 				+ info[i].div_id
-				+ '" onclick="javascript:share_clickFriends(this.id);"><img src="/memreas/img/profile-pic.jpg" alt="" '
+				+ '" onclick="javascript:share_clickFriends(this.id);"><img src="/memreas/img/profile-pic.jpg" class="new-memreas" alt="" '
 				+ (info[i].selected ? 'class="setchoosed"' : '') + '></figure>';
 		el += '<aside class="pro-pic_names2" name="'
 				+ info[i].name
@@ -916,7 +917,13 @@ share_addFriends = function(info) {
 	var imgList = $('#share_friendslist .mCSB_container li img');
 
 	for (i = 0; i < imgList.length; i++) {
-		$(imgList[i]).prop('src', info[i].photo);
+                if(info[i].photo){
+                    $(imgList[i]).prop('src', info[i].photo);
+                }else{
+                   $(imgList[i]).prop('src', '/memreas/img/profile-pic.jpg');  
+                }
+		//$(imgList[i]).prop('src', info[i].photo);
+               
 	}
 	$('#share_friendslist').mCustomScrollbar('update');
 }
