@@ -896,6 +896,7 @@ share_addFriends = function(info) {
 	var i = 0, el;
 
 	for (i = 0; i < info.length; i++) {
+            
 		el = '';
 		el += '<li>';
 		el += '<figure class="pro-pics2" id="'

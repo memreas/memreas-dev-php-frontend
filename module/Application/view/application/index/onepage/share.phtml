@@ -114,12 +114,19 @@
                     <div class="clearfix"></div>
                 </div>
                 <div id="tab3-share" class="hideCls">
-                    <div class="styled-select">
-                        <select id="cmb_socialtype" >
+                    <div class="styled-select hidden-memreas">
+                        <select id="cmb_socialtype" style="display:none;" >
                             <option value="">-Choose-</option>
                             <option value="memreas" selected="">memreas</option>
                         </select>
+                        
                     </div>
+                    
+                     <div class="styled-select">
+                        
+                        <label class="memreas-txt">memreas</label>
+                    </div>
+                    
                     <ul id="share_friendslist" class="share_friends_contents scrollClass scroll-area">
                         <!--
                         <li>
@@ -145,7 +152,7 @@
                         </div>
                     </div>
                     <div class="clear"></div>
-                    <ul class="share_friends_check_box">
+                    <ul class="share_friends_check_box hidden-memreas">
                         <li>
                             <input id="ckb_makegroup" class="css-checkbox" type="checkbox" />
                             <label for="ckb_makegroup" name="demo_lbl_6" class="css-label">make this a group</label>

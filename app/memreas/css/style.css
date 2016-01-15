@@ -4282,3 +4282,11 @@ html.noads #tab-content, html.noads #tab-content-queue, html.noads #tab-content-
     position: relative;
     background: url('../img/fotorama.png') no-repeat;
 }
+.memreas-txt{
+    
+	font-family: "Century Gothic";
+	font-size: 18px;
+	color: #FFF;
+        float: none;
+}
+.hidden-memreas{display:none !important;}
