@@ -670,7 +670,7 @@ function fetchFriendsMemreas(friendMemreasType) {
 												+ '}';
 
 										var stripeActionUrl = STRIPE_SERVER_URL
-												+ '/stripe/checkOwnEvent';
+												+ '/stripe_checkOwnEvent';
 										$
 												.ajax({
 													url : stripeActionUrl,

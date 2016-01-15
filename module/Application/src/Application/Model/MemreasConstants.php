@@ -9,7 +9,8 @@ namespace Application\Model;
 class MemreasConstants {
 	const MEMREAS_FE = "https://fe.memreas.com";
 	const MEMREAS_WS = "https://memreasdev-wsj.memreas.com";
-	const MEMREAS_PAY = "https://memreasdev-pay.memreas.com";
+	const MEMREAS_PAY = "https://memreasdev-wsj.memreas.com/?action=";
+	//const MEMREAS_PAY = "https://memreasdev-pay.memreas.com";
 	const MEMREAS_ADS = false;
 	const MEMREAS_SELL_MEDIA = 1; // Enable or Disable selling media
 	const CLOUDFRONT_DOWNLOAD_HOST = 'https://d3sisat5gdssl6.cloudfront.net/';
