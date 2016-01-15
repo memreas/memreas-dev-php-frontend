@@ -481,6 +481,7 @@ share_addEvent = function(medianext) {
 		// Checking for selling media
 		if ($("#ckb_sellmedia").is(":checked") && sell_media_price > 0 ) {
                     //alert('hello');
+                    
 			//popup("popupSellMedia");
 			//return true;
 		}
