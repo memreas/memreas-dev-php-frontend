@@ -4253,9 +4253,9 @@ html.noads #tab-content, html.noads #tab-content-queue, html.noads #tab-content-
 	}
 }
 
-@media ( max-height : 900px) and (max-width:1920px) {
+@media ( max-height : 979px) and (max-width:1920px) {
 	.fotorama__stage {
-height: 664px !important;
+height: 549px !important;
 	}
 }
 @media (min-width:1921px){
