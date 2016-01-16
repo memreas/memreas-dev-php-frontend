@@ -323,7 +323,7 @@ function getPlans(){
     jAccountPlans.empty();
     var jSubscriptionPlans = $(".subscription-plans");
     jSubscriptionPlans.removeClass('.preload-null').empty();
-    var stripeActionUrl = $("input[name=stripe_url]").val() + 'stripe_listPlan';
+    var stripeActionUrl = $("input[name=stripe_url]").val() + '/stripe/listPlan';
     var obj = new Object();
     obj.user_id = $("input[name=user_id]").val();
     var data_obj = JSON.stringify(obj, null, '\t');
