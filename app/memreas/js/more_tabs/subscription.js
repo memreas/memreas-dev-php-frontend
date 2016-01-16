@@ -227,7 +227,7 @@ function subscription_step4(){
             break;
         }
     }
-    var stripeActionUrl = $("input[name=stripe_url]").val() + 'stripe_subscribe';
+    var stripeActionUrl = $("input[name=stripe_url]").val() + '/stripe/subscribe';
     var order_summary = new Object();
     order_summary.userid = $("input[name=user_id]").val();
     order_summary.card_id = orderCard.stripe_card_reference_id;
@@ -278,7 +278,7 @@ function subscription_step4(){
                     '"type":"jsonp", ' +
                     '"json": ' + data_obj  +
                     '}';
-                var stripeCustomerUrl = $("input[name=stripe_url]").val() + 'stripe_getCustomerInfo';
+                var stripeCustomerUrl = $("input[name=stripe_url]").val() + '/stripe/getCustomerInfo';
                 $.ajax({
                     url: stripeCustomerUrl,
                     type: 'POST',
@@ -358,7 +358,7 @@ function getPlans(){
                     '"type":"jsonp", ' +
                     '"json": ' + data_obj  +
                     '}';
-                var stripeCustomerUrl = $("input[name=stripe_url]").val() + 'stripe_getCustomerInfo';
+                var stripeCustomerUrl = $("input[name=stripe_url]").val() + '/stripe/getCustomerInfo';
                 $.ajax({
                     url: stripeCustomerUrl,
                     type: 'POST',
@@ -410,7 +410,7 @@ function listStripeCard(){
     jMemberCard.removeClass('preload-null');
     jMemberCard.empty();
     var stripeUserId = $("input[name=user_id]").val();
-    var stripeActionUrl = $("input[name=stripe_url]").val() + 'stripe_listCards';
+    var stripeActionUrl = $("input[name=stripe_url]").val() + '/stripe/listCards';
     var obj = new Object();
     obj = {userid:stripeUserId};
     var json_listCard = JSON.stringify(obj, null, '\t');
@@ -513,7 +513,7 @@ function stripeAddCard(){
         jerror('Please complete all require fields');
     }
     else{
-        var stripeActionUrl = $("input[name=stripe_url]").val() + 'stripe_storeCard';
+        var stripeActionUrl = $("input[name=stripe_url]").val() + '/stripe/storeCard';
         var obj = new Object();
         console.log($('input[name=user_id]').val());
         obj.user_id = $('input[name=user_id]').val();
@@ -581,7 +581,7 @@ function removeCard(){
     if (selectedCard == '')
         jerror('Please select a card');
     else{
-        var stripeActionUrl =  $("input[name=stripe_url]").val() + 'stripe_deleteCards';
+        var stripeActionUrl =  $("input[name=stripe_url]").val() + '/stripe/deleteCards';
         var cardSelected = new Array();
         cardSelected.push(selectedCard);
 

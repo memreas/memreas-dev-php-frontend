@@ -79,7 +79,7 @@ function buyMedia(event_id){
                 '"json": ' + params_json  +
                 '}';
 
-            var stripeActionUrl = $("input[name=stripe_url]").val() + 'stripe_buyMedia';
+            var stripeActionUrl = $("input[name=stripe_url]").val() + '/stripe/buyMedia';
             $('.stripe-payment').fadeIn(1000);
             $.ajax({
                 url: stripeActionUrl,
@@ -193,7 +193,7 @@ function popupCreditAddCard(){
         jerror('Please complete all require fields');
     }
     else{
-        var stripeActionUrl = $("input[name=stripe_url]").val() + 'stripe_storeCard';
+        var stripeActionUrl = $("input[name=stripe_url]").val() + '/stripe/storeCard';
         var obj = new Object();
         obj.user_id = $('input[name=user_id]').val();
         obj.first_name = jAddCard.find("#addcard_fname").val();
@@ -278,7 +278,7 @@ function acceptBuyCredit(){
         '"json": ' + params_json  +
         '}';
 
-    var stripeActionUrl = $("input[name=stripe_url]").val() + 'stripe_addValue';
+    var stripeActionUrl = $("input[name=stripe_url]").val() + '/stripe/addValue';
     $('.stripe-payment').fadeIn(1000);
     $.ajax({
         url: stripeActionUrl,
@@ -312,7 +312,7 @@ function popupReloadAccountBalance(){
         '"json": ' + params_json  +
         '}';
 
-    var stripeActionUrl = $("input[name=stripe_url]").val() + 'stripe_getUserBalance';
+    var stripeActionUrl = $("input[name=stripe_url]").val() + '/stripe/getUserBalance';
     $('.stripe-payment').fadeIn(1000);
     $.ajax({
         url: stripeActionUrl,
