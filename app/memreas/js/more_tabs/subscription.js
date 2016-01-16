@@ -326,12 +326,13 @@ function getPlans(){
     var stripeActionUrl = $("input[name=stripe_url]").val() + '/stripe/listPlan';
     var obj = new Object();
     obj.user_id = $("input[name=user_id]").val();
+    obj.memreascookie = getCookie("memreascookie");
     var data_obj = JSON.stringify(obj, null, '\t');
     var data = '{"action": "listPlan", ' +
         '"type":"jsonp", ' + 
-        '"memreascookie":"' + getCookie("memreascookie") + '", ' +
         '"json": ' + data_obj  +
         '}';
+
     console.log("about to call stripe_listPlan with data--->" + data);
     $('#loadingpopup').show();
     $.ajax({
