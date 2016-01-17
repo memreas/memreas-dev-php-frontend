@@ -7,12 +7,12 @@
 	$(window).load(
 			function() {
 				$("#tab-content-memreas div.hideCls").hide(); // Initially
-																// hide all
-																// content
+				// hide all
+				// content
 				$("#tabs-memreas li:first").attr("id", "current"); // Activate
-																	// first tab
+				// first tab
 				$("#tab-content-memreas div:first").fadeIn(); // Show first
-																// tab content*/
+				// tab content*/
 
 				$('#tabs-memreas a')
 						.click(
@@ -22,19 +22,19 @@
 									$("#tab-content-memreas div.hideCls")
 											.hide(); // Hide all content
 									$("#tabs-memreas li").attr("id", ""); // Reset
-																			// id's
+									// id's
 									$(this).parent().attr("id", "current"); // Activate
-																			// this
+									// this
 									$('#' + $(this).attr('title')).fadeIn(); // Show
-																				// content
-																				// for
-																				// current
-																				// tab
+									// content
+									// for
+									// current
+									// tab
 									$('#' + $(this).attr('title')).fadeIn(); // Show
-																				// content
-																				// for
-																				// current
-																				// tab
+									// content
+									// for
+									// current
+									// tab
 									if (!($('#' + $(this).attr('title')
 											+ " .scroll-area")
 											.hasClass('mCustomScrollbar'))) {
@@ -153,6 +153,11 @@ function fetchMyMemreas() {
 								+ '</div>';
 						jTarget_object.append(element);
 
+						
+						/*
+						 * This section isn't necessary ... view events passes back all this data media, friends, comments.
+						 */
+						
 						// get event medias
 						ajaxRequest(
 								'listallmedia',
@@ -724,7 +729,7 @@ function fetchFriendsMemreas(friendMemreasType) {
 												});
 									}
 								} // end for loop for (var key=0;key <
-									// friend_resources_count;key++)
+								// friend_resources_count;key++)
 
 								if (total_event_row_width > global_width) {
 									$("#" + friend_row).swipe({
