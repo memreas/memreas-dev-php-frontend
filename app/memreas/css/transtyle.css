@@ -1121,4 +1121,6 @@ input[name="account_email"], input[name="account_alternate_email"],
 	
 }*/
 
-.memreas-span-6{max-width: 49%;}
+.memreas-span-6{width: 73%;}
+.memreas-span-3{width: 25%;}
+.memreas-detail-owner{width:25% !important;}
