@@ -217,6 +217,7 @@ function updateMemreasMediaDetailsScript() {
 			current : current,
 			minItems : 1,
 			onClick : function(el, pos, evt) {
+                               
 				$preview.attr('src', el.data('preview'));
 				$preview.attr('data-preview', el.data('preview'));
 				$carouselItems.removeClass('current-img');
@@ -375,8 +376,16 @@ function showEventDetail(eventId, userId) {
 									_download_url = _media_url;
                                                                     
                                                                   //target_element.append('<video  preload="none" autoplay="" style="width:100%; height:300px;"><source src="'+_media_url+'"  type="video/mp4" /> </video>')  
-
-								target_element
+                                                                   var fotoraSlide= '<a href="'+_media_url+'" data-video="true" media-id="'+mediaId+'"><img src="'+_media_url+'" media-id="'+mediaId+'" /></a>';
+                                                                   
+                                                                   target_element
+										.append('<li class="video-media" id="memreasvideo-'
+												+ mediaId
+												+ '" media-url="'
+												+ _main_media
+												+ '"  class="swipebox"><video  preload="none" autoplay="" style="width:100%; height:300px;"><source src="'+_media_url+'"  type="video/mp4" /> </video></li>');
+                                                                   
+								/*target_element
 										.append('<li class="video-media" id="memreasvideo-'
 												+ mediaId
 												+ '" media-url="'
@@ -385,14 +394,16 @@ function showEventDetail(eventId, userId) {
 												+ mediaId
 												+ '");\' id="button"><img src="'
 												+ _media_url
-												+ '" alt=""><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a></li>');
-								jcarousel_element.append('<li data-preview="'
-										+ _media_url + '" class=""  media-id="'
+												+ '" alt=""><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a></li>');*/
+                                                               // var Datapreview='<video  preload="none" autoplay="" style="width:100%; height:300px;"><source src="'+_media_url+'"  type="video/mp4" /> </video>';
+								jcarousel_element.append('<li data-preview="' 
+										+ _media_url + '" class="videoArea"  media-id="'
 										+ mediaId
 										+ '"><a href="javascript:;"><img src="'
 										+ _media_url
 										+ '" alt="image01" download="'
 										+ _media_url + '" /></a> <span class="video-play-icon-memreas"></span></li>');
+                                                                 $('.MemreasDetailfotoramaSlde').append(fotoraSlide);       
 							} else {
 								var _main_media = getValueFromXMLTag(media,
 										'media_url_1280x720');
@@ -422,6 +433,8 @@ function showEventDetail(eventId, userId) {
 										+ _media_url
 										+ '" alt="image01" download="'
 										+ _media_url + '" /></a></li>');
+                                                                        
+                                                               $('.MemreasDetailfotoramaSlde').append('<img src="'+_media_url+'" media-id="'+mediaId+'" /> ');         
 							}
 						}
 					}
