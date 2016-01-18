@@ -267,7 +267,8 @@ function validateRegstration() {
 										//
 										// Set Key since user is registered
 										//
-										var _media_extension = filename.split(".");
+										var _media_extension = filename
+												.split(".");
 										_media_extension = _media_extension[_media_extension.length - 1];
 										media_type = media_type = 'image/'
 												+ _media_extension
@@ -288,7 +289,7 @@ function validateRegstration() {
 														.val());
 										console
 												.log("Calling uploadHandle.submit()");
-										
+
 										var jqXHR = uploadHandle.submit();
 									},
 									error : function(jqXHR, textStatus,
@@ -434,7 +435,6 @@ $(function() {
 											},
 											success : function(data, status,
 													jqXHR) {
-												alert("about to call add media event...");
 												console
 														.log("fileupload success function...");
 												var params = [
