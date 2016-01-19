@@ -275,6 +275,8 @@ function accountAddCard(){
             dataType: 'jsonp',
             data: 'json=' + data,
             success: function(response){
+            	//debugging
+            	console.log(response);
                 if (response.status == 'Success'){
                     jsuccess("Your card added successfully");
                     disablePopup('popupaccountaddcard');
