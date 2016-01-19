@@ -23,6 +23,8 @@ $(document).ready(function() {
                     users = [];
                     map = {};
                     var objs = jQuery.parseJSON(data);
+                    //debugging json
+                    console.log(data);
                     var username = '@';
                     switch (q.charAt(0))
                     {
