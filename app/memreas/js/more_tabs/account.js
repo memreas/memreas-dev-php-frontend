@@ -97,7 +97,6 @@ function loadAccountCard(){
         dataType: 'jsonp',
         data: 'json=' + data,
         success: function(response){
-        	alert(response);
             if (response.status == 'Success'){
                 var cards = response.payment_methods;
                 var number_of_cards = response.NumRows;
