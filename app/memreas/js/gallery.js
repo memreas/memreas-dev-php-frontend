@@ -252,6 +252,7 @@ jQuery.fetch_server_media = function() {
 						var _media_url_hls = '';
 						var _media_url_web = '';
 						var _media_thumbnail = ''
+                                                var _media_thumbnail_large="";
 						// var main_media_url='';
 						if (_media_type == 'image') {
 							_media_url = getMediaUrl(media, _media_type);
@@ -306,13 +307,20 @@ console.log('_media_thumbnail after '+_media_thumbnail);
 										media_url_for_browser = _media_url_web;
 									}
 
-									source = '<div data-thumb="'
+//									source = '<div data-thumb="'
+//											+ _media_thumbnail + '" data-video="true" >';
+//									source += '<video controls poster="'+ _media_thumbnail_large +'" style="width:70%">';
+//									//source += '<video>';
+//									source += '<source src="' + media_url_for_browser + '" type="video/mp4">';
+//									source += '</video>';
+//									source += '</div>';
+                                                                        source = '<div data-thumb="'
 											+ _media_thumbnail + '" data-video="true" >';
-									//source += '<video controls poster="'+ _media_thumbnail_large +'">';
-									source += '<video>';
-									source += '<source src="' + media_url_for_browser + '" type="application/x-mpegURL">';
-									source += '</video>';
-									source += '</div>';
+                                                                        
+                                                                        source ='<a href="'+ media_url_for_browser +'" data-video="true">';
+                                                                       source +='<img src="'+ _media_thumbnail_large +'">';
+                                                                        source +='</a>';
+                                                                        source += '</div>';
 console.log("video source ---->"+source);
 									
 									//<video width="352" height="198" controls>
@@ -321,7 +329,7 @@ console.log("video source ---->"+source);
 									//
 									// Append to fotorama div
 									//
-									$(".fotorama").append(source);
+									$(".user-resources").append(source);
 
 									// $(".user-resources").append(source);
 									// edit-area-scroll
@@ -350,7 +358,7 @@ console.log("video source ---->"+source);
 									// $(".preload-files.pics").append(
 									// preload_source);
 								} else {
-									$(".fotorama")
+									$(".user-resources")
 											.append(
 													'<div data-thumb="/memreas/img/TrascodingIcon.gif">	<img src="/memreas/img/TrascodingIcon.gif"> </div>');
 
@@ -379,10 +387,13 @@ console.log("video source ---->"+source);
 							//
 							// Image section
 							console.log('Media URL:: ' + _media_url);
-							$(".fotorama").append(
+							$(".user-resources").append(
 									'<div data-thumb="' + _media_url
 											+ '"><img src="' + _media_url
 											+ '"> </div>');
+                                                                                
+                                                        $(".preload-files .pics").append(
+							 '<li><img src="' + _media_url + '"/></li>');                        
 
 							// $(".user-resources")
 							// .append(
@@ -419,31 +430,31 @@ console.log("video source ---->"+source);
 					}
 
 					setTimeout(function() {
-						// $(".preload-files").hide();
-						// $(".user-resources").fotorama({
-						// width: '800',
-						// height: '350',
-						// 'max-width': '100%'
-						//
-						// }).fadeIn(500);
-						//
-						// if (!$(".edit-area-scroll")
-						// .hasClass('mCustomScrollbar'))
-						// $(".edit-area-scroll").mCustomScrollbar({
-						// scrollButtons: {
-						// enable: true
-						// }
-						// });
-						// $(".edit-area-scroll").mCustomScrollbar('update');
-						//
-						// if (!$(".edit-areamedia-scroll").hasClass(
-						// 'mCustomScrollbar'))
-						// $(".edit-areamedia-scroll").mCustomScrollbar({
-						// scrollButtons: {
-						// enable: true
-						// }
-						// });
-						// $(".edit-areamedia-scroll").mCustomScrollbar('update');
+						 $(".preload-files").hide();
+						 $(".user-resources").fotorama({
+						 width: '800',
+						 height: '350',
+						 'max-width': '100%'
+						
+						 }).fadeIn(500);
+						
+//						 if (!$(".edit-area-scroll")
+//						 .hasClass('mCustomScrollbar'))
+//						 $(".edit-area-scroll").mCustomScrollbar({
+//						 scrollButtons: {
+//						 enable: true
+//						 }
+//						 });
+//						 $(".edit-area-scroll").mCustomScrollbar('update');
+//						
+//						 if (!$(".edit-areamedia-scroll").hasClass(
+//						 'mCustomScrollbar'))
+//						 $(".edit-areamedia-scroll").mCustomScrollbar({
+//						 scrollButtons: {
+//						 enable: true
+//						 }
+//						 });
+//						 $(".edit-areamedia-scroll").mCustomScrollbar('update');
 
 						// Fetch user's notification header
 						getUserDetail();
