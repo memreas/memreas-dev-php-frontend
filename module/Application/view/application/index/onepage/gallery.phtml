@@ -5,9 +5,6 @@
  * Proprietary and confidential
  */
 ?>
-<script type="text/javascript">
-console.log("Entered gallery.phtml");
-</script>
 <div class="span11 tabcontent-detail" id="gallery">
 	<!--<div class="<?php echo ($this->enableAdvertising) ? 'span9' : 'span11';?> left-gallery">-->
             <div class="span11 left-gallery">
@@ -16,9 +13,6 @@ console.log("Entered gallery.phtml");
 			<li><a href="#" title="tab2" class="delete-tab">delete</a></li>
 			<li><a href="#" title="tab3" class="location-tab">location</a></li>
 		</ul>
-<script type="text/javascript">
-console.log("Past UL List");
-</script>                
 		<div id="tab-content" class="clearfix">
 			<div id="tab1" class="hideCls hidden-onload">
 				<!-- <div class="fotoama" data-width="100%" data-ratio="800/600">  -->
@@ -31,9 +25,6 @@ console.log("Past UL List");
 				<!-- 	</div> -->
         
 			</div>
-<script type="text/javascript">
-console.log("Past TAB1 List");
-</script>                    
 			<div id="tab2" class="hideCls hidden-onload">
 				<div class="edit-area">
 					<ul id="content_1" class="pics edit-area-scroll scroll-area">
@@ -45,9 +36,6 @@ console.log("Past TAB1 List");
 						onclick="$('a[title=queue]').click();">Upload</a>
 				</div>
 			</div>
-<script type="text/javascript">
-console.log("Past TAB2 List");
-</script>
 			<div id="tab3" class="hideCls hidden-onload">
 				<div class="gallery-address-box input-wrap">
 					<input id="txt_gallery_address" name="input" type="text" /><a
@@ -61,10 +49,6 @@ console.log("Past TAB2 List");
 				</div>
 			</div>
 		</div>
-<script type="text/javascript">
-console.log("Past TAB3 List");
-</script>
-
 		<div class="change-location" style="display: none;">
 			<a class="fetch-local" href="#" style="margin-left: 10px;">Change
 				local directory</a><a class="browse-server" href="#">Browse Server</a>
@@ -76,9 +60,6 @@ console.log("Past TAB3 List");
 		</div>
 		<div id="bgpopupplayer" class="backgroundPopup"></div>
 	</div>
- <script type="text/javascript">
-console.log("Past Popup layer close");
-</script>   
 
 	<!-- Ads Section -->
     <?php include('right_advertising.phtml'); ?>
