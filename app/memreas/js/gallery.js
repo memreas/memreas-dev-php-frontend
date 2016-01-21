@@ -400,27 +400,27 @@ console.log("video source ---->"+source);
 							// '<img src="'
 							// + _media_url
 							// + '" />');
-							// $(".edit-area-scroll")
-							// .append(
-							// '<li><a class="image-sync" id="'
-							// + mediaId
-							// + '" onclick="return imageChoosed(this.id);"
-							// href="'
-							// + _media_url
-							// + '"><img src="'
-							// + _media_url
-							// + '"/></a></li>');
-							// $(".preload-files .pics").append(
-							// '<li><img src="' + _media_url + '"/></li>');
-							// $(".aviary-thumbs")
-							// .append(
-							// '<li><img id="edit'
-							// + mediaId
-							// + '" src="'
-							// + _media_url
-							// + '" onclick="openEditMedia(this.id, \''
-							// + _media_url
-							// + '\');"/></li>');
+							 $(".edit-area-scroll")
+							 .append(
+							 '<li><a class="image-sync" id="'
+													+ mediaId
+													+ '" onclick="return imageChoosed(this.id);" href="'
+													+ _media_url
+													+ '"><img src="'
+													+ _media_url
+													+ '"/></a></li>');
+                                                 
+							 $(".preload-files .pics").append(
+							 '<li><img src="' + _media_url + '"/></li>');
+							 $(".aviary-thumbs")
+							 .append(
+							 '<li><img id="edit'
+							 + mediaId
+							 + '" src="'
+							 + _media_url
+							 + '" onclick="openEditMedia(this.id, \''
+							 + _media_url
+							 + '\');"/></li>');
 							$(".galleries-location").append(
 									'<li><img id="location' + mediaId
 											+ '" class="img-gallery" src="'
@@ -438,23 +438,23 @@ console.log("video source ---->"+source);
 						
 						 }).fadeIn(500);
 						
-//						 if (!$(".edit-area-scroll")
-//						 .hasClass('mCustomScrollbar'))
-//						 $(".edit-area-scroll").mCustomScrollbar({
-//						 scrollButtons: {
-//						 enable: true
-//						 }
-//						 });
-//						 $(".edit-area-scroll").mCustomScrollbar('update');
-//						
-//						 if (!$(".edit-areamedia-scroll").hasClass(
-//						 'mCustomScrollbar'))
-//						 $(".edit-areamedia-scroll").mCustomScrollbar({
-//						 scrollButtons: {
-//						 enable: true
-//						 }
-//						 });
-//						 $(".edit-areamedia-scroll").mCustomScrollbar('update');
+						 if (!$(".edit-area-scroll")
+						 .hasClass('mCustomScrollbar'))
+						 $(".edit-area-scroll").mCustomScrollbar({
+						 scrollButtons: {
+						 enable: true
+						 }
+						 });
+						 $(".edit-area-scroll").mCustomScrollbar('update');
+						
+						 if (!$(".edit-areamedia-scroll").hasClass(
+						 'mCustomScrollbar'))
+						 $(".edit-areamedia-scroll").mCustomScrollbar({
+						 scrollButtons: {
+						 enable: true
+						 }
+						 });
+						 $(".edit-areamedia-scroll").mCustomScrollbar('update');
 
 						// Fetch user's notification header
 						getUserDetail();
