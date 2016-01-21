@@ -320,7 +320,7 @@ console.log('_media_thumbnail after '+_media_thumbnail);
                                                                         source ='<a href="'+ media_url_for_browser +'" data-video="true">';
                                                                        source +='<img src="'+ _media_thumbnail_large +'">';
                                                                         source +='</a>';
-                                                                        source += '</div>';
+                                                                        source += '</div>'; 
 console.log("video source ---->"+source);
 									
 									//<video width="352" height="198" controls>
