@@ -223,7 +223,6 @@ jQuery.fetch_server_media = function() {
 						var _media_type = getValueFromXMLTag(media, 'type');
 
 						var _media_url = '';
-						var _media_url_1080p = '';
 						var _media_url_web = '';
 						var _media_thumbnail = ''
 						// var main_media_url='';
@@ -234,9 +233,6 @@ jQuery.fetch_server_media = function() {
 							_media_url_hls = getValueFromXMLTag(media,
 									'media_url_hls');
 							_media_url_hls = removeCdataCorrectLink(_media_url_hls);
-							_media_url_1080p = getValueFromXMLTag(media,
-									'media_url_1080p');
-							_media_url_1080p = removeCdataCorrectLink(_media_url_1080p);
 							_media_url_web = getValueFromXMLTag(media,
 									'media_url_web');
 							_media_url_web = removeCdataCorrectLink(_media_url_web);

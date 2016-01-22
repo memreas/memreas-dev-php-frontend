@@ -850,7 +850,7 @@ share_getAllMedia = function() {
 
 								if (web_transcoded) {
 									var _main_video_media = getValueFromXMLTag(
-											media, 'media_url_1080p');
+											media, 'media_url_web');
 									_main_video_media = removeCdataCorrectLink(_main_video_media);
 									jtarget_element
 											.append('<li class="video-media" id="share-'
