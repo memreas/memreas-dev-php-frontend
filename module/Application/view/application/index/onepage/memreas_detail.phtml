@@ -15,9 +15,19 @@
             </ul>
         <div id="tab-content-memreas-detail">
             <div id="memreas-detail-tab1" class="hideCls">
-                  <ul id="content_1" class="pics memreas-detail-gallery">
+                        <div id="MemreasGallery" class="fotorama" data-swipe="true" data-max-width="100%" data-width="100%" data-height="80%" data-allow-full-screen="true" data-fit="cover" data-click="true" data-nav="thumbs">
+					
+                        
+                            <!-- user resources to be loaded here... -->
+                        </div>    
+                
+                
+                
+                
+<!--                  <ul id="content_1" class="pics memreas-detail-gallery">
 
-                      </ul>
+                      </ul>-->
+
                   <a id="button" class="black_btn_skin f-left" href="javascript:;" onClick="popupAddMemreasGallery();">add media</a>
                   <a id="button" class="black_btn_skin f-right" href="javascript:;" onClick="popupMemreasAddfriends();">add friends</a>
             </div>
@@ -33,7 +43,23 @@
                     </div>-->
                     
                     <aside id="left">
-                        <figure class="event"><div class="image-preview"><img id="preview" data-preview="/memreas/img/large/1.jpg" alt="" /></div></figure>
+                        <figure class="event" style="height: auto;">
+                            <div class="video-preview" style="display: none;">
+                                
+                                <video id="" style="width: 100%; height: 300px;" autoplay controls="" >
+  <source src="" type="video/webm">
+  <source src="" type="video/mp4">
+<source src="" type="application/x-mpegURL">
+Your browser does not support the video tag.
+</video>
+                                
+                                
+                                
+                                
+                                
+                            </div>
+                            <div class="image-preview"><img id="preview" data-preview="/memreas/img/large/1.jpg" alt="" /></div>
+                        </figure>
                     </aside>
                 </div>
                 <div class="clear-2"></div>
@@ -135,3 +161,20 @@
 
 </div>
 <div id="bgpopupplayerMemreas" class="backgroundPopup"></div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+    		setTimeout(function() {
+						 $(".preload-files").hide();
+						 $("#MemreasGallery").fotorama({
+						
+						 'max-width': '100%'
+						
+						 }).fadeIn(500);
+						
+					
+					}, 2000);
+    
+})
+
+</script>
