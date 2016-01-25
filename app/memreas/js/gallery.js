@@ -307,21 +307,26 @@ console.log('_media_thumbnail after '+_media_thumbnail);
 										media_url_for_browser = _media_url_web;
 									}
 
-//									source = '<div data-thumb="'
-//											+ _media_thumbnail + '" data-video="true" >';
-//									source += '<video controls poster="'+ _media_thumbnail_large +'" style="width:70%">';
-//									//source += '<video>';
-//									source += '<source src="' + media_url_for_browser + '" type="video/mp4">';
-//									source += '</video>';
-//									source += '</div>';
-                                                                        source = '<div data-thumb="'
+									source = '<div data-thumb="'
 											+ _media_thumbnail + '" data-video="true" >';
+									source += '<video controls poster="'+ _media_thumbnail_large +'" style="width:70%">';
+									//source += '<video>';
+									source += '<source src="' + media_url_for_browser + '" type="video/mp4">';
+                                                                        source += '<source src="' + media_url_for_browser + '" type="application/vnd.apple.mpegURL">';
+                                                                        source += '<source src="' + media_url_for_browser + '" type="application/x-mpegURL">';
+                                                                        source += '<source src="' + media_url_for_browser + '" type="application/x-mpegURL">';
                                                                         
-                                                                        source ='<a href="'+ media_url_for_browser +'" data-video="true">';
-                                                                       source +='<img src="'+ _media_thumbnail_large +'">';
-                                                                        source +='</a>';
-                                                                        source += '</div>'; 
-console.log("video source ---->"+source);
+									source += '</video>';
+									source += '</div>';
+                                                                        
+//                                                                        source = '<div data-thumb="'
+//											+ _media_thumbnail + '" data-video="true" >';
+//                                                                        
+//                                                                        source ='<a href="'+ media_url_for_browser +'" data-video="true">';
+//                                                                       source +='<img src="'+ _media_thumbnail_large +'">';
+//                                                                        source +='</a>';
+//                                                                        source += '</div>'; 
+//console.log("video source ---->"+source);
 									
 									//<video width="352" height="198" controls>
 								    //<source src="playlist.m3u8" type="application/x-mpegURL">
