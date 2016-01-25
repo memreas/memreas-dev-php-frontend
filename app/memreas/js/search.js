@@ -151,8 +151,6 @@ $(document).ready(function() {
                     break;
                 case '!':
                     var page = 1;var totalPage = 1;
-                    var action = 'findevent';
-                    //  var param  = [{tag: "tag", value: this.query}];
                     var reqhandler = function(data) {
                         $(".tabcontent-detail").hide();
                         $("#search-result").show();
@@ -184,8 +182,6 @@ $(document).ready(function() {
                     break;
                 case '#':
                     var page = 1;var totalPage = 1;
-                    var action = 'getDiscover';
-                    var param = [{tag: "tag", value: this.query}];
                     var reqhandler = function(data) {
                         $(".tabcontent-detail").hide();
                         $("#search-result").show();
