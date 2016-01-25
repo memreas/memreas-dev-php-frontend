@@ -240,7 +240,9 @@ function updateMemreasMediaDetailsScript() {
                     evt.preventDefault();
                     $(".image-preview .swipebox").swipebox();
                 }
-                
+                var download_url = $(this).attr('data-source');;
+                download_url = "/index/downloadMedia?file=" + download_url;
+                $(".memreas-detail-download").attr("href", download_url);
                   updateMediaLike();
                 getMediaComment();
                 });
@@ -254,6 +256,7 @@ function updateMemreasMediaDetailsScript() {
             minItems: 1,
            
             onReady: function () {
+                
                 el = $carouselItems.eq(current);
                 eventdetail_media_id = el.attr("media-id");
                 pos = current;
@@ -271,6 +274,43 @@ function updateMemreasMediaDetailsScript() {
 
                 updateMediaLike();
                 getMediaComment();
+                
+                
+                  /*  if($("#carousel > li").attr('class') == 'videoArea'){
+                        // alert('video');
+                         $('image-preview').hide();
+                         $preview.hide();
+                    $('.video-preview').show();
+                    var rel1 = $(this).attr('data-preview');
+                    var rel2 = $(this).attr('data-source');
+                    $('.video-preview >video').first().attr('poster', rel1);
+                    $('.video-preview > video >source').attr('src', rel2);
+                     //eventdetail_media_id = el.attr("media-id");
+                    }else {
+                    alert('image');
+                    $('.video-preview').hide();
+                    $('image-preview').show();
+                    $preview.show();
+                    var dtpr=$(this).attr('data-preview')
+                    $preview.attr('src',dtpr);
+                    //$preview.attr('data-preview', el.data('preview'));
+                    $carouselItems.removeClass('current-img');
+                    //eventdetail_media_id = el.attr("media-id");
+                   // el.addClass('current-img');
+                    carousel.setCurrent(pos);
+                    evt.preventDefault();
+                    $(".image-preview .swipebox").swipebox();
+                }
+                var download_url = $(this).attr('data-source');;
+                download_url = "/index/downloadMedia?file=" + download_url;
+                $(".memreas-detail-download").attr("href", download_url);
+                  updateMediaLike();
+                getMediaComment();
+               
+                */
+                
+                
+                
             }
         });
     }
@@ -408,7 +448,14 @@ function showEventDetail(eventId, userId) {
                                 _media_thumbnail_large = JSON.parse(removeCdata(_media_thumbnail_large));
                                 _media_thumbnail_large = _media_thumbnail_large[0];
                                 console.log('_media_thumbnail_large after ' + _media_thumbnail_large);
-
+                                
+                                   if ((userBrowser[0].ios)
+                                                || (userBrowser[1].browser == "Safari")) {
+                                         media_url_for_browser = _media_url_hls;
+                                } else {
+                                        media_url_for_browser = _media_url_web;
+                                } 
+                                
                                 _media_thumbnail = getValueFromXMLTag(media, 'media_url_98x78');
                                 _media_thumbnail = JSON.parse(removeCdata(_media_thumbnail));
                                 _media_thumbnail = _media_thumbnail[0];
@@ -416,28 +463,28 @@ function showEventDetail(eventId, userId) {
                                 var _download_url = getValueFromXMLTag(media,
                                         'media_url_download');
                                 if (_download_url == '')
-                                    _download_url = _media_url;
+                                    _download_url = _media_url_web;
 
                                 
-                                var fotoraSlide = '<div data-thumb="' + _media_thumbnail_large + '"><a href="' + _media_url_web + '" data-video="true" media-id="' + mediaId + '"><img src="' + _media_thumbnail_large + '" media-id="' + mediaId + '" /></a></div>';
+                                var fotoraSlide = '<div data-thumb="' + _media_thumbnail_large + '"><a href="' + media_url_for_browser + '" data-video="true" media-id="' + mediaId + '"><img src="' + _media_thumbnail_large + '" media-id="' + mediaId + '" /></a></div>';
 
-                                /*target_element
+                                target_element
                                         .append('<li class="video-media" id="memreasvideo-'
                                                 + mediaId
                                                 + '" media-url="'
                                                 + _main_media
-                                                + '"  class="swipebox"><video  preload="none" autoplay="" style="width:100%; height:300px;"><source src="' + _media_url + '"  type="video/mp4" /> </video></li>');*/
+                                                + '"  class="swipebox"><video  preload="none" autoplay="" style="width:100%; height:300px;"><source src="' + _media_url + '"  type="video/mp4" /> </video></li>');
 
 
                                 jcarousel_element.append('<li data-preview="'
-                                        + _media_url + '" class="videoArea"  data-source="' + _media_url_web + '" media-id="'
+                                        + _media_thumbnail_large + '" class="videoArea"  data-source="' + media_url_for_browser + '" media-id="'
                                         + mediaId
                                         + '"><a href="javascript:;" class=""><img src="'
                                         + _media_thumbnail
                                         + '" alt="image01" download="'
                                         + _media_thumbnail_large + '" class="videoArea" /></a> <span class="video-play-icon-memreas"></span></li>');
                                 $('.MemreasDetailfotoramaSlde').append(fotoraSlide);
-                                $('#MemreasGallery').append(fotoraSlide);
+                                //$('#memreas-detail-gallery').append(fotoraSlide);
                             } else {
                                
                                 
@@ -451,14 +498,14 @@ function showEventDetail(eventId, userId) {
                                 if (_download_url == '')
                                     _download_url = _main_media;
 
-                                /*target_element
+                                target_element
                                         .append('<li  media-id="'
                                                 + mediaId
                                                 + '"><a href="'
                                                 + _main_media
                                                 + '" class="swipebox" title="photo-2"><img src="'
                                                 + _media_url
-                                                + '" alt=""></a></li>');*/
+                                                + '" alt=""></a></li>');
                                 jcarousel_element.append('<li data-preview="'
                                         + _main_media + '"  media-id="'
                                         + mediaId
@@ -468,7 +515,7 @@ function showEventDetail(eventId, userId) {
                                         + _media_url + '" /></a></li>');
 
                                 $('.MemreasDetailfotoramaSlde').append('<div data-thumb="' + _media_url + '"><img src="' + _main_media + '" media-id="' + mediaId + '" /></div> ');
-                                $('#MemreasGallery').append('<div data-thumb="' + _media_url + '"><img src="' + _main_media + '" media-id="' + mediaId + '" /></div> ');
+                               // $('#memreas-detail-gallery').append('<div data-thumb="' + _media_url + '"><img src="' + _main_media + '" media-id="' + mediaId + '" /></div> ');
                             }
                         }
                     }
