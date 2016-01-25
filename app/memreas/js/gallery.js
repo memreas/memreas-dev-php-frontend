@@ -307,17 +307,45 @@ console.log('_media_thumbnail after '+_media_thumbnail);
 										media_url_for_browser = _media_url_web;
 									}
 
-									source = '<div data-thumb="'
+									/*source = '<div data-thumb="'
 											+ _media_thumbnail + '" data-video="true" >';
 									source += '<video controls poster="'+ _media_thumbnail_large +'" style="width:70%">';
 									//source += '<video>';
 									source += '<source src="' + media_url_for_browser + '" type="video/mp4">';
                                                                         source += '<source src="' + media_url_for_browser + '" type="application/vnd.apple.mpegURL">';
                                                                         source += '<source src="' + media_url_for_browser + '" type="application/x-mpegURL">';
-                                                                        source += '<source src="' + media_url_for_browser + '" type="application/x-mpegURL">';
+                                                                        source += '<source src="' + media_url_for_browser + '" type="video/ogg">';
                                                                         
 									source += '</video>';
 									source += '</div>';
+                                                                        
+                                                                        */
+                                                                            if ((userBrowser[0].ios)
+											|| (userBrowser[1].browser == "Safari")) {
+//										source += '<source  src="'
+//												+ _media_url_hls
+//												+ '" type="video/webm">';
+//										console.log("_media_url_hls-> " + _media_url_hls);
+
+                                                                                source +=' <a href="'+media_url_for_browser+'" data-img="'+_media_thumbnail+'"  data-video="true" ><img src="'+_media_thumbnail+'"></a>';
+									}else{
+                                                                           
+                                                                        source += '<video controls="" poster="'
+											+ _media_thumbnail + '"  width="'
+											+ width + '"  height="' + height
+											+ '" preload="auto" autoplay="">';        
+									
+										source += '<source src="'
+												+ media_url_for_browser
+												+ '" type="video/mp4">';
+                                                                                source += '<source src="' + media_url_for_browser + '" type="application/vnd.apple.mpegURL">';
+                                                                        source += '<source src="' + media_url_for_browser + '" type="application/x-mpegURL">';         
+									
+									source += '</video>'; 
+                                                                        }
+                                                                        
+                                                                        
+                                                                        
                                                                         
 //                                                                        source = '<div data-thumb="'
 //											+ _media_thumbnail + '" data-video="true" >';
@@ -335,6 +363,7 @@ console.log('_media_thumbnail after '+_media_thumbnail);
 									// Append to fotorama div
 									//
 									$(".user-resources").append(source);
+                                                                        console.log('NEW MEDIA: '+ media_url_for_browser);
 
 									// $(".user-resources").append(source);
 									// edit-area-scroll
