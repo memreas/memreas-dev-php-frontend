@@ -11,6 +11,8 @@ var userObject = [];
 var notificationHeaderObject = new Object(); // This variable stored header
 // notification and compare with
 // a new for checking
+var blueIMPGallery=new Array();
+var blueIMPGalleryData='';
 function getUserDetail() {
 	if ($("input[name=user_id]").val() == "") {
 		document.location.href = "/index";
@@ -276,6 +278,7 @@ console.log('_media_thumbnail after '+_media_thumbnail);
 						}
 
 						var mediaId = getValueFromXMLTag(media, 'media_id');
+                                                
 						// Build video thumbnail
 						if (_media_type == 'video') {
 							//
@@ -306,6 +309,17 @@ console.log('_media_thumbnail after '+_media_thumbnail);
 									} else {
 										media_url_for_browser = _media_url_web;
 									}
+                                                                       
+                                                                        blueIMPGalleryData=' {';
+                                                                        blueIMPGalleryData +='title:"",';
+                                                                        blueIMPGalleryData += 'href:'+ '"'+media_url_for_browser+'"'+',';
+                                                                        blueIMPGalleryData +='type:' + '"video/mp4"'+',';
+                                                                        blueIMPGalleryData += 'poster:'+ '"'+_media_thumbnail+'"'
+                                                                        blueIMPGalleryData += ' },';
+                                                                        
+                                                                        //blueIMPGallery= blueIMPGallery.push(blueIMPGalleryData);
+                                                                        
+                                                                       console.log('BLue Imp Data:'+blueIMPGalleryData);
 
 									/*source = '<div data-thumb="'
 											+ _media_thumbnail + '" data-video="true" >';
@@ -363,7 +377,7 @@ console.log('_media_thumbnail after '+_media_thumbnail);
 									// Append to fotorama div
 									//
 									$(".user-resources").append(source);
-                                                                        console.log('NEW MEDIA: '+ media_url_for_browser);
+                                                                        //console.log('NEW MEDIA: '+ media_url_for_browser);
 
 									// $(".user-resources").append(source);
 									// edit-area-scroll
@@ -415,6 +429,8 @@ console.log('_media_thumbnail after '+_media_thumbnail);
 									// href="/memreas/img/transcode-icon.png"><img
 									// src="/memreas/img/transcode-icon.png"/></a><img
 									// src="/memreas/img/gallery-select.png"></li>');
+                                                                       
+                                                                        
 								}
 							}
 						} else {
@@ -427,7 +443,18 @@ console.log('_media_thumbnail after '+_media_thumbnail);
 											+ '"> </div>');
                                                                                 
                                                         $(".preload-files .pics").append(
-							 '<li><img src="' + _media_url + '"/></li>');                        
+							 '<li><img src="' + _media_url + '"/></li>');     
+                                                 
+                                                 
+                                                                         var  blueIMPGalleryImg;
+                                                                        blueIMPGalleryImg=' {';
+                                                                        blueIMPGalleryImg +='title:"",';
+                                                                        blueIMPGalleryImg += 'href:'+ '"'+_media_url+'"'+',';
+                                                                        blueIMPGalleryImg +='type:' + '"image/jpeg"'+',';
+                                                                        blueIMPGalleryImg += 'thumbnail:'+ '"'+_media_url+'"'
+                                                                        blueIMPGalleryImg += ' },';
+                                                 //trackData.push(blueIMPGalleryImg);
+                                                 
 
 							// $(".user-resources")
 							// .append(
@@ -462,7 +489,7 @@ console.log('_media_thumbnail after '+_media_thumbnail);
 							checkHasImage = true;
 						}
 					}
-
+                                        //console.log('Gallery String Data:'+ blueIMPGallery.size());
 					setTimeout(function() {
 						 $(".preload-files").hide();
 						 $(".user-resources").fotorama({
