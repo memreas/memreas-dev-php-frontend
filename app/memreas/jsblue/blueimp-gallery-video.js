@@ -52,7 +52,6 @@
                 this.playingVideo.pause();
             }
         },
-
         videoFactory: function (obj, callback, videoInterface) {
             var that = this,
                 options = this.options,

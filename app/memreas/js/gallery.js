@@ -11,8 +11,8 @@ var userObject = [];
 var notificationHeaderObject = new Object(); // This variable stored header
 // notification and compare with
 // a new for checking
-var blueIMPGallery=new Array();
-var blueIMPGalleryData='';
+var blueIMPGallery = new Array();
+var blueIMPGalleryData = '';
 function getUserDetail() {
 	if ($("input[name=user_id]").val() == "") {
 		document.location.href = "/index";
@@ -26,7 +26,8 @@ function getUserDetail() {
 				'getuserdetails',
 				params,
 				function(xml_response) {
-					console.log("Inside get user detail response--->" + xml_response);
+					console.log("Inside get user detail response--->"
+							+ xml_response);
 
 					if (getValueFromXMLTag(xml_response, 'status') == 'Success') {
 						var useremail = getValueFromXMLTag(xml_response,
@@ -127,21 +128,21 @@ function getUserDetail() {
 	}
 }
 
-$(document).ready ( function(){
+$(document).ready(
+		function() {
 
-	console.log("Inside gallery tabs click functions");
-	$("a[title=gallery]").click(function() {
-		$("#gallery #tabs a[title=tab1]").click();
-	});
+			console.log("Inside gallery tabs click functions");
+			$("a[title=gallery]").click(function() {
+				$("#gallery #tabs a[title=tab1]").click();
+			});
 
-	$("#gallery #tabs a[title=tab1]").click(function() {
-		if (checkReloadItem('listallmedia')) {
-			$.fetch_server_media();
-		}
-	});
+			$("#gallery #tabs a[title=tab1]").click(function() {
+				if (checkReloadItem('listallmedia')) {
+					$.fetch_server_media();
+				}
+			});
 
-	$(".location-tab")
-			.click(
+			$(".location-tab").click(
 					function() {
 						if (!($(".galleries-location").parent(
 								".elastislide-carousel").length > 0))
@@ -151,7 +152,7 @@ $(document).ready ( function(){
 						// img').trigger("click");
 					});
 
-});
+		});
 
 var checkHasImage = false;
 /* Load server media */
@@ -236,28 +237,34 @@ jQuery.fetch_server_media = function() {
 				value : '1'
 			} ],
 			function(response) {
-				console.log("listallmedia response-->" + response);
+				//console.log("listallmedia response-->" + response);
 				if (getValueFromXMLTag(response, 'status') == "Success") {
 
 					var medias = getSubXMLFromTag(response, 'media');
 
-					//$(
-					//		".user-resources, .scrollClass .mCSB_container, .sync-content .scrollClass")
-					//		.html('');
+					// $(
+					// ".user-resources, .scrollClass .mCSB_container,
+					// .sync-content .scrollClass")
+					// .html('');
 					var count_media = medias.length;
-
+					var items_for_gallery = '[';
 					for (var json_key = 0; json_key < count_media; json_key++) {
 						var media = medias[json_key];
+						var content_type;
 						var _media_type = getValueFromXMLTag(media, 'type');
-
 						var _media_url = '';
 						var _media_url_hls = '';
 						var _media_url_web = '';
 						var _media_thumbnail = ''
-                                                var _media_thumbnail_large="";
-						// var main_media_url='';
+						var _media_thumbnail_large = "";
+						var main_media_url = '';
+						var source = "";
 						if (_media_type == 'image') {
 							_media_url = getMediaUrl(media, _media_type);
+							content_type = 'image/jpeg';
+							main_media_url
+							main_media_url = getValueFromXMLTag(media, 'main_media_url');
+							_media_thumbnail_large= main_media_url = removeCdataCorrectLink(main_media_url);
 						} else if (_media_type == 'video') {
 							_media_url_hls = getValueFromXMLTag(media,
 									'media_url_hls');
@@ -265,257 +272,404 @@ jQuery.fetch_server_media = function() {
 							_media_url_web = getValueFromXMLTag(media,
 									'media_url_web');
 							_media_url_web = removeCdataCorrectLink(_media_url_web);
-							_media_thumbnail_large = getValueFromXMLTag(media, 'media_url_448x306');
-							_media_thumbnail_large = JSON.parse(removeCdata(_media_thumbnail_large));
+							_media_thumbnail_large = getValueFromXMLTag(media,
+									'media_url_448x306');
+							_media_thumbnail_large = JSON
+									.parse(removeCdata(_media_thumbnail_large));
 							_media_thumbnail_large = _media_thumbnail_large[0];
-console.log('_media_thumbnail_large after '+_media_thumbnail_large);							
-							
-							_media_thumbnail = getValueFromXMLTag(media, 'media_url_98x78');
-							_media_thumbnail = JSON.parse(removeCdata(_media_thumbnail));
+
+							_media_thumbnail = getValueFromXMLTag(media,
+									'media_url_98x78');
+							_media_thumbnail = JSON
+									.parse(removeCdata(_media_thumbnail));
 							_media_thumbnail = _media_thumbnail[0];
-console.log('_media_thumbnail after '+_media_thumbnail);							
-							
-						}
 
-						var mediaId = getValueFromXMLTag(media, 'media_id');
-                                                
-						// Build video thumbnail
-						if (_media_type == 'video') {
-							//
-							// Video section
-							//
-							var media_transcode_status = getValueFromXMLTag(
-									media, 'media_transcode_status');
-							// if (typeof (metadata) != 'undefined') {
-							if (media_transcode_status == 'success') {
-
-								if (media_transcode_status == 'success') {
-									// Get screen area display height
-									var width = parseInt($("#tab-content")
-											.width());
-									var height = parseInt($("#tab-content")
-											.height()) - 100;
-
-									/**
-									 * build div and video tag
-									 */
-									var source = '';
-									var edit_source = '';
-									var preload_source = '';
-									var media_url_for_browser = '';
-									if ((userBrowser[0].ios)
-											|| (userBrowser[1].browser == "Safari")) {
-										media_url_for_browser = _media_url_hls;
-									} else {
-										media_url_for_browser = _media_url_web;
-									}
-                                                                       
-                                                                        blueIMPGalleryData=' {';
-                                                                        blueIMPGalleryData +='title:"",';
-                                                                        blueIMPGalleryData += 'href:'+ '"'+media_url_for_browser+'"'+',';
-                                                                        blueIMPGalleryData +='type:' + '"video/mp4"'+',';
-                                                                        blueIMPGalleryData += 'poster:'+ '"'+_media_thumbnail+'"'
-                                                                        blueIMPGalleryData += ' },';
-                                                                        
-                                                                        //blueIMPGallery= blueIMPGallery.push(blueIMPGalleryData);
-                                                                        
-                                                                       console.log('BLue Imp Data:'+blueIMPGalleryData);
-
-									/*source = '<div data-thumb="'
-											+ _media_thumbnail + '" data-video="true" >';
-									source += '<video controls poster="'+ _media_thumbnail_large +'" style="width:70%">';
-									//source += '<video>';
-									source += '<source src="' + media_url_for_browser + '" type="video/mp4">';
-                                                                        source += '<source src="' + media_url_for_browser + '" type="application/vnd.apple.mpegURL">';
-                                                                        source += '<source src="' + media_url_for_browser + '" type="application/x-mpegURL">';
-                                                                        source += '<source src="' + media_url_for_browser + '" type="video/ogg">';
-                                                                        
-									source += '</video>';
-									source += '</div>';
-                                                                        
-                                                                        */
-                                                                            if ((userBrowser[0].ios)
-											|| (userBrowser[1].browser == "Safari")) {
-//										source += '<source  src="'
-//												+ _media_url_hls
-//												+ '" type="video/webm">';
-//										console.log("_media_url_hls-> " + _media_url_hls);
-
-                                                                                source +=' <a href="'+media_url_for_browser+'" data-img="'+_media_thumbnail+'"  data-video="true" ><img src="'+_media_thumbnail+'"></a>';
-									}else{
-                                                                           
-                                                                        source += '<video controls="" poster="'
-											+ _media_thumbnail + '"  width="'
-											+ width + '"  height="' + height
-											+ '" preload="auto" autoplay="">';        
-									
-										source += '<source src="'
-												+ media_url_for_browser
-												+ '" type="video/mp4">';
-                                                                                source += '<source src="' + media_url_for_browser + '" type="application/vnd.apple.mpegURL">';
-                                                                        source += '<source src="' + media_url_for_browser + '" type="application/x-mpegURL">';         
-									
-									source += '</video>'; 
-                                                                        }
-                                                                        
-                                                                        
-                                                                        
-                                                                        
-//                                                                        source = '<div data-thumb="'
-//											+ _media_thumbnail + '" data-video="true" >';
-//                                                                        
-//                                                                        source ='<a href="'+ media_url_for_browser +'" data-video="true">';
-//                                                                       source +='<img src="'+ _media_thumbnail_large +'">';
-//                                                                        source +='</a>';
-//                                                                        source += '</div>'; 
-//console.log("video source ---->"+source);
-									
-									//<video width="352" height="198" controls>
-								    //<source src="playlist.m3u8" type="application/x-mpegURL">
-									//</video>
-									//
-									// Append to fotorama div
-									//
-									$(".user-resources").append(source);
-                                                                        //console.log('NEW MEDIA: '+ media_url_for_browser);
-
-									// $(".user-resources").append(source);
-									// edit-area-scroll
-
-									// edit_source += '<li
-									// class="video-media">';
-									// edit_source += '<a class="video-resource
-									// image-sync" id="'
-									// + mediaId
-									// + '" onclick="return
-									// imageChoosed(this.id);" href="'
-									// + _media_thumbnail
-									// + '">'
-									// + '<img src="'
-									// + _media_thumbnail
-									// + '"/>'
-									// + '<img class="overlay-videoimg"
-									// src="/memreas/img/video-overlay.png" />'
-									// + '</a><img
-									// src="/memreas/img/gallery-select.png"></li>';
-									// $(".edit-area-scroll").append(edit_source);
-									// .preload-files.pics
-									// preload_source += '<li
-									// class="video-media"><img src="'
-									// + _media_thumbnail + '"/></li>';
-									// $(".preload-files.pics").append(
-									// preload_source);
-								} else {
-									$(".user-resources")
-											.append(
-													'<div data-thumb="/memreas/img/TrascodingIcon.gif">	<img src="/memreas/img/TrascodingIcon.gif"> </div>');
-
-									// $(".user-resources")
-									// .append(
-									// '<img
-									// src="/memreas/img/TrascodingIcon.gif"
-									// />');
-									// $(".preload-files .pics")
-									// .append(
-									// '<li class="video-media"><img
-									// src="/memreas/img/transcode-icon.png"/></li>');
-									// $(".edit-area-scroll")
-									// .append(
-									// '<li class="video-media"><a
-									// class="video-resource image-sync" id="'
-									// + mediaId
-									// + '" onclick="return
-									// imageChoosed(this.id);"
-									// href="/memreas/img/transcode-icon.png"><img
-									// src="/memreas/img/transcode-icon.png"/></a><img
-									// src="/memreas/img/gallery-select.png"></li>');
-                                                                       
-                                                                        
-								}
+							if ((userBrowser[0].ios)
+									|| (userBrowser[1].browser == "Safari")) {
+								content_type = 'application/x-mpegURL';
+								main_media_url = _media_url_hls;
+							} else {
+								content_type = 'video/mp4';
+								main_media_url = _media_url_web;
 							}
-						} else {
-							//
-							// Image section
-							console.log('Media URL:: ' + _media_url);
-							$(".user-resources").append(
-									'<div data-thumb="' + _media_url
-											+ '"><img src="' + _media_url
-											+ '"> </div>');
-                                                                                
-                                                        $(".preload-files .pics").append(
-							 '<li><img src="' + _media_url + '"/></li>');     
-                                                 
-                                                 
-                                                                         var  blueIMPGalleryImg;
-                                                                        blueIMPGalleryImg=' {';
-                                                                        blueIMPGalleryImg +='title:"",';
-                                                                        blueIMPGalleryImg += 'href:'+ '"'+_media_url+'"'+',';
-                                                                        blueIMPGalleryImg +='type:' + '"image/jpeg"'+',';
-                                                                        blueIMPGalleryImg += 'thumbnail:'+ '"'+_media_url+'"'
-                                                                        blueIMPGalleryImg += ' },';
-                                                 //trackData.push(blueIMPGalleryImg);
-                                                 
-
-							// $(".user-resources")
-							// .append(
-							// '<img src="'
-							// + _media_url
-							// + '" />');
-							 $(".edit-area-scroll")
-							 .append(
-							 '<li><a class="image-sync" id="'
-													+ mediaId
-													+ '" onclick="return imageChoosed(this.id);" href="'
-													+ _media_url
-													+ '"><img src="'
-													+ _media_url
-													+ '"/></a></li>');
-                                                 
-							 $(".preload-files .pics").append(
-							 '<li><img src="' + _media_url + '"/></li>');
-							 $(".aviary-thumbs")
-							 .append(
-							 '<li><img id="edit'
-							 + mediaId
-							 + '" src="'
-							 + _media_url
-							 + '" onclick="openEditMedia(this.id, \''
-							 + _media_url
-							 + '\');"/></li>');
-							$(".galleries-location").append(
-									'<li><img id="location' + mediaId
-											+ '" class="img-gallery" src="'
-											+ _media_url + '" /></li>');
-							checkHasImage = true;
 						}
-					}
-                                        //console.log('Gallery String Data:'+ blueIMPGallery.size());
+
+						//
+						// Add to div layer
+						//
+						//items_for_gallery += '{' + 
+						//"title: ''," + 
+						//"href: '" + main_media_url + "'," + 
+						//"type: '" + content_type + "'," + 
+						//"poster: '" +  _media_thumbnail_large + "'" + '}';
+
+						items_for_gallery += '{' + 
+							'"title" : ' + '"",' +
+							'"href" : ' + '"' + main_media_url + '",' + 
+							'"type" : ' + '"' + content_type + '",' + 
+							'"poster" : ' + '"' + _media_thumbnail_large + '"' +
+						'},';
+						
+						//source = '<a href="' + main_media_url + '"' +
+						//' title="title"' +
+						//' type="' + content_type + '"' + 
+						//' data-poster="' + _media_thumbnail_large + '"' +
+						//' data-sources=[{"href": "' + main_media_url + '", "type" : "' + content_type + '"' +
+						//'>title</a>'
+						
+						//<a
+				        //href="https://example.org/videos/fruits.mp4"
+				        //title="Fruits"
+				        //type="video/mp4"
+				        //data-poster="https://example.org/images/fruits.jpg"
+				        //data-sources='[{"href": "https://example.org/videos/fruits.mp4", "type": "video/mp4"}, {"href": "https://example.org/videos/fruits.ogg", "type": "video/ogg"}]'
+				        	//>Fruits</a>
+				        	//$(".links").append(source);
+						
+					} // end for
+					items_for_gallery += '{ "container" : "#blueimp-video-carousel", "carousel" : "true"}]';
+					
+					 // Initialize the Gallery as video carousel:
+					/*
+					
+ blueimp.Gallery([{
+ 	"title": "image",
+ 	"href": "https://d3sisat5gdssl6.cloudfront.net/3f68e4a4-74bc-4c2d-bf5c-09f8fd501b7d/7ddc1767-e471-45c3-8fa9-1e95514b9e23/20150908_135823.jpg?Expires=1453867341&Signature=WL2IBAJUViihMvtbUkcr6X-0AuqD1PsoTiOzU~2AT4ZgH4Qt9tFx28jJaL92I3Hme5KeSi4wGU~DR3JYPH0lB6ijFi0chRtZWq--s5lmG-2neIpX70b0E0aP1fun5IZqILhM7Ut6v6QIYuAX1K5HXwAjDCGs5R1Ps4Od32D5mZZfOyBpkruH2PgrUGB2KAiMOopvOzuV-Y-RQFPRNEodcid6JZLVcAhtsuE7-uEAKWTE7e7oOhCILbjZtVFe03xLeKW2bG1ochzocq66YA1Wme1dzvZv1ZtOmNTrRW21EMVas-CytxbacRmA14PxQMRUYAO3o32NsdfMQzyZpt9saA__&Key-Pair-Id=APKAISSKGZE3DR5HQCHA",
+ 	"type": "image/jpeg",
+ 	"poster": "https://d3sisat5gdssl6.cloudfront.net/3f68e4a4-74bc-4c2d-bf5c-09f8fd501b7d/7ddc1767-e471-45c3-8fa9-1e95514b9e23/20150908_135823.jpg?Expires=1453867341&Signature=WL2IBAJUViihMvtbUkcr6X-0AuqD1PsoTiOzU~2AT4ZgH4Qt9tFx28jJaL92I3Hme5KeSi4wGU~DR3JYPH0lB6ijFi0chRtZWq--s5lmG-2neIpX70b0E0aP1fun5IZqILhM7Ut6v6QIYuAX1K5HXwAjDCGs5R1Ps4Od32D5mZZfOyBpkruH2PgrUGB2KAiMOopvOzuV-Y-RQFPRNEodcid6JZLVcAhtsuE7-uEAKWTE7e7oOhCILbjZtVFe03xLeKW2bG1ochzocq66YA1Wme1dzvZv1ZtOmNTrRW21EMVas-CytxbacRmA14PxQMRUYAO3o32NsdfMQzyZpt9saA__&Key-Pair-Id=APKAISSKGZE3DR5HQCHA"
+ }, {
+ 	"title": "video",
+ 	"href": "https://d3sisat5gdssl6.cloudfront.net/3f68e4a4-74bc-4c2d-bf5c-09f8fd501b7d/d35ae62f-befb-49cf-a7a9-d25c45869d6f/web/GOPR0044.mp4?Expires=1453867341&Signature=KOgtI2QA0wJxe7r9HM2CnUAScBvxeKES7cuOzWxLee07kYssIRWqcnAdvjkB16l6g7qxii6Xh4Vojine7xo34~ufqv7ay0CZXK7u7tv4tjV4BRMPMKAfUQZsDLfOy7RM3f4tl-h77t~4pi-mEUxPAW~ElEEb1zk5ydfw-U0uH-hPXOaOKRiAtw7onUOqrSTTRDKR4YxdqgJUdHiVSP4-75zOe3kpd3odLN7jLUfVI-r3gMrCri4o60AZDTc7NF77tW8aN8jm5NsMU4beJMIoZrp4WY1cSdtMpDUq3kuKkhDNlwOhcpeEbRDWko-LuWQbvRhIMkPSK~on9WkGvXuwKg__&Key-Pair-Id=APKAISSKGZE3DR5HQCHA",
+ 	"type": "video/mp4",
+ 	"poster": "https://d3sisat5gdssl6.cloudfront.net/3f68e4a4-74bc-4c2d-bf5c-09f8fd501b7d/d35ae62f-befb-49cf-a7a9-d25c45869d6f/web/GOPR0044.mp4?Expires=1453867341&Signature=KOgtI2QA0wJxe7r9HM2CnUAScBvxeKES7cuOzWxLee07kYssIRWqcnAdvjkB16l6g7qxii6Xh4Vojine7xo34~ufqv7ay0CZXK7u7tv4tjV4BRMPMKAfUQZsDLfOy7RM3f4tl-h77t~4pi-mEUxPAW~ElEEb1zk5ydfw-U0uH-hPXOaOKRiAtw7onUOqrSTTRDKR4YxdqgJUdHiVSP4-75zOe3kpd3odLN7jLUfVI-r3gMrCri4o60AZDTc7NF77tW8aN8jm5NsMU4beJMIoZrp4WY1cSdtMpDUq3kuKkhDNlwOhcpeEbRDWko-LuWQbvRhIMkPSK~on9WkGvXuwKg__&Key-Pair-Id=APKAISSKGZE3DR5HQCHA"
+ },{
+ 	"container": "#blueimp-video-carousel",
+ 	"carousel": "true"
+ }]);
+					
+
+					
+blueimp.Gallery([{
+ 	title: 'image',
+ 	href: 'https://d3sisat5gdssl6.cloudfront.net/3f68e4a4-74bc-4c2d-bf5c-09f8fd501b7d/7ddc1767-e471-45c3-8fa9-1e95514b9e23/20150908_135823.jpg?Expires=1453867341&Signature=WL2IBAJUViihMvtbUkcr6X-0AuqD1PsoTiOzU~2AT4ZgH4Qt9tFx28jJaL92I3Hme5KeSi4wGU~DR3JYPH0lB6ijFi0chRtZWq--s5lmG-2neIpX70b0E0aP1fun5IZqILhM7Ut6v6QIYuAX1K5HXwAjDCGs5R1Ps4Od32D5mZZfOyBpkruH2PgrUGB2KAiMOopvOzuV-Y-RQFPRNEodcid6JZLVcAhtsuE7-uEAKWTE7e7oOhCILbjZtVFe03xLeKW2bG1ochzocq66YA1Wme1dzvZv1ZtOmNTrRW21EMVas-CytxbacRmA14PxQMRUYAO3o32NsdfMQzyZpt9saA__&Key-Pair-Id=APKAISSKGZE3DR5HQCHA',
+ 	type: 'image/jpeg',
+ 	poster: 'https://d3sisat5gdssl6.cloudfront.net/3f68e4a4-74bc-4c2d-bf5c-09f8fd501b7d/7ddc1767-e471-45c3-8fa9-1e95514b9e23/20150908_135823.jpg?Expires=1453867341&Signature=WL2IBAJUViihMvtbUkcr6X-0AuqD1PsoTiOzU~2AT4ZgH4Qt9tFx28jJaL92I3Hme5KeSi4wGU~DR3JYPH0lB6ijFi0chRtZWq--s5lmG-2neIpX70b0E0aP1fun5IZqILhM7Ut6v6QIYuAX1K5HXwAjDCGs5R1Ps4Od32D5mZZfOyBpkruH2PgrUGB2KAiMOopvOzuV-Y-RQFPRNEodcid6JZLVcAhtsuE7-uEAKWTE7e7oOhCILbjZtVFe03xLeKW2bG1ochzocq66YA1Wme1dzvZv1ZtOmNTrRW21EMVas-CytxbacRmA14PxQMRUYAO3o32NsdfMQzyZpt9saA__&Key-Pair-Id=APKAISSKGZE3DR5HQCHA'
+ }, {
+ 	title: 'video',
+ 	href: 'https://d3sisat5gdssl6.cloudfront.net/3f68e4a4-74bc-4c2d-bf5c-09f8fd501b7d/d35ae62f-befb-49cf-a7a9-d25c45869d6f/web/GOPR0044.mp4?Expires=1453867341&Signature=KOgtI2QA0wJxe7r9HM2CnUAScBvxeKES7cuOzWxLee07kYssIRWqcnAdvjkB16l6g7qxii6Xh4Vojine7xo34~ufqv7ay0CZXK7u7tv4tjV4BRMPMKAfUQZsDLfOy7RM3f4tl-h77t~4pi-mEUxPAW~ElEEb1zk5ydfw-U0uH-hPXOaOKRiAtw7onUOqrSTTRDKR4YxdqgJUdHiVSP4-75zOe3kpd3odLN7jLUfVI-r3gMrCri4o60AZDTc7NF77tW8aN8jm5NsMU4beJMIoZrp4WY1cSdtMpDUq3kuKkhDNlwOhcpeEbRDWko-LuWQbvRhIMkPSK~on9WkGvXuwKg__&Key-Pair-Id=APKAISSKGZE3DR5HQCHA',
+ 	type: 'video/mp4',
+ 	poster: 'https://d3sisat5gdssl6.cloudfront.net/3f68e4a4-74bc-4c2d-bf5c-09f8fd501b7d/d35ae62f-befb-49cf-a7a9-d25c45869d6f/web/GOPR0044.mp4?Expires=1453867341&Signature=KOgtI2QA0wJxe7r9HM2CnUAScBvxeKES7cuOzWxLee07kYssIRWqcnAdvjkB16l6g7qxii6Xh4Vojine7xo34~ufqv7ay0CZXK7u7tv4tjV4BRMPMKAfUQZsDLfOy7RM3f4tl-h77t~4pi-mEUxPAW~ElEEb1zk5ydfw-U0uH-hPXOaOKRiAtw7onUOqrSTTRDKR4YxdqgJUdHiVSP4-75zOe3kpd3odLN7jLUfVI-r3gMrCri4o60AZDTc7NF77tW8aN8jm5NsMU4beJMIoZrp4WY1cSdtMpDUq3kuKkhDNlwOhcpeEbRDWko-LuWQbvRhIMkPSK~on9WkGvXuwKg__&Key-Pair-Id=APKAISSKGZE3DR5HQCHA'
+ },{
+ 	"container": "#blueimp-video-carousel",
+ 	"carousel": "true"
+ }]);
+
+					blueimp.Gallery([
+						{
+						 	title: 'image',
+						 	href: 'https://d3sisat5gdssl6.cloudfront.net/3f68e4a4-74bc-4c2d-bf5c-09f8fd501b7d/7ddc1767-e471-45c3-8fa9-1e95514b9e23/20150908_135823.jpg?Expires=1453867341&Signature=WL2IBAJUViihMvtbUkcr6X-0AuqD1PsoTiOzU~2AT4ZgH4Qt9tFx28jJaL92I3Hme5KeSi4wGU~DR3JYPH0lB6ijFi0chRtZWq--s5lmG-2neIpX70b0E0aP1fun5IZqILhM7Ut6v6QIYuAX1K5HXwAjDCGs5R1Ps4Od32D5mZZfOyBpkruH2PgrUGB2KAiMOopvOzuV-Y-RQFPRNEodcid6JZLVcAhtsuE7-uEAKWTE7e7oOhCILbjZtVFe03xLeKW2bG1ochzocq66YA1Wme1dzvZv1ZtOmNTrRW21EMVas-CytxbacRmA14PxQMRUYAO3o32NsdfMQzyZpt9saA__&Key-Pair-Id=APKAISSKGZE3DR5HQCHA',
+						 	type: 'image/jpeg',
+						 	poster: 'https://d3sisat5gdssl6.cloudfront.net/3f68e4a4-74bc-4c2d-bf5c-09f8fd501b7d/7ddc1767-e471-45c3-8fa9-1e95514b9e23/20150908_135823.jpg?Expires=1453867341&Signature=WL2IBAJUViihMvtbUkcr6X-0AuqD1PsoTiOzU~2AT4ZgH4Qt9tFx28jJaL92I3Hme5KeSi4wGU~DR3JYPH0lB6ijFi0chRtZWq--s5lmG-2neIpX70b0E0aP1fun5IZqILhM7Ut6v6QIYuAX1K5HXwAjDCGs5R1Ps4Od32D5mZZfOyBpkruH2PgrUGB2KAiMOopvOzuV-Y-RQFPRNEodcid6JZLVcAhtsuE7-uEAKWTE7e7oOhCILbjZtVFe03xLeKW2bG1ochzocq66YA1Wme1dzvZv1ZtOmNTrRW21EMVas-CytxbacRmA14PxQMRUYAO3o32NsdfMQzyZpt9saA__&Key-Pair-Id=APKAISSKGZE3DR5HQCHA'
+						 }, {
+						 	title: 'video',
+						 	href: 'https://d3sisat5gdssl6.cloudfront.net/3f68e4a4-74bc-4c2d-bf5c-09f8fd501b7d/d35ae62f-befb-49cf-a7a9-d25c45869d6f/web/GOPR0044.mp4?Expires=1453867341&Signature=KOgtI2QA0wJxe7r9HM2CnUAScBvxeKES7cuOzWxLee07kYssIRWqcnAdvjkB16l6g7qxii6Xh4Vojine7xo34~ufqv7ay0CZXK7u7tv4tjV4BRMPMKAfUQZsDLfOy7RM3f4tl-h77t~4pi-mEUxPAW~ElEEb1zk5ydfw-U0uH-hPXOaOKRiAtw7onUOqrSTTRDKR4YxdqgJUdHiVSP4-75zOe3kpd3odLN7jLUfVI-r3gMrCri4o60AZDTc7NF77tW8aN8jm5NsMU4beJMIoZrp4WY1cSdtMpDUq3kuKkhDNlwOhcpeEbRDWko-LuWQbvRhIMkPSK~on9WkGvXuwKg__&Key-Pair-Id=APKAISSKGZE3DR5HQCHA',
+						 	type: 'video/mp4',
+						 	poster: 'https://d3sisat5gdssl6.cloudfront.net/3f68e4a4-74bc-4c2d-bf5c-09f8fd501b7d/d35ae62f-befb-49cf-a7a9-d25c45869d6f/web/GOPR0044.mp4?Expires=1453867341&Signature=KOgtI2QA0wJxe7r9HM2CnUAScBvxeKES7cuOzWxLee07kYssIRWqcnAdvjkB16l6g7qxii6Xh4Vojine7xo34~ufqv7ay0CZXK7u7tv4tjV4BRMPMKAfUQZsDLfOy7RM3f4tl-h77t~4pi-mEUxPAW~ElEEb1zk5ydfw-U0uH-hPXOaOKRiAtw7onUOqrSTTRDKR4YxdqgJUdHiVSP4-75zOe3kpd3odLN7jLUfVI-r3gMrCri4o60AZDTc7NF77tW8aN8jm5NsMU4beJMIoZrp4WY1cSdtMpDUq3kuKkhDNlwOhcpeEbRDWko-LuWQbvRhIMkPSK~on9WkGvXuwKg__&Key-Pair-Id=APKAISSKGZE3DR5HQCHA'
+						 }
+					 ],{
+					 	container: '#blueimp-video-carousel',
+					 	carousel: 'true'
+					 });
+					
+				    blueimp.Gallery([
+				        {
+				            title: 'Sintel',
+				            href: 'https://archive.org/download/Sintel/sintel-2048-surround_512kb.mp4',
+				            type: 'video/mp4',
+				            poster: 'https://i.imgur.com/MUSw4Zu.jpg'
+				        },
+				        {
+				            title: 'Big Buck Bunny',
+				            href: 'https://upload.wikimedia.org/wikipedia/commons/7/75/' +
+				                'Big_Buck_Bunny_Trailer_400p.ogg',
+				            type: 'video/ogg',
+				            poster: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/' +
+				                'Big.Buck.Bunny.-.Opening.Screen.png/' +
+				                '800px-Big.Buck.Bunny.-.Opening.Screen.png'
+				        },
+				        {
+				            title: 'Elephants Dream',
+				            href: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/8/83/' +
+				                'Elephants_Dream_%28high_quality%29.ogv/' +
+				                'Elephants_Dream_%28high_quality%29.ogv.360p.webm',
+				            type: 'video/webm',
+				            poster: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/' +
+				                'Elephants_Dream_s1_proog.jpg/800px-Elephants_Dream_s1_proog.jpg'
+				        },
+				        {
+				            title: 'LES TWINS - An Industry Ahead',
+				            type: 'text/html',
+				            youtube: 'zi4CIXpx7Bg'
+				        },
+				        {
+				            title: 'KN1GHT - Last Moon',
+				            type: 'text/html',
+				            vimeo: '73686146',
+				            poster: 'https://secure-a.vimeocdn.com/ts/448/835/448835699_960.jpg'
+				        }
+				    ], {
+				        container: '#blueimp-video-carousel',
+				        carousel: true
+				    });
+				    */
+					
+					//console.log("items_for_gallery--->" + items_for_gallery);
+					//console.log("links div value ----->" + $(".links").val());
+
+					
+					//blueimp.Gallery(items_for_gallery);
+					 blueimp.Gallery([
+								        {
+								            title: 'Sintel',
+								            href: 'https://archive.org/download/Sintel/sintel-2048-surround_512kb.mp4',
+								            type: 'video/mp4',
+								            poster: 'https://i.imgur.com/MUSw4Zu.jpg'
+								        },
+								        {
+								            title: 'Big Buck Bunny',
+								            href: 'https://upload.wikimedia.org/wikipedia/commons/7/75/' +
+								                'Big_Buck_Bunny_Trailer_400p.ogg',
+								            type: 'video/ogg',
+								            poster: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/' +
+								                'Big.Buck.Bunny.-.Opening.Screen.png/' +
+								                '800px-Big.Buck.Bunny.-.Opening.Screen.png'
+								        },
+								        {
+								            title: 'Elephants Dream',
+								            href: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/8/83/' +
+								                'Elephants_Dream_%28high_quality%29.ogv/' +
+								                'Elephants_Dream_%28high_quality%29.ogv.360p.webm',
+								            type: 'video/webm',
+								            poster: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/' +
+								                'Elephants_Dream_s1_proog.jpg/800px-Elephants_Dream_s1_proog.jpg'
+								        },
+								        {
+								            title: 'LES TWINS - An Industry Ahead',
+								            type: 'text/html',
+								            youtube: 'zi4CIXpx7Bg'
+								        },
+								        {
+								            title: 'KN1GHT - Last Moon',
+								            type: 'text/html',
+								            vimeo: '73686146',
+								            poster: 'https://secure-a.vimeocdn.com/ts/448/835/448835699_960.jpg'
+								        }
+								    ], {
+								        container: '#blueimp-video-carousel',
+								        carousel: true
+								    });
+
+					
+					
+
+
+					/*
+					 * 
+					 * for (var json_key = 0; json_key < count_media;
+					 * json_key++) { var media = medias[json_key]; var
+					 * _media_type = getValueFromXMLTag(media, 'type');
+					 * 
+					 * var _media_url = ''; var _media_url_hls = ''; var
+					 * _media_url_web = ''; var _media_thumbnail = '' var
+					 * _media_thumbnail_large=""; // var main_media_url=''; if
+					 * (_media_type == 'image') { _media_url =
+					 * getMediaUrl(media, _media_type); } else if (_media_type ==
+					 * 'video') { _media_url_hls = getValueFromXMLTag(media,
+					 * 'media_url_hls'); _media_url_hls =
+					 * removeCdataCorrectLink(_media_url_hls); _media_url_web =
+					 * getValueFromXMLTag(media, 'media_url_web');
+					 * _media_url_web = removeCdataCorrectLink(_media_url_web);
+					 * _media_thumbnail_large = getValueFromXMLTag(media,
+					 * 'media_url_448x306'); _media_thumbnail_large =
+					 * JSON.parse(removeCdata(_media_thumbnail_large));
+					 * _media_thumbnail_large = _media_thumbnail_large[0];
+					 * console.log('_media_thumbnail_large after
+					 * '+_media_thumbnail_large);
+					 * 
+					 * _media_thumbnail = getValueFromXMLTag(media,
+					 * 'media_url_98x78'); _media_thumbnail =
+					 * JSON.parse(removeCdata(_media_thumbnail));
+					 * _media_thumbnail = _media_thumbnail[0];
+					 * console.log('_media_thumbnail after '+_media_thumbnail);
+					 *  }
+					 * 
+					 * var mediaId = getValueFromXMLTag(media, 'media_id');
+					 *  // Build video thumbnail if (_media_type == 'video') { // //
+					 * Video section // var media_transcode_status =
+					 * getValueFromXMLTag( media, 'media_transcode_status'); //
+					 * if (typeof (metadata) != 'undefined') { if
+					 * (media_transcode_status == 'success') {
+					 * 
+					 * if (media_transcode_status == 'success') { // Get screen
+					 * area display height var width =
+					 * parseInt($("#tab-content") .width()); var height =
+					 * parseInt($("#tab-content") .height()) - 100;
+					 *  // // build div and video tag // var source = ''; var
+					 * edit_source = ''; var preload_source = ''; var
+					 * media_url_for_browser = ''; var content_type = ''; if
+					 * ((userBrowser[0].ios) || (userBrowser[1].browser ==
+					 * "Safari")) { media_url_for_browser = _media_url_hls;
+					 * content_type = 'application/x-mpegURL';
+					 *  } else { media_url_for_browser = _media_url_web;
+					 * content_type = 'video/mp4'; }
+					 * 
+					 * blueIMPGalleryData=' {'; blueIMPGalleryData
+					 * +='title:"",'; blueIMPGalleryData += 'href:'+ '"' +
+					 * media_url_for_browser + '"' +','; blueIMPGalleryData
+					 * +='type:' '"' + content_type'"'+','; blueIMPGalleryData +=
+					 * 'poster:'+ '"'+_media_thumbnail+'"' blueIMPGalleryData += '
+					 * },';
+					 * 
+					 * //blueIMPGallery=
+					 * blueIMPGallery.push(blueIMPGalleryData);
+					 * 
+					 * console.log('BLue Imp Data:'+blueIMPGalleryData);
+					 * 
+					 * /*source = '<div data-thumb="' + _media_thumbnail + '"
+					 * data-video="true" >'; source += '<video controls
+					 * poster="'+ _media_thumbnail_large +'"
+					 * style="width:70%">'; //source += '<video>'; source += '<source
+					 * src="' + media_url_for_browser + '" type="video/mp4">';
+					 * source += '<source src="' + media_url_for_browser + '"
+					 * type="application/vnd.apple.mpegURL">'; source += '<source
+					 * src="' + media_url_for_browser + '"
+					 * type="application/x-mpegURL">'; source += '<source
+					 * src="' + media_url_for_browser + '" type="video/ogg">';
+					 * 
+					 * source += '</video>'; source += '</div>';
+					 * 
+					 * if ((userBrowser[0].ios) || (userBrowser[1].browser ==
+					 * "Safari")) { // source += '<source src="' // +
+					 * _media_url_hls // + '" type="video/webm">'; //
+					 * console.log("_media_url_hls-> " + _media_url_hls);
+					 * 
+					 * source +=' <a href="'+media_url_for_browser+'"
+					 * data-img="'+_media_thumbnail+'" data-video="true" ><img
+					 * src="'+_media_thumbnail+'"></a>'; }else{
+					 * 
+					 * source += '<video controls="" poster="' +
+					 * _media_thumbnail + '" width="' + width + '" height="' +
+					 * height + '" preload="auto" autoplay="">';
+					 * 
+					 * source += '<source src="' + media_url_for_browser + '"
+					 * type="video/mp4">'; source += '<source src="' +
+					 * media_url_for_browser + '"
+					 * type="application/vnd.apple.mpegURL">'; source += '<source
+					 * src="' + media_url_for_browser + '"
+					 * type="application/x-mpegURL">';
+					 * 
+					 * source += '</video>'; }
+					 * 
+					 * 
+					 * 
+					 *  // source = '<div data-thumb="' // + _media_thumbnail + '"
+					 * data-video="true" >'; // // source ='<a href="'+
+					 * media_url_for_browser +'" data-video="true">'; // source
+					 * +='<img src="'+ _media_thumbnail_large +'">'; // source
+					 * +='</a>'; // source += '</div>'; //console.log("video
+					 * source ---->"+source);
+					 *  //<video width="352" height="198" controls> //<source
+					 * src="playlist.m3u8" type="application/x-mpegURL"> //</video> // //
+					 * Append to fotorama div //
+					 * $(".user-resources").append(source); //console.log('NEW
+					 * MEDIA: '+ media_url_for_browser);
+					 *  // $(".user-resources").append(source); //
+					 * edit-area-scroll
+					 *  // edit_source += '<li // class="video-media">'; //
+					 * edit_source += '<a class="video-resource // image-sync"
+					 * id="' // + mediaId // + '" onclick="return //
+					 * imageChoosed(this.id);" href="' // + _media_thumbnail // +
+					 * '">' // + '<img src="' // + _media_thumbnail // + '"/>' // + '<img
+					 * class="overlay-videoimg" //
+					 * src="/memreas/img/video-overlay.png" />' // + '</a><img //
+					 * src="/memreas/img/gallery-select.png"></li>'; //
+					 * $(".edit-area-scroll").append(edit_source); //
+					 * .preload-files.pics // preload_source += '<li //
+					 * class="video-media"><img src="' // + _media_thumbnail +
+					 * '"/></li>'; // $(".preload-files.pics").append( //
+					 * preload_source); } else { $(".user-resources") .append( '<div
+					 * data-thumb="/memreas/img/TrascodingIcon.gif"> <img
+					 * src="/memreas/img/TrascodingIcon.gif"> </div>');
+					 *  // $(".user-resources") // .append( // '<img //
+					 * src="/memreas/img/TrascodingIcon.gif" // />'); //
+					 * $(".preload-files .pics") // .append( // '<li class="video-media"><img //
+					 * src="/memreas/img/transcode-icon.png"/></li>'); //
+					 * $(".edit-area-scroll") // .append( // '<li class="video-media"><a //
+					 * class="video-resource image-sync" id="' // + mediaId // + '"
+					 * onclick="return // imageChoosed(this.id);" //
+					 * href="/memreas/img/transcode-icon.png"><img //
+					 * src="/memreas/img/transcode-icon.png"/></a><img //
+					 * src="/memreas/img/gallery-select.png"></li>');
+					 * 
+					 *  } } } else { // // Image section console.log('Media
+					 * URL:: ' + _media_url); $(".user-resources").append( '<div
+					 * data-thumb="' + _media_url + '"><img src="' + _media_url +
+					 * '"> </div>');
+					 * 
+					 * $(".preload-files .pics").append( '<li><img src="' +
+					 * _media_url + '"/></li>');
+					 * 
+					 * 
+					 * var blueIMPGalleryImg; blueIMPGalleryImg=' {';
+					 * blueIMPGalleryImg +='title:"",'; blueIMPGalleryImg +=
+					 * 'href:'+ '"'+_media_url+'"'+','; blueIMPGalleryImg
+					 * +='type:' + '"image/jpeg"'+','; blueIMPGalleryImg +=
+					 * 'thumbnail:'+ '"'+_media_url+'"' blueIMPGalleryImg += '
+					 * },'; //trackData.push(blueIMPGalleryImg);
+					 * 
+					 *  // $(".user-resources") // .append( // '<img src="' // +
+					 * _media_url // + '" />'); $(".edit-area-scroll") .append( '<li><a
+					 * class="image-sync" id="' + mediaId + '" onclick="return
+					 * imageChoosed(this.id);" href="' + _media_url + '"><img
+					 * src="' + _media_url + '"/></a></li>');
+					 * 
+					 * $(".preload-files .pics").append( '<li><img src="' +
+					 * _media_url + '"/></li>'); $(".aviary-thumbs") .append( '<li><img
+					 * id="edit' + mediaId + '" src="' + _media_url + '"
+					 * onclick="openEditMedia(this.id, \'' + _media_url +
+					 * '\');"/></li>'); $(".galleries-location").append( '<li><img
+					 * id="location' + mediaId + '" class="img-gallery" src="' +
+					 * _media_url + '" /></li>'); checkHasImage = true; } } //
+					 * end for
+					 */
+					// console.log('Gallery String Data:'+
+					// blueIMPGallery.size());
 					setTimeout(function() {
-						 $(".preload-files").hide();
-						 $(".user-resources").fotorama({
-						 width: '800',
-						 height: '350',
-						 'max-width': '100%'
-						
-						 }).fadeIn(500);
-						
-						 if (!$(".edit-area-scroll")
-						 .hasClass('mCustomScrollbar'))
-						 $(".edit-area-scroll").mCustomScrollbar({
-						 scrollButtons: {
-						 enable: true
-						 }
-						 });
-						 $(".edit-area-scroll").mCustomScrollbar('update');
-						
-						 if (!$(".edit-areamedia-scroll").hasClass(
-						 'mCustomScrollbar'))
-						 $(".edit-areamedia-scroll").mCustomScrollbar({
-						 scrollButtons: {
-						 enable: true
-						 }
-						 });
-						 $(".edit-areamedia-scroll").mCustomScrollbar('update');
+						//$(".preload-files").hide();
+						//$(".user-resources").fotorama({
+						//	width : '800',
+						//	height : '350',
+						//	'max-width' : '100%'
+
+						//}).fadeIn(500);
+
+						if (!$(".edit-area-scroll")
+								.hasClass('mCustomScrollbar'))
+							$(".edit-area-scroll").mCustomScrollbar({
+								scrollButtons : {
+									enable : true
+								}
+							});
+						$(".edit-area-scroll").mCustomScrollbar('update');
+
+						if (!$(".edit-areamedia-scroll").hasClass(
+								'mCustomScrollbar'))
+							$(".edit-areamedia-scroll").mCustomScrollbar({
+								scrollButtons : {
+									enable : true
+								}
+							});
+						$(".edit-areamedia-scroll").mCustomScrollbar('update');
 
 						// Fetch user's notification header
 						getUserDetail();

@@ -130,6 +130,9 @@ $(document).ready(function() {
                             //addFriend($(this).attr('id'));
                         });
                         $('#search-result ul').removeClass().addClass('personresults');
+                        
+                        //Debugging limited results
+                        console.log("count of objects::" + objs.count);
                         ajaxScrollbarElement(".personresults");
                        // paginationlink();
                         $("#linkpaginations").pagination({

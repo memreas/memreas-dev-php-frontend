@@ -47,6 +47,7 @@
             return;
         }
         this.list = list;
+        
         this.num = list.length;
         this.initOptions(options);
         this.initialize();
