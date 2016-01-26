@@ -249,6 +249,9 @@ jQuery.fetch_server_media = function() {
 					var count_media = medias.length;
 					var items_for_gallery = '[';
 					for (var json_key = 0; json_key < count_media; json_key++) {
+						if (json_key > 0) {
+							items_for_gallery += ',';
+						}
 						var media = medias[json_key];
 						var content_type;
 						var _media_type = getValueFromXMLTag(media, 'type');
@@ -304,11 +307,11 @@ jQuery.fetch_server_media = function() {
 						//"poster: '" +  _media_thumbnail_large + "'" + '}';
 
 						items_for_gallery += '{' + 
-							'"title" : ' + '"",' +
-							'"href" : ' + '"' + main_media_url + '",' + 
-							'"type" : ' + '"' + content_type + '",' + 
-							'"poster" : ' + '"' + _media_thumbnail_large + '"' +
-						'},';
+							' title: ' + "'" + content_type + "'," +
+							' href: ' + "'" + main_media_url + "'," +
+							' type: ' + "'" + content_type + "'," +
+							' poster: ' + "'" + _media_thumbnail_large + "'" +
+						'}';
 						
 						//source = '<a href="' + main_media_url + '"' +
 						//' title="title"' +
@@ -327,107 +330,38 @@ jQuery.fetch_server_media = function() {
 				        	//$(".links").append(source);
 						
 					} // end for
-					items_for_gallery += '{ "container" : "#blueimp-video-carousel", "carousel" : "true"}]';
-					
-					 // Initialize the Gallery as video carousel:
-					/*
-					
- blueimp.Gallery([{
- 	"title": "image",
- 	"href": "https://d3sisat5gdssl6.cloudfront.net/3f68e4a4-74bc-4c2d-bf5c-09f8fd501b7d/7ddc1767-e471-45c3-8fa9-1e95514b9e23/20150908_135823.jpg?Expires=1453867341&Signature=WL2IBAJUViihMvtbUkcr6X-0AuqD1PsoTiOzU~2AT4ZgH4Qt9tFx28jJaL92I3Hme5KeSi4wGU~DR3JYPH0lB6ijFi0chRtZWq--s5lmG-2neIpX70b0E0aP1fun5IZqILhM7Ut6v6QIYuAX1K5HXwAjDCGs5R1Ps4Od32D5mZZfOyBpkruH2PgrUGB2KAiMOopvOzuV-Y-RQFPRNEodcid6JZLVcAhtsuE7-uEAKWTE7e7oOhCILbjZtVFe03xLeKW2bG1ochzocq66YA1Wme1dzvZv1ZtOmNTrRW21EMVas-CytxbacRmA14PxQMRUYAO3o32NsdfMQzyZpt9saA__&Key-Pair-Id=APKAISSKGZE3DR5HQCHA",
- 	"type": "image/jpeg",
- 	"poster": "https://d3sisat5gdssl6.cloudfront.net/3f68e4a4-74bc-4c2d-bf5c-09f8fd501b7d/7ddc1767-e471-45c3-8fa9-1e95514b9e23/20150908_135823.jpg?Expires=1453867341&Signature=WL2IBAJUViihMvtbUkcr6X-0AuqD1PsoTiOzU~2AT4ZgH4Qt9tFx28jJaL92I3Hme5KeSi4wGU~DR3JYPH0lB6ijFi0chRtZWq--s5lmG-2neIpX70b0E0aP1fun5IZqILhM7Ut6v6QIYuAX1K5HXwAjDCGs5R1Ps4Od32D5mZZfOyBpkruH2PgrUGB2KAiMOopvOzuV-Y-RQFPRNEodcid6JZLVcAhtsuE7-uEAKWTE7e7oOhCILbjZtVFe03xLeKW2bG1ochzocq66YA1Wme1dzvZv1ZtOmNTrRW21EMVas-CytxbacRmA14PxQMRUYAO3o32NsdfMQzyZpt9saA__&Key-Pair-Id=APKAISSKGZE3DR5HQCHA"
- }, {
- 	"title": "video",
- 	"href": "https://d3sisat5gdssl6.cloudfront.net/3f68e4a4-74bc-4c2d-bf5c-09f8fd501b7d/d35ae62f-befb-49cf-a7a9-d25c45869d6f/web/GOPR0044.mp4?Expires=1453867341&Signature=KOgtI2QA0wJxe7r9HM2CnUAScBvxeKES7cuOzWxLee07kYssIRWqcnAdvjkB16l6g7qxii6Xh4Vojine7xo34~ufqv7ay0CZXK7u7tv4tjV4BRMPMKAfUQZsDLfOy7RM3f4tl-h77t~4pi-mEUxPAW~ElEEb1zk5ydfw-U0uH-hPXOaOKRiAtw7onUOqrSTTRDKR4YxdqgJUdHiVSP4-75zOe3kpd3odLN7jLUfVI-r3gMrCri4o60AZDTc7NF77tW8aN8jm5NsMU4beJMIoZrp4WY1cSdtMpDUq3kuKkhDNlwOhcpeEbRDWko-LuWQbvRhIMkPSK~on9WkGvXuwKg__&Key-Pair-Id=APKAISSKGZE3DR5HQCHA",
- 	"type": "video/mp4",
- 	"poster": "https://d3sisat5gdssl6.cloudfront.net/3f68e4a4-74bc-4c2d-bf5c-09f8fd501b7d/d35ae62f-befb-49cf-a7a9-d25c45869d6f/web/GOPR0044.mp4?Expires=1453867341&Signature=KOgtI2QA0wJxe7r9HM2CnUAScBvxeKES7cuOzWxLee07kYssIRWqcnAdvjkB16l6g7qxii6Xh4Vojine7xo34~ufqv7ay0CZXK7u7tv4tjV4BRMPMKAfUQZsDLfOy7RM3f4tl-h77t~4pi-mEUxPAW~ElEEb1zk5ydfw-U0uH-hPXOaOKRiAtw7onUOqrSTTRDKR4YxdqgJUdHiVSP4-75zOe3kpd3odLN7jLUfVI-r3gMrCri4o60AZDTc7NF77tW8aN8jm5NsMU4beJMIoZrp4WY1cSdtMpDUq3kuKkhDNlwOhcpeEbRDWko-LuWQbvRhIMkPSK~on9WkGvXuwKg__&Key-Pair-Id=APKAISSKGZE3DR5HQCHA"
- },{
- 	"container": "#blueimp-video-carousel",
- 	"carousel": "true"
- }]);
-					
-
-					
-blueimp.Gallery([{
- 	title: 'image',
- 	href: 'https://d3sisat5gdssl6.cloudfront.net/3f68e4a4-74bc-4c2d-bf5c-09f8fd501b7d/7ddc1767-e471-45c3-8fa9-1e95514b9e23/20150908_135823.jpg?Expires=1453867341&Signature=WL2IBAJUViihMvtbUkcr6X-0AuqD1PsoTiOzU~2AT4ZgH4Qt9tFx28jJaL92I3Hme5KeSi4wGU~DR3JYPH0lB6ijFi0chRtZWq--s5lmG-2neIpX70b0E0aP1fun5IZqILhM7Ut6v6QIYuAX1K5HXwAjDCGs5R1Ps4Od32D5mZZfOyBpkruH2PgrUGB2KAiMOopvOzuV-Y-RQFPRNEodcid6JZLVcAhtsuE7-uEAKWTE7e7oOhCILbjZtVFe03xLeKW2bG1ochzocq66YA1Wme1dzvZv1ZtOmNTrRW21EMVas-CytxbacRmA14PxQMRUYAO3o32NsdfMQzyZpt9saA__&Key-Pair-Id=APKAISSKGZE3DR5HQCHA',
- 	type: 'image/jpeg',
- 	poster: 'https://d3sisat5gdssl6.cloudfront.net/3f68e4a4-74bc-4c2d-bf5c-09f8fd501b7d/7ddc1767-e471-45c3-8fa9-1e95514b9e23/20150908_135823.jpg?Expires=1453867341&Signature=WL2IBAJUViihMvtbUkcr6X-0AuqD1PsoTiOzU~2AT4ZgH4Qt9tFx28jJaL92I3Hme5KeSi4wGU~DR3JYPH0lB6ijFi0chRtZWq--s5lmG-2neIpX70b0E0aP1fun5IZqILhM7Ut6v6QIYuAX1K5HXwAjDCGs5R1Ps4Od32D5mZZfOyBpkruH2PgrUGB2KAiMOopvOzuV-Y-RQFPRNEodcid6JZLVcAhtsuE7-uEAKWTE7e7oOhCILbjZtVFe03xLeKW2bG1ochzocq66YA1Wme1dzvZv1ZtOmNTrRW21EMVas-CytxbacRmA14PxQMRUYAO3o32NsdfMQzyZpt9saA__&Key-Pair-Id=APKAISSKGZE3DR5HQCHA'
- }, {
- 	title: 'video',
- 	href: 'https://d3sisat5gdssl6.cloudfront.net/3f68e4a4-74bc-4c2d-bf5c-09f8fd501b7d/d35ae62f-befb-49cf-a7a9-d25c45869d6f/web/GOPR0044.mp4?Expires=1453867341&Signature=KOgtI2QA0wJxe7r9HM2CnUAScBvxeKES7cuOzWxLee07kYssIRWqcnAdvjkB16l6g7qxii6Xh4Vojine7xo34~ufqv7ay0CZXK7u7tv4tjV4BRMPMKAfUQZsDLfOy7RM3f4tl-h77t~4pi-mEUxPAW~ElEEb1zk5ydfw-U0uH-hPXOaOKRiAtw7onUOqrSTTRDKR4YxdqgJUdHiVSP4-75zOe3kpd3odLN7jLUfVI-r3gMrCri4o60AZDTc7NF77tW8aN8jm5NsMU4beJMIoZrp4WY1cSdtMpDUq3kuKkhDNlwOhcpeEbRDWko-LuWQbvRhIMkPSK~on9WkGvXuwKg__&Key-Pair-Id=APKAISSKGZE3DR5HQCHA',
- 	type: 'video/mp4',
- 	poster: 'https://d3sisat5gdssl6.cloudfront.net/3f68e4a4-74bc-4c2d-bf5c-09f8fd501b7d/d35ae62f-befb-49cf-a7a9-d25c45869d6f/web/GOPR0044.mp4?Expires=1453867341&Signature=KOgtI2QA0wJxe7r9HM2CnUAScBvxeKES7cuOzWxLee07kYssIRWqcnAdvjkB16l6g7qxii6Xh4Vojine7xo34~ufqv7ay0CZXK7u7tv4tjV4BRMPMKAfUQZsDLfOy7RM3f4tl-h77t~4pi-mEUxPAW~ElEEb1zk5ydfw-U0uH-hPXOaOKRiAtw7onUOqrSTTRDKR4YxdqgJUdHiVSP4-75zOe3kpd3odLN7jLUfVI-r3gMrCri4o60AZDTc7NF77tW8aN8jm5NsMU4beJMIoZrp4WY1cSdtMpDUq3kuKkhDNlwOhcpeEbRDWko-LuWQbvRhIMkPSK~on9WkGvXuwKg__&Key-Pair-Id=APKAISSKGZE3DR5HQCHA'
- },{
- 	"container": "#blueimp-video-carousel",
- 	"carousel": "true"
- }]);
-
-					blueimp.Gallery([
-						{
-						 	title: 'image',
-						 	href: 'https://d3sisat5gdssl6.cloudfront.net/3f68e4a4-74bc-4c2d-bf5c-09f8fd501b7d/7ddc1767-e471-45c3-8fa9-1e95514b9e23/20150908_135823.jpg?Expires=1453867341&Signature=WL2IBAJUViihMvtbUkcr6X-0AuqD1PsoTiOzU~2AT4ZgH4Qt9tFx28jJaL92I3Hme5KeSi4wGU~DR3JYPH0lB6ijFi0chRtZWq--s5lmG-2neIpX70b0E0aP1fun5IZqILhM7Ut6v6QIYuAX1K5HXwAjDCGs5R1Ps4Od32D5mZZfOyBpkruH2PgrUGB2KAiMOopvOzuV-Y-RQFPRNEodcid6JZLVcAhtsuE7-uEAKWTE7e7oOhCILbjZtVFe03xLeKW2bG1ochzocq66YA1Wme1dzvZv1ZtOmNTrRW21EMVas-CytxbacRmA14PxQMRUYAO3o32NsdfMQzyZpt9saA__&Key-Pair-Id=APKAISSKGZE3DR5HQCHA',
-						 	type: 'image/jpeg',
-						 	poster: 'https://d3sisat5gdssl6.cloudfront.net/3f68e4a4-74bc-4c2d-bf5c-09f8fd501b7d/7ddc1767-e471-45c3-8fa9-1e95514b9e23/20150908_135823.jpg?Expires=1453867341&Signature=WL2IBAJUViihMvtbUkcr6X-0AuqD1PsoTiOzU~2AT4ZgH4Qt9tFx28jJaL92I3Hme5KeSi4wGU~DR3JYPH0lB6ijFi0chRtZWq--s5lmG-2neIpX70b0E0aP1fun5IZqILhM7Ut6v6QIYuAX1K5HXwAjDCGs5R1Ps4Od32D5mZZfOyBpkruH2PgrUGB2KAiMOopvOzuV-Y-RQFPRNEodcid6JZLVcAhtsuE7-uEAKWTE7e7oOhCILbjZtVFe03xLeKW2bG1ochzocq66YA1Wme1dzvZv1ZtOmNTrRW21EMVas-CytxbacRmA14PxQMRUYAO3o32NsdfMQzyZpt9saA__&Key-Pair-Id=APKAISSKGZE3DR5HQCHA'
-						 }, {
-						 	title: 'video',
-						 	href: 'https://d3sisat5gdssl6.cloudfront.net/3f68e4a4-74bc-4c2d-bf5c-09f8fd501b7d/d35ae62f-befb-49cf-a7a9-d25c45869d6f/web/GOPR0044.mp4?Expires=1453867341&Signature=KOgtI2QA0wJxe7r9HM2CnUAScBvxeKES7cuOzWxLee07kYssIRWqcnAdvjkB16l6g7qxii6Xh4Vojine7xo34~ufqv7ay0CZXK7u7tv4tjV4BRMPMKAfUQZsDLfOy7RM3f4tl-h77t~4pi-mEUxPAW~ElEEb1zk5ydfw-U0uH-hPXOaOKRiAtw7onUOqrSTTRDKR4YxdqgJUdHiVSP4-75zOe3kpd3odLN7jLUfVI-r3gMrCri4o60AZDTc7NF77tW8aN8jm5NsMU4beJMIoZrp4WY1cSdtMpDUq3kuKkhDNlwOhcpeEbRDWko-LuWQbvRhIMkPSK~on9WkGvXuwKg__&Key-Pair-Id=APKAISSKGZE3DR5HQCHA',
-						 	type: 'video/mp4',
-						 	poster: 'https://d3sisat5gdssl6.cloudfront.net/3f68e4a4-74bc-4c2d-bf5c-09f8fd501b7d/d35ae62f-befb-49cf-a7a9-d25c45869d6f/web/GOPR0044.mp4?Expires=1453867341&Signature=KOgtI2QA0wJxe7r9HM2CnUAScBvxeKES7cuOzWxLee07kYssIRWqcnAdvjkB16l6g7qxii6Xh4Vojine7xo34~ufqv7ay0CZXK7u7tv4tjV4BRMPMKAfUQZsDLfOy7RM3f4tl-h77t~4pi-mEUxPAW~ElEEb1zk5ydfw-U0uH-hPXOaOKRiAtw7onUOqrSTTRDKR4YxdqgJUdHiVSP4-75zOe3kpd3odLN7jLUfVI-r3gMrCri4o60AZDTc7NF77tW8aN8jm5NsMU4beJMIoZrp4WY1cSdtMpDUq3kuKkhDNlwOhcpeEbRDWko-LuWQbvRhIMkPSK~on9WkGvXuwKg__&Key-Pair-Id=APKAISSKGZE3DR5HQCHA'
-						 }
-					 ],{
-					 	container: '#blueimp-video-carousel',
-					 	carousel: 'true'
-					 });
-					
-				    blueimp.Gallery([
-				        {
-				            title: 'Sintel',
-				            href: 'https://archive.org/download/Sintel/sintel-2048-surround_512kb.mp4',
-				            type: 'video/mp4',
-				            poster: 'https://i.imgur.com/MUSw4Zu.jpg'
-				        },
-				        {
-				            title: 'Big Buck Bunny',
-				            href: 'https://upload.wikimedia.org/wikipedia/commons/7/75/' +
-				                'Big_Buck_Bunny_Trailer_400p.ogg',
-				            type: 'video/ogg',
-				            poster: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/' +
-				                'Big.Buck.Bunny.-.Opening.Screen.png/' +
-				                '800px-Big.Buck.Bunny.-.Opening.Screen.png'
-				        },
-				        {
-				            title: 'Elephants Dream',
-				            href: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/8/83/' +
-				                'Elephants_Dream_%28high_quality%29.ogv/' +
-				                'Elephants_Dream_%28high_quality%29.ogv.360p.webm',
-				            type: 'video/webm',
-				            poster: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/' +
-				                'Elephants_Dream_s1_proog.jpg/800px-Elephants_Dream_s1_proog.jpg'
-				        },
-				        {
-				            title: 'LES TWINS - An Industry Ahead',
-				            type: 'text/html',
-				            youtube: 'zi4CIXpx7Bg'
-				        },
-				        {
-				            title: 'KN1GHT - Last Moon',
-				            type: 'text/html',
-				            vimeo: '73686146',
-				            poster: 'https://secure-a.vimeocdn.com/ts/448/835/448835699_960.jpg'
-				        }
-				    ], {
-				        container: '#blueimp-video-carousel',
-				        carousel: true
-				    });
-				    */
-					
-					//console.log("items_for_gallery--->" + items_for_gallery);
+					items_for_gallery += "],{ container: '#blueimp-video-carousel', carousel: 'true'}";
+					blueimp.Gallery(items_for_gallery);
+					console.log("items_for_gallery--->" + items_for_gallery);
 					//console.log("links div value ----->" + $(".links").val());
+					//
+					//This version uses AWS signed urls (they expire - so cut/paste new ones if you need to test)
+					//
+					/*
+					blueimp.Gallery([
+										{
+										 	title: 'image',
+										 	href: 'https://d3sisat5gdssl6.cloudfront.net/3f68e4a4-74bc-4c2d-bf5c-09f8fd501b7d/7ddc1767-e471-45c3-8fa9-1e95514b9e23/20150908_135823.jpg?Expires=1453867341&Signature=WL2IBAJUViihMvtbUkcr6X-0AuqD1PsoTiOzU~2AT4ZgH4Qt9tFx28jJaL92I3Hme5KeSi4wGU~DR3JYPH0lB6ijFi0chRtZWq--s5lmG-2neIpX70b0E0aP1fun5IZqILhM7Ut6v6QIYuAX1K5HXwAjDCGs5R1Ps4Od32D5mZZfOyBpkruH2PgrUGB2KAiMOopvOzuV-Y-RQFPRNEodcid6JZLVcAhtsuE7-uEAKWTE7e7oOhCILbjZtVFe03xLeKW2bG1ochzocq66YA1Wme1dzvZv1ZtOmNTrRW21EMVas-CytxbacRmA14PxQMRUYAO3o32NsdfMQzyZpt9saA__&Key-Pair-Id=APKAISSKGZE3DR5HQCHA',
+										 	type: 'image/jpeg',
+										 	poster: 'https://d3sisat5gdssl6.cloudfront.net/3f68e4a4-74bc-4c2d-bf5c-09f8fd501b7d/7ddc1767-e471-45c3-8fa9-1e95514b9e23/20150908_135823.jpg?Expires=1453867341&Signature=WL2IBAJUViihMvtbUkcr6X-0AuqD1PsoTiOzU~2AT4ZgH4Qt9tFx28jJaL92I3Hme5KeSi4wGU~DR3JYPH0lB6ijFi0chRtZWq--s5lmG-2neIpX70b0E0aP1fun5IZqILhM7Ut6v6QIYuAX1K5HXwAjDCGs5R1Ps4Od32D5mZZfOyBpkruH2PgrUGB2KAiMOopvOzuV-Y-RQFPRNEodcid6JZLVcAhtsuE7-uEAKWTE7e7oOhCILbjZtVFe03xLeKW2bG1ochzocq66YA1Wme1dzvZv1ZtOmNTrRW21EMVas-CytxbacRmA14PxQMRUYAO3o32NsdfMQzyZpt9saA__&Key-Pair-Id=APKAISSKGZE3DR5HQCHA'
+										 }, {
+										 	title: 'video',
+										 	href: 'https://d3sisat5gdssl6.cloudfront.net/3f68e4a4-74bc-4c2d-bf5c-09f8fd501b7d/d35ae62f-befb-49cf-a7a9-d25c45869d6f/web/GOPR0044.mp4?Expires=1453867341&Signature=KOgtI2QA0wJxe7r9HM2CnUAScBvxeKES7cuOzWxLee07kYssIRWqcnAdvjkB16l6g7qxii6Xh4Vojine7xo34~ufqv7ay0CZXK7u7tv4tjV4BRMPMKAfUQZsDLfOy7RM3f4tl-h77t~4pi-mEUxPAW~ElEEb1zk5ydfw-U0uH-hPXOaOKRiAtw7onUOqrSTTRDKR4YxdqgJUdHiVSP4-75zOe3kpd3odLN7jLUfVI-r3gMrCri4o60AZDTc7NF77tW8aN8jm5NsMU4beJMIoZrp4WY1cSdtMpDUq3kuKkhDNlwOhcpeEbRDWko-LuWQbvRhIMkPSK~on9WkGvXuwKg__&Key-Pair-Id=APKAISSKGZE3DR5HQCHA',
+										 	type: 'video/mp4',
+										 	poster: 'https://d3sisat5gdssl6.cloudfront.net/3f68e4a4-74bc-4c2d-bf5c-09f8fd501b7d/d35ae62f-befb-49cf-a7a9-d25c45869d6f/web/GOPR0044.mp4?Expires=1453867341&Signature=KOgtI2QA0wJxe7r9HM2CnUAScBvxeKES7cuOzWxLee07kYssIRWqcnAdvjkB16l6g7qxii6Xh4Vojine7xo34~ufqv7ay0CZXK7u7tv4tjV4BRMPMKAfUQZsDLfOy7RM3f4tl-h77t~4pi-mEUxPAW~ElEEb1zk5ydfw-U0uH-hPXOaOKRiAtw7onUOqrSTTRDKR4YxdqgJUdHiVSP4-75zOe3kpd3odLN7jLUfVI-r3gMrCri4o60AZDTc7NF77tW8aN8jm5NsMU4beJMIoZrp4WY1cSdtMpDUq3kuKkhDNlwOhcpeEbRDWko-LuWQbvRhIMkPSK~on9WkGvXuwKg__&Key-Pair-Id=APKAISSKGZE3DR5HQCHA'
+										 }
+									 ],{
+									 	container: '#blueimp-video-carousel',
+									 	carousel: 'true'
+									 });
+					*/
 
 					
-					//blueimp.Gallery(items_for_gallery);
+					
+					//
+					// This code is the video sample version from https://blueimp.github.io/Gallery/ 
+					//
+					/*
 					 blueimp.Gallery([
 								        {
 								            title: 'Sintel',
@@ -468,6 +402,7 @@ blueimp.Gallery([{
 								        container: '#blueimp-video-carousel',
 								        carousel: true
 								    });
+								    */
 
 					
 					
