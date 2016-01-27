@@ -242,6 +242,7 @@ jQuery.fetch_server_media = function() {
 
 					var medias = getSubXMLFromTag(response, 'media');
 
+					/*
 					// $(
 					// ".user-resources, .scrollClass .mCSB_container,
 					// .sync-content .scrollClass")
@@ -330,9 +331,11 @@ jQuery.fetch_server_media = function() {
 				        	//$(".links").append(source);
 						
 					} // end for
-					items_for_gallery += "],{ container: '#blueimp-video-carousel', carousel: 'true'}";
-					blueimp.Gallery(items_for_gallery);
-					console.log("items_for_gallery--->" + items_for_gallery);
+					*/
+					//items_for_gallery += "],{ container: '#blueimp-video-carousel', carousel: 'true'}";
+					//blueimp.Gallery(items_for_gallery);
+					//console.log("items_for_gallery--->" + items_for_gallery);
+					
 					//console.log("links div value ----->" + $(".links").val());
 					//
 					//This version uses AWS signed urls (they expire - so cut/paste new ones if you need to test)
@@ -361,7 +364,6 @@ jQuery.fetch_server_media = function() {
 					//
 					// This code is the video sample version from https://blueimp.github.io/Gallery/ 
 					//
-					/*
 					 blueimp.Gallery([
 								        {
 								            title: 'Sintel',
@@ -402,7 +404,6 @@ jQuery.fetch_server_media = function() {
 								        container: '#blueimp-video-carousel',
 								        carousel: true
 								    });
-								    */
 
 					
 					
