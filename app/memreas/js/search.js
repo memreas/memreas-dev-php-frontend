@@ -309,6 +309,7 @@ function personalSearchLi(target, item) {
     if (('@' + $("input[name=username]").val()) != item.username){
         var photo = item.profile_photo;
         photo = removeCdataCorrectLink(photo);
+        console.log(photo);
         var name = $.trim(item.username);
         var op = '<li id="search-'+name.replace('@', '')+'"><figure class="pro-pics"><img src="'
                 + photo + '" alt=""></figure><div class="user-names">'
@@ -322,6 +323,7 @@ function personalSearchLi(target, item) {
     }
 }
 function eventSearchLi(target, item) {
+    console.log(item);
     var event_img = item.event_photo;
     event_img = removeCdataCorrectLink(event_img);
     var name = $.trim(item.name);
