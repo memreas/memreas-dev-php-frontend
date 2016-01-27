@@ -242,7 +242,7 @@ jQuery.fetch_server_media = function() {
 
 					var medias = getSubXMLFromTag(response, 'media');
 
-					/*
+					
 					// $(
 					// ".user-resources, .scrollClass .mCSB_container,
 					// .sync-content .scrollClass")
@@ -262,6 +262,7 @@ jQuery.fetch_server_media = function() {
 						var _media_thumbnail = ''
 						var _media_thumbnail_large = "";
 						var main_media_url = '';
+                                                var main_media_url_m3u8 = '';
 						var source = "";
 						if (_media_type == 'image') {
 							_media_url = getMediaUrl(media, _media_type);
@@ -290,13 +291,20 @@ jQuery.fetch_server_media = function() {
 
 							if ((userBrowser[0].ios)
 									|| (userBrowser[1].browser == "Safari")) {
-								content_type = 'application/x-mpegURL';
+								//content_type = 'application/x-mpegURL';
 								main_media_url = _media_url_hls;
 							} else {
-								content_type = 'video/mp4';
+								//content_type = 'video/mp4';
 								main_media_url = _media_url_web;
 							}
+                                                        
+                                                         main_media_url_m3u8 = _media_url_hls;
+                                                        main_media_url = _media_url_web;
 						}
+                                              
+                                               
+                                               var content_type_v='video';
+                                                //main_media_url = _media_url_web;
 
 						//
 						// Add to div layer
@@ -306,13 +314,33 @@ jQuery.fetch_server_media = function() {
 						//"href: '" + main_media_url + "'," + 
 						//"type: '" + content_type + "'," + 
 						//"poster: '" +  _media_thumbnail_large + "'" + '}';
+                                                
+                                                if(_media_type =='video'){
+                                                   items_for_gallery +='{' +
+                                                'title:' +  "'" + content_type_v + "'," +
+                                                 ' type: ' + "'video/*'," +
+                                                 ' poster: ' + "'" + _media_thumbnail_large + "'" +
+                                                 'sources: [' +
+                                                         '{' +
+                                                                  'href:' + "'" + main_media_url_m3u8 + "'," +
+                                                                  'type:' + "'application/x-mpegurl'" +
+                                                         '},'+
+                                                         '{' +
+                                                                'href:' + "'" + main_media_url + "'," +
+                                                                'type:' + "'video/mp4'" +
+                                                          '}'+
+                                                        ']'+
+                                                '}' ;
+                                                }
 
-						items_for_gallery += '{' + 
+						else {
+                                                    items_for_gallery += '{' + 
 							' title: ' + "'" + content_type + "'," +
 							' href: ' + "'" + main_media_url + "'," +
 							' type: ' + "'" + content_type + "'," +
 							' poster: ' + "'" + _media_thumbnail_large + "'" +
-						'}';
+						'},';
+                                                }
 						
 						//source = '<a href="' + main_media_url + '"' +
 						//' title="title"' +
@@ -331,8 +359,8 @@ jQuery.fetch_server_media = function() {
 				        	//$(".links").append(source);
 						
 					} // end for
-					*/
 					
+					console.log('Item Of Gallery:'+items_for_gallery);
 					//items_for_gallery += "],{ container: '#blueimp-video-carousel', carousel: 'true'}";
 					//blueimp.Gallery(items_for_gallery);
 					//console.log("items_for_gallery--->" + items_for_gallery);
@@ -371,7 +399,7 @@ jQuery.fetch_server_media = function() {
 									 });
 									 */
 					
-					blueimp.Gallery([
+					/*blueimp.Gallery([
 										{
 										 	title: 'image',
 										 	href: 'https://d3sisat5gdssl6.cloudfront.net/3f68e4a4-74bc-4c2d-bf5c-09f8fd501b7d/7ddc1767-e471-45c3-8fa9-1e95514b9e23/20150908_135823.jpg?Expires=1453951075&Signature=Qx1Rc9v5pHx8Cz~pRC0wUyGJltAAghvBgu-36nfpPbGV~alBI8O3ayeVKx0825bTiyZI91Q4HFOZc5puGn6H-pkl5DgLT1SWWp47UhZxyGJUX9pwPt1-RhuzrX4V9Rs1ofJ3~6RXNCYHjI2MguGOG5EBgz2IBpIFI0V6sLkgWH8iDFpPM-k9aOmsbn3DU1vwm0FELSr74gQyTUvwCmu1v~U1AlXZemsWYOIsUPDXCMxcaa~BhLki2FRYY2dUZ-OXwIegrMgSN9r6nN2FXgkLMeHEM4gxUZ3jz6XoTRdVpbLYMTE63lgImF7yS0EgZJnE5H8Fh89LArLpcPfJGgMR4A__&Key-Pair-Id=APKAISSKGZE3DR5HQCHA',
@@ -395,7 +423,7 @@ jQuery.fetch_server_media = function() {
 									 ],{
 									 	container: '#blueimp-video-carousel',
 									 	carousel: 'true'
-									 });
+									 }); */
 					
 
 					
