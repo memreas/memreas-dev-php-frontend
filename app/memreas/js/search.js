@@ -23,8 +23,6 @@ $(document).ready(function() {
                     users = [];
                     map = {};
                     var objs = jQuery.parseJSON(data);
-                    //debugging json
-                    console.log(data);
                     var username = '@';
                     switch (q.charAt(0))
                     {
@@ -307,6 +305,16 @@ var h = function(item) {
 function personalSearchLi(target, item) {
     //Prevent yourself listing
     if (('@' + $("input[name=username]").val()) != item.username){
+    		for (property in item) {
+
+    		 /*this will create one string with all the Javascript 
+    		  properties and values to avoid multiple alert boxes: */
+
+    		  alertText += property + ':' + sampleObject[property]+'; ';
+    		  console.log (alertText);
+
+    		}
+    	
         var photo = item.profile_photo;
         photo = removeCdataCorrectLink(photo);
         console.log(photo);
