@@ -420,104 +420,162 @@ function showEventDetail(eventId, userId) {
                         var _media_url_web = '';
                         var _media_thumbnail = ''
                         var _media_thumbnail_large = "";
+                        var objArr2 = new Array();
 
                         for (var i = 0; i < media_count; i++) {
                             var media = medias[i];
                             var mediaId = getValueFromXMLTag(media, 'media_id');
                             var _media_type = getValueFromXMLTag(media, 'type');
-                            if (_media_type == 'video') {
-                                /*var _main_media = getValueFromXMLTag(media,
-                                 'media_url_1080p');
-                                 _main_media = removeCdataCorrectLink(_main_media);
-                                 var _main_media = getValueFromXMLTag(media,
-                                 'media_url_1080p');
-                                 _main_media = removeCdataCorrectLink(_main_media);
-                                 var _media_url = getMediaThumbnail(media,
-                                 '/memreas/img/small/1.jpg');*/
+                            var _media_url = '';
+						var _media_url_hls = '';
+						var _media_url_web = '';
+						var _media_thumbnail = ''
+						var _media_thumbnail_large = "";
+						var main_media_url = '';
+						var main_media_url_m3u8 = '';
+                            
+                          if (_media_type == 'image') {
+							_media_url = getMediaUrl(media, _media_type);
+							content_type = 'image/jpeg';
+							main_media_url
+							main_media_url = getValueFromXMLTag(media,
+									'main_media_url');
+							_media_thumbnail_large = main_media_url = removeCdataCorrectLink(main_media_url);
+						} else if (_media_type == 'video') {
+							_media_url_hls = getValueFromXMLTag(media,
+									'media_url_hls');
+							_media_url_hls = removeCdataCorrectLink(_media_url_hls);
+							_media_url_web = getValueFromXMLTag(media,
+									'media_url_web');
+							_media_url_web = removeCdataCorrectLink(_media_url_web);
+							_media_thumbnail_large = getValueFromXMLTag(media,
+									'media_url_448x306');
+							_media_thumbnail_large = JSON
+									.parse(removeCdata(_media_thumbnail_large));
+							_media_thumbnail_large = _media_thumbnail_large[0];
 
-                                 _media_url = getMediaThumbnail(media,
-                                        '/memreas/img/small/1.jpg');
+							_media_thumbnail = getValueFromXMLTag(media,
+									'media_url_98x78');
+							_media_thumbnail = JSON
+									.parse(removeCdata(_media_thumbnail));
+							_media_thumbnail = _media_thumbnail[0];
 
-                                _media_url_hls = getValueFromXMLTag(media,
-                                        'media_url_hls');
-                                _media_url_hls = removeCdataCorrectLink(_media_url_hls);
-                                _media_url_web = getValueFromXMLTag(media,
-                                        'media_url_web');
-                                _media_url_web = removeCdataCorrectLink(_media_url_web);
-                                _media_thumbnail_large = getValueFromXMLTag(media, 'media_url_448x306');
-                                _media_thumbnail_large = JSON.parse(removeCdata(_media_thumbnail_large));
-                                _media_thumbnail_large = _media_thumbnail_large[0];
-                                console.log('_media_thumbnail_large after ' + _media_thumbnail_large);
-                                
-                                   if ((userBrowser[0].ios)
-                                                || (userBrowser[1].browser == "Safari")) {
-                                         media_url_for_browser = _media_url_hls;
-                                } else {
-                                        media_url_for_browser = _media_url_web;
-                                } 
-                                
-                                _media_thumbnail = getValueFromXMLTag(media, 'media_url_98x78');
-                                _media_thumbnail = JSON.parse(removeCdata(_media_thumbnail));
-                                _media_thumbnail = _media_thumbnail[0];
-                                console.log('_media_thumbnail after ' + _media_thumbnail);
-                                var _download_url = getValueFromXMLTag(media,
-                                        'media_url_download');
-                                if (_download_url == '')
-                                    _download_url = _media_url_web;
+						}
 
-                                
-                                var fotoraSlide = '<div data-thumb="' + _media_thumbnail_large + '"><a href="' + media_url_for_browser + '" data-video="true" media-id="' + mediaId + '"><img src="' + _media_thumbnail_large + '" media-id="' + mediaId + '" /></a></div>';
-
-                                target_element
-                                        .append('<li class="video-media" id="memreasvideo-'
-                                                + mediaId
-                                                + '" media-url="'
-                                                + _main_media
-                                                + '"  class="swipebox"><video  preload="none" autoplay="" style="width:100%; height:300px;"><source src="' + _media_url + '"  type="video/mp4" /> </video></li>');
-
-
-                                jcarousel_element.append('<li data-preview="'
-                                        + _media_thumbnail_large + '" class="videoArea"  data-source="' + media_url_for_browser + '" media-id="'
-                                        + mediaId
-                                        + '"><a href="javascript:;" class=""><img src="'
-                                        + _media_thumbnail
-                                        + '" alt="image01" download="'
-                                        + _media_thumbnail_large + '" class="videoArea" /></a> <span class="video-play-icon-memreas"></span></li>');
-                                $('.MemreasDetailfotoramaSlde').append(fotoraSlide);
-                                //$('#memreas-detail-gallery').append(fotoraSlide);
-                            } else {
-                               
-                                
-                                var _main_media = getValueFromXMLTag(media,
-                                        'media_url_1280x720');
-                                _main_media = removeCdataCorrectLink(_main_media);
-                                var _media_url = getMediaThumbnail(media,
-                                        'media_url_448x306');
-                                var _download_url = getValueFromXMLTag(media,
-                                        'media_url_download');
-                                if (_download_url == '')
-                                    _download_url = _main_media;
-
-                                target_element
-                                        .append('<li  media-id="'
-                                                + mediaId
-                                                + '"><a href="'
-                                                + _main_media
-                                                + '" class="swipebox" title="photo-2"><img src="'
-                                                + _media_url
-                                                + '" alt=""></a></li>');
-                                jcarousel_element.append('<li data-preview="'
-                                        + _main_media + '"  media-id="'
-                                        + mediaId
-                                        + '"><a href="javascript:;"><img src="'
-                                        + _media_url
-                                        + '" alt="image01" download="'
-                                        + _media_url + '" /></a></li>');
-
-                                $('.MemreasDetailfotoramaSlde').append('<div data-thumb="' + _media_url + '"><img src="' + _main_media + '" media-id="' + mediaId + '" /></div> ');
-                               // $('#memreas-detail-gallery').append('<div data-thumb="' + _media_url + '"><img src="' + _main_media + '" media-id="' + mediaId + '" /></div> ');
-                            }
+						var item = new Object();
+						if (_media_type == 'video') {
+							item['title'] = _media_type; 
+							item['type'] = "video/*"; 
+							item['poster'] = _media_thumbnail_large; 
+							item['sources'] = [{href:_media_url_hls, type: "application/x-mpegurl"}, {href:_media_url_web, type: "video/mp4"}]; 
+						} else {
+							item['title'] = _media_type; 
+							item['type'] = "image/jpeg"; 
+							item['href'] = main_media_url; 
+							item['poster'] = main_media_url; 
+						}
+						//console.log("item" + JSON.stringify(item));
+						objArr2.push(item);  
+                                                
                         }
+                        console.log("objArr2" + JSON.stringify(objArr2));
+					blueimp.Gallery( objArr2, { container: '#blueimp-video-carousel-gallery', carousel: 'true' } );
+
+                            
+                            
+//                            if (_media_type == 'video') {
+//                                /*var _main_media = getValueFromXMLTag(media,
+//                                 'media_url_1080p');
+//                                 _main_media = removeCdataCorrectLink(_main_media);
+//                                 var _main_media = getValueFromXMLTag(media,
+//                                 'media_url_1080p');
+//                                 _main_media = removeCdataCorrectLink(_main_media);
+//                                 var _media_url = getMediaThumbnail(media,
+//                                 '/memreas/img/small/1.jpg');*/
+//
+//                                 _media_url = getMediaThumbnail(media,
+//                                        '/memreas/img/small/1.jpg');
+//
+//                                _media_url_hls = getValueFromXMLTag(media,
+//                                        'media_url_hls');
+//                                _media_url_hls = removeCdataCorrectLink(_media_url_hls);
+//                                _media_url_web = getValueFromXMLTag(media,
+//                                        'media_url_web');
+//                                _media_url_web = removeCdataCorrectLink(_media_url_web);
+//                                _media_thumbnail_large = getValueFromXMLTag(media, 'media_url_448x306');
+//                                _media_thumbnail_large = JSON.parse(removeCdata(_media_thumbnail_large));
+//                                _media_thumbnail_large = _media_thumbnail_large[0];
+//                                console.log('_media_thumbnail_large after ' + _media_thumbnail_large);
+//                                
+//                                   if ((userBrowser[0].ios)
+//                                                || (userBrowser[1].browser == "Safari")) {
+//                                         media_url_for_browser = _media_url_hls;
+//                                } else {
+//                                        media_url_for_browser = _media_url_web;
+//                                } 
+//                                
+//                                _media_thumbnail = getValueFromXMLTag(media, 'media_url_98x78');
+//                                _media_thumbnail = JSON.parse(removeCdata(_media_thumbnail));
+//                                _media_thumbnail = _media_thumbnail[0];
+//                                console.log('_media_thumbnail after ' + _media_thumbnail);
+//                                var _download_url = getValueFromXMLTag(media,
+//                                        'media_url_download');
+//                                if (_download_url == '')
+//                                    _download_url = _media_url_web;
+//
+//                                
+//                                var fotoraSlide = '<div data-thumb="' + _media_thumbnail_large + '"><a href="' + media_url_for_browser + '" data-video="true" media-id="' + mediaId + '"><img src="' + _media_thumbnail_large + '" media-id="' + mediaId + '" /></a></div>';
+//
+//                                target_element
+//                                        .append('<li class="video-media" id="memreasvideo-'
+//                                                + mediaId
+//                                                + '" media-url="'
+//                                                + _main_media
+//                                                + '"  class="swipebox"><video  preload="none" autoplay="" style="width:100%; height:300px;"><source src="' + _media_url + '"  type="video/mp4" /> </video></li>');
+//
+//
+//                                jcarousel_element.append('<li data-preview="'
+//                                        + _media_thumbnail_large + '" class="videoArea"  data-source="' + media_url_for_browser + '" media-id="'
+//                                        + mediaId
+//                                        + '"><a href="javascript:;" class=""><img src="'
+//                                        + _media_thumbnail
+//                                        + '" alt="image01" download="'
+//                                        + _media_thumbnail_large + '" class="videoArea" /></a> <span class="video-play-icon-memreas"></span></li>');
+//                                $('.MemreasDetailfotoramaSlde').append(fotoraSlide);
+//                                //$('#memreas-detail-gallery').append(fotoraSlide);
+//                            } else {
+//                               
+//                                
+//                                var _main_media = getValueFromXMLTag(media,
+//                                        'media_url_1280x720');
+//                                _main_media = removeCdataCorrectLink(_main_media);
+//                                var _media_url = getMediaThumbnail(media,
+//                                        'media_url_448x306');
+//                                var _download_url = getValueFromXMLTag(media,
+//                                        'media_url_download');
+//                                if (_download_url == '')
+//                                    _download_url = _main_media;
+//
+//                                target_element
+//                                        .append('<li  media-id="'
+//                                                + mediaId
+//                                                + '"><a href="'
+//                                                + _main_media
+//                                                + '" class="swipebox" title="photo-2"><img src="'
+//                                                + _media_url
+//                                                + '" alt=""></a></li>');
+//                                jcarousel_element.append('<li data-preview="'
+//                                        + _main_media + '"  media-id="'
+//                                        + mediaId
+//                                        + '"><a href="javascript:;"><img src="'
+//                                        + _media_url
+//                                        + '" alt="image01" download="'
+//                                        + _media_url + '" /></a></li>');
+//
+//                                //$('.MemreasDetailfotoramaSlde').append('<div data-thumb="' + _media_url + '"><img src="' + _main_media + '" media-id="' + mediaId + '" /></div> ');
+//                               // $('#memreas-detail-gallery').append('<div data-thumb="' + _media_url + '"><img src="' + _main_media + '" media-id="' + mediaId + '" /></div> ');
+//                            }
+                     //   }
                     }
                 } else
                     jerror(getValueFromXMLTag(response, 'message'));
