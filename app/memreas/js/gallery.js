@@ -261,6 +261,44 @@ jQuery.fetch_server_media = function() {
 						}
 						//console.log("item" + JSON.stringify(item));
 						objArr.push(item);
+                                                
+                                                
+                                                
+                                                //Delete Tab Data
+                                                
+                                                 $(".edit-area-scroll")
+							 .append(
+							 '<li><a class="image-sync" id="'
+													+ media_id
+													+ '" onclick="return imageChoosed(this.id);" href="'
+													+ _media_url
+													+ '"><img src="'
+													+ _media_url
+													+ '"/></a></li>');
+                                                 
+							 $(".preload-files .pics").append(
+							 '<li><img src="' + _media_url + '"/></li>');
+							 $(".aviary-thumbs")
+							 .append(
+							 '<li><img id="edit'
+							 + media_id
+							 + '" src="'
+							 + _media_url
+							 + '" onclick="openEditMedia(this.id, \''
+							 + _media_url
+							 + '\');"/></li>');
+							$(".galleries-location").append(
+									'<li><img id="location' + media_id
+											+ '" class="img-gallery" src="'
+											+ _media_url + '" /></li>');
+							checkHasImage = true;
+                                                
+                                                //End Delete Tab
+                                                
+                                                
+                                                
+                                                
+                                                
 
 					} // end for
 
