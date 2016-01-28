@@ -106,6 +106,7 @@ function fetchMyMemreas() {
 			} ],
 			function(response) {
 				if (getValueFromXMLTag(response, 'status') == "Success") {
+					console.log("response" + response); 
 					var events = getSubXMLFromTag(response, 'event');
 
 					var event_count = events.length;
@@ -157,7 +158,7 @@ function fetchMyMemreas() {
 						/*
 						 * This section isn't necessary ... view events passes back all this data media, friends, comments.
 						 */
-						
+						/*
 						// get event medias
 						ajaxRequest(
 								'listallmedia',
@@ -329,12 +330,12 @@ function fetchMyMemreas() {
 																													html_str,
 																													comment_count);
 
-																											/*
-																											 * if(
-																											 * $("#myEvent-"+eventdetail_id).find("ul.commitems").length){
-																											 * $("#myEvent-"+eventdetail_id).find("ul.commitems").each(function(){$(this).remove();}); }
-																											 * $("#myEvent-"+eventdetail_id).append(html_str);
-																											 */
+																											//
+																											// if(
+																											// $("#myEvent-"+eventdetail_id).find("ul.commitems").length){
+																											// $("#myEvent-"+eventdetail_id).find("ul.commitems").each(function(){$(this).remove();}); }
+																											// $("#myEvent-"+eventdetail_id).append(html_str);
+																											//
 																										} else {
 																											var html_str = '<p style="color: #FFF;" class="no-comment">No comment yet!</p>';
 																											popupDetailMedia(
@@ -414,6 +415,7 @@ function fetchMyMemreas() {
 							TYPE : 'mouseSwipe',
 							HORIZ : true
 						});
+						*/
 					}
 				} else
 					jerror('You have no event at this time. Try add some event at share tab');
