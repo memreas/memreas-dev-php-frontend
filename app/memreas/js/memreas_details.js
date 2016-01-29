@@ -479,7 +479,8 @@ function showEventDetail(eventId, userId) {
                                                 
                         }
                         console.log("objArr2" + JSON.stringify(objArr2));
-					blueimp.Gallery( objArr2, { container: '#blueimp-video-carousel-gallery', carousel: 'true' } );
+	                blueimp.Gallery( objArr2, { container: '#blueimp-video-carousel-gallery', carousel: 'true' } );
+                        blueimp.Gallery( objArr2, { container: '#blueimp-video-carousel-gallery-detail', carousel: 'true' } );
 
                             
                             
