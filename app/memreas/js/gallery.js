@@ -262,6 +262,7 @@ jQuery.fetch_server_media = function() {
 						//console.log("item" + JSON.stringify(item));
 						objArr.push(item);
                                                 
+
                                                 
                                                 
                                                 //Delete Tab Data
@@ -298,8 +299,8 @@ jQuery.fetch_server_media = function() {
                                                 
                                                 
                                                 
-                                                
 
+                                                
 					} // end for
 
 					console.log("objArr" + JSON.stringify(objArr));
