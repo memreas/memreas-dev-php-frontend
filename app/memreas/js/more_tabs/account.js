@@ -504,6 +504,7 @@ function getAccountPlans(){
         dataType: 'jsonp',
         data: 'json=' + data,
         success: function(response){
+        	console.log("response"+response);
             if (response.status == 'Success'){
                 var account_stripe = response.customer;
                 if (account_stripe.exist == 1){
@@ -517,11 +518,11 @@ function getAccountPlans(){
                             jAccountPlans.append(html_element);
                         }
                     }
-                    else jAccountPlans.html('You have no any activated plan');
+                    else jAccountPlans.html('You have not activated a plan');
                 }
-                else jAccountPlans.html('Your account has not existed or deleted before on Stripe');
+                else jAccountPlans.html("You don't have an account.  Add a payment method and sign up for a plan.");
             }
-            else jAccountPlans.html('You have no any activated plan');
+            else jAccountPlans.html("You have not activated a plan");
             $('#loadingpopup').fadeOut(500);
         }
     });
