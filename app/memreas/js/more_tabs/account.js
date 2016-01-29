@@ -80,12 +80,14 @@ function loadAccountCard(){
 
     jMemberCard.empty();
     var stripeUserId = $("input[name=user_id]").val();
-    var stripeActionUrl = $("input[name=stripe_url]").val() + '/stripe/listCards?memreascookie='+getCookie("memreascookie");
+    var stripeActionUrl = $("input[name=stripe_url]").val() + '/stripe/listCards';
     var obj = new Object();
+    console.log('stripeUserId'+stripeUserId);
     obj = {userid:stripeUserId};
     var json_listCard = JSON.stringify(obj, null, '\t');
     var data = '{"action": "listcards", ' +
-        '"type":"jsonp", ' +
+    		'"memreascookie": "' + getCookie("memreascookie") + '",'+
+    		'"type":"jsonp", ' +
         '"json": ' + json_listCard  +
         '}';
 
@@ -96,7 +98,8 @@ function loadAccountCard(){
         type: 'POST',
         dataType: 'jsonp',
         data: 'json=' + data,
-        success: function(response){
+        timeout: 5000,
+        done: function(response){
             if (response.status == 'Success'){
                 var cards = response.payment_methods;
                 var number_of_cards = response.NumRows;
@@ -135,6 +138,9 @@ function loadAccountCard(){
                 jerror(response.message);
             }
             $('.stripe-payment').fadeOut(500);
+        },
+        fail: function(response, textStatus, errorThrown) {
+        		jerror(response.message);
         }
     });
 }
