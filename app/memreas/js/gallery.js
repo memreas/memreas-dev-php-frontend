@@ -223,10 +223,10 @@ jQuery.fetch_server_media = function() {
 						if (_media_type == 'image') {
 							_media_url = getMediaUrl(media, _media_type);
 							content_type = 'image/jpeg';
-							main_media_url
+							
 							main_media_url = getValueFromXMLTag(media,
 									'main_media_url');
-                                                         //  main_media_url=getValueFromXMLTag(media,'media_url_448x306');
+                                                          // main_media_url=getValueFromXMLTag(media,'media_url_448x306');
 							_media_thumbnail_large = main_media_url = removeCdataCorrectLink(main_media_url);
 						} else if (_media_type == 'video') {
 							_media_url_hls = getValueFromXMLTag(media,
