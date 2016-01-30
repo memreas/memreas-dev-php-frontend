@@ -122,6 +122,7 @@ function getMediaComment() {
                     value: '1'
                 }],
             function (ret_xml) {
+                console.log('Slide Comment ->'+ret_xml);
                 var jComment_element = $('.memreas-detail-comments');
                 if (jComment_element.hasClass('mCustomScrollbar'))
                     jComment_element = $('.memreas-detail-comments .mCSB_container');
@@ -331,6 +332,7 @@ $(function () {
 function showEventDetail(eventId, userId) {
     eventdetail_id = eventId;
     eventdetail_user = userId;
+    $('#blueimp-video-carousel-gallery').find('slides').remove();
 
     ajaxRequest('geteventdetails', [{
             tag: 'event_id',
@@ -364,6 +366,7 @@ function showEventDetail(eventId, userId) {
     if (target_element.hasClass('mCustomScrollbar'))
         target_element = $(".memreas-detail-gallery .mCSB_container");
     target_element.empty();
+    
     $("#tabs-memreas-detail li:eq(0) a").click();
 
     /* Update details_tab also */
@@ -479,8 +482,10 @@ function showEventDetail(eventId, userId) {
                                                 
                         }
                         console.log("objArr2" + JSON.stringify(objArr2));
-	                blueimp.Gallery( objArr2, { container: '#blueimp-video-carousel-gallery', carousel: 'true' } );
-                        blueimp.Gallery( objArr2, { container: '#blueimp-video-carousel-gallery-detail', carousel: 'true' } );
+	                blueimp.Gallery( objArr2, {container: '#blueimp-video-carousel-gallery', carousel: 'true' } );
+                        blueimp.Gallery( objArr2, { onslide:function(){
+                                alert('Working on Progress');
+                        }, container: '#blueimp-video-carousel-gallery-detail', carousel: 'true' } );
 
                             
                             
@@ -1118,3 +1123,4 @@ $('.elastislide-list > li >a').click(function () {
     alert('hello');
     return false;
 });
+
