@@ -29,7 +29,7 @@ function getUserDetail() {
 				function(xml_response) {
 					console.log("Inside get user detail response--->"
 							+ xml_response);
-
+ //debugger;
 					if (getValueFromXMLTag(xml_response, 'status') == 'Success') {
 						var useremail = getValueFromXMLTag(xml_response,
 								'email');
@@ -123,8 +123,9 @@ function getUserDetail() {
 							} else
 								$("#lbl-sellmedia").remove();
 						}
-					} else
-						jerror(getValueFromXMLTag(xml_response, 'messsage'));
+					}//else
+						//jerror(getValueFromXMLTag(xml_response, 'messsage'));
+                                                    
 				}, 'undefined', true);
 	}
 }
@@ -223,8 +224,9 @@ jQuery.fetch_server_media = function() {
 							_media_url = getMediaUrl(media, _media_type);
 							content_type = 'image/jpeg';
 							main_media_url
-							main_media_url = getValueFromXMLTag(media,
-									'main_media_url');
+							//main_media_url = getValueFromXMLTag(media,
+									//'main_media_url');
+                                                           main_media_url=getValueFromXMLTag(media,'media_url_448x306');
 							_media_thumbnail_large = main_media_url = removeCdataCorrectLink(main_media_url);
 						} else if (_media_type == 'video') {
 							_media_url_hls = getValueFromXMLTag(media,
@@ -267,32 +269,32 @@ jQuery.fetch_server_media = function() {
                                                 
                                                 //Delete Tab Data
                                                 
-//                                                 $(".edit-area-scroll")
-//							 .append(
-//							 '<li><a class="image-sync" id="'
-//													+ media_id
-//													+ '" onclick="return imageChoosed(this.id);" href="'
-//													+ _media_url
-//													+ '"><img src="'
-//													+ _media_url
-//													+ '"/></a></li>');
-//                                                 
-//							 $(".preload-files .pics").append(
-//							 '<li><img src="' + _media_url + '"/></li>');
-//							 $(".aviary-thumbs")
-//							 .append(
-//							 '<li><img id="edit'
-//							 + media_id
-//							 + '" src="'
-//							 + _media_url
-//							 + '" onclick="openEditMedia(this.id, \''
-//							 + _media_url
-//							 + '\');"/></li>');
-//							$(".galleries-location").append(
-//									'<li><img id="location' + media_id
-//											+ '" class="img-gallery" src="'
-//											+ _media_url + '" /></li>');
-//							checkHasImage = true;
+                                                 $(".edit-area-scroll")
+							 .append(
+							 '<li><a class="image-sync" id="'
+													+ media_id
+													+ '" onclick="return imageChoosed(this.id);" href="'
+													+ _media_url
+													+ '"><img src="'
+													+ _media_url
+													+ '"/></a></li>');
+                                                 
+							 $(".preload-files .pics").append(
+							 '<li><img src="' + _media_url + '"/></li>');
+							 $(".aviary-thumbs")
+							 .append(
+							 '<li><img id="edit'
+							 + media_id
+							 + '" src="'
+							 + _media_url
+							 + '" onclick="openEditMedia(this.id, \''
+							 + _media_url
+							 + '\');"/></li>');
+							$(".galleries-location").append(
+									'<li><img id="location' + media_id
+											+ '" class="img-gallery" src="'
+											+ _media_url + '" /></li>');
+							checkHasImage = true;
                                                 
                                                 //End Delete Tab
                                                 
@@ -305,7 +307,7 @@ jQuery.fetch_server_media = function() {
 
 					console.log("objArr" + JSON.stringify(objArr));
 					blueimp.Gallery( objArr, { container: '#blueimp-video-carousel', carousel: 'true' } );
-
+                                        
 					setTimeout(function() {
 						// $(".preload-files").hide();
 						// $(".user-resources").fotorama({
@@ -343,6 +345,7 @@ jQuery.fetch_server_media = function() {
 					// $(".swipebox").swipebox();
 
 					// Show edit and delete tabs
+                                       
 					$("a[title=tab2], a[title=tab3]").show();
 
 				} else {
