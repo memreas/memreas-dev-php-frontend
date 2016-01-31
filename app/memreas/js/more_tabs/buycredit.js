@@ -7,8 +7,8 @@ var account_user = new Object();
 $(function(){
 	if( $("#credit-amount").length){
 		
-		//$(".akordeon-item .akordeon-item-body").css({overflow:"visible"});
-		//$("#credit-amount").closest("div.akordeon-item-body").css({height:"357px"});
+		// $(".akordeon-item .akordeon-item-body").css({overflow:"visible"});
+		// $("#credit-amount").closest("div.akordeon-item-body").css({height:"357px"});
 		$("#credit-amount").chosen({width:"95%"});
 	}
     $(".buycredit-order").click(function(){ fill_account_detail(); });
@@ -30,7 +30,7 @@ function buycredit_resetCardChoose(){
     }
 }
 function buycredit_addCardPopup(){
-    //Reset form;
+    // Reset form;
     var jAddCard = $(".creditAddCardForm");
     jAddCard.find('input[type=text]').each(function(){
         $(this).val($(this).attr('default'));
@@ -42,7 +42,7 @@ function buycreditAddCard(){
     var jAddCard = $(".creditAddCardForm");
     var formPass = true;
 
-    //Check all input passed
+    // Check all input passed
     jAddCard.find('input[type=text]').not("#addcard_address2").each(function(){
         if ($(this).val() == '' || $(this).val() == $(this).attr('default')){
             $(this).focus();
@@ -61,9 +61,10 @@ function buycreditAddCard(){
         jerror('Please complete all require fields');
     }
     else{
-        var stripeActionUrl = $("input[name=stripe_url]").val() + '/stripe/storeCard?memreascookie='+getCookie("memreascookie");
+        var stripeActionUrl = $("input[name=stripe_url]").val() + 'stripe_storeCard';
         var obj = new Object();
         obj.user_id = $('input[name=user_id]').val();
+        obj.memreascookie = getCookie("memreascookie");
         obj.first_name = jAddCard.find("#credit_addcard_fname").val();
         obj.last_name = jAddCard.find("#credit_addcard_lname").val();
         obj.credit_card_type = jAddCard.find("#credit_addcard_cctype").val();
@@ -122,9 +123,10 @@ function buycredit_listCard(){
 
     jMemberCard.empty();
     var stripeUserId = $("input[name=user_id]").val();
-    var stripeActionUrl = $("input[name=stripe_url]").val() + '/stripe/listCards?memreascookie='+getCookie("memreascookie");
+    var stripeActionUrl = $("input[name=stripe_url]").val() + 'stripe_listCards';
     var obj = new Object();
-    obj = {userid:stripeUserId};
+    obj.userid = stripeUserId;
+    obj.memreascookie = getCookie("memreascookie");
     var json_listCard = JSON.stringify(obj, null, '\t');
     var data = '{"action": "listcard", ' +
         '"type":"jsonp", ' +
@@ -158,14 +160,14 @@ function buycredit_listCard(){
                         var html_element = '<li>' +
                         '<label class="label_text2"><input';
 
-                        //Set first card is default checked
+                        // Set first card is default checked
                         if (i == 0){
                             html_element += ' checked="checked"';
                             buycredit_cardChange('buycredit-card-' + row_card_id);
                         }
 
                         html_element += ' type="radio" id="buycredit-card-' + row_card_id + '" name="radio_cards" class="regular-radio" onchange="buycredit_cardChange(this.id);"';
-                        //Set default card checked if available
+                        // Set default card checked if available
                         if (default_card == row_card_id){
                             html_element += ' checked="checked"';
                             buycredit_cardChange(default_card);
@@ -194,7 +196,7 @@ function buycredit_removeCard(){
 
     if (!confirmBox) return false;
 
-    //Fetch the card
+    // Fetch the card
     var selectedCard = '';
     for (i in buycredit_account_cards){
         if (buycredit_account_cards[i].selected == 1){
@@ -206,11 +208,15 @@ function buycredit_removeCard(){
     if (selectedCard == '')
         jerror('Please select a card');
     else{
-        var stripeActionUrl =  $("input[name=stripe_url]").val() + '/stripe/deleteCards?memreascookie='+getCookie("memreascookie");
+        var stripeActionUrl =  $("input[name=stripe_url]").val() + 'stripe_deleteCards';
         var cardSelected = new Array();
         cardSelected.push(selectedCard);
 
-        var data_object = JSON.stringify(cardSelected, null, '\t');
+        var obj = new Object();
+        obj.memreascookie = getCookie("memreascookie");
+        obj.cardSelected = cardSelected;
+        
+        var data_object = JSON.stringify(obj, null, '\t');
 
         var data = '{"action": "deleteCards", ' +
         '"type":"jsonp", ' +
@@ -241,15 +247,16 @@ function buycredit_removeCard(){
 }
 
 function fetch_customer(){
-    //Get customer info based on this account
+    // Get customer info based on this account
     var obj = new Object();
     obj.userid = $("input[name=user_id]").val();
+    obj.memreascookie = getCookie("memreascookie");
     var data_obj = JSON.stringify(obj, null, '\t');
     var data = '{"action": "getCustomerInfo", ' +
     '"type":"jsonp", ' +
     '"json": ' + data_obj  +
     '}';
-    var stripeCustomerUrl = $("input[name=stripe_url]").val() + '/stripe/getCustomerInfo?memreascookie='+getCookie("memreascookie");
+    var stripeCustomerUrl = $("input[name=stripe_url]").val() + 'stripe_getCustomerInfo';
     $.ajax({
         url: stripeCustomerUrl,
         type: 'POST',
@@ -301,7 +308,7 @@ function buycredit_confirmAmount(){
     var jBuycreditMessage = $(".credit-message-order");
     jBuycreditMessage.empty().hide();
     var checkCardChoose = false;
-    //Fetch the card
+    // Fetch the card
     var orderCard = new Object();
     for (var i in buycredit_account_cards){
         if (buycredit_account_cards[i].selected == 1){
@@ -318,6 +325,7 @@ function buycredit_confirmAmount(){
 
     var params = new Object;
     params.userid = $("input[name=user_id]").val();
+    params.memreascookie = getCookie("memreascookie");
     params.stripe_card_reference_id = orderCard.stripe_card_reference_id;
     params.amount = $("select#credit-amount").val();
     var params_json = JSON.stringify(params, null, '\t');
@@ -326,7 +334,7 @@ function buycredit_confirmAmount(){
     '"json": ' + params_json  +
     '}';
 
-    var stripeActionUrl = $("input[name=stripe_url]").val() + '/stripe/addValue?memreascookie='+getCookie("memreascookie");
+    var stripeActionUrl = $("input[name=stripe_url]").val() + 'stripe_addValue';
 
     $('.stripe-payment').fadeIn(1000);
     $.ajax({

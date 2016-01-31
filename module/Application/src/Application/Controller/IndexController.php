@@ -20,8 +20,6 @@ use \Exception;
 use Application\Model\MemreasConstants;
 
 class IndexController extends AbstractActionController {
-	protected $url = MemreasConstants::MEMREAS_WS;
-	protected $stripe_url = MemreasConstants::MEMREAS_PAY;
 	protected $user_id;
 	protected $storage;
 	protected $authservice;
@@ -49,9 +47,9 @@ class IndexController extends AbstractActionController {
 		 * Fetch guzzle and post...
 		 */
 		$guzzle = new \GuzzleHttp\Client ();
-		//Mlog::addone ( __CLASS__ . __METHOD__ . 'about to guzzle url+action+xml', $this->url . $action . $xml );
+		//Mlog::addone ( __CLASS__ . __METHOD__ . 'about to guzzle url+action+xml', MemreasConstants::MEMREAS_WS . $action . $xml );
 		try {
-			$response = $guzzle->post ( $this->url, [ 
+			$response = $guzzle->post ( MemreasConstants::MEMREAS_WS, [ 
 					'form_params' => [ 
 							'action' => $action,
 							'xml' => $xml 
@@ -61,7 +59,7 @@ class IndexController extends AbstractActionController {
 			Mlog::addone ( __CLASS__ . __METHOD__ . 'guzzle exception::', $exc->getMessage () );
 		}
 		
-		//Mlog::addone ( __CLASS__ . __METHOD__ . 'about to guzzle url+action+xml', $this->url . $action . $xml );	
+		//Mlog::addone ( __CLASS__ . __METHOD__ . 'about to guzzle url+action+xml', MemreasConstants::MEMREAS_WS . $action . $xml );	
 		//error_log ( '$response->getBody ()---->' . $response->getBody () );
 		
 		return $response->getBody ();
@@ -298,7 +296,7 @@ class IndexController extends AbstractActionController {
 				'data' => $s3Token,
 				'enableAdvertising' => $enableAdvertising,
 				'enableSellMedia' => MemreasConstants::MEMREAS_SELL_MEDIA,
-				'stripeUrl' => $this->stripe_url,
+				'stripeUrl' => MemreasConstants::MEMREAS_PAY,
 				'PaymentTabs' => $payment_tabs,
 				'app_version' => MemreasConstants::VERSION 
 		) );
