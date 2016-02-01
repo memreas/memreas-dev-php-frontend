@@ -257,7 +257,9 @@ function subscription_step4() {
 				type : 'POST',
 				dataType : 'jsonp',
 				data : 'json=' + data,
+				timeout: 10000,
 				success : function(response) {
+				  	response = jQuery.parseJSON( response.data );
 					if (response.status == 'Success') {
 						jOrderRecept.html($(".order-summary-recept ul").html());
 
@@ -313,7 +315,9 @@ function subscription_step4() {
 									type : 'POST',
 									dataType : 'jsonp',
 									data : 'json=' + data,
+									timeout: 10000,
 									success : function(response) {
+									  	response = jQuery.parseJSON( response.data );
 										if (response.status == 'Success') {
 											account_stripe = response.customer;
 											if (account_stripe != null
@@ -373,8 +377,9 @@ function getPlans() {
 				type : 'POST',
 				dataType : 'jsonp',
 				data : 'json=' + data,
+				timeout: 10000,
 				success : function(response) {
-					// console.log("response" + JSON.stringify(response));
+				  	response = jQuery.parseJSON( response.data );
 					var plans = JSON.parse(response.data);
 					var plan_count = plans.length;
 					console.log("plans ---> " + plans);
@@ -416,6 +421,7 @@ function getPlans() {
 									type : 'POST',
 									dataType : 'jsonp',
 									data : 'json=' + data,
+									timeout: 10000,
 									success : function(response) {
 										if (response.status == 'Success') {
 											account_stripe = response.customer;
@@ -442,12 +448,28 @@ function getPlans() {
 											setUserDefaultPlan();
 										updateAkordeonContent($('.subscription-payment-plans-tab'));
 										$('#loadingpopup').hide();
+									},
+									error : function(response, textStatus, errorThrown) {
+										if(textStatus === 'timeout')
+									    {     
+											jerror('request timeout - please try again later');
+											$('#loadingpopup').hide();
+									    }
+										
 									}
 								});
 					} else {
 						jerror('There is no plan at this time! Please come back and purchase later');
 						$('#loadingpopup').hide();
 					}
+				},
+				error : function(response, textStatus, errorThrown) {
+					if(textStatus === 'timeout')
+				    {     
+						jerror('request timeout - please try again later');
+						$('#loadingpopup').hide();
+				    }
+					
 				}
 			});
 }
@@ -545,6 +567,14 @@ function listStripeCard() {
 					}
 					updateAkordeonContent($('.subscription-payment-method-tab'));
 					$('#loadingpopup').hide();
+				},
+				error : function(response, textStatus, errorThrown) {
+					if(textStatus === 'timeout')
+				    {     
+						jerror('request timeout - please try again later');
+						$('#loadingpopup').hide();
+				    }
+					
 				}
 			});
 }
