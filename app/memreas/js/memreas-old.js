@@ -672,7 +672,8 @@ function fetchFriendsMemreas(friendMemreasType) {
 										// checking event is bought or not
 										var params = new Object;
 										params.user_id = LOGGED_USER_ID;
-										params.event_id = eventId;
+								        params.memreascookie = getCookie("memreascookie");
+								        	params.event_id = eventId;
 										var params_json = JSON.stringify(
 												params, null, '\t');
 										var data = '{"action": "check_own_event", '
@@ -682,7 +683,7 @@ function fetchFriendsMemreas(friendMemreasType) {
 												+ '}';
 
 										var stripeActionUrl = STRIPE_SERVER_URL
-												+ '/stripe/checkOwnEvent';
+												+ 'stripe_checkOwnEvent';
 										$
 												.ajax({
 													url : stripeActionUrl,
