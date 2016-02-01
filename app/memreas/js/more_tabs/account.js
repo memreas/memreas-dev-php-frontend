@@ -114,11 +114,24 @@ function loadAccountCard() {
 				type : 'POST',
 				dataType : 'jsonp',
 				data : 'json=' + data,
-				timeout : 5000,
-				done : function(response) {
+				timeout : 10000,
+				error : function(response, textStatus, errorThrown) {
+					if(textStatus === 'timeout')
+				    {     
+						$('.stripe-payment').fadeOut(500);    //do something. Try again perhaps?
+				        console.log("response.message--->" + response.message);
+				        jMemberCard.append('<li>request timeout - try again later...</li>');
+						jerror(textStatus);
+				    }
+					
+				},
+				success : function(response) {
+				  	response = jQuery.parseJSON( response.data );
 					if (response.status == 'Success') {
-						var cards = response.payment_methods;
+						console.log("Inside success - listcards");
+					  	var cards = response.payment_methods;
 						var number_of_cards = response.NumRows;
+						console.log("Inside success - number_of_cards" + number_of_cards);
 
 						if (number_of_cards > 0) {
 
@@ -167,9 +180,6 @@ function loadAccountCard() {
 						jerror(response.message);
 					}
 					$('.stripe-payment').fadeOut(500);
-				},
-				fail : function(response, textStatus, errorThrown) {
-					jerror(response.message);
 				}
 			});
 }
@@ -230,6 +240,7 @@ function accountRemoveCard(userConfirm) {
 			dataType : 'jsonp',
 			data : 'json=' + data,
 			success : function(response) {
+			  	response = jQuery.parseJSON( response.data );
 				if (response.status = 'Success') {
 
 					disablePopup('popupaccountviewcard_delete');
@@ -311,9 +322,17 @@ function accountAddCard() {
 					url : stripeActionUrl,
 					dataType : 'jsonp',
 					data : 'json=' + data,
+					timeout : 10000,
+					error : function(response, textStatus, errorThrown) {
+						if(textStatus === 'timeout')
+					    {     
+							jerror('Card adding failure. Please check card\'s information.');
+							$('.stripe-payment').fadeOut(500);
+					    }
+						
+					},
 					success : function(response) {
-						// debugging
-						console.log(response);
+					  	response = jQuery.parseJSON( response.data );
 						if (response.status == 'Success') {
 							jsuccess("Your card added successfully");
 							disablePopup('popupaccountaddcard');
@@ -323,10 +342,6 @@ function accountAddCard() {
 							pushReloadItem('reload_buy_credit_cards');
 						} else
 							jerror(response.message);
-						$('.stripe-payment').fadeOut(500);
-					},
-					error : function() {
-						jerror('Card adding failure. Please check card\'s information.');
 						$('.stripe-payment').fadeOut(500);
 					}
 				});
@@ -382,6 +397,7 @@ function accountViewCard() {
 						dataType : 'jsonp',
 						data : 'json=' + data,
 						success : function(response) {
+						  	response = jQuery.parseJSON( response.data );
 							if (response.status == 'Success') {
 								var card_info = response.card;
 								var first_name = card_info.name.split(' ')[0];
@@ -436,6 +452,7 @@ function accountViewCard() {
 						dataType : 'jsonp',
 						data : 'json=' + data,
 						success : function(response) {
+						  	response = jQuery.parseJSON( response.data );
 							if (response.status == 'Success') {
 								var card_info = response.card;
 								var first_name = card_info.name.split(' ')[0];
@@ -531,15 +548,22 @@ function accountUpdateCard() {
 					url : stripeActionUrl,
 					dataType : 'jsonp',
 					data : 'json=' + data,
+					timeout : 10000,
+					error : function(response, textStatus, errorThrown) {
+						if(textStatus === 'timeout')
+					    {     
+							jerror('Card update failure. Please check card\'s information.');
+							$('#loadingpopup').fadeOut(500);
+					    }
+						
+					},
 					success : function(response) {
+					  	response = jQuery.parseJSON( response.data );
 						$('#loadingpopup').fadeOut(500);
 						if (response.status == 'Success')
 							jsuccess('Card information updated');
 						else
 							jerror(response.message);
-					},
-					error : function() {
-						jerror('Card adding failure. Please check card\'s information.');
 					}
 				});
 	}
@@ -576,7 +600,7 @@ function getAccountPlans() {
 				dataType : 'jsonp',
 				data : 'json=' + data,
 				success : function(response) {
-					console.log("response" + response);
+				  	response = jQuery.parseJSON( response.data );
 					if (response.status == 'Success') {
 						var account_stripe = response.customer;
 						if (account_stripe.exist == 1) {
@@ -599,7 +623,7 @@ function getAccountPlans() {
 									.html("You don't have an account.  Add a payment method and sign up for a plan.");
 					} else
 						jAccountPlans
-								.html("'You have not activated a plan - Use the subscriptions tab to select a plan");
+								.html("You have not activated a plan - Use the subscriptions tab to select a plan");
 					$('#loadingpopup').fadeOut(500);
 				}
 			});
