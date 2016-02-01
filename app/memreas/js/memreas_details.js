@@ -470,12 +470,14 @@ function showEventDetail(eventId, userId) {
 							item['title'] = _media_type; 
 							item['type'] = "video/*"; 
 							item['poster'] = _media_thumbnail_large; 
+                                                        item['description'] = eventId + "_" + mediaId;
 							item['sources'] = [{href:_media_url_hls, type: "application/x-mpegurl"}, {href:_media_url_web, type: "video/mp4"}]; 
 						} else {
 							item['title'] = _media_type; 
 							item['type'] = "image/jpeg"; 
 							item['href'] = main_media_url; 
-							item['poster'] = main_media_url; 
+							item['poster'] = main_media_url;
+                                                        item['description'] = eventId + "_" + mediaId;
 						}
 						//console.log("item" + JSON.stringify(item));
 						objArr2.push(item);  
@@ -484,7 +486,7 @@ function showEventDetail(eventId, userId) {
                         console.log("objArr2" + JSON.stringify(objArr2));
 	                blueimp.Gallery( objArr2, {container: '#blueimp-video-carousel-gallery', carousel: 'true' } );
                         blueimp.Gallery( objArr2, { onslide:function(){
-                                alert('Working on Progress');
+                                alert( item['description']);
                         }, container: '#blueimp-video-carousel-gallery-detail', carousel: 'true' } );
 
                             
