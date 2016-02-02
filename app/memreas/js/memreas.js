@@ -119,15 +119,24 @@ function fetchMyMemreas() {
                         console.log('Media Event Length: '+event_media_count);
                         var event = events[i].innerHTML;
                        
-                        var StrMedia="<ul>";
+                        var StrMedia='<ul class="event-pics">';
                         for( var j=0; j < event_media_count; j++){
                              var event_medi=event_media[j];
                              var event_media_image=getValueFromXMLTag(event_medi,'event_media_448x306');
                              var _event_media_type_=getValueFromXMLTag(event_medi,'event_media_type');
+                              var eventId = $(event).filter('event_id').html();
                              if(_event_media_type_ =='image'){
-                                 StrMedia +='<li class="image"><img src="'+removeCdataCorrectLink(event_media_image)+'"  style="width:100%"/></li>';
+                                 StrMedia +='<li class="image"><a href="javascript:;" onclick="showEventDetail(\''
+                                + eventId
+                                + '\', \''
+                                + user_id
+                                + '\');" style="cursor: pointer;"><img src="'+removeCdataCorrectLink(event_media_image)+'"  style=""/></a></li>';
                              }else if(_event_media_type_ =='video'){
-                                 StrMedia +='<li class="video"><img src="'+removeCdataCorrectLink(event_media_image)+'"  style="width:100%"/></li>';
+                                 StrMedia +='<li class="video"><a href="javascript:;" onclick="showEventDetail(\''
+                                + eventId
+                                + '\', \''
+                                + user_id
+                                + '\');" style="cursor: pointer;"><img src="'+removeCdataCorrectLink(event_media_image)+'"  style=""/></a></li>';
                              }
                              console.log('Each Event:'+removeCdataCorrectLink(event_media_image));
                              //StrMedia +='<li><img src="'+removeCdataCorrectLink(event_media_image)+'"  style="width:100%"/></li>';
@@ -138,7 +147,7 @@ function fetchMyMemreas() {
                         var like_count = $(event).filter('like_count').html();
                         var comment_count = $(event).filter('comment_count')
                                 .html();
-                        var eventId = $(event).filter('event_id').html();
+                       
                         
                         //var event_media_image=$(event_medi).filter('event_media_448x306').html();
                         var event_name = $(event).filter('event_name').html();
@@ -167,7 +176,8 @@ function fetchMyMemreas() {
                                 + '<div id="viewport" onselectstart="return false;">'
                                 + '<div id="myEvent-'
                                 + eventId
-                                + '" class="swipeclass"><img src="/memreas/img/loading-line.gif" class="loading-small" />'
+                                + '" class="swipeclass">'
+                                +StrMedia
                                 + '</div>'
                                 + '</div>'
                                 + '<div id="viewport" onselectstart="return false;">'
@@ -177,7 +187,7 @@ function fetchMyMemreas() {
                                 + '</div>'
                                 + '</div>'
                                 + '</div>';
-                        element +=StrMedia;
+                        //element +=StrMedia;
                         jTarget_object.append(element);
 
 

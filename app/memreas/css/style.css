@@ -4294,4 +4294,32 @@ height: 549px !important;
         float: none;
 }
 .hidden-memreas{display:none !important;}
+ul.event-pics li {
+	width: 180px;
+	border: 1px #d6d6d6 solid;
+	float: left;
+	margin: 10px;
+	position: relative;
+	height: 98px;
+	overflow: hidden;
+	background: #112A4B;
+}
 
+ul.event-pics li img, .aviary-thumbs img, .galleries-location img {
+	height: auto;
+	width: 180px;
+	cursor: pointer;
+	max-width: 100%;
+	max-height: 100%;
+	height: 100%;
+}
+
+#memreas-detail-tab1 ul.pics li img, #share_medialist img {
+	width: 100%;
+}
+
+ul.event-pics li a {
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+}
