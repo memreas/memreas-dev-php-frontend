@@ -377,7 +377,8 @@ li.working-upload .progress-text {
 }
 
 .myMemreas, .friendMemreas, .publicMemreas {
-	height: 400px;
+/*	height: 400px;*/
+height: 750px;
 }
 
 img.loading-small {
