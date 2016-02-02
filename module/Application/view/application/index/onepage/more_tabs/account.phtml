@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Copyright (C) 2015 memreas llc. - All Rights Reserved
  * Unauthorized copying of this file, via any medium is strictly prohibited
@@ -7,401 +7,440 @@
 ?>
 
 <div class="akordeon-item account-profile-tab">
-    <div class="akordeon-item-head">
-        <div class="akordeon-item-head-container">
-            <div class="akordeon-heading">
-                profile
-            </div>
-        </div>
-    </div>
-    <div class="akordeon-item-body">
-        <div class="akordeon-item-content">
-            <div class="button-holder">
-                <input name="account_email" type="text" class="more-input" value="email" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'email')this.value = '';" readonly />
-                <input name="account_alternate_email" type="text" class="more-input" value="alternate email" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'alternate email')this.value = '';" />
-                <div class="clear"></div>
-                <div class="account-gender">
-                    <label class="label_text2"><input type="radio" id="gender-male" name="gender_choose" class="regular-radio" value="male" /><label for="gender-male"></label>Male</label>
-                    <label class="label_text2"><input type="radio" id="gender-female" name="gender_choose" class="regular-radio" value="female" /><label for="gender-female"></label>Female</label>
-                </div>
-                <label class="label_text">Date of birth</label><br/><input name="account_dob" id="account_dob" type="text" class="more-input date-picker" value="date of birth" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'date of birth')this.value = '';" readonly /><br/>
-                <a class="black_btn_skin f-center" href="javascript:;" onclick="saveUserDetail();">ok</a>
-                <a class="black_btn_skin" href="#">cancel</a>
-            </div>
-        </div>
-    </div>
+	<div class="akordeon-item-head">
+		<div class="akordeon-item-head-container">
+			<div class="akordeon-heading">profile</div>
+		</div>
+	</div>
+	<div class="akordeon-item-body">
+		<div class="akordeon-item-content">
+			<div class="button-holder">
+
+				<ul class="share_memreas_details account_form">
+					<li><label class="textfield_names">profile email</label> <input
+						name="account_email" type="text" class="more-input" value="email"
+						onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue"
+						onFocus="if(this.value == 'email')this.value = '';" readonly /></li>
+					<li><label class="textfield_names">alternative email:</label> <input
+						name="account_alternate_email" type="text" class="more-input"
+						value="alternate email"
+						onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue"
+						onFocus="if(this.value == 'alternate email')this.value = '';" />
+					<li><label class="textfield_names">gender (optional):</label> <input
+						type="radio" id="gender-male" name="gender_choose"
+						class="regular-radio" value="male" />
+						<label class="textfield_names">male:</label>
+						<input type="radio" id="gender-female"
+							name="gender_choose" class="regular-radio" value="female" />
+							<label class="textfield_names">female:</label>
+					<li><label class="textfield_names">date of birth:</label> <input
+						name="account_dob" id="account_dob" type="text"
+						class="more-input date-picker" value="date of birth"
+						onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue"
+						onFocus="if(this.value == 'date of birth')this.value = '';"
+						readonly /></li>
+				</ul>
+				<a class="black_btn_skin f-center" href="javascript:;"
+					onclick="saveUserDetail();">ok</a> <a class="black_btn_skin"
+					href="#">cancel</a>
+			</div>
+		</div>
+	</div>
 </div>
 <div class="akordeon-item account-profile-tab change-password">
-    <div class="akordeon-item-head">
-        <div class="akordeon-item-head-container">
-            <div class="akordeon-heading">
-                change password
-            </div>
-        </div>
-    </div>
-    <div class="akordeon-item-body">
-        <div class="akordeon-item-content">
-            <div class="button-holder">
-                <div class="group">
-                    <label for="existing-password">existing password</label>
-
-                    <input name="account_old_password" id="existing-password" type="password" class="more-input" />
-                </div>
-                <div class="group">
-                    <label for="change-password">new password</label>
-                    <input name="account_password" id="change-password" type="password" class="more-input" value="password" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'password')this.value = '';" />
-                </div>
-                <div class="group">
-                    <label for="change-cpassword">confirm password</label>
-                    <input name="account_repassword" id="change-cpassword" type="password" class="more-input" value="password" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'password')this.value = '';" />
-                </div>
-                <a class="black_btn_skin f-center" href="javascript:;" onclick="saveChangePassword();">ok</a>
-                <a class="black_btn_skin" href="#">cancel</a>
-            </div>
-        </div>
-    </div>
+	<div class="akordeon-item-head">
+		<div class="akordeon-item-head-container">
+			<div class="akordeon-heading">change password</div>
+		</div>
+	</div>
+	<div class="akordeon-item-body">
+		<div class="akordeon-item-content">
+			<div class="button-holder">
+				<div class="group">
+					<label for="existing-password" class="label_text2">current password</label>
+					<input name="account_old_password" id="existing-password"
+						type="password" class="more-input" />
+				</div>
+				<div class="group">
+					<label for="change-password" class="label_text2">new password</label>
+					<input name="account_password" id="change-password" type="password"
+						class="more-input" value="password"
+						onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue"
+						onFocus="if(this.value == 'password')this.value = '';" />
+				</div>
+				<div class="group">
+					<label for="change-cpassword" class="label_text2">confirm password</label>
+					<input name="account_repassword" id="change-cpassword"
+						type="password" class="more-input" value="password"
+						onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue"
+						onFocus="if(this.value == 'password')this.value = '';" />
+				</div>
+				<a class="black_btn_skin f-center" href="javascript:;"
+					onclick="saveChangePassword();">ok</a> <a class="black_btn_skin"
+					href="#">cancel</a>
+			</div>
+		</div>
+	</div>
 </div>
 <div class="akordeon-item account-profile-tab">
-    <div class="akordeon-item-head">
-        <div class="akordeon-item-head-container">
-            <div class="akordeon-heading">
-                Account detail
-            </div>
-        </div>
-    </div>
-    <div class="akordeon-item-body">
-        <div class="akordeon-item-content">
-            <div class="button-holder morepage-account-detail">
-                <div class="group">
-                    <label for="change-password">Your account types:</label>
-                    <span class="morepage-account-type">...</span>
-                </div>
-                <div class="group">
-                    <label for="change-password">Buyer's balance:</label>
-                    <span class="morepage-account-buyerbalance">...</span>
-                </div>
-                <div class="group">
-                    <label for="change-password">Seller's balance:</label>
-                    <span class="morepage-account-sellerbalance">...</span>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="akordeon-item-head">
+		<div class="akordeon-item-head-container">
+			<div class="akordeon-heading">account detail</div>
+		</div>
+	</div>
+	<div class="akordeon-item-body">
+		<div class="akordeon-item-content">
+			<div class="button-holder morepage-account-detail">
+				<div class="group">
+					<label for="change-password">Your account types:</label> <span
+						class="morepage-account-type">...</span>
+				</div>
+				<div class="group">
+					<label for="change-password">Buyer's balance:</label> <span
+						class="morepage-account-buyerbalance">...</span>
+				</div>
+				<div class="group">
+					<label for="change-password">Seller's balance:</label> <span
+						class="morepage-account-sellerbalance">...</span>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 <div class="akordeon-item">
-    <div class="akordeon-item-head account-plans-tab">
-        <div class="akordeon-item-head-container">
-            <div class="akordeon-heading">
-                plans
-            </div>
-        </div>
-    </div>
-    <div class="akordeon-item-body">
-        <div class="akordeon-item-content">
-            <div class="button-holder">
-                 <ul class="share_memreas_details account-plans preload-null">
-                    <li>
-                        <label class="label_text2"><input type="radio" id="subscription-plan-1" name="radio-4-set" class="regular-radio" /><label for="subscription-plan-1"></label>Plan A | Description for plan A - $12</label>
-                    </li>
-                    <li>
-                        <label class="label_text2"><input type="radio" id="subscription-plan-2" name="radio-4-set" class="regular-radio" /><label for="subscription-plan-2"></label>Plan B | Description for plan B - $24 </label>
-                    </li>
-                    <li>
-                        <label class="label_text2"><input type="radio" id="subscription-plan-3" name="radio-4-set" class="regular-radio" checked /><label for="subscription-plan-3"></label>Plan C | Description for plan C - $48</label>
-                    </li>
-                    <li>
-                        <label class="label_text2"><input type="radio" id="subscription-plan-4" name="radio-4-set" class="regular-radio" checked /><label for="subscription-plan-4"></label>Plan D | Description for plan C - $58</label>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
+	<div class="akordeon-item-head account-plans-tab">
+		<div class="akordeon-item-head-container">
+			<div class="akordeon-heading">my subscription</div>
+		</div>
+	</div>
+	<div class="akordeon-item-body">
+		<div class="akordeon-item-content">
+			<div class="button-holder">
+				<ul class="share_memreas_details account-plans preload-null">
+					<li><label class="label_text2"><input type="radio"
+							id="subscription-plan-1" name="radio-4-set" class="regular-radio" /><label
+							for="subscription-plan-1"></label>Plan A | Description for plan A
+							- $12</label></li>
+					<li><label class="label_text2"><input type="radio"
+							id="subscription-plan-2" name="radio-4-set" class="regular-radio" /><label
+							for="subscription-plan-2"></label>Plan B | Description for plan B
+							- $24 </label></li>
+					<li><label class="label_text2"><input type="radio"
+							id="subscription-plan-3" name="radio-4-set" class="regular-radio"
+							checked /><label for="subscription-plan-3"></label>Plan C |
+							Description for plan C - $48</label></li>
+					<li><label class="label_text2"><input type="radio"
+							id="subscription-plan-4" name="radio-4-set" class="regular-radio"
+							checked /><label for="subscription-plan-4"></label>Plan D |
+							Description for plan C - $58</label></li>
+				</ul>
+			</div>
+		</div>
+	</div>
 </div>
 <div class="akordeon-item account-card-tab">
-    <div class="akordeon-item-head account-card-section">
-        <div class="akordeon-item-head-container">
-            <div class="akordeon-heading">
-                payment methods
-            </div>
-        </div>
-    </div>
-    <div class="akordeon-item-body">
-        <div class="akordeon-item-content">
-            <div class="button-holder">
-                <ul class="share_memreas_details account-payment preload-null">
-                    <li>
-                        <label class="label_text2"><input type="radio" id="subscription-card-1" name="radio-4-set" class="regular-radio" />
-                            <label for="subscription-plan-1"></label>Card A | xxxxxxxxxxxx7576 01/2016</label>
-                    </li>
-                    <li>
-                        <label class="label_text2"><input type="radio" id="subscription-card-2" name="radio-4-set" class="regular-radio" />
-                            <label for="subscription-plan-2"></label>Card A | xxxxxxxxxxxx8547 06/2016</label>
-                    </li>
-                </ul>
-                <div style="clear: both;"></div>
-                <a class="black_btn_skin" href="javascript:;" onclick="accountAddCardPopup();" style="margin-top: 20px; display: inline-block;">Add</a>
-                <a class="black_btn_skin account-card-functions hide-onload" href="javascript:;" onclick="accountViewCard();" style="margin-top: 20px; display: inline-block;">View</a>
-                <a class="black_btn_skin account-card-functions hide-onload" href="javascript:;" onclick="accountRemoveCard(false);" style="margin-top: 20px; display: inline-block;">Delete</a>
-            </div>
-        </div>
-    </div>
+	<div class="akordeon-item-head account-card-section">
+		<div class="akordeon-item-head-container">
+			<div class="akordeon-heading">payment methods</div>
+		</div>
+	</div>
+	<div class="akordeon-item-body">
+		<div class="akordeon-item-content">
+			<div class="button-holder">
+				<ul class="share_memreas_details account-payment preload-null">
+					<li><label class="label_text2"><input type="radio"
+							id="subscription-card-1" name="radio-4-set" class="regular-radio" />
+							<label for="subscription-plan-1"></label>Card A |
+							xxxxxxxxxxxx7576 01/2016</label></li>
+					<li><label class="label_text2"><input type="radio"
+							id="subscription-card-2" name="radio-4-set" class="regular-radio" />
+							<label for="subscription-plan-2"></label>Card A |
+							xxxxxxxxxxxx8547 06/2016</label></li>
+				</ul>
+				<div style="clear: both;"></div>
+				<a class="black_btn_skin" href="javascript:;"
+					onclick="accountAddCardPopup();"
+					style="margin-top: 20px; display: inline-block;">Add</a> <a
+					class="black_btn_skin account-card-functions hide-onload"
+					href="javascript:;" onclick="accountViewCard();"
+					style="margin-top: 20px; display: inline-block;">View</a> <a
+					class="black_btn_skin account-card-functions hide-onload"
+					href="javascript:;" onclick="accountRemoveCard(false);"
+					style="margin-top: 20px; display: inline-block;">Delete</a>
+			</div>
+		</div>
+	</div>
 </div>
 <div class="akordeon-item">
-    <div class="akordeon-item-head member-trasnsaction-head">
-        <div class="akordeon-item-head-container">
-            <div class="akordeon-heading">
-                Transaction history
-            </div>
-        </div>
-    </div>
-    <div class="akordeon-item-body">
-        <div class="akordeon-item-content">
-            <ul class="scrollpopup member-transaction">
-                <table cellpadding="0" border="0" width="100%">
-                    <thead>
-                        <tr class="transaction-header">
-                            <td class="transaction-no">No.</td>
-                            <td class="transaction-type">Transaction type</td>
-                            <td class="transaction-detail">Transaction detail</td>
-                            <td class="transaction-begin-status">Status</td>
-                            <td class="transaction-amount">Amount</td>
-                            <td class="transaction-ending-currency">Currency</td>
-                            <td class="transaction-date">Transaction date</td>
-                        </tr>
-                    </thead>
-                    <tbody class="transaction-details">
-                        <tr class="transaction-row">
-                            <td class="transaction-no">1</td>
-                            <td class="transaction-type">add value</td>
-                            <td class="transaction-detail">add value detail</td>
-                            <td class="transaction-begin-status">0</td>
-                            <td class="transaction-amount">1</td>
-                            <td class="transaction-ending-currency">USD</td>
-                            <td class="transaction-date">11/11/2011</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </ul>
-        </div>
-    </div>
+	<div class="akordeon-item-head member-trasnsaction-head">
+		<div class="akordeon-item-head-container">
+			<div class="akordeon-heading">transaction history</div>
+		</div>
+	</div>
+	<div class="akordeon-item-body">
+		<div class="akordeon-item-content">
+			<ul class="scrollpopup member-transaction">
+				<table cellpadding="0" border="0" width="100%">
+					<thead>
+						<tr class="transaction-header">
+							<td class="transaction-no">No.</td>
+							<td class="transaction-type">Transaction type</td>
+							<td class="transaction-detail">Transaction detail</td>
+							<td class="transaction-begin-status">Status</td>
+							<td class="transaction-amount">Amount</td>
+							<td class="transaction-ending-currency">Currency</td>
+							<td class="transaction-date">Transaction date</td>
+						</tr>
+					</thead>
+					<tbody class="transaction-details">
+						<tr class="transaction-row">
+							<td class="transaction-no">1</td>
+							<td class="transaction-type">add value</td>
+							<td class="transaction-detail">add value detail</td>
+							<td class="transaction-begin-status">0</td>
+							<td class="transaction-amount">1</td>
+							<td class="transaction-ending-currency">USD</td>
+							<td class="transaction-date">11/11/2011</td>
+						</tr>
+					</tbody>
+				</table>
+			</ul>
+		</div>
+	</div>
 </div>
 <div class="akordeon-item">
-    <div class="akordeon-item-head">
-        <div class="akordeon-item-head-container">
-            <div class="akordeon-heading">
-                version
-            </div>
-        </div>
-    </div>
-    <div class="akordeon-item-body">
-        <div class="akordeon-item-content">
-            <ul class="scrollpopup member-transaction">
+	<div class="akordeon-item-head">
+		<div class="akordeon-item-head-container">
+			<div class="akordeon-heading">version</div>
+		</div>
+	</div>
+	<div class="akordeon-item-body">
+		<div class="akordeon-item-content">
+			<ul class="scrollpopup member-transaction">
                 application version: <?php echo $app_version; ?>
             </ul>
-        </div>
-    </div>
+		</div>
+	</div>
 </div>
 <div id="popupaccountaddcard" class="popups">
-    <a id="popupaccountaddcardClose" onClick="disablePopup('popupaccountaddcard');" class='popupClose'>x</a>
-    <h2>Add new card</h2>
-    <ul id="content_1" class="scrollpopup accountAddCardForm">
-        <li>
-            <label class="textfield_names">First name*</label>
-            <input name="input" type="text" id="addcard_fname" class="" value="first name" default="first name" onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#A0A0A0'); }" onFocus="if(this.value == 'first name'){ this.value = ''; $(this).css('color', '#000'); }"/>
-        </li>
-        <li>
-            <label class="textfield_names">Last name*</label>
-            <input name="input" type="text" id="addcard_lname" class="" value="last name" default="last name" onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }" onFocus="if(this.value == 'last name'){ this.value = ''; $(this).css('color', '#000'); }"/>
-        </li>
-         <li>
-            <label class="textfield_names">Address 1*</label>
-            <input name="input" type="text" id="addcard_address1" class="" value="Address line 1" default="Address line 1" onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }" onFocus="if(this.value == 'Address line 1'){ this.value = ''; $(this).css('color', '#000'); }"/>
-        </li>
-        <li>
-            <label class="textfield_names">Address 2</label>
-            <input name="input" type="text" id="addcard_address2" class="" value="Address line 2" default="Address line 2" onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }" onFocus="if(this.value == 'Address line 2'){ this.value = ''; $(this).css('color', '#000'); }"/>
-        </li>
-        <li>
-            <label class="textfield_names">City*</label>
-            <input name="input" type="text" id="addcard_city" class="" value="City" default="City" onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }" onFocus="if(this.value == 'City'){ this.value = ''; $(this).css('color', '#000'); }"/>
-        </li>
-        <li>
-            <label class="textfield_names">State*</label>
-            <input name="input" type="text" id="addcard_state" class="" value="State" default="State" onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }" onFocus="if(this.value == 'State'){ this.value = ''; $(this).css('color', '#000'); }"/>
-        </li>
-        <li>
-            <label class="textfield_names">Zip*</label>
-            <input name="input" type="text" id="addcard_zip" class="" value="Zip" default="Zip" onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }" onFocus="if(this.value == 'Zip'){ this.value = ''; $(this).css('color', '#000'); }"/>
-        </li>
-        <li>
-            <label class="textfield_names">Card type*</label>
-            <select name="addcard_cctype" id="addcard_cctype">
-                <option value="">-Choose-</option>
-                <option value="visa">Visa Card</option>
-                <option value="master">Master Card</option>
-                <option value="discover">Discover Card</option>
-                <option value="amex">Amex Card</option>
-            </select>
-        </li>
-        <li>
-            <label class="textfield_names">Card no.*</label>
-            <input name="input" type="text" id="addcard_ccnum" class="" value="Card number" default="Card number" onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }" onFocus="if(this.value == 'Card number'){ this.value = ''; $(this).css('color', '#000'); }"/>
-        </li>
-        <li>
-            <label class="textfield_names">Exp mon.*</label>
-            <select name="addcard_expmonth" id="addcard_expmonth">
-                <option value="">-Choose-</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-            </select>
-        </li>
-        <li>
-            <label class="textfield_names">Exp year*</label>
-            <select name="addcard_expyear" id="addcard_expyear">
-                <option value="">-Choose-</option>
-                <option value="2014">2014</option>
-                <option value="2015">2015</option>
-                <option value="2016">2016</option>
-                <option value="2017">2017</option>
-                <option value="2018">2018</option>
-                <option value="2019">2019</option>
-                <option value="2020">2020</option>
-                <option value="2021">2021</option>
-                <option value="2022">2022</option>
-                <option value="2023">2023</option>
-                <option value="2024">2024</option>
-                <option value="2025">2025</option>
-                <option value="2026">2026</option>
-            </select>
-        </li>
-        <li>
-            <label class="textfield_names">Card CVC*</label>
-            <input name="input" type="text" id="addcard_ccv" class="" value="Card code" onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }" onFocus="if(this.value == 'Card code'){ this.value = ''; $(this).css('color', '#000'); }"/>
-        </li>
-    </ul>
-    <a class="black_btn_skin f-left" href="javascript:;" onclick="accountAddCard();">ok</a> <a class="black_btn_skin f-right" href="javascript:disablePopup('popupaccountaddcard');">cancel</a>
+	<a id="popupaccountaddcardClose"
+		onClick="disablePopup('popupaccountaddcard');" class='popupClose'>x</a>
+	<h2>Add new card</h2>
+	<ul id="content_1" class="scrollpopup accountAddCardForm">
+		<li><label class="textfield_names">First name*</label> <input
+			name="input" type="text" id="addcard_fname" class=""
+			value="first name" default="first name"
+			onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#A0A0A0'); }"
+			onFocus="if(this.value == 'first name'){ this.value = ''; $(this).css('color', '#000'); }" />
+		</li>
+		<li><label class="textfield_names">Last name*</label> <input
+			name="input" type="text" id="addcard_lname" class=""
+			value="last name" default="last name"
+			onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }"
+			onFocus="if(this.value == 'last name'){ this.value = ''; $(this).css('color', '#000'); }" />
+		</li>
+		<li><label class="textfield_names">Address 1*</label> <input
+			name="input" type="text" id="addcard_address1" class=""
+			value="Address line 1" default="Address line 1"
+			onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }"
+			onFocus="if(this.value == 'Address line 1'){ this.value = ''; $(this).css('color', '#000'); }" />
+		</li>
+		<li><label class="textfield_names">Address 2</label> <input
+			name="input" type="text" id="addcard_address2" class=""
+			value="Address line 2" default="Address line 2"
+			onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }"
+			onFocus="if(this.value == 'Address line 2'){ this.value = ''; $(this).css('color', '#000'); }" />
+		</li>
+		<li><label class="textfield_names">City*</label> <input name="input"
+			type="text" id="addcard_city" class="" value="City" default="City"
+			onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }"
+			onFocus="if(this.value == 'City'){ this.value = ''; $(this).css('color', '#000'); }" />
+		</li>
+		<li><label class="textfield_names">State*</label> <input name="input"
+			type="text" id="addcard_state" class="" value="State" default="State"
+			onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }"
+			onFocus="if(this.value == 'State'){ this.value = ''; $(this).css('color', '#000'); }" />
+		</li>
+		<li><label class="textfield_names">Zip*</label> <input name="input"
+			type="text" id="addcard_zip" class="" value="Zip" default="Zip"
+			onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }"
+			onFocus="if(this.value == 'Zip'){ this.value = ''; $(this).css('color', '#000'); }" />
+		</li>
+		<li><label class="textfield_names">Card type*</label> <select
+			name="addcard_cctype" id="addcard_cctype">
+				<option value="">-Choose-</option>
+				<option value="visa">Visa Card</option>
+				<option value="master">Master Card</option>
+				<option value="discover">Discover Card</option>
+				<option value="amex">Amex Card</option>
+		</select></li>
+		<li><label class="textfield_names">Card no.*</label> <input
+			name="input" type="text" id="addcard_ccnum" class=""
+			value="Card number" default="Card number"
+			onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }"
+			onFocus="if(this.value == 'Card number'){ this.value = ''; $(this).css('color', '#000'); }" />
+		</li>
+		<li><label class="textfield_names">Exp mon.*</label> <select
+			name="addcard_expmonth" id="addcard_expmonth">
+				<option value="">-Choose-</option>
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+				<option value="5">5</option>
+				<option value="6">6</option>
+				<option value="7">7</option>
+				<option value="8">8</option>
+				<option value="9">9</option>
+				<option value="10">10</option>
+				<option value="11">11</option>
+				<option value="12">12</option>
+		</select></li>
+		<li><label class="textfield_names">Exp year*</label> <select
+			name="addcard_expyear" id="addcard_expyear">
+				<option value="">-Choose-</option>
+				<option value="2016">2016</option>
+				<option value="2017">2017</option>
+				<option value="2018">2018</option>
+				<option value="2019">2019</option>
+				<option value="2020">2020</option>
+				<option value="2021">2021</option>
+				<option value="2022">2022</option>
+				<option value="2023">2023</option>
+				<option value="2024">2024</option>
+				<option value="2025">2025</option>
+				<option value="2026">2026</option>
+		</select></li>
+		<li><label class="textfield_names">security code*</label> <input
+			name="input" type="text" id="addcard_ccv" class="" value="Card code"
+			onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }"
+			onFocus="if(this.value == 'Card code'){ this.value = ''; $(this).css('color', '#000'); }" />
+		</li>
+	</ul>
+	<a class="black_btn_skin f-left" href="javascript:;"
+		onclick="accountAddCard();">ok</a> <a class="black_btn_skin f-right"
+		href="javascript:disablePopup('popupaccountaddcard');">cancel</a>
 </div>
-<div id="bgpopupaccountaddcard" class="backgroundPopup" onclick="disablePopup('popupaccountaddcard');"></div>
+<div id="bgpopupaccountaddcard" class="backgroundPopup"
+	onclick="disablePopup('popupaccountaddcard');"></div>
 
 <div id="popupaccountviewcard" class="popups">
-    <a id="popupaccountviewcardClose" onClick="disablePopup('popupaccountviewcard');" class='popupClose'>x</a>
-    <h2>Card information</h2>
-    <ul id="content_1" class="scrollpopup accountEditCardForm">
-        <li>
-            <input type="hidden" name="card_id" id="card_id" value="">
-            <label class="textfield_names">First name*</label>
-            <input name="input" type="text" id="addcard_fname" class="" value="first name" default="first name" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'first name')this.value = '';"/>
-        </li>
-        <li>
-            <label class="textfield_names">Last name*</label>
-            <input name="input" type="text" id="addcard_lname" class="" value="last name" default="last name" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'last name')this.value = '';"/>
-        </li>
-         <li>
-            <label class="textfield_names">Address 1*</label>
-            <input name="input" type="text" id="addcard_address1" class="" value="Address line 1" default="Address line 1" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Address line 1')this.value = '';"/>
-        </li>
-        <li>
-            <label class="textfield_names">Address 2</label>
-            <input name="input" type="text" id="addcard_address2" class="" value="Address line 2" default="Address line 2" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Address line 2')this.value = '';"/>
-        </li>
-        <li>
-            <label class="textfield_names">City*</label>
-            <input name="input" type="text" id="addcard_city" class="" value="City" default="City" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'City')this.value = '';"/>
-        </li>
-        <li>
-            <label class="textfield_names">State*</label>
-            <input name="input" type="text" id="addcard_state" class="" value="State" default="State" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'State')this.value = '';"/>
-        </li>
-        <li>
-            <label class="textfield_names">Zip*</label>
-            <input name="input" type="text" id="addcard_zip" class="" value="Zip" default="Zip" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Zip')this.value = '';"/>
-        </li>
-        <li>
-            <label class="textfield_names">Card type*</label>
-            <input name="addcard_cctype" id="addcard_cctype" type="text" />
-        </li>
-        <li>
-            <label class="textfield_names">Card no.*</label>
-            <input name="input" type="text" id="addcard_ccnum" class="" value="Card number" default="Card number" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Card number')this.value = '';"/>
-        </li>
-        <li>
-            <label class="textfield_names">Exp mon.*</label>
-            <input name="addcard_expmonth" id="addcard_expmonth" type="text" />
-        </li>
-        <li>
-            <label class="textfield_names">Exp year*</label>
-            <input name="addcard_expyear" id="addcard_expyear" type="text" />
-        </li>
-        <li>
-            <label class="textfield_names">Card CVC*</label>
-            <input name="input" type="text" id="addcard_ccv" class="" value="Card code" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Card code')this.value = '';"/>
-        </li>
-    </ul>
-    <a class="black_btn_skin f-left" href="javascript:;" onclick="accountUpdateCard();">Update</a> <a class="black_btn_skin f-right" href="javascript:disablePopup('popupaccountviewcard');">close</a>
+	<a id="popupaccountviewcardClose"
+		onClick="disablePopup('popupaccountviewcard');" class='popupClose'>x</a>
+	<h2>Card information</h2>
+	<ul id="content_1" class="scrollpopup accountEditCardForm">
+		<li><input type="hidden" name="card_id" id="card_id" value=""> <label
+			class="textfield_names">First name*</label> <input name="input"
+			type="text" id="addcard_fname" class="" value="first name"
+			default="first name"
+			onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue"
+			onFocus="if(this.value == 'first name')this.value = '';" /></li>
+		<li><label class="textfield_names">Last name*</label> <input
+			name="input" type="text" id="addcard_lname" class=""
+			value="last name" default="last name"
+			onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue"
+			onFocus="if(this.value == 'last name')this.value = '';" /></li>
+		<li><label class="textfield_names">Address 1*</label> <input
+			name="input" type="text" id="addcard_address1" class=""
+			value="Address line 1" default="Address line 1"
+			onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue"
+			onFocus="if(this.value == 'Address line 1')this.value = '';" /></li>
+		<li><label class="textfield_names">Address 2</label> <input
+			name="input" type="text" id="addcard_address2" class=""
+			value="Address line 2" default="Address line 2"
+			onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue"
+			onFocus="if(this.value == 'Address line 2')this.value = '';" /></li>
+		<li><label class="textfield_names">City*</label> <input name="input"
+			type="text" id="addcard_city" class="" value="City" default="City"
+			onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue"
+			onFocus="if(this.value == 'City')this.value = '';" /></li>
+		<li><label class="textfield_names">State*</label> <input name="input"
+			type="text" id="addcard_state" class="" value="State" default="State"
+			onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue"
+			onFocus="if(this.value == 'State')this.value = '';" /></li>
+		<li><label class="textfield_names">Zip*</label> <input name="input"
+			type="text" id="addcard_zip" class="" value="Zip" default="Zip"
+			onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue"
+			onFocus="if(this.value == 'Zip')this.value = '';" /></li>
+		<li><label class="textfield_names">Card type*</label> <input
+			name="addcard_cctype" id="addcard_cctype" type="text" /></li>
+		<li><label class="textfield_names">Card no.*</label> <input
+			name="input" type="text" id="addcard_ccnum" class=""
+			value="Card number" default="Card number"
+			onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue"
+			onFocus="if(this.value == 'Card number')this.value = '';" /></li>
+		<li><label class="textfield_names">Exp mon.*</label> <input
+			name="addcard_expmonth" id="addcard_expmonth" type="text" /></li>
+		<li><label class="textfield_names">Exp year*</label> <input
+			name="addcard_expyear" id="addcard_expyear" type="text" /></li>
+		<li><label class="textfield_names">Card CVC*</label> <input
+			name="input" type="text" id="addcard_ccv" class="" value="Card code"
+			onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue"
+			onFocus="if(this.value == 'Card code')this.value = '';" /></li>
+	</ul>
+	<a class="black_btn_skin f-left" href="javascript:;"
+		onclick="accountUpdateCard();">Update</a> <a
+		class="black_btn_skin f-right"
+		href="javascript:disablePopup('popupaccountviewcard');">close</a>
 </div>
 <div id="bgpopupaccountviewcard" class="backgroundPopup"></div>
 
 <div id="popupaccountviewcard_delete" class="popups">
-    <a id="popupaccountviewcardClose" onClick="disablePopup('popupaccountviewcard_delete');" class='popupClose'>x</a>
-    <h2>Card information</h2>
-    <ul id="content_1" class="scrollpopup accountEditCardForm">
-        <li>
-            <input type="hidden" name="card_id" id="card_id" value="">
-            <label class="textfield_names">First name*</label>
-            <input name="input" type="text" id="addcard_fname" class="" value="first name" default="first name" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'first name')this.value = '';"/>
-        </li>
-        <li>
-            <label class="textfield_names">Last name*</label>
-            <input name="input" type="text" id="addcard_lname" class="" value="last name" default="last name" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'last name')this.value = '';"/>
-        </li>
-         <li>
-            <label class="textfield_names">Address 1*</label>
-            <input name="input" type="text" id="addcard_address1" class="" value="Address line 1" default="Address line 1" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Address line 1')this.value = '';"/>
-        </li>
-        <li>
-            <label class="textfield_names">Address 2</label>
-            <input name="input" type="text" id="addcard_address2" class="" value="Address line 2" default="Address line 2" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Address line 2')this.value = '';"/>
-        </li>
-        <li>
-            <label class="textfield_names">City*</label>
-            <input name="input" type="text" id="addcard_city" class="" value="City" default="City" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'City')this.value = '';"/>
-        </li>
-        <li>
-            <label class="textfield_names">State*</label>
-            <input name="input" type="text" id="addcard_state" class="" value="State" default="State" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'State')this.value = '';"/>
-        </li>
-        <li>
-            <label class="textfield_names">Zip*</label>
-            <input name="input" type="text" id="addcard_zip" class="" value="Zip" default="Zip" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Zip')this.value = '';"/>
-        </li>
-        <li>
-            <label class="textfield_names">Card type*</label>
-            <input name="addcard_cctype" id="addcard_cctype" type="text" />
-        </li>
-        <li>
-            <label class="textfield_names">Card no.*</label>
-            <input name="input" type="text" id="addcard_ccnum" class="" value="Card number" default="Card number" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Card number')this.value = '';"/>
-        </li>
-        <li>
-            <label class="textfield_names">Exp mon.*</label>
-            <input name="addcard_expmonth" id="addcard_expmonth" type="text" />
-        </li>
-        <li>
-            <label class="textfield_names">Exp year*</label>
-            <input name="addcard_expyear" id="addcard_expyear" type="text" />
-        </li>
-        </li>
-    </ul>
-    <a class="black_btn_skin account-card-functions hide-onload" href="javascript:;" onclick="accountRemoveCard(true);" style="margin-top: 20px; display: inline-block;">Delete</a> <a class="black_btn_skin f-right" href="javascript:disablePopup('popupaccountviewcard_delete');">close</a>
+	<a id="popupaccountviewcardClose"
+		onClick="disablePopup('popupaccountviewcard_delete');"
+		class='popupClose'>x</a>
+	<h2>Card information</h2>
+	<ul id="content_1" class="scrollpopup accountEditCardForm">
+		<li><input type="hidden" name="card_id" id="card_id" value=""> <label
+			class="textfield_names">First name*</label> <input name="input"
+			type="text" id="addcard_fname" class="" value="first name"
+			default="first name"
+			onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue"
+			onFocus="if(this.value == 'first name')this.value = '';" /></li>
+		<li><label class="textfield_names">Last name*</label> <input
+			name="input" type="text" id="addcard_lname" class=""
+			value="last name" default="last name"
+			onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue"
+			onFocus="if(this.value == 'last name')this.value = '';" /></li>
+		<li><label class="textfield_names">Address 1*</label> <input
+			name="input" type="text" id="addcard_address1" class=""
+			value="Address line 1" default="Address line 1"
+			onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue"
+			onFocus="if(this.value == 'Address line 1')this.value = '';" /></li>
+		<li><label class="textfield_names">Address 2</label> <input
+			name="input" type="text" id="addcard_address2" class=""
+			value="Address line 2" default="Address line 2"
+			onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue"
+			onFocus="if(this.value == 'Address line 2')this.value = '';" /></li>
+		<li><label class="textfield_names">City*</label> <input name="input"
+			type="text" id="addcard_city" class="" value="City" default="City"
+			onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue"
+			onFocus="if(this.value == 'City')this.value = '';" /></li>
+		<li><label class="textfield_names">State*</label> <input name="input"
+			type="text" id="addcard_state" class="" value="State" default="State"
+			onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue"
+			onFocus="if(this.value == 'State')this.value = '';" /></li>
+		<li><label class="textfield_names">Zip*</label> <input name="input"
+			type="text" id="addcard_zip" class="" value="Zip" default="Zip"
+			onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue"
+			onFocus="if(this.value == 'Zip')this.value = '';" /></li>
+		<li><label class="textfield_names">Card type*</label> <input
+			name="addcard_cctype" id="addcard_cctype" type="text" /></li>
+		<li><label class="textfield_names">Card no.*</label> <input
+			name="input" type="text" id="addcard_ccnum" class=""
+			value="Card number" default="Card number"
+			onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue"
+			onFocus="if(this.value == 'Card number')this.value = '';" /></li>
+		<li><label class="textfield_names">Exp mon.*</label> <input
+			name="addcard_expmonth" id="addcard_expmonth" type="text" /></li>
+		<li><label class="textfield_names">Exp year*</label> <input
+			name="addcard_expyear" id="addcard_expyear" type="text" /></li>
+		</li>
+	</ul>
+	<a class="black_btn_skin account-card-functions hide-onload"
+		href="javascript:;" onclick="accountRemoveCard(true);"
+		style="margin-top: 20px; display: inline-block;">Delete</a> <a
+		class="black_btn_skin f-right"
+		href="javascript:disablePopup('popupaccountviewcard_delete');">close</a>
 </div>
 <div id="bgpopupaccountviewcard_delete" class="backgroundPopup"></div>
