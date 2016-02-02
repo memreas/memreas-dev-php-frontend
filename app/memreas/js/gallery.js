@@ -189,7 +189,7 @@ jQuery.fetch_server_media = function() {
 				value : '1'
 			} ],
 			function(response) {
-				// console.log("listallmedia response-->" + response);
+			      console.log("listallmedia response-->" + response);
 				if (getValueFromXMLTag(response, 'status') == "Success") {
 
 					var medias = getSubXMLFromTag(response, 'media');
@@ -226,7 +226,7 @@ jQuery.fetch_server_media = function() {
 							
 							main_media_url = getValueFromXMLTag(media,
 									'main_media_url');
-                                                          // main_media_url=getValueFromXMLTag(media,'media_url_448x306');
+                                                           //main_media_url=getValueFromXMLTag(media,'media_url_448x306');
 							_media_thumbnail_large = main_media_url = removeCdataCorrectLink(main_media_url);
 						} else if (_media_type == 'video') {
 							_media_url_hls = getValueFromXMLTag(media,
