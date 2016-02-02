@@ -424,6 +424,7 @@ function showEventDetail(eventId, userId) {
                         var _media_thumbnail = ''
                         var _media_thumbnail_large = "";
                         var objArr2 = new Array();
+                        var mediaIDArray=new Array();
 
                         for (var i = 0; i < media_count; i++) {
                             var media = medias[i];
@@ -466,6 +467,8 @@ function showEventDetail(eventId, userId) {
 						}
 
 						var item = new Object();
+                                                var Item_media_Id=new Object();
+                                                Item_media_Id['media_id']=mediaId;
 						if (_media_type == 'video') {
 							item['title'] = eventId + "_" + mediaId; 
 							item['type'] = "video/*"; 
@@ -480,13 +483,28 @@ function showEventDetail(eventId, userId) {
                                                         item['description'] = eventId + "_" + mediaId;
 						}
 						//console.log("item" + JSON.stringify(item));
-						objArr2.push(item);  
+						objArr2.push(item);
+                                                mediaIDArray.push(Item_media_Id);
                                                 
                         }
-                        console.log("objArr2" + JSON.stringify(objArr2));
+                        //console.log("objArr2" + JSON.stringify(objArr2));
+                        console.log("Media Array Size" + mediaIDArray.length);
+
 	                blueimp.Gallery( objArr2, {onslide:function(){
-                                console.log( item['description']);},container: '#blueimp-video-carousel-gallery', carousel: 'true' } );
-                        blueimp.Gallery( objArr2, { container: '#blueimp-video-carousel-gallery-detail', carousel: 'true' } );
+                              console.log( item['description']);},container: '#blueimp-video-carousel-gallery', carousel: 'true' } );
+                        
+                        blueimp.Gallery( objArr2, {onslide:function(){
+                            // Getting Media ID Per SLider
+                            var _media_id_title =item['title'];
+                            var _media_id_title_parse = _media_id_title.indexOf('_');
+                            var  eventdetail_media_id= _media_id_title.substring(_media_id_title_parse + 1);
+                           
+                            //Getting Event ID Per SLider
+                            
+                            var eventdetail_id = _media_id_title.substring(0,36);
+                            getMediaComment();
+                                
+                                }, container: '#blueimp-video-carousel-gallery-detail', carousel: 'true' } );
 
                             
                             
