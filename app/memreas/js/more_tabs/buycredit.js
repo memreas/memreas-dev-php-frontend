@@ -91,6 +91,7 @@ function buycreditAddCard(){
             url: stripeActionUrl,
             dataType: 'jsonp',
             data: 'json=' + data,
+            timeout: 10000,
             success: function(response){
                 if (response.status == 'Success'){
                     jsuccess("Your card added successfully");
@@ -139,7 +140,9 @@ function buycredit_listCard(){
         type: 'POST',
         dataType: 'jsonp',
         data: 'json=' + data,
+        timeout: 10000,
         success: function(response){
+		  	response = jQuery.parseJSON( response.data );
             if (response.status == 'Success'){
                 var cards = response.payment_methods;
                 var number_of_cards = response.NumRows;
@@ -188,7 +191,15 @@ function buycredit_listCard(){
                 jerror(response.message);
             }
             $('#loadingpopup').hide();
-        }
+        },
+		error : function(response, textStatus, errorThrown) {
+			if(textStatus === 'timeout')
+		    {     
+				jerror('request timeout - please try again later');
+				$('#loadingpopup').hide();
+		    }
+			
+		}
     });
 }
 function buycredit_removeCard(){
@@ -228,7 +239,9 @@ function buycredit_removeCard(){
             url: stripeActionUrl,
             dataType: 'jsonp',
             data: 'json=' + data,
+            timeout: 10000,
             success: function(response){
+			  	response = jQuery.parseJSON( response.data );
                 if (response.status = 'Success'){
                     $(".buycredit-payment").addClass('preload-null');
                     $('#loadingpopup').hide();
@@ -241,7 +254,15 @@ function buycredit_removeCard(){
                     jerror(response.message);
                     $('#loadingpopup').hide();
                 }
-            }
+            },
+	    		error : function(response, textStatus, errorThrown) {
+	    			if(textStatus === 'timeout')
+	    		    {     
+	    				jerror('request timeout - please try again later');
+	    				$('#loadingpopup').hide();
+	    		    }
+	    			
+	    		}
         });
     }
 }
@@ -262,12 +283,20 @@ function fetch_customer(){
         type: 'POST',
         dataType: 'jsonp',
         data: 'json=' + data,
+        timeout: 10000,
         success: function(response){
+		  	response = jQuery.parseJSON( response.data );
             if (response.status == 'Success'){
                 account_stripe = response.customer;
                 account_user = response.account;
             }
-        }
+        },
+		error : function(response, textStatus, errorThrown) {
+			if(textStatus === 'timeout')
+		    {     
+				jerror('request timeout - please try again later');
+		    }
+		}
     });
 }
 
@@ -342,7 +371,9 @@ function buycredit_confirmAmount(){
         type: 'POST',
         dataType: 'jsonp',
         data: 'json=' + data,
+        timeout: 10000,
         success: function(response){
+		  	response = jQuery.parseJSON( response.data );
             if (response.status == 'Success'){
                 jsuccess(response.message);
                 account_user.balance = parseFloat(account_user.balance) + parseFloat(params.amount);
@@ -351,6 +382,14 @@ function buycredit_confirmAmount(){
             }
             else jerror(response.message);
             $('.stripe-payment').fadeOut(500);
-        }
+        },
+		error : function(response, textStatus, errorThrown) {
+			if(textStatus === 'timeout')
+		    {     
+				jerror('request timeout - please try again later');
+				 $('.stripe-payment').fadeOut(500);
+		    }
+			
+		}
     });
 }

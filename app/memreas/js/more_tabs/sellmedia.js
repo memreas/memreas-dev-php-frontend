@@ -75,12 +75,22 @@ function register_sell_media() {
 			type : 'POST',
 			dataType : 'jsonp',
 			data : 'json=' + data,
+			timeout: 10000,
 			success : function(response) {
+			  	response = jQuery.parseJSON( response.data );
 				if (response.status == 'Success')
 					jsuccess('your account has been registered successfully');
 				else
 					jerror(response.message);
 				$('.stripe-payment').fadeOut(500);
+			},
+			error : function(response, textStatus, errorThrown) {
+				if(textStatus === 'timeout')
+			    {     
+					jerror('request timeout - please try again later');
+					$('.stripe-payment').fadeOut(500);
+			    }
+				
 			}
 		});
 	}

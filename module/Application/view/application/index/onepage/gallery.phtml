@@ -5,6 +5,96 @@
  * Proprietary and confidential
  */
 ?>
+<<script type="text/javascript">
+<!--
+** Test stripe services using proxy
+//-->
+
+/////////////////////
+//Login
+/////////////////////
+jQuery.login - function () {
+	var obj = new Object();
+	obj.username = $(#username).val();
+	obj.password = $(#password).val();
+	var json_Login =  JSON.stringify(obj);
+	var data = ""
+
+	data = '{"action": "login", ' +
+	 '"type":"jsonp", ' +
+	 '"json": ' + json_Login  +
+	 '}';
+		 
+	
+}
+
+jQuery.execAjax = function (url, data, form_name) {
+	$.ajax( {
+		  type:'post',
+		  url: url,
+		  dataType: 'jsonp',
+		  data: 'json=' + data,
+		  success: function(json){
+		  	var req_resp = $(form_name).val() + "\n\n" + JSON.stringify(json, null, '\t');
+		  	$(form_name).val(req_resp);
+		  },
+		  error: function (jqXHR, textStatus, errorThrown) {
+		  	//alert("Inside error jqXHR...");
+	    	alert(jqXHR.responseText);
+	    	alert(jqXHR.status);
+	 	//alert(textStatus);
+	    	//alert(errorThrown);
+		  }
+		});
+		return false;
+}
+
+jQuery.addSeller = function () {
+
+	var obj = new Object();
+	obj.user_name = $("#add_seller_user_name").val();
+	obj.stripe_email_address = $("#add_seller__email_address").val();
+	obj.first_name = $("#add_seller_first_name").val();
+	obj.last_name = $("#add_seller_last_name").val();
+	obj.address_line_1 = $("#add_seller_address_line_1").val();
+	obj.address_line_2 = $("#add_seller_address_line_2").val();
+	obj.city = $("#add_seller_city").val();
+	obj.state = $("#add_seller_state").val();
+	obj.zip_code = $("#add_seller_zip_code").val();
+ var json_AddSeller = JSON.stringify(obj);
+ var data = "";
+ 
+
+ data = '{"action": "AddSeller", ' +
+ '"type":"jsonp", ' +
+ '"json": ' + json_AddSeller  +
+ '}';
+
+	//var results += json_AddSeller;
+	$("#add_seller_form_results").val(json_AddSeller, null, '\t');
+
+	$.ajax( {
+	  type:'post',
+	  url: stripeAddSeller_url,
+	  dataType: 'jsonp',
+	  data: 'json=' + data,
+	  success: function(json){
+	  	var req_resp = $("#add_seller_form_results").val() + "\n\n" + JSON.stringify(json, null, '\t');
+	  	$("#add_seller_form_results").val(req_resp);
+	  },
+	  error: function (jqXHR, textStatus, errorThrown) {
+	  	//alert("Inside error jqXHR...");
+    	alert(jqXHR.responseText);
+    	alert(jqXHR.status);
+ 	//alert(textStatus);
+    	//alert(errorThrown);
+	  }
+	});
+	return false;
+}
+
+</script>
+
 <div class="span11 tabcontent-detail" id="gallery">
 	<!--<div class="<?php echo ($this->enableAdvertising) ? 'span9' : 'span11';?> left-gallery">-->
 	<div class="span11 left-gallery">
