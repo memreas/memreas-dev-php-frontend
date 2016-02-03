@@ -681,6 +681,9 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 								if (isset ( $_GET ['email_verified'] ) && $_GET ['email_verified'] == 1) {
 									echo "jsuccess('Your account has been verified successfully');";
 								}
+								if (isset ( $_GET ['credits_activated'] )  && $_GET ['credits_activated'] == 1) {
+									echo "jsuccess('Your account has been credited. Enjoy!');";
+								}
 								?>
          <?php
 									

@@ -48,6 +48,7 @@ function register_sell_media() {
 				.attr('default')) ? '' : $("#sell-media-address2").val();
 		var params = {
 			memreascookie : getCookie("memreascookie"),
+			user_id : user_id,
 			user_name : $("#sell-media-username").val(),
 			first_name : $("#sell-media-fname").val(),
 			last_name : $("#sell-media-lname").val(),
@@ -78,10 +79,11 @@ function register_sell_media() {
 			timeout: 10000,
 			success : function(response) {
 			  	response = jQuery.parseJSON( response.data );
-				if (response.status == 'Success')
+				if (response.status == 'Success') {
 					jsuccess('your account has been registered successfully');
-				else
+				} else {
 					jerror(response.message);
+				}
 				$('.stripe-payment').fadeOut(500);
 			},
 			error : function(response, textStatus, errorThrown) {

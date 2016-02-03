@@ -19,12 +19,6 @@ $username = ! empty ( $_SESSION ['username'] ) ? ($_SESSION ['username']) : '';
 <?php if ($this->enableAdvertising) : ?>
 <html class="ads">
 <?php else: ?>
-
-
-
-
-
-
 <html class="noads">
 <?php endif; ?>
     <head>
@@ -33,7 +27,11 @@ $username = ! empty ( $_SESSION ['username'] ) ? ($_SESSION ['username']) : '';
 <title>memreas</title>
 
 <script type="text/javascript">
-			console.log("entered memreas one page...");
+<?php 
+echo "var user_id = '" . $user_id . "';";  
+echo "var username = '" . $username . "';";  
+?>
+
 			<?php if (!empty($this->CloudFrontPolicy)) { ?>
 			console.log("$this->CloudFrontPolicy is not empty!!");
 			console.log("cookies set...");
