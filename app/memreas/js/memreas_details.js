@@ -26,6 +26,7 @@ $(function () {
 
         e.preventDefault();
         $("#tab-content-memreas-detail div.hideCls").hide(); // Hide all
+       
         // content
         $("#tabs-memreas-detail li").attr("id", ""); // Reset id's
         $(this).parent().attr("id", "current"); // Activate this
@@ -424,7 +425,9 @@ function showEventDetail(eventId, userId) {
                         var _media_thumbnail = ''
                         var _media_thumbnail_large = "";
                         var objArr2 = new Array();
-                        var mediaIDArray=new Array();
+                        var objDetail = new Array();
+                        var mediaIDArray=[];
+                        var media_download_url='';
 
                         for (var i = 0; i < media_count; i++) {
                             var media = medias[i];
@@ -445,6 +448,8 @@ function showEventDetail(eventId, userId) {
 							main_media_url = getValueFromXMLTag(media,
 									'main_media_url');
 							_media_thumbnail_large = main_media_url = removeCdataCorrectLink(main_media_url);
+                                                        media_download_url=_media_thumbnail_large;
+                                                        
 						} else if (_media_type == 'video') {
 							_media_url_hls = getValueFromXMLTag(media,
 									'media_url_hls');
@@ -463,42 +468,58 @@ function showEventDetail(eventId, userId) {
 							_media_thumbnail = JSON
 									.parse(removeCdata(_media_thumbnail));
 							_media_thumbnail = _media_thumbnail[0];
+                                                        
+                                                        media_download_url=_media_url_web;
 
 						}
 
 						var item = new Object();
                                                 var Item_media_Id=new Object();
-                                                Item_media_Id['media_id']=mediaId;
+                                                var DetailImage= new Object();
+                                                
+                                                
+                                                
 						if (_media_type == 'video') {
+                                                        
+                                                        Item_media_Id['M_id']=mediaId;
+                                                        Item_media_Id['M_url']=_media_url_web;
 							item['title'] = eventId + "_" + mediaId; 
 							item['type'] = "video/*"; 
 							item['poster'] = _media_thumbnail_large; 
-                                                        item['description'] = eventId + "_" + mediaId;
+                                                        item['description'] = media_download_url;
 							item['sources'] = [{href:_media_url_hls, type: "application/x-mpegurl"}, {href:_media_url_web, type: "video/mp4"}]; 
 						} else {
+                                                        Item_media_Id['M_id']=mediaId;
+                                                        Item_media_Id['M_url']=_media_thumbnail_large;
 							item['title'] = eventId + "_" + mediaId; 
 							item['type'] = "image/jpeg"; 
 							item['href'] = main_media_url; 
-							item['poster'] = main_media_url;
+							item['poster'] = media_download_url;
                                                         item['description'] = eventId + "_" + mediaId;
+                                                       
 						}
-						//console.log("item" + JSON.stringify(item));
+						console.log("item :" + Item_media_Id['M_id'] + 'URL: '+Item_media_Id['M_url']);
 						objArr2.push(item);
+                                                objDetail.push(item);
                                                 mediaIDArray.push(Item_media_Id);
                                                 
                         }
                         //console.log("objArr2" + JSON.stringify(objArr2));
-                        console.log("Media Array Size" + mediaIDArray.length);
+                        console.log("Media Array" + mediaIDArray);
 
 	                blueimp.Gallery( objArr2, {onslide:function(){
-                              console.log( item['description']);},container: '#blueimp-video-carousel-gallery', carousel: 'true' } );
+                              },container: '#blueimp-video-carousel-gallery', carousel: 'true',preloadRange: 2,transitionSpeed: 400 } );
                         
-                        blueimp.Gallery( objArr2, {onslide:function(){
+                         media_download_url = "/index/downloadMedia?file=" + item['description'];
+                         console.log('Media URL Download: '+item['description']);
+                        blueimp.Gallery( objDetail, {onslide:function(){
                             // Getting Media ID Per SLider
                             var _media_id_title =item['title'];
                             var _media_id_title_parse = _media_id_title.indexOf('_');
                             var  eventdetail_media_id= _media_id_title.substring(_media_id_title_parse + 1);
-                           
+                            var index =this.getIndex();
+                            //var download_url = $(this).attr('data-source');
+                            $(".memreas-detail-download").attr("href", media_download_url);
                             //Getting Event ID Per SLider
                             
                             var eventdetail_id = _media_id_title.substring(0,36);
@@ -506,7 +527,7 @@ function showEventDetail(eventId, userId) {
                             console.log("eventdetail_id" + JSON.stringify(eventdetail_id));
                             getMediaComment();
                                 
-                                }, container: '#blueimp-video-carousel-gallery-detail', carousel: 'true' } );
+                                }, container: '#blueimp-video-carousel-gallery-detail', carousel: 'true',preloadRange: 2,transitionSpeed: 400 } );
 
                             
                             
