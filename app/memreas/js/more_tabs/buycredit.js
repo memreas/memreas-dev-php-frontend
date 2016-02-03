@@ -94,7 +94,7 @@ function buycreditAddCard(){
             timeout: 10000,
             success: function(response){
                 if (response.status == 'Success'){
-                    jsuccess("Your card added successfully");
+                    jsuccess("Your card was added successfully");
                     disablePopup('popupcreditaddcard');
                     $(".buycredit-payment").addClass('preload-null');
                     buycredit_listCard();

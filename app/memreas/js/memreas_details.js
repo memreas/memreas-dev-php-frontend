@@ -502,6 +502,8 @@ function showEventDetail(eventId, userId) {
                             //Getting Event ID Per SLider
                             
                             var eventdetail_id = _media_id_title.substring(0,36);
+                            console.log("_media_id_title" + JSON.stringify(_media_id_title));
+                            console.log("eventdetail_id" + JSON.stringify(eventdetail_id));
                             getMediaComment();
                                 
                                 }, container: '#blueimp-video-carousel-gallery-detail', carousel: 'true' } );
