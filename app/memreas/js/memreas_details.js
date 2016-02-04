@@ -26,7 +26,7 @@ $(function () {
 
         e.preventDefault();
         $("#tab-content-memreas-detail div.hideCls").hide(); // Hide all
-       
+
         // content
         $("#tabs-memreas-detail li").attr("id", ""); // Reset id's
         $(this).parent().attr("id", "current"); // Activate this
@@ -123,7 +123,7 @@ function getMediaComment() {
                     value: '1'
                 }],
             function (ret_xml) {
-                console.log('Slide Comment ->'+ret_xml);
+                console.log('Slide Comment ->' + ret_xml);
                 var jComment_element = $('.memreas-detail-comments');
                 if (jComment_element.hasClass('mCustomScrollbar'))
                     jComment_element = $('.memreas-detail-comments .mCSB_container');
@@ -211,54 +211,54 @@ function getMediaComment() {
 
 function updateMemreasMediaDetailsScript() {
     if (!$("#carousel").parent(".elastislide-carousel").length > 0) {
-       
-         //alert($(this).attr('class'));
-          $preview = $('#preview');
+
+        //alert($(this).attr('class'));
+        $preview = $('#preview');
         $carouselEl = $('#carousel');
-         $carouselItems = $carouselEl.children();
-                $("#carousel > li").click(function(){
-                    if($(this).attr('class') == 'videoArea'){
-                         alert('video');
-                         $('image-preview').hide();
-                         $preview.hide();
-                    $('.video-preview').show();
-                    var rel1 = $(this).attr('data-preview');
-                    var rel2 = $(this).attr('data-source');
-                    $('.video-preview >video').first().attr('poster', rel1);
-                    $('.video-preview > video >source').attr('src', rel2);
-                     //eventdetail_media_id = el.attr("media-id");
-                    }else {
-                    alert('image');
-                    $('.video-preview').hide();
-                    $('image-preview').show();
-                    $preview.show();
-                    var dtpr=$(this).attr('data-preview')
-                    $preview.attr('src',dtpr);
-                    //$preview.attr('data-preview', el.data('preview'));
-                    $carouselItems.removeClass('current-img');
-                    //eventdetail_media_id = el.attr("media-id");
-                    el.addClass('current-img');
-                    carousel.setCurrent(pos);
-                    evt.preventDefault();
-                    $(".image-preview .swipebox").swipebox();
-                }
-                var download_url = $(this).attr('data-source');;
-                download_url = "/index/downloadMedia?file=" + download_url;
-                $(".memreas-detail-download").attr("href", download_url);
-                  updateMediaLike();
-                getMediaComment();
-                });
-                
+        $carouselItems = $carouselEl.children();
+        $("#carousel > li").click(function () {
+            if ($(this).attr('class') == 'videoArea') {
+                alert('video');
+                $('image-preview').hide();
+                $preview.hide();
+                $('.video-preview').show();
+                var rel1 = $(this).attr('data-preview');
+                var rel2 = $(this).attr('data-source');
+                $('.video-preview >video').first().attr('poster', rel1);
+                $('.video-preview > video >source').attr('src', rel2);
+                //eventdetail_media_id = el.attr("media-id");
+            } else {
+                alert('image');
+                $('.video-preview').hide();
+                $('image-preview').show();
+                $preview.show();
+                var dtpr = $(this).attr('data-preview')
+                $preview.attr('src', dtpr);
+                //$preview.attr('data-preview', el.data('preview'));
+                $carouselItems.removeClass('current-img');
+                //eventdetail_media_id = el.attr("media-id");
+                el.addClass('current-img');
+                carousel.setCurrent(pos);
+                evt.preventDefault();
+                $(".image-preview .swipebox").swipebox();
+            }
+            var download_url = $(this).attr('data-source');
+            ;
+            download_url = "/index/downloadMedia?file=" + download_url;
+            $(".memreas-detail-download").attr("href", download_url);
+            updateMediaLike();
+            getMediaComment();
+        });
+
         var current = 0;
-         $preview = $('#preview');
+        $preview = $('#preview');
         $carouselEl = $('#carousel');
         $carouselItems = $carouselEl.children();
         carousel = $carouselEl.elastislide({
             current: current,
             minItems: 1,
-           
             onReady: function () {
-                
+
                 el = $carouselItems.eq(current);
                 eventdetail_media_id = el.attr("media-id");
                 pos = current;
@@ -266,7 +266,7 @@ function updateMemreasMediaDetailsScript() {
                 $preview.attr('data-preview', el.data('preview'));
                 $carouselItems.removeClass('current-img');
                 el.addClass('current-img');
-               // $(".image-preview .swipebox").swipebox();
+                // $(".image-preview .swipebox").swipebox();
 
                 // Set download button
                 var download_url = el.data('preview');
@@ -276,43 +276,43 @@ function updateMemreasMediaDetailsScript() {
 
                 updateMediaLike();
                 getMediaComment();
-                
-                
-                  /*  if($("#carousel > li").attr('class') == 'videoArea'){
-                        // alert('video');
-                         $('image-preview').hide();
-                         $preview.hide();
-                    $('.video-preview').show();
-                    var rel1 = $(this).attr('data-preview');
-                    var rel2 = $(this).attr('data-source');
-                    $('.video-preview >video').first().attr('poster', rel1);
-                    $('.video-preview > video >source').attr('src', rel2);
-                     //eventdetail_media_id = el.attr("media-id");
-                    }else {
-                    alert('image');
-                    $('.video-preview').hide();
-                    $('image-preview').show();
-                    $preview.show();
-                    var dtpr=$(this).attr('data-preview')
-                    $preview.attr('src',dtpr);
-                    //$preview.attr('data-preview', el.data('preview'));
-                    $carouselItems.removeClass('current-img');
-                    //eventdetail_media_id = el.attr("media-id");
-                   // el.addClass('current-img');
-                    carousel.setCurrent(pos);
-                    evt.preventDefault();
-                    $(".image-preview .swipebox").swipebox();
-                }
-                var download_url = $(this).attr('data-source');;
-                download_url = "/index/downloadMedia?file=" + download_url;
-                $(".memreas-detail-download").attr("href", download_url);
-                  updateMediaLike();
-                getMediaComment();
-               
-                */
-                
-                
-                
+
+
+                /*  if($("#carousel > li").attr('class') == 'videoArea'){
+                 // alert('video');
+                 $('image-preview').hide();
+                 $preview.hide();
+                 $('.video-preview').show();
+                 var rel1 = $(this).attr('data-preview');
+                 var rel2 = $(this).attr('data-source');
+                 $('.video-preview >video').first().attr('poster', rel1);
+                 $('.video-preview > video >source').attr('src', rel2);
+                 //eventdetail_media_id = el.attr("media-id");
+                 }else {
+                 alert('image');
+                 $('.video-preview').hide();
+                 $('image-preview').show();
+                 $preview.show();
+                 var dtpr=$(this).attr('data-preview')
+                 $preview.attr('src',dtpr);
+                 //$preview.attr('data-preview', el.data('preview'));
+                 $carouselItems.removeClass('current-img');
+                 //eventdetail_media_id = el.attr("media-id");
+                 // el.addClass('current-img');
+                 carousel.setCurrent(pos);
+                 evt.preventDefault();
+                 $(".image-preview .swipebox").swipebox();
+                 }
+                 var download_url = $(this).attr('data-source');;
+                 download_url = "/index/downloadMedia?file=" + download_url;
+                 $(".memreas-detail-download").attr("href", download_url);
+                 updateMediaLike();
+                 getMediaComment();
+                 
+                 */
+
+
+
             }
         });
     }
@@ -329,7 +329,7 @@ $(function () {
         $(".memreas-main").fadeIn(500);
     });
 });
-
+ var objArr2 = new Array();
 function showEventDetail(eventId, userId) {
     eventdetail_id = eventId;
     eventdetail_user = userId;
@@ -367,7 +367,7 @@ function showEventDetail(eventId, userId) {
     if (target_element.hasClass('mCustomScrollbar'))
         target_element = $(".memreas-detail-gallery .mCSB_container");
     target_element.empty();
-    
+
     $("#tabs-memreas-detail li:eq(0) a").click();
 
     /* Update details_tab also */
@@ -424,113 +424,143 @@ function showEventDetail(eventId, userId) {
                         var _media_url_web = '';
                         var _media_thumbnail = ''
                         var _media_thumbnail_large = "";
-                        var objArr2 = new Array();
+                       
                         var objDetail = new Array();
-                        var mediaIDArray=[];
-                        var media_download_url='';
+                        var mediaIDArray = [];
+                        var media_download_url = '';
 
                         for (var i = 0; i < media_count; i++) {
                             var media = medias[i];
                             var mediaId = getValueFromXMLTag(media, 'media_id');
                             var _media_type = getValueFromXMLTag(media, 'type');
                             var _media_url = '';
-						var _media_url_hls = '';
-						var _media_url_web = '';
-						var _media_thumbnail = ''
-						var _media_thumbnail_large = "";
-						var main_media_url = '';
-						var main_media_url_m3u8 = '';
-                            
-                          if (_media_type == 'image') {
-							_media_url = getMediaUrl(media, _media_type);
-							content_type = 'image/jpeg';
-							main_media_url
-							main_media_url = getValueFromXMLTag(media,
-									'main_media_url');
-							_media_thumbnail_large = main_media_url = removeCdataCorrectLink(main_media_url);
-                                                        media_download_url=_media_thumbnail_large;
-                                                        
-						} else if (_media_type == 'video') {
-							_media_url_hls = getValueFromXMLTag(media,
-									'media_url_hls');
-							_media_url_hls = removeCdataCorrectLink(_media_url_hls);
-							_media_url_web = getValueFromXMLTag(media,
-									'media_url_web');
-							_media_url_web = removeCdataCorrectLink(_media_url_web);
-							_media_thumbnail_large = getValueFromXMLTag(media,
-									'media_url_448x306');
-							_media_thumbnail_large = JSON
-									.parse(removeCdata(_media_thumbnail_large));
-							_media_thumbnail_large = _media_thumbnail_large[0];
+                            var _media_url_hls = '';
+                            var _media_url_web = '';
+                            var _media_thumbnail = ''
+                            var _media_thumbnail_large = "";
+                            var main_media_url = '';
+                            var main_media_url_m3u8 = '';
 
-							_media_thumbnail = getValueFromXMLTag(media,
-									'media_url_98x78');
-							_media_thumbnail = JSON
-									.parse(removeCdata(_media_thumbnail));
-							_media_thumbnail = _media_thumbnail[0];
-                                                        
-                                                        media_download_url=_media_url_web;
+                            if (_media_type == 'image') {
+                                _media_url = getMediaUrl(media, _media_type);
+                                content_type = 'image/jpeg';
+                                main_media_url
+                                main_media_url = getValueFromXMLTag(media,
+                                        'main_media_url');
+                                _media_thumbnail_large = main_media_url = removeCdataCorrectLink(main_media_url);
+                                media_download_url = _media_thumbnail_large;
 
-						}
+                            } else if (_media_type == 'video') {
+                                _media_url_hls = getValueFromXMLTag(media,
+                                        'media_url_hls');
+                                _media_url_hls = removeCdataCorrectLink(_media_url_hls);
+                                _media_url_web = getValueFromXMLTag(media,
+                                        'media_url_web');
+                                _media_url_web = removeCdataCorrectLink(_media_url_web);
+                                _media_thumbnail_large = getValueFromXMLTag(media,
+                                        'media_url_448x306');
+                                _media_thumbnail_large = JSON
+                                        .parse(removeCdata(_media_thumbnail_large));
+                                _media_thumbnail_large = _media_thumbnail_large[0];
 
-						var item = new Object();
-                                                var Item_media_Id=new Object();
-                                                var DetailImage= new Object();
-                                                
-                                                
-                                                
-						if (_media_type == 'video') {
-                                                        
-                                                        Item_media_Id['M_id']=mediaId;
-                                                        Item_media_Id['M_url']=_media_url_web;
-							item['title'] = eventId + "_" + mediaId; 
-							item['type'] = "video/*"; 
-							item['poster'] = _media_thumbnail_large; 
-                                                        item['description'] = media_download_url;
-							item['sources'] = [{href:_media_url_hls, type: "application/x-mpegurl"}, {href:_media_url_web, type: "video/mp4"}]; 
-						} else {
-                                                        Item_media_Id['M_id']=mediaId;
-                                                        Item_media_Id['M_url']=_media_thumbnail_large;
-							item['title'] = eventId + "_" + mediaId; 
-							item['type'] = "image/jpeg"; 
-							item['href'] = main_media_url; 
-							item['poster'] = media_download_url;
-                                                        item['description'] = eventId + "_" + mediaId;
-                                                       
-						}
-						console.log("item :" + Item_media_Id['M_id'] + 'URL: '+Item_media_Id['M_url']);
-						objArr2.push(item);
-                                                objDetail.push(item);
-                                                mediaIDArray.push(Item_media_Id);
-                                                
+                                _media_thumbnail = getValueFromXMLTag(media,
+                                        'media_url_98x78');
+                                _media_thumbnail = JSON
+                                        .parse(removeCdata(_media_thumbnail));
+                                _media_thumbnail = _media_thumbnail[0];
+
+                                media_download_url = _media_url_web;
+
+                            }
+
+                            var item = new Object();
+                            var Item_media_Id = new Object();
+                            var DetailImage = new Object();
+
+
+
+                            if (_media_type == 'video') {
+
+                                Item_media_Id['M_id'] = mediaId;
+                                Item_media_Id['M_url'] = _media_url_web;
+                                item['title'] = eventId + "_" + mediaId;
+                                item['type'] = "video/*";
+                                item['poster'] = _media_thumbnail_large;
+                                item['description'] = media_download_url;
+                                item['data-gallery'] = '#blueimp-video-carousel-gallery';
+                                item['data-gallery'] = '#blueimp-video-carousel-gallery-detail';
+                                item['sources'] = [{href: _media_url_hls, type: "application/x-mpegurl"}, {href: _media_url_web, type: "video/mp4"}];
+
+                                DetailImage['title'] = eventId + "_" + mediaId;
+                                DetailImage['type'] = "video/*";
+                                DetailImage['poster'] = _media_thumbnail_large;
+                                DetailImage['description'] = media_download_url;
+
+                                DetailImage['sources'] = [{href: _media_url_hls, type: "application/x-mpegurl"}, {href: _media_url_web, type: "video/mp4"}];
+                            } else {
+                                Item_media_Id['M_id'] = mediaId;
+                                Item_media_Id['M_url'] = _media_thumbnail_large;
+                                item['title'] = eventId + "_" + mediaId;
+                                item['type'] = "image/jpeg";
+                                item['href'] = main_media_url;
+                                item['poster'] = media_download_url;
+                                item['description'] = eventId + "_" + mediaId;
+                                item['data-gallery'] = '#blueimp-video-carousel-gallery';
+                                item['data-gallery'] = '#blueimp-video-carousel-gallery-detail';
+
+
+                                DetailImage['title'] = eventId + "_" + mediaId;
+                                DetailImage['type'] = "image/jpeg";
+                                DetailImage['href'] = main_media_url;
+                                DetailImage['poster'] = media_download_url;
+                                DetailImage['description'] = eventId + "_" + mediaId;
+
+
+                            }
+                            console.log("item :" + Item_media_Id['M_id'] + 'URL: ' + Item_media_Id['M_url']);
+                            objArr2.push(item);
+                            objDetail.push(DetailImage);
+                            mediaIDArray.push(Item_media_Id);
+
                         }
                         //console.log("objArr2" + JSON.stringify(objArr2));
                         console.log("Media Array" + mediaIDArray);
 
-	                blueimp.Gallery( objArr2, {onslide:function(){
-                              },container: '#blueimp-video-carousel-gallery', carousel: 'true',preloadRange: 2,transitionSpeed: 400 } );
-                        
-                         media_download_url = "/index/downloadMedia?file=" + item['description'];
-                         console.log('Media URL Download: '+item['description']);
-                        blueimp.Gallery( objDetail, {onslide:function(){
-                            // Getting Media ID Per SLider
-                            var _media_id_title =item['title'];
-                            var _media_id_title_parse = _media_id_title.indexOf('_');
-                            var  eventdetail_media_id= _media_id_title.substring(_media_id_title_parse + 1);
-                            var index =this.getIndex();
-                            //var download_url = $(this).attr('data-source');
-                            $(".memreas-detail-download").attr("href", media_download_url);
-                            //Getting Event ID Per SLider
-                            
-                            var eventdetail_id = _media_id_title.substring(0,36);
-                            console.log("_media_id_title" + JSON.stringify(_media_id_title));
-                            console.log("eventdetail_id" + JSON.stringify(eventdetail_id));
-                            getMediaComment();
-                                
-                                }, container: '#blueimp-video-carousel-gallery-detail', carousel: 'true',preloadRange: 2,transitionSpeed: 400 } );
+                        var jsonstrong = JSON.stringify(mediaIDArray);
+                        var DetailObj = JSON.parse(jsonstrong);
+                        //console.log("objArr2 STT" + jsonstrong);
+                        blueimp.Gallery(objArr2, {onslide: function () {
+                            }, container: '#blueimp-video-carousel-gallery', carousel: 'true', preloadRange: 2, transitionSpeed: 400});
 
-                            
-                            
+
+
+                        blueimp.Gallery(objDetail, {onslide: function () {
+                                // Getting Media ID Per SLider
+                                var index = this.getIndex();
+                                var down_load_media_id = DetailObj[index].M_id;
+                                var down_load_media_URL = DetailObj[index].M_url;
+                                console.log('Download Media URL' + down_load_media_URL);
+//                            for(var k=0; k <=DetailObj.length; k++){
+//                                console.log('Object Media ID' +);
+//                            }
+                                var _media_id_title = item['title'];
+                                var _media_id_title_parse = _media_id_title.indexOf('_');
+                                var eventdetail_media_id = _media_id_title.substring(_media_id_title_parse + 1);
+
+                                //var download_url = $(this).attr('data-source');
+                                var media_download_url_final = "/index/downloadMedia?file=" + down_load_media_URL;
+                                $(".memreas-detail-download").attr("href", media_download_url_final);
+                                //Getting Event ID Per SLider
+
+                                var eventdetail_id = _media_id_title.substring(0, 36);
+                                console.log("_media_id_title" + JSON.stringify(_media_id_title));
+                                console.log("eventdetail_id" + JSON.stringify(eventdetail_id));
+                                getMediaComment();
+
+                            }, container: '#blueimp-video-carousel-gallery-detail', carousel: 'true', preloadRange: 2, transitionSpeed: 600});
+
+
+
 //                            if (_media_type == 'video') {
 //                                /*var _main_media = getValueFromXMLTag(media,
 //                                 'media_url_1080p');
@@ -623,7 +653,7 @@ function showEventDetail(eventId, userId) {
 //                                //$('.MemreasDetailfotoramaSlde').append('<div data-thumb="' + _media_url + '"><img src="' + _main_media + '" media-id="' + mediaId + '" /></div> ');
 //                               // $('#memreas-detail-gallery').append('<div data-thumb="' + _media_url + '"><img src="' + _main_media + '" media-id="' + mediaId + '" /></div> ');
 //                            }
-                     //   }
+                        //   }
                     }
                 } else
                     jerror(getValueFromXMLTag(response, 'message'));
@@ -1166,3 +1196,8 @@ $('.elastislide-list > li >a').click(function () {
     return false;
 });
 
+$("#tabs-memreas-detail li:first").click(function(){
+    blueimp.Gallery(objArr2, {onslide: function () {
+                            }, container: '#blueimp-video-carousel-gallery', carousel: 'true', preloadRange: 2, transitionSpeed: 400});
+ 
+});
