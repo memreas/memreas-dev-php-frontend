@@ -37,6 +37,7 @@ $(function () {
     $("a[title=memreas-detail-tab3]")
             .click(
                     function () {
+                        BlueIMPGallery();
                         updateMemreasMediaDetailsScript();
                         // prevent this tab active if there is no media on this
                         // event
@@ -330,9 +331,6 @@ $(function () {
     });
 });
  var objArr2 = new Array();
-  var objDetail = new Array();
-                        var mediaIDArray = [];
-                        var media_download_url = '';
 function showEventDetail(eventId, userId) {
     eventdetail_id = eventId;
     eventdetail_user = userId;
@@ -428,7 +426,9 @@ function showEventDetail(eventId, userId) {
                         var _media_thumbnail = ''
                         var _media_thumbnail_large = "";
                        
-                       
+                        var objDetail = new Array();
+                        var mediaIDArray = [];
+                        var media_download_url = '';
 
                         for (var i = 0; i < media_count; i++) {
                             var media = medias[i];
@@ -1196,3 +1196,38 @@ $('.elastislide-list > li >a').click(function () {
     alert('hello');
     return false;
 });
+
+$("#tabs-memreas-detail li:first").click(function(){
+    blueimp.Gallery(objArr2, {onslide: function () {
+                            }, container: '#blueimp-video-carousel-gallery', carousel: 'true', preloadRange: 2, transitionSpeed: 400});
+ 
+});
+function BlueIMPGallery(){
+      blueimp.Gallery(objDetail, {onslide: function () {
+                                // Getting Media ID Per SLider
+                                var index = this.getIndex();
+                                var down_load_media_id = DetailObj[index].M_id;
+                                var down_load_media_URL = DetailObj[index].M_url;
+                                console.log('Download Media URL' + down_load_media_URL);
+//                            for(var k=0; k <=DetailObj.length; k++){
+//                                console.log('Object Media ID' +);
+//                            }
+                                var _media_id_title = item['title'];
+                                var _media_id_title_parse = _media_id_title.indexOf('_');
+                                var eventdetail_media_id = _media_id_title.substring(_media_id_title_parse + 1);
+
+                                //var download_url = $(this).attr('data-source');
+                                var media_download_url_final = "/index/downloadMedia?file=" + down_load_media_URL;
+                                $(".memreas-detail-download").attr("href", media_download_url_final);
+                                //Getting Event ID Per SLider
+
+                                var eventdetail_id = _media_id_title.substring(0, 36);
+                                console.log("_media_id_title" + JSON.stringify(_media_id_title));
+                                console.log("eventdetail_id" + JSON.stringify(eventdetail_id));
+                                getMediaComment();
+
+                            }, container: '#blueimp-video-carousel-gallery-detail', carousel: 'true', preloadRange: 2, transitionSpeed: 600});
+
+     
+}
+    
