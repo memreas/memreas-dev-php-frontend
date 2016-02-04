@@ -1205,7 +1205,30 @@ $("#tabs-memreas-detail li:first").click(function(){
  
 });
 function BlueIMPGallery(){
-      blueimp.Gallery(objDetail, {container: '#blueimp-video-carousel-gallery-detail', carousel: 'true', preloadRange: 2, transitionSpeed: 600});
+      blueimp.Gallery(objDetail, {onslide: function () {
+                                // Getting Media ID Per SLider
+                                var index = this.getIndex();
+                                var down_load_media_id = DetailObj[index].M_id;
+                                var down_load_media_URL = DetailObj[index].M_url;
+                                console.log('Download Media URL' + down_load_media_URL);
+//                            for(var k=0; k <=DetailObj.length; k++){
+//                                console.log('Object Media ID' +);
+//                            }
+                                var _media_id_title = item['title'];
+                                var _media_id_title_parse = _media_id_title.indexOf('_');
+                                var eventdetail_media_id = _media_id_title.substring(_media_id_title_parse + 1);
+
+                                //var download_url = $(this).attr('data-source');
+                                var media_download_url_final = "/index/downloadMedia?file=" + down_load_media_URL;
+                                $(".memreas-detail-download").attr("href", media_download_url_final);
+                                //Getting Event ID Per SLider
+
+                                var eventdetail_id = _media_id_title.substring(0, 36);
+                                console.log("_media_id_title" + JSON.stringify(_media_id_title));
+                                console.log("eventdetail_id" + JSON.stringify(eventdetail_id));
+                                getMediaComment();
+
+                            }, container: '#blueimp-video-carousel-gallery-detail', carousel: 'true', preloadRange: 2, transitionSpeed: 600});
 
      
 }
