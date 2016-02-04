@@ -37,6 +37,8 @@ $(function () {
     $("a[title=memreas-detail-tab3]")
             .click(
                     function () {
+                        
+                        BlueIMPGallery();
                         updateMemreasMediaDetailsScript();
                         // prevent this tab active if there is no media on this
                         // event
@@ -330,6 +332,9 @@ $(function () {
     });
 });
  var objArr2 = new Array();
+  var objDetail = new Array();
+          var mediaIDArray = [];
+                        var media_download_url = '';
 function showEventDetail(eventId, userId) {
     eventdetail_id = eventId;
     eventdetail_user = userId;
@@ -425,9 +430,7 @@ function showEventDetail(eventId, userId) {
                         var _media_thumbnail = ''
                         var _media_thumbnail_large = "";
                        
-                        var objDetail = new Array();
-                        var mediaIDArray = [];
-                        var media_download_url = '';
+                       
 
                         for (var i = 0; i < media_count; i++) {
                             var media = medias[i];
@@ -1201,3 +1204,11 @@ $("#tabs-memreas-detail li:first").click(function(){
                             }, container: '#blueimp-video-carousel-gallery', carousel: 'true', preloadRange: 2, transitionSpeed: 400});
  
 });
+function BlueIMPGallery(){
+      blueimp.Gallery(objDetail, {container: '#blueimp-video-carousel-gallery-detail', carousel: 'true', preloadRange: 2, transitionSpeed: 600});
+
+     
+}
+     
+    
+ 
