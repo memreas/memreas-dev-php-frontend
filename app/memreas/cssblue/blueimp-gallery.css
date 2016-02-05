@@ -245,9 +245,9 @@ body:last-child .blueimp-gallery-playing > .play-pause {
     /* Extra large screens  min-width 1441px */
     @media only screen and (min-width: 90.063em){}
      /* Extra large screens  min-width 1441px and max-width 1920px */   
-    @media only screen and (min-width: 90.063em) and (max-width: 120em){ .blueimp-gallery-carousel{height: 740px;}}
+    @media only screen and (min-width: 90.063em) and (max-width: 120em){ .blueimp-gallery-carousel{height: 780px;}}
     /* Extra Extra large screens min-width 1921px */  
-    @media only screen and (min-width: 120.063em){ .blueimp-gallery-carousel{height: 1300px;}}
+    @media only screen and (min-width: 120.063em){ .blueimp-gallery-carousel{height: 1200px;}}
     
     
     .blueimp-gallery-controls > .title{display:none;}
