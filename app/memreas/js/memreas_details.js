@@ -331,9 +331,12 @@ $(function () {
     });
 });
  var objArr2 = new Array();
-  var objDetail = new Array();
-                        var mediaIDArray = [];
-                        var media_download_url = '';
+var objDetail = new Array();
+var mediaIDArray = new Array();
+var media_download_url = '';
+  var item = new Object();
+                            var Item_media_Id = new Object();
+                            var DetailImage = new Object();
 
 function showEventDetail(eventId, userId) {
     eventdetail_id = eventId;
@@ -475,9 +478,7 @@ function showEventDetail(eventId, userId) {
 
                             }
 
-                            var item = new Object();
-                            var Item_media_Id = new Object();
-                            var DetailImage = new Object();
+                          
 
 
 
@@ -485,12 +486,12 @@ function showEventDetail(eventId, userId) {
 
                                 Item_media_Id['M_id'] = mediaId;
                                 Item_media_Id['M_url'] = _media_url_web;
+                                Item_media_Id['M_eventId'] = eventId;
                                 item['title'] = eventId + "_" + mediaId;
                                 item['type'] = "video/*";
                                 item['poster'] = _media_thumbnail_large;
                                 item['description'] = media_download_url;
-                                item['data-gallery'] = '#blueimp-video-carousel-gallery';
-                                item['data-gallery'] = '#blueimp-video-carousel-gallery-detail';
+                               
                                 item['sources'] = [{href: _media_url_hls, type: "application/x-mpegurl"}, {href: _media_url_web, type: "video/mp4"}];
 
                                 DetailImage['title'] = eventId + "_" + mediaId;
@@ -502,14 +503,13 @@ function showEventDetail(eventId, userId) {
                             } else {
                                 Item_media_Id['M_id'] = mediaId;
                                 Item_media_Id['M_url'] = _media_thumbnail_large;
+                                 Item_media_Id['M_eventId'] = eventId;
                                 item['title'] = eventId + "_" + mediaId;
                                 item['type'] = "image/jpeg";
                                 item['href'] = main_media_url;
                                 item['poster'] = media_download_url;
                                 item['description'] = eventId + "_" + mediaId;
-                                item['data-gallery'] = '#blueimp-video-carousel-gallery';
-                                item['data-gallery'] = '#blueimp-video-carousel-gallery-detail';
-
+                               
 
                                 DetailImage['title'] = eventId + "_" + mediaId;
                                 DetailImage['type'] = "image/jpeg";
@@ -526,40 +526,34 @@ function showEventDetail(eventId, userId) {
 
                         }
                         //console.log("objArr2" + JSON.stringify(objArr2));
-                        console.log("Media Array" + mediaIDArray);
+                       
 
                         var jsonstrong = JSON.stringify(mediaIDArray);
                         var DetailObj = JSON.parse(jsonstrong);
                         //console.log("objArr2 STT" + jsonstrong);
-                        blueimp.Gallery(objArr2, {onslide: function () {
-                            }, container: '#blueimp-video-carousel-gallery', carousel: 'true', preloadRange: 2, transitionSpeed: 400});
-
-
-
-                        blueimp.Gallery(objDetail, {onslide: function () {
-                                // Getting Media ID Per SLider
-                                var index = this.getIndex();
-                                var down_load_media_id = DetailObj[index].M_id;
-                                var down_load_media_URL = DetailObj[index].M_url;
-                                console.log('Download Media URL' + down_load_media_URL);
-//                            for(var k=0; k <=DetailObj.length; k++){
-//                                console.log('Object Media ID' +);
-//                            }
-                                var _media_id_title = item['title'];
-                                var _media_id_title_parse = _media_id_title.indexOf('_');
-                                var eventdetail_media_id = _media_id_title.substring(_media_id_title_parse + 1);
-
-                                //var download_url = $(this).attr('data-source');
-                                var media_download_url_final = "/index/downloadMedia?file=" + down_load_media_URL;
-                                $(".memreas-detail-download").attr("href", media_download_url_final);
-                                //Getting Event ID Per SLider
-
-                                var eventdetail_id = _media_id_title.substring(0, 36);
-                                console.log("_media_id_title" + JSON.stringify(_media_id_title));
-                                console.log("eventdetail_id" + JSON.stringify(eventdetail_id));
-                                getMediaComment();
-
-                            }, container: '#blueimp-video-carousel-gallery-detail', carousel: 'true', preloadRange: 2, transitionSpeed: 600});
+                        blueimp.Gallery(objArr2, { container: '#blueimp-video-carousel-gallery', carousel: 'true', preloadRange: 2, transitionSpeed: 400});
+//                        blueimp.Gallery(objDetail, {onslide: function () {
+//                                // Getting Media ID Per SLider
+//                                var index = this.getIndex();
+//                                var down_load_media_id = DetailObj[index].M_id;
+//                                var down_load_media_URL = DetailObj[index].M_url;
+//                                console.log('Download Media URL' + down_load_media_URL);
+//
+//                                var _media_id_title = item['title'];
+//                                var _media_id_title_parse = _media_id_title.indexOf('_');
+//                                var eventdetail_media_id = _media_id_title.substring(_media_id_title_parse + 1);
+//
+//                                //var download_url = $(this).attr('data-source');
+//                                var media_download_url_final = "/index/downloadMedia?file=" + down_load_media_URL;
+//                                $(".memreas-detail-download").attr("href", media_download_url_final);
+//                                //Getting Event ID Per SLider
+//
+//                                var eventdetail_id = _media_id_title.substring(0, 36);
+//                                console.log("_media_id_title" + JSON.stringify(_media_id_title));
+//                                console.log("eventdetail_id" + JSON.stringify(eventdetail_id));
+//                                getMediaComment();
+//
+//                            }, container: '#blueimp-video-carousel-gallery-detail', carousel: 'true', preloadRange: 2, transitionSpeed: 600});
 
 
 
@@ -1046,7 +1040,89 @@ function addFriendToEvent(eventId) {
             jerror(message);
     });
 }
-function memreasAddComment() {
+
+function reportMedia(userConfirm) {
+    if (!userConfirm)
+        jconfirm('report this media?', 'reportMedia(true)');
+    else {
+        ajaxRequest('mediainappropriate', [{
+                tag: 'media_id',
+                value: eventdetail_media_id.toString()
+            }, {
+                tag: 'is_appropriate',
+                value: '1'
+            }, {
+                tag: 'user_id',
+                value: LOGGED_USER_ID.toString()
+            }], function (response) {
+
+            if (getValueFromXMLTag(response, 'status') == 'Success')
+                jsuccess(getValueFromXMLTag(response, 'message'));
+            else
+                jerror(getValueFromXMLTag(response, 'message'));
+        });
+    }
+}
+
+/* Additions fixing */
+
+// Prevent clicking on carousel on detail tab if not enough media with full
+// width
+function checkMemreasDetailCarousel() {
+    var jDetailMediaScroll = $(".carousel-memrease-area");
+    var numberOfChild = jDetailMediaScroll.find("ul#carousel li").length;
+
+    if (numberOfChild < 5) {
+        $("body")
+                .append(
+                        '<style type="text/css">.carousel-memrease-area navs{ display: none; }</style>');
+    }
+
+}
+
+$('.elastislide-list > li >a').click(function () {
+    alert('hello');
+    return false;
+});
+
+$("#tabs-memreas-detail li:first").click(function(){
+    blueimp.Gallery(objArr2, {onslide: function () {
+                            }, container: '#blueimp-video-carousel-gallery', carousel: 'true', preloadRange: 2, transitionSpeed: 400});
+ 
+});
+var event_media_ID_variable ='';
+function BlueIMPGallery(){
+     console.log("Media Array Blue Gallery" +  JSON.stringify(mediaIDArray));
+     console.log("Media Array Object Detail Gallery" +  JSON.stringify(objDetail));
+    var jsonstrong2 = JSON.stringify(mediaIDArray);
+    var DetailObj2 = JSON.parse(jsonstrong2);
+      blueimp.Gallery(objDetail, {onslide: function () {
+                                // Getting Media ID Per SLider
+                                var index = this.getIndex();
+                                var eventdetail_media_id = DetailObj2[index].M_id;
+                                event_media_ID_variable=DetailObj2[index].M_id;
+                                var down_load_media_URL = DetailObj2[index].M_url;
+                                var eventdetail_id = DetailObj2[index].M_eventId;
+                                console.log('Download Media URL' + down_load_media_URL);
+                                    
+                               
+                                //var download_url = $(this).attr('data-source');
+                                var media_download_url_final = "/index/downloadMedia?file=" + down_load_media_URL;
+                                $(".memreas-detail-download").attr("href", media_download_url_final);
+                                //Getting Event ID Per SLider
+
+                               
+                                getMediaComment();
+                                //likeMemreasMedia();
+                                
+
+                            }, container: '#blueimp-video-carousel-gallery-detail', carousel: 'true', preloadRange: 2, transitionSpeed: 600,startSlideshow: false});
+
+     
+}
+    
+    
+    function memreasAddComment() {
     var current_user = $("input[name=user_id]").val();
     var comment_txt = $("input[name=comment_txtfield]").val();
     if (comment_txt == '' || comment_txt == 'your comment here') {
@@ -1058,7 +1134,7 @@ function memreasAddComment() {
             value: eventdetail_id
         }, {
             tag: "media_id",
-            value: eventdetail_media_id
+            value: event_media_ID_variable
         }, {
             tag: "user_id",
             value: current_user
@@ -1071,6 +1147,7 @@ function memreasAddComment() {
         }];
     addLoading('.popup-addcomment-text', 'input', '');
     disableButtons("#popupcomment");
+    $('#checkIdRuntime').html(event_media_ID_variable + '___'+eventdetail_id);
     ajaxRequest('addcomments', params, function (ret_xml) {
 
         var jComment_popup = $(".commentpopup");
@@ -1124,7 +1201,7 @@ function likeMemreasMedia() {
     var current_user = $("input[name=user_id]").val();
     ajaxRequest('likemedia', [{
             tag: "media_id",
-            value: eventdetail_media_id
+            value: event_media_ID_variable
         }, {
             tag: "user_id",
             value: current_user
@@ -1146,89 +1223,10 @@ function updateMediaLike() {
     // Update media like total
     var params = [{
             tag: 'media_id',
-            value: eventdetail_media_id
+            value: event_media_ID_variable
         }];
     ajaxRequest('getmedialike', params, function (xml_response) {
         $(".memreas-detail-likecount span").html(
                 getValueFromXMLTag(xml_response, 'likes'));
     }, 'undefined', true);
 }
-
-function reportMedia(userConfirm) {
-    if (!userConfirm)
-        jconfirm('report this media?', 'reportMedia(true)');
-    else {
-        ajaxRequest('mediainappropriate', [{
-                tag: 'media_id',
-                value: eventdetail_media_id.toString()
-            }, {
-                tag: 'is_appropriate',
-                value: '1'
-            }, {
-                tag: 'user_id',
-                value: LOGGED_USER_ID.toString()
-            }], function (response) {
-
-            if (getValueFromXMLTag(response, 'status') == 'Success')
-                jsuccess(getValueFromXMLTag(response, 'message'));
-            else
-                jerror(getValueFromXMLTag(response, 'message'));
-        });
-    }
-}
-
-/* Additions fixing */
-
-// Prevent clicking on carousel on detail tab if not enough media with full
-// width
-function checkMemreasDetailCarousel() {
-    var jDetailMediaScroll = $(".carousel-memrease-area");
-    var numberOfChild = jDetailMediaScroll.find("ul#carousel li").length;
-
-    if (numberOfChild < 5) {
-        $("body")
-                .append(
-                        '<style type="text/css">.carousel-memrease-area navs{ display: none; }</style>');
-    }
-
-}
-
-$('.elastislide-list > li >a').click(function () {
-    alert('hello');
-    return false;
-});
-
-$("#tabs-memreas-detail li:first").click(function(){
-    blueimp.Gallery(objArr2, {onslide: function () {
-                            }, container: '#blueimp-video-carousel-gallery', carousel: 'true', preloadRange: 2, transitionSpeed: 400});
- 
-});
-function BlueIMPGallery(){
-      blueimp.Gallery(objDetail, {onslide: function () {
-                                // Getting Media ID Per SLider
-                                var index = this.getIndex();
-                                var down_load_media_id = DetailObj[index].M_id;
-                                var down_load_media_URL = DetailObj[index].M_url;
-                                console.log('Download Media URL' + down_load_media_URL);
-//                            for(var k=0; k <=DetailObj.length; k++){
-//                                console.log('Object Media ID' +);
-//                            }
-                                var _media_id_title = item['title'];
-                                var _media_id_title_parse = _media_id_title.indexOf('_');
-                                var eventdetail_media_id = _media_id_title.substring(_media_id_title_parse + 1);
-
-                                //var download_url = $(this).attr('data-source');
-                                var media_download_url_final = "/index/downloadMedia?file=" + down_load_media_URL;
-                                $(".memreas-detail-download").attr("href", media_download_url_final);
-                                //Getting Event ID Per SLider
-
-                                var eventdetail_id = _media_id_title.substring(0, 36);
-                                console.log("_media_id_title" + JSON.stringify(_media_id_title));
-                                console.log("eventdetail_id" + JSON.stringify(eventdetail_id));
-                                getMediaComment();
-
-                            }, container: '#blueimp-video-carousel-gallery-detail', carousel: 'true', preloadRange: 2, transitionSpeed: 600});
-
-     
-}
-    
