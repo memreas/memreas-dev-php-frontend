@@ -115,7 +115,7 @@ function getMediaComment() {
                     value: eventdetail_id
                 }, {
                     tag: 'media_id',
-                    value: eventdetail_media_id
+                    value: event_media_ID_variable
                 }, {
                     tag: 'limit',
                     value: '100'
@@ -330,13 +330,13 @@ $(function () {
         $(".memreas-main").fadeIn(500);
     });
 });
- var objArr2 = new Array();
+var objArr2 = new Array();
 var objDetail = new Array();
 var mediaIDArray = new Array();
 var media_download_url = '';
-  var item = new Object();
-                            var Item_media_Id = new Object();
-                            var DetailImage = new Object();
+
+var Item_media_Id ='';
+var DetailImage = '';
 
 function showEventDetail(eventId, userId) {
     eventdetail_id = eventId;
@@ -480,30 +480,33 @@ function showEventDetail(eventId, userId) {
 
                           
 
-
+                            var item = new Object();
+                             Item_media_Id = new Object();
+                             DetailImage = new Object();
 
                             if (_media_type == 'video') {
 
                                 Item_media_Id['M_id'] = mediaId;
                                 Item_media_Id['M_url'] = _media_url_web;
                                 Item_media_Id['M_eventId'] = eventId;
+                                
+                                
                                 item['title'] = eventId + "_" + mediaId;
                                 item['type'] = "video/*";
                                 item['poster'] = _media_thumbnail_large;
                                 item['description'] = media_download_url;
-                               
                                 item['sources'] = [{href: _media_url_hls, type: "application/x-mpegurl"}, {href: _media_url_web, type: "video/mp4"}];
 
                                 DetailImage['title'] = eventId + "_" + mediaId;
                                 DetailImage['type'] = "video/*";
                                 DetailImage['poster'] = _media_thumbnail_large;
                                 DetailImage['description'] = media_download_url;
-
                                 DetailImage['sources'] = [{href: _media_url_hls, type: "application/x-mpegurl"}, {href: _media_url_web, type: "video/mp4"}];
                             } else {
                                 Item_media_Id['M_id'] = mediaId;
                                 Item_media_Id['M_url'] = _media_thumbnail_large;
-                                 Item_media_Id['M_eventId'] = eventId;
+                                Item_media_Id['M_eventId'] = eventId;
+                               
                                 item['title'] = eventId + "_" + mediaId;
                                 item['type'] = "image/jpeg";
                                 item['href'] = main_media_url;
@@ -525,11 +528,11 @@ function showEventDetail(eventId, userId) {
                             mediaIDArray.push(Item_media_Id);
 
                         }
-                        //console.log("objArr2" + JSON.stringify(objArr2));
+                        console.log("objArr2" + JSON.stringify(objArr2));
                        
 
-                        var jsonstrong = JSON.stringify(mediaIDArray);
-                        var DetailObj = JSON.parse(jsonstrong);
+                        //var jsonstrong = JSON.stringify(mediaIDArray);
+                        //var DetailObj = JSON.parse(jsonstrong);
                         //console.log("objArr2 STT" + jsonstrong);
                         blueimp.Gallery(objArr2, { container: '#blueimp-video-carousel-gallery', carousel: 'true', preloadRange: 2, transitionSpeed: 400});
 //                        blueimp.Gallery(objDetail, {onslide: function () {
@@ -1092,6 +1095,7 @@ $("#tabs-memreas-detail li:first").click(function(){
 });
 var event_media_ID_variable ='';
 function BlueIMPGallery(){
+    
      console.log("Media Array Blue Gallery" +  JSON.stringify(mediaIDArray));
      console.log("Media Array Object Detail Gallery" +  JSON.stringify(objDetail));
     var jsonstrong2 = JSON.stringify(mediaIDArray);
@@ -1113,7 +1117,8 @@ function BlueIMPGallery(){
 
                                
                                 getMediaComment();
-                                //likeMemreasMedia();
+                                updateMediaLike();
+                                
                                 
 
                             }, container: '#blueimp-video-carousel-gallery-detail', carousel: 'true', preloadRange: 2, transitionSpeed: 600,startSlideshow: false});
@@ -1209,6 +1214,7 @@ function likeMemreasMedia() {
             tag: "is_like",
             value: "1"
         }], function (ret_xml) {
+        
         jsuccess(getValueFromXMLTag(ret_xml, 'message'));
         updateMediaLike();
     });
@@ -1226,6 +1232,7 @@ function updateMediaLike() {
             value: event_media_ID_variable
         }];
     ajaxRequest('getmedialike', params, function (xml_response) {
+         console.log('LIKE MEDIA UPDATE:'+ xml_response + event_media_ID_variable);
         $(".memreas-detail-likecount span").html(
                 getValueFromXMLTag(xml_response, 'likes'));
     }, 'undefined', true);
