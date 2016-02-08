@@ -1152,7 +1152,7 @@ function BlueIMPGallery(){
         }];
     addLoading('.popup-addcomment-text', 'input', '');
     disableButtons("#popupcomment");
-    $('#checkIdRuntime').html(event_media_ID_variable + '___'+eventdetail_id);
+    
     ajaxRequest('addcomments', params, function (ret_xml) {
 
         var jComment_popup = $(".commentpopup");
@@ -1204,7 +1204,12 @@ function BlueIMPGallery(){
 }
 function likeMemreasMedia() {
     var current_user = $("input[name=user_id]").val();
-    ajaxRequest('likemedia', [{
+    ajaxRequest('likemedia', [
+        {
+            tag: "event_id",
+            value: eventdetail_id
+        },
+        {
             tag: "media_id",
             value: event_media_ID_variable
         }, {
