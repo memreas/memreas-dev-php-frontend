@@ -231,13 +231,13 @@ body:last-child .blueimp-gallery-playing > .play-pause {
 .blueimp-gallery > .slides > .slide > .slide-content{width:100%;}
 
 /* Small screen max-width 640px */
-    @media only screen and (max-width:40em){}
+    @media only screen and (max-width:40em){ .blueimp-gallery-carousel{height: 410px;}}
     /* Medium screen min-width 641px */ 
-    @media only screen and (min-width:40.063em){}
+    @media only screen and (min-width:40.063em){ .blueimp-gallery-carousel{height: 410px;}}
     /* Medium screen min-width 641px and max-width 1024px */
-    @media only screen and (min-width:40.063em) and (max-width:64em){}     
+    @media only screen and (min-width:40.063em) and (max-width:64em){ .blueimp-gallery-carousel{height: 410px;}}     
     /* Large screen min-width 1025px */ 
-    @media only screen and (min-width: 64.063em){} 
+    @media only screen and (min-width: 64.063em){ .blueimp-gallery-carousel{height: 410px;}} 
      /* Large screen min-width 1025px and max-width 1440px */    
     @media only screen and (min-width: 64.063em) and (max-width: 90em){
         .blueimp-gallery-carousel{height: 410px;}
