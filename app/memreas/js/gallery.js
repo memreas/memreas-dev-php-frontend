@@ -306,7 +306,15 @@ jQuery.fetch_server_media = function() {
 					} // end for
 
 					console.log("objArr" + JSON.stringify(objArr));
-					blueimp.Gallery( objArr, { container: '#blueimp-video-carousel', carousel: 'true' } );
+                                        
+                                        //var gallery = blueimp.Gallery(links, options);
+					blueimp.Gallery( objArr, {onslide:function(){
+                                              
+                                              
+                                        },container: '#blueimp-video-carousel', carousel: 'true', preloadRange: 2,transitionSpeed: 400 } );
+                                //var pos =   
+                                
+                                //gallery.slide(gallery.getIndex(),400);
                                         
 					setTimeout(function() {
 						// $(".preload-files").hide();
