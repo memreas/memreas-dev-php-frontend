@@ -69,12 +69,10 @@ $(function () {
         }
     });
     $("#tabs-memreas li:eq(2) a").click(function () {
-//        if (checkReloadItem('view_public_events')) {
-//           
-//            fetchPublicMemreas();
-//        }
-
-fetchPublicMemreas();
+        if (checkReloadItem('view_public_events')) {
+            //console.log('Public Event');
+           fetchpubsMemreas();
+        }
     });
 });
 function fetchMyMemreas() {
@@ -523,7 +521,7 @@ function fetchFriendsMemreas(friendMemreasType) {
                     value: '20'
                 }],
             function (response) {
-                console.log('FRIENDMEMREAS -->'+response);
+                
                 if (friendMemreasType == 'private') {
                     console.log('friendMemreasType-->' + friendMemreasType);
 //                    if ($(".event_images").hasClass("mCustomScrollbar"))
@@ -801,25 +799,21 @@ function fetchFriendsMemreas(friendMemreasType) {
                 }
             });
 }
+function addMemreas() {
+    $("a.share").click();
+    share_clearMemreas(true);
+}
 
-//  Public Tab Memreas
+// Public Event
 
-function fetchPublicMemreas() {
+
+
+function fetchpubsMemreas() {
    
     var user_id = $("input[name=user_id]").val();
-//    if (friendMemreasType == 'private') {
-//        var showPublic = '0';
-//        var showAccepted = '1';
-//        var sell_class = 'private-';
-//    } else {
-//        var showPublic = '1';
-//        var showAccepted = '1';
-//        var sell_class = 'public-';
-//    }
-
-        var showPublic = '1';
-        var showAccepted = '0';
-        var sell_class = 'public-';
+    var showPublic = '1';
+    var showAccepted = '0';
+     var sell_class = 'public-';
     ajaxRequest(
             'viewevents',
             [{
@@ -842,15 +836,16 @@ function fetchPublicMemreas() {
                     value: '20'
                 }],
             function (response) {
-                console.log('Public Response ->'+response);
-                 if ($(".event_images_public").hasClass("mCustomScrollbar"))
+                
+    console.log('PUb RES' +response);
+                   
+                    if ($(".event_images_public").hasClass("mCustomScrollbar"))
                         var target_object = ".event_images_public .mCSB_container";
                     else
-                      var target_object = ".event_images_public";
-                     
+                        var target_object = ".event_images_public";
                     ajaxScrollbarElement('.event_images_public');
-                    $(".event_images_public").empty();
-                //var friendsId = new Array();
+                    //$(".event_images_public").empty();
+                
                 var friends = getSubXMLFromTag(response, 'event');
                 if (getValueFromXMLTag(response, 'status') == "Success") {
                     if (friends.length > 0) {
@@ -859,45 +854,50 @@ function fetchPublicMemreas() {
                          */
                         friends = getSubXMLFromTag(response, 'event');
                         var friend_count = friends.length;
-                        console.log('FRC '+friend_count);
                         for (var i = 0; i < friend_count; i++) {
                             var friend = friends[i].innerHTML;
                             var creator_id = $(friend).filter(
                                     'event_creator_user_id').html();
+//                             var profile_img = $(friend).filter(
+//                                        'profile_pic').html();
+//                             profile_img = removeCdataCorrectLink(profile_img);
+                            var profile_img = '/memreas/img/profile-pic.jpg';
+                             var friend_row = 'friendPublic-' + creator_id;
+                              var event_creator = $(friend).filter(
+                                    'event_creator').html();
                             // console.log('event_creator_user_id-->' +
                             // JSON.stringify(friends, null, '\t'));
                             console
                                     .log('event_creator_user_id-->'
                                             + creator_id);
                             
-                             var friend_row = 'friendPublic-' + creator_id;
-                            if (typeof ($(friend).filter('profile_pic_79x80')) != 'undefined') {
-                                var profile_img = $(friend).filter(
-                                        'profile_pic_79x80').html();
-                                profile_img = removeCdataCorrectLink(profile_img);
-                            } else
-                                profile_img = '/memreas/img/profile-pic.jpg';
-                            if (profile_img == '')
-                                profile_img = '/memreas/img/profile-pic.jpg';
-                            console.log('profile_pic-->' + profile_img);
-                            console
-                                    .log('$(friend).filter("profile_pic_79x80").html()-->'
-                                            + removeCdataCorrectLink($(friend)
-                                                    .filter('profile_pic_79x80')
-                                                    .html()));
-                            console
-                                    .log('$(friend).filter("profile_pic_448x306").html()-->'
-                                            + removeCdataCorrectLink($(friend)
-                                                    .filter(
-                                                            'profile_pic_448x306')
-                                                    .html()));
-                            console
-                                    .log('$(friend).filter("profile_pic_98x78").html()-->'
-                                            + removeCdataCorrectLink($(friend)
-                                                    .filter('profile_pic_98x78')
-                                                    .html()));
-                            var event_creator = $(friend).filter(
-                                    'event_creator').html();
+//                            var friend_row = 'friendPublic-' + creator_id;
+//                            if (typeof ($(friend).filter('profile_pic_79x80')) != 'undefined') {
+//                                var profile_img = $(friend).filter(
+//                                        'profile_pic_79x80').html();
+//                                profile_img = removeCdataCorrectLink(profile_img);
+//                            } else
+//                                profile_img = '/memreas/img/profile-pic.jpg';
+//                            if (profile_img == '')
+//                                profile_img = '/memreas/img/profile-pic.jpg';
+//                            console.log('profile_pic-->' + profile_img);
+//                            console
+//                                    .log('$(friend).filter("profile_pic_79x80").html()-->'
+//                                            + removeCdataCorrectLink($(friend)
+//                                                    .filter('profile_pic_79x80')
+//                                                    .html()));
+//                            console
+//                                    .log('$(friend).filter("profile_pic_448x306").html()-->'
+//                                            + removeCdataCorrectLink($(friend)
+//                                                    .filter(
+//                                                            'profile_pic_448x306')
+//                                                    .html()));
+//                            console
+//                                    .log('$(friend).filter("profile_pic_98x78").html()-->'
+//                                            + removeCdataCorrectLink($(friend)
+//                                                    .filter('profile_pic_98x78')
+//                                                    .html()));
+//                           
                             console.log('Tr Object'+target_object);
                             $(target_object)
                                     .append(
@@ -912,202 +912,202 @@ function fetchPublicMemreas() {
                                             + '<div id="'
                                             + friend_row
                                             + '" class="swipeclass"></div></div></div>');
-                               console.log('Tr Object'+target_object);     
 
-//                            var global_width = $("#tab-content-memreas")
-//                                    .width();
-//                            var base_event_row_width = 120;
-//
-//                            /**
-//                             * Fetch events by friend
-//                             */
-//                            var events_resources = $(friend).filter('events')
-//                                    .html();
-//                            var event_resources = $(events_resources).filter(
-//                                    'event');
-//                            var event_resources_count = event_resources.length;
-//                            var total_event_row_width = 120 * event_resources_count;
-//
-//                            console.log('event_resources_count-->'
-//                                    + event_resources_count);
-//
-//                            if (event_resources_count > 0) {
-//                                for (var key = 0; key < event_resources_count; key++) {
-//                                    var event_resource = event_resources[key].innerHTML;
-//                                    console.log('event_resource-->'
-//                                            + event_resource);
-//                                    var eventId = $(event_resource).filter(
-//                                            'event_id').html();
-//                                    console.log('eventId-->' + eventId);
-//                                    // fetch event media
-//                                    var event_media_resource = $(event_resource)
-//                                            .filter('event_media').html();
-//
-//                                    var event_media_98x78 = $(
-//                                            event_media_resource).filter(
-//                                            'event_media_98x78').html();
-//                                    console.log('event_media_98x78-->'
-//                                            + event_media_98x78);
-//                                    event_media_98x78 = removeCdataCorrectLink(event_media_98x78);
-//                                    console.log('event_media_98x78 after-->'
-//                                            + event_media_98x78);
-//                                    if (event_media_98x78 == '')
-//                                        event_media_98x78 = '/memreas/img/small/1.jpg';
-//                                    var event_name = $(event_resource).filter(
-//                                            'event_name').html();
-//                                    var event_metadata = $(event_resource)
-//                                            .filter('event_metadata').html();
-//                                    console.log('event_name-->' + event_name);
-//                                    console.log('event_metadata-->'
-//                                            + event_metadata);
-//
-//                                    // Check if event is selling or not
-//                                    var sell_price = '';
-//                                    if (event_metadata != ''
-//                                            && typeof (event_metadata) != 'undefined') {
-//                                        event_metadata = JSON
-//                                                .parse(event_metadata);
-//                                        if (typeof (event_metadata.price) != 'undefined') {
-//                                            if (event_metadata.price != '')
-//                                                sell_price = event_metadata.price;
-//                                        }
-//                                    }
-//                                    if (sell_price == '') {
-//                                        console.log('sell_price-->'
-//                                                + sell_price);
-//                                        $("#" + friend_row)
-//                                                .append(
-//                                                        '<div class="event_img"><a href="javascript:showEventDetail(\''
-//                                                        + eventId
-//                                                        + '\', \''
-//                                                        + creator_id
-//                                                        + '\');">'
-//                                                        + '<img src="'
-//                                                        + event_media_98x78
-//                                                        + '" alt="">'
-//                                                        + '</a>'
-//                                                        + '<span class="event_name_box"><a style="color:#FFF;" href="javascript:showEventDetail(\''
-//                                                        + eventId
-//                                                        + '\', \''
-//                                                        + creator_id
-//                                                        + '\');">!'
-//                                                        + event_name
-//                                                        + '</a></span></div>');
-//                                    } else {
-//                                        console.log('selling event???--');
-//                                        $("#" + friend_row)
-//                                                .append(
-//                                                        '<div class="event_img" id="'
-//                                                        + sell_class
-//                                                        + 'selling-'
-//                                                        + eventId
-//                                                        + '" data-owner="'
-//                                                        + creator_id
-//                                                        + '" data-click="popupBuyMedia(\''
-//                                                        + eventId
-//                                                        + '\', \''
-//                                                        + sell_price
-//                                                        + '\', \''
-//                                                        + event_name
-//                                                        + '\');"><div class="sell-event-overlay"></div><span class="sell-event-buyme"><i>checking...</i></span><img src="'
-//                                                        + event_media_98x78
-//                                                        + '" alt=""><span class="event_name_box"><a style="color:#FFF;" href="javascript:;">!'
-//                                                        + event_name
-//                                                        + '</a></span></div>');
-//
-//                                        // Start requesting to pay server for
-//                                        // checking event is bought or not
-//                                        var params = new Object;
-//                                        params.user_id = LOGGED_USER_ID;
-//                                        params.event_id = eventId;
-//                                        var params_json = JSON.stringify(
-//                                                params, null, '\t');
-//                                        var data = '{"action": "check_own_event", '
-//                                                + '"type":"jsonp", '
-//                                                + '"json": '
-//                                                + params_json
-//                                                + '}';
-//
-//                                        var stripeActionUrl = STRIPE_SERVER_URL
-//                                                + '/stripe/checkOwnEvent';
-//                                        $
-//                                                .ajax({
-//                                                    url: stripeActionUrl,
-//                                                    type: 'POST',
-//                                                    dataType: 'jsonp',
-//                                                    data: 'json=' + data,
-//                                                    success: function (response) {
-//                                                        var current_event = response.event_id;
-//                                                        var jElement = $("#"
-//                                                                + sell_class
-//                                                                + "selling-"
-//                                                                + current_event);
-//                                                        if (response.status == 'Success') {
-//                                                            jElement
-//                                                                    .removeAttr(
-//                                                                            "data-owner")
-//                                                                    .removeAttr(
-//                                                                            "data-click")
-//                                                                    .find("a")
-//                                                                    .attr(
-//                                                                            "href",
-//                                                                            "javascript:showEventDetail('"
-//                                                                            + eventId
-//                                                                            + "', '"
-//                                                                            + creator_id
-//                                                                            + "');");
-//                                                            jElement
-//                                                                    .find(
-//                                                                            ".sell-event-overlay")
-//                                                                    .remove();
-//                                                            jElement
-//                                                                    .find(
-//                                                                            ".sell-event-buyme")
-//                                                                    .remove();
-//                                                        } else {
-//                                                            jElement
-//                                                                    .attr(
-//                                                                            "onclick",
-//                                                                            jElement
-//                                                                            .attr("data-click"))
-//                                                                    .removeAttr(
-//                                                                            "data-click");
-//                                                            jElement
-//                                                                    .find(
-//                                                                            ".sell-event-buyme")
-//                                                                    .html(
-//                                                                            "buy me");
-//                                                        }
-//
-//                                                    }
-//                                                });
-//                                    }
-//                                } // end for loop for (var key=0;key <
-//                                // friend_resources_count;key++)
-//
-//                                if (total_event_row_width > global_width) {
-//                                    $("#" + friend_row).swipe({
-//                                        TYPE: 'mouseSwipe',
-//                                        HORIZ: true
-//                                    });
-//                                }
-//                            } else {
-//                                $("#" + friend_row).append(
-//                                        'There is no event shared');
-//                                $("#" + friend_row).css({
-//                                    'color': '#FFF',
-//                                    'font-style': 'italic',
-//                                    'margin-bottom': '20px'
-//                                }).parent("#viewport").removeAttr('id')
-//                                        .removeAttr('class');
-//                            }
+                            var global_width = $("#tab-content-memreas")
+                                    .width();
+                            var base_event_row_width = 120;
+
+                            /**
+                             * Fetch events by friend
+                             */
+                            var events_resources = $(friend).filter('events')
+                                    .html();
+                            var event_resources = $(events_resources).filter(
+                                    'event');
+                            var event_resources_count = event_resources.length;
+                            var total_event_row_width = 120 * event_resources_count;
+
+                            console.log('event_resources_count-->'
+                                    + event_resources_count);
+
+                            if (event_resources_count > 0) {
+                                for (var key = 0; key < event_resources_count; key++) {
+                                    var event_resource = event_resources[key].innerHTML;
+                                    console.log('event_resource-->'
+                                            + event_resource);
+                                    var eventId = $(event_resource).filter(
+                                            'event_id').html();
+                                    console.log('eventId-->' + eventId);
+                                    // fetch event media
+                                    var event_media_resource = $(event_resource)
+                                            .filter('event_media').html();
+
+                                    var event_media_98x78 = $(
+                                            event_media_resource).filter(
+                                            'event_media_98x78').html();
+                                    console.log('event_media_98x78-->'
+                                            + event_media_98x78);
+                                    event_media_98x78 = removeCdataCorrectLink(event_media_98x78);
+                                    console.log('event_media_98x78 after-->'
+                                            + event_media_98x78);
+                                    if (event_media_98x78 == '')
+                                        event_media_98x78 = '/memreas/img/small/1.jpg';
+                                    var event_name = $(event_resource).filter(
+                                            'event_name').html();
+                                    var event_metadata = $(event_resource)
+                                            .filter('event_metadata').html();
+                                    console.log('event_name-->' + event_name);
+                                    console.log('event_metadata-->'
+                                            + event_metadata);
+
+                                    // Check if event is selling or not
+                                    var sell_price = '';
+                                    if (event_metadata != ''
+                                            && typeof (event_metadata) != 'undefined') {
+                                        event_metadata = JSON
+                                                .parse(event_metadata);
+                                        if (typeof (event_metadata.price) != 'undefined') {
+                                            if (event_metadata.price != '')
+                                                sell_price = event_metadata.price;
+                                        }
+                                    }
+                                    if (sell_price == '') {
+                                        console.log('sell_price-->'
+                                                + sell_price);
+                                        $("#" + friend_row)
+                                                .append(
+                                                        '<div class="event_img"><a href="javascript:showEventDetail(\''
+                                                        + eventId
+                                                        + '\', \''
+                                                        + creator_id
+                                                        + '\');">'
+                                                        + '<img src="'
+                                                        + event_media_98x78
+                                                        + '" alt="">'
+                                                        + '</a>'
+                                                        + '<span class="event_name_box"><a style="color:#FFF;" href="javascript:showEventDetail(\''
+                                                        + eventId
+                                                        + '\', \''
+                                                        + creator_id
+                                                        + '\');">!'
+                                                        + event_name
+                                                        + '</a></span></div>');
+                                    } else {
+                                        console.log('selling event???--');
+                                        $("#" + friend_row)
+                                                .append(
+                                                        '<div class="event_img" id="'
+                                                        + sell_class
+                                                        + 'selling-'
+                                                        + eventId
+                                                        + '" data-owner="'
+                                                        + creator_id
+                                                        + '" data-click="popupBuyMedia(\''
+                                                        + eventId
+                                                        + '\', \''
+                                                        + sell_price
+                                                        + '\', \''
+                                                        + event_name
+                                                        + '\');"><div class="sell-event-overlay"></div><span class="sell-event-buyme"><i>checking...</i></span><img src="'
+                                                        + event_media_98x78
+                                                        + '" alt=""><span class="event_name_box"><a style="color:#FFF;" href="javascript:;">!'
+                                                        + event_name
+                                                        + '</a></span></div>');
+
+                                        // Start requesting to pay server for
+                                        // checking event is bought or not
+                                        var params = new Object;
+                                        params.user_id = LOGGED_USER_ID;
+                                        params.event_id = eventId;
+                                        var params_json = JSON.stringify(
+                                                params, null, '\t');
+                                        var data = '{"action": "check_own_event", '
+                                                + '"type":"jsonp", '
+                                                + '"json": '
+                                                + params_json
+                                                + '}';
+
+                                        var stripeActionUrl = STRIPE_SERVER_URL
+                                                + '/stripe/checkOwnEvent';
+                                        $
+                                                .ajax({
+                                                    url: stripeActionUrl,
+                                                    type: 'POST',
+                                                    dataType: 'jsonp',
+                                                    data: 'json=' + data,
+                                                    success: function (response) {
+                                                        var current_event = response.event_id;
+                                                        var jElement = $("#"
+                                                                + sell_class
+                                                                + "selling-"
+                                                                + current_event);
+                                                        if (response.status == 'Success') {
+                                                            jElement
+                                                                    .removeAttr(
+                                                                            "data-owner")
+                                                                    .removeAttr(
+                                                                            "data-click")
+                                                                    .find("a")
+                                                                    .attr(
+                                                                            "href",
+                                                                            "javascript:showEventDetail('"
+                                                                            + eventId
+                                                                            + "', '"
+                                                                            + creator_id
+                                                                            + "');");
+                                                            jElement
+                                                                    .find(
+                                                                            ".sell-event-overlay")
+                                                                    .remove();
+                                                            jElement
+                                                                    .find(
+                                                                            ".sell-event-buyme")
+                                                                    .remove();
+                                                        } else {
+                                                            jElement
+                                                                    .attr(
+                                                                            "onclick",
+                                                                            jElement
+                                                                            .attr("data-click"))
+                                                                    .removeAttr(
+                                                                            "data-click");
+                                                            jElement
+                                                                    .find(
+                                                                            ".sell-event-buyme")
+                                                                    .html(
+                                                                            "buy me");
+                                                        }
+
+                                                    }
+                                                });
+                                    }
+                                } // end for loop for (var key=0;key <
+                                // friend_resources_count;key++)
+
+                                if (total_event_row_width > global_width) {
+                                    $("#" + friend_row).swipe({
+                                        TYPE: 'mouseSwipe',
+                                        HORIZ: true
+                                    });
+                                }
+                            } 
+                            else {
+                                $("#" + friend_row).append(
+                                        'There is no event shared');
+                                $("#" + friend_row).css({
+                                    'color': '#FFF',
+                                    'font-style': 'italic',
+                                    'margin-bottom': '20px'
+                                }).parent("#viewport").removeAttr('id')
+                                        .removeAttr('class');
+                            }
                         }
-                        //$(".event_images_public").mCustomScrollbar('update');
+                        $(".event_images_public").mCustomScrollbar('update');
                     }
                 }
             });
 }
-function addMemreas() {
-    $("a.share").click();
-    share_clearMemreas(true);
-}
+
+
+
+
