@@ -684,6 +684,9 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 								if (isset ( $_GET ['credits_activated'] )  && $_GET ['credits_activated'] == 1) {
 									echo "jsuccess('Your account has been credited. Enjoy!');";
 								}
+								if (isset ( $_GET ['credits_already_activated'] )  && $_GET ['credits_already_activated'] == 1) {
+									echo "jsuccess('These credits were applied in a prior activation.');";
+								}
 								?>
          <?php
 									
