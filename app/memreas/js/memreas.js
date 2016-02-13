@@ -845,6 +845,15 @@ function fetchpubsMemreas() {
                         var target_object = ".event_images_public";
                     ajaxScrollbarElement('.event_images_public');
                     //$(".event_images_public").empty();
+                    
+                
+                
+                //
+                
+                 
+                        
+                    
+                    
                 
                 var friends = getSubXMLFromTag(response, 'event');
                 if (getValueFromXMLTag(response, 'status') == "Success") {
@@ -856,8 +865,15 @@ function fetchpubsMemreas() {
                         var friend_count = friends.length;
                         for (var i = 0; i < friend_count; i++) {
                             var friend = friends[i].innerHTML;
+                            console.log('Event Tag Iterate -->'+friend);
                             var creator_id = $(friend).filter(
                                     'event_creator_user_id').html();
+                            var event_id=$(friend).filter(
+                                    'event_id').html();
+                            var event_like_total=$(friend).filter(
+                                    'event_like_total').html();
+                            var event_comment_total=$(friend).filter(
+                                    'event_comment_total').html();
 //                             var profile_img = $(friend).filter(
 //                                        'profile_pic').html();
 //                             profile_img = removeCdataCorrectLink(profile_img);
@@ -865,11 +881,43 @@ function fetchpubsMemreas() {
                              var friend_row = 'friendPublic-' + creator_id;
                               var event_creator = $(friend).filter(
                                     'event_creator').html();
+                         
+                         var event_media=getSubXMLFromTag(friends[i], 'event_media');
+                         var event_media_count=event_media.length;
+                        var StrMedia='<ul class="event-pics">';
+                        for( var j=0; j < event_media_count; j++){
+                             var event_medi=event_media[j];
+                             var event_media_image=getValueFromXMLTag(event_medi,'event_media_448x306');
+                             var _event_media_type_=getValueFromXMLTag(event_medi,'event_media_type');
+                              var eventId = $(event).filter('event_id').html();
+                             if(_event_media_type_ =='image'){
+                                 StrMedia +='<li class="image"><a href="javascript:;" onclick="showEventDetail(\''
+                                + event_id
+                                + '\', \''
+                                + user_id
+                                + '\');" style="cursor: pointer;"><img src="'+removeCdataCorrectLink(event_media_image)+'"  style=""/></a></li>';
+                             }else if(_event_media_type_ =='video'){
+                                 StrMedia +='<li class="video"><a href="javascript:;" onclick="showEventDetail(\''
+                                + event_id
+                                + '\', \''
+                                + user_id
+                                + '\');" style="cursor: pointer;"><img src="'+removeCdataCorrectLink(event_media_image)+'"  style=""/></a></li>';
+                             }
+                             console.log('Each Event:'+removeCdataCorrectLink(event_media_image));
+                             //StrMedia +='<li><img src="'+removeCdataCorrectLink(event_media_image)+'"  style="width:100%"/></li>';
+                            
+                        }     
+                           
+                           StrMedia +='</ul><div style="clear:both;"></div>'; 
+                         
+                            
+                            
+                            
                             // console.log('event_creator_user_id-->' +
                             // JSON.stringify(friends, null, '\t'));
                             console
                                     .log('event_creator_user_id-->'
-                                            + creator_id);
+                                            + creator_id +'Event Id--> '+ event_id);
                             
 //                            var friend_row = 'friendPublic-' + creator_id;
 //                            if (typeof ($(friend).filter('profile_pic_79x80')) != 'undefined') {
@@ -907,11 +955,14 @@ function fetchpubsMemreas() {
                                             + '" alt=""></figure>'
                                             + '<aside class="pro-names2">@'
                                             + event_creator
-                                            + '</aside>'
+                                            + '</aside><div style="clear:both;"></div>'
+                                            + '<a href="javascript:;" title="Like media" class="memreas-detail-likecount"><img src="/memreas/img/like.png" alt=""></a><span style="position: relative;top: -11px;left: -21px;color: #fff;">'+event_like_total+'</span>'
+                                            + '<a href="javascript:;" title="Comment"><img src="/memreas/img/comment.png" alt=""></a><span style="position: relative;top: -11px;left: -21px;color: #fff;">'+event_comment_total+'</span>'
                                             + '</section><div id="viewport" class="mouse_swip" onselectstart="return false;">'
                                             + '<div id="'
                                             + friend_row
                                             + '" class="swipeclass"></div></div></div>');
+                               $(target_object).append(StrMedia);     
 
                             var global_width = $("#tab-content-memreas")
                                     .width();
@@ -979,7 +1030,7 @@ function fetchpubsMemreas() {
                                                         '<div class="event_img"><a href="javascript:showEventDetail(\''
                                                         + eventId
                                                         + '\', \''
-                                                        + creator_id
+                                                        + user_id
                                                         + '\');">'
                                                         + '<img src="'
                                                         + event_media_98x78
@@ -988,7 +1039,7 @@ function fetchpubsMemreas() {
                                                         + '<span class="event_name_box"><a style="color:#FFF;" href="javascript:showEventDetail(\''
                                                         + eventId
                                                         + '\', \''
-                                                        + creator_id
+                                                        + user_id
                                                         + '\');">!'
                                                         + event_name
                                                         + '</a></span></div>');
