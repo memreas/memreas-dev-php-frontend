@@ -183,6 +183,10 @@ class IndexController extends AbstractActionController {
 			$data = simplexml_load_string ( trim ( $result ) );
 			$_SESSION ['user_id'] = ( string ) $data->loginresponse->user_id;
 			$_SESSION ['username'] = ( string ) $data->loginresponse->username;
+			$_SESSION ['x_memreas_chameleon'] = ( string ) $data->loginresponse->x_memreas_chameleon;
+			Mlog::addone(__CLASS__.__METHOD__.'::$data->loginresponse->x_memreas_chameleon--->', $data->loginresponse->x_memreas_chameleon);
+			setcookie ('x_memreas_chameleon', $_SESSION ['x_memreas_chameleon']);
+			Mlog::addone(__CLASS__.__METHOD__.'::$_COOKIE[x_memreas_chameleon]--->', $_COOKIE['x_memreas_chameleon']);
 			$this->memreas_session ();
 		} else if ($action == 'logout') {
 			$this->memreas_session ();
