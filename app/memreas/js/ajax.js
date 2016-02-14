@@ -10,8 +10,6 @@ var xml_str = "";
 // fetchChameleon - validate entry
 // ////////////////////////////////
 fetchChameleon = function() {
-    alert('enter fetchChameleon');
-
     var action = 'fetchchameleon';
     var params = [ {
 	tag : 'x_memreas_chameleon',
