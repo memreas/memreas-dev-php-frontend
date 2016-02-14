@@ -65,6 +65,7 @@ function buycreditAddCard(){
         var obj = new Object();
         obj.user_id = $('input[name=user_id]').val();
         obj.memreascookie = getCookie("memreascookie");
+	obj.x_memreas_chameleon = getCookie("x_memreas_chameleon");
         obj.first_name = jAddCard.find("#credit_addcard_fname").val();
         obj.last_name = jAddCard.find("#credit_addcard_lname").val();
         obj.credit_card_type = jAddCard.find("#credit_addcard_cctype").val();
@@ -128,6 +129,7 @@ function buycredit_listCard(){
     var obj = new Object();
     obj.userid = stripeUserId;
     obj.memreascookie = getCookie("memreascookie");
+    obj.x_memreas_chameleon = getCookie("x_memreas_chameleon");
     var json_listCard = JSON.stringify(obj, null, '\t');
     var data = '{"action": "listcard", ' +
         '"type":"jsonp", ' +
@@ -225,6 +227,7 @@ function buycredit_removeCard(){
 
         var obj = new Object();
         obj.memreascookie = getCookie("memreascookie");
+	obj.x_memreas_chameleon = getCookie("x_memreas_chameleon");
         obj.cardSelected = cardSelected;
         
         var data_object = JSON.stringify(obj, null, '\t');
@@ -272,6 +275,7 @@ function fetch_customer(){
     var obj = new Object();
     obj.userid = $("input[name=user_id]").val();
     obj.memreascookie = getCookie("memreascookie");
+    obj.x_memreas_chameleon = getCookie("x_memreas_chameleon");
     var data_obj = JSON.stringify(obj, null, '\t');
     var data = '{"action": "getCustomerInfo", ' +
     '"type":"jsonp", ' +
@@ -355,6 +359,7 @@ function buycredit_confirmAmount(){
     var params = new Object;
     params.userid = $("input[name=user_id]").val();
     params.memreascookie = getCookie("memreascookie");
+    params.x_memreas_chameleon = getCookie("x_memreas_chameleon");
     params.stripe_card_reference_id = orderCard.stripe_card_reference_id;
     params.amount = $("select#credit-amount").val();
     var params_json = JSON.stringify(params, null, '\t');

@@ -172,6 +172,8 @@ $(function() {
 							}
 
 							var form = $(this);
+alert("more_page calling tvm ...");
+
 							// Get signed credentials
 							$
 									.ajax({

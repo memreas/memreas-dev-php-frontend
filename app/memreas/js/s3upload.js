@@ -96,7 +96,7 @@ $(document)
 																	}
 																}
 																uploadFilesInstance[currentUploadFileCount] = filename;
-
+alert("S3Upload calling tvm ...");
 																$
 																		.ajax({
 																			url : "/index/fetchMemreasTVM",

@@ -48,6 +48,7 @@ function register_sell_media() {
 				.attr('default')) ? '' : $("#sell-media-address2").val();
 		var params = {
 			memreascookie : getCookie("memreascookie"),
+			x_memreas_chameleon : getCookie("x_memreas_chameleon"),
 			user_id : user_id,
 			user_name : $("#sell-media-username").val(),
 			first_name : $("#sell-media-fname").val(),
