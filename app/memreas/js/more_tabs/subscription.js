@@ -242,6 +242,7 @@ function subscription_step4() {
 			+ 'stripe_subscribe';
 	var order_summary = new Object();
 	order_summary.memreascookie = getCookie("memreascookie");
+	order_summary.x_memreas_chameleon = getCookie("x_memreas_chameleon");
 	order_summary.userid = $("input[name=user_id]").val();
 	order_summary.card_id = orderCard.stripe_card_reference_id;
 	order_summary.plan = orderPlan.id;
@@ -302,6 +303,7 @@ function subscription_step4() {
 						var obj = new Object();
 						obj.userid = $("input[name=user_id]").val();
 						obj.memreascookie = getCookie("memreascookie");
+						obj.x_memreas_chameleon = getCookie("x_memreas_chameleon");
 						var data_obj = JSON.stringify(obj, null, '\t');
 						var data = '{"action": "getCustomerInfo", '
 								+ '"type":"jsonp", ' + '"json": ' + data_obj
@@ -364,6 +366,7 @@ function getPlans() {
 	var obj = new Object();
 	obj.user_id = $("input[name=user_id]").val();
 	obj.memreascookie = getCookie("memreascookie");
+	obj.x_memreas_chameleon = getCookie("x_memreas_chameleon");
 	var data_obj = JSON.stringify(obj, null, '\t');
 	var data = '{"action": "listPlan", ' + '"type":"jsonp", ' + '"json": '
 			+ data_obj + '}';
@@ -408,6 +411,7 @@ function getPlans() {
 						var obj = new Object();
 						obj.userid = $("input[name=user_id]").val();
 						obj.memreascookie = getCookie("memreascookie");
+						obj.x_memreas_chameleon = getCookie("x_memreas_chameleon");
 						var data_obj = JSON.stringify(obj, null, '\t');
 						var data = '{"action": "getCustomerInfo", '
 								+ '"type":"jsonp", ' + '"json": ' + data_obj
@@ -494,6 +498,7 @@ function listStripeCard() {
 	var obj = new Object();
 	obj.userid = stripeUserId;
 	obj.memreascookie = getCookie("memreascookie");
+	obj.x_memreas_chameleon = getCookie("x_memreas_chameleon");
 	var json_listCard = JSON.stringify(obj, null, '\t');
 	var data = '{"action": "listcard", ' + '"type":"jsonp", ' + '"json": '
 			+ json_listCard + '}';
@@ -617,6 +622,7 @@ function stripeAddCard() {
 		var obj = new Object();
 		console.log($('input[name=user_id]').val());
 		obj.memreascookie = getCookie("memreascookie");
+		obj.x_memreas_chameleon = getCookie("x_memreas_chameleon");
 		obj.user_id = $('input[name=user_id]').val();
 		obj.first_name = jAddCard.find("#addcard_fname").val();
 		obj.last_name = jAddCard.find("#addcard_lname").val();
@@ -691,6 +697,7 @@ function removeCard() {
 
 		var obj = new Object();
 		obj.memreascookie = getCookie("memreascookie");
+		obj.x_memreas_chameleon = getCookie("x_memreas_chameleon");
 		obj.cardSelected = cardSelected;
 
 		var data_object = JSON.stringify(obj, null, '\t');

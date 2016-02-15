@@ -25,6 +25,7 @@ jQuery.login - function () {
 }
 
 jQuery.execAjax = function (url, data, form_name) {
+    console.log("Inside gallery.phtml ---> jQuery.execAjax url-->" + url);
 	$.ajax( {
 		  type:'post',
 		  url: url,
@@ -38,7 +39,7 @@ jQuery.execAjax = function (url, data, form_name) {
 		  	//alert("Inside error jqXHR...");
 	    	alert(jqXHR.responseText);
 	    	alert(jqXHR.status);
-	 	//alert(textStatus);
+	 		//alert(textStatus);
 	    	//alert(errorThrown);
 		  }
 		});

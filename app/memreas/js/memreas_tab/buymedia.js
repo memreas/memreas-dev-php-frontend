@@ -77,6 +77,7 @@ function buyMedia(event_id) {
 			params.seller_id = event_owner;
 			params.event_id = event_id;
 			params.memreascookie = getCookie("memreascookie");
+			params.x_memreas_chameleon = getCookie("x_memreas_chameleon");
 			params.duration_from = duration_from;
 			params.duration_to = duration_to;
 
@@ -95,6 +96,8 @@ function buyMedia(event_id) {
 						data : 'json=' + data,
 						success : function(response) {
 							if (response.status == 'Success') {
+							    	alert("setX_MEMREAS_CHAMELEON(response.x_memreas_chameleon)-->" + response.x_memreas_chameleon);
+							    	setX_MEMREAS_CHAMELEON(response.x_memreas_chameleon);
 								jsuccess(response.message);
 								disablePopup("popupBuyMedia");
 								var current_event = response.event_id;
@@ -150,6 +153,7 @@ function popupBuyCredit() {
 	var obj = new Object();
 	obj.userid = LOGGED_USER_ID;
 	obj.memreascookie = getCookie("memreascookie");
+	obj.x_memreas_chameleon = getCookie("x_memreas_chameleon");
 	var json_listCard = JSON.stringify(obj, null, '\t');
 	var data = '{"action": "listcards", ' + '"type":"jsonp", ' + '"json": '
 			+ json_listCard + '}';
@@ -162,6 +166,9 @@ function popupBuyCredit() {
 				data : 'json=' + data,
 				success : function(response) {
 					if (response.status == 'Success') {
+					    	alert("setX_MEMREAS_CHAMELEON(response.x_memreas_chameleon)-->" + response.x_memreas_chameleon);
+					    	setX_MEMREAS_CHAMELEON(response.x_memreas_chameleon);
+						
 						var cards = response.payment_methods;
 						var number_of_cards = response.NumRows;
 						if (number_of_cards > 0) {
@@ -222,6 +229,7 @@ function popupCreditAddCard() {
 		var obj = new Object();
 		obj.user_id = $('input[name=user_id]').val();
 		obj.memreascookie = getCookie("memreascookie");
+		obj.x_memreas_chameleon = getCookie("x_memreas_chameleon");
 		obj.first_name = jAddCard.find("#addcard_fname").val();
 		obj.last_name = jAddCard.find("#addcard_lname").val();
 		obj.credit_card_type = jAddCard.find("#addcard_cctype").val();
@@ -248,6 +256,9 @@ function popupCreditAddCard() {
 					dataType : 'jsonp',
 					data : 'json=' + data,
 					success : function(response) {
+					    	alert("setX_MEMREAS_CHAMELEON(response.x_memreas_chameleon)-->" + response.x_memreas_chameleon);
+					    	setX_MEMREAS_CHAMELEON(response.x_memreas_chameleon);
+						
 						if (response.status == 'Success') {
 							jsuccess("Your card added successfully");
 							disablePopup('popupCreditAddCard');
@@ -296,6 +307,7 @@ function acceptBuyCredit() {
 	var params = new Object;
 	params.userid = LOGGED_USER_ID;
 	params.memreascookie = getCookie("memreascookie");
+	params.x_memreas_chameleon = getCookie("x_memreas_chameleon");
 	params.stripe_card_reference_id = buycredit_card;
 	params.amount = buycredit_amount;
 	var params_json = JSON.stringify(params, null, '\t');
@@ -310,6 +322,9 @@ function acceptBuyCredit() {
 		dataType : 'jsonp',
 		data : 'json=' + data,
 		success : function(response) {
+		    	alert("setX_MEMREAS_CHAMELEON(response.x_memreas_chameleon)-->" + response.x_memreas_chameleon);
+		    	setX_MEMREAS_CHAMELEON(response.x_memreas_chameleon);
+
 			if (response.status == 'Success') {
 				jsuccess(response.message);
 				$(".popup-buymedia-credit")
@@ -332,6 +347,7 @@ function popupReloadAccountBalance() {
 	var params = new Object;
 	params.user_id = LOGGED_USER_ID;
 	params.memreascookie = getCookie("memreascookie");
+	params.x_memreas_chameleon = getCookie("x_memreas_chameleon");
 	var params_json = JSON.stringify(params, null, '\t');
 	var data = '{"action": "buy_credit", ' + '"type":"jsonp", ' + '"json": '
 			+ params_json + '}';
@@ -345,7 +361,9 @@ function popupReloadAccountBalance() {
 		dataType : 'jsonp',
 		data : 'json=' + data,
 		success : function(response) {
-			console.log(response);
+		    	alert("setX_MEMREAS_CHAMELEON(response.x_memreas_chameleon)-->" + response.x_memreas_chameleon);
+		    	setX_MEMREAS_CHAMELEON(response.x_memreas_chameleon);
+
 			if (response.status == 'Success') {
 				userObject.buyer_balance = response.buyer_balance;
 				jTargetElement.html("$" + response.buyer_balance);
