@@ -877,6 +877,14 @@ function fetchpubsMemreas() {
 //                             var profile_img = $(friend).filter(
 //                                        'profile_pic').html();
 //                             profile_img = removeCdataCorrectLink(profile_img);
+
+//                            if (typeof ($(friend).filter('profile_pic_79x80')) != 'undefined') {
+//                                var profile_img = $(friend).filter(
+//                                        'profile_pic_79x80').html();
+//                                profile_img = removeCdataCorrectLink(profile_img);
+//                            } else
+//                                profile_img = '/memreas/img/profile-pic.jpg';
+                            
                             var profile_img = '/memreas/img/profile-pic.jpg';
                              var friend_row = 'friendPublic-' + creator_id;
                               var event_creator = $(friend).filter(
@@ -884,7 +892,7 @@ function fetchpubsMemreas() {
                          
                          var event_media=getSubXMLFromTag(friends[i], 'event_media');
                          var event_media_count=event_media.length;
-                        var StrMedia='<ul class="event-pics">';
+                        var StrMedia='<div style="clear:both;"></div><ul class="event-pics">';
                         for( var j=0; j < event_media_count; j++){
                              var event_medi=event_media[j];
                              var event_media_image=getValueFromXMLTag(event_medi,'event_media_448x306');
@@ -953,16 +961,16 @@ function fetchpubsMemreas() {
                                             + '<figure class="pro-pics2"><img class="public-profile-img" src="'
                                             + profile_img
                                             + '" alt=""></figure>'
-                                            + '<aside class="pro-names2">@'
+                                            + '<aside class="pro-names2" style="margin-top:0px;">@'
                                             + event_creator
-                                            + '</aside><div style="clear:both;"></div>'
-                                            + '<a href="javascript:;" title="Like media" class="memreas-detail-likecount"><img src="/memreas/img/like.png" alt=""></a><span style="position: relative;top: -11px;left: -21px;color: #fff;">'+event_like_total+'</span>'
-                                            + '<a href="javascript:;" title="Comment"><img src="/memreas/img/comment.png" alt=""></a><span style="position: relative;top: -11px;left: -21px;color: #fff;">'+event_comment_total+'</span>'
-                                            + '</section><div id="viewport" class="mouse_swip" onselectstart="return false;">'
+                                            + '</aside>'
+                                            + '<a href="javascript:;" title="Like media" class="memreas-detail-likecount" style="margin-left:10px;"><img src="/memreas/img/like.png" alt=""></a><span style="position: relative;top: -10px;left: -17px;color: #fff;">'+event_like_total+'</span>'
+                                            + '<a href="javascript:;" title="Comment" style="position: relative;top:5px;"><img src="/memreas/img/comment.png" alt=""></a><span style="position: relative;top: -8px;left: -19px;color: #fff;">'+event_comment_total+'</span>'
+                                            + StrMedia +'</section><div id="viewport" class="mouse_swip" onselectstart="return false;">'
                                             + '<div id="'
                                             + friend_row
                                             + '" class="swipeclass"></div></div></div>');
-                               $(target_object).append(StrMedia);     
+                               //$(target_object).append(StrMedia);     
 
                             var global_width = $("#tab-content-memreas")
                                     .width();
