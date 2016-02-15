@@ -473,8 +473,8 @@ share_addEvent = function(medianext) {
 			ckb_public = 1;
 			ckb_canpost = 0;
 			ckb_canadd = 0;
-			date_from = getElementValue('dtp_from').val() = sellmedia_duration_from;
-			date_to = getElementValue('dtp_to').val() = sellmedia_duration_to;
+			date_from = getElementValue('dtp_from').val(sellmedia_duration_from);
+			date_to = getElementValue('dtp_to').val(sellmedia_duration_to);
 		}
 
 		var ckb_viewable = getCheckBoxValue('ckb_viewable');

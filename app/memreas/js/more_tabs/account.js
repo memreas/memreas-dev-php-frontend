@@ -102,6 +102,7 @@ function loadAccountCard() {
     console.log('stripeUserId' + stripeUserId);
     obj.userid = stripeUserId;
     obj.memreascookie = getCookie("memreascookie");
+    obj.x_memreas_chameleon = getCookie("x_memreas_chameleon");
     var json_listCard = JSON.stringify(obj, null, '\t');
     var data = '{"action": "listcards", ' + '"memreascookie": "'
 	    + getCookie("memreascookie") + '",' + '"type":"jsonp", '
@@ -228,6 +229,7 @@ function accountRemoveCard(userConfirm) {
 
 	var obj = new Object();
 	obj.memreascookie = getCookie("memreascookie");
+	obj.x_memreas_chameleon = getCookie("x_memreas_chameleon");
 	obj.cardSelected = cardSelected;
 
 	var data_object = JSON.stringify(obj, null, '\t');
@@ -299,6 +301,7 @@ function accountAddCard() {
 	console.log($('input[name=user_id]').val());
 	obj.user_id = $('input[name=user_id]').val();
 	obj.memreascookie = getCookie("memreascookie");
+	obj.x_memreas_chameleon = getCookie("x_memreas_chameleon");
 	obj.first_name = jAddCard.find("#addcard_fname").val();
 	obj.last_name = jAddCard.find("#addcard_lname").val();
 	obj.credit_card_type = jAddCard.find("#addcard_cctype").val();
@@ -382,6 +385,7 @@ function accountViewCard() {
 	var params = new Object();
 	params.user_id = $("input[name=user_id]").val();
 	params.memreascookie = getCookie("memreascookie");
+	params.x_memreas_chameleon = getCookie("x_memreas_chameleon");
 	params.card_id = selectedCard;
 
 	var data_object = JSON.stringify(params, null, '\t');
@@ -526,6 +530,7 @@ function accountUpdateCard() {
 	var obj = new Object();
 	obj.user_id = $("input[name=user_id]").val();
 	obj.memreascookie = getCookie("memreascookie");
+	obj.x_memreas_chameleon = getCookie("x_memreas_chameleon");
 	obj.id = jEditCard.find("#card_id").val();
 	obj.name = jEditCard.find("#addcard_fname").val() + ' '
 		+ jEditCard.find("#addcard_lname").val();
@@ -585,6 +590,7 @@ function getAccountPlans() {
     var obj = new Object();
     obj.userid = $("input[name=user_id]").val();
     obj.memreascookie = getCookie("memreascookie");
+    obj.x_memreas_chameleon = getCookie("x_memreas_chameleon");
     data_obj = JSON.stringify(obj, null, '\t');
     data = '{"action": "getCustomerInfo", ' + '"type":"jsonp", ' + '"json": '
 	    + data_obj + '}';

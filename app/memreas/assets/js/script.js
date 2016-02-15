@@ -55,8 +55,11 @@ $(document).ready( function() {
                   data: {title: data.files[0].name}, // send the file name to the server so it can generate the key param
                   async: false,
                   success: function(data) {
-                    // Now that we have our data, we update the form so it contains all
-                    // the needed data to sign the request
+                    /**
+                     * -
+                     *  Now that we have our data, we update the form so it contains all
+                     *  the needed data to sign the request
+                     */
                     form.find('input[name=policy]').val(data.policy)
                     form.find('input[name=signature]').val(data.signature)
                   }
@@ -65,14 +68,13 @@ $(document).ready( function() {
                 var filetype = data.files[0].type;
                 var filename = data.files[0].name;
                 var key_value = '${filename}';
-                //Debugging
-                console.log('filetype'+filetype);
-                console.log('filename'+filename);
-                console.log('key_value'+key_value);
-                //End Debugging
                 
 
-                //Check if valid type is image or video are allowed
+                /**
+                 * -
+                 * Check if valid type is image or video are allowed
+                 */
+                
                 if  (!(filetype.indexOf('image') >= 0 || filetype.indexOf('video') >= 0)){
                     jerror('file type is not allowed');
                     return false;
@@ -114,7 +116,6 @@ $(document).ready( function() {
                                 '</div>' +
                               '</li>');
 
-                //data.context = tpl2.appendTo(".image_upload_box");
                 data.context = tpl2;
 
                 //Active on share tab
@@ -153,8 +154,6 @@ $(document).ready( function() {
                     else {
                          jqXHR = data.submit();
                          data.context.find('.progress-text').html('Ok! Uploading...');
-                         //data.context.find('.progress-text').html('Queued');
-                         //putObjectUploadToQueue(data);
                          data.context.find("a.cancel-upload").click (function(){
                             if(data.context.hasClass('working-upload')){
                                 var currentPercent = data.context.find(".upload_progress_bar .progress").width() / data.context.find(".upload_progress_bar .progress").parent().width() * 100;
@@ -181,8 +180,11 @@ $(document).ready( function() {
 
             },
             progress: function(e, data){
-                // This is what makes everything really cool, thanks to that callback
-                // you can now update the progress bar based on the upload progress
+                /**
+                 * -
+                 *  This is what makes everything really cool, thanks to that callback
+                 *  you can now update the progress bar based on the upload progress
+                 */
                 var percent = Math.round((data.loaded / data.total) * 100);
                 data.context.find(".upload_progress_bar .progress").css ("width", percent + "%");
                 data.context.find(".upload_progress_bar span").html (percent + "%");
@@ -210,22 +212,17 @@ $(document).ready( function() {
                 var filename = s3_filename_split[s3_filename_split.length - 1];
                 var s3_path_split = s3_filename.split(filename);
                 var s3_path = s3_path_split[0];
-                /*
-                 * 6-SEP-2014 - need to get these into one single constants file
-                 * 2-OCT-2014 - udpated to allow for constants file for environments 
-                 */
                 var S3URL = "";
                 $.getScript('/memreas/js/constants.js', function()
                 		{
-                		    // script is now loaded and executed.
-                		    // put your dependent JS here.
-                			alert (S3BUCKET);
-                    		//S3BUCKET = "memreasprdsec";
+                    /**
+                     * -
+                     * script is now loaded and executed.
+                     * put your dependent JS here.
+                     */
                     		S3URL = "https://" + S3BUCKET + ".s3.amazonaws.com/";
                 		});
                 var server_url = _media_url.replace(S3URL, '');
-//alert("server url -->" + server_url);                
-                 
                 var params = [
                                 {tag: 's3url', value: filename},
                                 {tag: 'is_server_image', value: '0'},
@@ -286,7 +283,7 @@ function XML2JS(xmlDoc, containerTag) {
     return output;
 }
 
-/* Testing environment for upload handle - Not stable yet*/
+/** Testing environment for upload handle - Not stable yet*/
 
 var objectHandleUpload = []; //Used for put object upload handle to stack
 var currentUploadIndex = 0;
@@ -307,5 +304,3 @@ function progressUpload(){
         currentUploadIndex--;
     }
 }
-
-/****/

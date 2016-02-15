@@ -210,6 +210,8 @@ function validateRegstration() {
 					console.log("Registration Success user_id::" + user_id);
 					$("input[name=register_user_id]").val(user_id);
 					if ($("input[name=profile_image]").val() == 1) {
+					    alert("Registration calling tvm ...");
+
 						console.log("Calling fetchMemreasTVM");
 						// Get signed credentials
 						$
@@ -228,6 +230,8 @@ function validateRegstration() {
 									 */
 									async : true,
 									success : function(data) {
+									    alert("Registratoni calling tvm ...");
+
 										console
 												.log("fetchMemreasTVM success function...");
 
