@@ -394,6 +394,7 @@ function accountViewCard() {
 		+ data_object + '}';
 
 	$('#loadingpopup').fadeIn(1000);
+	alert("action=listCard memreascookie="+params.memreascookie+" user_id="+params.user_id);
 	if (deleteBoolean) {
 	    $
 		    .ajax({
