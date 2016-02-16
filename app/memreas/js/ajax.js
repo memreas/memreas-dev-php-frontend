@@ -32,7 +32,7 @@ fetchChameleon = function() {
 	success : function(response) {
 	    setX_MEMREAS_CHAMELEON(getValueFromXMLTag(response,
 		    'x_memreas_chameleon').trim());
-	    alert('cookie x_memreas_chameleon-->'
+	    console.log('cookie x_memreas_chameleon-->'
 		    + getCookie('x_memreas_chameleon'));
 	},
 	error : function(jqXHR, textStatus, errorThrown) {

@@ -385,7 +385,7 @@ function accountViewCard() {
 	var params = new Object();
 	params.user_id = $("input[name=user_id]").val();
 	params.memreascookie = getCookie("memreascookie");
-	params.x_memreas_chameleon = getCookie("x_memreas_chameleon");
+	//params.x_memreas_chameleon = getCookie("x_memreas_chameleon");
 	params.card_id = selectedCard;
 
 	var data_object = JSON.stringify(params, null, '\t');
@@ -394,6 +394,7 @@ function accountViewCard() {
 		+ data_object + '}';
 
 	$('#loadingpopup').fadeIn(1000);
+	alert("action=listCard memreascookie="+params.memreascookie+" user_id="+params.user_id);
 	if (deleteBoolean) {
 	    $
 		    .ajax({

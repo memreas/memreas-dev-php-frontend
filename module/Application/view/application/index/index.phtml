@@ -139,8 +139,8 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 											name="x-amz-date" value=""> <input type="hidden"
 											name="x-amz-expires" value=""> <input type="hidden"
 											name="x-amz-signature" value=""> <input type="hidden"
-											name="x-amz-server-side-encryption" value="AES256">
-											<input class="" id="file" type="file" name="file">
+											name="x-amz-server-side-encryption" value="AES256"> <input
+											class="" id="file" type="file" name="file">
 									</form>
 									<input type="hidden" name="register_user_id" value="" /> <span
 										class="absolute">choose profile picture</span>
@@ -681,19 +681,16 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 								if (isset ( $_GET ['email_verified'] ) && $_GET ['email_verified'] == 1) {
 									echo "jsuccess('Your account has been verified successfully');";
 								}
-								if (isset ( $_GET ['credits_activated'] )  && $_GET ['credits_activated'] == 1) {
+								if (isset ( $_GET ['credits_activated'] ) && $_GET ['credits_activated'] == 1) {
 									echo "jsuccess('Your account has been credited. Enjoy!');";
 								}
-								if (isset ( $_GET ['credits_already_activated'] )  && $_GET ['credits_already_activated'] == 1) {
+								if (isset ( $_GET ['email_verified'] ) && $_GET ['email_verified'] == 0) {
+									echo "jerror('Your account has not been verified');";
+								}
+								if (isset ( $_GET ['credits_already_activated'] ) && $_GET ['credits_already_activated'] == 1) {
 									echo "jsuccess('These credits were applied in a prior activation.');";
 								}
 								?>
-         <?php
-									
-									if (isset ( $_GET ['email_verified'] ) && $_GET ['email_verified'] == 0) {
-										echo "jerror('Your account has not been verified');";
-									}
-									?>
             if (window.FileReader) {
                 function handleFileSelect(evt) {
                     var files = evt.target.files;
