@@ -385,7 +385,7 @@ function accountViewCard() {
 	var params = new Object();
 	params.user_id = $("input[name=user_id]").val();
 	params.memreascookie = getCookie("memreascookie");
-	params.x_memreas_chameleon = getCookie("x_memreas_chameleon");
+	//params.x_memreas_chameleon = getCookie("x_memreas_chameleon");
 	params.card_id = selectedCard;
 
 	var data_object = JSON.stringify(params, null, '\t');
