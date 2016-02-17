@@ -163,10 +163,11 @@
 					style="margin-top: 20px; display: inline-block;">Add</a> <a
 					class="black_btn_skin account-card-functions hide-onload"
 					href="javascript:;" onclick="accountViewCard();"
-					style="margin-top: 20px; display: inline-block;">View</a> <a
-					class="black_btn_skin account-card-functions hide-onload"
-					href="javascript:;" onclick="accountRemoveCard(false);"
-					style="margin-top: 20px; display: inline-block;">Delete</a>
+					style="margin-top: 20px; display: inline-block;">View</a>
+				<a class="black_btn_skin account-card-functions hide-onload" href="javascript:;"
+					style="margin-top: 20px; display: inline-block;" onclick="new Account.removeCard(false, '.account-payment');">
+					Delete
+				</a>
 			</div>
 		</div>
 	</div>
@@ -318,7 +319,7 @@
 		</li>
 	</ul>
 	<a class="black_btn_skin f-left" href="javascript:;"
-		onclick="accountAddCard();">ok</a> <a class="black_btn_skin f-right"
+		onclick="new Account.addCard('.accountAddCardForm');">ok</a> <a class="black_btn_skin f-right"
 		href="javascript:disablePopup('popupaccountaddcard');">cancel</a>
 </div>
 <div id="bgpopupaccountaddcard" class="backgroundPopup"
@@ -389,7 +390,7 @@
 	<a id="popupaccountviewcardClose"
 		onClick="disablePopup('popupaccountviewcard_delete');"
 		class='popupClose'>x</a>
-	<h2>Card information</h2>
+	<h2>Review Card information</h2>
 	<ul id="content_1" class="scrollpopup accountEditCardForm">
 		<li><input type="hidden" name="card_id" id="card_id" value=""> <label
 			class="textfield_names">First name*</label> <input name="input"
@@ -438,7 +439,7 @@
 		</li>
 	</ul>
 	<a class="black_btn_skin account-card-functions hide-onload"
-		href="javascript:;" onclick="accountRemoveCard(true);"
+		href="javascript:;" onclick="new Account.removeCard(true, '.account-payment');"
 		style="margin-top: 20px; display: inline-block;">Delete</a> <a
 		class="black_btn_skin f-right"
 		href="javascript:disablePopup('popupaccountviewcard_delete');">close</a>
