@@ -3,6 +3,49 @@
  * this file, via any medium is strictly prohibited Proprietary and confidential
  */
 
+/*
+* System functionally
+* All common system functions will be managed here
+* */
+var AppSystem = function() {
+
+    //Display page loading screen
+    this.putPageLoading = function() {
+        $('#loadingpopup').fadeIn(1000);
+    }
+
+    //Remove page loading screen
+    this.removePageLoading = function() {
+        $('#loadingpopup').fadeOut(500);
+    }
+
+    //Put stripe processing loading state
+    this.putStripeLoading = function() {
+        $('.stripe-payment').fadeIn(1000);
+    }
+
+    //Remove stripe processing loading state
+    this.removeStripeLoading = function() {
+        $('.stripe-payment').fadeOut(1000);
+    }
+}
+var AppSystem = new AppSystem();
+
+/*
+* Handle system log
+* */
+var ConsoleLog = function() {
+    this.enableSystemLog = true; //Set this to false to remove log all places
+
+    //Set log into window console panel
+    this.setLog = function (variable) {
+        if (self.enableSystemLog) {
+            console.log(variable);
+        }
+    }
+}
+var ConsoleLog = new ConsoleLog();
+
 (function ($) {
     $(window).load(
             function () {
