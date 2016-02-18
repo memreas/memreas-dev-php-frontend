@@ -4,6 +4,10 @@ var Account = function() {
 	//Store current logged user Id
 	this.id = $("input[name=user_id]").val();
 
+	//Card objects for some separate tabs
+	this.accountTab_cards = new Object();
+	this.buyCreditTab_cards = new Object();
+
 	/*
 	* Load account cards and fill in available target element
 	* @param element full class name of target element
@@ -12,7 +16,7 @@ var Account = function() {
 	* @param extraFunction an optional extra function when function is executed
 	* */
 	this.loadCards = function(element, rowCardId, callBackCardChangeFunction, extraFunction) {
-		$(".account-card-functions").hide();
+		$("." + rowCardId + "-functions").hide();
 		var jMemberCard = $(element);
 
 		if (!jMemberCard.hasClass('preload-null')) {
@@ -68,7 +72,6 @@ var Account = function() {
 					if (number_of_cards > 0) {
 
 						for (var i = 0; i < number_of_cards; i++) {
-							accountTab_cards[i] = new Object();
 							var params = {
 								card_id : cards[i].stripe_card_reference_id,
 								data : cards[i],
@@ -77,7 +80,20 @@ var Account = function() {
 							var row_card_id = cards[i].stripe_card_reference_id;
 							var row_card_type = cards[i].card_type;
 							var row_card_obfuscated = cards[i].obfuscated_card_number;
-							accountTab_cards[i] = params;
+
+							//Delivery card objects into the right tab
+							switch (element) {
+								case '.account-payment':
+									Account.accountTab_cards[i] = new Object();
+									Account.accountTab_cards[i] = params;
+
+									break;
+								case '.buycredit-payment':
+									Account.buyCreditTab_cards[i] = new Object();
+									Account.buyCreditTab_cards[i] = params;
+									break;
+							}
+
 							var html_element = '<li id=' + rowCardId + '"-'
 								+ row_card_id + '">'
 								+ '<label class="label_text2"><input';
@@ -85,7 +101,7 @@ var Account = function() {
 							// Set first card is default checked
 							if (i == 0) {
 								html_element += ' checked="checked"';
-								accountCardChange(rowCardId + "-" + row_card_id);
+								//eval(callBackCardChangeFunction(rowCardId + "-" + row_card_id));
 							}
 
 							html_element += ' type="radio" id="' + rowCardId + '-'
@@ -127,14 +143,13 @@ var Account = function() {
 	* @param rowCardId class name of current row card id
 	* */
 	this.removeCard = function (userConfirm, element, rowCardId, callBackCardChangeFunction, extraFunction) {
-
 		if (!userConfirm) {
 
 			// Fetch the card
 			var selectedCard = '';
-			for ( var i in accountTab_cards) {
-				if (accountTab_cards[i].selected == 1) {
-					selectedCard = accountTab_cards[i].data.stripe_card_reference_id;
+			for (var i in Account.accountTab_cards) {
+				if (Account.accountTab_cards[i].selected == 1) {
+					selectedCard = Account.accountTab_cards[i].data.stripe_card_reference_id;
 					break;
 				}
 			}
@@ -152,9 +167,9 @@ var Account = function() {
 
 			// Fetch the card
 			var selectedCard = '';
-			for (var i in accountTab_cards) {
+			for (var i in Account.accountTab_cards) {
 				if (accountTab_cards[i].selected == 1) {
-					selectedCard = accountTab_cards[i].data.stripe_card_reference_id;
+					selectedCard = self.accountTab_cards[i].data.stripe_card_reference_id;
 					break;
 				}
 			}
@@ -186,7 +201,7 @@ var Account = function() {
 						pushReloadItem('reload_buy_credit_cards');
 
 						$(element).addClass("preload-null");
-						new Account.loadCards(element, rowCardId, callBackCardChangeFunction, extraFunction);
+						Account.loadCards(element, rowCardId, callBackCardChangeFunction, extraFunction);
 					} else {
 						jerror(response.message);
 					}
@@ -259,9 +274,9 @@ var Account = function() {
 					response = jQuery.parseJSON(response.data);
 					if (response.status == 'Success') {
 						jsuccess("Your card added successfully");
-						disablePopup('popupaccountaddcard');
+						disablePopup('popup-addcard-' + reloadElement.replace('.', ''));
 
-						$(".account-payment").addClass('preload-null');
+						$(reloadElement).addClass('preload-null');
 						new Account.loadCards(reloadElement, rowCardId, callBackCardChangeFunction, extraFunction);
 
 						pushReloadItem('reload_subscription_cards');
@@ -298,12 +313,12 @@ $(function() {
 
 	//Payment method tab remove card button click
 	$("#btn-account-remove-card").click(function() {
-		new Account.removeCard(false, '.account-payment', 'account-card', 'accountCardChange', '$(".account-card-functions").show()');
+		Account.removeCard(false, '.account-payment', 'account-card', 'accountCardChange', '$(".account-card-functions").show()');
 	});
 
 	//Payment method tab add card button click
 	$("#btn-popup-add-card").click(function() {
-		new Account.addCard('.accountAddCardForm', '.account-payment', 'account-card', 'accountCardChange', '$(".account-card-functions").show()');
+		Account.addCard('.accountAddCardForm', '.account-payment', 'account-card', 'accountCardChange', '$(".account-card-functions").show()');
 	});
 
     $("#tabs-more").mouseover(function() {
@@ -359,16 +374,16 @@ var accountTab_cards = new Object();
 function accountCardChange(choose_card_id) {
     choose_card_id = choose_card_id.replace('account-card-', '');
     accountResetCardChoose();
-    for ( var i in accountTab_cards) {
-	if (choose_card_id == accountTab_cards[i].card_id) {
-	    accountTab_cards[i].selected = 1;
-	}
+    for ( var i in Account.accountTab_cards) {
+		if (choose_card_id == Account.accountTab_cards[i].card_id) {
+			Account.accountTab_cards[i].selected = 1;
+		}
     }
 }
 
 function accountResetCardChoose() {
-    for ( var i in accountTab_cards) {
-	accountTab_cards[i].selected = 0;
+    for (var i in Account.accountTab_cards) {
+		Account.accountTab_cards[i].selected = 0;
     }
 }
 
@@ -379,7 +394,7 @@ function accountAddCardPopup() {
 	$(this).val($(this).attr('default'));
     });
     jAddCard.find('select').val('');
-    popup('popupaccountaddcard');
+    popup('popup-addcard-account-payment');
 }
 
 function accountViewCard() {
@@ -400,20 +415,20 @@ function accountViewCard() {
     jViewCard.find('select').val('');
 
     var selectedCard = '';
-    for ( var i in accountTab_cards) {
-	if (accountTab_cards[i].selected == 1) {
-	    selectedCard = accountTab_cards[i].data.stripe_card_reference_id;
-	    break;
-	}
+    for ( var i in Account.accountTab_cards) {
+		if (Account.accountTab_cards[i].selected == 1) {
+			selectedCard = Account.accountTab_cards[i].data.stripe_card_reference_id;
+			break;
+		}
     }
 
     if (selectedCard == '' && !deleteBoolean) {
-	jerror('Please select a card');
+		jerror('Please select a card');
     } else {
 	var stripeActionUrl = $("input[name=stripe_url]").val()
 		+ 'stripe_viewCard';
 	var params = new Object();
-	params.user_id = $("input[name=user_id]").val();
+	params.user_id = Account.id;
 	params.memreascookie = getCookie("memreascookie");
 	//params.x_memreas_chameleon = getCookie("x_memreas_chameleon");
 	params.card_id = selectedCard;
