@@ -709,7 +709,7 @@ nav ul li a:hover, nav ul li a.active {
 
 .rowfixed {
 	position: fixed;
-	z-index: 1000;
+	/*z-index: 1000;*/
 	width: 100%
 }
 
