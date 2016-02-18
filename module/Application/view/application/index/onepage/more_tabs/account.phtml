@@ -160,12 +160,13 @@
 				<div style="clear: both;"></div>
 				<a class="black_btn_skin" href="javascript:;"
 					onclick="accountAddCardPopup();"
-					style="margin-top: 20px; display: inline-block;">Add</a> <a
+					style="margin-top: 20px; display: inline-block;">Add</a>
+				<a
 					class="black_btn_skin account-card-functions hide-onload"
 					href="javascript:;" onclick="accountViewCard();"
 					style="margin-top: 20px; display: inline-block;">View</a>
-				<a class="black_btn_skin account-card-functions hide-onload" href="javascript:;"
-					style="margin-top: 20px; display: inline-block;" onclick="new Account.removeCard(false, '.account-payment');">
+				<a id="btn-account-remove-card" class="black_btn_skin account-card-functions hide-onload" href="javascript:;"
+					style="margin-top: 20px; display: inline-block;">
 					Delete
 				</a>
 			</div>
@@ -318,9 +319,8 @@
 			onFocus="if(this.value == 'Card code'){ this.value = ''; $(this).css('color', '#000'); }" />
 		</li>
 	</ul>
-	<a class="black_btn_skin f-left" href="javascript:;"
-		onclick="new Account.addCard('.accountAddCardForm');">ok</a> <a class="black_btn_skin f-right"
-		href="javascript:disablePopup('popupaccountaddcard');">cancel</a>
+	<a id="btn-popup-add-card" class="black_btn_skin f-left" href="javascript:;">ok</a>
+	<a class="black_btn_skin f-right" href="javascript:disablePopup('popupaccountaddcard');">cancel</a>
 </div>
 <div id="bgpopupaccountaddcard" class="backgroundPopup"
 	onclick="disablePopup('popupaccountaddcard');"></div>

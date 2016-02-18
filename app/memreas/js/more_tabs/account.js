@@ -7,8 +7,11 @@ var Account = function() {
 	/*
 	* Load account cards and fill in available target element
 	* @param element full class name of target element
+	* @param rowCardId instance name of each row card id
+	* @param callBackCardChangeFunction trigger when account card changed
+	* @param extraFunction an optional extra function when function is executed
 	* */
-	this.loadCards = function(element) {
+	this.loadCards = function(element, rowCardId, callBackCardChangeFunction, extraFunction) {
 		$(".account-card-functions").hide();
 		var jMemberCard = $(element);
 
@@ -18,7 +21,7 @@ var Account = function() {
 		jMemberCard.removeClass('preload-null');
 
 		if (jMemberCard.hasClass('mCustomScrollbar'))
-			jMemberCard = $(".account-payment .mCSB_container");
+			jMemberCard = $(element + " .mCSB_container");
 
 		jMemberCard.empty();
 
@@ -37,12 +40,12 @@ var Account = function() {
 			+ '"json": ' + json_listCard + '}';
 
 		AppSystem.removePageLoading();
-		$('.stripe-payment').fadeIn(1000);
+		AppSystem.putStripeLoading();
 
 		$.ajax({url : stripeActionUrl, type : 'POST', dataType : 'jsonp', data : 'json=' + data, timeout : 10000,
 			error : function(response, textStatus, errorThrown) {
 				if (textStatus === 'timeout') {
-					$('.stripe-payment').fadeOut(500); // do something. Try again perhaps?
+					AppSystem.removeStripeLoading(); // do something. Try again perhaps?
 
 					ConsoleLog.setLog("response.message--->" + response.message);
 
@@ -75,20 +78,19 @@ var Account = function() {
 							var row_card_type = cards[i].card_type;
 							var row_card_obfuscated = cards[i].obfuscated_card_number;
 							accountTab_cards[i] = params;
-							var html_element = '<li id="account-card-'
+							var html_element = '<li id=' + rowCardId + '"-'
 								+ row_card_id + '">'
 								+ '<label class="label_text2"><input';
 
 							// Set first card is default checked
 							if (i == 0) {
 								html_element += ' checked="checked"';
-								accountCardChange("account-card-"
-									+ row_card_id);
+								accountCardChange(rowCardId + "-" + row_card_id);
 							}
 
-							html_element += ' type="radio" id="account-card-'
+							html_element += ' type="radio" id="' + rowCardId + '-'
 								+ row_card_id
-								+ '" name="radio_cards" class="regular-radio" onchange="accountCardChange(this.id);" />'
+								+ '" name="radio_cards" class="regular-radio" onchange="' + callBackCardChangeFunction + '(this.id);" />'
 								+ '<label for="account-card-'
 								+ row_card_id
 								+ '"></label>'
@@ -101,7 +103,9 @@ var Account = function() {
 						}
 
 						ajaxScrollbarElement(element);
-						$(".account-card-functions").show();
+						if (extraFunction != '') {
+							eval(extraFunction);
+						}
 					} else {
 						jMemberCard.append('<li>Please add a card.</li>');
 					}
@@ -111,7 +115,7 @@ var Account = function() {
 					jMemberCard.append('<li>Please add a card.</li>');
 					jerror(response.message);
 				}
-				$('.stripe-payment').fadeOut(500);
+				AppSystem.removeStripeLoading();
 			}
 		});
 	}
@@ -120,8 +124,9 @@ var Account = function() {
 	* Delete member credit card
 	* @param userConfirm boolean true or false
 	* @param element full class name of target element (that area will reload cards list)
+	* @param rowCardId class name of current row card id
 	* */
-	this.removeCard = function (userConfirm, element) {
+	this.removeCard = function (userConfirm, element, rowCardId, callBackCardChangeFunction, extraFunction) {
 
 		if (!userConfirm) {
 
@@ -175,13 +180,13 @@ var Account = function() {
 					if (response.status = 'Success') {
 						disablePopup('popupaccountviewcard_delete');
 						jsuccess(response.message);
-						$("#account-card-" + selectedCard).remove();
+						$("#-" + rowCardId + selectedCard).remove();
 
 						pushReloadItem('reload_subscription_cards');
 						pushReloadItem('reload_buy_credit_cards');
 
-						$(".account-payment").addClass("preload-null");
-						new Account.loadCards(element);
+						$(element).addClass("preload-null");
+						new Account.loadCards(element, rowCardId, callBackCardChangeFunction, extraFunction);
 					} else {
 						jerror(response.message);
 					}
@@ -194,7 +199,7 @@ var Account = function() {
 	* Add new user card
 	* @param element target form element will be looking for card information
 	* */
-	this.addCard = function(element) {
+	this.addCard = function(element, reloadElement, rowCardId, callBackCardChangeFunction, extraFunction) {
 		var jAddCard = $(element);
 		var formPass = true;
 
@@ -257,7 +262,7 @@ var Account = function() {
 						disablePopup('popupaccountaddcard');
 
 						$(".account-payment").addClass('preload-null');
-						new Account.loadCards('.account-payment');
+						new Account.loadCards(reloadElement, rowCardId, callBackCardChangeFunction, extraFunction);
 
 						pushReloadItem('reload_subscription_cards');
 						pushReloadItem('reload_buy_credit_cards');
@@ -277,19 +282,28 @@ $(function() {
     $("#account_dob").datepicker();
 
     $(".member-trasnsaction-head").one("click", function() {
-	getAccountOrderHistory();
+		getAccountOrderHistory();
     });
 
-    $(".account-card-section").click(
-	    function() {
-
+	//Load account cards
+    $(".account-card-section").click(function() {
 		var jMemberCard = $(".account-payment");
 		if (checkReloadItem('reload_account_cards')
 			|| jMemberCard.html() == '') {
 		    if (!jMemberCard.hasClass('preload-null'))
 			jMemberCard.addClass('preload-null')
 		}
-		Account.loadCards(".account-payment");
+		Account.loadCards(".account-payment", 'account-card', 'accountCardChange', '$(".account-card-functions").show()');
+	});
+
+	//Payment method tab remove card button click
+	$("#btn-account-remove-card").click(function() {
+		new Account.removeCard(false, '.account-payment', 'account-card', 'accountCardChange', '$(".account-card-functions").show()');
+	});
+
+	//Payment method tab add card button click
+	$("#btn-popup-add-card").click(function() {
+		new Account.addCard('.accountAddCardForm', '.account-payment', 'account-card', 'accountCardChange', '$(".account-card-functions").show()');
 	});
 
     $("#tabs-more").mouseover(function() {
