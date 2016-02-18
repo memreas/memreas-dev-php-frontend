@@ -202,6 +202,8 @@ jQuery.fetch_server_media = function() {
 
 		    var items_for_gallery = "[";
 		    var objArr = new Array();
+                     var linksContainer = $('#links');
+                     var linksContainerData='';
 
 		    /** Initialize empty gallery and add within loop */
 		    for (var json_key = 0; json_key < count_media; json_key++) {
@@ -220,6 +222,7 @@ jQuery.fetch_server_media = function() {
 			var main_media_url = '';
 			var main_media_url_m3u8 = '';
 			var source = "";
+                       
 			if (_media_type == 'image') {
 			    _media_url = getMediaUrl(media, _media_type);
 			    content_type = 'image/jpeg';
@@ -261,14 +264,18 @@ jQuery.fetch_server_media = function() {
 				href : _media_url_web,
 				type : "video/mp4"
 			    } ];
+                        linksContainerData +='<a href="'+_media_url_web+'" title="'+_media_type+'" data-gallery=""><img src="'+_media_thumbnail_large+'" style="width:80px; height:80px;"></a>';
+                        
 			} else {
 			    item['title'] = _media_type;
 			    item['type'] = "image/jpeg";
 			    item['href'] = main_media_url;
 			    item['poster'] = main_media_url;
+                            linksContainerData +='<a href="'+main_media_url+'" title="'+_media_type+'" data-gallery=""><img src="'+main_media_url+'" style="width:80px; height:80px;"></a>';
 			}
 			// console.log("item" + JSON.stringify(item));
 			objArr.push(item);
+                        
 
 			// Delete Tab Data
 
@@ -303,15 +310,25 @@ jQuery.fetch_server_media = function() {
 		    console.log("objArr" + JSON.stringify(objArr));
 
 		    // var gallery = blueimp.Gallery(links, options);
-		    blueimp.Gallery(objArr, {
-			onslide : function() {
-
-			},
-			container : '#blueimp-video-carousel',
-			carousel : 'true',
-			preloadRange : 2,
-			transitionSpeed : 400
-		    });
+//		    blueimp.Gallery(objArr, {
+//			onslide : function() {
+//
+//			},
+//			container : '#blueimp-video-carousel',
+//			carousel : 'true',
+//			preloadRange : 2,
+//			transitionSpeed : 400
+//		    });
+                    
+                     blueimp.Gallery(objArr, {
+            container: '#blueimp-gallery',
+            carousel: true,
+             thumbnailProperty: 'thumbnail',
+             thumbnailIndicators: true
+        });
+                 
+                    $(linksContainer).append(linksContainerData);
+                    
 		    // var pos =
 
 		    // gallery.slide(gallery.getIndex(),400);

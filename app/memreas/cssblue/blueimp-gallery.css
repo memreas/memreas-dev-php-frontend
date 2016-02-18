@@ -32,25 +32,23 @@
   position: fixed;
   z-index: 999999;
   overflow: hidden;
-/*  background: #000;
-  background: rgba(0, 0, 0, 0.9);*/
+  background: #000;
+  background: rgba(0, 0, 0, 0.9);
   opacity: 0;
-/*  display: none;*/
+  display: none;
   direction: ltr;
-/*  -ms-touch-action: none;
-  touch-action: none;*/
+  -ms-touch-action: none;
+  touch-action: none;
 }
 .blueimp-gallery-carousel {
   position: relative;
   z-index: auto;
   margin: 1em auto;
   /* Set the carousel width/height ratio to 16/9: */
-/*  padding-bottom: 56.25%;*/
-/*  box-shadow: 0 0 10px #000;*/
-/*  -ms-touch-action: pan-y;
-  touch-action: pan-y;*/
-  
-  
+  padding-bottom: 56.25%;
+  box-shadow: 0 0 10px #000;
+  -ms-touch-action: pan-y;
+  touch-action: pan-y;
 }
 .blueimp-gallery-display {
   display: block;
@@ -227,8 +225,6 @@ body:last-child .blueimp-gallery-playing > .play-pause {
   position: relative;
 }
 
-/*shyam Adding CSS */
-.blueimp-gallery > .slides > .slide > .slide-content{width:100%;}
 
 /* Small screen max-width 640px */
     @media only screen and (max-width:40em){ .blueimp-gallery-carousel{height: 410px;}}
