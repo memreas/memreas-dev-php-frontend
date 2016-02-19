@@ -84,22 +84,20 @@ $(function() {
 					});
 
 	var buyCreditTabAkordeon = false;
-	$("a.buy-credit-tab").click(
-			function() {
+	$("a.buy-credit-tab").click(function() {
+		if (!buyCreditTabAkordeon) {
+			$('#buttons8-moretab').akordeon();
+			buyCreditTabAkordeon = true;
+		}
 
-				if (!buyCreditTabAkordeon) {
-					$('#buttons8-moretab').akordeon();
-					buyCreditTabAkordeon = true;
-				}
-
-				var jMemberCard = $(".buycredit-payment");
-				if (checkReloadItem('reload_buy_credit_cards')
-						|| jMemberCard.html() == '') {
-					if (jMemberCard.hasClass('preload-null'))
-						jMemberCard.addClass('preload-null');
-				}
-				buycredit_listCard();
-			});
+		var jMemberCard = $(".buycredit-payment");
+		if (checkReloadItem('reload_buy_credit_cards')
+				|| jMemberCard.html() == '') {
+			if (jMemberCard.hasClass('preload-null'))
+				jMemberCard.addClass('preload-null');
+		}
+		Account.loadCards(".buycredit-payment", 'buycredit-card', 'buycredit_cardChange', '$(".buycredit-card-functions").show()');
+	});
 
 	// Sell mediatab
 	$("a.sell-media-tab").one("click", function() {
