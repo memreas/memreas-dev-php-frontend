@@ -841,7 +841,7 @@ ul.right textarea {
 
 footer {
 	position: fixed;
-	z-index: 2000;
+	z-index: -1;
 	left: 0;
 	bottom: 0;
 	right: 0;
@@ -1480,7 +1480,7 @@ left
 	{
 	content: '';
 	position: absolute;
-	z-index: 1;
+/*	z-index: 1;*/
 	top: 0;
 	right: -1.2em;
 	bottom: 0;
@@ -1511,7 +1511,7 @@ left
 	{
 	content: '';
 	position: absolute;
-	z-index: 1;
+/*	z-index: 1;*/
 	top: 0;
 	left: -1.2em;
 	bottom: 0;
@@ -1553,7 +1553,7 @@ left
 	background-image: -ms-linear-gradient(top, #3a3a3a, #151515);
 	background-image: -o-linear-gradient(top, #3a3a3a, #151515);
 	background-image: linear-gradient(to bottom, #3a3a3a, #151515);
-	z-index: 2;
+/*	z-index: 2;*/
 }
 /* ------------------------------------------------- */
 #tab-content, #tab-content-queue, #tab-content-share,
