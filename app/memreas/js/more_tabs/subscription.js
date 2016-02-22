@@ -380,16 +380,16 @@ function getPlans() {
 				type : 'POST',
 				dataType : 'jsonp',
 				data : 'json=' + data,
-				timeout: 10000,
+				timeout: 30000,
 				success : function(response) {
-				  	response = jQuery.parseJSON( response.data );
 					var plans = JSON.parse(response.data);
+					var plans = plans.plans;
+					console.log(plans);
 					var plan_count = plans.length;
 					console.log("plans ---> " + plans);
 					console.log("plan_count ---> " + plan_count);
 					if (plan_count > 0) {
-						var plans = response;
-						for ( var i in plans) {
+						for (var i = 0;i < plan_count;i++) {
 							plans_payment[i] = new Object();
 							var params = {
 								plan_id : plans[i].id,
@@ -425,8 +425,9 @@ function getPlans() {
 									type : 'POST',
 									dataType : 'jsonp',
 									data : 'json=' + data,
-									timeout: 10000,
+									timeout: 30000,
 									success : function(response) {
+										console.log(response);
 										if (response.status == 'Success') {
 											account_stripe = response.customer;
 											if (account_stripe != null
@@ -511,6 +512,7 @@ function listStripeCard() {
 				dataType : 'jsonp',
 				data : 'json=' + data,
 				success : function(response) {
+					response = JSON.parse(response.data);
 					if (response.status == 'Success') {
 						var cards = response.payment_methods;
 						var number_of_cards = response.NumRows;

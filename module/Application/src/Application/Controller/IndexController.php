@@ -59,7 +59,7 @@ class IndexController extends AbstractActionController {
 		/*
 		 * Fetch guzzle and post...
 		 */
-		$guzzle = new \GuzzleHttp\Client ();
+		$guzzle = new \GuzzleHttp\Client (['verify' => false]);
 		//Mlog::addone ( __CLASS__ . __METHOD__ . 'about to guzzle url+action+xml', MemreasConstants::MEMREAS_WS . $action . $xml );
 		try {
 			$response = $guzzle->post ( MemreasConstants::MEMREAS_WS, [ 
@@ -299,7 +299,6 @@ class IndexController extends AbstractActionController {
 		
 		// Pass constant global variables to js global constant
 		$this->writeJsConstants ();
-		
 		$path = "application/index/memreas_one_page.phtml";
 		error_log ( 'routing to $path--->' . $path );
 		
