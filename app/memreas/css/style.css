@@ -4324,5 +4324,20 @@ ul.event-pics li a {
 	height: 100%;
 }
 
-.blueimp-gallery-thumb-anchor{width:145px; height: 145px; margin-right: 12px;}
+.blueimp-gallery-thumb-anchor{width:145px; height: 145px; margin-right: 12px; border:2px solid #fff; margin-bottom: 12px; float: left;}
 .blueimp-gallery-thumb-anchor img{ width:145px; height: 145px; border:2px solid #fff; margin-bottom: 12px;}
+
+.video-content-play-icon{
+background-image: url(../img/video-play.svg);
+
+    right: 0;
+    left: 0;
+   
+    width: 128px;
+    height: 128px;
+    display: inline-block;
+    background: url(../img/video-play.png) center no-repeat;
+    opacity: 0.8;
+    cursor: pointer;
+    
+}
