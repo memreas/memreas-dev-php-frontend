@@ -299,7 +299,6 @@ class IndexController extends AbstractActionController {
 		
 		// Pass constant global variables to js global constant
 		$this->writeJsConstants ();
-		
 		$path = "application/index/memreas_one_page.phtml";
 		error_log ( 'routing to $path--->' . $path );
 		
