@@ -158,8 +158,8 @@ $(document).ready(
 	});
 
 var checkHasImage = false;
-/* Load server media */
  var objArr = new Array();
+/* Load server media */
 jQuery.fetch_server_media = function() {
     console.log("Inside jQuery.fetch_server_media");
     var verticalHeight = window.innerHeight;
@@ -232,9 +232,8 @@ jQuery.fetch_server_media = function() {
 				    'main_media_url');
 			    // main_media_url=getValueFromXMLTag(media,'media_url_448x306');
 			    _media_thumbnail_large = main_media_url = removeCdataCorrectLink(main_media_url);
-                            media_thummb_448=getValueFromXMLTag(media,'media_url_448x306');
+                              media_thummb_448=getValueFromXMLTag(media,'media_url_448x306');
                             media_thummb_448=removeCdataCorrectLink(media_thummb_448);
-                            
 			} else if (_media_type == 'video') {
 			    _media_url_hls = getValueFromXMLTag(media,
 				    'media_url_hls');
@@ -268,14 +267,14 @@ jQuery.fetch_server_media = function() {
 				href : _media_url_web,
 				type : "video/mp4"
 			    } ];
-                        linksContainerData +='<a href="'+_media_url_web+'" title="'+_media_type+'" data-gallery="" class="blueimp-gallery-thumb-anchor"><img src="'+_media_thumbnail_large+'" ></a>';
+                        linksContainerData +='<a href="'+_media_url_web+'" title="'+_media_type+'" data-type="video/mp4" data-gallery="#blueimp-gallery" class="blueimp-gallery-thumb-anchor " style="background:url('+_media_thumbnail_large+')"><span class="video-content-play-icon"></span></a>';
                         
 			} else {
 			    item['title'] = _media_type;
 			    item['type'] = "image/jpeg";
 			    item['href'] = main_media_url;
 			    item['poster'] = main_media_url;
-                            linksContainerData +='<a href="'+main_media_url+'" title="'+_media_type+'" data-gallery="" class="blueimp-gallery-thumb-anchor"><img src="'+media_thummb_448+'" ></a>';
+                             linksContainerData +='<a href="'+main_media_url+'" title="'+_media_type+'" data-gallery="#blueimp-gallery" class="blueimp-gallery-thumb-anchor" style="background:url('+media_thummb_448+')"><span></span></a>';
 			}
 			// console.log("item" + JSON.stringify(item));
 			objArr.push(item);
@@ -323,13 +322,16 @@ jQuery.fetch_server_media = function() {
 //			preloadRange : 2,
 //			transitionSpeed : 400
 //		    });
-
-
-                     setTimeout(function() {
-                
-    },100);        
-                    $(linksContainer).append(linksContainerData);
                     
+                     blueimp.Gallery(objArr, {
+            container: '#blueimp-gallery',
+            carousel: true,
+             thumbnailProperty: 'thumbnail',
+             thumbnailIndicators: true
+        });
+                 
+                    $(linksContainer).append(linksContainerData);
+                    $('#blueimp-gallery').hide();
 		    // var pos =
 
 		    // gallery.slide(gallery.getIndex(),400);
@@ -395,15 +397,10 @@ jQuery.fetch_server_media = function() {
 	    });
 }
 
-$('#links > a').click(function(){
-         blueimp.Gallery(objArr, {
-            container: '#blueimp-gallery',
-            carousel: true,
-             thumbnailProperty: 'thumbnail',
-             thumbnailIndicators: true
-        });
-});
-
+//$('#links > a').click(function(){
+//    
+//        $('#blueimp-gallery').show();
+//});
 function getUserNotificationsHeader() {
     console.log("Inside gallery.js - getUserNotificationsHeader");
     var user_id = $("input[name=user_id]").val();

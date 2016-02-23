@@ -1497,3 +1497,16 @@ label.event-name {
 	border-radius: 15px;
 	margin-bottom: 9px;
 }
+
+//
+
+.film-phone {
+	/*left: 1px;
+    top: -15px;*/
+	width:100% !important;
+}
+
+.mobile-form{background: none !important; }
+.mobile-form input {width: 100% !important; }
+.mobile-profile{padding:10px 32px 10px 0px !important;}
+.mobile-form  > label{display: inline !important;}
