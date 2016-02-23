@@ -110,9 +110,16 @@ class IndexController extends AbstractActionController {
 			ob_end_flush ();
 			exit ();
 		} else if ($actionname == "mobile") {
-			$path = "application/index/mobile-registration.phtml";
-			$view = new ViewModel ();
-			$view->setTemplate ( $path ); // path to phtml file under view folder
+			$path = $this->security ( "application/index/mobile-registration.phtml" );
+			$view = new ViewModel ( array (
+					'data' => $data 
+			) );
+			$view->setTemplate ( $path ); // path to phtml file under view
+			                              // folder
+			                              
+			// End buffering and flush
+			ob_end_clean ();
+			
 			return $view;
 		} else {
 			
