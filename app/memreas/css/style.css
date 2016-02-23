@@ -4341,3 +4341,6 @@ background-image: url(../img/video-play.svg);
     cursor: pointer;
     
 }
+
+.mobile-form{background: none !important; }
+.mobile-form input {width: 100% !important; }
