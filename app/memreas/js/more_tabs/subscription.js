@@ -259,37 +259,7 @@ function subscription_step4() {
 				success : function(response) {
 				  	response = jQuery.parseJSON( response.data );
 					if (response.status == 'Success') {
-						jOrderRecept.html($(".order-summary-recept ul").html());
-
-						// Set order recept
-						var card_data = orderCard.stripe_card_response;
-						jOrderRecept.find('#order-recept-name').html(
-								orderCard.first_name + ' '
-										+ orderCard.last_name);
-						jOrderRecept.find('#order-recept-address1').html(
-								orderCard.address_line_1);
-						jOrderRecept.find('#order-recept-address2').html(
-								orderCard.address_line_2);
-						jOrderRecept.find('#order-recept-cardtype').html(
-								orderCard.card_type);
-						jOrderRecept.find('#order-recept-ccnum').html(
-								orderCard.obfuscated_card_number);
-						jOrderRecept.find('#order-recept-expdate').html(
-								card_data.exp_month);
-						jOrderRecept.find('#order-recept-expyear').html(
-								card_data.exp_year);
-						jOrderRecept.find('#order-recept-city').html(
-								card_data.address_city);
-						jOrderRecept.find('#order-recept-state').html(
-								card_data.address_state);
-						jOrderRecept.find('#order-recept-zip').html(
-								orderCard.zip_code);
-
-						jOrderRecept.find('#choose-planrecept-name').html(
-								orderPlan.name);
-						jOrderRecept.find('#choose-planrecept-cost').html(
-								(orderPlan.amount / 100) + ' '
-										+ orderPlan.currency);
+						jOrderRecept.html("Your plan is activated successfully");
 
 						updateAkordeonContent($('.subscription-order-receipt-tab'));
 						check_user_subscription = 1;
@@ -316,9 +286,9 @@ function subscription_step4() {
 									data : 'json=' + data,
 									timeout: 10000,
 									success : function(response) {
-									  	response = jQuery.parseJSON( response.data );
+										response = JSON.parse(response.data);
 										if (response.status == 'Success') {
-											account_stripe = response.customer;
+											account_stripe = response.account.customer;
 											if (account_stripe != null
 													&& account_stripe.exist == 1) {
 												var total_subscriptions = account_stripe.info.subscriptions.total_count;
@@ -424,9 +394,9 @@ function getPlans() {
 									data : 'json=' + data,
 									timeout: 30000,
 									success : function(response) {
-										console.log(response);
+										response = JSON.parse(response.data);
 										if (response.status == 'Success') {
-											account_stripe = response.customer;
+											account_stripe = response.account.customer;
 											if (account_stripe != null
 													&& account_stripe.exist == 1) {
 												var total_subscriptions = account_stripe.info.subscriptions.total_count;
