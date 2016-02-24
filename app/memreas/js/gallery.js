@@ -267,14 +267,14 @@ jQuery.fetch_server_media = function() {
 				href : _media_url_web,
 				type : "video/mp4"
 			    } ];
-                        linksContainerData +='<a href="'+_media_url_web+'" title="'+_media_type+'" data-type="video/mp4" data-gallery="#blueimp-gallery" class="blueimp-gallery-thumb-anchor " style="background:url('+_media_thumbnail_large+')"><span class="video-content-play-icon"></span></a>';
+                        linksContainerData +='<a href="'+_media_url_web+'" title="'+media_id+'" data-type="video/mp4" data-gallery="#blueimp-gallery" class="blueimp-gallery-thumb-anchor " style="background:url('+_media_thumbnail_large+')"><span class="video-content-play-icon"></span></a>';
                         
 			} else {
 			    item['title'] = _media_type;
 			    item['type'] = "image/jpeg";
 			    item['href'] = main_media_url;
 			    item['poster'] = main_media_url;
-                             linksContainerData +='<a href="'+main_media_url+'" title="'+_media_type+'" data-gallery="#blueimp-gallery" class="blueimp-gallery-thumb-anchor" style="background:url('+media_thummb_448+')"><span></span></a>';
+                             linksContainerData +='<a href="'+main_media_url+'" title="'+media_id+'" data-gallery="#blueimp-gallery" class="blueimp-gallery-thumb-anchor" style="background:url('+media_thummb_448+')"><span></span></a>';
 			}
 			// console.log("item" + JSON.stringify(item));
 			objArr.push(item);
