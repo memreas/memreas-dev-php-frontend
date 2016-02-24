@@ -150,7 +150,7 @@ function fetchMyMemreas() {
                 }],
             function (response) {
                 if (getValueFromXMLTag(response, 'status') == "Success") {
-                    console.log("response SSHYAM" + response);
+                    console.log("response " + response);
                     var events = getSubXMLFromTag(response, 'event');
                    
 
