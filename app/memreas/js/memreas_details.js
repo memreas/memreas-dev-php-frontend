@@ -1135,3 +1135,7 @@ function reportMedia(userConfirm) {
         });
     }
 }
+
+$('#DMCAViolation').click(function(){
+                    $('#reportform').toggleClass('HideReport');
+                });

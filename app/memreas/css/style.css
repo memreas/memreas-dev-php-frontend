@@ -4393,3 +4393,11 @@ background-image: url(../img/video-play.svg);
     text-align: center;
     line-height: 18px;
 }*/
+
+.HideReport{display:none;}
+.popups label {
+	color: #fff;
+	font-family: "Century Gothic";
+	font-size: 16px;
+	display: block;
+}

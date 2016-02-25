@@ -665,7 +665,7 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
         
         <div id="popupReportMedia" class="popups">
         <a id="popupReportMediaClose" onClick="disablePopup('popupReportMedia');" class='popupClose'>x</a>
-        <h2>Report media</h2>
+        <h2>DMCA violation</h2>
         <p>&nbsp;</p>
         
         <ul id="content_1" class="scrollpopup give-message-form">
@@ -676,18 +676,16 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
                     <label for="email">Copy Right Owner Name</label>
                     <input name="copyrightowner" id="copyrightowner" type="text" placeholder="Your Name" /> 
                     <label for="email">Address</label>
-                    <input name="copyrightowner" id="copyrightowner" type="text" placeholder="Your Addresss" /> 
+                    <input name="addressV" id="addressV" type="text" placeholder="Your Addresss" /> 
                     <label for="email">Email</label>
-                    <input name="email" id="inEmail" type="email" placeholder="Your Email" /> 
+                    <input name="email" id="emailvoilcation" type="email" placeholder="Your Email" /> 
                      <label for="email">Media Id</label>
-                    <input name="email" id="inEmail" type="email" placeholder="Media Id" /> 
+                    <input name="email" id="mediaId" type="text" placeholder="Media Id" /> 
 
 
                 </form> 
                 
-               <br /> <input id="OffensiveContent" class="radio-bx" type="radio" name="report" value="1" style="width: 18px; height: 18px;">
-                <label for="Offensive Content" class="radio-label" style="display: inline-block;">Offensive Content</label>   
-                
+             
             </li>
         </ul>
         <a class="btn btn-sm login-btn" href="javascript:;" id="accept-notification" onclick="">OK</a> <a class="btn btn-sm login-btn" href="javascript:disablePopup('popupReportMedia');">close</a>

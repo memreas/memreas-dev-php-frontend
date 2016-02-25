@@ -177,7 +177,7 @@
 
     <div id="popupReportMedia" class="popups">
         <a id="popupReportMediaClose" onClick="disablePopup('popupReportMedia');" class='popupClose'>x</a>
-        <h2>Report media</h2>
+        <h2>DMCA violation</h2>
         <p>&nbsp;</p>
         
          
@@ -185,10 +185,21 @@
         
         <ul class=" scrollpopup give-message-form">
             <li>
-            <input id="male" type="radio" class="radio-bx" name="report" value="0" style="width: 18px; height: 18px; position: relative;top: 4px;">
+            <input id="DMCAViolation" type="radio" class="radio-bx" name="report" value="0" style="width: 18px; height: 18px; position: relative;top: 4px;">
                 <label for="DMCA Violation" class="radio-label" style="display: inline-block; color:#fff;  font-size: 15px;">DMCA Violation</label>
-               <br /> <input id="female" class="radio-bx" type="radio" name="report" value="1" style="width: 18px; height: 18px; position: relative;top: 4px;">
-                <label for="Offensive Content" class="radio-label" style="display: inline-block; color:#fff; font-size: 15px;">Offensive Content</label>   
+               <form enctype="multipart/form-data" action="" method="post" name="" class="HideReport" id="reportform" style="background: none; border-bottom: none;">
+                    <label for="email">Copy Right Owner Name</label>
+                    <input name="copyrightowner" id="copyrightowner" type="text" placeholder="Your Name" /> 
+                    <label for="address">Address</label>
+                    <input name="addressV" id="addressV" type="text" placeholder="Your Addresss" /> 
+                    <label for="email">Email</label>
+                    <input name="email" id="emailvoilcation" type="email" placeholder="Your Email" /> 
+                     <label for="mediaId">Media Id</label>
+                    <input name="mediaId" id="mediaId" type="text" placeholder="Media Id" /> 
+
+
+                </form> 
+                
             </li> 
         </ul>
         
