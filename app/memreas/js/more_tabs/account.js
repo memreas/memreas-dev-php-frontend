@@ -101,7 +101,8 @@ var Account = function() {
 							// Set first card is default checked
 							if (i == 0) {
 								html_element += ' checked="checked"';
-								//eval(callBackCardChangeFunction(rowCardId + "-" + row_card_id));
+								var change_card_func = callBackCardChangeFunction + "('" + rowCardId + "-" + row_card_id + "')";
+								eval(change_card_func);
 							}
 
 							html_element += ' type="radio" id="' + rowCardId + '-'
