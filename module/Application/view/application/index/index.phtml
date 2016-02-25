@@ -185,6 +185,10 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 									class="btn btn-lyt create-accnt" value="Create an account">
 							</form>
 						</div>
+                                            
+                                            <form id="Rpicon" method="post" action="" style="border-bottom: none;">
+                                    <a href="javascript:;" title="Report media" id="ReportMediaIcon"><img src="/memreas/img/report.png" alt=""></a>
+                                </form>
 					</div>
 
 
@@ -654,6 +658,27 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 			</div>
 		</div>
 	</div>
+        
+        <div id="popupReportMedia" class="popups">
+        <a id="popupReportMediaClose" onClick="disablePopup('popupReportMedia');" class='popupClose'>x</a>
+        <h2>Report media</h2>
+        <p>&nbsp;</p>
+        
+        <ul id="content_1" class="scrollpopup give-message-form">
+            <li>
+               <input id="male" type="radio" class="radio-bx" name="report" value="0" style="width: 18px; height: 18px;">
+                <label for="DMCA Violation" class="radio-label" style="display: inline-block;">DMCA Violation</label>
+               <br /> <input id="female" class="radio-bx" type="radio" name="report" value="1" style="width: 18px; height: 18px;">
+                <label for="Offensive Content" class="radio-label" style="display: inline-block;">Offensive Content</label>   
+                
+            </li>
+        </ul>
+        <a class="btn btn-sm login-btn" href="javascript:;" id="accept-notification" onclick="">OK</a> <a class="btn btn-sm login-btn" href="javascript:disablePopup('popupReportMedia');">close</a>
+    </div>
+        
+        
+        
+        
 	<!-- overlay splash ends here -->
 
 	<!-- Modal JS -->
@@ -671,6 +696,11 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 	<script>
             $(function() {
                 $(".rslides").responsiveSlides();
+                
+                $('#ReportMediaIcon').click(function(){
+                    popup("popupReportMedia");
+			return false;
+                });
             });
         </script>
 

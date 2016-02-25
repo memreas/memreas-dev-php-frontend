@@ -1044,28 +1044,7 @@ function addFriendToEvent(eventId) {
     });
 }
 
-function reportMedia(userConfirm) {
-    if (!userConfirm)
-        jconfirm('report this media?', 'reportMedia(true)');
-    else {
-        ajaxRequest('mediainappropriate', [{
-                tag: 'media_id',
-                value: eventdetail_media_id.toString()
-            }, {
-                tag: 'is_appropriate',
-                value: '1'
-            }, {
-                tag: 'user_id',
-                value: LOGGED_USER_ID.toString()
-            }], function (response) {
 
-            if (getValueFromXMLTag(response, 'status') == 'Success')
-                jsuccess(getValueFromXMLTag(response, 'message'));
-            else
-                jerror(getValueFromXMLTag(response, 'message'));
-        });
-    }
-}
 
 /* Additions fixing */
 
@@ -1094,6 +1073,7 @@ $("#tabs-memreas-detail li:first").click(function(){
  
 });
 var event_media_ID_variable ='';
+var eventdetail_id='';
 function BlueIMPGallery(){
     
      console.log("Media Array Blue Gallery" +  JSON.stringify(mediaIDArray));
@@ -1241,4 +1221,37 @@ function updateMediaLike() {
         $(".memreas-detail-likecount span").html(
                 getValueFromXMLTag(xml_response, 'likes'));
     }, 'undefined', true);
+}
+
+
+
+function reportMedia(userConfirm) {
+    
+    if (!userConfirm)
+         popup("popupReportMedia");
+       // jconfirm('report this media?', 'reportMedia(true)');
+           
+    else {
+        ajaxRequest('mediainappropriate', [{
+                tag: 'media_id',
+                value: event_media_ID_variable
+            }, {
+                tag: 'event_id',
+                value: eventdetail_id
+            }, 
+            {
+                tag: 'is_appropriate',
+                value: '1'
+            },
+            {
+                tag: 'user_id',
+                value: LOGGED_USER_ID.toString()
+            }], function (response) {
+            console.log('Media ID Event-->'+response);
+            if (getValueFromXMLTag(response, 'status') == 'Success')
+                jsuccess(getValueFromXMLTag(response, 'message'));
+            else
+                jerror(getValueFromXMLTag(response, 'message'));
+        });
+    }
 }
