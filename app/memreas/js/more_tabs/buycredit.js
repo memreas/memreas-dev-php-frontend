@@ -165,10 +165,9 @@ function fill_account_detail(){
         return false;
     }
     $('#loadingpopup').show();
-    var stripe_card = orderCard.stripe_card_response;
-    var card_name = stripe_card.name;
-    card_name = card_name.split(' ');
-    jBuyerName.html(card_name[0] + ' ' + card_name[1]);
+    var stripe_card = orderCard;
+    var card_name = stripe_card.first_name + ' ' + stripe_card.last_name;
+    jBuyerName.html(card_name);
 
     if (account_user.balance == '' || typeof (account_user.balance) == 'undefined')
         var balance = 0

@@ -200,7 +200,9 @@ getXMLStringFromParamArray = function(action, params) {
     case "saveuserdetails":
 	action_tag = "saveuserdetails";
 	break;
-    case "getusergroups":
+    case "generatemediaid":
+	action_tag = "generatemediaid";
+	case "getusergroups":
 	action_tag = "getusergroups";
 	break;
     case "getgroupfriends":
