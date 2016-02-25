@@ -41,6 +41,10 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 <link rel="stylesheet" href="/memreas/css/jNotify.jquery.css">
 <link href="/memreas/css/jquery.mCustomScrollbar.css" rel="stylesheet" />
 <script src="/memreas/js/jquery-register.js"></script>
+<style type="text/css">
+    .HideReport{display:none;}
+    
+</style>
 </head>
 
 <body>
@@ -666,9 +670,22 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
         
         <ul id="content_1" class="scrollpopup give-message-form">
             <li>
-               <input id="male" type="radio" class="radio-bx" name="report" value="0" style="width: 18px; height: 18px;">
+               <input id="DMCAViolation" type="radio" class="radio-bx" name="report" value="0" style="width: 18px; height: 18px;">
                 <label for="DMCA Violation" class="radio-label" style="display: inline-block;">DMCA Violation</label>
-               <br /> <input id="female" class="radio-bx" type="radio" name="report" value="1" style="width: 18px; height: 18px;">
+                <form enctype="multipart/form-data" action="" method="post" name="" class="HideReport" id="reportform" style="background: none; border-bottom: none;">
+                    <label for="email">Copy Right Owner Name</label>
+                    <input name="copyrightowner" id="copyrightowner" type="text" placeholder="Your Name" /> 
+                    <label for="email">Address</label>
+                    <input name="copyrightowner" id="copyrightowner" type="text" placeholder="Your Addresss" /> 
+                    <label for="email">Email</label>
+                    <input name="email" id="inEmail" type="email" placeholder="Your Email" /> 
+                     <label for="email">Media Id</label>
+                    <input name="email" id="inEmail" type="email" placeholder="Media Id" /> 
+
+
+                </form> 
+                
+               <br /> <input id="OffensiveContent" class="radio-bx" type="radio" name="report" value="1" style="width: 18px; height: 18px;">
                 <label for="Offensive Content" class="radio-label" style="display: inline-block;">Offensive Content</label>   
                 
             </li>
@@ -700,6 +717,9 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
                 $('#ReportMediaIcon').click(function(){
                     popup("popupReportMedia");
 			return false;
+                });
+                $('#DMCAViolation').click(function(){
+                    $('#reportform').toggleClass('HideReport');
                 });
             });
         </script>
