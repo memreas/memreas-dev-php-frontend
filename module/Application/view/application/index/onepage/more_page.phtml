@@ -33,6 +33,7 @@ use Application\Model\MemreasConstants;
 						media</a></li>
                 <?php endif ?>
 				<li><a href="#" title="tab5-more" class="help-tab">help</a></li>
+                                <li><a href="#" title="tab11-more" class="dmca-tab">DMCA</a></li>
 			</ul>
 
 			<div id="tab-content-more">
@@ -134,7 +135,8 @@ use Application\Model\MemreasConstants;
 				</div>
 				<div id="tab5-more" class="hideCls parent-global-akordeon">
 					<div class="akordeon" id="buttons5-moretab">
-        <?php include ('more_tabs/help.phtml'); ?>
+        <?php //include ('more_tabs/help.phtml'); ?>
+                                             <?php include ('more_tabs/dmca.phtml'); ?>
       </div>
 				</div>
 				<div id="tab-friends" class="hideCls">
@@ -171,6 +173,15 @@ use Application\Model\MemreasConstants;
 				</div>
     <?php endif ?>
 </div>
+                    
+                 <div id="tab11-more" class="hideCls">
+					<div class="akordeon" id="buttons11-moretab">
+            <?php include ('more_tabs/dmca.phtml'); ?>
+        </div>
+				</div>   
+                    
+                    
+                    
 		</div>
 	</div>
 	<!-- Ads Section -->
