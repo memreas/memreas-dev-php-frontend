@@ -681,9 +681,9 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
         
         <ul id="content_1" class="scrollpopup give-message-form">
             <li>
-               <input id="DMCAViolation" type="radio" class="radio-bx" name="report" value="0" style="width: 18px; height: 18px;">
-                <label for="DMCA Violation" class="radio-label" style="display: inline-block;">DMCA Violation</label>
-                <form enctype="multipart/form-data" action="" method="post" name="" class="HideReport" id="reportform" style="background: none; border-bottom: none;">
+<!--               <input id="DMCAViolation" type="radio" class="radio-bx" name="report" value="0" style="width: 18px; height: 18px;">
+                <label for="DMCA Violation" class="radio-label" style="display: inline-block;">DMCA Violation</label>-->
+                <form enctype="multipart/form-data" action="" method="post" name="" class="" id="reportform" style="background: none; border-bottom: none;">
                     <label for="email">Copy Right Owner Name</label>
                     <input name="copyrightowner" id="copyrightowner" type="text" placeholder="Your Name" /> 
                     <label for="email">Address</label>
@@ -727,9 +727,9 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
                     popup("popupReportMedia");
 			return false;
                 });
-                $('#DMCAViolation').click(function(){
-                    $('#reportform').toggleClass('HideReport');
-                });
+//                $('#DMCAViolation').click(function(){
+//                    $('#reportform').toggleClass('HideReport');
+//                });
             });
         </script>
 
