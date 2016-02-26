@@ -281,14 +281,13 @@ jQuery.fetch_server_media = function() {
                         
 
 			// Delete Tab Data
-
 			$(".edit-area-scroll")
 				.append(
 					'<li><a class="image-sync" id="'
 						+ media_id
 						+ '" onclick="return imageChoosed(this.id);" href="'
-						+ _media_url + '"><img src="'
-						+ _media_url + '"/></a></li>');
+						+ _media_thumbnail + '"><img src="'
+						+ _media_thumbnail + '"/></a></li>');
 
 			$(".preload-files .pics").append(
 				'<li><img src="' + _media_url + '"/></li>');
@@ -297,13 +296,13 @@ jQuery.fetch_server_media = function() {
 					'<li><img id="edit'
 						+ media_id
 						+ '" src="'
-						+ _media_url
+						+ _media_thumbnail
 						+ '" onclick="openEditMedia(this.id, \''
-						+ _media_url + '\');"/></li>');
+						+ _media_thumbnail + '\');"/></li>');
 			$(".galleries-location").append(
 				'<li><img id="location' + media_id
 					+ '" class="img-gallery" src="'
-					+ _media_url + '" /></li>');
+					+ _media_thumbnail + '" /></li>');
 			checkHasImage = true;
 
 			// End Delete Tab
