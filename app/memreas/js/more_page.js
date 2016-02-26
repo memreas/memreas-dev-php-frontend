@@ -40,7 +40,8 @@ $(function() {
         $('.reportCounterclaim').click(function(){
            var relatt=$(this).attr('rel');
             //$(this).parent('tr').find('.evenrow'). first().show();
-            $('.formrowfinder'+relatt+'').toggleClass('evenrow');
+            //$('.formrowfinder'+relatt+'').toggleClass('evenrow');
+            popup('dmca-form-box');
         });
         $('.info-dcma').click(function(){
            popup('dmca-check-box'); 

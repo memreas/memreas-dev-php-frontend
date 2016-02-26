@@ -27,7 +27,7 @@
                      <th>status</th>
             </thead>
             <tbody><?php for($k=0;$k<=4;$k++){ ?>
-                <tr class="oddrow">
+                <tr class="<?php if($k%2==0) echo 'oddrow'; else echo 'evenrow'; ?>">
                     <td>26-FEB-2016</td>
                     <td>8c86f96d-6731-4c4</td>
                     
@@ -37,11 +37,30 @@
                     <td>26 FEB 2016</td>
                     <td>Status Update</td>
                 </tr>
-                <tr class="evenrow formrowfinder<?php  echo $k;?>">
-                    <td colspan="6">
-                        <form style="margin-bottom: 20px;">
+               
+            <?php } ?>
+            </tbody>
+            </table>
+            
+        </div>
+    </div>
+</div>
+
+
+
+<div id="dmca-check-box" class="popups">
+    <a id="popupReportMediaClose" onClick="disablePopup('dmca-check-box');" class='popupClose'>x</a>
+        <h2>Your Counter Notice must contain the following</h2>
+        
+        <p>By submission of my counter claim I agree to provide my email address to the reporter and will resolve this violation without any further involvement from memreas.</p>
+</div>
+
+
+<div id="dmca-form-box" class="popups2">
+    <a id="popupReportMediaClose" onClick="disablePopup('dmca-form-box');" class='popupClose'>x</a>
+    <form style="margin-bottom: 20px;">
                 
-           
+        <h2>DMCA violation </h2>
             <ul id="content_1" class="share_memreas_details">
                
                 <li>
@@ -54,7 +73,7 @@
                 </li>
                 
                 <li>
-                    <label class="textfield_names">Signed Written Communication :</label>
+                    <label class="textfield_names">Signed Written Communication:</label>
                     <a class="black_btn_skin f-center change-profile-btn fileupload-dmca" href="javascript:;">Choose file</a>
                     <span class="dmca-file-location"><a href="http://www.fememreas.com/images/" target="_blank">http://www.fememreas.com/images/</a></span>
                     <span class="dmca-file-info"><a href="javascript:," target="_blank" class="info-dcma"><img src="/memreas/img/info.png" /></a></span>
@@ -74,7 +93,7 @@
                     
                     <input id="morepage_isselfdestruct" class="css-checkbox" type="checkbox">
                     <label for="morepage_isselfdestruct" name="demo_lbl_5" class="css-label margin-none" style="text-align: left; margin-left: 90px !important; ">By submission of my counter claim I agree to provide my email address to the reporter and will resolve this violation without any further involvement from memreas.</label>
-                    
+                <div style="clear: both;"></div>
                 </li>
                 
             </ul>
@@ -84,24 +103,9 @@
             <a class="black_btn_skin" href="javascript:;" onclick="morepage_saveEvent(false);">ok</a>
             <a class="black_btn_skin" href="javascript:;">cancel</a>
             </div>
-             </form>
-                        
-                    </td>
-                </tr>
-            <?php } ?>
-            </tbody>
-            </table>
-            
-        </div>
-    </div>
+             </form>    
 </div>
 
 
 
-<div id="dmca-check-box" class="popups">
-    <a id="popupReportMediaClose" onClick="disablePopup('dmca-check-box');" class='popupClose'>x</a>
-        <h2>Your Counter Notice must contain the following</h2>
-        
-        <p>By submission of my counter claim I agree to provide my email address to the reporter and will resolve this violation without any further involvement from memreas.</p>
-</div>
-
+    
