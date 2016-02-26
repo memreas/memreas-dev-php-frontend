@@ -4401,3 +4401,16 @@ background-image: url(../img/video-play.svg);
 	font-size: 16px;
 	display: block;
 }
+
+//DCMA
+
+ .dmca-table-data{width: 100%; margin-bottom: 20px; font-size: 17px;}
+     .dmca-table-data thead{background: #3A9ACA; padding: 10px;}
+     .dmca-table-data thead  th{font-weight: bold; padding: 10px;}
+     .oddrow{background:#3A9ACA;}
+     .evenrow{background: #327AC9; display: none;}
+     .dmca-table-data form{margin-bottom: 20px;}
+     
+     .dmca-table-data tbody tr td {border:1px solid #fff; text-align: center; vertical-align: middle;}
+     .counter-claim-btn{color:#fff; border:1px solid #fff; background: #3A9ACA; border-radius: 7px; font-size: 17px; padding: 7px;}
+     .fileupload-dmca{float: left!important; margin: 0px !important;}

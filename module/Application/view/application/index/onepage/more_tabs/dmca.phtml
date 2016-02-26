@@ -5,13 +5,7 @@
  * Proprietary and confidential
  */
 ?>
-<style type="text/css">
-    table{width: 100%; margin-bottom: 20px;}
-     table thead{background: #000; padding: 10px;}
-     table thead  th{font-weight: bold;}
-     table tbody tr td {border:1px solid #fff; text-align: center}
-     
-</style>
+
 <div class="akordeon-item expanded">
     <div class="akordeon-item-head">
         <div class="akordeon-item-head-container">
@@ -23,36 +17,47 @@
     <div class="akordeon-item-body"  style="padding-bottom: 10px;">
         <div class="akordeon-item-content">
             
-            <table>
+            <table class="dmca-table-data" style="width: 100%;">
                 <thead>
-                    <th>Counter Claim</th>
-                    <th>report date</th>
-                    <th>media thumbnail</th>
-                    <th>checkbox</th>
-                    <th>Date</th>
-                     <th>thumbnail</th>
+                    <th>Violation Reported</th>
+                    <th>Media Id</th>
+                    <th>media image</th>
+                    <th>report counter claim</th>
+                    <th>counter claim reported</th>
+                     <th>status</th>
             </thead>
-            <tbody>
-                <tr>
-                    <td>Counter Claim text</td>
-                    <td>26 FEB 2016</td>
+            <tbody><?php for($k=0;$k<=4;$k++){ ?>
+                <tr class="oddrow">
+                    <td>26-FEB-2016</td>
+                    <td>8c86f96d-6731-4c4</td>
+                    
                     <td><img src="/memreas/img/1.jpg" width="80" /></td>
-                    <td> <input id="morepage_ckb_sellmedia" class="css-checkbox" type="checkbox" />
-                    <label id="lbl-sellmedia" for="morepage_ckb_sellmedia" name="demo_lbl_6" class="css-label margin-none"></label></td>
+                    <td> <a href="javascript:;" class="counter-claim-btn reportCounterclaim" rel="<?php echo $k; ?>">report counter claim</a> 
+                    </td>
                     <td>26 FEB 2016</td>
-                    <td><img src="/memreas/img/1.jpg" width="80" /></td>
+                    <td>Status Update</td>
                 </tr>
-            </tbody>
-            </table>
+                <tr class="evenrow formrowfinder<?php  echo $k;?>">
+                    <td colspan="6">
+                        <form style="margin-bottom: 20px;">
+                
+           
             <ul id="content_1" class="share_memreas_details">
                
                 <li>
                     <label class="textfield_names">Full Name :</label>
-                    <input name="input" type="text" id="morepage_eventDate" class="share-txtfield date-picker"  value="" placeholder="Full Name" />
+                    <input name="input" type="text" id="morepage_eventDate" class="share-txtfield"  value="" placeholder="Full Name" />
                 </li>
                 <li>
                     <label class="textfield_names">Address :</label>
                     <input name="input3" type="text" id="morepage_eventLocation" class="share-txtfield" value="" placeholder="Address" />
+                </li>
+                
+                <li>
+                    <label class="textfield_names">Signed Written Communication :</label>
+                    <a class="black_btn_skin f-center change-profile-btn fileupload-dmca" href="javascript:;">Choose file</a>
+                    <span class="dmca-file-location"><a href="http://www.fememreas.com/images/" target="_blank">http://www.fememreas.com/images/</a></span>
+                    <span class="dmca-file-info"><a href="javascript:," target="_blank" class="info-dcma"><img src="/memreas/img/info.png" /></a></span>
                 </li>
                 
                 <li>
@@ -65,6 +70,13 @@
                    
                 </li>
                 
+                <li>
+                    
+                    <input id="morepage_isselfdestruct" class="css-checkbox" type="checkbox">
+                    <label for="morepage_isselfdestruct" name="demo_lbl_5" class="css-label margin-none" style="text-align: left; margin-left: 90px !important; ">By submission of my counter claim I agree to provide my email address to the reporter and will resolve this violation without any further involvement from memreas.</label>
+                    
+                </li>
+                
             </ul>
             <div style="clear: both; margin-top: 10px; margin-bottom: 10px; padding-top: 10px;"></div>
             <div class="btn">
@@ -72,18 +84,24 @@
             <a class="black_btn_skin" href="javascript:;" onclick="morepage_saveEvent(false);">ok</a>
             <a class="black_btn_skin" href="javascript:;">cancel</a>
             </div>
+             </form>
+                        
+                    </td>
+                </tr>
+            <?php } ?>
+            </tbody>
+            </table>
+            
         </div>
     </div>
 </div>
 
 
 
-<div id="more_dlg_locationmap" class="popups2">
-    <a id="more_btn_locationmap_close" onClick="javascript:more_closeGoogleMap(false);" class='popupClose'>x</a>
-    <h2>location</h2>
-    <a id="more_btn_locationmap_ok" class="black_btn_skin btn_locationmap_ok" href="javascript:more_closeGoogleMap(true);">OK</a>
-    <input id="more_txt_locationmap_address" class="txt_locationmap_address" name="input" type="text" />
-    <div class="clear"></div>
-    <div id="more_div_locationmap_maparea" class="map_box"></div>
+<div id="dmca-check-box" class="popups">
+    <a id="popupReportMediaClose" onClick="disablePopup('dmca-check-box');" class='popupClose'>x</a>
+        <h2>Your Counter Notice must contain the following</h2>
+        
+        <p>By submission of my counter claim I agree to provide my email address to the reporter and will resolve this violation without any further involvement from memreas.</p>
 </div>
-<div id="more_div_locationmap_back" class="backgroundPopup"></div>
+
