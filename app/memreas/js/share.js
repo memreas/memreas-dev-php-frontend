@@ -361,7 +361,7 @@ share_initGoogleMap = function(div_id) {
 
 // Check valid duration
 function checkSellMediaDuration() {
-    debugger;
+    //debugger;
 	var sellmedia_duration_from = $("#sellmedia_duration_from").val();
 	var sellmedia_duration_to = $("#sellmedia_duration_to").val();
 
@@ -473,8 +473,8 @@ share_addEvent = function(medianext) {
 			ckb_public = 1;
 			ckb_canpost = 0;
 			ckb_canadd = 0;
-			date_from = getElementValue('dtp_from').val(sellmedia_duration_from);
-			date_to = getElementValue('dtp_to').val(sellmedia_duration_to);
+			date_from = sellmedia_duration_from;
+			date_to = sellmedia_duration_to;
 		}
 
 		var ckb_viewable = getCheckBoxValue('ckb_viewable');
@@ -815,6 +815,16 @@ share_getAllMedia = function() {
 				} ],
 				function(response) {
 					if (getValueFromXMLTag(response, 'status') == "Success") {
+
+						var sellmedia_price_select = $("#sellmedia_price").val();
+
+						if ($("#ckb_sellmedia").is(":checked")) {
+							var event_for_sale = true;
+						}
+						else {
+							var event_for_sale = false;
+						}
+
 						var medias = getSubXMLFromTag(response, 'media');
 						var count_media = medias.length;
 						var jtarget_element = $('#share_medialist');
@@ -835,6 +845,20 @@ share_getAllMedia = function() {
 										.replace("]]-->", "");
 								metadata = JSON.parse(metadata);
 								var transcode_progress = metadata.S3_files.transcode_progress;
+
+								//Checking for sale event with media copyright
+								if (event_for_sale && sellmedia_price_select > 0) {
+									if (typeof (metadata.S3_files.copyright) == 'undefined') {
+										continue; //Skip non-copyright media available for listing at select media for sale
+									}
+									else {
+										if (metadata.S3_files.copyright == null) {
+											continue; //Same purpose as if condition above
+										}
+									}
+								}
+
+								return;
 
 								// Check if web transcode is completed or not
 								var web_transcoded = false;
@@ -864,14 +888,34 @@ share_getAllMedia = function() {
 													+ '" alt=""><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a></li>');
 								}
 							} else
+
+								var metadata = getValueFromXMLTag(media,
+									'metadata').replace("<!--[CDATA[", "")
+									.replace("]]-->", "");
+
+								if (typeof(metadata) != 'undefined') {
+									metadata = JSON.parse(metadata);
+									//Checking for sale event with media copyright
+									if (event_for_sale && sellmedia_price_select > 0) {
+										if (typeof (metadata.S3_files.copyright) == 'undefined') {
+											continue; //Skip non-copyright media available for listing at select media for sale
+										}
+										else {
+											if (metadata.S3_files.copyright == null) {
+												continue; //Same purpose as if condition above
+											}
+										}
+									}
+								}
+
 								jtarget_element
-										.append('<li id="share-'
-												+ _media_id
-												+ '-parent"><a href="javascript:;" id="share-'
-												+ _media_id
-												+ '" class="image-sync" onclick="return imageChoosed(this.id);"><img src="'
-												+ _media_url
-												+ '" alt=""></a></li>');
+									.append('<li id="share-'
+										+ _media_id
+										+ '-parent"><a href="javascript:;" id="share-'
+										+ _media_id
+										+ '" class="image-sync" onclick="return imageChoosed(this.id);"><img src="'
+										+ _media_url
+										+ '" alt=""></a></li>');
 						}
 
 						ajaxScrollbarElement('#share_medialist');
