@@ -936,24 +936,41 @@ function fetchpubsMemreas() {
                          var event_media=getSubXMLFromTag(friends[i], 'event_media');
                          var event_media_count=event_media.length;
                         var StrMedia='<div style="clear:both;"></div><ul class="event-pics">';
+
+                            var event_metadata = getValueFromXMLTag(friend, 'event_metadata');
+
+                            if (typeof (event_metadata) != null) {
+                                event_metadata = JSON.parse(event_metadata);
+                                var event_price = event_metadata.price;
+                            }
+                            else {
+                                var event_price = 0;
+                            }
+
                         for( var j=0; j < event_media_count; j++){
                              var event_medi=event_media[j];
                              var event_media_image=getValueFromXMLTag(event_medi,'event_media_448x306');
                              var _event_media_type_=getValueFromXMLTag(event_medi,'event_media_type');
                               var eventId = $(event).filter('event_id').html();
-                             if(_event_media_type_ =='image'){
-                                 StrMedia +='<li class="image"><a href="javascript:;" onclick="showEventDetail(\''
-                                + event_id
-                                + '\', \''
-                                + user_id
-                                + '\');" style="cursor: pointer;"><img src="'+removeCdataCorrectLink(event_media_image)+'"  style=""/></a></li>';
-                             }else if(_event_media_type_ =='video'){
-                                 StrMedia +='<li class="video"><a href="javascript:;" onclick="showEventDetail(\''
-                                + event_id
-                                + '\', \''
-                                + user_id
-                                + '\');" style="cursor: pointer;"><img src="'+removeCdataCorrectLink(event_media_image)+'"  style=""/></a></li>';
+
+                            if (event_price == 0) {
+                                 if(_event_media_type_ =='image'){
+                                     StrMedia +='<li class="image"><a href="javascript:;" onclick="showEventDetail(\''
+                                    + event_id
+                                    + '\', \''
+                                    + user_id
+                                    + '\');" style="cursor: pointer;"><img src="'+removeCdataCorrectLink(event_media_image)+'"  style=""/></a></li>';
+                                 }else if(_event_media_type_ =='video'){
+                                     StrMedia +='<li class="video"><a href="javascript:;" onclick="showEventDetail(\''
+                                    + event_id
+                                    + '\', \''
+                                    + user_id
+                                    + '\');" style="cursor: pointer;"><img src="'+removeCdataCorrectLink(event_media_image)+'"  style=""/></a></li>';
+                                 }
                              }
+                            else {
+
+                            }
                              console.log('Each Event:'+removeCdataCorrectLink(event_media_image));
                              //StrMedia +='<li><img src="'+removeCdataCorrectLink(event_media_image)+'"  style="width:100%"/></li>';
                             
