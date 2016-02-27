@@ -30,7 +30,7 @@ function buyMedia(event_id) {
 		jerror("you must agree with our terms and conditions");
 		return false;
 	}
-
+/*
 	var buymedia_password_confirm = $("#buymedia_confirm_password").val();
 	if (buymedia_password_confirm == '') {
 		jerror("Please confirm password");
@@ -42,7 +42,7 @@ function buyMedia(event_id) {
 		jerror("Confirm password is incorrect");
 		return false;
 	}
-
+*/
 	ajaxRequest('geteventdetails', [ {
 		tag : 'event_id',
 		value : event_id
@@ -72,7 +72,7 @@ function buyMedia(event_id) {
 			var event_id = getValueFromXMLTag(response, 'event_id');
 
 			var params = new Object;
-			params.user_id = LOGGED_USER_ID;
+			params.user_id = Account.id;
 			params.amount = price.toString();
 			params.seller_id = event_owner;
 			params.event_id = event_id;
@@ -345,11 +345,11 @@ function popupReloadAccountBalance() {
 	jTargetElement.html("...");
 
 	var params = new Object;
-	params.user_id = LOGGED_USER_ID;
+	params.user_id = Account.id;
 	params.memreascookie = getCookie("memreascookie");
 	params.x_memreas_chameleon = getCookie("x_memreas_chameleon");
 	var params_json = JSON.stringify(params, null, '\t');
-	var data = '{"action": "buy_credit", ' + '"type":"jsonp", ' + '"json": '
+	var data = '{"action": "getuserbalance", ' + '"type":"jsonp", ' + '"json": '
 			+ params_json + '}';
 
 	var stripeActionUrl = $("input[name=stripe_url]").val()
@@ -361,9 +361,9 @@ function popupReloadAccountBalance() {
 		dataType : 'jsonp',
 		data : 'json=' + data,
 		success : function(response) {
-		    	alert("setX_MEMREAS_CHAMELEON(response.x_memreas_chameleon)-->" + response.x_memreas_chameleon);
+		    	//alert("setX_MEMREAS_CHAMELEON(response.x_memreas_chameleon)-->" + response.x_memreas_chameleon);
 		    	setX_MEMREAS_CHAMELEON(response.x_memreas_chameleon);
-
+			response = JSON.parse(response.data);
 			if (response.status == 'Success') {
 				userObject.buyer_balance = response.buyer_balance;
 				jTargetElement.html("$" + response.buyer_balance);
