@@ -639,19 +639,25 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 				<!---End Pop up section-->
 			</div>
                     <div style="text-align: center;">
-                    <form id="Rpicon" method="post" action="" style="border-bottom: none; position: relative; top:-30px;">
-                        <a href="javascript:;" title="Report media" id="ReportMediaIcon" class="h2sego">report dcma violation</a>
-                                </form>
+                   
             </div>
             
 		</div>
             
 	</section>
+        <div style="clear: both;"></div>
+        <div style="width: 100%; position:relative; z-index: 999; text-align: center;">
+           
+        </div> 
 	<!--Body Ends Here-->
 
 	<!--Footer-->
-	<footer class="rel">
-		<p><?php echo MemreasConstants::COPYRIGHT?></p>
+	<footer>
+            <a href="javascript:;" title="Report media" id="ReportMediaIcon" class="h2sego" style="font-size: 18px;position: relative;top: -42px;">report dcma violation</a>
+            <div class="rel">
+            <p><?php echo MemreasConstants::COPYRIGHT?></p>    
+            </div>
+            
 	</footer>
 	<!--End of Footer-->
 
@@ -692,6 +698,13 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
                     <input name="email" id="emailvoilcation" type="email" placeholder="Your Email" /> 
                      <label for="email">Media Id</label>
                     <input name="email" id="mediaId" type="text" placeholder="Media Id" /> 
+                    
+                    
+                    
+                    <input id="morepage_isselfdestruct" class="css-checkbox" type="checkbox">
+                    <label for="morepage_isselfdestruct" name="demo_lbl_5" class="css-label margin-none" style="text-align: left; margin-left: 0px !important; width: 100%; height:55px; ">By submission of my counter claim I agree to provide my email address to the reporter and will resolve this violation without any further involvement from memreas.</label>
+                    
+                
 
 
                 </form> 

@@ -34,6 +34,21 @@ $(function() {
 			itemsOrder : [ 2, 0, 1 ]
 		});
 	});
+        
+        //DMCA
+        
+        $('.reportCounterclaim').click(function(){
+           var relatt=$(this).attr('rel');
+            //$(this).parent('tr').find('.evenrow'). first().show();
+            //$('.formrowfinder'+relatt+'').toggleClass('evenrow');
+            popup('dmca-form-box');
+        });
+        $('.info-dcma').click(function(){
+           popup('dmca-check-box'); 
+        });
+         
+        
+        
 
 	// Group tab
 	$("a.group-tab").one('click', function() {
@@ -59,6 +74,10 @@ $(function() {
 		$('#buttons6-moretab').akordeon();
 		getAccountMemreas();
 	});
+        
+        
+        
+        
 
 	var subscriptionTabAkordeon = false;
 	$("a.subscription-tab")
