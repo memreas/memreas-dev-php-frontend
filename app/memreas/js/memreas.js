@@ -978,7 +978,7 @@ function fetchpubsMemreas() {
                                                         + event_name
                                                         + '\');" style="cursor: pointer;"><div class="sell-event-overlay"></div><span class="sell-event-buyme"><i>Buy</i></span><img src="'+removeCdataCorrectLink(event_media_image)+'"  style=""/></a></li>';
                                 }else if(_event_media_type_ =='video'){
-                                    StrMedia +='<li class="video"><a href="javascript:;" onclick="spopupBuyMedia(\''
+                                    StrMedia +='<li class="video"><a href="javascript:;" onclick="popupBuyMedia(\''
                                         + event_id
                                         + '\', \''
                                         + event_price
