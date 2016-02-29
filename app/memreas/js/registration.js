@@ -733,10 +733,10 @@ $('#reportVolForm').click(function(){
         }, {
             tag: "copyright_owner_email_address",
             value: copyright_owner_email_address
-        },{
+        }, {
             tag: "copyright_owner_agreed_to_terms",
-            value: 1
-        }
+            value: "1"
+        },
     ];
    
     
@@ -746,10 +746,10 @@ $('#reportVolForm').click(function(){
         var status=getValueFromXMLTag(ret_xml,'status');
         
         
-        console.log('message-->'+message);
+        console.log('message-->'+message +'Status-->'+status);
         console.log(ret_xml);
         
-        if(status =='Success'){
+        if(status =='success'){
           jsuccess("your Report added");    
         }else{
             jerror("your Report is not added");
