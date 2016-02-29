@@ -683,7 +683,7 @@ $('#reportVolForm').click(function(){
     var copyright_owner_address=$('#addressV').val();
     var copyright_owner_email_address=$('#emailvoilcation').val();
     var mediaId_report=$('#mediaId').val();
-    var terms_condition=$('#term_condition').val();
+    var terms_condition=$('#term_condition');
     if (copy_right_owner == '') {
         jerror("Please fill your name");
         return;
@@ -710,6 +710,15 @@ $('#reportVolForm').click(function(){
         return false;
     }
     
+    
+//		if ($(this).is(":checked")) {
+//			legalvalue=$(this).attr('checked', true);
+//		} else {
+//                        alert()
+//			legalvalue=$(this).attr('checked', false);
+//		}
+	
+    
     var params = [{
             tag: "media_id",
             value: mediaId_report
@@ -727,12 +736,12 @@ $('#reportVolForm').click(function(){
         {
             tag: "copyright_owner_agreed_to_terms",
             value: terms_condition
-        },
+        }
     ];
    
-    
+    console. log('Media ID'+mediaId_report +"Owner"+copy_right_owner+'address'+copyright_owner_address+"Email"+copyright_owner_email_address);
     ajaxRequest('dcmareportviolation', params, function (ret_xml) {
-
+        
         console.log(ret_xml);
         $('#reportform').submit();
         jsuccess("your Report added");
