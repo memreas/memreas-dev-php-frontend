@@ -683,7 +683,8 @@ $('#reportVolForm').click(function(){
     var copyright_owner_address=$('#addressV').val();
     var copyright_owner_email_address=$('#emailvoilcation').val();
     var mediaId_report=$('#mediaId').val();
-    var terms_condition=$('#term_condition');
+    //var terms_condition=$('#term_condition');
+    var terms_condition = 1;
     
     if (copy_right_owner == '') {
         jerror("Please fill your name");
@@ -719,7 +720,7 @@ $('#reportVolForm').click(function(){
 //			legalvalue=$(this).attr('checked', false);
 //		}
 	
-    console.log('Media ID'+mediaId_report + "Owner" +copy_right_owner+'address'+copyright_owner_address+"Email"+copyright_owner_email_address);
+    console.log('Media ID-->'+mediaId_report + "Owner-->" +copy_right_owner+'address-->'+copyright_owner_address+"Email-->"+copyright_owner_email_address+'terms_condition-->'+terms_condition);
     var params = [{
             tag: "media_id",
             value: mediaId_report
@@ -732,20 +733,25 @@ $('#reportVolForm').click(function(){
         }, {
             tag: "copyright_owner_email_address",
             value: copyright_owner_email_address
-        },
-        
-        {
+        },{
             tag: "copyright_owner_agreed_to_terms",
-            value: terms_condition
+            value: 1
         }
     ];
    
     
     ajaxRequest('dcmareportviolation', params, function (ret_xml) {
         
-        var message=getValueFromXMLTag(ret_xml,'message');
+        var message=getValueFromXMLTag(ret_xml,'message')
+        var status=getValueFromXMLTag(ret_xml,'status');
+        
+        
         console.log('message-->'+message);
         console.log(ret_xml);
+        
+        if(status =='Success'){
+          jsuccess("your Report added");    
+        }
         jsuccess("your Report added");
      
 
