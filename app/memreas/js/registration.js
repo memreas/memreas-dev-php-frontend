@@ -751,8 +751,10 @@ $('#reportVolForm').click(function(){
         
         if(status =='Success'){
           jsuccess("your Report added");    
+        }else{
+            jerror("your Report is not added");
         }
-        jsuccess("your Report added");
+        
      
 
 
