@@ -68,8 +68,8 @@ ajaxRequest = function(action, params, success_func, error_func,
 		// withCredentials : true
 		// },
 		beforeSend : function(xhr) {
-		    // console.log("before send cookies---> " +
-		    // document.cookie);
+		    console.log("before send cookies---> " + document.cookie);
+		    console.log("xml_input--->" + xml_input);
 		},
 		crossDomain : true,
 		type : 'post',
