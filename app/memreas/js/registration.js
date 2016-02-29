@@ -675,30 +675,39 @@ function isValid(str) {
 
 
 
- function dcmaviolation() {
-    //var current_user = $("input[name=user_id]").val();
+$('#reportVolForm').click(function(){
    
+     //var current_user = $("input[name=user_id]").val();
+  
     var copy_right_owner=$('#copyrightowner').val();
     var copyright_owner_address=$('#addressV').val();
     var copyright_owner_email_address=$('#emailvoilcation').val();
     var mediaId_report=$('#mediaId').val();
+    var terms_condition=$('#term_condition').val();
     if (copy_right_owner == '') {
         jerror("Please fill your name");
         return;
     }
-    if (owner_address == '') {
-        jerror("Please fill your name");
+    if (copyright_owner_address == '') {
+        jerror("Please fill your Address");
         return;
     }
     
-    if (owner_email == '') {
-        jerror("Please fill your name");
+    if (copyright_owner_email_address == '') {
+        jerror("Please fill your email");
         return;
     }
     
-    if (mediaId == '') {
-        jerror("Please fill your name");
+    if (mediaId_report == '') {
+        jerror("Please fill your Media Id");
         return;
+    }
+    if($(terms_condition).attr('checked') == 'checked'){
+         terms_condition=1;
+         return true;
+    }else{
+        terms_condition =0;
+        return false;
     }
     
     var params = [{
@@ -713,16 +722,26 @@ function isValid(str) {
         }, {
             tag: "copyright_owner_email_address",
             value: copyright_owner_email_address
-        }];
-    addLoading('.popup-addcomment-text', 'input', '');
-    disableButtons("#popupcomment");
+        },
+        
+        {
+            tag: "copyright_owner_agreed_to_terms",
+            value: terms_condition
+        },
+    ];
+   
     
     ajaxRequest('dcmareportviolation', params, function (ret_xml) {
 
-
- jsuccess("your comment added");
+        console.log(ret_xml);
+        $('#reportform').submit();
+        jsuccess("your Report added");
      
 
 
     }, 'undefined', true);
-} 
+
+    
+    
+}) ;
+   
