@@ -290,6 +290,10 @@ getXMLStringFromParamArray = function(action, params) {
     case "fetchpresigneduploadurl":
 	action_tag = "fetchpresigneduploadurl";
 	break;
+    case "dcmareportviolation":
+	action_tag = "dcmareportviolation";
+	break;
+	
 
     default:
 	break;
