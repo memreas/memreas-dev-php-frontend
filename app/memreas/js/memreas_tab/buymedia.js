@@ -95,8 +95,9 @@ function buyMedia(event_id) {
 						dataType : 'jsonp',
 						data : 'json=' + data,
 						success : function(response) {
+							response = JSON.parse(response.data);
 							if (response.status == 'Success') {
-							    	alert("setX_MEMREAS_CHAMELEON(response.x_memreas_chameleon)-->" + response.x_memreas_chameleon);
+							    	//alert("setX_MEMREAS_CHAMELEON(response.x_memreas_chameleon)-->" + response.x_memreas_chameleon);
 							    	setX_MEMREAS_CHAMELEON(response.x_memreas_chameleon);
 								jsuccess(response.message);
 								disablePopup("popupBuyMedia");
