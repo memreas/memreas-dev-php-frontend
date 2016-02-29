@@ -708,13 +708,16 @@ nav ul li a:hover, nav ul li a.active {
 }
 
 .rowfixed {
-	position: fixed;
+	position: relative;
 	z-index: 3;
 	width: 100%
 }
 
 .top75 {
 	top: 75px;
+}
+.top20 {
+	top: 20px;
 }
 
 .event_details {

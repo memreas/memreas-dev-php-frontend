@@ -272,10 +272,10 @@ jQuery.fetch_server_media = function() {
 				    + _media_url_web
 				    + '" title="'
 				    + media_id
-				    //+ '" data-type="video/mp4" data-gallery="#blueimp-gallery" class="blueimp-gallery-thumb-anchor " style="background:url('
-				    + '" data-type="video/mp4" class="blueimp-gallery-thumb-anchor " style="background:url('
+				    + '" data-type="video/mp4" data-gallery="#blueimp-gallery" class="blueimp-gallery-thumb-anchor " style="background:url('
+				   // + '" data-type="video/mp4" class="blueimp-gallery-thumb-anchor " style="background:url('
 				    + _media_thumbnail_large
-				    + ') ><span class="video-content-play-icon"></span></a>';
+				    + ')" ><span class="video-content-play-icon"></span></a>';
 
 			} else {
 			    item['title'] = _media_type;
@@ -286,8 +286,8 @@ jQuery.fetch_server_media = function() {
 				    + main_media_url
 				    + '" title="'
 				    + media_id
-				    //+ '" data-gallery="#blueimp-gallery" class="blueimp-gallery-thumb-anchor" style="background:url('
-				    + '" class="blueimp-gallery-thumb-anchor" style="background:url('
+				    + '" data-gallery="#blueimp-gallery" class="blueimp-gallery-thumb-anchor" style="background:url('
+				    //+ '" class="blueimp-gallery-thumb-anchor" style="background:url('
 				    + media_thummb_448 + ')"><span></span></a>';
 			}
 			// console.log("item" + JSON.stringify(item));
@@ -346,7 +346,7 @@ jQuery.fetch_server_media = function() {
 		    });
 
 		    $(linksContainer).append(linksContainerData);
-		    $('#blueimp-gallery').hide();
+		   // $('#blueimp-gallery').hide();
 		    // var pos =
 
 		    // gallery.slide(gallery.getIndex(),400);
@@ -416,10 +416,7 @@ jQuery.fetchVideoHTML = function (media_id) {
     
 }
 
-$('#links > a').click(function(){
-   alert("Inside links function"); 
- //$('#blueimp-gallery').show();
-});
+
 function getUserNotificationsHeader() {
     console.log("Inside gallery.js - getUserNotificationsHeader");
     var user_id = $("input[name=user_id]").val();

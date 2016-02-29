@@ -177,7 +177,7 @@
 
     <div id="popupReportMedia" class="popups">
         <a id="popupReportMediaClose" onClick="disablePopup('popupReportMedia');" class='popupClose'>x</a>
-        <h2>DMCA violation</h2>
+        <h2>Report Media</h2>
         <p>&nbsp;</p>
         
          
@@ -185,9 +185,13 @@
         
         <ul class=" scrollpopup give-message-form">
             <li>
-            <input id="DMCAViolation" type="radio" class="radio-bx" name="report" value="0" style="width: 18px; height: 18px; position: relative;top: 4px;">
+               <input id="DMCAViolation" type="radio" class="radio-bx" name="report" value="0" style="width: 18px; height: 18px; position: relative;top: 4px;">
                 <label for="DMCA Violation" class="radio-label" style="display: inline-block; color:#fff;  font-size: 15px;">DMCA Violation</label>
-               <form enctype="multipart/form-data" action="" method="post" name="" class="HideReport" id="reportform" style="background: none; border-bottom: none;">
+                
+              <input id="offensiveViolation" type="radio" class="radio-bx" name="report" value="0" style="width: 18px; height: 18px; position: relative;top: 4px;">
+                <label for="DMCA Violation" class="radio-label" style="display: inline-block; color:#fff;  font-size: 15px;">Offensive Content</label> 
+                
+               <form enctype="multipart/form-data" action="" method="post" name="" class="HideReport" id="reportform" style="background: none; border-bottom: none; margin-top: 10px;">
                     <label for="email">Copy Right Owner Name</label>
                     <input name="copyrightowner" id="copyrightowner" type="text" placeholder="Your Name" /> 
                     <label for="address">Address</label>
