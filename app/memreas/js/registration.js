@@ -719,7 +719,7 @@ $('#reportVolForm').click(function(){
 //			legalvalue=$(this).attr('checked', false);
 //		}
 	
-    console.log('Media ID'+mediaId_report +"Owner"+copy_right_owner+'address'+copyright_owner_address+"Email"+copyright_owner_email_address);
+    console.log('Media ID'+mediaId_report + "Owner" +copy_right_owner+'address'+copyright_owner_address+"Email"+copyright_owner_email_address);
     var params = [{
             tag: "media_id",
             value: mediaId_report
@@ -743,8 +743,9 @@ $('#reportVolForm').click(function(){
     
     ajaxRequest('dcmareportviolation', params, function (ret_xml) {
         
+        var message=getSubXMLFromTag(ret_xml,'message');
+        console.log('message-->'+message);
         console.log(ret_xml);
-        $('#reportform').submit();
         jsuccess("your Report added");
      
 
