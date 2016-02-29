@@ -743,7 +743,7 @@ $('#reportVolForm').click(function(){
     
     ajaxRequest('dcmareportviolation', params, function (ret_xml) {
         
-        var message=getSubXMLFromTag(ret_xml,'message');
+        var message=getValueFromXMLTag(ret_xml,'message');
         console.log('message-->'+message);
         console.log(ret_xml);
         jsuccess("your Report added");
