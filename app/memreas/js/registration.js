@@ -672,3 +672,57 @@ function isValid(str) {
 	}
 	return true;
 }
+
+
+
+ function dcmaviolation() {
+    //var current_user = $("input[name=user_id]").val();
+   
+    var copy_right_owner=$('#copyrightowner').val();
+    var copyright_owner_address=$('#addressV').val();
+    var copyright_owner_email_address=$('#emailvoilcation').val();
+    var mediaId_report=$('#mediaId').val();
+    if (copy_right_owner == '') {
+        jerror("Please fill your name");
+        return;
+    }
+    if (owner_address == '') {
+        jerror("Please fill your name");
+        return;
+    }
+    
+    if (owner_email == '') {
+        jerror("Please fill your name");
+        return;
+    }
+    
+    if (mediaId == '') {
+        jerror("Please fill your name");
+        return;
+    }
+    
+    var params = [{
+            tag: "media_id",
+            value: mediaId_report
+        }, {
+            tag: "copyright_owner_name",
+            value: copy_right_owner
+        }, {
+            tag: "copyright_owner_address",
+            value: copyright_owner_address
+        }, {
+            tag: "copyright_owner_email_address",
+            value: copyright_owner_email_address
+        }];
+    addLoading('.popup-addcomment-text', 'input', '');
+    disableButtons("#popupcomment");
+    
+    ajaxRequest('dcmareportviolation', params, function (ret_xml) {
+
+
+ jsuccess("your comment added");
+     
+
+
+    }, 'undefined', true);
+} 
