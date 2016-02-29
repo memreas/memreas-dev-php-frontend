@@ -158,7 +158,7 @@ $(document).ready(
 	});
 
 var checkHasImage = false;
- var objArr = new Array();
+var objArr = new Array();
 /* Load server media */
 jQuery.fetch_server_media = function() {
     console.log("Inside jQuery.fetch_server_media");
@@ -202,9 +202,9 @@ jQuery.fetch_server_media = function() {
 		    var count_media = medias.length;
 
 		    var items_for_gallery = "[";
-		   
-                     var linksContainer = $('#links');
-                     var linksContainerData='';
+
+		    var linksContainer = $('#links');
+		    var linksContainerData = '';
 
 		    /** Initialize empty gallery and add within loop */
 		    for (var json_key = 0; json_key < count_media; json_key++) {
@@ -223,7 +223,7 @@ jQuery.fetch_server_media = function() {
 			var main_media_url = '';
 			var main_media_url_m3u8 = '';
 			var source = "";
-                       var media_thummb_448="";
+			var media_thummb_448 = "";
 			if (_media_type == 'image') {
 			    _media_url = getMediaUrl(media, _media_type);
 			    content_type = 'image/jpeg';
@@ -232,8 +232,9 @@ jQuery.fetch_server_media = function() {
 				    'main_media_url');
 			    // main_media_url=getValueFromXMLTag(media,'media_url_448x306');
 			    _media_thumbnail_large = main_media_url = removeCdataCorrectLink(main_media_url);
-                              media_thummb_448=getValueFromXMLTag(media,'media_url_448x306');
-                            media_thummb_448=removeCdataCorrectLink(media_thummb_448);
+			    media_thummb_448 = getValueFromXMLTag(media,
+				    'media_url_448x306');
+			    media_thummb_448 = removeCdataCorrectLink(media_thummb_448);
 			} else if (_media_type == 'video') {
 			    _media_url_hls = getValueFromXMLTag(media,
 				    'media_url_hls');
@@ -267,18 +268,30 @@ jQuery.fetch_server_media = function() {
 				href : _media_url_web,
 				type : "video/mp4"
 			    } ];
-                        linksContainerData +='<a href="'+_media_url_web+'" title="'+media_id+'" data-type="video/mp4" data-gallery="#blueimp-gallery" class="blueimp-gallery-thumb-anchor " style="background:url('+_media_thumbnail_large+')"><span class="video-content-play-icon"></span></a>';
-                        
+			    linksContainerData += '<a href="'
+				    + _media_url_web
+				    + '" title="'
+				    + media_id
+				    //+ '" data-type="video/mp4" data-gallery="#blueimp-gallery" class="blueimp-gallery-thumb-anchor " style="background:url('
+				    + '" data-type="video/mp4" class="blueimp-gallery-thumb-anchor " style="background:url('
+				    + _media_thumbnail_large
+				    + ') ><span class="video-content-play-icon"></span></a>';
+
 			} else {
 			    item['title'] = _media_type;
 			    item['type'] = "image/jpeg";
 			    item['href'] = main_media_url;
 			    item['poster'] = main_media_url;
-                             linksContainerData +='<a href="'+main_media_url+'" title="'+media_id+'" data-gallery="#blueimp-gallery" class="blueimp-gallery-thumb-anchor" style="background:url('+media_thummb_448+')"><span></span></a>';
+			    linksContainerData += '<a href="'
+				    + main_media_url
+				    + '" title="'
+				    + media_id
+				    //+ '" data-gallery="#blueimp-gallery" class="blueimp-gallery-thumb-anchor" style="background:url('
+				    + '" class="blueimp-gallery-thumb-anchor" style="background:url('
+				    + media_thummb_448 + ')"><span></span></a>';
 			}
 			// console.log("item" + JSON.stringify(item));
 			objArr.push(item);
-                        
 
 			// Delete Tab Data
 			$(".edit-area-scroll")
@@ -286,8 +299,10 @@ jQuery.fetch_server_media = function() {
 					'<li><a class="image-sync" id="'
 						+ media_id
 						+ '" onclick="return imageChoosed(this.id);" href="'
-						+ _media_thumbnail + '"><img src="'
-						+ _media_thumbnail + '"/></a></li>');
+						+ _media_thumbnail
+						+ '"><img src="'
+						+ _media_thumbnail
+						+ '"/></a></li>');
 
 			$(".preload-files .pics").append(
 				'<li><img src="' + _media_url + '"/></li>');
@@ -298,7 +313,8 @@ jQuery.fetch_server_media = function() {
 						+ '" src="'
 						+ _media_thumbnail
 						+ '" onclick="openEditMedia(this.id, \''
-						+ _media_thumbnail + '\');"/></li>');
+						+ _media_thumbnail
+						+ '\');"/></li>');
 			$(".galleries-location").append(
 				'<li><img id="location' + media_id
 					+ '" class="img-gallery" src="'
@@ -312,25 +328,25 @@ jQuery.fetch_server_media = function() {
 		    console.log("objArr" + JSON.stringify(objArr));
 
 		    // var gallery = blueimp.Gallery(links, options);
-//		    blueimp.Gallery(objArr, {
-//			onslide : function() {
-//
-//			},
-//			container : '#blueimp-video-carousel',
-//			carousel : 'true',
-//			preloadRange : 2,
-//			transitionSpeed : 400
-//		    });
-                    
-                     blueimp.Gallery(objArr, {
-            container: '#blueimp-gallery',
-            carousel: true,
-             thumbnailProperty: 'thumbnail',
-             thumbnailIndicators: true
-        });
-                 
-                    $(linksContainer).append(linksContainerData);
-                    $('#blueimp-gallery').hide();
+		    // blueimp.Gallery(objArr, {
+		    // onslide : function() {
+		    //
+		    // },
+		    // container : '#blueimp-video-carousel',
+		    // carousel : 'true',
+		    // preloadRange : 2,
+		    // transitionSpeed : 400
+		    // });
+
+		    blueimp.Gallery(objArr, {
+			container : '#blueimp-gallery',
+			carousel : true,
+			thumbnailProperty : 'thumbnail',
+			thumbnailIndicators : true
+		    });
+
+		    $(linksContainer).append(linksContainerData);
+		    $('#blueimp-gallery').hide();
 		    // var pos =
 
 		    // gallery.slide(gallery.getIndex(),400);
@@ -396,10 +412,14 @@ jQuery.fetch_server_media = function() {
 	    });
 }
 
-//$('#links > a').click(function(){
-//    
-//        $('#blueimp-gallery').show();
-//});
+jQuery.fetchVideoHTML = function (media_id) {
+    
+}
+
+$('#links > a').click(function(){
+   alert("Inside links function"); 
+ //$('#blueimp-gallery').show();
+});
 function getUserNotificationsHeader() {
     console.log("Inside gallery.js - getUserNotificationsHeader");
     var user_id = $("input[name=user_id]").val();
