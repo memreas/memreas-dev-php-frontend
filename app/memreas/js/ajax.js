@@ -79,8 +79,7 @@ ajaxRequest = function(action, params, success_func, error_func,
 		success : function(ret_xml) {
 		    // alert("wsurl---> " + wsurl + "ret_xml---->"+ret_xml);
 		    // alert("ret_xml.data.x_memreas_chameleon---->"+getValueFromXMLTag(ret_xml,'x_memreas_chameleon').trim());
-		    // setX_MEMREAS_CHAMELEON(getValueFromXMLTag(ret_xml,
-		    // 'x_memreas_chameleon').trim());
+		    setX_MEMREAS_CHAMELEON(getValueFromXMLTag(ret_xml, 'x_memreas_chameleon').trim());
 		    // alert('action->' + action + ' x_memreas_chameleon->' +
 		    // getCookie('x_memreas_chameleon'));
 
@@ -129,7 +128,7 @@ ajaxRequest = function(action, params, success_func, error_func,
     return false;
 }
 
-getXMLStringFromParamArray = function(action, params) {
+i = function(action, params) {
     var i = 0;
     var action_tag = "";
     xml_str = "<xml>";
