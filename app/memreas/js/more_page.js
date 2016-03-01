@@ -1946,7 +1946,7 @@ $(function(){
                     '<td>'+media_id+'</td>'+
                     
                    ' <td><img src="'+media_thumb+'" width="80" /></td>'+
-                    '<td> <a href="javascript:reportCounterclaim()" class="counter-claim-btn reportCounterclaim" rel="'+i+'">report counter claim</a>'+ 
+                    '<td> <a href="javascript:reportCounterclaim()" class="counter-claim-btn reportCounterclaim" rel="'+media_id+'">report counter claim</a>'+ 
                     '</td>'+
                     '<td>'+media_date+'</td>'+
                     '<td>Status Update</td>'+
@@ -1980,6 +1980,8 @@ $(function(){
 
 function reportCounterclaim(){
      popup('dmca-form-box');
+     var relAttr=$(this).att('rel');
+     $('#media_id').val(relAttr);
 }
 
 function reportCounterclaimFrom(){
@@ -2021,6 +2023,9 @@ function reportCounterclaimFrom(){
     
     
      var params = [{
+            tag: "memreascookie",
+            value: getCookie("memreas")
+        },{
             tag: "media_id",
             value: mediaId_report
         }, {
@@ -2044,6 +2049,7 @@ function reportCounterclaimFrom(){
    
     
     ajaxRequest('dcmareportviolation', params, function (ret_xml) {
+        setX_MEMREAS_CHAMELEON(getValueFromXMLTag(ret_xml, 'x_memreas_chameleon').trim());
         
         var message=getValueFromXMLTag(ret_xml,'message')
         var status=getValueFromXMLTag(ret_xml,'status');
