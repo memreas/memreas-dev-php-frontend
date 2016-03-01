@@ -434,6 +434,10 @@ function getCookie(cname) {
     return "";
 }
 
+function setCookie(cname, cvalue) {
+    document.cookie = cname + "=" + cvalue + ";";
+}
+
 function isJson(str) {
     try {
         JSON.parse(str);

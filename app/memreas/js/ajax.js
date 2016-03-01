@@ -17,6 +17,7 @@ fetchChameleon = function() {
     } ];
     var xml_input = getXMLStringFromParamArray(action, params);
     var data = new Object();
+    var token_test;
     data.ws_action = action;
     data.type = "jsonp";
     data.json = xml_input;
@@ -30,10 +31,15 @@ fetchChameleon = function() {
 	dataType : 'jsonp',
 	data : 'json=' + json_data,
 	success : function(response) {
-	    setX_MEMREAS_CHAMELEON(getValueFromXMLTag(response,
+	    setCookie('x_memreas_chameleon', getValueFromXMLTag(response,
 		    'x_memreas_chameleon').trim());
 	    console.log('cookie x_memreas_chameleon-->'
 		    + getCookie('x_memreas_chameleon'));
+	    token_test = getValueFromXMLTag(response,
+	    'token_test').trim()
+	    if (token_test != '') {
+		alert(token_test); 
+	    }
 	},
 	error : function(jqXHR, textStatus, errorThrown) {
 	    // do nothing
@@ -77,11 +83,6 @@ ajaxRequest = function(action, params, success_func, error_func,
 		dataType : 'jsonp',
 		data : 'json=' + json_data,
 		success : function(ret_xml) {
-		    // alert("wsurl---> " + wsurl + "ret_xml---->"+ret_xml);
-		    // alert("ret_xml.data.x_memreas_chameleon---->"+getValueFromXMLTag(ret_xml,'x_memreas_chameleon').trim());
-		    //setX_MEMREAS_CHAMELEON(getValueFromXMLTag(ret_xml, 'x_memreas_chameleon').trim());
-		    // alert('action->' + action + ' x_memreas_chameleon->' +
-		    // getCookie('x_memreas_chameleon'));
 
 		    /*
 		     * var x_memreas_chameleon = getValueFromXMLTag(ret_xml,
