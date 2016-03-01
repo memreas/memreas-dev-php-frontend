@@ -683,8 +683,8 @@ $('#reportVolForm').click(function(){
     var copyright_owner_address=$('#addressV').val();
     var copyright_owner_email_address=$('#emailvoilcation').val();
     var mediaId_report=$('#mediaId').val();
-    //var terms_condition=$('#term_condition');
-    var terms_condition = 1;
+    var terms_condition=$('#term_condition').val();
+    
     
     if (copy_right_owner == '') {
         jerror("Please fill your name");
@@ -704,6 +704,13 @@ $('#reportVolForm').click(function(){
         jerror("Please fill your Media Id");
         return;
     }
+    
+    if(terms_condition ==''){
+         jerror("Please checkbox");
+         return;
+    }
+   
+    
 //    if($(terms_condition).attr('checked') == 'checked'){
 //         terms_condition=1;
 //         return true;
@@ -713,14 +720,12 @@ $('#reportVolForm').click(function(){
 //    }
     
     
-//		if ($(this).is(":checked")) {
-//			legalvalue=$(this).attr('checked', true);
-//		} else {
-//                        alert()
-//			legalvalue=$(this).attr('checked', false);
-//		}
+		 
 	
     console.log('Media ID-->'+mediaId_report + "Owner-->" +copy_right_owner+'address-->'+copyright_owner_address+"Email-->"+copyright_owner_email_address+'terms_condition-->'+terms_condition);
+     
+			
+if(terms_condition =="1"){    
     var params = [{
             tag: "media_id",
             value: mediaId_report
@@ -750,9 +755,12 @@ $('#reportVolForm').click(function(){
         console.log(ret_xml);
         
         if(status =='success'){
-          jsuccess("your Report added");    
+          jsuccess("your Report added");
+          disablePopup('popupReportMedia');
+          
         }else{
             jerror("your Report is not added");
+             disablePopup('popupReportMedia');
         }
         
      
@@ -761,6 +769,17 @@ $('#reportVolForm').click(function(){
     }, 'undefined', true);
 
     
-    
+    }else 
+    jerror("Please check your form");
 }) ;
+
+$('#term_condition_label').click(function(){
+    $('#term_condition').toggleClass('checked');
+    if($('#term_condition').hasClass('checked')){
+       $('#term_condition').val(1); 
+    }else{
+       $('#term_condition').val(''); 
+    }
+    
+});
    
