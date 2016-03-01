@@ -488,11 +488,7 @@ $(document)
 									function(
 										xml_response) {
 									    var filename = data.files[0].name;
-									    alert("before::"
-										    + filename);
 									    filename = correctUploadFilename(filename);
-									    alert("after::"
-										    + filename);
 									    if (getValueFromXMLTag(
 										    xml_response,
 										    'status') == 'Failure') {
