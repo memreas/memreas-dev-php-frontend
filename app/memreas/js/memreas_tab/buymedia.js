@@ -10,7 +10,7 @@ function popupBuyMedia(event_id, event_price, event_name) {
 	$(".popup-event-name").html(event_name);
 	$(".popup-buymedia-price").html("$" + event_price);
 	$("#accept-buymedia").attr("onclick", "buyMedia('" + event_id + "');");
-	popupReloadAccountBalance();
+	Account.reloadAccountCredit('.popup-buymedia-credit');
 	popup("popupBuyMedia");
 }
 
@@ -127,6 +127,7 @@ function buyMedia(event_id) {
 								jElement.attr('onclick', divaTagClick);
 								jElement.find(".sell-event-overlay").remove();
 								jElement.find(".sell-event-buyme").remove();
+								fetchpubsMemreas();
 							} else
 								jerror(response.message);
 							$('.stripe-payment').fadeOut(500);
@@ -333,45 +334,6 @@ function acceptBuyCredit() {
 				popup("popupBuyMedia");
 			} else
 				jerror(response.message);
-			$('.stripe-payment').fadeOut(500);
-		}
-	});
-}
-
-/*
- * Reload account balance
- */
-function popupReloadAccountBalance() {
-	var jTargetElement = $(".popup-buymedia-credit");
-	jTargetElement.html("...");
-
-	var params = new Object;
-	params.user_id = Account.id;
-	params.memreascookie = getCookie("memreascookie");
-	params.x_memreas_chameleon = getCookie("x_memreas_chameleon");
-	var params_json = JSON.stringify(params, null, '\t');
-	var data = '{"action": "getuserbalance", ' + '"type":"jsonp", ' + '"json": '
-			+ params_json + '}';
-
-	var stripeActionUrl = $("input[name=stripe_url]").val()
-			+ 'stripe_getUserBalance';
-	$('.stripe-payment').fadeIn(1000);
-	$.ajax({
-		url : stripeActionUrl,
-		type : 'POST',
-		dataType : 'jsonp',
-		data : 'json=' + data,
-		success : function(response) {
-		    	//alert("setX_MEMREAS_CHAMELEON(response.x_memreas_chameleon)-->" + response.x_memreas_chameleon);
-		    	setX_MEMREAS_CHAMELEON(response.x_memreas_chameleon);
-			response = JSON.parse(response.data);
-			if (response.status == 'Success') {
-				userObject.buyer_balance = response.buyer_balance;
-				jTargetElement.html("$" + response.buyer_balance);
-			} else {
-				jerror(response.message);
-				jTargetElement.html("$" + userObject.buyer_balance);
-			}
 			$('.stripe-payment').fadeOut(500);
 		}
 	});

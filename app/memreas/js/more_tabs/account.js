@@ -304,7 +304,6 @@ var Account = function() {
 	this.checkOwnEvent = function(eventId) {
 		if (this.eventPurchases.length > 0) {
 			for (var i = 0;i < this.eventPurchases.length;i++) {
-				alert(this.eventPurchases[i] + ' => ' + eventId);
 				if (this.eventPurchases[i] == eventId) {
 					return true;
 				}
