@@ -95,10 +95,10 @@
     </div>
 </div>
 
-<div id="popupaddcard" class="popups">
-    <a id="popupaddcardClose" onClick="disablePopup('popupaddcard');" class='popupClose'>x</a>
+<div id="popup-addcard-subscription-payment" class="popups">
+    <a id="popup-addcard-subscription-paymentClose" onClick="disablePopup('popu-addcard-subscription-payment');" class='popupClose'>x</a>
     <h2>Add new card</h2>
-    <ul id="content_1" class="scrollpopup addCardForm">
+    <ul id="content_1" class="scrollpopup subscriptionAddCardForm">
         <li>
             <label class="textfield_names">First name*</label>
             <input name="input" type="text" id="addcard_fname" class="" value="first name" default="first name" onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }" onFocus="if(this.value == 'first name'){ this.value = ''; $(this).css('color', '#000'); }"/>
@@ -181,9 +181,10 @@
             <input name="input" type="text" id="addcard_ccv" class="" value="Card code" onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }" onFocus="if(this.value == 'Card code'){ this.value = ''; $(this).css('color', '#000'); }"/>
         </li>
     </ul>
-    <a class="black_btn_skin f-left" href="javascript:;" onclick="stripeAddCard();">ok</a> <a class="black_btn_skin f-right" href="javascript:disablePopup('popupaddcard');">cancel</a>
+    <a class="black_btn_skin f-left" href="javascript:;" onclick="stripeAddCard();">ok</a> <a class="black_btn_skin f-right" href="javascript:disablePopup('popup-addcard-subscription-payment');">cancel</a>
 </div>
-<div id="bgpopupaddcard" class="backgroundPopup"></div>
+<div id="bgpopup-addcard-subscription-payment" class="backgroundPopup"></div>
+
 <!-- Order summary content -->
 <div class="order-summary-preview hide-onload">
     <ul>
