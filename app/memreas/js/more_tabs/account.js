@@ -717,30 +717,30 @@ function getAccountPlans() {
 		success : function(response) {
 		    response = jQuery.parseJSON(response.data);
 		    if (response.status == 'Success') {
-			var account_stripe = response.customer;
-			if (account_stripe.exist == 1) {
-			    var total_subscriptions = account_stripe.info.subscriptions.total_count;
-			    if (total_subscriptions > 0) {
+				var account_stripe = response.account.customer;
+				if (account_stripe.exist) {
+					var total_subscriptions = account_stripe.info.subscriptions.total_count;
+					if (total_subscriptions > 0) {
+					jAccountPlans
+						.append('<li><label class="label_text2"><label for="account-plan-1"></label>Your current active plans:</label></li>');
+					var active_subscriptions = account_stripe.info.subscriptions.data;
+					for (var i = 0; i < total_subscriptions; i++) {
+						var plan = active_subscriptions[i].plan;
+						var html_element = '<li><label class="label_text2"><label for="account-plan-1"></label>'
+							+ plan.name + '</label></li>';
+						jAccountPlans.append(html_element);
+					}
+					} else
+					jAccountPlans
+						.html('You are using our free plan. Use the subscriptions tab to upgrade.');
+				} else
+					jAccountPlans
+						.html("You are using our free plan. Use the subscriptions tab to upgrade.");
+				} else
 				jAccountPlans
-					.append('<li><label class="label_text2"><label for="account-plan-1"></label>Your current active plans:</label></li>');
-				var active_subscriptions = account_stripe.info.subscriptions.data;
-				for (var i = 0; i < total_subscriptions; i++) {
-				    var plan = active_subscriptions[i].plan;
-				    var html_element = '<li><label class="label_text2"><label for="account-plan-1"></label>'
-					    + plan.name + '</label></li>';
-				    jAccountPlans.append(html_element);
-				}
-			    } else
-				jAccountPlans
-					.html('You are using our free plan. Use the subscriptions tab to upgrade.');
-			} else
-			    jAccountPlans
-				    .html("You are using our free plan. Use the subscriptions tab to upgrade.");
-		    } else
-			jAccountPlans
-				.html("You are using our free plan. Use the subscriptions tab to upgrade.");
-		    $('#loadingpopup').fadeOut(500);
-		}
+					.html("You are using our free plan. Use the subscriptions tab to upgrade.");
+				$('#loadingpopup').fadeOut(500);
+			}
 	    });
 }
 
