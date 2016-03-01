@@ -35,17 +35,7 @@ $(function() {
 		});
 	});
         
-        //DMCA
-        
-        $('.reportCounterclaim').click(function(){
-           var relatt=$(this).attr('rel');
-            //$(this).parent('tr').find('.evenrow'). first().show();
-            //$('.formrowfinder'+relatt+'').toggleClass('evenrow');
-            popup('dmca-form-box');
-        });
-        $('.info-dcma').click(function(){
-           popup('dmca-check-box'); 
-        });
+       
          
         
         
@@ -1913,3 +1903,77 @@ function cancelAddGroup() {
 	$(".group-select, .group-default-actions").show();
 	group_mode = 'update';
 }
+
+$(function(){
+    $('.dmca-tab').click(function(){
+        
+        var userId = $("input[name=user_id]").val();
+        
+     ajaxRequest(
+	    'listallmedia',
+	    [{
+		tag : 'user_id',
+		value : userId
+	    } ],function(response) {
+		console.log("DCMA-->" + response);
+                var status =getValueFromXMLTag(response,'status');
+                var medias =getSubXMLFromTag(response,'media');
+                
+                console.log('Media-->'+medias);
+                var medias_count = medias.length;
+              var report_v_row='';
+                if(status =='Success'){
+                    //var media_count=getSubXMLFromTag(medias,'media');
+                    
+                    for(var i=0; i < medias_count; i++){
+                        var media_detail=medias[i].innerHTML;
+                        
+                        //console.log('media_detail '+i+'-->'+media_detail);
+                        var media_id = $(media_detail).filter('media_id').html();
+                        
+                        //console.log('media_id-->'+media_id);
+                        var media_date=$(media_detail).filter('media_date').html();
+                        var media_type=$(media_detail).filter('type').html();
+                        var media_thumb=$(media_detail).filter('media_url_448x306').html();
+                        media_thumb=removeCdataCorrectLink(media_thumb);
+                        var row_class='';
+                        if(i%2==0)
+                            row_class='oddrow';
+                            else
+                               row_class='evenrow';
+                   report_v_row +='<tr class="'+row_class+'">' +
+                    '<td>'+media_date+'</td>'+
+                    '<td>'+media_id+'</td>'+
+                    
+                   ' <td><img src="'+media_thumb+'" width="80" /></td>'+
+                    '<td> <a href="javascript:;" class="counter-claim-btn reportCounterclaim" rel="'+i+'">report counter claim</a>'+ 
+                    '</td>'+
+                    '<td>'+media_date+'</td>'+
+                    '<td>Status Update</td>'+
+                '</tr>';
+                        
+                        
+                    }
+                    var media_count2=getValueFromXMLTag(medias,'media');
+                    $('.dmca-table-data > tbody').append(report_v_row);
+                    console.log('DMCMA COUNt -->'+report_v_row);
+                    console.log('DMCMA COUNt2 -->'+media_count2.length);
+                    
+                }
+            }
+        
+    );
+    });
+    
+    //DMCA
+        
+        $(document).on('click','.reportCounterclaim',function(){
+            var rel=$(this).attr(rel); 
+            popup('dmca-form-box');
+        })
+        
+        $('.info-dcma').click(function(){
+           popup('dmca-check-box'); 
+        });
+    
+});
