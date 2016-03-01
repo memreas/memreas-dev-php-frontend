@@ -409,15 +409,23 @@ function getPlans() {
 																+ '</p>';
 														jAccountPlans
 																.append(html_element);
+														$("input#plan-" + plan.id).attr("checked", "checked");
+														planChange(plan.id);
 													}
 													check_user_subscription = 1;
-												} else
+												} else {
 													setUserDefaultPlan();
+													$("input#plan-PLAN_A_2GB_MONTHLY").attr("checked", "checked");
+													planChange('PLAN_A_2GB_MONTHLY');
+												}
 											} else
 												jAccountPlans
 														.html('Your account has not existed or deleted before on Stripe');
-										} else
+										} else {
 											setUserDefaultPlan();
+											$("input#plan-PLAN_A_2GB_MONTHLY").attr("checked", "checked");
+											planChange('PLAN_A_2GB_MONTHLY');
+										}
 										updateAkordeonContent($('.subscription-payment-plans-tab'));
 										$('#loadingpopup').hide();
 									},
