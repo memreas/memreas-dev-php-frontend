@@ -56,28 +56,29 @@
                
                 <li>
                     <label class="textfield_names">Full Name :</label>
-                    <input name="input" type="text" id="morepage_eventDate" class="share-txtfield"  value="" placeholder="Full Name" />
+                    <input name="copyright_owner_name" type="text" id="copyright_owner_name" class="share-txtfield"  value="" placeholder="Contact Owner Name" />
                 </li>
                 <li>
                     <label class="textfield_names">Address :</label>
-                    <input name="input3" type="text" id="morepage_eventLocation" class="share-txtfield" value="" placeholder="Address" />
+                    <input name="copyright_owner_address" type="text" id="copyright_owner_address" class="share-txtfield" value="" placeholder="Address" />
                 </li>
                 
                 
                 
                 <li>
                     <label class="textfield_names">Phone number :</label>
-                    <input name="input3" type="text" id="morepage_eventLocation" class="share-txtfield" value="" placeholder="Phone no." />
+                    <input name="counter_claim_phone_number" type="text" id="counter_claim_phone_number" class="share-txtfield" value="" placeholder="Phone no." />
                 </li>
                 <li>
                      <label class="textfield_names">Email address :</label>
-                     <input name="input3" type="text" id="morepage_eventLocation" class="share-txtfield" value="" placeholder="Email"/>
-                   
+                     <input name="copyright_owner_email_address" type="email" id="copyright_owner_email_address" class="share-txtfield" value="" placeholder="Email"/>
+                     <input type="hidden" name="media_id"  id="media_id" />
                 </li>
                 
                 <li>
                     <label class="textfield_names">Signed Written Communication:</label>
-                    <a class="black_btn_skin f-center change-profile-btn fileupload-dmca" href="javascript:;">Choose file</a>
+<!--                    <a class="black_btn_skin f-center change-profile-btn fileupload-dmca" href="javascript:;">Choose file</a>-->
+<input type="file" name="file" id="file" />
                     <span class="dmca-file-location"><a href="http://www.fememreas.com/images/" target="_blank" style="color:#fff; padding-left: 5px;">http://www.fememreas.com/images/</a></span>
                     <span class="dmca-file-info"><a href="javascript:," target="_blank" class="info-dcma"><img src="/memreas/img/info.png" /></a></span>
                 </li>
@@ -93,7 +94,7 @@
             <div style="clear: both; margin-top: 10px; margin-bottom: 10px; padding-top: 10px;"></div>
             <div class="btn">
 
-            <a class="black_btn_skin" href="javascript:;" onclick="">ok</a>
+            <a class="black_btn_skin" href="javascript:reportCounterclaimFrom();" onclick="">ok</a>
             <a class="black_btn_skin" href="javascript:;" onClick="disablePopup('dmca-check-box');">cancel</a>
             </div>
              </form>    

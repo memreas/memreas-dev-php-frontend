@@ -1981,3 +1981,88 @@ $(function(){
 function reportCounterclaim(){
      popup('dmca-form-box');
 }
+
+function reportCounterclaimFrom(){
+    
+    var copy_right_owner=$('#copyright_owner_name').val();
+    var copyright_owner_address=$('#copyright_owner_address').val();
+    var copyright_owner_email_address=$('#copyright_owner_email_address').val();
+    var mediaId_report=$('#media_id').val();
+    var counter_claim_phone_number=$('#counter_claim_phone_number').val();
+    var terms_condition=$('#term_condition').val();
+    
+    
+    if (copy_right_owner == '') {
+        jerror("Please fill your name");
+        return;
+    }
+    if (copyright_owner_address == '') {
+        jerror("Please fill your Address");
+        return;
+    }
+    
+    if (counter_claim_phone_number == '') {
+        jerror("Please fill your Phone No");
+        return;
+    }
+    if (mediaId_report == '') {
+        jerror("Please fill your Media Id");
+        return;
+    }
+    
+    
+    
+    if(terms_condition ==''){
+         jerror("Please checkbox");
+         return;
+    }
+    
+    
+    
+    
+     var params = [{
+            tag: "media_id",
+            value: mediaId_report
+        }, {
+            tag: "copyright_owner_name",
+            value: copy_right_owner
+        }, {
+            tag: "copyright_owner_address",
+            value: copyright_owner_address
+        }, {
+            tag: "copyright_owner_email_address",
+            value: copyright_owner_email_address
+        }, {
+            tag: "copyright_owner_agreed_to_terms",
+            value: "1"
+        },{
+            tag: "counter_claim_phone_number",
+            value: counter_claim_phone_number
+        },
+        
+    ];
+   
+    
+    ajaxRequest('dcmareportviolation', params, function (ret_xml) {
+        
+        var message=getValueFromXMLTag(ret_xml,'message')
+        var status=getValueFromXMLTag(ret_xml,'status');
+        
+        
+        console.log('message-->'+message +'Status-->'+status);
+        console.log(ret_xml);
+        
+        if(status =='success'){
+          jsuccess("your Report added");
+          disablePopup('popupReportMedia');
+          
+        }else{
+            jerror("your Report is not added");
+             disablePopup('popupReportMedia');
+        }
+        
+     
+
+
+    }, 'undefined', true);
+}
