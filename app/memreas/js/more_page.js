@@ -1946,7 +1946,7 @@ $(function(){
                     '<td>'+media_id+'</td>'+
                     
                    ' <td><img src="'+media_thumb+'" width="80" /></td>'+
-                    '<td> <a href="javascript:;" class="counter-claim-btn reportCounterclaim" rel="'+i+'">report counter claim</a>'+ 
+                    '<td> <a href="javascript:reportCounterclaim()" class="counter-claim-btn reportCounterclaim" rel="'+i+'">report counter claim</a>'+ 
                     '</td>'+
                     '<td>'+media_date+'</td>'+
                     '<td>Status Update</td>'+
@@ -1967,13 +1967,17 @@ $(function(){
     
     //DMCA
         
-        $(document).on('click','.reportCounterclaim',function(){
-            var rel=$(this).attr(rel); 
-            popup('dmca-form-box');
-        })
-        
-        $('.info-dcma').click(function(){
-           popup('dmca-check-box'); 
-        });
+//        $(document).on('click','.reportCounterclaim',function(){
+//            var rel=$(this).attr(rel); 
+//            popup('dmca-form-box');
+//        })
+//        
+//        $('.info-dcma').click(function(){
+//           popup('dmca-check-box'); 
+//        });
     
 });
+
+function reportCounterclaim(){
+     popup('dmca-form-box');
+}
