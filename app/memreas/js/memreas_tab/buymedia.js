@@ -8,9 +8,9 @@
 function popupBuyMedia(event_id, event_price, event_name) {
 	clearBuyMediaPopup();
 	$(".popup-event-name").html(event_name);
-	$(".popup-buymedia-credit").html("$" + userObject.buyer_balance);
 	$(".popup-buymedia-price").html("$" + event_price);
 	$("#accept-buymedia").attr("onclick", "buyMedia('" + event_id + "');");
+	popupReloadAccountBalance();
 	popup("popupBuyMedia");
 }
 

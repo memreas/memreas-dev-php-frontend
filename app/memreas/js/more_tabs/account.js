@@ -8,6 +8,7 @@ var Account = function() {
 	this.accountTab_cards = new Object();
 	this.buyCreditTab_cards = new Object();
 
+	this.eventPurchases = new Object();
 	/*
 	* Load account cards and fill in available target element
 	* @param element full class name of target element
@@ -289,6 +290,23 @@ var Account = function() {
 				}
 			});
 		}
+	}
+
+	/*
+	* Checking user event owning
+	* @param eventId Target event id for checking
+	* */
+	this.checkOwnEvent = function(eventId) {
+		if (this.eventPurchases.length > 0) {
+			for (var i = 0;i < this.eventPurchases.length;i++) {
+				alert(this.eventPurchases[i] + ' => ' + eventId);
+				if (this.eventPurchases[i] == eventId) {
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 }
 var Account = new Account();
