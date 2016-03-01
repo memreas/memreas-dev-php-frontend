@@ -7,6 +7,7 @@ var Account = function() {
 	//Card objects for some separate tabs
 	this.accountTab_cards = new Object();
 	this.buyCreditTab_cards = new Object();
+	this.subscriptionTab_cards = new Object();
 
 	this.eventPurchases = new Object();
 	/*
@@ -92,6 +93,10 @@ var Account = function() {
 								case '.buycredit-payment':
 									Account.buyCreditTab_cards[i] = new Object();
 									Account.buyCreditTab_cards[i] = params;
+									break;
+								case '.subscription-payment':
+									Account.subscriptionTab_cards[i] = new Object();
+									Account.subscriptionTab_cards[i] = params;
 									break;
 							}
 
