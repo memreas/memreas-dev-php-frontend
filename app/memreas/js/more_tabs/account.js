@@ -308,6 +308,46 @@ var Account = function() {
 
 		return false;
 	}
+
+	/*
+	* Reload Account Buyer Credit
+	* */
+	this.reloadAccountCredit = function(targetElement) {
+		var jTargetElement = $(targetElement);
+		jTargetElement.html("...");
+
+		var params = new Object;
+		params.user_id = this.id;
+		params.memreascookie = getCookie("memreascookie");
+		params.x_memreas_chameleon = getCookie("x_memreas_chameleon");
+		var params_json = JSON.stringify(params, null, '\t');
+		var data = '{"action": "getuserbalance", ' + '"type":"jsonp", ' + '"json": '
+			+ params_json + '}';
+
+		var stripeActionUrl = $("input[name=stripe_url]").val()
+			+ 'stripe_getUserBalance';
+
+		AppSystem.putStripeLoading();
+
+		$.ajax({
+			url : stripeActionUrl,
+			type : 'POST',
+			dataType : 'jsonp',
+			data : 'json=' + data,
+			success : function(response) {
+				setX_MEMREAS_CHAMELEON(response.x_memreas_chameleon);
+				response = JSON.parse(response.data);
+				if (response.status == 'Success') {
+					userObject.buyer_balance = response.buyer_balance;
+					jTargetElement.html("$" + response.buyer_balance);
+				} else {
+					jerror(response.message);
+					jTargetElement.html("$" + userObject.buyer_balance);
+				}
+				AppSystem.removeStripeLoading();
+			}
+		});
+	}
 }
 var Account = new Account();
 

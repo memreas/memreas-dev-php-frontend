@@ -146,10 +146,8 @@ function fetch_customer(){
 
 function fill_account_detail(){
     var jBuyerName = $("#credit-account-name");
-    var jBuyerBalance = $("#credit-account-balance");
 
     jBuyerName.html('Not Specify');
-    jBuyerBalance.html('Not Specify');
     var checkCardChoose = false;
     var orderCard = new Object();
     for (var i in Account.buyCreditTab_cards){
@@ -164,16 +162,12 @@ function fill_account_detail(){
         jerror('Please choose a payment method');
         return false;
     }
-    $('#loadingpopup').show();
+
     var stripe_card = orderCard;
     var card_name = stripe_card.first_name + ' ' + stripe_card.last_name;
     jBuyerName.html(card_name);
 
-    if (account_user.balance == '' || typeof (account_user.balance) == 'undefined')
-        var balance = 0
-    else var balance= account_user.balance;
-    jBuyerBalance.html('$' + balance);
-    $('#loadingpopup').hide();
+    Account.reloadAccountCredit("#credit-account-balance");
 }
 
 function buycredit_confirmAmount(){
