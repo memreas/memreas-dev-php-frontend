@@ -30,19 +30,13 @@ function buyMedia(event_id) {
 		jerror("you must agree with our terms and conditions");
 		return false;
 	}
-/*
+
 	var buymedia_password_confirm = $("#buymedia_confirm_password").val();
 	if (buymedia_password_confirm == '') {
 		jerror("Please confirm password");
 		return false;
 	}
 
-	buymedia_password_confirm = md5(buymedia_password_confirm);
-	if (buymedia_password_confirm != userObject.password) {
-		jerror("Confirm password is incorrect");
-		return false;
-	}
-*/
 	ajaxRequest('geteventdetails', [ {
 		tag : 'event_id',
 		value : event_id
@@ -73,6 +67,7 @@ function buyMedia(event_id) {
 
 			var params = new Object;
 			params.user_id = Account.id;
+			params.password = buymedia_password_confirm;
 			params.amount = price.toString();
 			params.seller_id = event_owner;
 			params.event_id = event_id;
@@ -100,7 +95,10 @@ function buyMedia(event_id) {
 							    	//alert("setX_MEMREAS_CHAMELEON(response.x_memreas_chameleon)-->" + response.x_memreas_chameleon);
 							    	setX_MEMREAS_CHAMELEON(response.x_memreas_chameleon);
 								jsuccess(response.message);
+								var transaction_id = response.transaction_id;
+								$("#buymedia-confirmation-trans-id").html(transaction_id);
 								disablePopup("popupBuyMedia");
+								popup("popupBuyMediaConfirmation");
 								var current_event = response.event_id;
 
 								// Checking for handling public tab or friend
