@@ -2136,10 +2136,7 @@ function reportCounterClaimForm() {
     }, {
 	tag : "media_id",
 	value : mediaId_report
-    }, {
-	tag : "counter_claim_url",
-	value : counter_claim_url
-    }, {
+    },  {
 	tag : "copyright_owner_name",
 	value : copy_right_owner
     }, {

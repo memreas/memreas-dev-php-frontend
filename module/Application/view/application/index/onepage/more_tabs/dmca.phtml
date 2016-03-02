@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (C) 2015 memreas llc. - All Rights Reserved
  * Unauthorized copying of this file, via any medium is strictly prohibited
@@ -8,134 +9,134 @@ use Application\Model\MemreasConstants;
 ?>
 
 <div class="akordeon-item expanded">
-	<div class="akordeon-item-head">
-		<div class="akordeon-item-head-container">
-			<div class="akordeon-heading">DMCA</div>
-		</div>
-	</div>
-	<div class="akordeon-item-body" style="padding-bottom: 10px;">
-		<div class="akordeon-item-content">
+    <div class="akordeon-item-head">
+        <div class="akordeon-item-head-container">
+            <div class="akordeon-heading">DMCA</div>
+        </div>
+    </div>
+    <div class="akordeon-item-body" style="padding-bottom: 10px;">
+        <div class="akordeon-item-content">
 
-			<table class="dmca-table-data" style="width: 100%;">
-				<thead>
-					<th>Violation Reported</th>
-					<th>Media Id</th>
-					<th>media image</th>
-					<th>report counter claim</th>
-					<th>counter claim reported</th>
-					<th>status</th>
-				</thead>
-				<tbody>
-					<!-- Dynamic Upload here Data -->
+            <table class="dmca-table-data" style="width: 100%;">
+                <thead>
+                <th>Violation Reported</th>
+                <th>Media Id</th>
+                <th>media image</th>
+                <th>report counter claim</th>
+                <th>counter claim reported</th>
+                <th>status</th>
+                </thead>
+                <tbody>
+                    <!-- Dynamic Upload here Data -->
 
 
-				</tbody>
-			</table>
+                </tbody>
+            </table>
 
-		</div>
-	</div>
+        </div>
+    </div>
 </div>
 
 
 
 <div id="dmca-check-box" class="popups">
-	<a id="popupReportMediaClose" onClick="disablePopup('dmca-check-box');"
-		class='popupClose'>x</a>
-	<h2>Your Counter Notice must contain the following and be in PDF or
-		JPEG digital formats</h2>
-	<p>
-		Signed and written counter notice must contain the following: <br>Identification
-		of the material removed and the location of the material prior to
-		removal. <br>A statement under penalty of perjury that the user has a
-		good faith belief that the material was removed as a result of a
-		mistake or misidentification. <br>Contain your name, address, and
-		phone number <br>And a statement that the you will accept service of
-		process and consents to the jurisdiction of Federal District Court
-	</p>
+    <a id="popupReportMediaClose" onClick="disablePopup('dmca-check-box');"
+       class='popupClose'>x</a>
+    <h2>Your Counter Notice must contain the following and be in PDF or
+        JPEG digital formats</h2>
+    <p>
+        Signed and written counter notice must contain the following: <br>Identification
+        of the material removed and the location of the material prior to
+        removal. <br>A statement under penalty of perjury that the user has a
+        good faith belief that the material was removed as a result of a
+        mistake or misidentification. <br>Contain your name, address, and
+        phone number <br>And a statement that the you will accept service of
+        process and consents to the jurisdiction of Federal District Court
+    </p>
 </div>
 
 
 <div id="dmca-form-box" class="popups2">
-	<a id="popupReportMediaClose" onClick="disablePopup('dmca-form-box');"
-		class='popupClose'>x</a>
+    <a id="popupReportMediaClose" onClick="disablePopup('dmca-form-box');"
+       class='popupClose'>x</a>
 
-	<form name="dmcaFileUploadForm" id="dmcaFileUploadForm"
-		enctype="multipart/form-data"
-		action="https://<?php echo MemreasConstants::S3BUCKET; ?>.s3.amazonaws.com/">
+    <form name="dmcaFileUploadForm" id="dmcaFileUploadForm"
+          enctype="multipart/form-data"
+          action="https://<?php echo MemreasConstants::S3BUCKET; ?>.s3.amazonaws.com/">
 
-		<input type="hidden" name="key" value=""> 
-		<input type="hidden" name="Content-Type" value=""> 
-		<input type="hidden" name="acl" value=""> 
-		<input type="hidden" name="success_action_status" value="">
-		<input type="hidden" name="policy" value=""> 
-		<input type="hidden" name="x-amz-algorithm" value=""> 
-		<input type="hidden" name="x-amz-credential" value=""> 
-		<input type="hidden" name="x-amz-date" value=""> 
-		<input type="hidden" name="x-amz-expires" value="">
-		<input type="hidden" name="x-amz-signature" value="">
-		<input type="hidden" name="x-amz-server-side-encryption" value="AES256">
-		<input type="file" name="file" id="file">
-	</form>
+        <input type="hidden" name="key" value=""> 
+        <input type="hidden" name="Content-Type" value=""> 
+        <input type="hidden" name="acl" value=""> 
+        <input type="hidden" name="success_action_status" value="">
+        <input type="hidden" name="policy" value=""> 
+        <input type="hidden" name="x-amz-algorithm" value=""> 
+        <input type="hidden" name="x-amz-credential" value=""> 
+        <input type="hidden" name="x-amz-date" value=""> 
+        <input type="hidden" name="x-amz-expires" value="">
+        <input type="hidden" name="x-amz-signature" value="">
+        <input type="hidden" name="x-amz-server-side-encryption" value="AES256">
+        <input type="file" name="file" id="file">
+    </form>
 
-	<form id="dmcaReportCounterClaimForm" style="margin-bottom: 20px;">
+    <form id="dmcaReportCounterClaimForm" style="margin-bottom: 20px;">
 
-		<h2 class="dmcaTitle" style="width: 100%;">dmca violation - counter
-			claim</h2>
-		<ul id="content_1" class="share_memreas_details">
+        <h2 class="dmcaTitle" style="width: 100%;">dmca violation - counter
+            claim</h2>
+        <ul id="content_1" class="share_memreas_details">
 
-			<li><label class="textfield_names">Full Name :</label> <input
-				name="copyright_owner_name" type="text" id="copyright_owner_name"
-				class="share-txtfield" value="" placeholder="Contact Owner Name" />
-			</li>
-			<li><label class="textfield_names">Address :</label> <input
-				name="copyright_owner_address" type="text"
-				id="copyright_owner_address" class="share-txtfield" value=""
-				placeholder="Address" /></li>
+            <li><label class="textfield_names">Full Name :</label> <input
+                    name="copyright_owner_name" type="text" id="copyright_owner_name"
+                    class="share-txtfield" value="" placeholder="Contact Owner Name" />
+            </li>
+            <li><label class="textfield_names">Address :</label> <input
+                    name="copyright_owner_address" type="text"
+                    id="copyright_owner_address" class="share-txtfield" value=""
+                    placeholder="Address" /></li>
 
 
 
-			<li><label class="textfield_names">Phone number :</label> <input
-				name="counter_claim_phone_number" type="text"
-				id="counter_claim_phone_number" class="share-txtfield" value=""
-				placeholder="Phone no." /></li>
-			<!-- remove - use email on file-->
-                <li>
-                     <label class="textfield_names">Email address :</label>
-<!--                     <label class="textfield_names">userObj</label>-->
-                     <input name="copyright_owner_email_address" type="email" id="copyright_owner_email_address" class="share-txtfield" value="" placeholder="Email"/>
-                     
-                </li>
-                
-			<li><label class="textfield_names">Media Id</label> <input
-				type="text" name="media_id" id="media_id" readonly />
-                            <input type="hidden" name="violation_id" id="violation_id"  />
-                        </li>
+            <li><label class="textfield_names">Phone number :</label> <input
+                    name="counter_claim_phone_number" type="text"
+                    id="counter_claim_phone_number" class="share-txtfield" value=""
+                    placeholder="Phone no." /></li>
+            <!-- remove - use email on file-->
+            <li>
+                <label class="textfield_names">Email address :</label>
+                <!--                     <label class="textfield_names">userObj</label>-->
+                <input name="copyright_owner_email_address" type="email" id="copyright_owner_email_address" class="share-txtfield" value="" placeholder="Email" readonly/>
 
-			<li><label class="textfield_names">Signed Written Communication:</label>
-				<!--                    <a class="black_btn_skin f-center change-profile-btn fileupload-dmca" href="javascript:;">Choose file</a>-->
-				<input type="file" name="file" id="file" /> <span
-				class="dmca-file-info"><a href="javascript:," target="_blank"
-					class="info-dcma"><img src="/memreas/img/info.png" /></a></span></li>
+            </li>
 
-			<li><input id="morepage_isselfdestruct" class="css-checkbox"
-				type="checkbox"> <label for="morepage_isselfdestruct"
-				name="demo_lbl_5" class="css-label margin-none"
-				style="text-align: left; margin-left: 90px !important;">by
-					submission of my counter claim and memreas terms and conditions i
-					agree to provide my email address to the reporter and will resolve
-					this violation without any further involvement from memreas.</label>
-				<div style="clear: both;"></div></li>
+            <li><label class="textfield_names">Media Id</label> <input
+                    type="text" name="media_id" id="media_id" readonly />
+                <input type="hidden" name="violation_id" id="violation_id"  />
+            </li>
 
-		</ul>
-		<div
-			style="clear: both; margin-top: 10px; margin-bottom: 10px; padding-top: 10px;"></div>
-		<div class="btn">
+            <li><label class="textfield_names">Signed Written Communication:</label>
+                <!--<a class="black_btn_skin f-center change-profile-btn fileupload-dmca" href="javascript:;">Choose file</a>-->
+                <input type="file" name="file" id="file" /> <span
+                    class="dmca-file-info"><a href="javascript:," target="_blank"
+                                          class="info-dcma"><img src="/memreas/img/info.png" /></a></span></li>
 
-			<a class="black_btn_skin" href="javascript:reportCounterClaimForm();"
-				onclick="">ok</a> <a class="black_btn_skin" href="javascript:;"
-				onclick="disablePopup('dmca-check-box');">cancel</a>
-		</div>
-	</form>
+            <li><input id="morepage_isselfdestruct" class="css-checkbox"
+                       type="checkbox"> <label for="morepage_isselfdestruct"
+                       name="demo_lbl_5" class="css-label margin-none"
+                       style="text-align: left; margin-left: 90px !important;">by
+                    submission of my counter claim and memreas terms and conditions i
+                    agree to provide my email address to the reporter and will resolve
+                    this violation without any further involvement from memreas.</label>
+                <div style="clear: both;"></div></li>
+
+        </ul>
+        <div
+            style="clear: both; margin-top: 10px; margin-bottom: 10px; padding-top: 10px;"></div>
+        <div class="btn">
+
+            <a class="black_btn_skin" href="javascript:reportCounterClaimForm();"
+               onclick="">ok</a> <a class="black_btn_skin" href="javascript:;"
+               onclick="disablePopup('dmca-check-box');"  class='popupClose'>cancel</a>
+        </div>
+    </form>
 </div>
 
 
