@@ -2078,6 +2078,11 @@ function fetchS3PreSignedURLDMCACounterClaim() {
 
 	    
 	    var jqXHR = uploadHandle.submit();
+	    
+	    /**
+	     * file is submitted so call ws to store to db
+	     */
+	    reportCounterClaimForm();
 	},
 	error : function(jqXHR, textStatus, errorThrown) {
 	    console.log(jqXHR.responseText);
