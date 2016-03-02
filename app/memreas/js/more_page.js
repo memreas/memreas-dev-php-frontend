@@ -1972,9 +1972,9 @@ $(function() {
 						    ' <td><img src="'
 						    + media_url
 						    + '" width="80" /></td>'
-						    + '<td> <a href="javascript:reportCounterclaim()" class="counter-claim-btn reportCounterclaim" rel="'
+						    + '<td> <a href="javascript:;" onclick="reportCounterclaim(this);" class="counter-claim-btn reportCounterclaim" id="'
 						    + media_id
-						    + '">report counter claim</a>'
+						    + '" rel="'+violation_id+'">report counter claim</a>'
 						    + '</td>' + '<td>'
 						    + dmca_violation_report_date + '</td>'
 						    + '<td>'+counter_status+'</td>'
@@ -2087,10 +2087,14 @@ function fetchS3PreSignedURLDMCACounterClaim() {
 
 }
 
-function reportCounterclaim() {
-    popup('dmca-form-box');
-    var relAttr = $(this).att('rel');
-    $('#media_id').val(relAttr);
+function reportCounterclaim(elm) {
+   //alert($(elm).attr('id'));
+   $('#media_id').val($(elm).attr('id'));
+   $('#violation_id').val($(elm).attr('rel'));
+   $('#copyright_owner_email_address').val(userObject.email);
+   popup('dmca-form-box');
+    
+   
 }
 
 function reportCounterClaimForm() {

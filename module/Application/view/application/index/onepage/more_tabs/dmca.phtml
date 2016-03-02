@@ -73,7 +73,7 @@ use Application\Model\MemreasConstants;
 		<input type="hidden" name="x-amz-date" value=""> 
 		<input type="hidden" name="x-amz-expires" value="">
 		<input type="hidden" name="x-amz-signature" value="">
-		<inputtype="hidden" name="x-amz-server-side-encryption" value="AES256">
+		<input type="hidden" name="x-amz-server-side-encryption" value="AES256">
 		<input type="file" name="file" id="file">
 	</form>
 
@@ -98,17 +98,18 @@ use Application\Model\MemreasConstants;
 				name="counter_claim_phone_number" type="text"
 				id="counter_claim_phone_number" class="share-txtfield" value=""
 				placeholder="Phone no." /></li>
-			<!-- remove - use email on file
+			<!-- remove - use email on file-->
                 <li>
                      <label class="textfield_names">Email address :</label>
-                     <label class="textfield_names">userObj.</label>
+<!--                     <label class="textfield_names">userObj</label>-->
                      <input name="copyright_owner_email_address" type="email" id="copyright_owner_email_address" class="share-txtfield" value="" placeholder="Email"/>
                      
                 </li>
-                 -->
-
+                
 			<li><label class="textfield_names">Media Id</label> <input
-				type="text" name="media_id" id="media_id" readonly="" /></li>
+				type="text" name="media_id" id="media_id" readonly />
+                            <input type="hidden" name="violation_id" id="violation_id"  />
+                        </li>
 
 			<li><label class="textfield_names">Signed Written Communication:</label>
 				<!--                    <a class="black_btn_skin f-center change-profile-btn fileupload-dmca" href="javascript:;">Choose file</a>-->
@@ -132,7 +133,7 @@ use Application\Model\MemreasConstants;
 
 			<a class="black_btn_skin" href="javascript:reportCounterClaimForm();"
 				onclick="">ok</a> <a class="black_btn_skin" href="javascript:;"
-				onClick="disablePopup('dmca-check-box');">cancel</a>
+				onclick="disablePopup('dmca-check-box');">cancel</a>
 		</div>
 	</form>
 </div>
