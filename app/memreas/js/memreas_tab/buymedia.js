@@ -64,6 +64,7 @@ function buyMedia(event_id) {
 
 			var event_owner = getValueFromXMLTag(response, 'event_owner');
 			var event_id = getValueFromXMLTag(response, 'event_id');
+			var event_name = getValueFromXMLTag(response, 'name');
 
 			var params = new Object;
 			params.user_id = Account.id;
@@ -71,6 +72,7 @@ function buyMedia(event_id) {
 			params.amount = price.toString();
 			params.seller_id = event_owner;
 			params.event_id = event_id;
+			params.event_name = event_name;
 			params.memreascookie = getCookie("memreascookie");
 			params.x_memreas_chameleon = getCookie("x_memreas_chameleon");
 			params.duration_from = duration_from;
