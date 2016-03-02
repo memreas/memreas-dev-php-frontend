@@ -91,7 +91,14 @@ use Application\Model\MemreasConstants;
             <li><label class="textfield_names">Address :</label> <input
                     name="copyright_owner_address" type="text"
                     id="copyright_owner_address" class="share-txtfield" value=""
-                    placeholder="Address" /></li>
+                    placeholder="Address" />
+            </li>
+            
+            <li><label class="textfield_names">Counter Claim url :</label> <input
+                    name="counter_claim_url" type="text"
+                    id="counter_claim_url" class="share-txtfield" value=""
+                    placeholder="Counter Claim url" />
+            </li>
 
 
 
@@ -100,32 +107,29 @@ use Application\Model\MemreasConstants;
                     id="counter_claim_phone_number" class="share-txtfield" value=""
                     placeholder="Phone no." /></li>
             <!-- remove - use email on file-->
-            <li>
-                <label class="textfield_names">Email address :</label>
-                <!--                     <label class="textfield_names">userObj</label>-->
-                <input name="copyright_owner_email_address" type="email" id="copyright_owner_email_address" class="share-txtfield" value="" placeholder="Email" readonly/>
-
-            </li>
-
-            <li><label class="textfield_names">Media Id</label> <input
+            <li><label class="textfield_names">media Id</label> 
+                <input
                     type="text" name="media_id" id="media_id" readonly />
                 <input type="hidden" name="violation_id" id="violation_id"  />
+                <input name="copyright_owner_email_address" type="hidden" id="copyright_owner_email_address" class="share-txtfield" value="" placeholder="Email" readonly/>
             </li>
 
             <li><label class="textfield_names">Signed Written Communication:</label>
                 <!--<a class="black_btn_skin f-center change-profile-btn fileupload-dmca" href="javascript:;">Choose file</a>-->
                 <input type="file" name="file" id="file" /> <span
                     class="dmca-file-info"><a href="javascript:," target="_blank"
-                                          class="info-dcma"><img src="/memreas/img/info.png" /></a></span></li>
+                                          class="info-dcma"><img src="/memreas/img/info.png" /></a></span>
+            </li>
 
-            <li><input id="morepage_isselfdestruct" class="css-checkbox"
+            <li><input id="term_condition" class="css-checkbox"
                        type="checkbox"> <label for="morepage_isselfdestruct"
                        name="demo_lbl_5" class="css-label margin-none"
-                       style="text-align: left; margin-left: 90px !important;">by
+                       style="text-align: left; margin-left: 90px !important;" id="term_condition_label">by
                     submission of my counter claim and memreas terms and conditions i
                     agree to provide my email address to the reporter and will resolve
                     this violation without any further involvement from memreas.</label>
-                <div style="clear: both;"></div></li>
+                <div style="clear: both;"></div>
+            </li>
 
         </ul>
         <div

@@ -2106,6 +2106,8 @@ function reportCounterClaimForm() {
     var mediaId_report = $('#media_id').val();
     var counter_claim_phone_number = $('#counter_claim_phone_number').val();
     var terms_condition = $('#term_condition').val();
+    var violation_id=$('#violation_id').val();
+    var counter_claim_url=$('#counter_claim_url').val();
 
     if (copy_right_owner == '') {
 	jerror("Please fill your name");
@@ -2115,7 +2117,10 @@ function reportCounterClaimForm() {
 	jerror("Please fill your Address");
 	return;
     }
-
+    if(counter_claim_url ==''){
+        jerror("Please fill Claim Url");
+	return;
+    }
     if (counter_claim_phone_number == '') {
 	jerror("Please fill your Phone No");
 	return;
@@ -2131,29 +2136,29 @@ function reportCounterClaimForm() {
     }
 
     var params = [ {
-	tag : "memreascookie",
-	value : getCookie("memreas")
+	tag : "violation_id",
+	value : violation_id
     }, {
-	tag : "media_id",
-	value : mediaId_report
-    },  {
-	tag : "copyright_owner_name",
+	tag : "counter_claim_url",
+	value : counter_claim_url
+    }, {
+	tag : "counter_claim_name",
 	value : copy_right_owner
     }, {
-	tag : "copyright_owner_address",
+	tag : "counter_claim_address",
 	value : copyright_owner_address
     }, {
-	tag : "copyright_owner_email_address",
+	tag : "counter_claim_email_address",
 	value : copyright_owner_email_address
     }, {
-	tag : "copyright_owner_agreed_to_terms",
+	tag : "counter_claim_agreed_to_terms",
 	value : "1"
-    }, {
+    },  {
 	tag : "counter_claim_phone_number",
 	value : counter_claim_phone_number
     }, ];
 
-    ajaxRequest('dcmareportviolation', params, function(ret_xml) {
+    ajaxRequest('dcmacounterclaim', params, function(ret_xml) {
 
 	var message = getValueFromXMLTag(ret_xml, 'message');
 	var status = getValueFromXMLTag(ret_xml, 'status');
@@ -2171,3 +2176,13 @@ function reportCounterClaimForm() {
     }, 'undefined', true);
 
 }
+
+$('#term_condition_label').click(function(){
+    $('#term_condition').toggleClass('checked');
+    if($('#term_condition').hasClass('checked')){
+       $('#term_condition').val(1); 
+    }else{
+       $('#term_condition').val(''); 
+    }
+    
+});
