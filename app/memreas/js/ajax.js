@@ -129,7 +129,7 @@ ajaxRequest = function(action, params, success_func, error_func,
     return false;
 }
 
-i = function(action, params) {
+getXMLStringFromParamArray = function(action, params) {
     var i = 0;
     var action_tag = "";
     xml_str = "<xml>";
