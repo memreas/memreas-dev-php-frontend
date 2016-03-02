@@ -30,15 +30,6 @@ $username = ! empty ( $_SESSION ['username'] ) ? ($_SESSION ['username']) : '';
 <?php 
 echo "var user_id = '" . $user_id . "';";  
 echo "var username = '" . $username . "';";
-echo "var S3BUCKET = '" . MemreasConstants::S3BUCKET . "';";
-echo "var LOGGED_USER_ID = '" .  $_SESSION ['user_id'] . "';";
-echo "var LISTNOTIFICATIONSPOLLTIME = '" . MemreasConstants::LISTNOTIFICATIONSPOLLTIME . "';";
-echo "var GALLERYDELAYTIME = '" . MemreasConstants::GALLERYDELAYTIME . "';";
-echo "var FREE_ACCOUNT_FILE_LIMIT = '" . MemreasConstants::FREE_ACCOUNT_FILE_LIMIT . "';";
-echo "var PAID_ACCOUNT_FILE_LIMIT = '" . MemreasConstants::PAID_ACCOUNT_FILE_LIMIT . "';";
-echo "var CLOUDFRONT_DOWNLOAD_HOST = '" . MemreasConstants::CLOUDFRONT_DOWNLOAD_HOST . "';";
-echo "var STRIPE_SERVER_URL = '" . MemreasConstants::MEMREAS_PAY . "';";
-echo "var ENABLE_SELL_MEDIA = '" . MemreasConstants::MEMREAS_SELL_MEDIA  . "';";
 ?>
 
 			<?php if (!empty($this->CloudFrontPolicy)) { ?>
