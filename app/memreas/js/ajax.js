@@ -3,7 +3,7 @@
  * this file, via any medium is strictly prohibited Proprietary and confidential
  */
 
-var wsurl = '/index/execAjax';
+var feExecAjaxURL = '/index/execAjax';
 var xml_str = "";
 
 // ///////////////////////////////
@@ -27,7 +27,7 @@ fetchChameleon = function() {
     $.ajax({
 	crossDomain : true,
 	type : 'post',
-	url : wsurl,
+	url : feExecAjaxURL,
 	dataType : 'jsonp',
 	data : 'json=' + json_data,
 	success : function(response) {
@@ -79,7 +79,7 @@ ajaxRequest = function(action, params, success_func, error_func,
 		},
 		crossDomain : true,
 		type : 'post',
-		url : wsurl,
+		url : feExecAjaxURL,
 		dataType : 'jsonp',
 		data : 'json=' + json_data,
 		success : function(ret_xml) {

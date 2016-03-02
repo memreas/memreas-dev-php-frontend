@@ -202,7 +202,8 @@ class IndexController extends AbstractActionController {
 			 * Handle login
 			 */
 			//Mlog::addone ( $cm . __LINE__ ,'enter login fe result...' );
-			$this->writeJsConstants ();
+			//removed and put constants in memreas_one_page.phtml
+			//$this->writeJsConstants ();
 			$data = simplexml_load_string ( trim ( $result ) );
 			$_SESSION ['user_id'] = ( string ) $data->loginresponse->user_id;
 			$_SESSION ['username'] = ( string ) $data->loginresponse->username;
@@ -348,6 +349,8 @@ class IndexController extends AbstractActionController {
 	/*
 	 * Write constant to javascript
 	 */
+	//replaced - put into memreas_one_page.phtml - js file was not being written - likely file permissions
+	/*
 	public function writeJsConstants() {
 		$this->memreas_session ();
 		if (! file_exists ( $_SERVER ['DOCUMENT_ROOT'] . '/memreas/js/constants.js' )) {
@@ -379,9 +382,8 @@ class IndexController extends AbstractActionController {
 			Mlog::addone("writeJsConstants() - $ _ SERVER [DOCUMENT_ROOT]", $_SERVER ['DOCUMENT_ROOT']);
 			Mlog::addone("writeJsConstants()", "constants.js file exists...");
 		}
-		
-		
 	}
+	*/
 	
 	/*
 	 * Login Action
