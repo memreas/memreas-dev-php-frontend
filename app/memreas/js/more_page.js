@@ -1904,16 +1904,18 @@ $(function() {
 		    function() {
 
 			var userId = $("input[name=user_id]").val();
-
+                        
 			/**
 			 * wrong - need to call dmca list web service...
 			 */
+                        
 			ajaxRequest(
-				'listallmedia',
+				'dcmalist',
 				[ {
 				    tag : 'user_id',
 				    value : userId
-				} ],
+				}
+                            ],
 				function(response) {
 				    console.log("DCMA-->" + response);
 				    var status = getValueFromXMLTag(response,
@@ -1935,17 +1937,22 @@ $(function() {
 					    // '+i+'-->'+media_detail);
 					    var media_id = $(media_detail)
 						    .filter('media_id').html();
+                                            var violation_id = $(media_detail)
+						    .filter('violation_id').html();
 
 					    // console.log('media_id-->'+media_id);
-					    var media_date = $(media_detail)
-						    .filter('media_date')
+					    var dmca_violation_report_date = $(media_detail)
+						    .filter('dmca_violation_report_date')
 						    .html();
-					    var media_type = $(media_detail)
-						    .filter('type').html();
-					    var media_thumb = $(media_detail)
-						    .filter('media_url_448x306')
+                                            
+                                            var counter_status = $(media_detail)
+						    .filter('status')
 						    .html();
-					    media_thumb = removeCdataCorrectLink(media_thumb);
+					  
+					    var media_url = $(media_detail)
+						    .filter('media_url')
+						    .html();
+					    media_url = removeCdataCorrectLink(media_url);
 					    var row_class = '';
 					    if (i % 2 == 0)
 						row_class = 'oddrow';
@@ -1955,7 +1962,7 @@ $(function() {
 						    + row_class
 						    + '">'
 						    + '<td>'
-						    + media_date
+						    + violation_id
 						    + '</td>'
 						    + '<td>'
 						    + media_id
@@ -1963,14 +1970,14 @@ $(function() {
 						    +
 
 						    ' <td><img src="'
-						    + media_thumb
+						    + media_url
 						    + '" width="80" /></td>'
 						    + '<td> <a href="javascript:reportCounterclaim()" class="counter-claim-btn reportCounterclaim" rel="'
 						    + media_id
 						    + '">report counter claim</a>'
 						    + '</td>' + '<td>'
-						    + media_date + '</td>'
-						    + '<td>Status Update</td>'
+						    + dmca_violation_report_date + '</td>'
+						    + '<td>'+counter_status+'</td>'
 						    + '</tr>';
 
 					}
