@@ -17,7 +17,7 @@ fetchChameleon = function() {
     } ];
     var xml_input = getXMLStringFromParamArray(action, params);
     var data = new Object();
-    var token_test;
+    var token_test = '';
     data.ws_action = action;
     data.type = "jsonp";
     data.json = xml_input;
@@ -35,10 +35,9 @@ fetchChameleon = function() {
 		    'x_memreas_chameleon').trim());
 	    console.log('cookie x_memreas_chameleon-->'
 		    + getCookie('x_memreas_chameleon'));
-	    token_test = getValueFromXMLTag(response,
-	    'token_test').trim()
+	    token_test = getValueFromXMLTag(response, 'token_test').trim();
 	    if (token_test != '') {
-		alert(token_test); 
+		alert(token_test);
 	    }
 	},
 	error : function(jqXHR, textStatus, errorThrown) {
@@ -108,8 +107,8 @@ ajaxRequest = function(action, params, success_func, error_func,
 		    // Make sure there is no ajax instance still processing
 		    if (stackAjaxInstance.length == 0)
 			$('#loadingpopup').fadeOut(500);
-		    
-		    //fetch token
+
+		    // fetch token
 		    fetchChameleon();
 
 		},
@@ -202,7 +201,7 @@ getXMLStringFromParamArray = function(action, params) {
 	break;
     case "generatemediaid":
 	action_tag = "generatemediaid";
-	case "getusergroups":
+    case "getusergroups":
 	action_tag = "getusergroups";
 	break;
     case "getgroupfriends":
@@ -293,7 +292,6 @@ getXMLStringFromParamArray = function(action, params) {
     case "dcmareportviolation":
 	action_tag = "dcmareportviolation";
 	break;
-	
 
     default:
 	break;
