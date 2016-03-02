@@ -83,6 +83,7 @@ ajaxRequest = function(action, params, success_func, error_func,
 		data : 'json=' + json_data,
 		success : function(ret_xml) {
 
+		    console.log("ret_xml--->"+ret_xml);
 		    /*
 		     * var x_memreas_chameleon = getValueFromXMLTag(ret_xml,
 		     * 'x_memreas_chameleon').trim(); if (x_memreas_chameleon !=
@@ -109,7 +110,7 @@ ajaxRequest = function(action, params, success_func, error_func,
 			$('#loadingpopup').fadeOut(500);
 
 		    // fetch token
-		    fetchChameleon();
+		    //fetchChameleon();
 
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
