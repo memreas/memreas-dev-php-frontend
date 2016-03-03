@@ -389,8 +389,6 @@ $(document)
 		    $('.media-upload')
 			    .each(
 				    function() {
-alert("inside add .media-upload each");
-
 					var form = $(".media-upload");
 
 					$('.media-upload')
@@ -408,7 +406,6 @@ alert("inside add .media-upload each");
 							    maxFileSize : 5000000,
 							    add : function(
 								    event, data) {
-//alert("inside add event, data");
 								var filename = data.files[0].name;
 								filename = correctUploadFilename(filename);
 								var filetype = data.files[0].type;
