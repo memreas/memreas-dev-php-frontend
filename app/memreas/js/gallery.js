@@ -299,9 +299,9 @@ jQuery.fetch_server_media = function() {
 					'<li><a class="image-sync" id="'
 						+ media_id
 						+ '" onclick="return imageChoosed(this.id);" href="'
-						+ _media_thumbnail
+						+ _media_thumbnail_large
 						+ '"><img src="'
-						+ _media_thumbnail
+						+ _media_thumbnail_large
 						+ '"/></a></li>');
 
 			$(".preload-files .pics").append(
@@ -311,9 +311,9 @@ jQuery.fetch_server_media = function() {
 					'<li><img id="edit'
 						+ media_id
 						+ '" src="'
-						+ _media_thumbnail
+						+ _media_thumbnail_large
 						+ '" onclick="openEditMedia(this.id, \''
-						+ _media_thumbnail
+						+ _media_thumbnail_large
 						+ '\');"/></li>');
 			$(".galleries-location").append(
 				'<li><img id="location' + media_id
