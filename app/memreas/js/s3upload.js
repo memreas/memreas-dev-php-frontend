@@ -13,10 +13,13 @@ $(document)
 	.ready(
 		function() {
 
+		    // Single upload for now
+		    //$(".media-upload").find("input[type=file]").removeAttr(
+			//    'multiple');
 		    // Check if IOS only allow 1 file per upload
 		    if (userBrowser[0].ios) {
-			$(".media-upload").find("input[type=file]").removeAttr(
-				'multiple');
+		     $(".media-upload").find("input[type=file]").removeAttr(
+		     'multiple');
 		    }
 
 		    var ellipsisCount = 1;
@@ -32,6 +35,7 @@ $(document)
 		    $('.media-upload')
 			    .each(
 				    function() {
+alert("inside add .media-upload each");
 
 					var form = $(".media-upload");
 
@@ -46,27 +50,30 @@ $(document)
 							    multiple : true,
 							    type : 'POST',
 							    autoUpload : true,
+							    //5GB max
 							    maxFileSize : 5000000,
 							    add : function(
 								    event, data) {
+alert("inside add event, data");
 								var filename = data.files[0].name;
 								filename = correctUploadFilename(filename);
 								var filetype = data.files[0].type;
+
 								// Get file size
-								var file_size = data.files[0].size; // In
-								// bytes
+								// in bytes
+								var file_size = data.files[0].size;
 
 								if (userObject.plan == 'FREE') {
-								    var limited_file_size = FREE_ACCOUNT_FILE_LIMIT * 1000000; // Convert
-								    // to
-								    // bytes
+								    // convert
+								    // to bytes
+								    var limited_file_size = FREE_ACCOUNT_FILE_LIMIT * 1000000;
 								    var limited_size_message = "Free account has been limited to "
 									    + FREE_ACCOUNT_FILE_LIMIT
 									    + " MB per upload";
 								} else {
-								    var limited_file_size = PAID_ACCOUNT_FILE_LIMIT * 1000000; // Convert
-								    // to
-								    // bytes
+								    // convert
+								    // to bytes
+								    var limited_file_size = PAID_ACCOUNT_FILE_LIMIT * 1000000;
 								    var limited_size_message = "File size has been limited to "
 									    + PAID_ACCOUNT_FILE_LIMIT
 									    + " MB per upload";
@@ -324,7 +331,8 @@ $(document)
 									+ media_id
 									+ '/'
 									+ filename;
-									//+ correctUploadFilename('${filename}');
+								// +
+								// correctUploadFilename('${filename}');
 								$(this)
 									.find(
 										'input[name=key]')
@@ -807,7 +815,7 @@ function correctUploadFilename(filename) {
 
     var invalidChars = [ ' ', '+', '*', "'", '"', '(', ')', '!' ];
     for (var i = 0; i < invalidChars.length; i++) {
-	//filename = filename.replace(invalidChars[i], '-');
+	// filename = filename.replace(invalidChars[i], '-');
 	filename = filename.split(invalidChars[i]).join('-');
     }
 
