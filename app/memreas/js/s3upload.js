@@ -9,10 +9,17 @@ var currentUploadFileCount = 0; // Count for all current files selected for
 var contentTypeOfFile = "";
 var mimeTypeOfFile = "";
 var media_id;
+
 $(document)
 	.ready(
 		function() {
-
+/*
+			$("#upload-dropzone").click(
+				function() {
+					$("#media-upload-form").find("input[type=file]")
+						.trigger('click');
+				});
+*/
 		    // Single upload for now
 		    //$(".media-upload").find("input[type=file]").removeAttr(
 			//    'multiple');
@@ -25,12 +32,6 @@ $(document)
 		    var ellipsisCount = 1;
 		    var name = '';
 		    var hashName = '';
-
-		    $(".upload-dropzone").click(
-			    function() {
-				$(".media-upload").find("input[type=file]")
-					.trigger('click');
-			    });
 
 		    $('.media-upload')
 			    .each(
@@ -54,7 +55,7 @@ alert("inside add .media-upload each");
 							    maxFileSize : 5000000,
 							    add : function(
 								    event, data) {
-alert("inside add event, data");
+//alert("inside add event, data");
 								var filename = data.files[0].name;
 								filename = correctUploadFilename(filename);
 								var filetype = data.files[0].type;
@@ -131,7 +132,7 @@ alert("inside add event, data");
 										/*-
 										 * Now that we have our data, we update the form
 										 * so it contains all the needed data
-										 * to sign the request  
+										 * to sign the request
 										 */
 										media_id = data.media_id;
 										form

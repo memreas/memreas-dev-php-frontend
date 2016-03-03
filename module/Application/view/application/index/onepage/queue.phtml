@@ -22,7 +22,7 @@ use Application\Model\MemreasConstants;
 						<li class="first-upload"></li>
 					</ul>
 					<!-- Direct Upload to S3 -->
-                    <form action="https://<?php echo MemreasConstants::S3BUCKET; ?>.s3.amazonaws.com/" method="POST" enctype="multipart/form-data" class="media-upload">
+                    <form action="https://<?php echo MemreasConstants::S3BUCKET; ?>.s3.amazonaws.com/" method="POST" enctype="multipart/form-data" class="media-upload" id="media-upload-form">
 	                    <input type="hidden" name="key" value="">
     	        				<input type="hidden" name="Content-Type" value="">
 	                    <input type="hidden" name="acl" value="">
@@ -34,8 +34,10 @@ use Application\Model\MemreasConstants;
         		    			<input type="hidden" name="x-amz-expires" value="">
     		        			<input type="hidden" name="x-amz-signature" value="">
     		        			<input type="hidden" name="x-amz-server-side-encryption" value="AES256">
-                        <input type="file" name="file" multiple="" style="opacity: 0; -moz-opacity:0; -webkit-opacity: 0; filter: alpha(opacity = 0);"/>
-                        <div class="upload-dropzone upload-from-event"></div>
+
+                        <div id="upload-dropzone" class="upload-dropzone upload-from-event" style="position: relative;">
+							<input type="file" name="file" multiple="" style="opacity: 0; -moz-opacity:0; -webkit-opacity: 0; filter: alpha(opacity = 0); width: 100%; height: 100%;"/>
+						</div>
                     </form>
 					</div>
 				<div id="complete" class="hideCls">
