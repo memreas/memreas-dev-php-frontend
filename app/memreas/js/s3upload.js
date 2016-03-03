@@ -3,6 +3,359 @@
  * this file, via any medium is strictly prohibited Proprietary and confidential
  */
 
+/*
+* S3 System class and handling site media uploading functionally
+* @param Element Target form class/id name will be doomed
+* */
+var S3UploadInstance = function(Element) {
+	this.instance = $(Element);
+
+	/*
+	* Doom for uploading
+	*
+	* @param targetPath S3 targetPath where file will be stored
+	* */
+	this.bindUploading = function(targetPath, progressBarClass, callBackFunction) {
+		var self = this;
+		self.instance.fileupload({
+			url : self.instance.attr('action'),
+			dataType : 'xml',
+			crossDomain : true,
+			multiple : true,
+			type : 'POST',
+			autoUpload : true,
+			//5GB max
+			maxFileSize : 5000000,
+			add : function(event, data) {
+				var filename = data.files[0].name;
+				filename = correctUploadFilename(filename);
+				var filetype = data.files[0].type;
+				$.ajax({
+						url : "/index/fetchMemreasTVM",
+						type : 'GET',
+						dataType : 'json',
+						data : {
+							title : filename
+						},
+						/*-
+						 * send the file name to the server so it
+						 * can generate the key param
+						 */
+						async : false,
+						error : function(
+							jqXHR,
+							status,
+							thrownError) {
+							alert(jqXHR.status);
+							alert(jqXHR.responseText);
+							alert(status);
+							alert(thrownError);
+						},
+						success : function(
+							data) {
+							/*-
+							 * Now that we have our data, we update the form
+							 * so it contains all the needed data
+							 * to sign the request
+							 */
+							media_id = data.media_id;
+							self.instance
+								.find(
+									'input[name=key]')
+								.val(targetPath + filename);
+							self.instance
+								.find(
+									'input[name=acl]')
+								.val(
+									data.acl);
+							self.instance
+								.find(
+									'input[name=success_action_status]')
+								.val(
+									data.successStatus);
+							self.instance
+								.find(
+									'input[name=policy]')
+								.val(
+									data.base64Policy);
+							self.instance
+								.find(
+									'input[name=x-amz-algorithm]')
+								.val(
+									data.algorithm)
+							self.instance
+								.find(
+									'input[name=x-amz-credential]')
+								.val(
+									data.credentials)
+							self.instance
+								.find(
+									'input[name=x-amz-date]')
+								.val(
+									data.date)
+							self.instance
+								.find(
+									'input[name=x-amz-expires]')
+								.val(
+									data.expires)
+							self.instance
+								.find(
+									'input[name=x-amz-signature]')
+								.val(
+									data.signature)
+						}
+					});
+
+				/*-
+				 * Check here isfile is valid
+				 * - matches checking on server
+				 */
+				var extension = filename
+					.substr((filename
+						.lastIndexOf('.') + 1));
+				var is_valid = false;
+				switch (extension
+					.toLowerCase()) {
+					// image types
+					// allowed
+					case 'jpeg':
+						filetype = 'image';
+						is_valid = true;
+						break;
+					case 'jpg':
+						filetype = 'image';
+						is_valid = true;
+						break;
+					case 'png':
+						filetype = 'image';
+						is_valid = true;
+						break;
+					case 'gif':
+						filetype = 'image';
+						is_valid = true;
+						break;
+
+					// video types
+					// allowed
+					case 'mpeg':
+						filetype = 'video';
+						is_valid = true;
+						break;
+					case 'mp4':
+						filetype = 'video';
+						is_valid = true;
+						break;
+					case 'avi':
+						filetype = 'video';
+						is_valid = true;
+						break;
+					case 'mov':
+						filetype = 'video';
+						is_valid = true;
+						break;
+					case '3gp':
+						filetype = 'video';
+						is_valid = true;
+						break;
+					case '3gpp':
+						filetype = 'video';
+						is_valid = true;
+						break;
+					case 'mkv':
+						filetype = 'video';
+						is_valid = true;
+						break;
+					case 'mpg':
+						filetype = 'video';
+						is_valid = true;
+						break;
+					case 'avi':
+						filetype = 'video';
+						is_valid = true;
+						break;
+					case 'flv':
+						filetype = 'video';
+						is_valid = true;
+						break;
+					case 'wmv':
+						filetype = 'video';
+						is_valid = true;
+						break;
+					case 'divx':
+						filetype = 'video';
+						is_valid = true;
+						break;
+					case 'ogv':
+						filetype = 'video';
+						is_valid = true;
+						break;
+					case 'ogm':
+						filetype = 'video';
+						is_valid = true;
+						break;
+					case 'nut':
+						filetype = 'video';
+						is_valid = true;
+						break;
+					case 'vob':
+						filetype = 'video';
+						is_valid = true;
+						break;
+					case 'vro':
+						filetype = 'video';
+						is_valid = true;
+						break;
+
+					// audio types
+					// allowed
+					case 'mp3':
+						filetype = 'audio';
+						is_valid = true;
+						break;
+					case 'wav':
+						filetype = 'audio';
+						is_valid = true;
+						break;
+					case 'caf':
+						filetype = 'audio';
+						is_valid = true;
+						break;
+					default:
+						jerror('file type is not allowed');
+				}
+				contentTypeOfFile = filetype;
+				mimeTypeOfFile = filetype
+					+ '/'
+					+ extension
+						.toLowerCase()
+				if (!is_valid) {
+					jerror('file type is not allowed');
+					return false;
+				}
+
+				if (filetype
+						.indexOf('image') >= 0)
+					var target = 'image';
+				else
+					target = 'media';
+
+				self.instance
+					.find(
+						'input[name=Content-Type]')
+					.val(
+						filetype);
+
+				// Use XHR,
+				// fallback to
+				// iframe
+				options = $(
+					self.instance)
+					.fileupload(
+						'option');
+				use_xhr = !options.forceIframeTransport
+					&& ((!options.multipart && $.support.xhrFileUpload) || $.support.xhrFormDataFileUpload);
+
+				if (!use_xhr) {
+					using_iframe_transport = true;
+				}
+
+				// For upload
+				var tpl = $('<li class="working-upload '
+					+ progressBarClass
+					+ '-child">'
+					+ '<div class="upload_progress_bar">'
+					+ '<span></span><div class="progress"></div>'
+					+ '</div><div class="progress-text"></div>'
+					+ '<div class="close_progress"><a href="javascript:;" class="cancel-upload"><img src="/memreas/img/close.png" alt=""></a></div>'
+					+ '<div class="clear"></div>'
+					+ '</div>'
+					+ '</li>');
+				$("." + progressBarClass).append(tpl);
+				data.context = tpl;
+
+				//Begin upload
+				jqXHR = data
+					.submit();
+
+				data.context
+					.find(
+						"a.cancel-upload")
+					.click(
+						function() {
+							var currentPercent = data.context
+									.find(
+										".upload_progress_bar .progress")
+									.width()
+								/ data.context
+									.find(
+										".upload_progress_bar .progress")
+									.parent()
+									.width()
+								* 100;
+							if (currentPercent < 100) {
+								jqXHR.abort();
+								data.context.remove();
+							}
+						});
+			},
+			progress : function(
+				e, data) {
+				var percent = Math
+					.round((data.loaded / data.total) * 100);
+				data.context
+					.find(
+						".upload_progress_bar .progress")
+					.css(
+						"width",
+						percent
+						+ "%");
+				data.context
+					.find(
+						".upload_progress_bar span")
+					.html(
+						percent
+						+ "%");
+				if (percent == 100) {
+					data.context
+						.find(
+							'.close_progress')
+						.html(
+							'<span><img src="/memreas/img/arrow-gray.png" /></span>');
+				}
+			},
+			error : function(
+				jqXHR,
+				status,
+				thrownError) {
+				console.log(jqXHR.status);
+				console.log(jqXHR.responseText);
+				console.log(status);
+				alert(thrownError);
+				return false;
+			},
+			fail : function(e,
+							data) {
+				window.onbeforeunload = null;
+				return false;
+			},
+			success : function(
+				data,
+				status,
+				jqXHR) {
+				console
+					.log('Inside Success function');
+				var s3_media_url = getValueFromXMLTag(
+					jqXHR.responseText,
+					'Location');
+				eval(callBackFunction);
+			},
+			done : function(
+				event, data) {
+			}
+		});
+	}
+}
+
 var uploadFilesInstance = []; // Used for store all file name for uploading
 var currentUploadFileCount = 0; // Count for all current files selected for
 // upload

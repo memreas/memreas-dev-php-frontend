@@ -457,6 +457,9 @@ $(function() {
 
 			}
 		    });
+
+	var DmcaForm = new S3UploadInstance("#dmcaFileUploadForm");
+	DmcaForm.bindUploading(Account.id + '/dmca/', 'dmca-upload-progress', 'alert(s3_media_url);');
 });
 
 /* Fill in current logged user detail */
@@ -2110,7 +2113,7 @@ function reportCounterClaimForm() {
 	    .val();
     var mediaId_report = $('#media_id').val();
     var counter_claim_phone_number = $('#counter_claim_phone_number').val();
-    var terms_condition = $('#term_condition').val();
+    var terms_condition = $('#dmca_term_condition').val();
     var violation_id=$('#violation_id').val();
     var counter_claim_url=$('#counter_claim_url').val();
 
@@ -2181,13 +2184,3 @@ function reportCounterClaimForm() {
     }, 'undefined', true);
 
 }
-
-$('#term_condition_label').click(function(){
-    $('#term_condition').toggleClass('checked');
-    if($('#term_condition').hasClass('checked')){
-       $('#term_condition').val(1); 
-    }else{
-       $('#term_condition').val(''); 
-    }
-    
-});

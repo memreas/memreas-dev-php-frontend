@@ -62,7 +62,8 @@ use Application\Model\MemreasConstants;
 
     <form name="dmcaFileUploadForm" id="dmcaFileUploadForm"
           enctype="multipart/form-data"
-          action="https://<?php echo MemreasConstants::S3BUCKET; ?>.s3.amazonaws.com/">
+          action="https://<?php echo MemreasConstants::S3BUCKET; ?>.s3.amazonaws.com/"
+          method="post">
 
         <input type="hidden" name="key" value=""> 
         <input type="hidden" name="Content-Type" value=""> 
@@ -116,15 +117,13 @@ use Application\Model\MemreasConstants;
 
             <li><label class="textfield_names">Signed Written Communication:</label>
                 <!--<a class="black_btn_skin f-center change-profile-btn fileupload-dmca" href="javascript:;">Choose file</a>-->
-                <input type="file" name="file" id="file" /> <span
-                    class="dmca-file-info"><a href="javascript:," target="_blank"
-                                          class="info-dcma"><img src="/memreas/img/info.png" /></a></span>
+                <div class="dmca-upload-progress" style="width: 80%; float: right; vertical-align: top;"></div>
             </li>
 
-            <li><input id="term_condition" class="css-checkbox"
-                       type="checkbox"> <label for="morepage_isselfdestruct"
+            <li><input id="dmca_term_condition" class="css-checkbox"
+                       type="checkbox"> <label for="dmca_term_condition"
                        name="demo_lbl_5" class="css-label margin-none"
-                       style="text-align: left; margin-left: 90px !important;" id="term_condition_label">by
+                       style="text-align: left; margin-left: 90px !important;" id="dmca_term_condition_label">by
                     submission of my counter claim and memreas terms and conditions i
                     agree to provide my email address to the reporter and will resolve
                     this violation without any further involvement from memreas.</label>
