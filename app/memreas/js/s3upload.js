@@ -804,7 +804,7 @@ var S3UploadInstance = function() {
 		var self = this;
 
 		$(".dmca-file-btn").click(function(){
-			$(element).find("input[type=file]").preventDefault().click();
+			$(element).find("input[type=file]").click();
 		});
 
 		self.instance.each(function(){
