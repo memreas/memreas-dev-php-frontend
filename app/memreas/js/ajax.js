@@ -37,7 +37,7 @@ fetchChameleon = function() {
 		    + getCookie('x_memreas_chameleon'));
 	    token_test = getValueFromXMLTag(response, 'token_test').trim();
 	    if (token_test != '') {
-		alert(token_test);
+		console.log("token_test-->" + token_test);
 	    }
 	},
 	error : function(jqXHR, textStatus, errorThrown) {
@@ -110,7 +110,7 @@ ajaxRequest = function(action, params, success_func, error_func,
 			$('#loadingpopup').fadeOut(500);
 
 		    // fetch token
-		    //fetchChameleon();
+		    fetchChameleon();
 
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
