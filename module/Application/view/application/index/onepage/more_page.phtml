@@ -47,7 +47,7 @@ use Application\Model\MemreasConstants;
 						<img src="/memreas/img/profile-pic.jpg" alt="">
 					</figure>
 					<div class="pro-names2" id="setting-username">User Name</div>
-					<form name="frm_profile_pic" id="frm-profile-pic"
+					<form name="frm_profile_pic" id="frm-profile-pic" method="post"
 						enctype="multipart/form-data"
 						action="https://<?php echo MemreasConstants::S3BUCKET; ?>.s3.amazonaws.com/">
 

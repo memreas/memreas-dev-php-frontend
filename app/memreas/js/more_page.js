@@ -457,9 +457,6 @@ $(function() {
 
 			}
 		    });
-
-	var DmcaForm = new S3UploadInstance("#dmcaFileUploadForm");
-	DmcaForm.bindUploading(Account.id + '/dmca/', 'dmca-upload-progress', 'alert(s3_media_url);');
 });
 
 /* Fill in current logged user detail */

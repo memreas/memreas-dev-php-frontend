@@ -60,23 +60,23 @@ use Application\Model\MemreasConstants;
     <a id="popupReportMediaClose" onClick="disablePopup('dmca-form-box');"
        class='popupClose'>x</a>
 
-    <form name="dmcaFileUploadForm" id="dmcaFileUploadForm"
+    <form name="dmcaFileUploadForm" id="dmcaFileUploadForm" class="dmcaFileUploadForm"
           enctype="multipart/form-data"
           action="https://<?php echo MemreasConstants::S3BUCKET; ?>.s3.amazonaws.com/"
-          method="post">
+          method="post" form-type="dmca-upload" style="display: none;">
 
-        <input type="hidden" name="key" value=""> 
-        <input type="hidden" name="Content-Type" value=""> 
-        <input type="hidden" name="acl" value=""> 
+        <input type="hidden" name="key" value="">
+        <input type="hidden" name="Content-Type" value="">
+        <input type="hidden" name="acl" value="">
         <input type="hidden" name="success_action_status" value="">
-        <input type="hidden" name="policy" value=""> 
-        <input type="hidden" name="x-amz-algorithm" value=""> 
-        <input type="hidden" name="x-amz-credential" value=""> 
-        <input type="hidden" name="x-amz-date" value=""> 
+        <input type="hidden" name="policy" value="">
+        <input type="hidden" name="x-amz-algorithm" value="">
+        <input type="hidden" name="x-amz-credential" value="">
+        <input type="hidden" name="x-amz-date" value="">
         <input type="hidden" name="x-amz-expires" value="">
         <input type="hidden" name="x-amz-signature" value="">
         <input type="hidden" name="x-amz-server-side-encryption" value="AES256">
-        <input type="file" name="file" id="file">
+        <input type="file" name="file" id="file" multiple="">
     </form>
 
     <form id="dmcaReportCounterClaimForm" style="margin-bottom: 20px;">
@@ -117,7 +117,9 @@ use Application\Model\MemreasConstants;
 
             <li><label class="textfield_names">Signed Written Communication:</label>
                 <!--<a class="black_btn_skin f-center change-profile-btn fileupload-dmca" href="javascript:;">Choose file</a>-->
-                <div class="dmca-upload-progress" style="width: 80%; float: right; vertical-align: top;"></div>
+                <div class="dmca-upload-progress" style="width: 80%; float: right; vertical-align: top;">
+                    <a class="black_btn_skin f-left dmca-file-btn" href="javascript:;">Choose file</a>
+                </div>
             </li>
 
             <li><input id="dmca_term_condition" class="css-checkbox"
@@ -141,6 +143,6 @@ use Application\Model\MemreasConstants;
         </div>
     </form>
 </div>
-
+<div id="bgdmca-form-box" class="backgroundPopup"></div>
 
 
