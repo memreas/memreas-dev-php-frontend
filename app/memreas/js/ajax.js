@@ -8,7 +8,9 @@ var xml_str = "";
 
 // ///////////////////////////////
 // fetchChameleon - validate entry
+// - not working - setting in session...
 // ////////////////////////////////
+/*
 fetchChameleon = function() {
     var action = 'fetchchameleon';
     var params = [ {
@@ -28,6 +30,7 @@ fetchChameleon = function() {
 	crossDomain : true,
 	type : 'post',
 	url : feExecAjaxURL,
+	async: false,
 	dataType : 'jsonp',
 	data : 'json=' + json_data,
 	success : function(response) {
@@ -45,6 +48,7 @@ fetchChameleon = function() {
 	}
     });
 }
+*/
 
 // ////////////////////////////////
 // Input xml and fetch output xml
@@ -108,9 +112,6 @@ ajaxRequest = function(action, params, success_func, error_func,
 		    // Make sure there is no ajax instance still processing
 		    if (stackAjaxInstance.length == 0)
 			$('#loadingpopup').fadeOut(500);
-
-		    // fetch token
-		    fetchChameleon();
 
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
