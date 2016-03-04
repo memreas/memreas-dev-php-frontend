@@ -11,44 +11,23 @@ var xml_str = "";
 // - not working - setting in session...
 // ////////////////////////////////
 /*
-fetchChameleon = function() {
-    var action = 'fetchchameleon';
-    var params = [ {
-	tag : 'x_memreas_chameleon',
-	value : getCookie('x_memreas_chameleon')
-    } ];
-    var xml_input = getXMLStringFromParamArray(action, params);
-    var data = new Object();
-    var token_test = '';
-    data.ws_action = action;
-    data.type = "jsonp";
-    data.json = xml_input;
-    data.callback = '';
-    var json_data = JSON.stringify(data);
-
-    $.ajax({
-	crossDomain : true,
-	type : 'post',
-	url : feExecAjaxURL,
-	async: false,
-	dataType : 'jsonp',
-	data : 'json=' + json_data,
-	success : function(response) {
-	    setCookie('x_memreas_chameleon', getValueFromXMLTag(response,
-		    'x_memreas_chameleon').trim());
-	    console.log('cookie x_memreas_chameleon-->'
-		    + getCookie('x_memreas_chameleon'));
-	    token_test = getValueFromXMLTag(response, 'token_test').trim();
-	    if (token_test != '') {
-		console.log("token_test-->" + token_test);
-	    }
-	},
-	error : function(jqXHR, textStatus, errorThrown) {
-	    // do nothing
-	}
-    });
-}
-*/
+ * fetchChameleon = function() { var action = 'fetchchameleon'; var params = [ {
+ * tag : 'x_memreas_chameleon', value : getCookie('x_memreas_chameleon') } ];
+ * var xml_input = getXMLStringFromParamArray(action, params); var data = new
+ * Object(); var token_test = ''; data.ws_action = action; data.type = "jsonp";
+ * data.json = xml_input; data.callback = ''; var json_data =
+ * JSON.stringify(data);
+ * 
+ * $.ajax({ crossDomain : true, type : 'post', url : feExecAjaxURL, async:
+ * false, dataType : 'jsonp', data : 'json=' + json_data, success :
+ * function(response) { setCookie('x_memreas_chameleon',
+ * getValueFromXMLTag(response, 'x_memreas_chameleon').trim());
+ * console.log('cookie x_memreas_chameleon-->' +
+ * getCookie('x_memreas_chameleon')); token_test = getValueFromXMLTag(response,
+ * 'token_test').trim(); if (token_test != '') { console.log("token_test-->" +
+ * token_test); } }, error : function(jqXHR, textStatus, errorThrown) { // do
+ * nothing } }); }
+ */
 
 // ////////////////////////////////
 // Input xml and fetch output xml
@@ -87,14 +66,15 @@ ajaxRequest = function(action, params, success_func, error_func,
 		data : 'json=' + json_data,
 		success : function(ret_xml) {
 
-		    console.log("ret_xml--->"+ret_xml);
-		    /*
-		     * var x_memreas_chameleon = getValueFromXMLTag(ret_xml,
-		     * 'x_memreas_chameleon').trim(); if (x_memreas_chameleon !=
-		     * '') { alert('setting new x_memreas_chameleon--> ' +
-		     * x_memreas_chameleon ); setCookie("x_memreas_chameleon",
-		     * x_memreas_chameleon) }
-		     */
+		    console.log("ret_xml--->" + ret_xml);
+
+		    var x_memreas_chameleon = getValueFromXMLTag(ret_xml,
+			    'x_memreas_chameleon').trim();
+		    if (x_memreas_chameleon != '') {
+			console.log('setting new x_memreas_chameleon--> '
+				+ x_memreas_chameleon);
+			setCookie("x_memreas_chameleon", x_memreas_chameleon)
+		    }
 
 		    if (action != 'findtag' && action != 'findevent') {
 			if (getValueFromXMLTag(ret_xml, 'error').trim() == 'Please Login') {
@@ -294,14 +274,13 @@ getXMLStringFromParamArray = function(action, params) {
     case "dcmareportviolation":
 	action_tag = "dcmareportviolation";
 	break;
-    //Counter List    
+    // Counter List
     case "dcmalist":
 	action_tag = "dcmalist";
-	break; 
-     case "dcmacounterclaim":
+	break;
+    case "dcmacounterclaim":
 	action_tag = "dcmacounterclaim";
-	break;    
-
+	break;
 
     default:
 	break;
