@@ -1016,6 +1016,11 @@ var S3UploadInstance = function() {
 							filetype = 'audio';
 							is_valid = true;
 							break;
+
+						case 'pdf':
+							filetype = 'pdf';
+							is_valid = true;
+							break;
 						default:
 							jerror('file type is not allowed');
 					}
