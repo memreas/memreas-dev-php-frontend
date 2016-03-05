@@ -800,12 +800,9 @@ var S3UploadInstance = function() {
 	* Doom for dmca uploading
 	* */
 	this.doomDmcaUploadForm = function(element) {
+
 		this.instance = $(element);
 		var self = this;
-
-		$(".dmca-file-btn").click(function(){
-			$(element).find("input[type=file]").click();
-		});
 
 		self.instance.each(function(){
 
