@@ -363,7 +363,8 @@ class IndexController extends AbstractActionController {
 					'PAID_ACCOUNT_FILE_LIMIT' => MemreasConstants::PAID_ACCOUNT_FILE_LIMIT,
 					'CLOUDFRONT_DOWNLOAD_HOST' => MemreasConstants::CLOUDFRONT_DOWNLOAD_HOST,
 					'STRIPE_SERVER_URL' => MemreasConstants::MEMREAS_PAY,
-					'ENABLE_SELL_MEDIA' => MemreasConstants::MEMREAS_SELL_MEDIA 
+					'ENABLE_SELL_MEDIA' => MemreasConstants::MEMREAS_SELL_MEDIA, 
+					'SEARCH_MIN_LENGTH' => 1 
 			);
 			$content = '';
 			foreach ( $JsConstantVariables as $variable => $value ) {
