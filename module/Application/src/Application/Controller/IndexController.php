@@ -7,17 +7,11 @@
  */
 namespace Application\Controller;
 
+use \Exception;
+use Application\memreas\Mlog;
+use Application\Model\MemreasConstants;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use Zend\ViewModel\JsonModel;
-use Application\memreas\Mlog;
-use Application\Model;
-use Application\Model\UserTable;
-use Application\Form;
-use Zend\Mail\Message;
-use Application\TwitterOAuth\TwitterOAuth;
-use \Exception;
-use Application\Model\MemreasConstants;
 
 class IndexController extends AbstractActionController {
 	protected $user_id;
@@ -355,16 +349,7 @@ class IndexController extends AbstractActionController {
 			//Mlog::addone("writeJsConstants()", "about to write constants.js file...");
 			// Put constant variables here
 			$JsConstantVariables = array (
-					'S3BUCKET' => MemreasConstants::S3BUCKET,
-					'LOGGED_USER_ID' => $_SESSION ['user_id'],
-					'LISTNOTIFICATIONSPOLLTIME' => MemreasConstants::LISTNOTIFICATIONSPOLLTIME,
-					'GALLERYDELAYTIME' => MemreasConstants::GALLERYDELAYTIME,
-					'FREE_ACCOUNT_FILE_LIMIT' => MemreasConstants::FREE_ACCOUNT_FILE_LIMIT,
-					'PAID_ACCOUNT_FILE_LIMIT' => MemreasConstants::PAID_ACCOUNT_FILE_LIMIT,
-					'CLOUDFRONT_DOWNLOAD_HOST' => MemreasConstants::CLOUDFRONT_DOWNLOAD_HOST,
-					'STRIPE_SERVER_URL' => MemreasConstants::MEMREAS_PAY,
-					'ENABLE_SELL_MEDIA' => MemreasConstants::MEMREAS_SELL_MEDIA, 
-					'SEARCH_MIN_LENGTH' => 1 
+					'REMOVE_THIS' => 1 
 			);
 			$content = '';
 			foreach ( $JsConstantVariables as $variable => $value ) {

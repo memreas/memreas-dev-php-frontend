@@ -6,6 +6,7 @@
  */
 ?>
 <?php
+use Application\Model\MemreasConstants;
 header ( 'Cache-Control: no-cache, no-store, must-revalidate' ); // HTTP 1.1.
 header ( 'Pragma: no-cache' ); // HTTP 1.0.
 header ( 'Expires: 0' ); // Proxies.
@@ -21,7 +22,23 @@ $username = ! empty ( $_SESSION ['username'] ) ? ($_SESSION ['username']) : '';
 <?php else: ?>
 <html class="noads">
 <?php endif; ?>
-    <head>
+<head>
+<?php 
+//javascript constants
+$constants = "<script>";
+$constants .= "var S3BUCKET = '" . MemreasConstants::S3BUCKET . "';";
+$constants .= "var LOGGED_USER_ID = '" . $_SESSION ['user_id'] . "';";
+$constants .= "var LISTNOTIFICATIONSPOLLTIME = '" . MemreasConstants::LISTNOTIFICATIONSPOLLTIME . "';";
+$constants .= "var GALLERYDELAYTIME = '" . MemreasConstants::GALLERYDELAYTIME . "';";
+$constants .= "var FREE_ACCOUNT_FILE_LIMIT = '" . MemreasConstants::FREE_ACCOUNT_FILE_LIMIT . "';";
+$constants .= "var PAID_ACCOUNT_FILE_LIMIT = '" . MemreasConstants::PAID_ACCOUNT_FILE_LIMIT . "';";
+$constants .= "var CLOUDFRONT_DOWNLOAD_HOST = '" . MemreasConstants::CLOUDFRONT_DOWNLOAD_HOST . "';";
+$constants .= "var STRIPE_SERVER_URL = '" . MemreasConstants::MEMREAS_PAY . "';";
+$constants .= "var ENABLE_SELL_MEDIA = '" . MemreasConstants::MEMREAS_SELL_MEDIA . "';";
+$constants .= "var SEARCH_MIN_LENGTH = 1;";
+$constants .= "</script>";
+echo $constants;
+?>
 <meta charset="utf-8">
 <meta name="viewport" content="user-scalable-no,initial-scale=1.0, minimum-scale=1.0,maximum-scale=1.0">
 <title>memreas</title>
