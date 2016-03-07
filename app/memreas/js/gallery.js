@@ -268,10 +268,11 @@ jQuery.fetch_server_media = function() {
 				href : _media_url_web,
 				type : "video/mp4"
 			    } ];
-			    linksContainerData += '<a class="blueimp-gallery-thumb-anchor " href="javascript:;"'
-				    + ' title="'
+			    linksContainerData += '<a href="'
+				    + _media_url_web
+				    + '" title="'
 				    + media_id
-				    + '" onclick="popupGalleryVideoPlayer(\'' + _media_url_web + '\', \'' + _media_thumbnail_large + '\');" style="background:url('
+				    + '" type="video/mp4" data-gallery class="blueimp-gallery-thumb-anchor " style="background:url('
 				    + _media_thumbnail_large
 				    + ')"><span class="video-content-play-icon"></span></a>';
 
