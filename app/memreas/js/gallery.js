@@ -27,8 +27,8 @@ function getUserDetail() {
 		'getuserdetails',
 		params,
 		function(xml_response) {
-		    console.log("Inside get user detail response--->"
-			    + xml_response);
+		    // console.log("Inside get user detail response--->"+
+		    // xml_response);
 		    // debugger;
 		    if (getValueFromXMLTag(xml_response, 'status') == 'Success') {
 			var useremail = getValueFromXMLTag(xml_response,
@@ -190,7 +190,7 @@ jQuery.fetch_server_media = function() {
 		value : '1'
 	    } ],
 	    function(response) {
-		console.log("listallmedia response-->" + response);
+		// console.log("listallmedia response-->" + response);
 		if (getValueFromXMLTag(response, 'status') == "Success") {
 
 		    var medias = getSubXMLFromTag(response, 'media');
@@ -268,26 +268,30 @@ jQuery.fetch_server_media = function() {
 				href : _media_url_web,
 				type : "video/mp4"
 			    } ];
-			    linksContainerData += '<a href="'
-				    + _media_url_web
-				    + '" title="'
+
+			    linksContainerData += '<a href="' + _media_url_web
+				    + '"';
+			    linksContainerData += ' title="' + media_id + '"';
+			    linksContainerData += ' type="video/mp4" data-gallery="'
 				    + media_id
-				    + '" type="video/mp4" data-gallery class="blueimp-gallery-thumb-anchor " style="background:url('
+				    + '" class="blueimp-gallery-thumb-anchor "';
+			    linksContainerData += ' style="background:url('
 				    + _media_thumbnail_large
 				    + ')"><span class="video-content-play-icon"></span></a>';
 
 			} else {
-			    item['title'] = _media_type;
+			    item['title'] = media_id;
 			    item['type'] = "image/jpeg";
 			    item['href'] = main_media_url;
 			    item['poster'] = main_media_url;
-			    linksContainerData += '<a href="'
-				    + main_media_url
-				    + '" title="'
-				    + media_id
-				    + '" data-gallery="#blueimp-gallery" class="blueimp-gallery-thumb-anchor" style="background:url('
-				    //+ '" class="blueimp-gallery-thumb-anchor" style="background:url('
+
+			    linksContainerData += '<a href="' + main_media_url
+				    + '" title="' + media_id
+				    + '" data-gallery="' + media_id
+				    + '" class="blueimp-gallery-thumb-anchor"';
+			    linksContainerData += ' style="background:url('
 				    + media_thummb_448 + ')"><span></span></a>';
+
 			}
 			// console.log("item" + JSON.stringify(item));
 			objArr.push(item);
@@ -324,59 +328,10 @@ jQuery.fetch_server_media = function() {
 
 		    } // end for
 
-		    console.log("objArr" + JSON.stringify(objArr));
-
-		    // var gallery = blueimp.Gallery(links, options);
-		    // blueimp.Gallery(objArr, {
-		    // onslide : function() {
-		    //
-		    // },
-		    // container : '#blueimp-video-carousel',
-		    // carousel : 'true',
-		    // preloadRange : 2,
-		    // transitionSpeed : 400
-		    // });
-
-		    blueimp.Gallery(objArr, {
-			container : '#blueimp-gallery',
-			carousel : true,
-			thumbnailProperty : 'thumbnail',
-			thumbnailIndicators : true
-		    });
-
 		    $(linksContainer).append(linksContainerData);
-		   // $('#blueimp-gallery').hide();
-		    // var pos =
-
-		    // gallery.slide(gallery.getIndex(),400);
+		    $('#blueimp-gallery').hide();
 
 		    setTimeout(function() {
-			// $(".preload-files").hide();
-			// $(".user-resources").fotorama({
-			// width : '800',
-			// height : '350',
-			// 'max-width' : '100%'
-
-			// }).fadeIn(500);
-
-			if (!$(".edit-area-scroll")
-				.hasClass('mCustomScrollbar'))
-			    $(".edit-area-scroll").mCustomScrollbar({
-				scrollButtons : {
-				    enable : true
-				}
-			    });
-			$(".edit-area-scroll").mCustomScrollbar('update');
-
-			if (!$(".edit-areamedia-scroll").hasClass(
-				'mCustomScrollbar'))
-			    $(".edit-areamedia-scroll").mCustomScrollbar({
-				scrollButtons : {
-				    enable : true
-				}
-			    });
-			$(".edit-areamedia-scroll").mCustomScrollbar('update');
-
 			// Fetch user's notification header
 			getUserDetail();
 			getUserNotificationsHeader();
@@ -411,13 +366,25 @@ jQuery.fetch_server_media = function() {
 	    });
 }
 
-jQuery.fetchVideoHTML = function (media_id) {
-    
-}
-
+$(document).on('click', '[data-gallery]', function(event) {
+    var id = $(this).data('gallery');
+    var widget = $(id);
+    var selected_media_id;
+    var media_id;
+    var obj;
+    selected_media_id = widget.selector;
+    console.log("objArr.length-->"+objArr.length);
+    for (i=0; i<objArr.length; i++) {
+	obj = objArr[i];
+	if (selected_media_id == obj['title']) {
+	    break;
+	}
+    }
+    return blueimp.Gallery([obj], { container : '#blueimp-gallery', carousel : true});
+});
 
 function getUserNotificationsHeader() {
-    console.log("Inside gallery.js - getUserNotificationsHeader");
+    // console.log("Inside gallery.js - getUserNotificationsHeader");
     var user_id = $("input[name=user_id]").val();
     var jTargetElement = $(".notification-head ul");
     if (jTargetElement.hasClass("mCustomScrollbar"))
@@ -916,12 +883,15 @@ function error_deletephoto() {
 }
 
 function popupGalleryVideoPlayer(media_video_url, thumbnail) {
-	$("#popupgalleryplayer").html('');
-	$("#popupgalleryplayer").html(
-			'<a id="popupplayerMemreasClose" onClick="disablePopup(\'popupgalleryplayer\')" class=\'popupClose\'>x</a>'
-			+ '<video width="500" height="300" controls>'
-			+ '<source src="' + media_video_url + '" type="video/mp4">'
-			+ 'Your browser does not support the video tag.'
-			+ '</video>');
-	popup('popupgalleryplayer');
+    $("#popupgalleryplayer").html('');
+    $("#popupgalleryplayer")
+	    .html(
+		    '<a id="popupplayerMemreasClose" onClick="disablePopup(\'popupgalleryplayer\')" class=\'popupClose\'>x</a>'
+			    + '<video width="500" height="300" controls>'
+			    + '<source src="'
+			    + media_video_url
+			    + '" type="video/mp4">'
+			    + 'Your browser does not support the video tag.'
+			    + '</video>');
+    popup('popupgalleryplayer');
 }

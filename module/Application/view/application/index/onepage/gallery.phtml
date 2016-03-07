@@ -103,34 +103,27 @@ jQuery.addSeller = function () {
 		</ul>
 		<div id="tab-content" class="clearfix">
 			<div id="tab1" class="hideCls hidden-onload">
-				<!-- <div class="fotoama" data-width="100%" data-ratio="800/600">  -->
-				<!--				<div class="preload-files">
-					<ul class="pics"></ul>
-				</div>-->
-				<!--				<div id="mGallery" class="fotorama user-resources"	data-swipe="true" data-max-width="100%" data-width="100%" data-height="80%" data-allow-full-screen="true" data-fit="cover" data-click="true" data-nav="thumbs">
-					 user resources to be loaded here... 
-				</div>-->
-
 				<!-- The Gallery as lightbox dialog, should be a child element of the document body -->
-				<!-- 
-				<div id="blueimp-gallery"
-					class="blueimp-gallery blueimp-gallery-controls blueimp-gallery-carousel "
-					data-start-slideshow="false">
-					<div class="slides"></div>
-					<h3 class="title"></h3>
-					<a class="prev">‹</a> <a class="next">›</a> <a class="close">×</a>
-					<a class="play-pause"></a>
-				</div> -->
-
 				<div id="links" class="links"></div>
-				<div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
+				
+                    <div id="blueimp-video-carousel-gallery"
+						class="blueimp-gallery blueimp-gallery-controls blueimp-gallery-carousel " data-start-slideshow="false">
+						<div class="slides"></div>
+						<h3 class="title"></h3>
+						<a class="prev">‹</a> 
+						<a class="next">›</a>
+                                                
+						<!-- <a class="play-pause"></a> --> 
+                                                <p class="description"></p>
+                                                
+					</div>
+				
+				<div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" data-start-slideshow="false">
 					<div class="slides"></div>
 					<h3 class="title"></h3>
 					<a class="prev">‹</a>
 					<a class="next">›</a> 
 					<a class="close">×</a>
-					<a class="play-pause"></a>
-					<ol class="indicator"></ol>
 				</div>
 
 
