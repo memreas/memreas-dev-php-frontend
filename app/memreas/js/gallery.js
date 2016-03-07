@@ -258,7 +258,7 @@ jQuery.fetch_server_media = function() {
 
 			var item = new Object();
 			if (_media_type == 'video') {
-			    item['title'] = _media_type;
+			    item['title'] = media_id;
 			    item['type'] = "video/*";
 			    item['poster'] = _media_thumbnail_large;
 			    item['sources'] = [ {
@@ -272,10 +272,9 @@ jQuery.fetch_server_media = function() {
 				    + _media_url_web
 				    + '" title="'
 				    + media_id
-				    + '" data-type="video/mp4" data-gallery="#blueimp-gallery" class="blueimp-gallery-thumb-anchor " style="background:url('
-				   // + '" data-type="video/mp4" class="blueimp-gallery-thumb-anchor " style="background:url('
+				    + '" type="video/*" data-gallery="#blueimp-gallery" data-unique-id="1" class="blueimp-gallery-thumb-anchor " style="background:url('
 				    + _media_thumbnail_large
-				    + ')" ><span class="video-content-play-icon"></span></a>';
+				    + ')" data-sources="[{href:' + _media_url_hls + ', type : \'application/x-mpegurl\'}, {href :' + _media_url_web + ', type : \'video/mp4\'}]"><span class="video-content-play-icon"></span></a>';
 
 			} else {
 			    item['title'] = _media_type;
