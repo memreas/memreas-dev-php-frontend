@@ -268,13 +268,12 @@ jQuery.fetch_server_media = function() {
 				href : _media_url_web,
 				type : "video/mp4"
 			    } ];
-			    linksContainerData += '<a href="'
-				    + _media_url_web
-				    + '" title="'
+			    linksContainerData += '<a class="blueimp-gallery-thumb-anchor " href="javascript:;"'
+				    + ' title="'
 				    + media_id
-				    + '" type="video/*" data-gallery="#blueimp-gallery" data-unique-id="1" class="blueimp-gallery-thumb-anchor " style="background:url('
+				    + '" onclick="popupGalleryVideoPlayer(\'' + _media_url_web + '\', \'' + _media_thumbnail_large + '\');" style="background:url('
 				    + _media_thumbnail_large
-				    + ')" data-sources="[{href:' + _media_url_hls + ', type : \'application/x-mpegurl\'}, {href :' + _media_url_web + ', type : \'video/mp4\'}]"><span class="video-content-play-icon"></span></a>';
+				    + ')"><span class="video-content-play-icon"></span></a>';
 
 			} else {
 			    item['title'] = _media_type;
@@ -913,4 +912,15 @@ function success_deletephoto(xml_response) {
 
 function error_deletephoto() {
     jerror("error delete photo");
+}
+
+function popupGalleryVideoPlayer(media_video_url, thumbnail) {
+	$("#popupgalleryplayer").html('');
+	$("#popupgalleryplayer").html(
+			'<a id="popupplayerMemreasClose" onClick="disablePopup(\'popupgalleryplayer\')" class=\'popupClose\'>x</a>'
+			+ '<video width="500" height="300" controls>'
+			+ '<source src="' + media_video_url + '" type="video/mp4">'
+			+ 'Your browser does not support the video tag.'
+			+ '</video>');
+	popup('popupgalleryplayer');
 }
