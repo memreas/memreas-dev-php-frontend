@@ -19,39 +19,39 @@
                 <form name="sell_media_frm" />
                 <ul class="share_memreas_details sell_media_form">
                     <li>
-                        <label class="textfield_names">Username*</label>
+                        <label class="textfield_names">username*</label>
                         <input name="input" type="text" id="sell-media-username" class="disabled" value="username" default="username" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'username')this.value = '';" readonly />
                     </li>
                     <li>
-                        <label class="textfield_names">Stripe email*</label>
+                        <label class="textfield_names">stripe email*</label>
                         <input name="input" type="text" id="sell-media-email" class="disabled" value="Stripe email" default="Stripe email" onBlur="if(!/\S/.test(this.value)){ this.value=this.defaultValue; }" onFocus="if(this.value == 'Stripe email'){ this.value = ''; }" readonly />
                     </li>
                     <li>
-                        <label class="textfield_names">First name*</label>
+                        <label class="textfield_names">first name*</label>
                         <input name="input" type="text" id="sell-media-fname" class="" value="first name" default="first name" onBlur="if(!/\S/.test(this.value)){ this.value=this.defaultValue; $(this).css('color', '#a0a0a0'); }" onFocus="if(this.value == 'first name'){ this.value = ''; $(this).css('color', '#000'); }" />
                     </li>
                     <li>
-                        <label class="textfield_names">Last name*</label>
+                        <label class="textfield_names">last name*</label>
                         <input name="input" type="text" id="sell-media-lname" class="" value="last name" default="first name" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'last name')this.value = '';" />
                     </li>
                     <li>
-                        <label class="textfield_names">Address 1*</label>
+                        <label class="textfield_names">address 1*</label>
                         <input name="input" type="text" id="sell-media-address1" class="" value="Address line 1" default="Address line 1" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Address line 1')this.value = '';" />
                     </li>
                     <li>
-                        <label class="textfield_names">Address 2</label>
-                        <input name="input" type="text" id="sell-media-address2" class="" value="Address line 2" default="Address line 2" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Address line 2')this.value = '';" />
+                        <label class="textfield_names">dddress 2</label>
+                        <input name="input" type="text" id="sell-media-address2" class="" value="Address line 2" default="Address line 2" onBlur="if(!/\S/.test(this.value))this.value=''" onFocus="if(this.value == 'Address line 2')this.value = '';" />
                     </li>
                     <li>
-                        <label class="textfield_names">City*</label>
+                        <label class="textfield_names">city*</label>
                         <input name="input" type="text" id="sell-media-city" class="" value="City" default="City" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'City')this.value = '';" />
                     </li>
                     <li>
-                        <label class="textfield_names">State*</label>
+                        <label class="textfield_names">state*</label>
                         <input name="input" type="text" id="sell-media-state" class="" value="State" default="State" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'State')this.value = '';" />
                     </li>
                     <li>
-                        <label class="textfield_names">Zip*</label>
+                        <label class="textfield_names">zip*</label>
                         <input name="input" type="text" id="sell-media-zip" class="" value="Zip" default="Zip" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'Zip')this.value = '';" />
                     </li>
                     <li class="add-seller-message hide-onload">
@@ -79,6 +79,10 @@
         <div class="akordeon-item-content">
             <ul class="share_memreas_details sell_media_bank">
                 <li>
+                    <label class="textfield_names" style="float: none; margin-bottom: 20px;">Social Security or Tax ID Number*</label>
+                    <input name="input" type="text" id="sell-media-tax-ssn-ein" class="" value="123456789" default="123456789" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == '123456789')this.value = '';" />
+                </li>
+                <li>
                     <label class="textfield_names" style="float: none; margin-bottom: 20px;">banking institution "i.e. Citibank"*</label>
                     <input name="input" type="text" id="sell-media-bank" class="" value="banking institution" default="banking institution" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'banking institution')this.value = '';" />
                 </li>
@@ -92,7 +96,7 @@
                 </li>
                 <li>
                     <input id="register-seller-agree" class="css-checkbox" type="checkbox" name="register_seller_agree"/>
-                    <label for="register-seller-agree" name="demo_lbl_1" class="css-label margin-none" >Check this box to confirm memreas <a href="javascript:;" onclick="popup('popupMarketplaceTerms');">Marketplace Terms of Service</a></label>
+                    <label for="register-seller-agree" name="demo_lbl_1" class="css-label margin-none" >by checking this box I agree to memreas <a href="javascript:;" onclick="popup('popupMarketplaceTerms');">Marketplace Terms of Service</a></label>
                 </li>
             </ul>
             <div class="btn">

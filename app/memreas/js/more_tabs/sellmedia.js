@@ -60,6 +60,7 @@ function register_sell_media() {
 			zip_code : $("#sell-media-zip").val(),
 			stripe_email_address : $("#sell-media-email").val(),
 			sell_media_bank : $("#sell-media-bank").val(),
+			tax_ssn_ein : $("#sell-media-tax-ssn-ein").val(),
 			bank_routing : $("#sell-media-bank-routing").val(),
 			account_number : $("#sell-media-account-number").val()
 		}
@@ -102,7 +103,7 @@ function register_sell_media() {
 function resetSellMedia() {
 	var text_ids = [ 'sell-media-fname', 'sell-media-lname',
 			'sell-media-address1', 'sell-media-address2', 'sell-media-city',
-			'sell-media-state', 'sell-media-zip', 'sell-media-bank',
+			'sell-media-state', 'sell-media-zip', 'sell-media-tax_ssn_ein', 'sell-media-bank',
 			'sell-media-bank-routing', 'sell-media-account-number' ];
 	clearTextField(text_ids);
 }
