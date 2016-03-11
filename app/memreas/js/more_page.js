@@ -173,7 +173,6 @@ $(function() {
 			    }
 
 			    var form = $(this);
-			    alert("more_page calling tvm ...");
 
 			    // Get signed credentials
 			    $
@@ -2036,7 +2035,6 @@ function fetchS3PreSignedURLDMCACounterClaim() {
 	 */
 	async : true,
 	success : function(data) {
-	    alert("fetchS3PreSignedURLDMCACounterClaim calling tvm ...");
 	    console.log("fetchMemreasTVM success function...");
 	    /*-
 	     * Now that we have our data, we update the form so it

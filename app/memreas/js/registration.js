@@ -228,7 +228,6 @@ function validateRegstration() {
 									 */
 									async : true,
 									success : function(data) {
-									    alert("Registratoni calling tvm ...");
 
 										console
 												.log("fetchMemreasTVM success function...");
