@@ -169,15 +169,15 @@ function subscription_step3() {
 
 	var card_name = orderCard.first_name + ' ' + orderCard.last_name;
 	jOrderSummary.find('#order-summary-name').val(card_name);
-	jOrderSummary.find('#order-summary-address1').val(orderCard.address_line1);
-	jOrderSummary.find('#order-summary-address2').val(orderCard.address_line2);
+	jOrderSummary.find('#order-summary-address1').val(orderCard.address_line_1);
+	jOrderSummary.find('#order-summary-address2').val(orderCard.address_line_2);
 	jOrderSummary.find('#order-card-type').html(orderCard.card_type);
 	jOrderSummary.find('#order-summary-ccnum').val(
 			orderCard.obfuscated_card_number);
 	jOrderSummary.find('#order-summary-expdate').val(orderCard.exp_month);
-	jOrderSummary.find('#order-summary-expyear').val(orderCard.exp_year);
-	jOrderSummary.find('#order-summary-city').val(orderCard.address_city);
-	jOrderSummary.find('#order-summary-state').val(orderCard.address_state);
+	jOrderSummary.find('#order-summary-expyear').val(orderCard.valid_until);
+	jOrderSummary.find('#order-summary-city').val(orderCard.city);
+	jOrderSummary.find('#order-summary-state').val(orderCard.state);
 	jOrderSummary.find('#order-summary-zip').val(orderCard.zip_code);
 
 	jOrderSummary.find('#choose-plan-name').html(orderPlan.name);
