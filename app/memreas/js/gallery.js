@@ -204,6 +204,12 @@ jQuery.fetch_server_media = function() {
 		    var items_for_gallery = "[";
 
 		    var linksContainer = $('#links');
+
+			//Reset area to prevent from duplicating items
+			linksContainer.html('');
+			$(".edit-area-scroll").html('');
+			objArr = new Array();
+
 		    var linksContainerData = '';
 
 		    /** Initialize empty gallery and add within loop */
