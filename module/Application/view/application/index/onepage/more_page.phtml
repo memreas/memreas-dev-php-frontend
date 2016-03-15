@@ -47,7 +47,7 @@ use Application\Model\MemreasConstants;
 						<img src="/memreas/img/profile-pic.jpg" alt="">
 					</figure>
 					<div class="pro-names2" id="setting-username">User Name</div>
-					<form name="frm_profile_pic" id="frm-profile-pic" method="post"
+					<form name="frm_profile_pic" class="frm-profile-pic" method="post"
 						enctype="multipart/form-data"
 						action="https://<?php echo MemreasConstants::S3BUCKET; ?>.s3.amazonaws.com/">
 
@@ -65,7 +65,7 @@ use Application\Model\MemreasConstants;
 						<input type="file" name="file" id="file" style="opacity: 0; -moz-opacity: 0; -webkit-opacity: 0; filter: alpha(opacity = 0); margin: 0; width: 1px; height: 1px;">
 					</form>
 					<a class="black_btn_skin f-center change-profile-btn"
-						href="javascript:;">Change Picture</a>
+						href="javascript:;" onclick="$('.frm-profile-pic').find('input[type=file]').click();">Change Picture</a>
 					<div class="clear"></div>
 					<div class="akordeon" id="buttons-moretab"
 						style="margin-top: 10px;">

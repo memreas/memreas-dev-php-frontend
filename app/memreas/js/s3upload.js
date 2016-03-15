@@ -1153,11 +1153,354 @@ var S3UploadInstance = function() {
 			});
 		});
 	}
+
+	/*
+	* Doom for profile upload change
+	* */
+	this.doomProfileUploadForm = function(element) {
+
+		this.instance = $(element);
+		var self = this;
+
+		self.instance.each(function(){
+
+			var form = self.instance;
+			form.fileupload({
+				url : form.attr('action'),
+				dataType : 'xml',
+				crossDomain : true,
+				multiple : true,
+				type : 'POST',
+				autoUpload : true,
+				//5GB max
+				maxFileSize : 5000000,
+				add : function(event, data) {
+					var profile_filename = data.files[0].name;
+					profile_filename = correctUploadFilename(profile_filename);
+					if (!$("a[title=more]").hasClass('active'))
+						return false;
+					var filetype = data.files[0].type;
+					var key_value = profile_filename;
+					if (!(filetype.indexOf('image') >= 0)) {
+						jerror('Only image type is allowed.');
+						$("input[name=profile_image]").val(0);
+						return false;
+					}
+					$("input[name=profile_image]").val(1);
+					if (filetype.indexOf('image') >= 0)
+						var target = 'image';
+					else
+						target = 'media';
+
+					if (profile_filename.indexOf(" ") >= 0) {
+						alert("Please remove spaces from filename.");
+						return;
+					}
+
+					var form = $(this);
+
+					// Get signed credentials
+					$
+						.ajax({
+							url : "/index/fetchMemreasTVM",
+							type : 'GET',
+							dataType : 'json',
+							data : {
+								title : profile_filename
+							},
+							/*-
+							 * send the file name to the server so it
+							 * can generate the key param
+							 */
+
+							async : false,
+							error : function(jqXHR, status,
+											 thrownError) {
+								alert(jqXHR.status);
+								alert(jqXHR.responseText);
+								alert(status);
+								alert(thrownError);
+							},
+							success : function(data, status,
+											   response) {
+								// var xmlstr = data.xml ? data.xml
+								// : (new
+								// XMLSerializer()).serializeToString(data);
+								console
+									.log("response.responseText--->"
+										+ response.responseText);
+								/*-
+								 * Now that we have our data, we update the form
+								 * so it contains all the needed data
+								 * to sign the request
+								 */
+								media_id = data.media_id;
+								s3path = Account.id + '/' + media_id
+									+ '/';
+								s3file = profile_filename;
+								form.find('input[name=key]').val(
+									s3path + s3file);
+								form.find('input[name=acl]').val(
+									data.acl);
+								form
+									.find(
+										'input[name=success_action_status]')
+									.val(data.successStatus);
+								form.find('input[name=policy]')
+									.val(data.base64Policy);
+								form
+									.find(
+										'input[name=x-amz-algorithm]')
+									.val(data.algorithm)
+								form
+									.find(
+										'input[name=x-amz-credential]')
+									.val(data.credentials)
+								form.find('input[name=x-amz-date]')
+									.val(data.date)
+								form
+									.find(
+										'input[name=x-amz-expires]')
+									.val(data.expires)
+								form
+									.find(
+										'input[name=x-amz-signature]')
+									.val(data.signature)
+								form.find(
+									"input[name=Content-Type]")
+									.val(filetype);
+							}
+						});
+
+					// Use XHR, fallback to iframe
+					options = $(this).fileupload('option');
+					use_xhr = !options.forceIframeTransport
+						&& ((!options.multipart && $.support.xhrFileUpload) || $.support.xhrFormDataFileUpload);
+
+					if (!use_xhr) {
+						using_iframe_transport = true;
+					}
+
+					$("#loadingpopup").show();
+					var jqXHR = data.submit();
+				},
+				progress : function(
+					e, data) {
+
+				},
+				error : function(
+					jqXHR,
+					status,
+					thrownError) {
+					console.log(jqXHR.status);
+					console.log(jqXHR.responseText);
+					console.log(status);
+					alert(thrownError);
+					return false;
+				},
+				fail : function(e,
+								data) {
+					window.onbeforeunload = null;
+					return false;
+				},
+				success : function(
+					data,
+					status,
+					jqXHR) {
+					console.log("data.submit success...");
+					console.log("jqXHR.responseText--->"
+						+ jqXHR.responseText);
+
+					var _media_url = getValueFromXMLTag(
+						jqXHR.responseText, 'Key');
+					var _media_extension = _media_url.split(".");
+					_media_extension = _media_extension[_media_extension.length - 1];
+					var media_type = 'image/'
+						+ _media_extension.toLowerCase(); // only
+					// image
+					// allowed
+					// for
+					// profile
+					// pic...
+					console.log('media_type::' + media_type);
+					var s3url = s3path + s3file;
+					var params = [ {
+						tag : 's3url',
+						value : s3url
+					}, {
+						tag : 'is_server_image',
+						value : '0'
+					}, {
+						tag : 'content_type',
+						value : media_type
+					}, {
+						tag : 's3path',
+						value : s3path
+					}, {
+						tag : 's3file_name',
+						value : s3file
+					}, {
+						tag : 'device_type',
+						value : 'web'
+					}, {
+						tag : 'device_id',
+						value : ''
+					}, {
+						tag : 'event_id',
+						value : ''
+					}, {
+						tag : 'media_id',
+						value : media_id
+					}, {
+						tag : 'user_id',
+						value : Account.id
+					}, {
+						tag : 'is_profile_pic',
+						value : '1'
+					}, {
+						tag : 'location',
+						value : ''
+					} ];
+					ajaxRequest(
+						'addmediaevent',
+						params,
+						function(ret_xml) {
+							jsuccess('Your profile picture updated');
+							setTimeout(
+								function() {
+									var params = [ {
+										tag : 'user_id',
+										value : Account.id
+									} ];
+									ajaxRequest(
+										'getuserdetails',
+										params,
+										function(
+											xml_response) {
+											//
+											console
+												.log(xml_response);
+											//
+											if (getValueFromXMLTag(
+													xml_response,
+													'status') == 'Success') {
+												var useremail = getValueFromXMLTag(
+													xml_response,
+													'email');
+												var username = getValueFromXMLTag(
+													xml_response,
+													'username');
+												$(
+													"input[name=username]")
+													.val(
+														username);
+												var userprofile = getValueFromXMLTag(
+													xml_response,
+													'profile');
+												userprofile = removeCdataCorrectLink(userprofile);
+												// update
+												// image
+												$(
+													"#setting-userprofile img, img#profile_picture")
+													.attr(
+														'src',
+														userprofile);
+												var alternate_email = getValueFromXMLTag(
+													xml_response,
+													'alternate_email');
+												var gender = getValueFromXMLTag(
+													xml_response,
+													'gender');
+
+												var dob = getValueFromXMLTag(
+													xml_response,
+													'dob');
+												var username_length = username.length;
+												if (username_length > 10) {
+													username = username
+															.substring(
+																0,
+																7)
+														+ '...';
+												}
+												$("header")
+													.find(
+														".pro-name")
+													.html(
+														username);
+												$(
+													"#setting-username")
+													.html(
+														getValueFromXMLTag(
+															xml_response,
+															'username'));
+												if (userprofile != '') {
+													$(
+														"header")
+														.find(
+															"#profile_picture")
+														.attr(
+															'src',
+															userprofile);
+													$(
+														"#setting-userprofile img")
+														.attr(
+															'src',
+															userprofile);
+												}
+												$(
+													"input[name=account_email]")
+													.val(
+														useremail);
+												$(
+													"input[name=account_alternate_email]")
+													.val(
+														alternate_email);
+												$(
+													"input[name=account_dob]")
+													.val(
+														dob);
+
+												if (gender == 'male')
+													$(
+														"#gender-male")
+														.attr(
+															"checked",
+															"checked");
+												else {
+													if (gender == 'female')
+														$(
+															"#gender-female")
+															.attr(
+																"checked",
+																"checked");
+												}
+
+												$(
+													"input[name=account_email]")
+													.val(
+														useremail);
+											} else
+												jerror(getValueFromXMLTag(
+													xml_response,
+													'messsage'));
+										});
+								}, 2000);
+						});
+				},
+				done : function(
+					event, data) {
+				}
+			});
+		});
+	}
 }
 var MediaUpload = new S3UploadInstance();
 MediaUpload.doomMediaUploadForm('.media-upload');
 var DmcaUpload = new S3UploadInstance();
 DmcaUpload.doomDmcaUploadForm('.dmcaFileUploadForm');
+var ProfileUpload = new S3UploadInstance();
+ProfileUpload.doomProfileUploadForm('.frm-profile-pic');
 
 var uploadFilesInstance = []; // Used for store all file name for uploading
 var currentUploadFileCount = 0; // Count for all current files selected for
