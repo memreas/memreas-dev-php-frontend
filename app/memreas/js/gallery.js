@@ -108,20 +108,10 @@ function getUserDetail() {
 			$(".morepage-account-sellerbalance").html(
 				"$" + userObject.seller_balance);
 
-			if (ENABLE_SELL_MEDIA) {
-			    // Seller able to sell media
-			    if (userObject.type != 'Free user'
-				    && ((userObject.type).indexOf('seller') >= 0)) {
-				$(".share-register-seller").remove();
-			    }
-			    var checkSellMedia = shareCheckSellMedia();
-			    if (checkSellMedia) {
-				$(".share-media-price .italic-description")
-					.html(
-						'Check this option if you want to sell this event');
-				$("#lbl-sellmedia").show();
-			    } else
-				$("#lbl-sellmedia").remove();
+			var user_plan = getValueFromXMLTag(xml_response, 'plan');
+
+			if (user_plan == 'FREE') {
+				$(".sell-media-section").hide();
 			}
 		    }// else
 		    // jerror(getValueFromXMLTag(xml_response, 'messsage'));

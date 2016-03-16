@@ -288,23 +288,25 @@ function subscription_step4() {
 									success : function(response) {
 										response = JSON.parse(response.data);
 										if (response.status == 'Success') {
-											account_stripe = response.account.customer;
-											if (account_stripe != null
-													&& account_stripe.exist == 1) {
-												var total_subscriptions = account_stripe.info.subscriptions.total_count;
-												if (total_subscriptions > 0) {
-													var active_subscriptions = account_stripe.info.subscriptions.data;
-													for (i = 0; i < total_subscriptions; i++) {
-														var plan = active_subscriptions[i].plan;
-														var html_element = '<p>'
-																+ plan.name
-																+ '</p>';
-														jAccountPlans
-																.append(html_element);
-													}
+											var account = response.buyer_account;
+											if (typeof account != 'undefined') {
+												var subscription = account.subscription;
+												if (typeof subscription != 'undefined') {
+													var plan_id = subscription.plan;
+													var plan_name = subscription.plan_description;
+													var html_element = '<p>'
+														+ plan_name
+														+ '</p>';
+													jAccountPlans
+														.append(html_element);
+													$("input#plan-" + plan_id).attr("checked", "checked");
+													planChange(plan_id);
 													check_user_subscription = 1;
-												} else
+												} else {
 													setUserDefaultPlan();
+													$("input#plan-PLAN_A_2GB_MONTHLY").attr("checked", "checked");
+													planChange('PLAN_A_2GB_MONTHLY');
+												}
 											} else
 												jAccountPlans
 														.html('Your account has not existed or deleted before on Stripe');
@@ -376,7 +378,7 @@ function getPlans() {
 						}
 						// Get customer info based on this account
 						var obj = new Object();
-						obj.userid = $("input[name=user_id]").val();
+						obj.user_id = Account.id;
 						obj.memreascookie = getCookie("memreascookie");
 						obj.x_memreas_chameleon = getCookie("x_memreas_chameleon");
 						var data_obj = JSON.stringify(obj, null, '\t');
@@ -396,22 +398,19 @@ function getPlans() {
 									success : function(response) {
 										response = JSON.parse(response.data);
 										if (response.status == 'Success') {
-											account_stripe = response.account.customer;
-											if (account_stripe != null
-													&& account_stripe.exist == 1) {
-												var total_subscriptions = account_stripe.info.subscriptions.total_count;
-												if (total_subscriptions > 0) {
-													var active_subscriptions = account_stripe.info.subscriptions.data;
-													for (i = 0; i < total_subscriptions; i++) {
-														var plan = active_subscriptions[i].plan;
-														var html_element = '<p>'
-																+ plan.name
-																+ '</p>';
-														jAccountPlans
-																.append(html_element);
-														$("input#plan-" + plan.id).attr("checked", "checked");
-														planChange(plan.id);
-													}
+											var account = response.buyer_account;
+											if (typeof account != 'undefined') {
+												var subscription = account.subscription;
+												if (typeof subscription != 'undefined') {
+													var plan_id = subscription.plan;
+													var plan_name = subscription.plan_description;
+													var html_element = '<p>'
+															+ plan_name
+															+ '</p>';
+													jAccountPlans
+															.append(html_element);
+													$("input#plan-" + plan_id).attr("checked", "checked");
+													planChange(plan_id);
 													check_user_subscription = 1;
 												} else {
 													setUserDefaultPlan();
