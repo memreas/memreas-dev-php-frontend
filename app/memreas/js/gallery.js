@@ -14,111 +14,6 @@ var notificationHeaderObject = new Object(); // This variable stored header
 var blueIMPGallery = new Array();
 var blueIMPGalleryData = '';
 var gallery;
-function getUserDetail() {
-    if ($("input[name=user_id]").val() == "") {
-	document.location.href = "/index";
-    } else {
-	console.log("About to get UserDetails...");
-	var params = [ {
-	    tag : 'user_id',
-	    value : $("input[name=user_id]").val()
-	} ];
-	ajaxRequest(
-		'getuserdetails',
-		params,
-		function(xml_response) {
-		    // console.log("Inside get user detail response--->"+
-		    // xml_response);
-		    // debugger;
-		    if (getValueFromXMLTag(xml_response, 'status') == 'Success') {
-			var useremail = getValueFromXMLTag(xml_response,
-				'email');
-			var username = getValueFromXMLTag(xml_response,
-				'username');
-			$("input[name=username]").val(username);
-			var userprofile = getValueFromXMLTag(xml_response,
-				'profile');
-			userprofile = removeCdataCorrectLink(userprofile);
-			var alternate_email = getValueFromXMLTag(xml_response,
-				'alternate_email');
-			var gender = getValueFromXMLTag(xml_response, 'gender');
-			var dob = getValueFromXMLTag(xml_response, 'dob');
-			var username_length = username.length;
-			if (username_length > 10) {
-			    username = username.substring(0, 7) + '...';
-			}
-			$("header").find(".pro-name").html(username);
-			$("#setting-username").html(
-				getValueFromXMLTag(xml_response, 'username'));
-			if (userprofile != '') {
-			    $("header").find("#profile_picture").attr('src',
-				    userprofile);
-			    $("#setting-userprofile img").attr('src',
-				    userprofile);
-			}
-			$("input[name=account_email]").val(useremail);
-			$("input[name=account_alternate_email]").val(
-				alternate_email);
-			$("input[name=account_dob]").val(dob);
-
-			if (gender == 'male')
-			    $("#gender-male").attr("checked", "checked");
-			else {
-			    if (gender == 'female')
-				$("#gender-female").attr("checked", "checked");
-			}
-
-			$("input[name=account_email]").val(useremail);
-			var plan = getValueFromXMLTag(xml_response, 'plan');
-
-			// Assign user detail into local object
-			userObject.email = useremail;
-			userObject.username = username;
-			userObject.userprofile = userprofile;
-			userObject.alternate_email = alternate_email;
-			userObject.gender = gender;
-			userObject.dob = dob;
-			userObject.plan = plan;
-			userObject.plan_name = getValueFromXMLTag(xml_response,
-				'plan_name');
-			userObject.type = getValueFromXMLTag(xml_response,
-				'account_type');
-
-			$(".share-account-type").html(userObject.type);
-			$(".share-account-plan").html(userObject.plan);
-
-			if (userObject.plan != 'FREE')
-			    $(".share-register-plan").remove();
-
-			if ((userObject.type).indexOf('seller') >= 0
-				|| (userObject.type).indexOf('buyer') >= 0) {
-			    userObject.buyer_balance = getValueFromXMLTag(
-				    xml_response, 'buyer_balance');
-			    userObject.seller_balance = getValueFromXMLTag(
-				    xml_response, 'seller_balance');
-			} else {
-			    userObject.buyer_balance = 0;
-			    userObject.seller_balance = 0;
-			}
-
-			// Update user detail on share page
-			$(".morepage-account-type").html(userObject.type);
-			$(".morepage-account-buyerbalance").html(
-				"$" + userObject.buyer_balance);
-			$(".morepage-account-sellerbalance").html(
-				"$" + userObject.seller_balance);
-
-			var user_plan = getValueFromXMLTag(xml_response, 'plan');
-
-			if (user_plan == 'FREE') {
-				$(".sell-media-section").hide();
-			}
-		    }// else
-		    // jerror(getValueFromXMLTag(xml_response, 'messsage'));
-
-		}, 'undefined', true);
-    }
-}
 
 $(document).ready(
 	function() {
@@ -329,7 +224,6 @@ jQuery.fetch_server_media = function() {
 
 		    setTimeout(function() {
 			// Fetch user's notification header
-			getUserDetail();
 			getUserNotificationsHeader();
 		    }, GALLERYDELAYTIME);
 		    setTimeout(function() {
@@ -355,7 +249,6 @@ jQuery.fetch_server_media = function() {
 		    $("#gallery #tab-content").find(".hideCls").hide();
 		    $("#gallery #tab-content").find(".hideCls:eq(0)").show();
 		    // Fetch user's notification header
-		    getUserDetail();
 		    getUserNotificationsHeader();
 		}
 		return true;

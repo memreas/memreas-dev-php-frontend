@@ -28,8 +28,124 @@ var AppSystem = function() {
     this.removeStripeLoading = function() {
         $('.stripe-payment').fadeOut(1000);
     }
+
+    //Put preload functions
+    this.putPreloadApplicationItems = function() {
+        this.getUserDetail();
+    }
+
+    /*
+    * Get user detail
+    *
+    * Fetch current logged user detail and fill into site section
+    * */
+    this.getUserDetail = function() {
+        console.log("About to get UserDetails...");
+        var params = [ {
+            tag : 'user_id',
+            value : $("input[name=user_id]").val(),
+        } ];
+
+        //Fill in site account information
+        ajaxRequest('getuserdetails', params,
+            function(xml_response) {
+                if (getValueFromXMLTag(xml_response, 'status') == 'Success') {
+                    var useremail = getValueFromXMLTag(xml_response, 'email');
+                    var username = getValueFromXMLTag(xml_response, 'username');
+
+                    var userprofile = getValueFromXMLTag(xml_response, 'profile');
+                    userprofile = removeCdataCorrectLink(userprofile);
+
+                    var alternate_email = getValueFromXMLTag(xml_response, 'alternate_email');
+                    var gender = getValueFromXMLTag(xml_response, 'gender');
+                    var dob = getValueFromXMLTag(xml_response, 'dob');
+                    var username_length = username.length;
+
+                    if (username_length > 10) {
+                        username = username.substring(0, 7) + '...';
+                    }
+
+                    $("header").find(".pro-name").html(username);
+                    $("#setting-username").html(getValueFromXMLTag(xml_response, 'username'));
+
+                    if (userprofile != '') {
+                        $("header").find("#profile_picture").attr('src', userprofile);
+                        $("#setting-userprofile img").attr('src', userprofile);
+                    }
+
+                    $("input[name=account_email]").val(useremail);
+                    $("input[name=account_alternate_email]").val(alternate_email);
+                    $("input[name=account_dob]").val(dob);
+
+                    if (gender == 'male') {
+                        $("#gender-male").attr("checked", "checked");
+                    }
+                    else {
+                        if (gender == 'female') {
+                            $("#gender-female").attr("checked", "checked");
+                        }
+                    }
+
+                    var account_type = getValueFromXMLTag(xml_response, 'account_type');
+                    $(".share-account-type").html(account_type);
+
+                    $("input[name=account_email]").val(useremail);
+                }
+            },
+        'undefined', true);
+
+        //Checking for share page, account sale event
+        var obj = new Object();
+        obj.user_id = $("input[name=user_id]").val();
+        obj.memreascookie = getCookie("memreascookie");
+        obj.x_memreas_chameleon = getCookie("x_memreas_chameleon");
+        var data_obj = JSON.stringify(obj, null, '\t');
+        var data = '{"action": "getCustomerInfo", '
+            + '"type":"jsonp", ' + '"json": ' + data_obj
+            + '}';
+        var stripeCustomerUrl = $("input[name=stripe_url]").val() + 'stripe_getCustomerInfo';
+        $.ajax({
+            url : stripeCustomerUrl,
+            type : 'POST',
+            dataType : 'jsonp',
+            data : 'json=' + data,
+            timeout: 30000,
+            success : function(response) {
+                response = JSON.parse(response.data);
+                if (response.status == 'Success') {
+                    var account = response.buyer_account;
+                    if (typeof account != 'undefined') {
+                        var subscription = account.subscription;
+                        if (typeof subscription != 'undefined') {
+                            var plan_id = subscription.plan;
+                            if (plan_id == 'PLAN_A_2GB_MONTHLY') {
+                                $(".sell-media-section").hide();
+                            }
+                            else {
+                                $(".share-account-plan").html(subscription.plan_description);
+                            }
+                        } else {
+                            $(".sell-media-section").hide();
+                        }
+                    } else {
+                        $(".sell-media-section").hide();
+                    }
+                } else {
+                    $(".sell-media-section").hide();
+                }
+            },
+            error : function(response, textStatus, errorThrown) {
+                if(textStatus === 'timeout')
+                {
+                    jerror('request timeout - please try again later');
+                    $('#loadingpopup').hide();
+                }
+            }
+        });
+    }
 }
 var AppSystem = new AppSystem();
+AppSystem.putPreloadApplicationItems();
 
 /*
  * Handle system log
