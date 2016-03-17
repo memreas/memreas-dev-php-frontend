@@ -7,17 +7,19 @@
 namespace Application\Model;
 
 class MemreasConstants {
-	const MEMREAS_FE = "https://fe.memreas.com";
-	const MEMREAS_WS = "https://memreasdev-wsj.memreas.com";
-	const MEMREAS_PAY = "https://memreasdev-wsj.memreas.com/index?action=";
-	//const MEMREAS_PAY = "https://memreasdev-pay.memreas.com";
+	const MEMREAS_FE = "https://pfe.memreas.com";
+	const MEMREAS_WS = "https://memreasprod-ws.memreas.com";
+	const MEMREAS_PAY = "https://memreasprod-ws.memreas.com/index?action=";
 	const MEMREAS_ADS = false;
 	const MEMREAS_SELL_MEDIA = 1; // Enable or Disable selling media
-	const CLOUDFRONT_DOWNLOAD_HOST = 'https://d3sisat5gdssl6.cloudfront.net/';
-	const CLOUDFRONT_HLS_DOWNLOAD_HOST = 'https://d2b3944zpv2o6x.cloudfront.net/';
-	const S3_APPKEY = 'AKIAIXDH3Q23AP4KPZRA';
-	const S3_APPSEC = 'TM+p8s9hlJwnKECCEKSVVhEOBjVhTWDG4ijIhJdk';
-	const S3BUCKET = "memreasdevsec";
+	const S3_APPKEY = 'AKIAISDIQFVJMWFYXCIA';
+	const S3_APPSEC = 'eM5HG4MbYhkW1Jz1RWIdMapo2s+DbB+KnkhzTt91';
+	const S3BUCKET = "memreasprodsec";
+	const S3HLSBUCKET = "memreasprodhlssec";
+	const CLOUDFRONT_DOWNLOAD_HOST = 'https://d3j7vnip9qhisx.cloudfront.net/';
+	const CLOUDFRONT_HLS_DOWNLOAD_HOST = 'https://d1fhgtf97i7jlq.cloudfront.net/';
+	
+		
 	const LISTNOTIFICATIONSPOLLTIME = 240000; // 5 minutes
 	const GALLERYDELAYTIME = 500; // 500 ms
 	                              
