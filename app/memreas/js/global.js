@@ -434,6 +434,23 @@ function getCookie(cname) {
     return "";
 }
 
+function setCookie(cname, cvalue) {
+    document.cookie = cname + "=" + cvalue + ";";
+}
+
+function isJson(str) {
+    try {
+        JSON.parse(str);
+    } catch (e) {
+        return false;
+    }
+    return true;
+}
+
+function setX_MEMREAS_CHAMELEON(x_memreas_chameleon) {
+    document.cookie = 'x_memreas_chameleon=' + x_memreas_chameleon + ";";
+} 
+
 /* Other */
 addLoading = function(element, typeLoading, additionClass) {
     var jElement = $(element);

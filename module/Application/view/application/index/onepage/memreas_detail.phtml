@@ -102,7 +102,7 @@
                                 <li class="memreas-detail-likecount"><a href="javascript:likeMemreasMedia();" title="Like media"><img src="/memreas/img/like.png" alt=""></a><span>..</span></li>
                                 <li class="memreas-detail-commentcount"><a href="javascript:showPopupComment();" title="Comment"><img src="/memreas/img/comment.png" alt=""></a><span>..</span></li>
                                 <li><a href="javascript:voiceComment();" title="Voice comment"><img src="/memreas/img/sound.png" alt=""></a></li>
-                                <li><a href="javascript:reportMedia(false);" title="Report media"><img src="/memreas/img/report.png" alt=""></a></li>
+                                <li><a href="javascript:reportMedia(false);" title="Report media" id="reportMediaform"><img src="/memreas/img/report.png" alt=""></a></li>
                             </ul>
                         </div>
                     </div>
@@ -168,12 +168,58 @@
                     <a href="javascript:voiceComment();" class="voice-icon" style="left: 320px;"></a>
                 </div>
                 <a class="black_btn_skin f-left" href="javascript:memreasAddComment();">ok</a> <a class="black_btn_skin f-right" href="javascript:disablePopup('popupcomment');">cancel</a>
-                <span id="checkIdRuntime"></span>
+                
             </div>
             <div id="bgpopupcomment" class="backgroundPopup"></div>
         </div>
     </div>
     <!-- Ads Section -->
+
+    <div id="popupReportMedia" class="popups">
+        <a id="popupReportMediaClose" onClick="disablePopup('popupReportMedia');" class='popupClose'>x</a>
+        <h2>Report Media</h2>
+        <p>&nbsp;</p>
+        
+         
+        
+        
+        <ul class=" scrollpopup give-message-form">
+            <li>
+               <input id="DMCAViolation" type="radio" class="radio-bx" name="report" value="0" style="width: 18px; height: 18px; position: relative;top: 4px;">
+                <label for="DMCA Violation" class="radio-label" style="display: inline-block; color:#fff;  font-size: 15px;">DMCA Violation</label>
+                
+              <input id="offensiveViolation" type="radio" class="radio-bx" name="report" value="0" style="width: 18px; height: 18px; position: relative;top: 4px;">
+                <label for="DMCA Violation" class="radio-label" style="display: inline-block; color:#fff;  font-size: 15px;">Offensive Content</label> 
+                
+              <form enctype="multipart/form-data" action="" method="post" name="" class="HideReport" id="reportform" style="background: none; border-bottom: none;">
+                    <label for="email">Copy Right Owner Name</label>
+                    <input name="copyrightowner" id="copyrightowner" type="text" placeholder="Your Name" /> 
+                    <label for="email">Address</label>
+                    <input name="addressV" id="addressV" type="text" placeholder="Your Addresss" /> 
+                    <label for="email">Email</label>
+                    <input name="email" id="emailvoilcation" type="email" placeholder="Your Email" /> 
+                     <label for="email">Media Id</label>
+                     <input name="mediaIdreport" id="mediaIdreport" type="text" placeholder="Media Id" readonly /> 
+                    
+                    
+                    
+                    <input id="term_condition" class="css-checkbox" type="checkbox">
+                    <label for="term_condition" id="term_condition_label" name="demo_lbl_5" class="css-label margin-none" style="text-align: left; margin-left: 0px !important; width: 100%; height:55px; ">notice to reporter - in the event of a counter claim we will provide the claimant your email address and expect any further legal matters to be concluded by the reporter (you) and the counter-claimant.</label>
+                    
+                <br />  <br />
+                <div style="clear: both;"></div>
+
+
+                </form> 
+                
+            </li> 
+        </ul>
+            <a class="black_btn_skin f-left" href="javascript:;" id="reportVolForm" >OK</a> <a class="black_btn_skin f-left" href="javascript:disablePopup('popupReportMedia');">close</a>
+       
+        
+    </div>
+
+
     <?php include('right_advertising.phtml'); ?>
     <!-- End Ads Section -->
 

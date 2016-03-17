@@ -8,9 +8,9 @@
 function popupBuyMedia(event_id, event_price, event_name) {
 	clearBuyMediaPopup();
 	$(".popup-event-name").html(event_name);
-	$(".popup-buymedia-credit").html("$" + userObject.buyer_balance);
 	$(".popup-buymedia-price").html("$" + event_price);
 	$("#accept-buymedia").attr("onclick", "buyMedia('" + event_id + "');");
+	Account.reloadAccountCredit('.popup-buymedia-credit');
 	popup("popupBuyMedia");
 }
 
@@ -34,12 +34,6 @@ function buyMedia(event_id) {
 	var buymedia_password_confirm = $("#buymedia_confirm_password").val();
 	if (buymedia_password_confirm == '') {
 		jerror("Please confirm password");
-		return false;
-	}
-
-	buymedia_password_confirm = md5(buymedia_password_confirm);
-	if (buymedia_password_confirm != userObject.password) {
-		jerror("Confirm password is incorrect");
 		return false;
 	}
 
@@ -70,13 +64,17 @@ function buyMedia(event_id) {
 
 			var event_owner = getValueFromXMLTag(response, 'event_owner');
 			var event_id = getValueFromXMLTag(response, 'event_id');
+			var event_name = getValueFromXMLTag(response, 'name');
 
 			var params = new Object;
-			params.user_id = LOGGED_USER_ID;
+			params.user_id = Account.id;
+			params.password = buymedia_password_confirm;
 			params.amount = price.toString();
 			params.seller_id = event_owner;
 			params.event_id = event_id;
+			params.event_name = event_name;
 			params.memreascookie = getCookie("memreascookie");
+			params.x_memreas_chameleon = getCookie("x_memreas_chameleon");
 			params.duration_from = duration_from;
 			params.duration_to = duration_to;
 
@@ -94,9 +92,15 @@ function buyMedia(event_id) {
 						dataType : 'jsonp',
 						data : 'json=' + data,
 						success : function(response) {
+							response = JSON.parse(response.data);
 							if (response.status == 'Success') {
+							    	//alert("setX_MEMREAS_CHAMELEON(response.x_memreas_chameleon)-->" + response.x_memreas_chameleon);
+							    	setX_MEMREAS_CHAMELEON(response.x_memreas_chameleon);
 								jsuccess(response.message);
+								var transaction_id = response.transaction_id;
+								$("#buymedia-confirmation-trans-id").html(transaction_id);
 								disablePopup("popupBuyMedia");
+								popup("popupBuyMediaConfirmation");
 								var current_event = response.event_id;
 
 								// Checking for handling public tab or friend
@@ -123,6 +127,7 @@ function buyMedia(event_id) {
 								jElement.attr('onclick', divaTagClick);
 								jElement.find(".sell-event-overlay").remove();
 								jElement.find(".sell-event-buyme").remove();
+								fetchpubsMemreas();
 							} else
 								jerror(response.message);
 							$('.stripe-payment').fadeOut(500);
@@ -150,6 +155,7 @@ function popupBuyCredit() {
 	var obj = new Object();
 	obj.userid = LOGGED_USER_ID;
 	obj.memreascookie = getCookie("memreascookie");
+	obj.x_memreas_chameleon = getCookie("x_memreas_chameleon");
 	var json_listCard = JSON.stringify(obj, null, '\t');
 	var data = '{"action": "listcards", ' + '"type":"jsonp", ' + '"json": '
 			+ json_listCard + '}';
@@ -162,6 +168,9 @@ function popupBuyCredit() {
 				data : 'json=' + data,
 				success : function(response) {
 					if (response.status == 'Success') {
+					    	alert("setX_MEMREAS_CHAMELEON(response.x_memreas_chameleon)-->" + response.x_memreas_chameleon);
+					    	setX_MEMREAS_CHAMELEON(response.x_memreas_chameleon);
+						
 						var cards = response.payment_methods;
 						var number_of_cards = response.NumRows;
 						if (number_of_cards > 0) {
@@ -222,6 +231,7 @@ function popupCreditAddCard() {
 		var obj = new Object();
 		obj.user_id = $('input[name=user_id]').val();
 		obj.memreascookie = getCookie("memreascookie");
+		obj.x_memreas_chameleon = getCookie("x_memreas_chameleon");
 		obj.first_name = jAddCard.find("#addcard_fname").val();
 		obj.last_name = jAddCard.find("#addcard_lname").val();
 		obj.credit_card_type = jAddCard.find("#addcard_cctype").val();
@@ -248,6 +258,9 @@ function popupCreditAddCard() {
 					dataType : 'jsonp',
 					data : 'json=' + data,
 					success : function(response) {
+					    	alert("setX_MEMREAS_CHAMELEON(response.x_memreas_chameleon)-->" + response.x_memreas_chameleon);
+					    	setX_MEMREAS_CHAMELEON(response.x_memreas_chameleon);
+						
 						if (response.status == 'Success') {
 							jsuccess("Your card added successfully");
 							disablePopup('popupCreditAddCard');
@@ -296,6 +309,7 @@ function acceptBuyCredit() {
 	var params = new Object;
 	params.userid = LOGGED_USER_ID;
 	params.memreascookie = getCookie("memreascookie");
+	params.x_memreas_chameleon = getCookie("x_memreas_chameleon");
 	params.stripe_card_reference_id = buycredit_card;
 	params.amount = buycredit_amount;
 	var params_json = JSON.stringify(params, null, '\t');
@@ -310,6 +324,9 @@ function acceptBuyCredit() {
 		dataType : 'jsonp',
 		data : 'json=' + data,
 		success : function(response) {
+		    	alert("setX_MEMREAS_CHAMELEON(response.x_memreas_chameleon)-->" + response.x_memreas_chameleon);
+		    	setX_MEMREAS_CHAMELEON(response.x_memreas_chameleon);
+
 			if (response.status == 'Success') {
 				jsuccess(response.message);
 				$(".popup-buymedia-credit")
@@ -317,42 +334,6 @@ function acceptBuyCredit() {
 				popup("popupBuyMedia");
 			} else
 				jerror(response.message);
-			$('.stripe-payment').fadeOut(500);
-		}
-	});
-}
-
-/*
- * Reload account balance
- */
-function popupReloadAccountBalance() {
-	var jTargetElement = $(".popup-buymedia-credit");
-	jTargetElement.html("...");
-
-	var params = new Object;
-	params.user_id = LOGGED_USER_ID;
-	params.memreascookie = getCookie("memreascookie");
-	var params_json = JSON.stringify(params, null, '\t');
-	var data = '{"action": "buy_credit", ' + '"type":"jsonp", ' + '"json": '
-			+ params_json + '}';
-
-	var stripeActionUrl = $("input[name=stripe_url]").val()
-			+ 'stripe_getUserBalance';
-	$('.stripe-payment').fadeIn(1000);
-	$.ajax({
-		url : stripeActionUrl,
-		type : 'POST',
-		dataType : 'jsonp',
-		data : 'json=' + data,
-		success : function(response) {
-			console.log(response);
-			if (response.status == 'Success') {
-				userObject.buyer_balance = response.buyer_balance;
-				jTargetElement.html("$" + response.buyer_balance);
-			} else {
-				jerror(response.message);
-				jTargetElement.html("$" + userObject.buyer_balance);
-			}
 			$('.stripe-payment').fadeOut(500);
 		}
 	});

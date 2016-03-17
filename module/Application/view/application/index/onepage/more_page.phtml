@@ -33,6 +33,7 @@ use Application\Model\MemreasConstants;
 						media</a></li>
                 <?php endif ?>
 				<li><a href="#" title="tab5-more" class="help-tab">help</a></li>
+                                <li><a href="#" title="dcma-more" class="dmca-tab">DMCA</a></li>
 			</ul>
 
 			<div id="tab-content-more">
@@ -46,7 +47,7 @@ use Application\Model\MemreasConstants;
 						<img src="/memreas/img/profile-pic.jpg" alt="">
 					</figure>
 					<div class="pro-names2" id="setting-username">User Name</div>
-					<form name="frm_profile_pic" id="frm-profile-pic"
+					<form name="frm_profile_pic" class="frm-profile-pic" method="post"
 						enctype="multipart/form-data"
 						action="https://<?php echo MemreasConstants::S3BUCKET; ?>.s3.amazonaws.com/">
 
@@ -64,7 +65,7 @@ use Application\Model\MemreasConstants;
 						<input type="file" name="file" id="file" style="opacity: 0; -moz-opacity: 0; -webkit-opacity: 0; filter: alpha(opacity = 0); margin: 0; width: 1px; height: 1px;">
 					</form>
 					<a class="black_btn_skin f-center change-profile-btn"
-						href="javascript:;">Change Picture</a>
+						href="javascript:;" onclick="$('.frm-profile-pic').find('input[type=file]').click();">Change Picture</a>
 					<div class="clear"></div>
 					<div class="akordeon" id="buttons-moretab"
 						style="margin-top: 10px;">
@@ -135,8 +136,16 @@ use Application\Model\MemreasConstants;
 				<div id="tab5-more" class="hideCls parent-global-akordeon">
 					<div class="akordeon" id="buttons5-moretab">
         <?php include ('more_tabs/help.phtml'); ?>
+                                             <?php //include ('more_tabs/dmca.phtml'); ?>
       </div>
 				</div>
+                            
+                               <div id="dcma-more" class="hideCls">
+			<div class="akordeon" id="dmca-moretab">		
+            <?php include ('more_tabs/dmca.phtml'); ?>
+                        </div>
+	</div> 
+                            
 				<div id="tab-friends" class="hideCls">
 					<div class="akordeon" id="buttons-friends-moretab">
         <?php include ('more_tabs/friends.phtml'); ?>
@@ -171,6 +180,11 @@ use Application\Model\MemreasConstants;
 				</div>
     <?php endif ?>
 </div>
+                    
+                
+                    
+                    
+                    
 		</div>
 	</div>
 	<!-- Ads Section -->

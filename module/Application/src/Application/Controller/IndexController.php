@@ -7,17 +7,11 @@
  */
 namespace Application\Controller;
 
+use \Exception;
+use Application\memreas\Mlog;
+use Application\Model\MemreasConstants;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use Zend\ViewModel\JsonModel;
-use Application\memreas\Mlog;
-use Application\Model;
-use Application\Model\UserTable;
-use Application\Form;
-use Zend\Mail\Message;
-use Application\TwitterOAuth\TwitterOAuth;
-use \Exception;
-use Application\Model\MemreasConstants;
 
 class IndexController extends AbstractActionController {
 	protected $user_id;
@@ -26,6 +20,17 @@ class IndexController extends AbstractActionController {
 	protected $session;
 	protected $sid;
 	protected $ipAddress;
+	public function is_json($string,$return_data = false) {
+      	$data = json_decode($string);
+      	$result = (json_last_error() == JSON_ERROR_NONE) ? ($return_data ? $data : TRUE) : FALSE;
+      	if ($result) {
+      		Mlog::addone(__CLASS__.__METHOD__.__LINE.'isJSON result', 'true');
+      	} else {
+      		Mlog::addone(__CLASS__.__METHOD__.__LINE.'isJSON result', 'false');
+      	}
+    	return $result;
+	}
+
 	public function fetchXML($action, $xml) {
 		$this->memreas_session ();
 		/**
@@ -33,11 +38,13 @@ class IndexController extends AbstractActionController {
 		 */
 		
 		/*
-		 * If sid is available and missing inject it...
+		 * If memreascookie is available and missing inject it...
 		 */
 		$data = simplexml_load_string ( $xml );
 		if (empty ( $data->memreascookie )) {
 			$data->memreascookie = $_COOKIE ['memreascookie'];
+			//x_memreas_chameleon is pass through ... 
+			//$data->x_memreas_chameleon = $_COOKIE ['x_memreas_chameleon'];
 			$data->addChild ( 'clientIPAddress', $this->fetchUserIPAddress () );
 			$xml = $data->asXML ();
 			//error_log ( '$xml-->' . $xml );
@@ -96,15 +103,27 @@ class IndexController extends AbstractActionController {
 			// End buffering and flush
 			ob_end_flush ();
 			exit ();
+		} else if ($actionname == "mobile") {
+			$path = $this->security ( "application/index/mobile-registration.phtml" );
+			$view = new ViewModel ( array (
+					'data' => $data 
+			) );
+			$view->setTemplate ( $path ); // path to phtml file under view
+			                              // folder
+			                              
+			// End buffering and flush
+			ob_end_clean ();
+			
+			return $view;
 		} else {
 			
 			$this->memreas_session ();
 			//error_log ( "Enter FE indexAction" . PHP_EOL );
 			// Checking headers for cookie info
-			$headers = apache_request_headers ();
-			foreach ( $headers as $header => $value ) {
-				error_log ( "FE header: $header :: value: $value" . PHP_EOL );
-			}
+			//$headers = apache_request_headers ();
+			//foreach ( $headers as $header => $value ) {
+			//	error_log ( "FE header: $header :: value: $value" . PHP_EOL );
+			//}
 			// End Checking headers for cookie info
 			
 			$path = $this->security ( "application/index/index.phtml" );
@@ -135,8 +154,8 @@ class IndexController extends AbstractActionController {
 			$callback = $_REQUEST ['callback'];
 			$json = $_REQUEST ['json'];
 			$message_data = json_decode ( $json, true );
-			// error_log('$callback--->'.$callback.PHP_EOL);
-			// error_log('$json--->'.$json.PHP_EOL);
+			//error_log('$callback--->'.$callback.PHP_EOL);
+			//error_log('$json--->'.$json.PHP_EOL);
 			
 			// Setup the URL and action
 			$ws_action = $message_data ['ws_action'];
@@ -146,7 +165,7 @@ class IndexController extends AbstractActionController {
 			// Guzzle the Web Service
 			//Mlog::addone ( '$this->fetchXML ( $ws_action, $xml )', "this->fetchXML ( $ws_action, $xml )" );
 			$result = $this->fetchXML ( $ws_action, $xml );
-			Mlog::addone ( '$result--->', $result );
+			//Mlog::addone ( '$result--->', $result );
 			$json = json_encode ( $result );
 			
 			// Handle session
@@ -157,13 +176,9 @@ class IndexController extends AbstractActionController {
 			$callback_json = $callback . "(" . $json . ")";
 			$output = ob_get_clean ();
 			header ( "Content-type: plain/text" );
+			//Mlog::addone ( '$callback_json--->', $callback_json);
 			echo $callback_json;
 			
-			// Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__ .
-			// '$callback_json', $callback_json );
-			
-			//Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__, 'exit' );
-			// Need to exit here to avoid ZF2 framework view.
 			exit ();
 		} else {
 			// $path = $this->security ( "application/index/sample-ajax.phtml"
@@ -175,15 +190,18 @@ class IndexController extends AbstractActionController {
 		return $view;
 	}
 	private function handleWSSession($action, $result) {
+		$cm = __CLASS__ . __METHOD__;
 		if ($action == 'login') {
 			/**
 			 * Handle login
 			 */
+			//Mlog::addone ( $cm . __LINE__ ,'enter login fe result...' );
 			$this->writeJsConstants ();
 			$data = simplexml_load_string ( trim ( $result ) );
 			$_SESSION ['user_id'] = ( string ) $data->loginresponse->user_id;
 			$_SESSION ['username'] = ( string ) $data->loginresponse->username;
 			$this->memreas_session ();
+			Mlog::addone ( $cm . __LINE__ ,'passed $this->memreas_session ()...' );
 		} else if ($action == 'logout') {
 			$this->memreas_session ();
 			/**
@@ -202,8 +220,7 @@ class IndexController extends AbstractActionController {
 		$this->memreas_session ();
 
 		
-		//Mlog::addone ( __CLASS__ . __METHOD__ . '$_REQUEST', $_REQUEST );
-		error_log("_REQUEST-->".print_r($_REQUEST,true).PHP_EOL);
+		Mlog::addone ( __CLASS__ . __METHOD__ .__LINE__, 'About to fetch S3Key' );
 		$action='memreas_tvm';
 		if (isset ( $_REQUEST ['user_id'] )) {
 			// Fetch parms
@@ -242,7 +259,7 @@ class IndexController extends AbstractActionController {
 			$message_data ['xml'] = '';
 		}
 		
-		Mlog::addone ( __CLASS__ . __METHOD__ . 'REGISTRATION RELATED ---->$_POST[xml]', $_POST ['xml'] );
+		//Mlog::addone ( __CLASS__ . __METHOD__ . 'REGISTRATION RELATED ---->$_POST[xml]', $_POST ['xml'] );
 		$data = simplexml_load_string ( $_POST ['xml'] );
 		if (isset($data->memreas_tvm->user_id)) {
 			$xml = '<xml><user_id>' . $data->memreas_tvm->user_id . '</user_id><memreas_tvm>0</memreas_tvm><memreas_pre_signed_url>1</memreas_pre_signed_url></xml>';
@@ -288,7 +305,6 @@ class IndexController extends AbstractActionController {
 		
 		// Pass constant global variables to js global constant
 		$this->writeJsConstants ();
-		
 		$path = "application/index/memreas_one_page.phtml";
 		error_log ( 'routing to $path--->' . $path );
 		
@@ -329,19 +345,11 @@ class IndexController extends AbstractActionController {
 	public function writeJsConstants() {
 		$this->memreas_session ();
 		if (! file_exists ( $_SERVER ['DOCUMENT_ROOT'] . '/memreas/js/constants.js' )) {
-			Mlog::addone("writeJsConstants() - $ _ SERVER [DOCUMENT_ROOT]", $_SERVER ['DOCUMENT_ROOT']);
-			Mlog::addone("writeJsConstants()", "about to write constants.js file...");
+			//Mlog::addone("writeJsConstants() - $ _ SERVER [DOCUMENT_ROOT]", $_SERVER ['DOCUMENT_ROOT']);
+			//Mlog::addone("writeJsConstants()", "about to write constants.js file...");
 			// Put constant variables here
 			$JsConstantVariables = array (
-					'S3BUCKET' => MemreasConstants::S3BUCKET,
-					'LOGGED_USER_ID' => $_SESSION ['user_id'],
-					'LISTNOTIFICATIONSPOLLTIME' => MemreasConstants::LISTNOTIFICATIONSPOLLTIME,
-					'GALLERYDELAYTIME' => MemreasConstants::GALLERYDELAYTIME,
-					'FREE_ACCOUNT_FILE_LIMIT' => MemreasConstants::FREE_ACCOUNT_FILE_LIMIT,
-					'PAID_ACCOUNT_FILE_LIMIT' => MemreasConstants::PAID_ACCOUNT_FILE_LIMIT,
-					'CLOUDFRONT_DOWNLOAD_HOST' => MemreasConstants::CLOUDFRONT_DOWNLOAD_HOST,
-					'STRIPE_SERVER_URL' => MemreasConstants::MEMREAS_PAY,
-					'ENABLE_SELL_MEDIA' => MemreasConstants::MEMREAS_SELL_MEDIA 
+					'REMOVE_THIS' => 1 
 			);
 			$content = '';
 			foreach ( $JsConstantVariables as $variable => $value ) {
@@ -357,8 +365,6 @@ class IndexController extends AbstractActionController {
 			Mlog::addone("writeJsConstants() - $ _ SERVER [DOCUMENT_ROOT]", $_SERVER ['DOCUMENT_ROOT']);
 			Mlog::addone("writeJsConstants()", "constants.js file exists...");
 		}
-		
-		
 	}
 	
 	/*
@@ -627,84 +633,3 @@ class IndexController extends AbstractActionController {
 	}
 } // end class IndexController
 
-// /* For S3 */
-// 	public function s3signedAction() {
-// 		$this->memreas_session ();
-// 		$data ['bucket'] = MemreasConstants::S3BUCKET;
-		
-// 		$data ['accesskey'] = MemreasConstants::S3_APPKEY;
-// 		$data ['secret'] = MemreasConstants::S3_APPSEC;
-		
-// 		$policy = $this->getS3Policy ();
-// 		$hmac = $this->hmacsha1 ( $data ['secret'], $policy );
-// 		$json_object = array (
-// 				'accessKey' => $data ['accesskey'],
-// 				'policy' => $policy,
-// 				'signature' => $this->hex2b64 ( $hmac ) 
-// 		);
-// 		header ( 'ContentType: application/json' );
-// 		echo json_encode ( $json_object );
-// 		die ();
-// 	}
-// private function getS3Policy() {
-// 	$this->memreas_session ();
-// 	$now = strtotime ( date ( "Y-m-d\TG:i:s" ) );
-// 	$expire = date ( 'Y-m-d\TG:i:s\Z', strtotime ( '+30 minutes', $now ) );
-// 	$policy = '{
-//                     "expiration": "' . $expire . '",
-//                     "conditions": [
-//                         {
-//                             "bucket": "' . MemreasConstants::S3BUCKET . '"
-//     					},
-//                         {
-//                             "acl": "public-read"
-//                         },
-//                         [
-//                             "starts-with",
-//                             "$key",
-//                             ""
-//                         ],
-//                         {
-//                             "success_action_status": "201"
-//                         },
-//                         ["starts-with", "$Content-Type", ""],
-//                         ["content-length-range", 0, 5000000000]
-//                     ]
-//                 }';
-// 	/*
-// 	 * Changed support 5GB
-// 	 */
-// 	// 4GB file supported
-// 	return base64_encode ( $policy );
-// }
-
-// /*
-//  * Calculate HMAC-SHA1 according to RFC2104
-//  * See http://www.faqs.org/rfcs/rfc2104.html
-//  */
-// private function hmacsha1($key, $data) {
-// 	$this->memreas_session ();
-// 	$blocksize = 64;
-// 	$hashfunc = 'sha1';
-// 	if (strlen ( $key ) > $blocksize)
-// 		$key = pack ( 'H*', $hashfunc ( $key ) );
-// 	$key = str_pad ( $key, $blocksize, chr ( 0x00 ) );
-// 	$ipad = str_repeat ( chr ( 0x36 ), $blocksize );
-// 	$opad = str_repeat ( chr ( 0x5c ), $blocksize );
-// 	$hmac = pack ( 'H*', $hashfunc ( ($key ^ $opad) . pack ( 'H*', $hashfunc ( ($key ^ $ipad) . $data ) ) ) );
-
-// 	return bin2hex ( $hmac );
-// }
-
-// /*
-//  * Used to encode a field for Amazon Auth
-//  * (taken from the Amazon S3 PHP example library)
-//  */
-// private function hex2b64($str) {
-// 	$this->memreas_session ();
-// 	$raw = '';
-// 	for($i = 0; $i < strlen ( $str ); $i += 2) {
-// 		$raw .= chr ( hexdec ( substr ( $str, $i, 2 ) ) );
-// 	}
-// 	return base64_encode ( $raw );
-// }

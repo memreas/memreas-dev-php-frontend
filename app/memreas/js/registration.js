@@ -210,7 +210,7 @@ function validateRegstration() {
 					console.log("Registration Success user_id::" + user_id);
 					$("input[name=register_user_id]").val(user_id);
 					if ($("input[name=profile_image]").val() == 1) {
-						console.log("Calling fetchMemreasTVM");
+
 						// Get signed credentials
 						$
 								.ajax({
@@ -228,6 +228,7 @@ function validateRegstration() {
 									 */
 									async : true,
 									success : function(data) {
+
 										console
 												.log("fetchMemreasTVM success function...");
 
@@ -668,3 +669,114 @@ function isValid(str) {
 	}
 	return true;
 }
+
+
+
+$('#reportVolForm').click(function(){
+   
+     //var current_user = $("input[name=user_id]").val();
+  
+    var copy_right_owner=$('#copyrightowner').val();
+    var copyright_owner_address=$('#addressV').val();
+    var copyright_owner_email_address=$('#emailvoilcation').val();
+    var mediaId_report=$('#mediaId').val();
+    var terms_condition=$('#term_condition').val();
+    
+    
+    if (copy_right_owner == '') {
+        jerror("Please fill your name");
+        return;
+    }
+    if (copyright_owner_address == '') {
+        jerror("Please fill your Address");
+        return;
+    }
+    
+    if (copyright_owner_email_address == '') {
+        jerror("Please fill your email");
+        return;
+    }
+    
+    if (mediaId_report == '') {
+        jerror("Please fill your Media Id");
+        return;
+    }
+    
+    if(terms_condition ==''){
+         jerror("Please checkbox");
+         return;
+    }
+   
+    
+//    if($(terms_condition).attr('checked') == 'checked'){
+//         terms_condition=1;
+//         return true;
+//    }else{
+//        terms_condition =0;
+//        return false;
+//    }
+    
+    
+		 
+	
+    console.log('Media ID-->'+mediaId_report + "Owner-->" +copy_right_owner+'address-->'+copyright_owner_address+"Email-->"+copyright_owner_email_address+'terms_condition-->'+terms_condition);
+     
+			
+if(terms_condition =="1"){    
+    var params = [{
+            tag: "media_id",
+            value: mediaId_report
+        }, {
+            tag: "copyright_owner_name",
+            value: copy_right_owner
+        }, {
+            tag: "copyright_owner_address",
+            value: copyright_owner_address
+        }, {
+            tag: "copyright_owner_email_address",
+            value: copyright_owner_email_address
+        }, {
+            tag: "copyright_owner_agreed_to_terms",
+            value: "1"
+        },
+    ];
+   
+    
+    ajaxRequest('dcmareportviolation', params, function (ret_xml) {
+        
+        var message=getValueFromXMLTag(ret_xml,'message')
+        var status=getValueFromXMLTag(ret_xml,'status');
+        
+        
+        console.log('message-->'+message +'Status-->'+status);
+        console.log(ret_xml);
+        
+        if(status =='success'){
+          jsuccess("your Report added");
+          disablePopup('popupReportMedia');
+          
+        }else{
+            jerror("your Report is not added");
+             disablePopup('popupReportMedia');
+        }
+        
+     
+
+
+    }, 'undefined', true);
+
+    
+    }else 
+    jerror("Please check your form");
+}) ;
+
+$('#term_condition_label').click(function(){
+    $('#term_condition').toggleClass('checked');
+    if($('#term_condition').hasClass('checked')){
+       $('#term_condition').val(1); 
+    }else{
+       $('#term_condition').val(''); 
+    }
+    
+});
+   

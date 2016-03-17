@@ -18,8 +18,6 @@ class MemreasConstants {
 	const S3HLSBUCKET = "memreasprodhlssec";
 	const CLOUDFRONT_DOWNLOAD_HOST = 'https://d3j7vnip9qhisx.cloudfront.net/';
 	const CLOUDFRONT_HLS_DOWNLOAD_HOST = 'https://d1fhgtf97i7jlq.cloudfront.net/';
-	
-		
 	const LISTNOTIFICATIONSPOLLTIME = 240000; // 5 minutes
 	const GALLERYDELAYTIME = 500; // 500 ms
 	                              

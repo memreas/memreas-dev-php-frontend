@@ -55,7 +55,7 @@
                     <span class="popup-buymedia-credit">$5</span>
                     <a class="addcredit-popup-btn" href="javascript:;" onclick="popupBuyCredit();">Buy more</a>
                     -
-                    <a href="javascript:;" onclick="popupReloadAccountBalance();"><img src="/memreas/img/syns.png" width="30" border="0" /></a>
+                    <a href="javascript:;" onclick="Account.reloadAccountCredit('.popup-buymedia-credit');"><img src="/memreas/img/syns.png" width="30" border="0" /></a>
                     <div class="clear"></div>
                 </li>
                 <li>
@@ -70,15 +70,35 @@
                 </li>
                  <li>
                     <input id="ckb_buymedia_agree" class="css-checkbox" type="checkbox" />
-                    <label id="lbl-sellmedia" for="ckb_buymedia_agree" name="demo_lbl_6" class="css-label margin-none" style="height: 100px; line-height: 21px;" >
+                     <label id="" for="ckb_buymedia_agree" name="demo_lbl_6" class="css-label margin-none" style="height: 100px; line-height: 20px;" >
                         By checking this box I certify that I own the appropriate copyrights for any media within this memeas share.  Full terms are available <a href="javascript:;" onclick="sharePopupMarketTerm();">here</a>.
+                     </label>
+                </li>
+            </ul>
+            <div class="clear"></div>
+            <a class="black_btn_skin f-left" href="javascript:;" id="accept-buymedia" onclick="">Buy now</a>
+            <a class="black_btn_skin f-right" href="javascript:disablePopup('popupBuyMedia');">close</a>
+        </div>
+        <div id="bgpopupBuyMedia" class="backgroundPopup"></div>
+
+        <!-- POPUP Buy media confirmation -->
+        <div id="popupBuyMediaConfirmation" class="popups">
+            <a id="popupBuyMediaConfirmationClose" onClick="disablePopup('popupBuyMediaConfirmation');" class='popupClose'>x</a>
+            <h2>memreas purchase confirmation</h2>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <ul id="content_1" class="give-message-form buying-media-detail">
+                <li>
+                    <label class="margin-none" style="line-height: 21px;" >
+                        Thanks for your purchase. Your confirmation number is: <span id="buymedia-confirmation-trans-id"></span> We've also sent you an email confirmation of the purchase.
                     </label>
                 </li>
             </ul>
             <div class="clear"></div>
-            <a class="black_btn_skin f-left" href="javascript:;" id="accept-buymedia" onclick="">Buy now</a> <a class="black_btn_skin f-right" href="javascript:disablePopup('popupBuyMedia');">close</a>
+            <a class="black_btn_skin f-right" href="javascript:disablePopup('popupBuyMediaConfirmation');">close</a>
         </div>
-        <div id="bgpopupBuyMedia" class="backgroundPopup"></div>
+        <div id="bgpopupBuyMediaConfirmation" class="backgroundPopup"></div>
 
         <div id="popupBuyCredit" class="popups">
             <a id="popupBuyCreditClose" onClick="disablePopup('popupBuyCredit');" class='popupClose'>x</a>
@@ -97,12 +117,15 @@
                 <li>
                     <label class="textfield_names" style="width: 150px;">Select amount: </label>
                     <select name="popup_buycredit_amount">
-                        <option value="5">$5</option>
                         <option value="10">$10</option>
                         <option value="15">$15</option>
                         <option value="20">$20</option>
+                        <option value="25">$25</option>
+                        <option value="30">$35</option>
+                        <option value="35">$35</option>
+                        <option value="40">$40</option>
+                        <option value="45">$45</option>
                         <option value="50">$50</option>
-                        <option value="100">$100</option>
                     </select>
                     <div class="clear"></div>
                 </li>
@@ -162,8 +185,6 @@
                     <label class="textfield_names">Exp year*</label>
                     <select name="addcard_expyear" id="addcard_expyear">
                         <option value="">-Choose-</option>
-                        <option value="2014">2014</option>
-                        <option value="2015">2015</option>
                         <option value="2016">2016</option>
                         <option value="2017">2017</option>
                         <option value="2018">2018</option>

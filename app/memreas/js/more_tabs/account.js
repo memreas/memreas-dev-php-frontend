@@ -1,21 +1,388 @@
+//Handle all account functions into an object orient
+var Account = function() {
+
+	//Store current logged user Id
+	this.id = $("input[name=user_id]").val();
+
+	//Card objects for some separate tabs
+	this.accountTab_cards = new Object();
+	this.buyCreditTab_cards = new Object();
+	this.subscriptionTab_cards = new Object();
+
+	this.eventPurchases = new Object();
+	/*
+	* Load account cards and fill in available target element
+	* @param element full class name of target element
+	* @param rowCardId instance name of each row card id
+	* @param callBackCardChangeFunction trigger when account card changed
+	* @param extraFunction an optional extra function when function is executed
+	* */
+	this.loadCards = function(element, rowCardId, callBackCardChangeFunction, extraFunction) {
+		$("." + rowCardId + "-functions").hide();
+		var jMemberCard = $(element);
+
+		if (!jMemberCard.hasClass('preload-null')) {
+			return false;
+		}
+		jMemberCard.removeClass('preload-null');
+
+		if (jMemberCard.hasClass('mCustomScrollbar'))
+			jMemberCard = $(element + " .mCSB_container");
+
+		jMemberCard.empty();
+
+		var stripeActionUrl = STRIPE_SERVER_URL + 'stripe_listCards';
+
+		ConsoleLog.setLog('stripeUserId' + self.id);
+
+		var obj = new Object();
+		obj.userid = self.id;
+		obj.memreascookie = getCookie("memreascookie");
+		obj.x_memreas_chameleon = getCookie("x_memreas_chameleon");
+		var json_listCard = JSON.stringify(obj, null, '\t');
+
+		var data = '{"action": "listcards", ' + '"memreascookie": "'
+			+ getCookie("memreascookie") + '",' + '"type":"jsonp", '
+			+ '"json": ' + json_listCard + '}';
+
+		AppSystem.removePageLoading();
+		AppSystem.putStripeLoading();
+
+		$.ajax({url : stripeActionUrl, type : 'POST', dataType : 'jsonp', data : 'json=' + data, timeout : 10000,
+			error : function(response, textStatus, errorThrown) {
+				if (textStatus === 'timeout') {
+					AppSystem.removeStripeLoading(); // do something. Try again perhaps?
+
+					ConsoleLog.setLog("response.message--->" + response.message);
+
+					jMemberCard.append('<li>request timeout - try again later...</li>');
+					jerror(textStatus);
+				}
+
+			},
+			success : function(response) {
+				response = jQuery.parseJSON(response.data);
+				if (response.status == 'Success') {
+
+					ConsoleLog.setLog("Inside success - listcards");
+
+					var cards = response.payment_methods;
+					var number_of_cards = response.NumRows;
+
+					ConsoleLog.setLog("Inside success - number_of_cards" + number_of_cards);
+
+					if (number_of_cards > 0) {
+
+						for (var i = 0; i < number_of_cards; i++) {
+							var params = {
+								card_id : cards[i].stripe_card_reference_id,
+								data : cards[i],
+								selected : 0
+							};
+							var row_card_id = cards[i].stripe_card_reference_id;
+							var row_card_type = cards[i].card_type;
+							var row_card_obfuscated = cards[i].obfuscated_card_number;
+
+							//Delivery card objects into the right tab
+							switch (element) {
+								case '.account-payment':
+									Account.accountTab_cards[i] = new Object();
+									Account.accountTab_cards[i] = params;
+
+									break;
+								case '.buycredit-payment':
+									Account.buyCreditTab_cards[i] = new Object();
+									Account.buyCreditTab_cards[i] = params;
+									break;
+								case '.subscription-payment':
+									Account.subscriptionTab_cards[i] = new Object();
+									Account.subscriptionTab_cards[i] = params;
+									break;
+							}
+
+							var html_element = '<li id=' + rowCardId + '"-'
+								+ row_card_id + '">'
+								+ '<label class="label_text2"><input';
+
+							// Set first card is default checked
+							if (i == 0) {
+								html_element += ' checked="checked"';
+								var change_card_func = callBackCardChangeFunction + "('" + rowCardId + "-" + row_card_id + "')";
+								eval(change_card_func);
+							}
+
+							html_element += ' type="radio" id="' + rowCardId + '-'
+								+ row_card_id
+								+ '" name="radio_cards" class="regular-radio" onchange="' + callBackCardChangeFunction + '(this.id);" />'
+								+ '<label for="account-card-'
+								+ row_card_id
+								+ '"></label>'
+								+ row_card_type
+								+ ' | '
+								+ row_card_obfuscated
+								+ '</label>'
+								+ '</li>';
+							jMemberCard.append(html_element);
+						}
+
+						ajaxScrollbarElement(element);
+						if (extraFunction != '') {
+							eval(extraFunction);
+						}
+					} else {
+						jMemberCard.append('<li>Please add a card.</li>');
+					}
+
+					removeItem(reloadItems, 'reload_account_cards');
+				} else {
+					jMemberCard.append('<li>Please add a card.</li>');
+					jerror(response.message);
+				}
+				AppSystem.removeStripeLoading();
+			}
+		});
+	}
+
+	/*
+	* Delete member credit card
+	* @param userConfirm boolean true or false
+	* @param element full class name of target element (that area will reload cards list)
+	* @param rowCardId class name of current row card id
+	* */
+	this.removeCard = function (userConfirm, element, rowCardId, callBackCardChangeFunction, extraFunction) {
+		if (!userConfirm) {
+
+			// Fetch the card
+			var selectedCard = '';
+			for (var i in Account.accountTab_cards) {
+				if (Account.accountTab_cards[i].selected == 1) {
+					selectedCard = Account.accountTab_cards[i].data.stripe_card_reference_id;
+					break;
+				}
+			}
+
+			if (selectedCard == '') {
+				jerror('Please select a card');
+			}
+			else {
+				accountViewCard('delete');
+			}
+		}// check whether userConfirm is set or true
+
+		else { // The card will be deleted now
+			var stripeActionUrl = STRIPE_SERVER_URL + 'stripe_deleteCards';
+
+			// Fetch the card
+			var selectedCard = '';
+			for (var i in Account.accountTab_cards) {
+				if (accountTab_cards[i].selected == 1) {
+					selectedCard = self.accountTab_cards[i].data.stripe_card_reference_id;
+					break;
+				}
+			}
+			var cardSelected = new Array();
+			cardSelected.push(selectedCard);
+
+			var obj = new Object();
+			obj.memreascookie = getCookie("memreascookie");
+			obj.x_memreas_chameleon = getCookie("x_memreas_chameleon");
+			obj.selectedCard = cardSelected;
+
+			var data_object = JSON.stringify(obj, null, '\t');
+
+			var data = '{"action": "deleteCards", ' + '"type":"jsonp", '
+				+ '"json": ' + data_object + '}';
+
+			AppSystem.putPageLoading();
+
+			$.ajax({ type : 'post', url : stripeActionUrl, dataType : 'jsonp', data : 'json=' + data,
+				success : function(response) {
+					response = jQuery.parseJSON(response.data);
+					AppSystem.removePageLoading();
+					if (response.status = 'Success') {
+						disablePopup('popupaccountviewcard_delete');
+						jsuccess(response.message);
+						$("#-" + rowCardId + selectedCard).remove();
+
+						pushReloadItem('reload_subscription_cards');
+						pushReloadItem('reload_buy_credit_cards');
+
+						$(element).addClass("preload-null");
+						Account.loadCards(element, rowCardId, callBackCardChangeFunction, extraFunction);
+					} else {
+						jerror(response.message);
+					}
+				}
+			});
+		}
+	}
+
+	/*
+	* Add new user card
+	* @param element target form element will be looking for card information
+	* */
+	this.addCard = function(element, reloadElement, rowCardId, callBackCardChangeFunction, extraFunction) {
+		var jAddCard = $(element);
+		var formPass = true;
+
+		// Check all input passed
+		jAddCard.find('input[type=text]').not("#addcard_address2").each(function() {
+			if ($(this).val() == '' || $(this).val() == $(this).attr('default')) {
+				$(this).focus();
+				formPass = false;
+				return false;
+			}
+		});
+		jAddCard.find('select').each(function() {
+			if ($(this).val() == '') {
+				formPass = false;
+				return;
+			}
+		});
+
+		if (!formPass) {
+			jerror('Please complete all require fields');
+		} else {
+			var stripeActionUrl = STRIPE_SERVER_URL + 'stripe_storeCard';
+
+			ConsoleLog.setLog(self.id);
+
+			var obj = new Object();
+			obj.user_id = $('input[name=user_id]').val();
+			obj.memreascookie = getCookie("memreascookie");
+			obj.x_memreas_chameleon = getCookie("x_memreas_chameleon");
+			obj.first_name = jAddCard.find("#addcard_fname").val();
+			obj.last_name = jAddCard.find("#addcard_lname").val();
+			obj.credit_card_type = jAddCard.find("#addcard_cctype").val();
+			obj.credit_card_number = jAddCard.find("#addcard_ccnum").val();
+			obj.expiration_month = jAddCard.find("#addcard_expmonth").val();
+			obj.expiration_year = jAddCard.find("#addcard_expyear").val();
+			obj.cvc = jAddCard.find("#addcard_ccv").val();
+			obj.address_line_1 = jAddCard.find("#addcard_address1").val();
+			obj.address_line_2 = jAddCard.find("#addcard_address2").val();
+			obj.city = jAddCard.find("#addcard_city").val();
+			obj.state = jAddCard.find("#addcard_state").val();
+			obj.zip_code = jAddCard.find("#addcard_zip").val();
+
+			var json_storeCard = JSON.stringify(obj);
+
+			var data = '{"action": "addCard", ' + '"type":"jsonp", ' + '"json": '
+				+ json_storeCard + '}';
+
+			AppSystem.putStripeLoading();
+			$.ajax({ type : 'post', url : stripeActionUrl, dataType : 'jsonp', data : 'json=' + data, timeout : 10000,
+				error : function(response, textStatus, errorThrown) {
+					if (textStatus === 'timeout') {
+						jerror('Card adding failure. Please check card\'s information.');
+						AppSystem.removeStripeLoading();
+					}
+				},
+				success : function(response) {
+					response = jQuery.parseJSON(response.data);
+					if (response.status == 'Success') {
+						jsuccess("Your card added successfully");
+						disablePopup('popup-addcard-' + reloadElement.replace('.', ''));
+
+						$(reloadElement).addClass('preload-null');
+						new Account.loadCards(reloadElement, rowCardId, callBackCardChangeFunction, extraFunction);
+
+						pushReloadItem('reload_subscription_cards');
+						pushReloadItem('reload_buy_credit_cards');
+					} else {
+						jerror(response.message);
+					}
+					AppSystem.removeStripeLoading();
+				}
+			});
+		}
+	}
+
+	/*
+	* Checking user event owning
+	* @param eventId Target event id for checking
+	* */
+	this.checkOwnEvent = function(eventId) {
+		if (this.eventPurchases.length > 0) {
+			for (var i = 0;i < this.eventPurchases.length;i++) {
+				if (this.eventPurchases[i] == eventId) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	/*
+	* Reload Account Buyer Credit
+	* */
+	this.reloadAccountCredit = function(targetElement) {
+		var jTargetElement = $(targetElement);
+		jTargetElement.html("...");
+
+		var params = new Object;
+		params.user_id = this.id;
+		params.memreascookie = getCookie("memreascookie");
+		params.x_memreas_chameleon = getCookie("x_memreas_chameleon");
+		var params_json = JSON.stringify(params, null, '\t');
+		var data = '{"action": "getuserbalance", ' + '"type":"jsonp", ' + '"json": '
+			+ params_json + '}';
+
+		var stripeActionUrl = $("input[name=stripe_url]").val()
+			+ 'stripe_getUserBalance';
+
+		AppSystem.putStripeLoading();
+
+		$.ajax({
+			url : stripeActionUrl,
+			type : 'POST',
+			dataType : 'jsonp',
+			data : 'json=' + data,
+			success : function(response) {
+				setX_MEMREAS_CHAMELEON(response.x_memreas_chameleon);
+				response = JSON.parse(response.data);
+				if (response.status == 'Success') {
+					userObject.buyer_balance = response.buyer_balance;
+					jTargetElement.html("$" + response.buyer_balance);
+				} else {
+					jerror(response.message);
+					jTargetElement.html("$" + userObject.buyer_balance);
+				}
+				AppSystem.removeStripeLoading();
+			}
+		});
+	}
+}
+var Account = new Account();
+
 $(function() {
+
     $("#account_dob").datepicker();
 
     $(".member-trasnsaction-head").one("click", function() {
-	getAccountOrderHistory();
+		getAccountOrderHistory();
     });
 
-    $(".account-card-section").click(
-	    function() {
-
+	//Load account cards
+    $(".account-card-section").click(function() {
 		var jMemberCard = $(".account-payment");
 		if (checkReloadItem('reload_account_cards')
 			|| jMemberCard.html() == '') {
 		    if (!jMemberCard.hasClass('preload-null'))
 			jMemberCard.addClass('preload-null')
 		}
-		loadAccountCard();
-	    });
+		Account.loadCards(".account-payment", 'account-card', 'accountCardChange', '$(".account-card-functions").show()');
+	});
+
+	//Payment method tab remove card button click
+	$("#btn-account-remove-card").click(function() {
+		Account.removeCard(false, '.account-payment', 'account-card', 'accountCardChange', '$(".account-card-functions").show()');
+	});
+
+	//Payment method tab add card button click
+	$("#btn-popup-add-card").click(function() {
+		Account.addCard('.accountAddCardForm', '.account-payment', 'account-card', 'accountCardChange', '$(".account-card-functions").show()');
+	});
 
     $("#tabs-more").mouseover(function() {
 	$(".tab-slide-nav").fadeIn(500);
@@ -61,6 +428,7 @@ $(function() {
 	});
     });
 });
+
 /*
  * Card process section
  */
@@ -69,195 +437,16 @@ var accountTab_cards = new Object();
 function accountCardChange(choose_card_id) {
     choose_card_id = choose_card_id.replace('account-card-', '');
     accountResetCardChoose();
-    for ( var i in accountTab_cards) {
-	if (choose_card_id == accountTab_cards[i].card_id) {
-	    accountTab_cards[i].selected = 1;
-	}
+    for ( var i in Account.accountTab_cards) {
+		if (choose_card_id == Account.accountTab_cards[i].card_id) {
+			Account.accountTab_cards[i].selected = 1;
+		}
     }
 }
 
 function accountResetCardChoose() {
-    for ( var i in accountTab_cards) {
-	accountTab_cards[i].selected = 0;
-    }
-}
-
-/* Load user credit card */
-function loadAccountCard() {
-    $(".account-card-functions").hide();
-    var jMemberCard = $(".account-payment");
-
-    if (!jMemberCard.hasClass('preload-null'))
-	return false;
-    jMemberCard.removeClass('preload-null');
-
-    if (jMemberCard.hasClass('mCustomScrollbar'))
-	jMemberCard = $(".account-payment .mCSB_container");
-
-    jMemberCard.empty();
-    var stripeUserId = $("input[name=user_id]").val();
-    var stripeActionUrl = $("input[name=stripe_url]").val()
-	    + 'stripe_listCards';
-    var obj = new Object();
-    console.log('stripeUserId' + stripeUserId);
-    obj.userid = stripeUserId;
-    obj.memreascookie = getCookie("memreascookie");
-    var json_listCard = JSON.stringify(obj, null, '\t');
-    var data = '{"action": "listcards", ' + '"memreascookie": "'
-	    + getCookie("memreascookie") + '",' + '"type":"jsonp", '
-	    + '"json": ' + json_listCard + '}';
-
-    $('.stripe-payment').fadeIn(1000);
-    $
-	    .ajax({
-		url : stripeActionUrl,
-		type : 'POST',
-		dataType : 'jsonp',
-		data : 'json=' + data,
-		timeout : 10000,
-		error : function(response, textStatus, errorThrown) {
-		    if (textStatus === 'timeout') {
-			$('.stripe-payment').fadeOut(500); // do something. Try
-							    // again perhaps?
-			console.log("response.message--->" + response.message);
-			jMemberCard
-				.append('<li>request timeout - try again later...</li>');
-			jerror(textStatus);
-		    }
-
-		},
-		success : function(response) {
-		    response = jQuery.parseJSON(response.data);
-		    if (response.status == 'Success') {
-			console.log("Inside success - listcards");
-			var cards = response.payment_methods;
-			var number_of_cards = response.NumRows;
-			console.log("Inside success - number_of_cards"
-				+ number_of_cards);
-
-			if (number_of_cards > 0) {
-
-			    for (var i = 0; i < number_of_cards; i++) {
-				accountTab_cards[i] = new Object();
-				var params = {
-				    card_id : cards[i].stripe_card_reference_id,
-				    data : cards[i],
-				    selected : 0
-				};
-				var row_card_id = cards[i].stripe_card_reference_id;
-				var row_card_type = cards[i].card_type;
-				var row_card_obfuscated = cards[i].obfuscated_card_number;
-				accountTab_cards[i] = params;
-				var html_element = '<li id="account-card-'
-					+ row_card_id + '">'
-					+ '<label class="label_text2"><input';
-
-				// Set first card is default checked
-				if (i == 0) {
-				    html_element += ' checked="checked"';
-				    accountCardChange("account-card-"
-					    + row_card_id);
-				}
-
-				html_element += ' type="radio" id="account-card-'
-					+ row_card_id
-					+ '" name="radio_cards" class="regular-radio" onchange="accountCardChange(this.id);" />'
-					+ '<label for="account-card-'
-					+ row_card_id
-					+ '"></label>'
-					+ row_card_type
-					+ ' | '
-					+ row_card_obfuscated
-					+ '</label>'
-					+ '</li>';
-				jMemberCard.append(html_element);
-			    }
-			    ajaxScrollbarElement('.account-payment');
-			    $(".account-card-functions").show();
-			} else
-			    jMemberCard.append('<li>Please add a card.</li>');
-			removeItem(reloadItems, 'reload_account_cards');
-		    } else {
-			jMemberCard.append('<li>Please add a card.</li>');
-			jerror(response.message);
-		    }
-		    $('.stripe-payment').fadeOut(500);
-		}
-	    });
-}
-
-function accountRemoveCard(userConfirm) {
-
-    if (!userConfirm) {
-
-	// Fetch the card
-	var selectedCard = '';
-	for ( var i in accountTab_cards) {
-	    if (accountTab_cards[i].selected == 1) {
-		selectedCard = accountTab_cards[i].data.stripe_card_reference_id;
-		break;
-	    }
-	}
-
-	if (selectedCard == '')
-	    jerror('Please select a card');
-	// else if (!userConfirm){
-	// jconfirm('Are you sure want to remove this card?',
-	// 'accountRemoveCard(true)');
-	// return false;
-	// }
-	else {
-	    accountViewCard('delete');
-	}
-    }// check whether userConfirm is set or true
-
-    else { // The card will be deleted now
-	var stripeActionUrl = $("input[name=stripe_url]").val()
-		+ 'stripe_deleteCards';
-
-	// Fetch the card
-	var selectedCard = '';
-	for ( var i in accountTab_cards) {
-	    if (accountTab_cards[i].selected == 1) {
-		selectedCard = accountTab_cards[i].data.stripe_card_reference_id;
-		break;
-	    }
-	}
-	var cardSelected = new Array();
-	cardSelected.push(selectedCard);
-
-	var obj = new Object();
-	obj.memreascookie = getCookie("memreascookie");
-	obj.cardSelected = cardSelected;
-
-	var data_object = JSON.stringify(obj, null, '\t');
-
-	var data = '{"action": "deleteCards", ' + '"type":"jsonp", '
-		+ '"json": ' + data_object + '}';
-
-	$('#loadingpopup').fadeIn(1000);
-	$.ajax({
-	    type : 'post',
-	    url : stripeActionUrl,
-	    dataType : 'jsonp',
-	    data : 'json=' + data,
-	    success : function(response) {
-		response = jQuery.parseJSON(response.data);
-		if (response.status = 'Success') {
-
-		    disablePopup('popupaccountviewcard_delete');
-		    jsuccess(response.message);
-		    $("#account-card-" + selectedCard).remove();
-		    pushReloadItem('reload_subscription_cards');
-		    pushReloadItem('reload_buy_credit_cards');
-		    $(".account-payment").addClass("preload-null");
-		    loadAccountCard();
-		} else {
-		    jerror(response.message);
-		}
-		$('#loadingpopup').fadeOut(500);
-	    }
-	});
+    for (var i in Account.accountTab_cards) {
+		Account.accountTab_cards[i].selected = 0;
     }
 }
 
@@ -268,85 +457,7 @@ function accountAddCardPopup() {
 	$(this).val($(this).attr('default'));
     });
     jAddCard.find('select').val('');
-    popup('popupaccountaddcard');
-}
-
-function accountAddCard() {
-    var jAddCard = $(".accountAddCardForm");
-    var formPass = true;
-
-    // Check all input passed
-    jAddCard.find('input[type=text]').not("#addcard_address2").each(function() {
-	if ($(this).val() == '' || $(this).val() == $(this).attr('default')) {
-	    $(this).focus();
-	    formPass = false;
-	    return false;
-	}
-    });
-    jAddCard.find('select').each(function() {
-	if ($(this).val() == '') {
-	    formPass = false;
-	    return;
-	}
-    });
-
-    if (!formPass) {
-	jerror('Please complete all require fields');
-    } else {
-	var stripeActionUrl = $("input[name=stripe_url]").val()
-		+ 'stripe_storeCard';
-	var obj = new Object();
-	console.log($('input[name=user_id]').val());
-	obj.user_id = $('input[name=user_id]').val();
-	obj.memreascookie = getCookie("memreascookie");
-	obj.first_name = jAddCard.find("#addcard_fname").val();
-	obj.last_name = jAddCard.find("#addcard_lname").val();
-	obj.credit_card_type = jAddCard.find("#addcard_cctype").val();
-	obj.credit_card_number = jAddCard.find("#addcard_ccnum").val();
-	obj.expiration_month = jAddCard.find("#addcard_expmonth").val();
-	obj.expiration_year = jAddCard.find("#addcard_expyear").val();
-	obj.cvc = jAddCard.find("#addcard_ccv").val();
-	obj.address_line_1 = jAddCard.find("#addcard_address1").val();
-	obj.address_line_2 = jAddCard.find("#addcard_address2").val();
-	obj.city = jAddCard.find("#addcard_city").val();
-	obj.state = jAddCard.find("#addcard_state").val();
-	obj.zip_code = jAddCard.find("#addcard_zip").val();
-
-	var json_storeCard = JSON.stringify(obj);
-
-	var data = '{"action": "addCard", ' + '"type":"jsonp", ' + '"json": '
-		+ json_storeCard + '}';
-
-	$('.stripe-payment').fadeIn(1000);
-	$
-		.ajax({
-		    type : 'post',
-		    url : stripeActionUrl,
-		    dataType : 'jsonp',
-		    data : 'json=' + data,
-		    timeout : 10000,
-		    error : function(response, textStatus, errorThrown) {
-			if (textStatus === 'timeout') {
-			    jerror('Card adding failure. Please check card\'s information.');
-			    $('.stripe-payment').fadeOut(500);
-			}
-
-		    },
-		    success : function(response) {
-			response = jQuery.parseJSON(response.data);
-			if (response.status == 'Success') {
-			    jsuccess("Your card added successfully");
-			    disablePopup('popupaccountaddcard');
-			    $(".account-payment").addClass('preload-null');
-			    loadAccountCard();
-			    pushReloadItem('reload_subscription_cards');
-			    pushReloadItem('reload_buy_credit_cards');
-			} else
-			    jerror(response.message);
-			$('.stripe-payment').fadeOut(500);
-		    }
-		});
-    }
+    popup('popup-addcard-account-payment');
 }
 
 function accountViewCard() {
@@ -367,21 +478,22 @@ function accountViewCard() {
     jViewCard.find('select').val('');
 
     var selectedCard = '';
-    for ( var i in accountTab_cards) {
-	if (accountTab_cards[i].selected == 1) {
-	    selectedCard = accountTab_cards[i].data.stripe_card_reference_id;
-	    break;
-	}
+    for ( var i in Account.accountTab_cards) {
+		if (Account.accountTab_cards[i].selected == 1) {
+			selectedCard = Account.accountTab_cards[i].data.stripe_card_reference_id;
+			break;
+		}
     }
 
     if (selectedCard == '' && !deleteBoolean) {
-	jerror('Please select a card');
+		jerror('Please select a card');
     } else {
 	var stripeActionUrl = $("input[name=stripe_url]").val()
 		+ 'stripe_viewCard';
 	var params = new Object();
-	params.user_id = $("input[name=user_id]").val();
+	params.user_id = Account.id;
 	params.memreascookie = getCookie("memreascookie");
+	//params.x_memreas_chameleon = getCookie("x_memreas_chameleon");
 	params.card_id = selectedCard;
 
 	var data_object = JSON.stringify(params, null, '\t');
@@ -390,6 +502,7 @@ function accountViewCard() {
 		+ data_object + '}';
 
 	$('#loadingpopup').fadeIn(1000);
+	//alert("action=listCard memreascookie="+params.memreascookie+" user_id="+params.user_id);
 	if (deleteBoolean) {
 	    $
 		    .ajax({
@@ -526,6 +639,7 @@ function accountUpdateCard() {
 	var obj = new Object();
 	obj.user_id = $("input[name=user_id]").val();
 	obj.memreascookie = getCookie("memreascookie");
+	obj.x_memreas_chameleon = getCookie("x_memreas_chameleon");
 	obj.id = jEditCard.find("#card_id").val();
 	obj.name = jEditCard.find("#addcard_fname").val() + ' '
 		+ jEditCard.find("#addcard_lname").val();
@@ -585,6 +699,7 @@ function getAccountPlans() {
     var obj = new Object();
     obj.userid = $("input[name=user_id]").val();
     obj.memreascookie = getCookie("memreascookie");
+    obj.x_memreas_chameleon = getCookie("x_memreas_chameleon");
     data_obj = JSON.stringify(obj, null, '\t');
     data = '{"action": "getCustomerInfo", ' + '"type":"jsonp", ' + '"json": '
 	    + data_obj + '}';
@@ -602,30 +717,30 @@ function getAccountPlans() {
 		success : function(response) {
 		    response = jQuery.parseJSON(response.data);
 		    if (response.status == 'Success') {
-			var account_stripe = response.customer;
-			if (account_stripe.exist == 1) {
-			    var total_subscriptions = account_stripe.info.subscriptions.total_count;
-			    if (total_subscriptions > 0) {
+				var account_stripe = response.account.customer;
+				if (account_stripe.exist) {
+					var total_subscriptions = account_stripe.info.subscriptions.total_count;
+					if (total_subscriptions > 0) {
+					jAccountPlans
+						.append('<li><label class="label_text2"><label for="account-plan-1"></label>Your current active plans:</label></li>');
+					var active_subscriptions = account_stripe.info.subscriptions.data;
+					for (var i = 0; i < total_subscriptions; i++) {
+						var plan = active_subscriptions[i].plan;
+						var html_element = '<li><label class="label_text2"><label for="account-plan-1"></label>'
+							+ plan.name + '</label></li>';
+						jAccountPlans.append(html_element);
+					}
+					} else
+					jAccountPlans
+						.html('You are using our free plan. Use the subscriptions tab to upgrade.');
+				} else
+					jAccountPlans
+						.html("You are using our free plan. Use the subscriptions tab to upgrade.");
+				} else
 				jAccountPlans
-					.append('<li><label class="label_text2"><label for="account-plan-1"></label>Your current active plans:</label></li>');
-				var active_subscriptions = account_stripe.info.subscriptions.data;
-				for (var i = 0; i < total_subscriptions; i++) {
-				    var plan = active_subscriptions[i].plan;
-				    var html_element = '<li><label class="label_text2"><label for="account-plan-1"></label>'
-					    + plan.name + '</label></li>';
-				    jAccountPlans.append(html_element);
-				}
-			    } else
-				jAccountPlans
-					.html('You are using our free plan. Use the subscriptions tab to upgrade.');
-			} else
-			    jAccountPlans
-				    .html("You are using our free plan. Use the subscriptions tab to upgrade.");
-		    } else
-			jAccountPlans
-				.html("You are using our free plan. Use the subscriptions tab to upgrade.");
-		    $('#loadingpopup').fadeOut(500);
-		}
+					.html("You are using our free plan. Use the subscriptions tab to upgrade.");
+				$('#loadingpopup').fadeOut(500);
+			}
 	    });
 }
 

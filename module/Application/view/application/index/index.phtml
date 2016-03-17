@@ -41,6 +41,16 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 <link rel="stylesheet" href="/memreas/css/jNotify.jquery.css">
 <link href="/memreas/css/jquery.mCustomScrollbar.css" rel="stylesheet" />
 <script src="/memreas/js/jquery-register.js"></script>
+<style type="text/css">
+    .HideReport{display:none;}
+    .h2sego{color: #FFF;
+    font-family: "Segoe Script";
+    font-size: 30px;
+    font-weight: bold;
+    text-shadow: 0 1px 1px #333;
+    text-align: center;}
+    
+</style>
 </head>
 
 <body>
@@ -139,8 +149,8 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 											name="x-amz-date" value=""> <input type="hidden"
 											name="x-amz-expires" value=""> <input type="hidden"
 											name="x-amz-signature" value=""> <input type="hidden"
-											name="x-amz-server-side-encryption" value="AES256">
-											<input class="" id="file" type="file" name="file">
+											name="x-amz-server-side-encryption" value="AES256"> <input
+											class="" id="file" type="file" name="file">
 									</form>
 									<input type="hidden" name="register_user_id" value="" /> <span
 										class="absolute">choose profile picture</span>
@@ -185,6 +195,8 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 									class="btn btn-lyt create-accnt" value="Create an account">
 							</form>
 						</div>
+                                            
+                                        
 					</div>
 
 
@@ -626,13 +638,26 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 				<div id="bgpopupContact" class="backgroundPopup"></div>
 				<!---End Pop up section-->
 			</div>
+                    <div style="text-align: center;">
+                   
+            </div>
+            
 		</div>
+            
 	</section>
+        <div style="clear: both;"></div>
+        <div style="width: 100%; position:relative; z-index: 999; text-align: center;">
+           
+        </div> 
 	<!--Body Ends Here-->
 
 	<!--Footer-->
-	<footer class="rel">
-		<p><?php echo MemreasConstants::COPYRIGHT?></p>
+	<footer>
+            <a href="javascript:;" title="Report media" id="ReportMediaIcon" class="h2sego" style="font-size: 18px;position: relative;top: -42px;">report dcma violation</a>
+            <div class="rel">
+            <p><?php echo MemreasConstants::COPYRIGHT?></p>    
+            </div>
+            
 	</footer>
 	<!--End of Footer-->
 
@@ -654,6 +679,46 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 			</div>
 		</div>
 	</div>
+        
+        <div id="popupReportMedia" class="popups">
+        <a id="popupReportMediaClose" onClick="disablePopup('popupReportMedia');" class='popupClose'>x</a>
+        <h2 style="font-family: 'Georgia';">DMCA violation</h2>
+       
+        
+        <ul id="content_1" class="scrollpopup give-message-form">
+            <li>
+<!--               <input id="DMCAViolation" type="radio" class="radio-bx" name="report" value="0" style="width: 18px; height: 18px;">
+                <label for="DMCA Violation" class="radio-label" style="display: inline-block;">DMCA Violation</label>-->
+                <form enctype="multipart/form-data" action="" method="post" name="" class="" id="reportform" style="background: none; border-bottom: none;">
+                    <label for="email">Copy Right Owner Name</label>
+                    <input name="copyrightowner" id="copyrightowner" type="text" placeholder="Your Name" /> 
+                    <label for="email">Address</label>
+                    <input name="addressV" id="addressV" type="text" placeholder="Your Addresss" /> 
+                    <label for="email">Email</label>
+                    <input name="email" id="emailvoilcation" type="email" placeholder="Your Email" /> 
+                     <label for="email">Media Id</label>
+                    <input name="email" id="mediaId" type="text" placeholder="Media Id" /> 
+                    
+                    
+                    
+                    <input id="term_condition" class="css-checkbox" type="checkbox">
+                    <label for="term_condition"  id ="term_condition_label" name="demo_lbl_5" class="css-label margin-none" style="text-align: left; margin-left: 0px !important; width: 100%; height:55px; ">notice to reporter - in the event of a counter claim we will provide the claimant your email address and expect any further legal matters to be concluded by the reporter (you) and the counter-claimant.</label>
+                    
+                <br />  <br />
+                <div style="clear: both;"></div>
+
+<a class="btn btn-sm login-btn" href="javascript:;" id="reportVolForm" >OK</a> <a class="btn btn-sm login-btn" href="javascript:disablePopup('popupReportMedia');">close</a>
+                </form> 
+                
+             
+            </li>
+        </ul>
+        
+    </div>
+        
+        
+        
+        
 	<!-- overlay splash ends here -->
 
 	<!-- Modal JS -->
@@ -671,6 +736,14 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 	<script>
             $(function() {
                 $(".rslides").responsiveSlides();
+                
+                $('#ReportMediaIcon').click(function(){
+                    popup("popupReportMedia");
+			return false;
+                });
+//                $('#DMCAViolation').click(function(){
+//                    $('#reportform').toggleClass('HideReport');
+//                });
             });
         </script>
 
@@ -681,16 +754,16 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 								if (isset ( $_GET ['email_verified'] ) && $_GET ['email_verified'] == 1) {
 									echo "jsuccess('Your account has been verified successfully');";
 								}
-								if (isset ( $_GET ['credits_activated'] )  && $_GET ['credits_activated'] == 1) {
+								if (isset ( $_GET ['credits_activated'] ) && $_GET ['credits_activated'] == 1) {
 									echo "jsuccess('Your account has been credited. Enjoy!');";
 								}
+								if (isset ( $_GET ['email_verified'] ) && $_GET ['email_verified'] == 0) {
+									echo "jerror('Your account has not been verified');";
+								}
+								if (isset ( $_GET ['credits_already_activated'] ) && $_GET ['credits_already_activated'] == 1) {
+									echo "jsuccess('These credits were applied in a prior activation.');";
+								}
 								?>
-         <?php
-									
-									if (isset ( $_GET ['email_verified'] ) && $_GET ['email_verified'] == 0) {
-										echo "jerror('Your account has not been verified');";
-									}
-									?>
             if (window.FileReader) {
                 function handleFileSelect(evt) {
                     var files = evt.target.files;
