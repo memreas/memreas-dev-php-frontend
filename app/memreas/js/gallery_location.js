@@ -73,33 +73,13 @@ gallery_initGoogleMap = function(div_id, mediaLat, mediaLng) {
 			}
 
 			var newPlace = place.geometry.location;
-			var LAT = '';
-			for (var i = 0; i <= 4; i++) {
-				switch (i) {
-				case 0:
-					LAT = newPlace.A;
-					break;
-				case 1:
-					LAT = newPlace.B;
-					break;
-				case 2:
-					LAT = newPlace.C;
-					break;
-				case 4:
-					LAT = newPlace.D;
-					break;
-				}
-				if (typeof (LAT) != 'undefined')
-					break;
-			}
-			var LNG = newPlace.k;
 
 			newLocation = [ {
 				tag : 'lat',
-				value : LAT
+				value : newPlace.lat()
 			}, {
 				tag : 'lng',
-				value : LNG
+				value : newPlace.lng()
 			} ];
 			console.log(newLocation);
 
