@@ -12,3 +12,5 @@ composer.phar
 data/session/*
 php_errors.log
 
+#ignore constants - use env specific via deploy script
+module/Application/src/Application/Model/MemreasConstants.php
