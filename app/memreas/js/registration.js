@@ -134,6 +134,7 @@ function validateRegstration() {
 	var input_uname = $("#register input[name=username]").val();
 	var input_upass = $("#register input[name=password]").val();
 	var input_rpass = $("#register input[name=verifypassword]").val();
+	var input_secret = $("#register input[name=secret]").val();
 	var legal_agree = $("#register input[name=legal_agree]");
 	if (input_email == '' || input_email == 'Your Email') {
 		jerror('Please fill email');
@@ -153,6 +154,11 @@ function validateRegstration() {
 	if (input_upass != input_rpass) {
 		jerror('Password confirm no match');
 		$("#register input[name=verifypassword]").focus();
+		return false;
+	}
+	if (input_secret == '' || input_secret == 'secret') {
+		jerror("We're in beta, please enter the secret to pass");
+		$("#register input[name=username]").focus();
 		return false;
 	}
 	if (!legal_agree.is(":checked")) {
@@ -190,6 +196,9 @@ function validateRegstration() {
 	}, {
 		tag : 'profile_photo',
 		value : profile_photo
+	}, {
+		tag : 'secret',
+		value : input_secret
 	}, {
 		tag : 'invited_by',
 		value : ''

@@ -156,6 +156,7 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 										class="absolute">choose profile picture</span>
 								</div>
 							</div>
+							
 							<form enctype="multipart/form-data"
 								action="<?php echo $this->url('index',array('action'=>'registration'));?>"
 								method="post" name="register" id="register"
@@ -181,12 +182,19 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 									placeholder="Verify Password"
 									onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue"
 									onFocus="if(this.value == 'Verify Password')this.value = '';" />
-								<label for="invited_by" class="event-name">!event name</label> <input
+								<label for="invited_by" class="event-name">!event name</label> 
+								<input
+									name="secret" id="secret" class="signup_textfields"
+									type="text" value="secret"
+									onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue"
+									onFocus="if(this.value == 'secret')this.value = '';"> 
+								<input
 									name="invited_by" id="invited_by" class="signup_textfields"
 									type="text" value="invited by @person (optional)"
 									onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue"
 									onFocus="if(this.value == 'invited by @person (optional)')this.value = '';"
-									style="display: none;"> <input type="checkbox"
+									style="display: none;"> 
+								<input type="checkbox"
 									class="css-checkbox" id="demo_box_2" name="legal_agree"> <label
 									class="css-label" for="demo_box_2"><a
 									onclick="popup('popupContact');" href="javascript:;"
