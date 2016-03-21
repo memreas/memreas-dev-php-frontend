@@ -322,9 +322,6 @@ var S3UploadInstance = function() {
 							'input[name=key]')
 						.val(
 							key_value);
-					alert("key_value2-->"+key_value);
-					alert("userid-->"+userid);
-					alert("media_id-->"+media_id);
 					// Use XHR,
 					// fallback to
 					// iframe
@@ -625,9 +622,6 @@ var S3UploadInstance = function() {
 					window.onbeforeunload = null;
 				},
 				success : function(data, status, jqXHR) {
-					alert(jqXHR.status);
-					alert(jqXHR.responseText);
-					alert(status);
 					console
 						.log('Inside Success function');
 					var _media_url = getValueFromXMLTag(
