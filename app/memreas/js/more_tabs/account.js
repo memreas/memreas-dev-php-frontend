@@ -250,7 +250,7 @@ var Account = function() {
 			ConsoleLog.setLog(self.id);
 
 			var obj = new Object();
-			obj.user_id = $('input[name=user_id]').val();
+			obj.user_id = Account.id;
 			obj.memreascookie = getCookie("memreascookie");
 			obj.sid = getCookie("memreascookie");
 			obj.x_memreas_chameleon = getCookie("x_memreas_chameleon");
