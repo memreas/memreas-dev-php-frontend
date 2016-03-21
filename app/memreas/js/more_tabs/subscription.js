@@ -335,6 +335,7 @@ function getPlans() {
 	var obj = new Object();
 	obj.user_id = $("input[name=user_id]").val();
 	obj.memreascookie = getCookie("memreascookie");
+	obj.sid = getCookie("memreascookie");
 	obj.x_memreas_chameleon = getCookie("x_memreas_chameleon");
 	var data_obj = JSON.stringify(obj, null, '\t');
 	var data = '{"action": "listPlan", ' + '"type":"jsonp", ' + '"json": '
