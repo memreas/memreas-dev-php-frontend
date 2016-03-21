@@ -322,7 +322,7 @@ var S3UploadInstance = function() {
 							'input[name=key]')
 						.val(
 							key_value);
-					alert("key_value-->"+key_value);
+					alert("key_value2-->"+key_value);
 					alert("userid-->"+userid);
 					alert("media_id-->"+media_id);
 					// Use XHR,
