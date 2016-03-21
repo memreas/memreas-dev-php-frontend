@@ -200,6 +200,7 @@ class IndexController extends AbstractActionController {
 			$data = simplexml_load_string ( trim ( $result ) );
 			$_SESSION ['user_id'] = ( string ) $data->loginresponse->user_id;
 			$_SESSION ['username'] = ( string ) $data->loginresponse->username;
+
 			$this->memreas_session ();
 			Mlog::addone ( $cm . __LINE__ ,'passed $this->memreas_session ()...' );
 		} else if ($action == 'logout') {

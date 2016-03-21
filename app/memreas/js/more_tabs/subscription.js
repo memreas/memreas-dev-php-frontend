@@ -240,6 +240,7 @@ function subscription_step4() {
 	var order_summary = new Object();
 	order_summary.memreascookie = getCookie("memreascookie");
 	order_summary.x_memreas_chameleon = getCookie("x_memreas_chameleon");
+	order_summary.sid = getCookie("x_memreas_chameleon");
 	order_summary.userid = $("input[name=user_id]").val();
 	order_summary.card_id = orderCard.stripe_card_reference_id;
 	order_summary.plan = orderPlan.id;
@@ -335,6 +336,7 @@ function getPlans() {
 	var obj = new Object();
 	obj.user_id = $("input[name=user_id]").val();
 	obj.memreascookie = getCookie("memreascookie");
+	obj.sid = getCookie("memreascookie");
 	obj.x_memreas_chameleon = getCookie("x_memreas_chameleon");
 	var data_obj = JSON.stringify(obj, null, '\t');
 	var data = '{"action": "listPlan", ' + '"type":"jsonp", ' + '"json": '
@@ -380,6 +382,7 @@ function getPlans() {
 						var obj = new Object();
 						obj.user_id = Account.id;
 						obj.memreascookie = getCookie("memreascookie");
+						obj.sid = getCookie("memreascookie");
 						obj.x_memreas_chameleon = getCookie("x_memreas_chameleon");
 						var data_obj = JSON.stringify(obj, null, '\t');
 						var data = '{"action": "getCustomerInfo", '
