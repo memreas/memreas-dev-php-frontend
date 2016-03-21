@@ -182,12 +182,13 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 									placeholder="Verify Password"
 									onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue"
 									onFocus="if(this.value == 'Verify Password')this.value = '';" />
-								<label for="invited_by" class="event-name">!event name</label> 
+									<!-- testing deploy -->
 								<input
 									name="secret" id="secret" class="signup_textfields"
 									type="text" value="secret"
 									onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue"
 									onFocus="if(this.value == 'secret')this.value = '';"> 
+								<label for="invited_by" class="event-name">!event name</label> 
 								<input
 									name="invited_by" id="invited_by" class="signup_textfields"
 									type="text" value="invited by @person (optional)"
