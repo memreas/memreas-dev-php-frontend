@@ -38,6 +38,7 @@ var Account = function() {
 		var obj = new Object();
 		obj.userid = self.id;
 		obj.memreascookie = getCookie("memreascookie");
+		obj.sid = getCookie("memreascookie");
 		obj.x_memreas_chameleon = getCookie("x_memreas_chameleon");
 		var json_listCard = JSON.stringify(obj, null, '\t');
 
@@ -185,6 +186,7 @@ var Account = function() {
 
 			var obj = new Object();
 			obj.memreascookie = getCookie("memreascookie");
+			obj.sid = getCookie("memreascookie");
 			obj.x_memreas_chameleon = getCookie("x_memreas_chameleon");
 			obj.selectedCard = cardSelected;
 
@@ -250,6 +252,7 @@ var Account = function() {
 			var obj = new Object();
 			obj.user_id = $('input[name=user_id]').val();
 			obj.memreascookie = getCookie("memreascookie");
+			obj.sid = getCookie("memreascookie");
 			obj.x_memreas_chameleon = getCookie("x_memreas_chameleon");
 			obj.first_name = jAddCard.find("#addcard_fname").val();
 			obj.last_name = jAddCard.find("#addcard_lname").val();
@@ -323,6 +326,7 @@ var Account = function() {
 		var params = new Object;
 		params.user_id = this.id;
 		params.memreascookie = getCookie("memreascookie");
+		params.sid = getCookie("memreascookie");
 		params.x_memreas_chameleon = getCookie("x_memreas_chameleon");
 		var params_json = JSON.stringify(params, null, '\t');
 		var data = '{"action": "getuserbalance", ' + '"type":"jsonp", ' + '"json": '
@@ -493,6 +497,7 @@ function accountViewCard() {
 	var params = new Object();
 	params.user_id = Account.id;
 	params.memreascookie = getCookie("memreascookie");
+	params.sid = getCookie("memreascookie");
 	//params.x_memreas_chameleon = getCookie("x_memreas_chameleon");
 	params.card_id = selectedCard;
 
@@ -639,6 +644,7 @@ function accountUpdateCard() {
 	var obj = new Object();
 	obj.user_id = $("input[name=user_id]").val();
 	obj.memreascookie = getCookie("memreascookie");
+	obj.sid = getCookie("memreascookie");
 	obj.x_memreas_chameleon = getCookie("x_memreas_chameleon");
 	obj.id = jEditCard.find("#card_id").val();
 	obj.name = jEditCard.find("#addcard_fname").val() + ' '
@@ -699,6 +705,7 @@ function getAccountPlans() {
     var obj = new Object();
     obj.userid = $("input[name=user_id]").val();
     obj.memreascookie = getCookie("memreascookie");
+    obj.sid = getCookie("memreascookie");
     obj.x_memreas_chameleon = getCookie("x_memreas_chameleon");
     data_obj = JSON.stringify(obj, null, '\t');
     data = '{"action": "getCustomerInfo", ' + '"type":"jsonp", ' + '"json": '
