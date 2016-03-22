@@ -7,6 +7,8 @@
 * S3 System class and handling site media uploading functionally
 * @param Element Target form class/id name will be doomed
 * */
+var FileInstances = [];
+var FileKeyInstances = [];
 var S3UploadInstance = function() {
 
 	this.instance = '';
@@ -35,9 +37,12 @@ var S3UploadInstance = function() {
 				//5GB max
 				maxFileSize : 5000000,
 				add : function(event, data) {
+
 					var filename = data.files[0].name;
 					filename = correctUploadFilename(filename);
 					var filetype = data.files[0].type;
+
+					FileInstances[filename] = data;
 
 					//Will switch to target handling snippet code for each form type
 
@@ -85,6 +90,21 @@ var S3UploadInstance = function() {
 							return false;
 						}
 					}
+
+					// Use XHR,
+					// fallback to
+					// iframe
+					options = $(
+						this)
+						.fileupload(
+							'option');
+					use_xhr = !options.forceIframeTransport
+						&& ((!options.multipart && $.support.xhrFileUpload) || $.support.xhrFormDataFileUpload);
+
+					if (!use_xhr) {
+						using_iframe_transport = true;
+					}
+
 					uploadFilesInstance[currentUploadFileCount] = filename;
 					$
 						.ajax({
@@ -110,471 +130,453 @@ var S3UploadInstance = function() {
 								alert(thrownError);
 							},
 							success : function(
-								data) {
+								response) {
 								/*-
 								 * Now that we have our data, we update the form
 								 * so it contains all the needed data
 								 * to sign the request
 								 */
-								media_id = data.media_id;
+								media_id = response.media_id;
+								var userid = $(
+									"input[name=user_id]")
+									.val();
 								form
 									.find(
 										'input[name=key]')
 									.val(
-										data.media_id
+										userid + '/' +
+										response.media_id
 										+ '/'
 										+ filename);
+
+								FileKeyInstances[filename] = userid + '/' +
+									response.media_id
+									+ '/'
+									+ filename;
+
 								form
 									.find(
 										'input[name=acl]')
 									.val(
-										data.acl);
+										response.acl);
 								form
 									.find(
 										'input[name=success_action_status]')
 									.val(
-										data.successStatus);
+										response.successStatus);
 								form
 									.find(
 										'input[name=policy]')
 									.val(
-										data.base64Policy);
+										response.base64Policy);
 								form
 									.find(
 										'input[name=x-amz-algorithm]')
 									.val(
-										data.algorithm)
+										response.algorithm)
 								form
 									.find(
 										'input[name=x-amz-credential]')
 									.val(
-										data.credentials)
+										response.credentials)
 								form
 									.find(
 										'input[name=x-amz-date]')
 									.val(
-										data.date)
+										response.date)
 								form
 									.find(
 										'input[name=x-amz-expires]')
 									.val(
-										data.expires)
+										response.expires)
 								form
 									.find(
 										'input[name=x-amz-signature]')
 									.val(
-										data.signature)
-							}
-						});
+										response.signature)
 
-					/*-
-					 * Check here isfile is valid
-					 * - matches checking on server
-					 */
-					var key_value = filename;
-					var extension = filename
-						.substr((filename
-							.lastIndexOf('.') + 1));
-					var is_valid = false;
-					switch (extension
-						.toLowerCase()) {
-						// image types
-						// allowed
-						case 'jpeg':
-							filetype = 'image';
-							is_valid = true;
-							break;
-						case 'jpg':
-							filetype = 'image';
-							is_valid = true;
-							break;
-						case 'png':
-							filetype = 'image';
-							is_valid = true;
-							break;
-						case 'gif':
-							filetype = 'image';
-							is_valid = true;
-							break;
-
-						// video types
-						// allowed
-						case 'mpeg':
-							filetype = 'video';
-							is_valid = true;
-							break;
-						case 'mp4':
-							filetype = 'video';
-							is_valid = true;
-							break;
-						case 'avi':
-							filetype = 'video';
-							is_valid = true;
-							break;
-						case 'mov':
-							filetype = 'video';
-							is_valid = true;
-							break;
-						case '3gp':
-							filetype = 'video';
-							is_valid = true;
-							break;
-						case '3gpp':
-							filetype = 'video';
-							is_valid = true;
-							break;
-						case 'mkv':
-							filetype = 'video';
-							is_valid = true;
-							break;
-						case 'mpg':
-							filetype = 'video';
-							is_valid = true;
-							break;
-						case 'avi':
-							filetype = 'video';
-							is_valid = true;
-							break;
-						case 'flv':
-							filetype = 'video';
-							is_valid = true;
-							break;
-						case 'wmv':
-							filetype = 'video';
-							is_valid = true;
-							break;
-						case 'divx':
-							filetype = 'video';
-							is_valid = true;
-							break;
-						case 'ogv':
-							filetype = 'video';
-							is_valid = true;
-							break;
-						case 'ogm':
-							filetype = 'video';
-							is_valid = true;
-							break;
-						case 'nut':
-							filetype = 'video';
-							is_valid = true;
-							break;
-						case 'vob':
-							filetype = 'video';
-							is_valid = true;
-							break;
-						case 'vro':
-							filetype = 'video';
-							is_valid = true;
-							break;
-
-						// audio types
-						// allowed
-						case 'mp3':
-							filetype = 'audio';
-							is_valid = true;
-							break;
-						case 'wav':
-							filetype = 'audio';
-							is_valid = true;
-							break;
-						case 'caf':
-							filetype = 'audio';
-							is_valid = true;
-							break;
-						default:
-							jerror('file type is not allowed');
-					}
-					contentTypeOfFile = filetype;
-					mimeTypeOfFile = filetype
-						+ '/'
-						+ extension
-							.toLowerCase()
-					if (!is_valid) {
-						jerror('file type is not allowed');
-						return false;
-					}
-
-					if (filetype
-							.indexOf('image') >= 0)
-						var target = 'image';
-					else
-						target = 'media';
-
-					form
-						.find(
-							'input[name=Content-Type]')
-						.val(
-							filetype);
-					var userid = $(
-						"input[name=user_id]")
-						.val();
-					
-					key_value = userid
-						+ '/'
-						+ media_id
-						+ '/'
-						+ filename;
-					// +
-					// correctUploadFilename('${filename}');
-					$(this)
-						.find(
-							'input[name=key]')
-						.val(
-							key_value);
-					// Use XHR,
-					// fallback to
-					// iframe
-					options = $(
-						this)
-						.fileupload(
-							'option');
-					use_xhr = !options.forceIframeTransport
-						&& ((!options.multipart && $.support.xhrFileUpload) || $.support.xhrFormDataFileUpload);
-
-					if (!use_xhr) {
-						using_iframe_transport = true;
-					}
-
-					// For upload
-					var class_upload = filename
-						.split('.');
-					var tpl2 = $('<li class="working-upload upload-'
-						+ class_upload[0]
-						+ '">'
-						+ '<div class="upload_progress" id="table">'
-						+ '<div class="upload_progress_img">'
-						+ '<img src="/memreas/img/loading-line.gif" class="loading-small">'
-						+ '</div>'
-						+ '<div class="upload_progress_bar">'
-						+ '<span></span><div class="progress"></div>'
-						+ '</div><div class="progress-text"></div>'
-						+ '<div class="close_progress"><a href="javascript:;" class="cancel-upload"><img src="/memreas/img/close.png" alt=""></a></div>'
-						+ '<div class="clear"></div>'
-						+ '</div>'
-						+ '</li>');
-
-					data.context = tpl2;
-
-					// Set preview
-					// if browser is
-					// supported
-					// file reader
-					if (window.FileReader
-						&& filetype
-							.indexOf('image') >= 0) {
-						var file = data.files[0]; // Files[0]
-						// =
-						// 1st
-						// file
-						var reader = new FileReader();
-						reader
-							.readAsDataURL(file);
-						reader.onload = (function(
-							event) {
-							var preview_thumbnail = event.target.result;
-							data.context
-								.find(
-									'.upload_progress_img')
-								.find(
-									'img')
-								.attr(
-									'src',
-									preview_thumbnail)
-								.removeClass(
-									'loading-small');
-						});
-					} else {
-						data.context
-							.find(
-								'.upload_progress_img')
-							.find(
-								'img')
-							.attr(
-								'src',
-								'/memreas/img/pic-1.jpg')
-							.removeClass(
-								'loading-small');
-					}
-
-					// Active on
-					// share tab
-					if ($("a.share")
-							.hasClass(
-								"active")) {
-						$(
-							".event-upload-image .mCSB_container")
-							.append(
-								tpl2);
-						$(
-							".event-upload-image")
-							.mCustomScrollbar(
-								"update");
-						$(
-							".event-upload-image")
-							.mCustomScrollbar(
-								"scrollTo",
-								"last");
-					} else {
-						if ($(
-								".image_upload_box")
-								.hasClass(
-									"mCustomScrollbar"))
-							$(
-								".image_upload_box .mCSB_container")
-								.append(
-									tpl2);
-						else
-							$(
-								".image_upload_box")
-								.append(
-									tpl2);
-						if ($(
-								".image_upload_box")
-								.hasClass(
-									"mCustomScrollbar"))
-							$(
-								".image_upload_box")
-								.mCustomScrollbar(
-									"update");
-						else
-							$(
-								".image_upload_box")
-								.mCustomScrollbar(
-									{
-										scrollButtons : {
-											enable : true
-										}
-									});
-						$(
-							".image_upload_box")
-							.mCustomScrollbar(
-								"scrollTo",
-								"last");
-					}
-
-					/*-
-					 * Check if media exist or not
-					 */
-					var params = [
-						{
-							tag : 'user_id',
-							value : $(
-								"input[name=user_id]")
-								.val()
-						},
-						{
-							tag : 'filename',
-							value : filename
-						} ];
-
-					data.context
-						.find(
-							'.progress-text')
-						.html(
-							'Checking file exist');
-
-					ajaxRequest(
-						'checkexistmedia',
-						params,
-						function(
-							xml_response) {
-							var filename = data.files[0].name;
-							filename = correctUploadFilename(filename);
-							if (getValueFromXMLTag(
-									xml_response,
-									'status') == 'Failure') {
-								data.context
-									.find(
-										'.progress-text')
-									.html(
-										'This file has already existed. Uploading will abort!');
-								removeItem(
-									uploadFilesInstance,
-									filename);
-								setTimeout(
-									function() {
-										tpl2
-											.remove();
-									},
-									2000);
-								return false;
-							} else {
 								/*-
-								 * Checking if file name has space
+								 * Check here isfile is valid
+								 * - matches checking on server
 								 */
-								if (filename
-										.indexOf(" ") >= 0) {
-									data.context
-										.find(
-											'.progress-text')
-										.html(
-											'Please remove space in file name. Uploading will abort!');
-									removeItem(
-										uploadFilesInstance,
-										filename);
-									setTimeout(
-										function() {
-											tpl2
-												.remove();
-										},
-										4000);
+								var key_value = filename;
+								var extension = filename
+									.substr((filename
+										.lastIndexOf('.') + 1));
+								var is_valid = false;
+								switch (extension
+									.toLowerCase()) {
+									// image types
+									// allowed
+									case 'jpeg':
+										filetype = 'image';
+										is_valid = true;
+										break;
+									case 'jpg':
+										filetype = 'image';
+										is_valid = true;
+										break;
+									case 'png':
+										filetype = 'image';
+										is_valid = true;
+										break;
+									case 'gif':
+										filetype = 'image';
+										is_valid = true;
+										break;
+
+									// video types
+									// allowed
+									case 'mpeg':
+										filetype = 'video';
+										is_valid = true;
+										break;
+									case 'mp4':
+										filetype = 'video';
+										is_valid = true;
+										break;
+									case 'avi':
+										filetype = 'video';
+										is_valid = true;
+										break;
+									case 'mov':
+										filetype = 'video';
+										is_valid = true;
+										break;
+									case '3gp':
+										filetype = 'video';
+										is_valid = true;
+										break;
+									case '3gpp':
+										filetype = 'video';
+										is_valid = true;
+										break;
+									case 'mkv':
+										filetype = 'video';
+										is_valid = true;
+										break;
+									case 'mpg':
+										filetype = 'video';
+										is_valid = true;
+										break;
+									case 'avi':
+										filetype = 'video';
+										is_valid = true;
+										break;
+									case 'flv':
+										filetype = 'video';
+										is_valid = true;
+										break;
+									case 'wmv':
+										filetype = 'video';
+										is_valid = true;
+										break;
+									case 'divx':
+										filetype = 'video';
+										is_valid = true;
+										break;
+									case 'ogv':
+										filetype = 'video';
+										is_valid = true;
+										break;
+									case 'ogm':
+										filetype = 'video';
+										is_valid = true;
+										break;
+									case 'nut':
+										filetype = 'video';
+										is_valid = true;
+										break;
+									case 'vob':
+										filetype = 'video';
+										is_valid = true;
+										break;
+									case 'vro':
+										filetype = 'video';
+										is_valid = true;
+										break;
+
+									// audio types
+									// allowed
+									case 'mp3':
+										filetype = 'audio';
+										is_valid = true;
+										break;
+									case 'wav':
+										filetype = 'audio';
+										is_valid = true;
+										break;
+									case 'caf':
+										filetype = 'audio';
+										is_valid = true;
+										break;
+									default:
+										jerror('file type is not allowed');
+								}
+								contentTypeOfFile = filetype;
+								mimeTypeOfFile = filetype
+									+ '/'
+									+ extension
+										.toLowerCase()
+								if (!is_valid) {
+									jerror('file type is not allowed');
 									return false;
 								}
 
-								var jqXHR = data
-									.submit();
+								if (filetype
+										.indexOf('image') >= 0)
+									var target = 'image';
+								else
+									target = 'media';
+
+								form
+									.find(
+										'input[name=Content-Type]')
+									.val(
+										filetype);
+
+								// For upload
+								var class_upload = filename
+									.split('.');
+								var tpl2 = $('<li class="working-upload upload-'
+									+ class_upload[0]
+									+ '">'
+									+ '<div class="upload_progress" id="table">'
+									+ '<div class="upload_progress_img">'
+									+ '<img src="/memreas/img/loading-line.gif" class="loading-small">'
+									+ '</div>'
+									+ '<div class="upload_progress_bar">'
+									+ '<span></span><div class="progress"></div>'
+									+ '</div><div class="progress-text"></div>'
+									+ '<div class="close_progress"><a href="javascript:;" class="cancel-upload"><img src="/memreas/img/close.png" alt=""></a></div>'
+									+ '<div class="clear"></div>'
+									+ '</div>'
+									+ '</li>');
+
+								data.context = tpl2;
+
+								// Set preview
+								// if browser is
+								// supported
+								// file reader
+								if (window.FileReader
+									&& filetype
+										.indexOf('image') >= 0) {
+									var file = data.files[0]; // Files[0]
+									// =
+									// 1st
+									// file
+									var reader = new FileReader();
+									reader
+										.readAsDataURL(file);
+									reader.onload = (function(
+										event) {
+										var preview_thumbnail = event.target.result;
+										data.context
+											.find(
+												'.upload_progress_img')
+											.find(
+												'img')
+											.attr(
+												'src',
+												preview_thumbnail)
+											.removeClass(
+												'loading-small');
+									});
+								} else {
+									data.context
+										.find(
+											'.upload_progress_img')
+										.find(
+											'img')
+										.attr(
+											'src',
+											'/memreas/img/pic-1.jpg')
+										.removeClass(
+											'loading-small');
+								}
+
+								// Active on
+								// share tab
+								if ($("a.share")
+										.hasClass(
+											"active")) {
+									$(
+										".event-upload-image .mCSB_container")
+										.append(
+											tpl2);
+									$(
+										".event-upload-image")
+										.mCustomScrollbar(
+											"update");
+									$(
+										".event-upload-image")
+										.mCustomScrollbar(
+											"scrollTo",
+											"last");
+								} else {
+									if ($(
+											".image_upload_box")
+											.hasClass(
+												"mCustomScrollbar"))
+										$(
+											".image_upload_box .mCSB_container")
+											.append(
+												tpl2);
+									else
+										$(
+											".image_upload_box")
+											.append(
+												tpl2);
+									if ($(
+											".image_upload_box")
+											.hasClass(
+												"mCustomScrollbar"))
+										$(
+											".image_upload_box")
+											.mCustomScrollbar(
+												"update");
+									else
+										$(
+											".image_upload_box")
+											.mCustomScrollbar(
+												{
+													scrollButtons : {
+														enable : true
+													}
+												});
+									$(
+										".image_upload_box")
+										.mCustomScrollbar(
+											"scrollTo",
+											"last");
+								}
+
+								/*-
+								 * Check if media exist or not
+								 */
+								var params = [
+									{
+										tag : 'user_id',
+										value : $(
+											"input[name=user_id]")
+											.val()
+									},
+									{
+										tag : 'filename',
+										value : filename
+									} ];
+
 								data.context
 									.find(
 										'.progress-text')
 									.html(
-										'Ok! Uploading...');
-								data.context
-									.find(
-										"a.cancel-upload")
-									.click(
-										function() {
-											var filename = data.files[0].name;
-											filename = correctUploadFilename(filename);
-											if (data.context
-													.hasClass('working-upload')) {
-												var currentPercent = data.context
-														.find(
-															".upload_progress_bar .progress")
-														.width()
-													/ data.context
-														.find(
-															".upload_progress_bar .progress")
-														.parent()
-														.width()
-													* 100;
-												if (currentPercent < 100) {
-													jqXHR
-														.abort();
-													stopUpload = true;
-													removeItem(
-														uploadFilesInstance,
-														filename);
-												} else {
-													jerror('Upload is completed. Please wait until add media to your account done');
-													stopUpload = false;
-												}
-											}
-											if (stopUpload) {
+										'Checking file exist');
+
+								ajaxRequest(
+									'checkexistmedia',
+									params,
+									function(
+										xml_response) {
+										var filename = data.files[0].name;
+										filename = correctUploadFilename(filename);
+										if (getValueFromXMLTag(
+												xml_response,
+												'status') == 'Failure') {
+											data.context
+												.find(
+													'.progress-text')
+												.html(
+													'This file has already existed. Uploading will abort!');
+											removeItem(
+												uploadFilesInstance,
+												filename);
+											setTimeout(
+												function() {
+													tpl2
+														.remove();
+												},
+												2000);
+											return false;
+										} else {
+											/*-
+											 * Checking if file name has space
+											 */
+											if (filename
+													.indexOf(" ") >= 0) {
 												data.context
-													.fadeOut(function() {
-														data.context
+													.find(
+														'.progress-text')
+													.html(
+														'Please remove space in file name. Uploading will abort!');
+												removeItem(
+													uploadFilesInstance,
+													filename);
+												setTimeout(
+													function() {
+														tpl2
 															.remove();
-													});
+													},
+													4000);
+												return false;
 											}
-										});
+
+											form
+												.find(
+													'input[name=key]')
+												.val(FileKeyInstances[filename]);
+											FileInstances[filename].submit();
+
+											data.context
+												.find(
+													'.progress-text')
+												.html(
+													'Ok! Uploading...');
+											data.context
+												.find(
+													"a.cancel-upload")
+												.click(
+													function() {
+														var filename = data.files[0].name;
+														filename = correctUploadFilename(filename);
+														if (data.context
+																.hasClass('working-upload')) {
+															var currentPercent = data.context
+																	.find(
+																		".upload_progress_bar .progress")
+																	.width()
+																/ data.context
+																	.find(
+																		".upload_progress_bar .progress")
+																	.parent()
+																	.width()
+																* 100;
+															if (currentPercent < 100) {
+																jqXHR
+																	.abort();
+																stopUpload = true;
+																removeItem(
+																	uploadFilesInstance,
+																	filename);
+															} else {
+																jerror('Upload is completed. Please wait until add media to your account done');
+																stopUpload = false;
+															}
+														}
+														if (stopUpload) {
+															data.context
+																.fadeOut(function() {
+																	data.context
+																		.remove();
+																});
+														}
+													});
+										}
+									},
+									'undefined',
+									true);
 							}
-						},
-						'undefined',
-						true);
-
-
-
+						});
 				},
 				progress : function(
 					e, data) {
@@ -642,8 +644,13 @@ var S3UploadInstance = function() {
 						var s3_filename = getValueFromXMLTag(
 							jqXHR.responseText,
 							'Key');
+
 						var s3_filename_split = s3_filename
 							.split("/");
+
+						//Get media id response from server
+						var server_media_id = s3_filename_split[1];
+
 						var base_filename = s3_filename_split[s3_filename_split.length - 1];
 						var s3_path_split = s3_filename
 							.split(base_filename);
@@ -697,7 +704,7 @@ var S3UploadInstance = function() {
 							},
 							{
 								tag : 'media_id',
-								value : media_id
+								value : server_media_id
 							},
 							{
 								tag : 'user_id',
