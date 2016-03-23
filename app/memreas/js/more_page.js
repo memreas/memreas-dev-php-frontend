@@ -2170,8 +2170,8 @@ function reportCounterClaimForm() {
 	console.log(ret_xml);
 
 	if (status == 'success') {
-	    jsuccess("we've received your counter claim");
-	    disablePopup('popupReportMedia');
+		disablePopup('dmca-form-box');
+	    popup('popupComfirmDmca');
 	} else {
 	    jerror("your counter claim failed to upload");
 	    disablePopup('popupReportMedia');
