@@ -207,7 +207,7 @@ function validateRegstration() {
 		value : assigned_event
 	} ];
 	console.log("About to call registration via ajax");
-	console.log("secret--->" + secret);
+	console.log("secret--->" + input_secret);
 
 	ajaxRequest(
 			'registration',
