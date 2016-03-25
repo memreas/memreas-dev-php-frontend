@@ -20,11 +20,11 @@
                 <ul class="share_memreas_details sell_media_form">
                     <li>
                         <label class="textfield_names">username*</label>
-                        <input name="input" type="text" id="sell-media-username" class="disabled" value="username" default="username" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'username')this.value = '';" readonly />
+                        <input name="input" type="text" id="sell-media-username" class="disabled" value="<?php $_SESSION['username']?>" default="<?php $_SESSION['username']?>" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'username')this.value = '';" readonly />
                     </li>
                     <li>
                         <label class="textfield_names">stripe email*</label>
-                        <input name="input" type="text" id="sell-media-email" class="disabled" value="Stripe email" default="Stripe email" onBlur="if(!/\S/.test(this.value)){ this.value=this.defaultValue; }" onFocus="if(this.value == 'Stripe email'){ this.value = ''; }" readonly />
+                        <input name="input" type="text" id="sell-media-email" class="disabled" value="<?php $_SESSION['email']?>" default="<?php $_SESSION['email']?>" onBlur="if(!/\S/.test(this.value)){ this.value=this.defaultValue; }" onFocus="if(this.value == 'Stripe email'){ this.value = ''; }" readonly />
                     </li>
                     <li>
                         <label class="textfield_names">first name*</label>
@@ -78,6 +78,7 @@
     <div class="akordeon-item-body"  style="padding-bottom: 10px;">
         <div class="akordeon-item-content">
             <ul class="share_memreas_details sell_media_bank">
+            	<!--  Production 
                 <li>
                     <label class="textfield_names" style="float: none; margin-bottom: 20px;">Social Security or Tax ID Number*</label>
                     <input name="input" type="text" id="sell-media-tax-ssn-ein" class="" value="123456789" default="123456789" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == '123456789')this.value = '';" />
@@ -94,6 +95,28 @@
                     <label class="textfield_names" style="float: none; margin-bottom: 20px;">bank account number*</label>
                     <input name="input" type="text" id="sell-media-account-number" class="" value="account number" default="account number" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'account number')this.value = '';" />
                 </li>
+                 -->
+            	<!--  Test values --> 
+                <li>
+                    <label class="textfield_names" style="float: none; margin-bottom: 20px;">Stripe Test Data</label>
+                </li>
+                <li>
+                    <label class="textfield_names" style="float: none; margin-bottom: 20px;">Social Security or Tax ID Number*</label>
+                    <input name="input" type="text" id="sell-media-tax-ssn-ein" class="" value="000000000" default="000000000" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == '123456789')this.value = '';" />
+                </li>
+                <li>
+                    <label class="textfield_names" style="float: none; margin-bottom: 20px;">banking institution "i.e. Citibank"*</label>
+                    <input name="input" type="text" id="sell-media-bank" class="" value="citibank" default="citibank" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'banking institution')this.value = '';" />
+                </li>
+                <li>
+                    <label class="textfield_names" style="float: none; margin-bottom: 20px;">bank routing number (ABA #)*</label>
+                    <input name="input" type="text" id="sell-media-bank-routing" class="" value="110000000" default="110000000" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'routing number')this.value = '';" />
+                </li>
+                <li>
+                    <label class="textfield_names" style="float: none; margin-bottom: 20px;">bank account number*</label>
+                    <input name="input" type="text" id="sell-media-account-number" class="" value="000123456789" default="000123456789" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'account number')this.value = '';" />
+                </li>
+            	<!--  Test values --> 
                 <li>
                     <input id="register-seller-agree" class="css-checkbox" type="checkbox" name="register_seller_agree"/>
                     <label for="register-seller-agree" name="demo_lbl_1" class="css-label margin-none" >by checking this box I agree to memreas <a href="javascript:;" onclick="popup('popupMarketplaceTerms');">Marketplace Terms of Service</a></label>
