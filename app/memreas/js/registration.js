@@ -194,6 +194,9 @@ function validateRegstration() {
 		tag : 'invited_by',
 		value : ''
 	}, {
+		tag : 'secret',
+		value : input_secret
+	}, {
 		tag : 'event_id',
 		value : assigned_event
 	} ];
