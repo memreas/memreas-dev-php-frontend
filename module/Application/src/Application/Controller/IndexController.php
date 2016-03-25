@@ -20,17 +20,16 @@ class IndexController extends AbstractActionController {
 	protected $session;
 	protected $sid;
 	protected $ipAddress;
-	public function is_json($string,$return_data = false) {
-      	$data = json_decode($string);
-      	$result = (json_last_error() == JSON_ERROR_NONE) ? ($return_data ? $data : TRUE) : FALSE;
-      	if ($result) {
-      		Mlog::addone(__CLASS__.__METHOD__.__LINE.'isJSON result', 'true');
-      	} else {
-      		Mlog::addone(__CLASS__.__METHOD__.__LINE.'isJSON result', 'false');
-      	}
-    	return $result;
+	public function is_json($string, $return_data = false) {
+		$data = json_decode ( $string );
+		$result = (json_last_error () == JSON_ERROR_NONE) ? ($return_data ? $data : TRUE) : FALSE;
+		if ($result) {
+			Mlog::addone ( __CLASS__ . __METHOD__ . __LINE . 'isJSON result', 'true' );
+		} else {
+			Mlog::addone ( __CLASS__ . __METHOD__ . __LINE . 'isJSON result', 'false' );
+		}
+		return $result;
 	}
-
 	public function fetchXML($action, $xml) {
 		$this->memreas_session ();
 		/**
@@ -43,18 +42,20 @@ class IndexController extends AbstractActionController {
 		$data = simplexml_load_string ( $xml );
 		if (empty ( $data->memreascookie )) {
 			$data->memreascookie = $_COOKIE ['memreascookie'];
-			//x_memreas_chameleon is pass through ... 
-			//$data->x_memreas_chameleon = $_COOKIE ['x_memreas_chameleon'];
+			// x_memreas_chameleon is pass through ...
+			if (isset ( $_COOKIE ['x_memreas_chameleon'] )) {
+				$data->x_memreas_chameleon = $_COOKIE ['x_memreas_chameleon'];
+			}
 			$data->addChild ( 'clientIPAddress', $this->fetchUserIPAddress () );
 			$xml = $data->asXML ();
-			//error_log ( '$xml-->' . $xml );
+			// error_log ( '$xml-->' . $xml );
 		}
 		
 		/*
 		 * Fetch guzzle and post...
 		 */
 		$guzzle = new \GuzzleHttp\Client ();
-		//Mlog::addone ( __CLASS__ . __METHOD__ . 'about to guzzle url+action+xml', MemreasConstants::MEMREAS_WS . $action . $xml );
+		// Mlog::addone ( __CLASS__ . __METHOD__ . 'about to guzzle url+action+xml', MemreasConstants::MEMREAS_WS . $action . $xml );
 		try {
 			$response = $guzzle->post ( MemreasConstants::MEMREAS_WS, [ 
 					'form_params' => [ 
@@ -66,19 +67,18 @@ class IndexController extends AbstractActionController {
 			Mlog::addone ( __CLASS__ . __METHOD__ . 'guzzle exception::', $exc->getMessage () );
 		}
 		
-		//Mlog::addone ( __CLASS__ . __METHOD__ . 'about to guzzle url+action+xml', MemreasConstants::MEMREAS_WS . $action . $xml );	
-		//error_log ( '$response->getBody ()---->' . $response->getBody () );
+		// Mlog::addone ( __CLASS__ . __METHOD__ . 'about to guzzle url+action+xml', MemreasConstants::MEMREAS_WS . $action . $xml );
+		// error_log ( '$response->getBody ()---->' . $response->getBody () );
 		
 		return $response->getBody ();
 	}
 	public function indexAction() {
-		//Mlog::addone ( __CLASS__ . __METHOD__ . 'enter', 'indexAction' );
+		// Mlog::addone ( __CLASS__ . __METHOD__ . 'enter', 'indexAction' );
 		// Start buffering so cookies are set
 		//
 		// Check Headers sent
 		//
-		//error_log ( __CLASS__ . __METHOD__ . __LINE__ . "headers_list()" . print_r ( headers_list (), true ) . PHP_EOL );
-		
+		// error_log ( __CLASS__ . __METHOD__ . __LINE__ . "headers_list()" . print_r ( headers_list (), true ) . PHP_EOL );
 		ob_start ();
 		$actionname = isset ( $_REQUEST ["action"] ) ? $_REQUEST ["action"] : '';
 		if ($actionname == "clearlog") {
@@ -97,7 +97,7 @@ class IndexController extends AbstractActionController {
 			 * Approach:
 			 * N/a
 			 */
-			//Mlog::addone ( __CLASS__ . __METHOD . __LINE . "showlog-->", "called..." );
+			// Mlog::addone ( __CLASS__ . __METHOD . __LINE . "showlog-->", "called..." );
 			$result = '<pre>' . file_get_contents ( getcwd () . '/php_errors.log' );
 			echo $result;
 			// End buffering and flush
@@ -118,12 +118,12 @@ class IndexController extends AbstractActionController {
 		} else {
 			
 			$this->memreas_session ();
-			//error_log ( "Enter FE indexAction" . PHP_EOL );
+			// error_log ( "Enter FE indexAction" . PHP_EOL );
 			// Checking headers for cookie info
-			//$headers = apache_request_headers ();
-			//foreach ( $headers as $header => $value ) {
-			//	error_log ( "FE header: $header :: value: $value" . PHP_EOL );
-			//}
+			// $headers = apache_request_headers ();
+			// foreach ( $headers as $header => $value ) {
+			// error_log ( "FE header: $header :: value: $value" . PHP_EOL );
+			// }
 			// End Checking headers for cookie info
 			
 			$path = $this->security ( "application/index/index.phtml" );
@@ -154,8 +154,8 @@ class IndexController extends AbstractActionController {
 			$callback = $_REQUEST ['callback'];
 			$json = $_REQUEST ['json'];
 			$message_data = json_decode ( $json, true );
-			//error_log('$callback--->'.$callback.PHP_EOL);
-			//error_log('$json--->'.$json.PHP_EOL);
+			// error_log('$callback--->'.$callback.PHP_EOL);
+			// error_log('$json--->'.$json.PHP_EOL);
 			
 			// Setup the URL and action
 			$ws_action = $message_data ['ws_action'];
@@ -163,9 +163,9 @@ class IndexController extends AbstractActionController {
 			$xml = $message_data ['json'];
 			
 			// Guzzle the Web Service
-			//Mlog::addone ( '$this->fetchXML ( $ws_action, $xml )', "this->fetchXML ( $ws_action, $xml )" );
+			// Mlog::addone ( '$this->fetchXML ( $ws_action, $xml )', "this->fetchXML ( $ws_action, $xml )" );
 			$result = $this->fetchXML ( $ws_action, $xml );
-			//Mlog::addone ( '$result--->', $result );
+			// Mlog::addone ( '$result--->', $result );
 			$json = json_encode ( $result );
 			
 			// Handle session
@@ -176,7 +176,7 @@ class IndexController extends AbstractActionController {
 			$callback_json = $callback . "(" . $json . ")";
 			$output = ob_get_clean ();
 			header ( "Content-type: plain/text" );
-			//Mlog::addone ( '$callback_json--->', $callback_json);
+			// Mlog::addone ( '$callback_json--->', $callback_json);
 			echo $callback_json;
 			
 			exit ();
@@ -195,14 +195,15 @@ class IndexController extends AbstractActionController {
 			/**
 			 * Handle login
 			 */
-			//Mlog::addone ( $cm . __LINE__ ,'enter login fe result...' );
+			// Mlog::addone ( $cm . __LINE__ ,'enter login fe result...' );
 			$this->writeJsConstants ();
 			$data = simplexml_load_string ( trim ( $result ) );
 			$_SESSION ['user_id'] = ( string ) $data->loginresponse->user_id;
 			$_SESSION ['username'] = ( string ) $data->loginresponse->username;
-
+			$_SESSION ['email'] = ( string ) $data->loginresponse->email;
+			
 			$this->memreas_session ();
-			Mlog::addone ( $cm . __LINE__ ,'passed $this->memreas_session ()...' );
+			Mlog::addone ( $cm . __LINE__, 'passed $this->memreas_session ()...' );
 		} else if ($action == 'logout') {
 			$this->memreas_session ();
 			/**
@@ -219,10 +220,9 @@ class IndexController extends AbstractActionController {
 	}
 	private function getS3Key() {
 		$this->memreas_session ();
-
 		
-		Mlog::addone ( __CLASS__ . __METHOD__ .__LINE__, 'About to fetch S3Key' );
-		$action='memreas_tvm';
+		Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__, 'About to fetch S3Key' );
+		$action = 'memreas_tvm';
 		if (isset ( $_REQUEST ['user_id'] )) {
 			// Fetch parms
 			$user_id = $_REQUEST ['user_id'];
@@ -234,7 +234,7 @@ class IndexController extends AbstractActionController {
 		}
 		
 		$action = 'memreas_tvm';
-		//$xml = '<xml><username>' . $_SESSION ['username'] . '</username><memreas_tvm>1</memreas_tvm></xml>';
+		// $xml = '<xml><username>' . $_SESSION ['username'] . '</username><memreas_tvm>1</memreas_tvm></xml>';
 		$s3Authenticate = $this->fetchXML ( $action, $xml );
 		
 		return $s3Authenticate;
@@ -260,9 +260,9 @@ class IndexController extends AbstractActionController {
 			$message_data ['xml'] = '';
 		}
 		
-		//Mlog::addone ( __CLASS__ . __METHOD__ . 'REGISTRATION RELATED ---->$_POST[xml]', $_POST ['xml'] );
+		// Mlog::addone ( __CLASS__ . __METHOD__ . 'REGISTRATION RELATED ---->$_POST[xml]', $_POST ['xml'] );
 		$data = simplexml_load_string ( $_POST ['xml'] );
-		if (isset($data->memreas_tvm->user_id)) {
+		if (isset ( $data->memreas_tvm->user_id )) {
 			$xml = '<xml><user_id>' . $data->memreas_tvm->user_id . '</user_id><memreas_tvm>0</memreas_tvm><memreas_pre_signed_url>1</memreas_pre_signed_url></xml>';
 			Mlog::addone ( __CLASS__ . __METHOD__ . 'REGISTRATION RELATED data->memreas_tvm->user_id ---->$_POST[xml]', $_POST ['xml'] );
 		} else {
@@ -346,8 +346,8 @@ class IndexController extends AbstractActionController {
 	public function writeJsConstants() {
 		$this->memreas_session ();
 		if (! file_exists ( $_SERVER ['DOCUMENT_ROOT'] . '/memreas/js/constants.js' )) {
-			//Mlog::addone("writeJsConstants() - $ _ SERVER [DOCUMENT_ROOT]", $_SERVER ['DOCUMENT_ROOT']);
-			//Mlog::addone("writeJsConstants()", "about to write constants.js file...");
+			// Mlog::addone("writeJsConstants() - $ _ SERVER [DOCUMENT_ROOT]", $_SERVER ['DOCUMENT_ROOT']);
+			// Mlog::addone("writeJsConstants()", "about to write constants.js file...");
 			// Put constant variables here
 			$JsConstantVariables = array (
 					'REMOVE_THIS' => 1 
@@ -363,8 +363,8 @@ class IndexController extends AbstractActionController {
 			fwrite ( $fileHandle, $content, strlen ( $content ) );
 			fclose ( $fileHandle );
 		} else {
-			Mlog::addone("writeJsConstants() - $ _ SERVER [DOCUMENT_ROOT]", $_SERVER ['DOCUMENT_ROOT']);
-			Mlog::addone("writeJsConstants()", "constants.js file exists...");
+			Mlog::addone ( "writeJsConstants() - $ _ SERVER [DOCUMENT_ROOT]", $_SERVER ['DOCUMENT_ROOT'] );
+			Mlog::addone ( "writeJsConstants()", "constants.js file exists..." );
 		}
 	}
 	
@@ -613,14 +613,8 @@ class IndexController extends AbstractActionController {
 		/*
 		 * Fetch the user's ip address
 		 */
-		$this->ipAddress = $this->getServiceLocator ()->get ( 'Request' )->getServer ( 'REMOTE_ADDR' );
-		if (! empty ( $_SERVER ['HTTP_CLIENT_IP'] )) {
-			$this->ipAddress = $_SERVER ['HTTP_CLIENT_IP'];
-		} else if (! empty ( $_SERVER ['HTTP_X_FORWARDED_FOR'] )) {
-			$this->ipAddress = $_SERVER ['HTTP_X_FORWARDED_FOR'];
-		} else {
-			$this->ipAddress = $_SERVER ['REMOTE_ADDR'];
-		}
+		$remote = new \Zend\Http\PhpEnvironment\RemoteAddress ();
+		$this->ipAddress = $remote->getIpAddress ();
 		error_log ( 'ip is ' . $this->ipAddress );
 		
 		return $this->ipAddress;
