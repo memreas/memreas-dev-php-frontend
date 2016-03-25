@@ -197,11 +197,11 @@ function validateRegstration() {
 		tag : 'profile_photo',
 		value : profile_photo
 	}, {
-		tag : 'invited_by',
-		value : ''
-	}, {
 		tag : 'secret',
 		value : input_secret
+	}, {
+		tag : 'invited_by',
+		value : ''
 	}, {
 		tag : 'event_id',
 		value : assigned_event
