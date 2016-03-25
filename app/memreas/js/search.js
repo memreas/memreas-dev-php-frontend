@@ -84,6 +84,7 @@ $(document).ready(function() {
                         });
                         $('.btn-friends').click(function() {
                         	var mid = $(this).attr('id');
+                            mid = '@' + mid;
                         	var photo = map[mid].profile_photo;
                         	photo = removeCdataCorrectLink(photo);
                         	$(".modal-backdrop").removeClass("out").addClass("in");
@@ -310,8 +311,8 @@ function personalSearchLi(target, item) {
     		 /*this will create one string with all the Javascript 
     		  properties and values to avoid multiple alert boxes: */
 
-    		  alertText += property + ':' + sampleObject[property]+'; ';
-    		  console.log (alertText);
+    		  //alertText += property + ':' + sampleObject[property]+'; ';
+    		  //console.log (alertText);
 
     		}
     	

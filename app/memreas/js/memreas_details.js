@@ -449,11 +449,12 @@ function showEventDetail(eventId, userId) {
                             if (_media_type == 'image') {
                                 _media_url = getMediaUrl(media, _media_type);
                                 content_type = 'image/jpeg';
-                                main_media_url
                                 main_media_url = getValueFromXMLTag(media,
                                         'main_media_url');
                                 _media_thumbnail_large = main_media_url = removeCdataCorrectLink(main_media_url);
                                 media_download_url = _media_thumbnail_large;
+
+                                target_element.append ('<li  media-id="' + mediaId + '"><a href="' + main_media_url + '" class="swipebox" title="photo-2"><img src="' + _media_url + '" alt=""></a></li>');
 
                             } else if (_media_type == 'video') {
                                 _media_url_hls = getValueFromXMLTag(media,
@@ -476,6 +477,7 @@ function showEventDetail(eventId, userId) {
 
                                 media_download_url = _media_url_web;
 
+                                target_element.append ('<li class="video-media" id="memreasvideo-' + mediaId + '" media-url="' + main_media_url + '"><a href=\'javascript:popupVideoPlayer("memreasvideo-' + mediaId + '");\' id="button"><img src="' + _media_url + '" alt=""><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a></li>');
                             }
 
                           
