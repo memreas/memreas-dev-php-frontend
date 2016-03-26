@@ -1,6 +1,7 @@
 /*
  * Sell media handle
- * */
+ */
+
 
 function sellMediaStep2() {
 	if (checkSellerBasicInformation('sell_media_form', false))
@@ -21,6 +22,7 @@ function checkSellerBasicInformation(element, focus_element) {
 					return formPass;
 				}
 			});
+    	alert($('[name="sell-media-username"]').val());
 	return formPass;
 }
 
@@ -50,7 +52,7 @@ function register_sell_media() {
 			memreascookie : getCookie("memreascookie"),
 			x_memreas_chameleon : getCookie("x_memreas_chameleon"),
 			user_id : user_id,
-			user_name : $("#sell-media-username").val(),
+			user_name : $('[name="sell-media-username"]').val(),
 			first_name : $("#sell-media-fname").val(),
 			last_name : $("#sell-media-lname").val(),
 			address_line_1 : $("#sell-media-address1").val(),
@@ -66,6 +68,7 @@ function register_sell_media() {
 		}
 
 		var data_params = JSON.stringify(params, null, '\t');
+		console.log("data_params-->"+data_params);
 
 		var data = '{"action": "addSeller", ' + '"type":"jsonp", ' + '"json": '
 				+ data_params + '}';
