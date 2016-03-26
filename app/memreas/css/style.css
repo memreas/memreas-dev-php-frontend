@@ -4221,6 +4221,11 @@ input.disabled {
 	background: #C8C8C8;
 }
 
+.sell_media_form_read_only input {
+	color: #000;
+	background: #C8C8C8;
+}
+
 .sell_media_form input {
 	color: #A0A0A0;
 }

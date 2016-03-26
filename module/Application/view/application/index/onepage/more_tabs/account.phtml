@@ -18,7 +18,7 @@
 
 				<ul class="share_memreas_details account_form">
 					<li><label class="textfield_names">profile email</label> <input
-						name="account_email" type="text" class="more-input" value="email"
+						name="account_email" type="text" class="more-input" value="<?php echo $_SESSION['email']; ?>"
 						onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue"
 						onFocus="if(this.value == 'email')this.value = '';" readonly /></li>
 					<li><label class="textfield_names">alternative email:</label> <input
