@@ -494,6 +494,10 @@ $(function() {
 														{
 															tag : 'is_profile_pic',
 															value : '1'
+														},
+														{
+															tag : 'is_registration',
+															value : '1'
 														}, {
 															tag : 'location',
 															value : ''
