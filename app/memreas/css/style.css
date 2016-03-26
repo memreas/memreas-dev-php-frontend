@@ -3537,8 +3537,6 @@ a.btn-browse-file {
 }
 
 /*Put own css here*/
-@import url("davidstyle.css");
-
 @import url("transtyle.css");
 
 .typeahead {

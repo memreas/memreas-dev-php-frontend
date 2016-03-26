@@ -722,7 +722,9 @@ function getAccountPlans() {
 		dataType : 'jsonp',
 		data : 'json=' + data,
 		success : function(response) {
+		    console.log("before parse data response--> " + response);
 		    response = jQuery.parseJSON(response.data);
+		    console.log("response--> " + response);
 		    if (response.status == 'Success') {
 				var account_stripe = response.account.customer;
 				if (account_stripe.exist) {
