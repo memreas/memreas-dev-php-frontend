@@ -5,7 +5,7 @@
 
 echo -n "Do you want to point to local after push (y\n) > "
 read local
-echo "You entered $comment"
+echo "You entered $local"
 
 
 echo -n "Enter the details of your deployment (i.e. 4-FEB-2014 Updating this script.) > "
