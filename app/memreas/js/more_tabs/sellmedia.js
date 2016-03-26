@@ -63,7 +63,7 @@ function register_sell_media() {
 			stripe_email_address : $("#sell-media-email").val(),
 			sell_media_bank : $("#sell-media-bank").val(),
 			tax_ssn_ein : $("#sell-media-tax-ssn-ein").val(),
-			bank_routing : $("#sell-media-bank-routing").val(),
+			routing_number : $("#sell-media-bank-routing").val(),
 			account_number : $("#sell-media-account-number").val()
 		}
 
