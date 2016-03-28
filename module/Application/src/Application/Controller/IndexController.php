@@ -609,15 +609,19 @@ class IndexController extends AbstractActionController {
 		die ();
 	}
 	public function fetchUserIPAddress() {
-		$this->memreas_session ();
 		/*
 		 * Fetch the user's ip address
 		 */
-		$remote = new \Zend\Http\PhpEnvironment\RemoteAddress ();
-		$this->ipAddress = $remote->getIpAddress ();
-		error_log ( 'ip is ' . $this->ipAddress );
+		//Mlog::addone ( '$_SERVER [REMOTE_ADDR]', $_SERVER ['REMOTE_ADDR'] );
+		//Mlog::addone ( '$_SERVER [HTTP_X_FORWARDED_FOR]', $_SERVER ['HTTP_X_FORWARDED_FOR'] );
+		if (! empty ( $_SERVER ['HTTP_X_FORWARDED_FOR'] )) {
+			$ipAddress = $_SERVER ['HTTP_X_FORWARDED_FOR'];
+		} else {
+			$ipAddress = $_SERVER ['REMOTE_ADDR'];
+		}
+		// error_log ( 'ip is ' . $ipAddress );
 		
-		return $this->ipAddress;
+		return $ipAddress;
 	}
 	public function memreas_session() {
 		if (session_status () !== PHP_SESSION_ACTIVE) {
