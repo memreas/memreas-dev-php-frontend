@@ -612,12 +612,9 @@ class IndexController extends AbstractActionController {
 		/*
 		 * Fetch the user's ip address
 		 */
-		Mlog::addone ( '$_SERVER [REMOTE_ADDR]', $_SERVER ['REMOTE_ADDR'] );
-		Mlog::addone ( '$_SERVER [HTTP_CLIENT_IP]', $_SERVER ['HTTP_CLIENT_IP'] );
-		Mlog::addone ( '$_SERVER [HTTP_X_FORWARDED_FOR]', $_SERVER ['HTTP_X_FORWARDED_FOR'] );
-		if (! empty ( $_SERVER ['HTTP_CLIENT_IP'] )) {
-			$ipAddress = $_SERVER ['HTTP_CLIENT_IP'];
-		} else if (! empty ( $_SERVER ['HTTP_X_FORWARDED_FOR'] )) {
+		//Mlog::addone ( '$_SERVER [REMOTE_ADDR]', $_SERVER ['REMOTE_ADDR'] );
+		//Mlog::addone ( '$_SERVER [HTTP_X_FORWARDED_FOR]', $_SERVER ['HTTP_X_FORWARDED_FOR'] );
+		if (! empty ( $_SERVER ['HTTP_X_FORWARDED_FOR'] )) {
 			$ipAddress = $_SERVER ['HTTP_X_FORWARDED_FOR'];
 		} else {
 			$ipAddress = $_SERVER ['REMOTE_ADDR'];
