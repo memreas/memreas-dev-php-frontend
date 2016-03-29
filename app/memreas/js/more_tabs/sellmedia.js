@@ -81,7 +81,7 @@ function register_sell_media() {
 			type : 'POST',
 			dataType : 'jsonp',
 			data : 'json=' + data,
-			timeout: 10000,
+			//timeout: 10000,
 			success : function(response) {
 			  	response = jQuery.parseJSON( response.data );
 				if (response.status == 'Success') {
