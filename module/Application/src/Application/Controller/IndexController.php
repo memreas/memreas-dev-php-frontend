@@ -40,6 +40,7 @@ class IndexController extends AbstractActionController {
 		 * If memreascookie is available and missing inject it...
 		 */
 		$data = simplexml_load_string ( $xml );
+		Mlog::addone ( __CLASS__ . __METHOD__ . '::$data', $data );
 		if (empty ( $data->memreascookie )) {
 			$data->memreascookie = $_COOKIE ['memreascookie'];
 			// x_memreas_chameleon is pass through ...
@@ -55,7 +56,7 @@ class IndexController extends AbstractActionController {
 		 * Fetch guzzle and post...
 		 */
 		$guzzle = new \GuzzleHttp\Client ();
-		// Mlog::addone ( __CLASS__ . __METHOD__ . 'about to guzzle url+action+xml', MemreasConstants::MEMREAS_WS . $action . $xml );
+		Mlog::addone ( __CLASS__ . __METHOD__ . 'about to guzzle url+action+xml', MemreasConstants::MEMREAS_WS . $action . $xml );
 		try {
 			$response = $guzzle->post ( MemreasConstants::MEMREAS_WS, [ 
 					'form_params' => [ 
