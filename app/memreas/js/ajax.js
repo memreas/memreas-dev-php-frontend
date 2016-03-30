@@ -67,7 +67,7 @@ ajaxRequest = function(action, params, success_func, error_func,
 		dataType : 'jsonp',
 		data : 'json=' + json_data,
 		success : function(ret_xml) {
-
+/*
 		    // console.log("ret_xml--->" + ret_xml);
 		    var x_memreas_chameleon = getValueFromXMLTag(ret_xml,
 			    'x_memreas_chameleon').trim();
@@ -83,7 +83,7 @@ ajaxRequest = function(action, params, success_func, error_func,
 			    return;
 			}
 		    }
-
+*/
 		    if (typeof success_func != "undefined")
 			success_func(ret_xml);
 
