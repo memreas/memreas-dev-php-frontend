@@ -932,6 +932,7 @@ function fetchpubsMemreas() {
     params.user_id = Account.id;
     params.memreascookie = getCookie("memreascookie");
     params.x_memreas_chameleon = getCookie("x_memreas_chameleon");
+    params.sid = getCookie("memreascookie");
     var params_json = JSON.stringify(
         params, null, '\t');
     var data = '{"action": "check_own_event", '

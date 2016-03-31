@@ -155,6 +155,7 @@ function popupBuyCredit() {
 	var obj = new Object();
 	obj.userid = LOGGED_USER_ID;
 	obj.memreascookie = getCookie("memreascookie");
+	obj.sid = getCookie("memreascookie");
 	obj.x_memreas_chameleon = getCookie("x_memreas_chameleon");
 	var json_listCard = JSON.stringify(obj, null, '\t');
 	var data = '{"action": "listcards", ' + '"type":"jsonp", ' + '"json": '
@@ -167,8 +168,9 @@ function popupBuyCredit() {
 				dataType : 'jsonp',
 				data : 'json=' + data,
 				success : function(response) {
+					response = JSON.parse(response.data);
 					if (response.status == 'Success') {
-					    	alert("setX_MEMREAS_CHAMELEON(response.x_memreas_chameleon)-->" + response.x_memreas_chameleon);
+					    	//alert("setX_MEMREAS_CHAMELEON(response.x_memreas_chameleon)-->" + response.x_memreas_chameleon);
 					    	setX_MEMREAS_CHAMELEON(response.x_memreas_chameleon);
 						
 						var cards = response.payment_methods;
