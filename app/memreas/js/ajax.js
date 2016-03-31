@@ -67,23 +67,22 @@ ajaxRequest = function(action, params, success_func, error_func,
 		dataType : 'jsonp',
 		data : 'json=' + json_data,
 		success : function(ret_xml) {
-/*
 		    // console.log("ret_xml--->" + ret_xml);
-		    var x_memreas_chameleon = getValueFromXMLTag(ret_xml,
-			    'x_memreas_chameleon').trim();
-		    if (x_memreas_chameleon != '') {
-			console.log('setting new x_memreas_chameleon--> '
-				+ x_memreas_chameleon);
-			setCookie("x_memreas_chameleon", x_memreas_chameleon)
-		    }
-
 		    if (action != 'findtag' && action != 'findevent') {
+			var x_memreas_chameleon = getValueFromXMLTag(ret_xml,
+				'x_memreas_chameleon').trim();
+			if (x_memreas_chameleon != '') {
+			    console.log('setting new x_memreas_chameleon--> '
+				    + x_memreas_chameleon);
+			    setCookie("x_memreas_chameleon",
+				    x_memreas_chameleon)
+			}
+
 			if (getValueFromXMLTag(ret_xml, 'error').trim() == 'Please Login') {
 			    document.location.href = "/index";
 			    return;
 			}
 		    }
-*/
 		    if (typeof success_func != "undefined")
 			success_func(ret_xml);
 
