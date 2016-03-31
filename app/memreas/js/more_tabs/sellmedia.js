@@ -51,6 +51,7 @@ function register_sell_media() {
 		var params = {
 			memreascookie : getCookie("memreascookie"),
 			x_memreas_chameleon : getCookie("x_memreas_chameleon"),
+			sid : getCookie("memreascookie"),
 			user_id : user_id,
 			user_name : $('[name="sell-media-username"]').val(),
 			first_name : $("#sell-media-fname").val(),
