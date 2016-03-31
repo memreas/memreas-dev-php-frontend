@@ -45,8 +45,8 @@ echo $constants;
 
 <script type="text/javascript">
 <?php 
-echo "var user_id = '" . $user_id . "';";  
-echo "var username = '" . $username . "';";
+echo "var user_id = '" . $_SESSION['user_id'] . "';";  
+echo "var username = '" . $_SESSION['username'] . "';";
 ?>
 
 			<?php if (!empty($this->CloudFrontPolicy)) { ?>
