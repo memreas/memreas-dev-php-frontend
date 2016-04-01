@@ -65,7 +65,7 @@ ajaxRequest = function(action, params, success_func, error_func,
 		type : 'post',
 		url : feExecAjaxURL,
 		dataType : 'jsonp',
-		timeout : 10000
+		timeout : 10000,
 		data : 'json=' + json_data,
 		success : function(ret_xml) {
 		    // console.log("ret_xml--->" + ret_xml);
