@@ -235,6 +235,7 @@ function popupCreditAddCard() {
 		var obj = new Object();
 		obj.user_id = $('input[name=user_id]').val();
 		obj.memreascookie = getCookie("memreascookie");
+		obj.sid = getCookie("memreascookie");
 		obj.x_memreas_chameleon = getCookie("x_memreas_chameleon");
 		obj.first_name = jAddCard.find("#addcard_fname").val();
 		obj.last_name = jAddCard.find("#addcard_lname").val();
