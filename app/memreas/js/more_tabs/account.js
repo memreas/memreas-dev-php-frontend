@@ -708,7 +708,9 @@ function getAccountPlans() {
     obj.sid = getCookie("memreascookie");
     obj.x_memreas_chameleon = getCookie("x_memreas_chameleon");
     data_obj = JSON.stringify(obj, null, '\t');
-    data = '{"action": "getCustomerInfo", ' + '"type":"jsonp", ' + '"json": '
+    data = '{"action": "getCustomerInfo", ' +
+    	   '"memreascookie":"' + getCookie("memreascookie") + '", ' +
+    	   '"type":"jsonp", ' + '"json": '
 	    + data_obj + '}';
 
     var stripeCustomerUrl = $("input[name=stripe_url]").val()
