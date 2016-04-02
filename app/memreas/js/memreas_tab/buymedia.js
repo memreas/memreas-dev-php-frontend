@@ -306,14 +306,9 @@ function acceptBuyCredit() {
 		return false;
 	}
 
-	password_confirm = md5(password_confirm);
-	if (password_confirm != userObject.password) {
-		jerror("Password confirm is invalid");
-		return false;
-	}
-
 	var params = new Object;
-	params.userid = LOGGED_USER_ID;
+	params.userid = Account.id;
+	params.password = password_confirm;
 	params.memreascookie = getCookie("memreascookie");
 	params.x_memreas_chameleon = getCookie("x_memreas_chameleon");
 	params.stripe_card_reference_id = buycredit_card;
