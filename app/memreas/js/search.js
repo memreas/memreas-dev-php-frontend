@@ -439,7 +439,7 @@ var h = function(item) {
 
     switch (item.charAt(0)) {
     case '@':
-	var photo = map[item].profile_photo;
+	var photo = map[item].profile_photo[0];
 	var name = map[item].username;
 	photo = removeCdataCorrectLink(photo);
 	break;
