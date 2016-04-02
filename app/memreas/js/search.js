@@ -444,7 +444,12 @@ var h = function(item) {
 	photo = removeCdataCorrectLink(photo);
 	break;
     case '!':
-	var photo = map[item].event_photo;
+	if (typeof map[item].event_photo === 'string') {
+		var photo = map[item].event_photo;
+	}
+	else {
+		var photo = map[item].event_creator_pic;
+	}
 	photo = removeCdataCorrectLink(photo);
 	var name = map[item].name + "!";
 	break;

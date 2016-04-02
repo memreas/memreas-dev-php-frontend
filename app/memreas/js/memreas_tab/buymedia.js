@@ -79,7 +79,8 @@ function buyMedia(event_id) {
 			params.duration_to = duration_to;
 
 			var params_json = JSON.stringify(params, null, '\t');
-			var data = '{"action": "buyMedia", ' + '"type":"jsonp", '
+			var data = '{"action": "buyMedia", ' + '"memreascookie": "'
+				+ getCookie("memreascookie") + '"type":"jsonp", '
 					+ '"json": ' + params_json + '}';
 
 			var stripeActionUrl = $("input[name=stripe_url]").val()
@@ -153,12 +154,13 @@ function popupBuyCredit() {
 	var stripeActionUrl = $("input[name=stripe_url]").val()
 			+ 'stripe_listCards';
 	var obj = new Object();
-	obj.userid = LOGGED_USER_ID;
+	obj.userid = Account.id;
 	obj.memreascookie = getCookie("memreascookie");
 	obj.sid = getCookie("memreascookie");
 	obj.x_memreas_chameleon = getCookie("x_memreas_chameleon");
 	var json_listCard = JSON.stringify(obj, null, '\t');
-	var data = '{"action": "listcards", ' + '"type":"jsonp", ' + '"json": '
+	var data = '{"action": "listcards",' + '"memreascookie": "'
+		+ getCookie("memreascookie") + '", ' + '"type":"jsonp", ' + '"json": '
 			+ json_listCard + '}';
 	$('.stripe-payment').fadeIn(1000);
 	$
@@ -233,6 +235,7 @@ function popupCreditAddCard() {
 		var obj = new Object();
 		obj.user_id = $('input[name=user_id]').val();
 		obj.memreascookie = getCookie("memreascookie");
+		obj.sid = getCookie("memreascookie");
 		obj.x_memreas_chameleon = getCookie("x_memreas_chameleon");
 		obj.first_name = jAddCard.find("#addcard_fname").val();
 		obj.last_name = jAddCard.find("#addcard_lname").val();
@@ -249,7 +252,8 @@ function popupCreditAddCard() {
 
 		var json_storeCard = JSON.stringify(obj);
 
-		var data = '{"action": "addCard", ' + '"type":"jsonp", ' + '"json": '
+		var data = '{"action": "addCard", ' + '"memreascookie": "'
+			+ getCookie("memreascookie") + '"type":"jsonp", ' + '"json": '
 				+ json_storeCard + '}';
 
 		$('.stripe-payment').fadeIn(1000);
