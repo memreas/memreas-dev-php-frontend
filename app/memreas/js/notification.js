@@ -136,6 +136,9 @@ function notification_status_to_class(status_code) {
 
 function updateNotification(notification_id, update_status) {
 
+    //
+    // JM: updated status values to match web service.
+    //
     switch (update_status) {
     case 'accept':
 	var params = [ {
@@ -146,28 +149,6 @@ function updateNotification(notification_id, update_status) {
 	    }, {
 		tag : 'status',
 		value : '1'
-	    } ]
-	} ];
-	ajaxRequest('updatenotification', params, function(response) {
-	    if (getValueFromXMLTag(response, 'status') == 'success') {
-		jsuccess(getValueFromXMLTag(response, 'message'));
-		setTimeout(function() {
-		    // Reload notification
-		    $("a.notification_icon").click();
-		}, 1000);
-	    } else
-		jerror(getValueFromXMLTag(response, 'message'));
-	});
-	break;
-    case 'ignore':
-	var params = [ {
-	    tag : 'notification',
-	    value : [ {
-		tag : 'notification_id',
-		value : notification_id
-	    }, {
-		tag : 'status',
-		value : '2'
 	    } ]
 	} ];
 	ajaxRequest('updatenotification', params, function(response) {
@@ -193,7 +174,29 @@ function updateNotification(notification_id, update_status) {
 		value : notification_id
 	    }, {
 		tag : 'status',
-		value : '0'
+		value : '2'
+	    } ]
+	} ];
+	ajaxRequest('updatenotification', params, function(response) {
+	    if (getValueFromXMLTag(response, 'status') == 'success') {
+		jsuccess(getValueFromXMLTag(response, 'message'));
+		setTimeout(function() {
+		    // Reload notification
+		    $("a.notification_icon").click();
+		}, 1000);
+	    } else
+		jerror(getValueFromXMLTag(response, 'message'));
+	});
+	break;
+    case 'ignore':
+	var params = [ {
+	    tag : 'notification',
+	    value : [ {
+		tag : 'notification_id',
+		value : notification_id
+	    }, {
+		tag : 'status',
+		value : '3'
 	    } ]
 	} ];
 	ajaxRequest('updatenotification', params, function(response) {
