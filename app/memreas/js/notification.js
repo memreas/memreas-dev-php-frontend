@@ -128,6 +128,9 @@ function notification_status_to_class(status_code) {
     case '2':
 	class_return = 'decline';
 	break;
+    case '3':
+	class_return = 'ignore';
+	break;
     default:
 	class_return = '';
     }
