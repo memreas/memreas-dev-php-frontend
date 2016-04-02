@@ -2423,6 +2423,11 @@ ul.option li small {
 	font-size: 32px;
 }
 
+.regular-radio:checked+label.mem-gend:after {
+	top: 15px;
+	left: 85px;
+}
+
 .regular-radio:checked+label {
 	background-color: #e9ecee;
 	color: #99a1a7;
