@@ -323,15 +323,15 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4e8dd4', end
 
 @media ( max-width :768px) {
 	.film {
-		padding: 52.5% 0 0;
+		padding: 150px 0 75px!important;
 	}
 	.filminner {
-		bottom: 14.3%;
+		display: none;
 	}
 	.imabsolute {
 		position: absolute;
 		z-index: 1000;
-		top: 25%;
+		top: 35%;
 	}
 }
 
@@ -340,22 +340,26 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4e8dd4', end
 		bottom: 21%;
 	}
 	.imabsolute {
-		top: 21%;
+		top: 30%;
 	}
-}
 
-@media ( max-width :600px) {
-	.filminner {
-		bottom: 23%;
+	.film {
+		padding: 150px 0 75px!important;
 	}
 }
 
 @media ( max-width :450px) {
-	.filminner {
-		bottom: 28.5%;
+
+	.film {
+		transform: rotate(0deg);
 	}
+
 	.imabsolute {
 		top: 17%;
+	}
+
+	.imabsolute {
+		top: 40%;
 	}
 }
 
@@ -481,6 +485,14 @@ input[type=checkbox].css-checkbox+label.css-label {
 	margin-left: 80px;
 	min-width: 140px;
 }
+
+input[type=checkbox].css-checkbox+label#term_condition_label.css-label {
+	text-indent: 35px;
+	padding-left: 0;
+	height: 100px;
+	line-height: 1.7;
+}
+
 
 input[type=checkbox].css-checkbox:checked+label.css-label {
 	background: url(../img/check.png) no-repeat;
@@ -851,7 +863,7 @@ footer.rel {
 	}
 	.feature {
 		/*min-height: 386px;*/
-		
+		margin-left: 0;
 	}
 	#file {
 		padding: 7px 0;
