@@ -117,7 +117,8 @@ function fetch_customer(){
     obj.memreascookie = getCookie("memreascookie");
     obj.x_memreas_chameleon = getCookie("x_memreas_chameleon");
     var data_obj = JSON.stringify(obj, null, '\t');
-    var data = '{"action": "getCustomerInfo", ' +
+    var data = '{"action": "getCustomerInfo", ' + 
+    '"memreascookie":"' + getCookie("memreascookie") + '", ' +
     '"type":"jsonp", ' +
     '"json": ' + data_obj  +
     '}';

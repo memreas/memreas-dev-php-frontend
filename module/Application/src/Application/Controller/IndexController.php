@@ -167,7 +167,7 @@ class IndexController extends AbstractActionController {
 			// Guzzle the Web Service
 			// Mlog::addone ( '$this->fetchXML ( $ws_action, $xml )', "this->fetchXML ( $ws_action, $xml )" );
 			$result = $this->fetchXML ( $ws_action, $xml );
-			// Mlog::addone ( '$result--->', $result );
+			Mlog::addone ( '$result--->', $result );
 			$json = json_encode ( $result );
 			
 			// Handle session
@@ -376,14 +376,14 @@ class IndexController extends AbstractActionController {
 	public function loginAction() {
 		Mlog::addone ( 'Enter::', 'loginAction()' );
 		$this->memreas_session ();
-		// error_log ( "Inside loginAction" . PHP_EOL );
+		Mlog::addone ( __CLASS__.__METHOD__.__LINE__.'::$_REQUEST--->',$_REQUEST );
 		
 		// Fetch the post data
 		$request = $this->getRequest ();
 		$postData = $request->getPost ()->toArray ();
 		
-		$username = $postData ['username'];
-		// $password = $postData ['password'];
+		$username = $_POST['username'];
+		$password = $_POST['password'];
 		$userid = $postData ['status_user_id'];
 		if (empty ( $userid )) {
 			Mlog::addone ( 'Returning view::', 'this->redirect ()->toRoute ( index, array (action => index) )' );
@@ -628,8 +628,8 @@ class IndexController extends AbstractActionController {
 	public function memreas_session() {
 		if (session_status () !== PHP_SESSION_ACTIVE) {
 			session_start ();
-			// error_log('$_COOKIE---->'.print_r($_COOKIE, true));
-			// error_log('$_SESSION---->'.print_r($_SESSION, true));
+			error_log('$_COOKIE---->'.print_r($_COOKIE, true));
+			error_log('$_SESSION---->'.print_r($_SESSION, true));
 		}
 	}
 } // end class IndexController

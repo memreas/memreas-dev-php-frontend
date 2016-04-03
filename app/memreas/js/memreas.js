@@ -101,7 +101,8 @@ var AppSystem = function() {
         obj.x_memreas_chameleon = getCookie("x_memreas_chameleon");
         var data_obj = JSON.stringify(obj, null, '\t');
         var data = '{"action": "getCustomerInfo", '
-            + '"type":"jsonp", ' + '"json": ' + data_obj
+            + '"memreascookie":"' + getCookie("memreascookie") + '", ' +
+            '"type":"jsonp", ' + '"json": ' + data_obj
             + '}';
         var stripeCustomerUrl = $("input[name=stripe_url]").val() + 'stripe_getCustomerInfo';
         $.ajax({
