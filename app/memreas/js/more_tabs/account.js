@@ -176,8 +176,8 @@ var Account = function() {
 			// Fetch the card
 			var selectedCard = '';
 			for (var i in Account.accountTab_cards) {
-				if (accountTab_cards[i].selected == 1) {
-					selectedCard = self.accountTab_cards[i].data.stripe_card_reference_id;
+				if (Account.accountTab_cards[i].selected == 1) {
+					selectedCard = Account.accountTab_cards[i].data.stripe_card_reference_id;
 					break;
 				}
 			}
