@@ -193,6 +193,7 @@ function buycredit_confirmAmount(){
     var params = new Object;
     params.userid = $("input[name=user_id]").val();
     params.memreascookie = getCookie("memreascookie");
+    params.sid = getCookie("memreascookie");
     params.x_memreas_chameleon = getCookie("x_memreas_chameleon");
     params.stripe_card_reference_id = orderCard.stripe_card_reference_id;
     params.amount = $("select#credit-amount").val();
