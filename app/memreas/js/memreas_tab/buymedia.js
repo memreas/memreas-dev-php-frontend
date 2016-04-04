@@ -25,11 +25,6 @@ function clearBuyMediaPopup() {
 }
 
 function buyMedia(event_id) {
-	var buymedia_agreement = ($("#ckb_buymedia_agree").is(":checked") ? 1 : 0);
-	if (!buymedia_agreement) {
-		jerror("you must agree with our terms and conditions");
-		return false;
-	}
 
 	var buymedia_password_confirm = $("#buymedia_confirm_password").val();
 	if (buymedia_password_confirm == '') {
