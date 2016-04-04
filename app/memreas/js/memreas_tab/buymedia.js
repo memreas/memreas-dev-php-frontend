@@ -233,7 +233,8 @@ function popupCreditAddCard() {
 		var stripeActionUrl = $("input[name=stripe_url]").val()
 				+ 'stripe_storeCard';
 		var obj = new Object();
-		obj.user_id = $('input[name=user_id]').val();
+
+		obj.user_id = Account.id;
 		obj.memreascookie = getCookie("memreascookie");
 		obj.sid = getCookie("memreascookie");
 		obj.x_memreas_chameleon = getCookie("x_memreas_chameleon");
@@ -264,8 +265,8 @@ function popupCreditAddCard() {
 					dataType : 'jsonp',
 					data : 'json=' + data,
 					success : function(response) {
-					    	alert("setX_MEMREAS_CHAMELEON(response.x_memreas_chameleon)-->" + response.x_memreas_chameleon);
-					    	setX_MEMREAS_CHAMELEON(response.x_memreas_chameleon);
+					    	//alert("setX_MEMREAS_CHAMELEON(response.x_memreas_chameleon)-->" + response.x_memreas_chameleon);
+					    	//setX_MEMREAS_CHAMELEON(response.x_memreas_chameleon);
 						
 						if (response.status == 'Success') {
 							jsuccess("Your card added successfully");
