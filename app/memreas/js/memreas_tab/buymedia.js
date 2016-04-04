@@ -335,10 +335,10 @@ function acceptBuyCredit() {
 				params.memreascookie = getCookie("memreascookie");
 				params.sid = getCookie("memreascookie");
 				params.x_memreas_chameleon = getCookie("x_memreas_chameleon");
-				params.stripe_card_reference_id = orderCard.stripe_card_reference_id;
-				params.amount = $("select#credit-amount").val();
+				params.stripe_card_reference_id = buycredit_card;
+				params.amount = buycredit_amount;
 				var params_json = JSON.stringify(params, null, '\t');
-				var data = '{"action": "subscription", ' +
+				var data = '{"action": "buycredit", ' +
 					'"type":"jsonp", ' +
 					'"json": ' + params_json  +
 					'}';
