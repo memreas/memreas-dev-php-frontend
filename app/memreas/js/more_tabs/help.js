@@ -14,4 +14,8 @@ $(function(){
     $(".dmca-policy-head").one("click", function(){
         $(".dmca-policy").mCustomScrollbar({scrollButtons:{enable:true }});
     });
+
+     $(".marketplace-agree-head").one("click", function(){
+        $(".marketplace-agree").mCustomScrollbar({scrollButtons:{enable:true }});
+    });
 });

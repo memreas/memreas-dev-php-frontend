@@ -38,13 +38,19 @@
 						onBlur="if(!/\S/.test(this.value)){ this.value=this.defaultValue; $(this).css('color', '#a0a0a0'); }"
 						onFocus="if(this.value == 'last name'){ this.value = ''; $(this).css('color', '#000'); }" />
 					</li>
+					<li><label class="textfield_names">date of birth*</label> <input
+						name="input" type="text" id="sell-media-dob" class=""
+						value="yyyy-mm-dd" default="yyyy-mm-dd"
+						onBlur="if(!/\S/.test(this.value)){ this.value=this.defaultValue; $(this).css('color', '#a0a0a0'); }"
+						onFocus="if(this.value == 'yyyy-mm-dd'){ this.value = ''; $(this).css('color', '#000'); }" />
+					</li>
 					<li><label class="textfield_names">address 1*</label> <input
 						name="input" type="text" id="sell-media-address1" class=""
 						value="Address line 1" default="Address line 1"
 						onBlur="if(!/\S/.test(this.value)){ this.value=this.defaultValue; $(this).css('color', '#a0a0a0'); }"
 						onFocus="if(this.value == 'Address line 1'){ this.value = ''; $(this).css('color', '#000'); }" />
 					</li>
-					<li><label class="textfield_names">dddress 2</label> <input
+					<li><label class="textfield_names">address 2</label> <input
 						name="input" type="text" id="sell-media-address2" class=""
 						value="Address line 2" default="Address line 2"
 						onBlur="if(!/\S/.test(this.value)){ this.value=''; $(this).css('color', '#a0a0a0'); }"
