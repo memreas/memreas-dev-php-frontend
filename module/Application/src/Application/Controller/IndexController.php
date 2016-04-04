@@ -329,8 +329,18 @@ class IndexController extends AbstractActionController {
 				'BuyCredit' => MemreasConstants::PAYMENT_TAB_BUY_CREDIT,
 				'SellMedia' => MemreasConstants::PAYMENT_TAB_SELL_MEDIA 
 		);
+
+		//
+		// if $_SESSION ['user_id'] is not set logout
+		// - something must be wrong...
+		//
+		if (empty($_SESSION ['user_id'])){
+			$this->logoutAction();
+		}
 		
-		// Guzzle the LoginWeb Service
+		//
+		// else route to memreas one page
+		//
 		$user_id = $_SESSION ['user_id'];
 		$data ['userid'] = $user_id;
 		$data ['bucket'] = MemreasConstants::S3BUCKET;
