@@ -55,7 +55,7 @@ class IndexController extends AbstractActionController {
 		/*
 		 * Fetch guzzle and post...
 		 */
-		//$guzzle = new \GuzzleHttp\Client (['verify' => false]);
+		// $guzzle = new \GuzzleHttp\Client (['verify' => false]);
 		$guzzle = new \GuzzleHttp\Client ();
 		Mlog::addone ( __CLASS__ . __METHOD__ . 'about to guzzle url+action+xml', MemreasConstants::MEMREAS_WS . $action . $xml );
 		try {
@@ -69,8 +69,8 @@ class IndexController extends AbstractActionController {
 			Mlog::addone ( __CLASS__ . __METHOD__ . 'guzzle exception::', $exc->getMessage () );
 		}
 		
-		// Mlog::addone ( __CLASS__ . __METHOD__ . 'about to guzzle url+action+xml', MemreasConstants::MEMREAS_WS . $action . $xml );
-		// error_log ( '$response->getBody ()---->' . $response->getBody () );
+		Mlog::addone ( __CLASS__ . __METHOD__ . 'about to guzzle url+action+xml', MemreasConstants::MEMREAS_WS . $action . $xml );
+		error_log ( '$response->getBody ()---->' . $response->getBody () );
 		
 		return $response->getBody ();
 	}
@@ -193,27 +193,56 @@ class IndexController extends AbstractActionController {
 	}
 	private function handleWSSession($action, $result) {
 		$cm = __CLASS__ . __METHOD__;
-		if ($action == 'login') {
+		
+		//
+		// Check return result
+		//
+		libxml_use_internal_errors ( true );
+		Mlog::addone ( $cm . __LINE__ . '::$result--->', $result );
+		$data = simplexml_load_string ( $result );
+		if ($data !== false) {
+			// Process XML structure here
+			Mlog::addone ( $cm . __LINE__ . '::$result--->', 'passed $this->memreas_session ()...' );
+			if ($action == 'login') {
+				/**
+				 * Handle login
+				 */
+				Mlog::addone ( $cm . __LINE__ . '::$action', $action );
+				Mlog::addone ( $cm . __LINE__ . '::$result', $result );
+				$this->writeJsConstants ();
+				$_SESSION ['user_id'] = ( string ) $data->loginresponse->user_id;
+				$_SESSION ['username'] = ( string ) $data->loginresponse->username;
+				$_SESSION ['email'] = ( string ) $data->loginresponse->email;
+				
+				$this->memreas_session ();
+				Mlog::addone ( $cm . __LINE__, 'passed $this->memreas_session ()...' );
+			} else if (($action == 'logout') || (! empty ( $data->logoutresponse ))) {
+				// $this->memreas_session ();
+				/**
+				 * Handle logout
+				 */
+				$this->logoutAction ();
+			}
+		} else {
+			foreach ( libxml_get_errors () as $error ) {
+				error_log ( 'Error parsing XML file : ' . $error->message );
+			}
 			/**
-			 * Handle login
+			 * data is bad logout
 			 */
-			Mlog::addone ( $cm . __LINE__ .'::$action',$action );
-			Mlog::addone ( $cm . __LINE__ .'::$result',$result );
-			$this->writeJsConstants ();
-			$data = simplexml_load_string ( trim ( $result ) );
-			$_SESSION ['user_id'] = ( string ) $data->loginresponse->user_id;
-			$_SESSION ['username'] = ( string ) $data->loginresponse->username;
-			$_SESSION ['email'] = ( string ) $data->loginresponse->email;
-			
-			$this->memreas_session ();
-			Mlog::addone ( $cm . __LINE__, 'passed $this->memreas_session ()...' );
-		} else if ($action == 'logout') {
-			$this->memreas_session ();
-			/**
-			 * Handle logout
-			 */
-			$data = simplexml_load_string ( trim ( $result ) );
-			session_destroy ();
+			$this->logoutAction ();
+		}
+		
+		
+		//
+		// if refresh and no session logout
+		//
+		if (empty ( $_SESSION )) {
+			//
+			// something is wrong
+			//
+			error_log ( 'session_id()---->' . session_id () );
+			$this->logoutAction ();
 		}
 	}
 	private function setSignedCookie($name, $val, $domain) {
@@ -377,14 +406,14 @@ class IndexController extends AbstractActionController {
 	public function loginAction() {
 		Mlog::addone ( 'Enter::', 'loginAction()' );
 		$this->memreas_session ();
-		Mlog::addone ( __CLASS__.__METHOD__.__LINE__.'::$_REQUEST--->',$_REQUEST );
+		Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__ . '::$_REQUEST--->', $_REQUEST );
 		
 		// Fetch the post data
 		$request = $this->getRequest ();
 		$postData = $request->getPost ()->toArray ();
 		
-		$username = $_POST['username'];
-		$password = $_POST['password'];
+		$username = $_POST ['username'];
+		$password = $_POST ['password'];
 		$userid = $postData ['status_user_id'];
 		if (empty ( $userid )) {
 			Mlog::addone ( 'Returning view::', 'this->redirect ()->toRoute ( index, array (action => index) )' );
@@ -615,8 +644,8 @@ class IndexController extends AbstractActionController {
 		/*
 		 * Fetch the user's ip address
 		 */
-		//Mlog::addone ( '$_SERVER [REMOTE_ADDR]', $_SERVER ['REMOTE_ADDR'] );
-		//Mlog::addone ( '$_SERVER [HTTP_X_FORWARDED_FOR]', $_SERVER ['HTTP_X_FORWARDED_FOR'] );
+		// Mlog::addone ( '$_SERVER [REMOTE_ADDR]', $_SERVER ['REMOTE_ADDR'] );
+		// Mlog::addone ( '$_SERVER [HTTP_X_FORWARDED_FOR]', $_SERVER ['HTTP_X_FORWARDED_FOR'] );
 		if (! empty ( $_SERVER ['HTTP_X_FORWARDED_FOR'] )) {
 			$ipAddress = $_SERVER ['HTTP_X_FORWARDED_FOR'];
 		} else {
@@ -628,9 +657,15 @@ class IndexController extends AbstractActionController {
 	}
 	public function memreas_session() {
 		if (session_status () !== PHP_SESSION_ACTIVE) {
-			session_start ();
-			error_log('$_COOKIE---->'.print_r($_COOKIE, true));
-			error_log('$_SESSION---->'.print_r($_SESSION, true));
+			if (!empty($_COOKIE['memreascookie'])) {
+				session_id ( $_COOKIE['memreascookie'] );
+				session_start ();
+			} else {
+				// must be login
+				session_start ();
+			}
+			error_log ( '$_COOKIE---->' . print_r ( $_COOKIE, true ) );
+			error_log ( '$_SESSION---->' . print_r ( $_SESSION, true ) );
 		}
 	}
 } // end class IndexController
