@@ -190,18 +190,21 @@ function popupBuyCredit() {
 							}
 							removeItem(reloadItems, 'reload_account_cards');
 						} else {
-							jerror("You have no card at this time");
-							setTimeout(function() {
+							jerror("You have no card at this time. Please add some cards under account tab!");
+							/*setTimeout(function() {
 								jconfirm('Add card to your account?',
 										'popup(\'popupCreditAddCard\')')
 							}, 3000);
+							*/
 						}
 					} else {
-						jerror("You have no card at this time");
+						jerror("You have no card at this time. Please add some cards under account tab!");
+						/*
 						setTimeout(function() {
 							jconfirm('Add card to your account?',
 									'popup(\'popupCreditAddCard\')')
 						}, 3000);
+						*/
 					}
 					$('.stripe-payment').fadeOut(500);
 				}
@@ -307,36 +310,67 @@ function acceptBuyCredit() {
 		return false;
 	}
 
-	var params = new Object;
-	params.userid = Account.id;
-	params.password = password_confirm;
-	params.memreascookie = getCookie("memreascookie");
-	params.x_memreas_chameleon = getCookie("x_memreas_chameleon");
-	params.stripe_card_reference_id = buycredit_card;
-	params.amount = buycredit_amount;
-	var params_json = JSON.stringify(params, null, '\t');
-	var data = '{"action": "buy_credit", ' + '"type":"jsonp", ' + '"json": '
-			+ params_json + '}';
+	//Perform password confirmation
+	var params = [ {
+		tag : 'username',
+		value : $("input[name=username]").val()
+	}, {
+		tag : 'password',
+		value : password_confirm
+	}, {
+		tag : 'device_type',
+		value : "web"
+	}, {
+		tag : 'device_id',
+		value : ''
+	} ];
+	ajaxRequest(
+		'login',
+		params,
+		function(xml_response) {
+			if (getValueFromXMLTag(xml_response,
+					'status') == 'success') {
+				var params = new Object;
+				params.userid = $("input[name=user_id]").val();
+				params.memreascookie = getCookie("memreascookie");
+				params.sid = getCookie("memreascookie");
+				params.x_memreas_chameleon = getCookie("x_memreas_chameleon");
+				params.stripe_card_reference_id = orderCard.stripe_card_reference_id;
+				params.amount = $("select#credit-amount").val();
+				var params_json = JSON.stringify(params, null, '\t');
+				var data = '{"action": "subscription", ' +
+					'"type":"jsonp", ' +
+					'"json": ' + params_json  +
+					'}';
 
-	var stripeActionUrl = $("input[name=stripe_url]").val() + 'stripe_addValue';
-	$('.stripe-payment').fadeIn(1000);
-	$.ajax({
-		url : stripeActionUrl,
-		type : 'POST',
-		dataType : 'jsonp',
-		data : 'json=' + data,
-		success : function(response) {
-		    	alert("setX_MEMREAS_CHAMELEON(response.x_memreas_chameleon)-->" + response.x_memreas_chameleon);
-		    	setX_MEMREAS_CHAMELEON(response.x_memreas_chameleon);
+				var stripeActionUrl = $("input[name=stripe_url]").val() + 'stripe_addValue';
 
-			if (response.status == 'Success') {
-				jsuccess(response.message);
-				$(".popup-buymedia-credit")
-						.html("$" + userObject.buyer_balance);
-				popup("popupBuyMedia");
+				$('.stripe-payment').fadeIn(1000);
+				$.ajax({
+					url: stripeActionUrl,
+					type: 'POST',
+					dataType: 'jsonp',
+					data: 'json=' + data,
+					timeout: 10000,
+					success: function(response){
+						response = jQuery.parseJSON( response.data );
+						if (response.status == 'Success') {
+							jsuccess(response.message);
+							popup("popupBuyMedia");
+						} else
+							jerror(response.message);
+						$('.stripe-payment').fadeOut(500);
+					},
+					error : function(response, textStatus, errorThrown) {
+						if(textStatus === 'timeout')
+						{
+							jerror('request timeout - please try again later');
+							$('.stripe-payment').fadeOut(500);
+						}
+
+					}
+				});
 			} else
-				jerror(response.message);
-			$('.stripe-payment').fadeOut(500);
-		}
-	});
+				jerror("Password confirmation is not matched!");
+		});
 }
