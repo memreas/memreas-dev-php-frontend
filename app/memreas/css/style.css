@@ -2428,6 +2428,10 @@ ul.option li small {
 	left: 85px;
 }
 
+.mem-gend {
+	color: #292929!important;
+}
+
 .regular-radio:checked+label {
 	background-color: #e9ecee;
 	color: #99a1a7;
@@ -4018,7 +4022,7 @@ select {
 	display: none;
 }
 
-.member-guidelines, .privacy-policy, .terms-service, .dmca-policy {
+.member-guidelines, .privacy-policy, .terms-service, .dmca-policy, .marketplace-agree{
 	height: 300px;
 }
 
