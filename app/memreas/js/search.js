@@ -516,7 +516,12 @@ function personalSearchLi(target, item) {
 }
 function eventSearchLi(target, item) {
     console.log(item);
-    var event_img = item.event_photo;
+	if (item.event_photo.length > 0) {
+		var event_img = item.event_photo[0];
+	}
+	else {
+		var event_img = item.event_creator_pic[0];
+	}
     event_img = removeCdataCorrectLink(event_img);
     var name = $.trim(item.name);
 
