@@ -1660,9 +1660,9 @@ left
 	cursor: move;
 }
 
-.mouse_swip {
+/*.mouse_swip {
 	height: 150px;
-}
+}*/
 
 .event_img {
 	width: 120px;
@@ -1850,11 +1850,11 @@ ul.share_memreas_details li {
 	clear: both;
 	min-height: 35px;
 	margin: 10px 0;
-	width: 100%;
+	width: 98%;
 }
 
 .textfield_names {
-	width: 100px;
+	min-width: 100%;
 	float: left;
 	font-family: "Century Gothic";
 	font-size: 18px;
@@ -3916,7 +3916,7 @@ select {
 }
 
 .share_memreas_details.sell_media_form input, .sell_media_bank input {
-	margin-left: 6%;
+	/*margin-left: 6%;*/
 	width: 74%;
 }
 
