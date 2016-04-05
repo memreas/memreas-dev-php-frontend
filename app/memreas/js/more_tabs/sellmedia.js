@@ -101,7 +101,6 @@ function checkSellerBasicInformation(element, focus_element) {
 }
 
 function register_sell_media() {
-    alert("register_sell_media()");
     var jSellMediaMessage = $(".add-seller-message");
     jSellMediaMessage.empty().hide();
 
@@ -132,6 +131,7 @@ function register_sell_media() {
 	    user_name : $('[name="sell-media-username"]').val(),
 	    first_name : $("#sell-media-fname").val(),
 	    last_name : $("#sell-media-lname").val(),
+	    date_of_birth : $("#sell-media-dob").val(),
 	    address_line_1 : $("#sell-media-address1").val(),
 	    address_line_2 : address_line_2,
 	    city : $("#sell-media-city").val(),
