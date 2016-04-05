@@ -496,9 +496,8 @@ function personalSearchLi(target, item) {
 	    // console.log (alertText);
 	}
 
-	var photo = item.profile_photo;
+	var photo = item.profile_photo[0];
 	photo = removeCdataCorrectLink(photo);
-	console.log(photo);
 	var name = $.trim(item.username);
 	var op = '<li id="search-' + name.replace('@', '')
 		+ '"><figure class="pro-pics"><img src="' + photo
