@@ -533,7 +533,7 @@ function eventSearchLi(target, item) {
 	    + ' <div class="event_members">';
     if (item.friends.length > 0) {
 	$.each(item.friends, function(i, friend) {
-	    var friend_photo = removeCdataCorrectLink(friend.profile_photo);
+	    var friend_photo = removeCdataCorrectLink(friend.profile_photo[0]);
 	    op += '<div class="event_gallery_pro"><img src="' + friend_photo
 		    + '" title="' + friend.username + '"></div>'
 	});
