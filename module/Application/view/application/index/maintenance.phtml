@@ -29,53 +29,49 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 <link rel="stylesheet" type="text/css" href="/memreas/css/reset.css">
 <link rel="stylesheet" type="text/css" href="/memreas/css/bootstrap.css">
 <link rel="stylesheet" type="text/css"
-	href="/memreas/css/responsiveslides.css">
+    href="/memreas/css/responsiveslides.css">
 <link rel="stylesheet" type="text/css" href="/memreas/css/register.css">
-<link href="/memreas/css/modalPopLite.css" rel="stylesheet"
-	type="text/css" />
-<link rel="shortcut icon" href="img/icon.png" />
+<link rel="shortcut icon" href="/memreas/img/icon.png" />
 <!-- HTML5 shim for IE backwards compatibility -->
 <!--[if lt IE 9]>
         <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
 <!-- End Mark update -->
-<link rel="stylesheet" href="/memreas/css/jNotify.jquery.css">
-<link href="/memreas/css/jquery.mCustomScrollbar.css" rel="stylesheet" />
-<script src="js/jquery-register.js"></script>
+<script src="/memreas/js/jquery-register.js"></script>
 </head>
 
 <body>
     
     
     <header class="rel">
-		<div class="container">
-			<div class="header-inner">
-				<h1 id="logo">
-					<a href="">memreas</a>
-				</h1>
-			</div>
-		</div>
+        <div class="container">
+            <div class="header-inner">
+                <h1 id="logo">
+                    <a href="">memreas</a>
+                </h1>
+            </div>
+        </div>
     </header>
     <section id="MobileHomeScreen" style="overflow: hidden;">
     
     <div class="row-fluid">
         <div class="span12">
             <div class="span12">
-            	<div style="text-align: center; margin: 20px 0;">
-		             <h1 style="font-family: 'Century Gothic'; text-transform: inherit;">Sorry this Page is currently Under Maintenance</h1>
-		        </div>
+                <div style="text-align: center; margin: 20px 0;">
+                     <h1 style="font-family: 'Century Gothic'; text-transform: initial!important;">Our site is down for maintenance.  <br /> We will resume services shortly.</h1>
+                </div>
                 <div class="relative feature" style="min-height: auto;">
-                    <div class="film film-phone" style="margin: 0 auto;">
+                    <div class="film film-phone" style="margin: 0 auto; height: 280px;">
 
                         <div id="slider">
                             <ul class="rslides">
-                                <li><img src="img/slide-1-3.png" alt="Beach Party"></li>
-                                <li><img src="img/slide-1-1.png" alt="Fireworks"></li>
-                                <li><img src="img/slide-1-2.png" alt="Wedding"></li>
+                                <li><img src="/memreas/img/slide-1-3.png" alt="Beach Party"></li>
+                                <li><img src="/memreas/img/slide-1-1.png" alt="Fireworks"></li>
+                                <li><img src="/memreas/img/slide-1-2.png" alt="Wedding"></li>
                             </ul>
                         </div>
                         <div class="filminner"></div>
-                        <img src="img/logo2.png" class="imabsolute" />
+                        <img src="/memreas/img/logo2.png" class="imabsolute" />
                     </div>
 
 
@@ -84,14 +80,26 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 
         </div>
     </div>
-    
-    
-
-    
 
     </section>
    
-     <!--**********Mobile Login Layout************** -->
+
+    <!-- Modal JS -->
+
+    <script src="/memreas/js/responsiveslides.min.js"></script>
+    <script src="/memreas/js/jquery-ui.min.js"></script>
+
+    <script>
+            $(function() {
+                $(".rslides").responsiveSlides();
+                
+                $('#SignupReg').click(function(){
+                    $('#MobileHomeScreen').hide();
+                    $('.mobileReform').show();
+                    
+                });
+            });
+        </script>
      
    
         

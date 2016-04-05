@@ -44,10 +44,16 @@ function centerPopup(id) {
 	var windowHeight = window.innerHeight;
 	var popupHeight = $("#" + id).outerHeight();
 	var popupWidth = $("#" + id).outerWidth();
+	// JP Changes start here
+	// I Inserted the "Transform"
+	// and change the top
+	// to custom
+	// (windowHeight - popupHeight) / 2
 	$("#" + id).css({
 		"position" : "absolute",
-		"top" : (windowHeight - popupHeight) / 2,
-		"left" : "37%"
+		"top" : "50%",
+		"left" : "50%",
+		"transform" : "translate(-50%, -50%)"
 	});
 	// Khan Changes starts Here
 	if (window.innerWidth <= 1024) {
