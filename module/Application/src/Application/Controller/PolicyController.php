@@ -12,11 +12,10 @@ use Zend\View\Model\ViewModel;
 
 class PolicyController extends AbstractActionController {
 	public function indexAction() {
-		return $this->privacyAction();
+		return $this->tosAction();
 	}
 	public function privacyAction() {
 		$view = new ViewModel ();
-		//$view->setTemplate ( 'application/index/500.phtml' );
 		$view->setTemplate ( 'application/index/onepage/more_tabs/help/privacy-policy.phtml' );
 		return $view;
 	}
