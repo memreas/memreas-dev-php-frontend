@@ -496,9 +496,8 @@ function personalSearchLi(target, item) {
 	    // console.log (alertText);
 	}
 
-	var photo = item.profile_photo;
+	var photo = item.profile_photo[0];
 	photo = removeCdataCorrectLink(photo);
-	console.log(photo);
 	var name = $.trim(item.username);
 	var op = '<li id="search-' + name.replace('@', '')
 		+ '"><figure class="pro-pics"><img src="' + photo
@@ -517,7 +516,12 @@ function personalSearchLi(target, item) {
 }
 function eventSearchLi(target, item) {
     console.log(item);
-    var event_img = item.event_photo;
+	if (item.event_photo.length > 0) {
+		var event_img = item.event_photo[0];
+	}
+	else {
+		var event_img = item.event_creator_pic[0];
+	}
     event_img = removeCdataCorrectLink(event_img);
     var name = $.trim(item.name);
 
@@ -529,7 +533,7 @@ function eventSearchLi(target, item) {
 	    + ' <div class="event_members">';
     if (item.friends.length > 0) {
 	$.each(item.friends, function(i, friend) {
-	    var friend_photo = removeCdataCorrectLink(friend.profile_photo);
+	    var friend_photo = removeCdataCorrectLink(friend.profile_photo[0]);
 	    op += '<div class="event_gallery_pro"><img src="' + friend_photo
 		    + '" title="' + friend.username + '"></div>'
 	});
