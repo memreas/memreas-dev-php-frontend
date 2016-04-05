@@ -49,7 +49,7 @@ var Account = function() {
 		AppSystem.removePageLoading();
 		AppSystem.putStripeLoading();
 
-		$.ajax({url : stripeActionUrl, type : 'POST', dataType : 'jsonp', data : 'json=' + data, timeout : 10000,
+		$.ajax({url : stripeActionUrl, type : 'POST', dataType : 'jsonp', data : 'json=' + data, timeout : 20000,
 			error : function(response, textStatus, errorThrown) {
 				if (textStatus === 'timeout') {
 					AppSystem.removeStripeLoading(); // do something. Try again perhaps?
@@ -176,8 +176,8 @@ var Account = function() {
 			// Fetch the card
 			var selectedCard = '';
 			for (var i in Account.accountTab_cards) {
-				if (accountTab_cards[i].selected == 1) {
-					selectedCard = self.accountTab_cards[i].data.stripe_card_reference_id;
+				if (Account.accountTab_cards[i].selected == 1) {
+					selectedCard = Account.accountTab_cards[i].data.stripe_card_reference_id;
 					break;
 				}
 			}
@@ -197,7 +197,7 @@ var Account = function() {
 
 			AppSystem.putPageLoading();
 
-			$.ajax({ type : 'post', url : stripeActionUrl, dataType : 'jsonp', data : 'json=' + data,
+			$.ajax({ type : 'post', url : stripeActionUrl, dataType : 'jsonp', data : 'json=' + data, timeout : 20000,
 				success : function(response) {
 					response = jQuery.parseJSON(response.data);
 					AppSystem.removePageLoading();
@@ -273,7 +273,7 @@ var Account = function() {
 				+ json_storeCard + '}';
 
 			AppSystem.putStripeLoading();
-			$.ajax({ type : 'post', url : stripeActionUrl, dataType : 'jsonp', data : 'json=' + data, timeout : 10000,
+			$.ajax({ type : 'post', url : stripeActionUrl, dataType : 'jsonp', data : 'json=' + data, timeout : 20000,
 				error : function(response, textStatus, errorThrown) {
 					if (textStatus === 'timeout') {
 						jerror('Card adding failure. Please check card\'s information.');
@@ -342,6 +342,7 @@ var Account = function() {
 			type : 'POST',
 			dataType : 'jsonp',
 			data : 'json=' + data,
+			timeout : 20000,
 			success : function(response) {
 				setX_MEMREAS_CHAMELEON(response.x_memreas_chameleon);
 				response = JSON.parse(response.data);
@@ -507,7 +508,6 @@ function accountViewCard() {
 		+ data_object + '}';
 
 	$('#loadingpopup').fadeIn(1000);
-	//alert("action=listCard memreascookie="+params.memreascookie+" user_id="+params.user_id);
 	if (deleteBoolean) {
 	    $
 		    .ajax({
@@ -528,7 +528,7 @@ function accountViewCard() {
 				jViewCard.find("#addcard_lname").val(last_name)
 					.attr('readonly', true);
 				jViewCard.find("#addcard_cctype").val(
-					card_info.type).attr('readonly', true);
+					card_info.brand).attr('readonly', true);
 				jViewCard.find("#addcard_ccnum").val(
 					'***' + card_info.last4).attr(
 					'readonly', true);
@@ -581,7 +581,7 @@ function accountViewCard() {
 					.val(first_name);
 				jViewCard.find("#addcard_lname").val(last_name);
 				jViewCard.find("#addcard_cctype").val(
-					card_info.type).attr('readonly', true);
+					card_info.brand).attr('readonly', true);
 				jViewCard.find("#addcard_ccnum").val(
 					'***' + card_info.last4).attr(
 					'readonly', true);
@@ -669,7 +669,7 @@ function accountUpdateCard() {
 		    url : stripeActionUrl,
 		    dataType : 'jsonp',
 		    data : 'json=' + data,
-		    timeout : 10000,
+		    timeout : 20000,
 		    error : function(response, textStatus, errorThrown) {
 			if (textStatus === 'timeout') {
 			    jerror('Card update failure. Please check card\'s information.');

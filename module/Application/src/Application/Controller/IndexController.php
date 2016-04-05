@@ -197,7 +197,8 @@ class IndexController extends AbstractActionController {
 			/**
 			 * Handle login
 			 */
-			// Mlog::addone ( $cm . __LINE__ ,'enter login fe result...' );
+			Mlog::addone ( $cm . __LINE__ .'::$action',$action );
+			Mlog::addone ( $cm . __LINE__ .'::$result',$result );
 			$this->writeJsConstants ();
 			$data = simplexml_load_string ( trim ( $result ) );
 			$_SESSION ['user_id'] = ( string ) $data->loginresponse->user_id;
