@@ -112,28 +112,38 @@ var AppSystem = function() {
 	    data : 'json=' + data,
 	    timeout : 30000,
 	    success : function(response) {
-		response = JSON.parse(response.data);
-		if (response.status == 'Success') {
-		    var account = response.buyer_account;
-		    if (typeof account != 'undefined') {
-			var subscription = account.subscription;
-			if (typeof subscription != 'undefined') {
-			    var plan_id = subscription.plan;
-			    if (plan_id == 'PLAN_A_2GB_MONTHLY') {
-				$(".sell-media-section").hide();
-			    } else {
-				$(".share-account-plan").html(
-					subscription.plan_description);
-			    }
-			} else {
-			    $(".sell-media-section").hide();
-			}
-		    } else {
-			$(".sell-media-section").hide();
-		    }
-		} else {
-		    $(".sell-media-section").hide();
-		}
+            response = JSON.parse(response.data);
+            if (response.status == 'Success') {
+                var account = response.buyer_account;
+                if (typeof account != 'undefined') {
+                    var subscription = account.subscription;
+                    if (typeof subscription != 'undefined') {
+                        var plan_id = subscription.plan;
+                        if (plan_id == 'PLAN_A_2GB_MONTHLY') {
+                        $(".sell-media-section").hide();
+                        } else {
+                        $(".share-account-plan").html(
+                            subscription.plan_description);
+                        }
+                    } else {
+                        //Disable some features if user has free plan
+                        $(".sell-media-section").hide();
+                        $("form[name=sell_media_frm] input").attr("disabled", "disabled");
+                        $("form[name=sell_media_frm]").next(".btn").remove();
+                        $("form[name=sell_media_frm] ul").before("<label>Please upgrade your subscription plan to register as seller</label>");
+                    }
+                } else {
+                    $(".sell-media-section").hide();
+                    $("form[name=sell_media_frm] input").attr("disabled", "disabled");
+                    $("form[name=sell_media_frm]").next(".btn").remove();
+                    $("form[name=sell_media_frm] ul").before("<label>Please upgrade your subscription plan to register as seller</label>");
+                }
+            } else {
+                $(".sell-media-section").hide();
+                $("form[name=sell_media_frm] input").attr("disabled", "disabled");
+                $("form[name=sell_media_frm]").next(".btn").remove();
+                $("form[name=sell_media_frm] ul").before("<label>Please upgrade your subscription plan to register as seller</label>");
+            }
 	    },
 	    error : function(response, textStatus, errorThrown) {
 		if (textStatus === 'timeout') {
