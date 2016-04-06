@@ -128,19 +128,19 @@ var AppSystem = function() {
                     } else {
                         //Disable some features if user has free plan
                         $(".sell-media-section").hide();
-                        $("form[name=sell_media_frm] input").attr("disabled", "disabled");
+                        $("form[name=sell_media_frm]").find("input").attr("disabled", "disabled");
                         $("form[name=sell_media_frm]").next(".btn").remove();
                         $("form[name=sell_media_frm] ul").before("<label>Please upgrade your subscription plan to register as seller</label>");
                     }
                 } else {
                     $(".sell-media-section").hide();
-                    $("form[name=sell_media_frm] input").attr("disabled", "disabled");
+                    $("form[name=sell_media_frm]").find("input").attr("disabled", "disabled");
                     $("form[name=sell_media_frm]").next(".btn").remove();
                     $("form[name=sell_media_frm] ul").before("<label>Please upgrade your subscription plan to register as seller</label>");
                 }
             } else {
                 $(".sell-media-section").hide();
-                $("form[name=sell_media_frm] input").attr("disabled", "disabled");
+                $("form[name=sell_media_frm]").find("input").attr("disabled", "disabled");
                 $("form[name=sell_media_frm]").next(".btn").remove();
                 $("form[name=sell_media_frm] ul").before("<label>Please upgrade your subscription plan to register as seller</label>");
             }
