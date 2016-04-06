@@ -608,7 +608,7 @@ function fetchFriendsMemreas(friendMemreasType) {
 								    'event_media')
 							    .html();
 
-							console.log(event_media_resource);
+							console.log(event_resource);
 						    var event_media_98x78 = $(
 							    event_media_resource)
 							    .filter(
