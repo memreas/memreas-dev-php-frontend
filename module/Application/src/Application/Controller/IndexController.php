@@ -55,7 +55,7 @@ class IndexController extends AbstractActionController {
 		/*
 		 * Fetch guzzle and post...
 		 */
-		// $guzzle = new \GuzzleHttp\Client (['verify' => false]);
+		 //$guzzle = new \GuzzleHttp\Client (['verify' => false]);
 		$guzzle = new \GuzzleHttp\Client ();
 		Mlog::addone ( __CLASS__ . __METHOD__ . 'about to guzzle url+action+xml', MemreasConstants::MEMREAS_WS . $action . $xml );
 		try {
