@@ -521,6 +521,7 @@ function fetchFriendsMemreas(friendMemreasType) {
 							.filter(
 								'profile_pic_79x80')
 							.html();
+							console.log(profile_img);
 						profile_img = removeCdataCorrectLink(profile_img);
 					    } else
 						profile_img = '/memreas/img/profile-pic.jpg';
@@ -607,6 +608,7 @@ function fetchFriendsMemreas(friendMemreasType) {
 								    'event_media')
 							    .html();
 
+							console.log(event_media_resource);
 						    var event_media_98x78 = $(
 							    event_media_resource)
 							    .filter(
