@@ -120,28 +120,29 @@ var AppSystem = function() {
                     if (typeof subscription != 'undefined') {
                         var plan_id = subscription.plan;
                         if (plan_id == 'PLAN_A_2GB_MONTHLY') {
-                        $(".sell-media-section").hide();
+                        	$(".sell-media-section").hide();
+							//Disable some features if user has free plan
+							$("form[name=sell_media_frm]").find("input").attr("disabled", "disabled");
+							$("form[name=sell_media_frm]").next(".btn").remove();
+							$("form[name=sell_media_frm] ul").before("<label>Please upgrade your subscription plan to register as seller</label>");
                         } else {
-                        $(".share-account-plan").html(
-                            subscription.plan_description);
+							$(".share-account-plan").html(
+								subscription.plan_description);
                         }
                     } else {
                         //Disable some features if user has free plan
-                        alert('1');
                         $(".sell-media-section").hide();
                         $("form[name=sell_media_frm]").find("input").attr("disabled", "disabled");
                         $("form[name=sell_media_frm]").next(".btn").remove();
                         $("form[name=sell_media_frm] ul").before("<label>Please upgrade your subscription plan to register as seller</label>");
                     }
                 } else {
-                    alert('2');
                     $(".sell-media-section").hide();
                     $("form[name=sell_media_frm]").find("input").attr("disabled", "disabled");
                     $("form[name=sell_media_frm]").next(".btn").remove();
                     $("form[name=sell_media_frm] ul").before("<label>Please upgrade your subscription plan to register as seller</label>");
                 }
             } else {
-                alert('3');
                 $(".sell-media-section").hide();
                 $("form[name=sell_media_frm]").find("input").attr("disabled", "disabled");
                 $("form[name=sell_media_frm]").next(".btn").remove();
