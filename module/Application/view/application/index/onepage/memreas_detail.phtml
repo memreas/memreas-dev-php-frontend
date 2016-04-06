@@ -6,25 +6,28 @@
  */
 ?>
 <div class="memreas-detail" style="display: none;">
-    <div class="<?php echo ($this->enableAdvertising) ? 'span9' : 'span11'; ?>">
-        <div class="row-fluid">
-            <ul id="tabs-memreas-detail" class="medium_tabs">
-                <li><a href="#" title="memreas-detail-tab1">gallery</a></li>
-                <li><a href="#" title="memreas-detail-tab3">details</a></li>
-                <li><a href="#" title="memreas-detail-tab4">location</a></li>
-            </ul>
-            <div id="tab-content-memreas-detail">
-                <div id="memreas-detail-tab1" class="hideCls">
-                     <ul id="content_1" class="pics memreas-detail-gallery">
-                    
-                     </ul>
-                    <a id="button" class="black_btn_skin f-left" href="javascript:;" onClick="popupAddMemreasGallery();">add media</a>
-                    <a id="button" class="black_btn_skin f-right" href="javascript:;" onClick="popupMemreasAddfriends();">add friends</a>
-                </div>
-                <div id="memreas-detail-tab3" class="hideCls">
-                    <div class="span6 memreas-span-6">
+	<div
+		class="<?php echo ($this->enableAdvertising) ? 'span9' : 'span11'; ?>">
+		<div class="row-fluid">
+			<ul id="tabs-memreas-detail" class="medium_tabs">
+				<li><a href="#" title="memreas-detail-tab1">gallery</a></li>
+				<li><a href="#" title="memreas-detail-tab3">details</a></li>
+				<li><a href="#" title="memreas-detail-tab4">location</a></li>
+			</ul>
+			<div id="tab-content-memreas-detail">
+				<div id="memreas-detail-tab1" class="hideCls">
+					<ul id="content_1" class="pics memreas-detail-gallery">
 
-                        <!--                  <div class=" MemreasDetailfotoramaSlde fotorama" data-click="false"
+					</ul>
+					<a id="button" class="black_btn_skin f-left" href="javascript:;"
+						onClick="popupAddMemreasGallery();">add media</a> <a id="button"
+						class="black_btn_skin f-right" href="javascript:;"
+						onClick="popupMemreasAddfriends();">add friends</a>
+				</div>
+				<div id="memreas-detail-tab3" class="hideCls">
+					<div class="span6 memreas-span-6">
+
+						<!--                  <div class=" MemreasDetailfotoramaSlde fotorama" data-click="false"
                                                                 data-swipe="true"  data-max-width="100%" data-width="100%" data-height="100%"
                                
                                                                 data-allow-full-screen="true" data-fit="cover" data-click="true"
@@ -32,19 +35,19 @@
                                                                  
                                             </div>-->
 
-                        <aside id="left">
-                            
-                            <div id="blueimp-video-carousel-gallery-detail"
-						class="blueimp-gallery blueimp-gallery-controls blueimp-gallery-carousel " data-start-slideshow="false">
-						<div class="slides"></div>
-						<h3 class="title"></h3>
-						<a class="prev">‹</a> 
-						<a class="next">›</a> 
-					         <a class="play-pause"></a>
-                                                <p class="description"></p>
-					</div>
-                            
-<!--                            
+						<aside id="left">
+
+							<div id="blueimp-video-carousel-gallery-detail"
+								class="blueimp-gallery blueimp-gallery-controls blueimp-gallery-carousel "
+								data-start-slideshow="false">
+								<div class="slides"></div>
+								<h3 class="title"></h3>
+								<a class="prev">‹</a> <a class="next">›</a> <a
+									class="play-pause"></a>
+								<p class="description"></p>
+							</div>
+
+							<!--                            
                             <figure class="event" style="height: auto;">
                                 <div class="video-preview" style="display: none;">
 
@@ -62,159 +65,201 @@
                                 </div>
                                 <div class="image-preview"><img id="preview" data-preview="/memreas/img/large/1.jpg" alt="" /></div>
                             </figure>-->
-                        </aside>
-                    </div>
-                    <div class="clear-2"></div>
-                    <div class="span6 memreas-detail-owner">
-                        <ul id="content_1" class="right memreas-detail-comments">
-                            <li class="clearfix event-owner">
-                                <figure class="pro-pics"><img src="/memreas/img/profile-pic-2.jpg" alt=""></figure><div class="pro-names">User Name</div>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="clear"></div>
-<!--                    <div class="row-fluid carousel-memrease-area">
+						</aside>
+					</div>
+					<div class="clear-2"></div>
+					<div class="span6 memreas-detail-owner">
+						<ul id="content_1" class="right memreas-detail-comments">
+							<li class="clearfix event-owner">
+								<figure class="pro-pics">
+									<img src="/memreas/img/profile-pic-2.jpg" alt="">
+								</figure>
+								<div class="pro-names">User Name</div>
+							</li>
+						</ul>
+					</div>
+					<div class="clear"></div>
+					<!--                    <div class="row-fluid carousel-memrease-area">
                         <ul id="carousel" class="elastislide-list">
                              Gallery detail will load here 
                         </ul>
                     </div>-->
-                    <div class="row-fluid">
-                        <div class="menu clearfix">
-                            <ul>
-                                <li><a href="javascript:;" class="memreas-detail-download" title="Download"><img src="/memreas/img/download-button.png" alt="" width="33"></a></li>
-                                <li class="memreas-detail-likecount"><a href="javascript:likeMemreasMedia();" title="Like media"><img src="/memreas/img/like.png" alt=""></a><span>..</span></li>
-                                <li class="memreas-detail-commentcount"><a href="javascript:showPopupComment();" title="Comment"><img src="/memreas/img/comment.png" alt=""></a><span>..</span></li>
-                                <li><a href="javascript:voiceComment();" title="Voice comment"><img src="/memreas/img/sound.png" alt=""></a></li>
-                                <li><a href="javascript:reportMedia(false);" title="Report media" id="reportMediaform"><img src="/memreas/img/report.png" alt=""></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div id="memreas-detail-tab4" class="hideCls">
-                    <div class="map" id="memreas-detail-location">
+					<div class="row-fluid">
+						<div class="menu clearfix">
+							<ul>
+								<li><a href="javascript:;" class="memreas-detail-download"
+									title="Download"><img src="/memreas/img/download-button.png"
+										alt="" width="33"></a></li>
+								<li class="memreas-detail-likecount"><a
+									href="javascript:likeMemreasMedia();" title="Like media"><img
+										src="/memreas/img/like.png" alt=""></a><span>..</span></li>
+								<li class="memreas-detail-commentcount"><a
+									href="javascript:showPopupComment();" title="Comment"><img
+										src="/memreas/img/comment.png" alt=""></a><span>..</span></li>
+								<li><a href="javascript:voiceComment();" title="Voice comment"><img
+										src="/memreas/img/sound.png" alt=""></a></li>
+								<li><a href="javascript:reportMedia(false);"
+									title="Report media" id="reportMediaform"><img
+										src="/memreas/img/report.png" alt=""></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div id="memreas-detail-tab4" class="hideCls">
+					<div class="map" id="memreas-detail-location"></div>
+				</div>
+			</div>
+			<!------------------first-pop-up-------------------->
+			<div id="popupAddMedia" class="popups">
+				<a id="popupAddMediaClose" onClick="disablePopup('popupAddMedia')"
+					class='popupClose'>x</a>
+				<h2>select gallery photos</h2>
+				<ul id="content_1" class="popupAddMediaContent scrollpopup">
 
-                    </div>
-                </div>
-            </div>
-            <!------------------first-pop-up-------------------->
-            <div id="popupAddMedia" class="popups">
-                <a id="popupAddMediaClose" onClick="disablePopup('popupAddMedia')" class='popupClose'>x</a>
-                <h2>select gallery photos</h2>
-                <ul id="content_1" class="popupAddMediaContent scrollpopup">
-
-                </ul>
-                <a class="black_btn_skin f-left accept-btn" href="javascript:;">ok</a> <a class="black_btn_skin f-right" href="javascript:disablePopup('popupAddMedia');">cancel</a>
-            </div>
-            <div id="bgpopupAddMedia" class="backgroundPopup"></div>
-
-
-            <!------------------second-pop-up-------------------->
-            <div id="popupFriends" class="popups">
-                <a id="popupFriendsClose" onClick="disablePopup('popupFriends')" class='popupClose'>x</a>
-                <h2>select friends</h2>
-                <div class="styled-select">
-                    <select style="width: 390px" id="memreas-dropfriend">
-                        <option value="">-choose-</option>
-                        <option value="mr" selected="selected">memreas</option>
-                    </select>
-                </div>
-                <ul id="content_1" class="popupContact scrollpopup memreas-detail-friends">
-                    <!-- Ajax friend will load here -->
-                </ul>
-                <div>
-                    <input name="memreas_detail_emails" id="memreas_detail_emails" class="popup-input" type="text" value="email" onBlur="if (!/\S/.test(this.value))
-                                this.value = this.defaultValue" onFocus="if (this.value == 'email')
-                                            this.value = '';"/>
-                    <div class="clear"></div>
-                    <input id="memreas_makegroup_check" class="css-checkbox" type="checkbox" />
-                    <label for="memreas_makegroup_check" name="demo_lbl_6" class="css-label">make this a group</label>
-                    <div class="clear"></div>
-                    <input name="memreas_groupname" class="popup-input" type="text" value="group name here" onBlur="if (!/\S/.test(this.value))
-                                this.value = this.defaultValue" onFocus="if (this.value == 'group name here')
-                                            this.value = '';"/>
-                </div>
-                <a class="black_btn_skin f-left memreas-addfriend-btn" href="javascript:;">ok</a> <a class="black_btn_skin f-right" href="javascript:disablePopup('popupFriends');">cancel</a>
-            </div>
-            <div id="bgpopupFriends" class="backgroundPopup"></div>
-
-            <!------------------fourth-pop-up-------------------->
-            <div id="popupcomment" class="popups">
-                <a id="popupcommentClose" onClick="disablePopup('popupcomment');" class='popupClose'>x</a>
-                <h2>comments</h2>
-                <ul id="content_1" class="commentpopup scrollpopup">
-                    <!-- Ajax Comment will load here -->
-                </ul>
-                <div class="input-wrap input-text popup-addcomment-text" style="position: relative;">
-                    <input name="comment_txtfield" type="text" class="comment_txtfield" value="your comment here" onBlur="if (!/\S/.test(this.value))
-                                this.value = this.defaultValue" onFocus="if (this.value == 'your comment here')
-                                            this.value = '';"/>
-                    <a href="javascript:voiceComment();" class="voice-icon" style="left: 320px;"></a>
-                </div>
-                <a class="black_btn_skin f-left" href="javascript:memreasAddComment();">ok</a> <a class="black_btn_skin f-right" href="javascript:disablePopup('popupcomment');">cancel</a>
-                
-            </div>
-            <div id="bgpopupcomment" class="backgroundPopup"></div>
-        </div>
-    </div>
-    <!-- Ads Section -->
-
-    <div id="popupReportMedia" class="popups">
-        <a id="popupReportMediaClose" onClick="disablePopup('popupReportMedia');" class='popupClose'>x</a>
-        <h2>Report Media</h2>
-        <p>&nbsp;</p>
-        
-         
-        
-        
-        <ul class=" scrollpopup give-message-form">
-            <li>
-               <input id="DMCAViolation" type="radio" class="radio-bx" name="report" value="0" style="width: 18px; height: 18px; position: relative;top: 4px;">
-                <label for="DMCA Violation" class="radio-label" style="display: inline-block; color:#fff;  font-size: 15px;">DMCA Violation</label>
-                
-              <input id="offensiveViolation" type="radio" class="radio-bx" name="report" value="0" style="width: 18px; height: 18px; position: relative;top: 4px;">
-                <label for="DMCA Violation" class="radio-label" style="display: inline-block; color:#fff;  font-size: 15px;">Offensive Content</label> 
-                
-              <form enctype="multipart/form-data" action="" method="post" name="" class="HideReport" id="reportform" style="background: none; border-bottom: none;">
-                    <label for="email">Copy Right Owner Name</label>
-                    <input name="copyrightowner" id="copyrightowner" type="text" placeholder="Your Name" /> 
-                    <label for="email">Address</label>
-                    <input name="addressV" id="addressV" type="text" placeholder="Your Addresss" /> 
-                    <label for="email">Email</label>
-                    <input name="email" id="emailvoilcation" type="email" placeholder="Your Email" /> 
-                     <label for="email">Media Id</label>
-                     <input name="mediaIdreport" id="mediaIdreport" type="text" placeholder="Media Id" readonly /> 
-                    
-                    
-                    
-                    <input id="term_condition" class="css-checkbox" type="checkbox">
-                    <label for="term_condition" id="term_condition_label" name="demo_lbl_5" class="css-label margin-none" style="text-align: left; margin-left: 0px !important; width: 100%; height:55px; ">notice to reporter - in the event of a counter claim we will provide the claimant your email address and expect any further legal matters to be concluded by the reporter (you) and the counter-claimant.</label>
-                    
-                <br />  <br />
-                <div style="clear: both;"></div>
+				</ul>
+				<a class="black_btn_skin f-left accept-btn" href="javascript:;">ok</a>
+				<a class="black_btn_skin f-right"
+					href="javascript:disablePopup('popupAddMedia');">cancel</a>
+			</div>
+			<div id="bgpopupAddMedia" class="backgroundPopup"></div>
 
 
-                </form> 
-                
-            </li> 
-        </ul>
-            <a class="black_btn_skin f-left" href="javascript:;" id="reportVolForm" >OK</a> <a class="black_btn_skin f-left" href="javascript:disablePopup('popupReportMedia');">close</a>
-       
-        
-    </div>
+			<!------------------second-pop-up-------------------->
+			<div id="popupFriends" class="popups">
+				<a id="popupFriendsClose" onClick="disablePopup('popupFriends')"
+					class='popupClose'>x</a>
+				<h2>select friends</h2>
+				<div class="styled-select">
+					<select style="width: 390px" id="memreas-dropfriend">
+						<option value="">-choose-</option>
+						<option value="mr" selected="selected">memreas</option>
+					</select>
+				</div>
+				<ul id="content_1"
+					class="popupContact scrollpopup memreas-detail-friends">
+					<!-- Ajax friend will load here -->
+				</ul>
+				<div>
+					<input name="memreas_detail_emails" id="memreas_detail_emails"
+						class="popup-input" type="text" value="email"
+						onBlur="if (!/\S/.test(this.value))
+                                this.value = this.defaultValue"
+						onFocus="if (this.value == 'email')
+                                            this.value = '';" />
+					<div class="clear"></div>
+					<input id="memreas_makegroup_check" class="css-checkbox"
+						type="checkbox" /> <label for="memreas_makegroup_check"
+						name="demo_lbl_6" class="css-label">make this a group</label>
+					<div class="clear"></div>
+					<input name="memreas_groupname" class="popup-input" type="text"
+						value="group name here"
+						onBlur="if (!/\S/.test(this.value))
+                                this.value = this.defaultValue"
+						onFocus="if (this.value == 'group name here')
+                                            this.value = '';" />
+				</div>
+				<a class="black_btn_skin f-left memreas-addfriend-btn"
+					href="javascript:;">ok</a> <a class="black_btn_skin f-right"
+					href="javascript:disablePopup('popupFriends');">cancel</a>
+			</div>
+			<div id="bgpopupFriends" class="backgroundPopup"></div>
+
+			<!------------------fourth-pop-up-------------------->
+			<div id="popupcomment" class="popups">
+				<a id="popupcommentClose" onClick="disablePopup('popupcomment');"
+					class='popupClose'>x</a>
+				<h2>comments</h2>
+				<ul id="content_1" class="commentpopup scrollpopup">
+					<!-- Ajax Comment will load here -->
+				</ul>
+				<div class="input-wrap input-text popup-addcomment-text"
+					style="position: relative;">
+					<input name="comment_txtfield" type="text" class="comment_txtfield"
+						value="your comment here"
+						onBlur="if (!/\S/.test(this.value))
+                                this.value = this.defaultValue"
+						onFocus="if (this.value == 'your comment here')
+                                            this.value = '';" /> <a
+						href="javascript:voiceComment();" class="voice-icon"
+						style="left: 320px;"></a>
+				</div>
+				<a class="black_btn_skin f-left"
+					href="javascript:memreasAddComment();">ok</a> <a
+					class="black_btn_skin f-right"
+					href="javascript:disablePopup('popupcomment');">cancel</a>
+
+			</div>
+			<div id="bgpopupcomment" class="backgroundPopup"></div>
+		</div>
+	</div>
+	<!-- Ads Section -->
+
+	<div id="popupReportMedia" class="popups">
+		<a id="popupReportMediaClose"
+			onClick="disablePopup('popupReportMedia');" class='popupClose'>x</a>
+		<h2>Report Media</h2>
+		<p>&nbsp;</p>
+
+
+
+
+		<ul class=" scrollpopup give-message-form">
+			<li><input id="DMCAViolation" type="radio" class="radio-bx"
+				name="report" value="0"
+				style="width: 18px; height: 18px; position: relative; top: 4px;"> <label
+				for="DMCA Violation" class="radio-label"
+				style="display: inline-block; color: #fff; font-size: 15px;">DMCA
+					Violation</label> <input id="offensiveViolation" type="radio"
+				class="radio-bx" name="report" value="0"
+				style="width: 18px; height: 18px; position: relative; top: 4px;"> <label
+				for="DMCA Violation" class="radio-label"
+				style="display: inline-block; color: #fff; font-size: 15px;">Offensive
+					Content</label>
+
+				<form enctype="multipart/form-data" action="" method="post" name=""
+					class="HideReport" id="reportform"
+					style="background: none; border-bottom: none;">
+					<label for="email">Copy Right Owner Name</label> <input
+						name="copyrightowner" id="copyrightowner" type="text"
+						placeholder="Your Name" /> <label for="email">Address</label> <input
+						name="addressV" id="addressV" type="text"
+						placeholder="Your Addresss" /> <label for="email">Email</label> <input
+						name="email" id="emailvoilcation" type="email"
+						placeholder="Your Email" /> <label for="email">Media Id</label> <input
+						name="mediaIdreport" id="mediaIdreport" type="text"
+						placeholder="Media Id" readonly /> <input id="term_condition"
+						class="css-checkbox" type="checkbox"> <label for="term_condition"
+						id="term_condition_label" name="demo_lbl_5"
+						class="css-label margin-none"
+						style="text-align: left; margin-left: 0px !important; width: 100%; height: 55px;">notice
+						to reporter - in the event of a counter claim we will provide the
+						claimant your email address and expect any further legal matters
+						to be concluded by the reporter (you) and the counter-claimant.</label>
+
+					<br /> <br />
+					<div style="clear: both;"></div>
+
+
+				</form></li>
+		</ul>
+		<a class="black_btn_skin f-left" href="javascript:;"
+			id="reportVolForm">OK</a> <a class="black_btn_skin f-left"
+			href="javascript:disablePopup('popupReportMedia');">close</a>
+
+
+	</div>
 
 
     <?php include('right_advertising.phtml'); ?>
     <!-- End Ads Section -->
 
-    <!-- Bottom Ads -->
+	<!-- Bottom Ads -->
     <?php include('bottom_advertising.phtml'); ?>
     <!-- End Bottom Ads -->
 </div>
 <!-- END MEMREAS TAB -->
 </div>
-<div id="popupplayerMemreas" class="video_popups popups">
-
-</div>
+<div id="popupplayerMemreas" class="video_popups popups"></div>
 <div id="bgpopupplayerMemreas" class="backgroundPopup"></div>
 
 <script type="text/javascript">
