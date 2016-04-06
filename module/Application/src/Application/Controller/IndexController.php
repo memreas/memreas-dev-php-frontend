@@ -678,5 +678,14 @@ class IndexController extends AbstractActionController {
 			error_log ( '$_SESSION---->' . print_r ( $_SESSION, true ) );
 		}
 	}
+	
+	/**
+	 * Action to return Android APK
+	 */
+	public function androidAction() {
+		return $this->redirect()->toUrl(MemreasConstants::ANDROID_DOWNLOAD_URL);
+	}
+	
+	
 } // end class IndexController
 
