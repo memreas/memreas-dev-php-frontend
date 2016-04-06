@@ -41,7 +41,20 @@ return array (
 												'action' => 'index' 
 										) 
 								) 
-						) 
+						), 
+						'policy' => array (
+								'type' => 'Segment',
+								'options' => array (
+										'route' => '/policy[/:action][/:id]',
+										'constraints' => array (
+												'action' => '[a-zA-Z][a-zA-Z0-9_-]*' 
+										),
+										'defaults' => array (
+												'controller' => 'Application\Controller\Policy',
+												'action' => 'index' 
+										) 
+								) 
+						)
 				) 
 		),
 		// The following is a route to simplify getting started creating
@@ -68,7 +81,8 @@ return array (
 		),
 		'controllers' => array (
 				'invokables' => array (
-						'Application\Controller\Index' => 'Application\Controller\IndexController' 
+						'Application\Controller\Index' => 'Application\Controller\IndexController', 
+						'Application\Controller\Policy' => 'Application\Controller\PolicyController' 
 				) 
 		),
 		'view_manager' => array (
