@@ -113,6 +113,8 @@ $(document)
 											'id');
 									mid = '@'
 										+ mid;
+										console.log(mid);
+										console.log(map[mid]);
 									var photo = map[mid].profile_photo[0];
 									photo = removeCdataCorrectLink(photo);
 									$(
