@@ -30,7 +30,7 @@ $(document)
 			    switch (q.charAt(0)) {
 			    case '@':
 				$.each(objs.search, function(i, obj) {
-				    username += obj.username;
+				    username = '@' + obj.username;
 				    map[username] = obj;
 				    users.push(username);
 				});
@@ -113,7 +113,7 @@ $(document)
 											'id');
 									mid = '@'
 										+ mid;
-									var photo = map[mid].profile_photo;
+									var photo = map[mid].profile_photo[0];
 									photo = removeCdataCorrectLink(photo);
 									$(
 										".modal-backdrop")

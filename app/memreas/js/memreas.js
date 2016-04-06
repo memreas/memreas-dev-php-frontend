@@ -112,28 +112,51 @@ var AppSystem = function() {
 	    data : 'json=' + data,
 	    timeout : 30000,
 	    success : function(response) {
-		response = JSON.parse(response.data);
-		if (response.status == 'Success') {
-		    var account = response.buyer_account;
-		    if (typeof account != 'undefined') {
-			var subscription = account.subscription;
-			if (typeof subscription != 'undefined') {
-			    var plan_id = subscription.plan;
-			    if (plan_id == 'PLAN_A_2GB_MONTHLY') {
-				$(".sell-media-section").hide();
-			    } else {
-				$(".share-account-plan").html(
-					subscription.plan_description);
-			    }
-			} else {
-			    $(".sell-media-section").hide();
-			}
-		    } else {
-			$(".sell-media-section").hide();
-		    }
-		} else {
-		    $(".sell-media-section").hide();
-		}
+            response = JSON.parse(response.data);
+            if (response.status == 'Success') {
+                var account = response.buyer_account;
+                if (typeof account != 'undefined') {
+                    var subscription = account.subscription;
+                    if (typeof subscription != 'undefined') {
+                        var plan_id = subscription.plan;
+                        if (plan_id == 'PLAN_A_2GB_MONTHLY') {
+                        	$(".sell-media-section").hide();
+							//Disable some features if user has free plan
+							$("form[name=sell_media_frm]").find("ul").hide();
+							$(".sell_media_bank").hide();
+							$("form[name=sell_media_frm]").next(".btn").remove();
+							$(".sell_media_bank").next(".btn").remove();
+							$("form[name=sell_media_frm] ul").before("<label>Please upgrade your subscription plan to register as seller</label>");
+							$(".sell_media_bank").before("<label>Please upgrade your subscription plan to register as seller</label>");
+                        } else {
+							$(".share-account-plan").html(
+								subscription.plan_description);
+                        }
+                    } else {
+                        //Disable some features if user has free plan
+						$("form[name=sell_media_frm]").find("ul").hide();
+						$(".sell_media_bank").hide();
+						$("form[name=sell_media_frm]").next(".btn").remove();
+						$(".sell_media_bank").next(".btn").remove();
+						$("form[name=sell_media_frm] ul").before("<label>Please upgrade your subscription plan to register as seller</label>");
+						$(".sell_media_bank").before("<label>Please upgrade your subscription plan to register as seller</label>");
+                    }
+                } else {
+					$("form[name=sell_media_frm]").find("ul").hide();
+					$(".sell_media_bank").hide();
+					$("form[name=sell_media_frm]").next(".btn").remove();
+					$(".sell_media_bank").next(".btn").remove();
+					$("form[name=sell_media_frm] ul").before("<label>Please upgrade your subscription plan to register as seller</label>");
+					$(".sell_media_bank").before("<label>Please upgrade your subscription plan to register as seller</label>");
+                }
+            } else {
+				$("form[name=sell_media_frm]").find("ul").hide();
+				$(".sell_media_bank").hide();
+				$("form[name=sell_media_frm]").next(".btn").remove();
+				$(".sell_media_bank").next(".btn").remove();
+				$("form[name=sell_media_frm] ul").before("<label>Please upgrade your subscription plan to register as seller</label>");
+				$(".sell_media_bank").before("<label>Please upgrade your subscription plan to register as seller</label>");
+            }
 	    },
 	    error : function(response, textStatus, errorThrown) {
 		if (textStatus === 'timeout') {
@@ -498,6 +521,7 @@ function fetchFriendsMemreas(friendMemreasType) {
 							.filter(
 								'profile_pic_79x80')
 							.html();
+							console.log(profile_img);
 						profile_img = removeCdataCorrectLink(profile_img);
 					    } else
 						profile_img = '/memreas/img/profile-pic.jpg';
@@ -584,6 +608,7 @@ function fetchFriendsMemreas(friendMemreasType) {
 								    'event_media')
 							    .html();
 
+							console.log(event_resource);
 						    var event_media_98x78 = $(
 							    event_media_resource)
 							    .filter(
