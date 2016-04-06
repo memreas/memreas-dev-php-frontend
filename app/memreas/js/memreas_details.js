@@ -477,7 +477,7 @@ function showEventDetail(eventId, userId) {
 
                                 media_download_url = _media_url_web;
 
-                                target_element.append ('<li class="video-media" id="memreasvideo-' + mediaId + '" media-url="' + main_media_url + '"><a href=\'javascript:popupVideoPlayer("memreasvideo-' + mediaId + '");\' id="button"><img src="' + _media_url + '" alt=""><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a></li>');
+                                target_element.append ('<li class="video-media" id="memreasvideo-' + mediaId + '" media-url="' + main_media_url + '"><a href=\'javascript:popupVideoPlayer("memreasvideo-' + mediaId + '");\' id="button"><img src="' + _media_thumbnail + '" alt=""><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a></li>');
                             }
 
                           
