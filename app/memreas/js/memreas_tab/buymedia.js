@@ -33,8 +33,7 @@ function popupBuyMedia(event_id, event_price, event_name) {
 				else
 					var duration_to = '';
 
-				console.log('duration from' + duration_from);
-				console.log('duration to' + duration_to);
+				$(".buying-media-duration").html(duration_from + ' to ' + duration_to);
 			} else {
 				jerror(getValueFromXMLTag(response, 'message'));
 			}
