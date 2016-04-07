@@ -11,7 +11,35 @@ function popupBuyMedia(event_id, event_price, event_name) {
     $(".popup-buymedia-price").html("$" + event_price);
     $("#accept-buymedia").attr("onclick", "buyMedia('" + event_id + "');");
     Account.reloadAccountCredit('.popup-buymedia-credit');
-    popup("popupBuyMedia");
+	ajaxRequest(
+		'geteventdetails',
+		[ {
+			tag : 'event_id',
+			value : event_id
+		} ],
+		function(response) {
+			if (getValueFromXMLTag(response, 'status') == 'Success') {
+				var metadata = getValueFromXMLTag(response,
+					'event_metadata');
+				metadata = JSON.parse(metadata);
+
+				if (typeof (metadata.duration_from) != 'undefined')
+					var duration_from = metadata.duration_from;
+				else
+					var duration_from = '';
+
+				if (typeof (metadata.duration_to) != 'undefined')
+					var duration_to = metadata.duration_to;
+				else
+					var duration_to = '';
+
+				console.log('duration from' + duration_from);
+				console.log('duration to' + duration_to);
+			} else {
+				jerror(getValueFromXMLTag(response, 'message'));
+			}
+			popup("popupBuyMedia");
+		});
 }
 
 /*
