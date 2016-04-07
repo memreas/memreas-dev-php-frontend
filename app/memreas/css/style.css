@@ -2430,6 +2430,7 @@ ul.option li small {
 
 .mem-gend {
 	color: #292929!important;
+	min-width: 8%;
 }
 
 .regular-radio:checked+label {
@@ -4084,7 +4085,7 @@ select {
 	line-height: 35px;
 }
 
-.popup-buymedia-credit, .popup-buymedia-price, .popup-event-name {
+.popup-buymedia-credit, .popup-buymedia-price, .popup-event-name, .buying-media-duration {
 	color: #F5FF00;
 	font-size: 18px;
 }

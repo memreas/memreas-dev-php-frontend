@@ -55,7 +55,7 @@ class IndexController extends AbstractActionController {
 		/*
 		 * Fetch guzzle and post...
 		 */
-		// $guzzle = new \GuzzleHttp\Client (['verify' => false]);
+		 //$guzzle = new \GuzzleHttp\Client (['verify' => false]);
 		$guzzle = new \GuzzleHttp\Client ();
 		Mlog::addone ( __CLASS__ . __METHOD__ . 'about to guzzle url+action+xml', MemreasConstants::MEMREAS_WS . $action . $xml );
 		try {
@@ -684,6 +684,16 @@ class IndexController extends AbstractActionController {
 	 */
 	public function androidAction() {
 		return $this->redirect()->toUrl(MemreasConstants::ANDROID_DOWNLOAD_URL);
+	}
+	
+	/**
+	 * Action to return Public Page
+	 */
+	public function publicAction() {
+		$path = "application/index/public_page.phtml";
+		//$view = new ViewModel ( array (
+		//) );
+		$view->setTemplate ( $path ); // path to phtml file under view folder
 	}
 	
 	

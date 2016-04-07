@@ -49,11 +49,10 @@ function centerPopup(id) {
 	// and change the top
 	// to custom
 	// (windowHeight - popupHeight) / 2
-	$("#" + id).css({
+$("#" + id).css({
 		"position" : "absolute",
-		"top" : "50%",
-		"left" : "50%",
-		"transform" : "translate(-50%, -50%)"
+		"top" : (windowHeight - popupHeight) / 2,
+		"left" : "37%"
 	});
 	// Khan Changes starts Here
 	if (window.innerWidth <= 1024) {
