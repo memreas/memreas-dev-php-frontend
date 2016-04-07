@@ -686,6 +686,16 @@ class IndexController extends AbstractActionController {
 		return $this->redirect()->toUrl(MemreasConstants::ANDROID_DOWNLOAD_URL);
 	}
 	
+	/**
+	 * Action to return Public Page
+	 */
+	public function publicAction() {
+		$path = "application/index/public_page.phtml";
+		//$view = new ViewModel ( array (
+		//) );
+		$view->setTemplate ( $path ); // path to phtml file under view folder
+	}
+	
 	
 } // end class IndexController
 
