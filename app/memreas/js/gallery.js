@@ -197,7 +197,7 @@ jQuery.fetch_server_media = function() {
 						+ _media_thumbnail_large
 						+ '"><img src="'
 						+ _media_thumbnail_large
-						+ '"/><span class="video-content-play-icon"></span></a></li>');
+						+ '"/><span class="video-content-play-icon" style="position: absolute; left: 10%; top: -5%;"></span></a></li>');
 			}
 			else {
 				$(".edit-area-scroll")
