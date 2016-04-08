@@ -1522,3 +1522,6 @@ label.event-name {
 .mobile-form input {width: 100% !important; }
 .mobile-profile{padding:10px 32px 10px 0px !important;}
 .mobile-form  > label{display: inline !important;}
+.mobile-content{
+	display: none;
+}
