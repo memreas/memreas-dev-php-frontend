@@ -12,6 +12,7 @@ var s3url = '';
 var s3path = '';
 var s3file = '';
 var filename = '';
+var optimize_filename = '';
 var user_id = '';
 var media_id = '';
 var media_type = '';
@@ -280,7 +281,7 @@ function validateRegstration() {
 												+ _media_extension
 														.toLowerCase();
 										s3path = user_id + '/' + media_id + '/';
-										s3file = filename;
+										s3file = optimize_filename;
 										s3url = s3path + s3file;
 										form.find('input[name=Content-Type]')
 												.val(media_type);
@@ -400,6 +401,8 @@ $(function() {
 												console
 														.log("Inside .direct-upload .fileupload .add");
 												filename = data.files[0].name;
+												optimize_filename = filename.replace(' ', '-');
+												$("input[name=key]").val(optimize_filename);
 												filetype = data.files[0].type;
 												// Check if valid type is image
 												// or video are allowed
