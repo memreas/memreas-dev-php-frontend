@@ -130,6 +130,7 @@ class IndexController extends AbstractActionController {
 			
 			$path = $this->security ( "application/index/index.phtml" );
 			$data ['bucket'] = MemreasConstants::S3BUCKET;
+			$data['maintenance'] = MemreasConstants::MAINTENANCE;
 			$view = new ViewModel ( array (
 					'data' => $data 
 			) );
@@ -344,6 +345,7 @@ class IndexController extends AbstractActionController {
 		$user_id = $_SESSION ['user_id'];
 		$data ['userid'] = $user_id;
 		$data ['bucket'] = MemreasConstants::S3BUCKET;
+		$data['maintenance'] = MemreasConstants::MAINTENANCE;
 		$s3Token = $this->getS3Key ();
 		
 		// Pass constant global variables to js global constant

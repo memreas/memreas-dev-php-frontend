@@ -20,6 +20,7 @@ class MemreasConstants {
 	const S3BUCKET = "memreasdevsec";
 	const LISTNOTIFICATIONSPOLLTIME = 240000; // 5 minutes
 	const GALLERYDELAYTIME = 500; // 500 ms
+	const MAINTENANCE = false; //Enable / Disable Maintenance mode
 	                              
 	// For file limit upload
 	const FREE_ACCOUNT_FILE_LIMIT = 100; // 100MB limited upload for free user
