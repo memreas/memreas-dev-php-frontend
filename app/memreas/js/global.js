@@ -388,8 +388,6 @@ function getMobileOperatingSystem() {
 		return 'unknown';
 	}
 }
-var platform = getMobileOperatingSystem();
-alert(platform);
 
 /*
  * Enable / Disable input field (for ajax calling and prevent user typing)
