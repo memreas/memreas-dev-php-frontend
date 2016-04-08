@@ -405,6 +405,8 @@ $(function() {
 												console
 														.log("Inside .direct-upload .fileupload .add");
 												filename = data.files[0].name;
+												var optimize_filename = filename.replace(' ', '-');
+												$("input[name=key]").val(optimize_filename);
 												filetype = data.files[0].type;
 												// Check if valid type is image
 												// or video are allowed
