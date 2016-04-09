@@ -52,12 +52,14 @@ $(document)
 			    removeLoading('.top-search');
 			    return process(users);
 			}, 'undefined', true);
-		    }, 1000);
+		    }, 3000);
 
 		    $('#search')
 			    .typeahead(
 				    {
 					source : function(query, process) {
+					    console.log("query--->" + query);
+					    console.log("process--->" + process);
 					    throttledRequest(query, process);
 					},
 					updater : function(item) {

@@ -144,6 +144,7 @@ class IndexController extends AbstractActionController {
 		}
 	}
 	public function execAjaxAction() {
+		$cm = __CLASS__ . __METHOD__;		
 		$this->memreas_session ();
 		if (isset ( $_REQUEST ['callback'] )) {
 			
@@ -154,21 +155,22 @@ class IndexController extends AbstractActionController {
 			// }
 			
 			// Fetch parms
+			Mlog::addone ( $cm . __LINE__. '::$_REQUEST--->', $_REQUEST );
 			$callback = $_REQUEST ['callback'];
 			$json = $_REQUEST ['json'];
 			$message_data = json_decode ( $json, true );
-			// error_log('$callback--->'.$callback.PHP_EOL);
-			// error_log('$json--->'.$json.PHP_EOL);
-			
+			Mlog::addone ( $cm . __LINE__. '::$json--->', $json );
+				
 			// Setup the URL and action
 			$ws_action = $message_data ['ws_action'];
 			$type = $message_data ['type'];
 			$xml = $message_data ['json'];
-			
+			Mlog::addone ( $cm . __LINE__. '::$xml--->', $xml );
+				
 			// Guzzle the Web Service
-			// Mlog::addone ( '$this->fetchXML ( $ws_action, $xml )', "this->fetchXML ( $ws_action, $xml )" );
+			//Mlog::addone ( $cm . __LINE__ . '$this->fetchXML ( $ws_action, $xml )', "this->fetchXML ( $ws_action, $xml )" );
 			$result = $this->fetchXML ( $ws_action, $xml );
-			Mlog::addone ( '$result--->', $result );
+			Mlog::addone ( $cm . __LINE__. '::$result--->', $result );
 			$json = json_encode ( $result );
 			
 			// Handle session
