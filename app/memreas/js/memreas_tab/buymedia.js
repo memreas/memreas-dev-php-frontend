@@ -6,8 +6,9 @@
  * Popup buying media form
  * */
 function popupBuyMedia(event_id, event_price, event_name) {
+    console.log("popupBuyMedia enter");
     clearBuyMediaPopup();
-    $(".popup-event-name").html(event_name);
+    $(".popup-event-name").html("!"+event_name);
     $(".popup-buymedia-price").html("$" + event_price);
     $("#accept-buymedia").attr("onclick", "buyMedia('" + event_id + "');");
     Account.reloadAccountCredit('.popup-buymedia-credit');
@@ -45,10 +46,13 @@ function popupBuyMedia(event_id, event_price, event_name) {
  * Reset buying media popup form
  */
 function clearBuyMediaPopup() {
+    console.log("clearBuyMediaPopup enter");
     $(".popup-event-name, .popup-buymedia-credit, .popup-buymedia-price")
 	    .empty();
     $("#ckb_buymedia_agree").removeAttr("checked");
     $("#accept-buymedia").removeAttr('onclick');
+    //$("buymedia_confirm_password").val('');
+    $('input[type="password"]').val('');
 }
 
 function buyMedia(event_id) {
@@ -142,11 +146,11 @@ function buyMedia(event_id) {
 					// friend
 					// tab is activated
 					var sell_class = '';
-					if ($("a[title=memreas-tab3]").parent(
-						'li').attr("id") == "current")
+					if ($("a[title=memreas-tab3]").parent('li').attr("id") == "current") {
 					    sell_class = "public-";
-					else
+					} else {
 					    sell_class = "private-";
+					}
 
 					var jElement = $("#" + sell_class
 						+ "selling-" + current_event);
@@ -168,7 +172,11 @@ function buyMedia(event_id) {
 						.remove();
 					jElement.find(".sell-event-buyme")
 						.remove();
+					//
+					// Refresh the page
+					//
 					fetchpubsMemreas();
+
 				    } else
 					jerror(response.message);
 				    $('.stripe-payment').fadeOut(500);
@@ -333,14 +341,8 @@ function popupCreditAddCard() {
 function acceptBuyCredit() {
     var buycredit_card = $("select[name=popup_buycredit_card]").val();
     var buycredit_amount = $("select[name=popup_buycredit_amount]").val();
-    var buycredit_agreement = ($("#ckb_buycredit_agree").is(":checked") ? 1 : 0);
     if (buycredit_card == '') {
 	jerror('please select your card');
-	return false;
-    }
-
-    if (!buycredit_agreement) {
-	jerror("you must agree with our terms and conditions");
 	return false;
     }
 

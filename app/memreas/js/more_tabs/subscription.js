@@ -131,7 +131,7 @@ function subscription_step3() {
 		}
 	});
 	if (!checkPlanChoose)
-		html_content = '<li><span class="error-description">Previous steps error! Please choose a plan first.</span></li>';
+		html_content = '<li><span class="error-description">Previous step error! Please choose a plan first.</span></li>';
 	else {
 		jMemberCard.find('input[type=radio]').each(function() {
 			if ($(this).is(":checked")) {
@@ -140,7 +140,7 @@ function subscription_step3() {
 			}
 		});
 		if (!checkCardChoose)
-			html_content = '<li><span class="error-description">Previous steps error! Please choose a payment method.</span></li>';
+			html_content = '<li><span class="error-description">Previous step error! Please choose a payment method.</span></li>';
 		else
 			html_content = $(".order-summary-preview ul").html();
 	}
@@ -201,22 +201,24 @@ function subscription_step4() {
 			return;
 		}
 	});
-	if (!checkPlanChoose)
-		html_content = '<li><span class="error-description">Previous steps error! Please choose a plan first.</span></li>';
-	else {
+	if (!checkPlanChoose){
+		html_content = '<li><span class="error-description">Previous step error! Please choose a plan first.</span></li>';
+	} else {
 		jMemberCard.find('input[type=radio]').each(function() {
 			if ($(this).is(":checked")) {
 				checkCardChoose = true;
 				return;
 			}
 		});
-		if (!checkCardChoose)
-			html_content = '<li><span class="error-description">Previous steps error! Please choose a payment method.</span></li>';
+		if (!checkCardChoose) {
+			html_content = '<li><span class="error-description">Previous step error! Please choose a payment method.</span></li>';
+		}
 	}
 
 	jOrderRecept.html(html_content);
-	if (!checkPlanChoose || !checkCardChoose)
+	if (!checkPlanChoose || !checkCardChoose) {
 		return false;
+	}
 
 	// Fetch the order plan
 	var orderPlan = new Object();
@@ -258,6 +260,7 @@ function subscription_step4() {
 				data : 'json=' + data,
 				timeout: 10000,
 				success : function(response) {
+				    	console.log(response);
 				  	response = jQuery.parseJSON( response.data );
 					if (response.status == 'Success') {
 						jOrderRecept.html("Your plan is activated successfully");
