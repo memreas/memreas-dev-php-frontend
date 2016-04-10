@@ -44,8 +44,6 @@ class IndexController extends AbstractActionController {
 		}
 		return $xml->asXML ();
 	}
-	
-	
 	public function fetchXML($action, $xml) {
 		$this->memreas_session ();
 		/**
@@ -71,7 +69,7 @@ class IndexController extends AbstractActionController {
 		/*
 		 * Fetch guzzle and post...
 		 */
-		 //$guzzle = new \GuzzleHttp\Client (['verify' => false]);
+		// $guzzle = new \GuzzleHttp\Client (['verify' => false]);
 		$guzzle = new \GuzzleHttp\Client ();
 		Mlog::addone ( __CLASS__ . __METHOD__ . 'about to guzzle url+action+xml', MemreasConstants::MEMREAS_WS . $action . $xml );
 		try {
@@ -86,17 +84,17 @@ class IndexController extends AbstractActionController {
 		}
 		
 		Mlog::addone ( __CLASS__ . __METHOD__ . 'about to guzzle url+action+xml', MemreasConstants::MEMREAS_WS . $action . $xml );
-		//error_log ( '$response->getBody ()---->' . $response->getBody () );
+		// error_log ( '$response->getBody ()---->' . $response->getBody () );
 		
-		if (empty($response)) {
-			//something is wrong - logout
+		if (empty ( $response )) {
+			// something is wrong - logout
 			return $this->logoutAction ();
 		}
 		
 		return $response->getBody ();
 	}
 	public function indexAction() {
-		Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__, '::enter'  );
+		Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__, '::enter' );
 		// Start buffering so cookies are set
 		//
 		// Check Headers sent
@@ -143,7 +141,7 @@ class IndexController extends AbstractActionController {
 			
 			$path = $this->security ( "application/index/index.phtml" );
 			$data ['bucket'] = MemreasConstants::S3BUCKET;
-			$data['maintenance'] = MemreasConstants::MAINTENANCE;
+			$data ['maintenance'] = MemreasConstants::MAINTENANCE;
 			$view = new ViewModel ( array (
 					'data' => $data 
 			) );
@@ -157,7 +155,7 @@ class IndexController extends AbstractActionController {
 		}
 	}
 	public function execAjaxAction() {
-		$cm = __CLASS__ . __METHOD__;		
+		$cm = __CLASS__ . __METHOD__;
 		Mlog::addone ( $cm . __LINE__ . '::$_REQUEST--->', $_REQUEST );
 		$this->memreas_session ();
 		if (isset ( $_REQUEST ['callback'] )) {
@@ -172,15 +170,15 @@ class IndexController extends AbstractActionController {
 			$callback = $_REQUEST ['callback'];
 			$json = $_REQUEST ['json'];
 			$message_data = json_decode ( $json, true );
-				
+			
 			// Setup the URL and action
 			$ws_action = $message_data ['ws_action'];
 			$type = $message_data ['type'];
 			$xml = $message_data ['json'];
-				
+			
 			// Guzzle the Web Service
 			$result = $this->fetchXML ( $ws_action, $xml );
-			//Mlog::addone ( $cm . __LINE__. '::$result--->', $result );
+			// Mlog::addone ( $cm . __LINE__. '::$result--->', $result );
 			$json = json_encode ( $result );
 			
 			// Handle session
@@ -225,9 +223,7 @@ class IndexController extends AbstractActionController {
 				$_SESSION ['username'] = ( string ) $data->loginresponse->username;
 				$_SESSION ['email'] = ( string ) $data->loginresponse->email;
 				
-				//set secure cookies to retrieve this info and avoid 
-				
-				
+				// set secure cookies to retrieve this info and avoid
 			} else if (($action == 'logout') || (! empty ( $data->logoutresponse ))) {
 				// $this->memreas_session ();
 				/**
@@ -236,15 +232,14 @@ class IndexController extends AbstractActionController {
 				$this->logoutAction ();
 			}
 		} else {
-			//foreach ( libxml_get_errors () as $error ) {
-			//	error_log ( 'Error parsing XML file : ' . $error->message );
-			//}
+			// foreach ( libxml_get_errors () as $error ) {
+			// error_log ( 'Error parsing XML file : ' . $error->message );
+			// }
 			/**
 			 * data is bad logout
 			 */
 			$this->logoutAction ();
 		}
-		
 		
 		//
 		// if refresh and no session logout
@@ -258,7 +253,7 @@ class IndexController extends AbstractActionController {
 		}
 	}
 	private function setSignedCookie($name, $val, $domain) {
-		Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__, '::enter'  );
+		Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__, '::enter' );
 		// using our own implementation because
 		// using php setcookie means the values are URL encoded and then AWS CF fails
 		header ( "Set-Cookie: $name=$val; path=/; domain=$domain; secure; httpOnly", false );
@@ -342,13 +337,13 @@ class IndexController extends AbstractActionController {
 				'BuyCredit' => MemreasConstants::PAYMENT_TAB_BUY_CREDIT,
 				'SellMedia' => MemreasConstants::PAYMENT_TAB_SELL_MEDIA 
 		);
-
+		
 		//
 		// if $_SESSION ['user_id'] is not set logout
 		// - something must be wrong...
 		//
-		if (empty($_SESSION ['user_id'])){
-			$this->logoutAction();
+		if (empty ( $_SESSION ['user_id'] )) {
+			$this->logoutAction ();
 		}
 		
 		//
@@ -357,7 +352,7 @@ class IndexController extends AbstractActionController {
 		$user_id = $_SESSION ['user_id'];
 		$data ['userid'] = $user_id;
 		$data ['bucket'] = MemreasConstants::S3BUCKET;
-		$data['maintenance'] = MemreasConstants::MAINTENANCE;
+		$data ['maintenance'] = MemreasConstants::MAINTENANCE;
 		$s3Token = $this->getS3Key ();
 		
 		// Pass constant global variables to js global constant
@@ -428,31 +423,31 @@ class IndexController extends AbstractActionController {
 	 * Login Action
 	 */
 	public function loginAction() {
-		Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__, '::enter'  );
+		Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__, '::enter' );
 		Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__ . '::$_REQUEST--->', $_REQUEST );
 		
 		// Fetch the post data
 		$request = $this->getRequest ();
 		$postData = $request->getPost ()->toArray ();
 		
-		$password = $postData['password'];
-		if (empty ( $postData['status_user_id'] )) {
+		$password = $postData ['password'];
+		if (empty ( $postData ['status_user_id'] )) {
 			Mlog::addone ( 'Returning view::', 'this->redirect ()->toRoute ( index, array (action => index) )' );
 			return $this->redirect ()->toRoute ( 'index', array (
 					'action' => "index" 
 			) );
 		} else {
 			Mlog::addone ( 'Returning view::', 'this->redirect ()->toRoute ( index, array (action => memreas) )' );
-			$this->memreas_session();
-			$_SESSION['username'] = $username = $_POST ['username'];
-			$_SESSION['user_id'] = $userid = $postData ['status_user_id'];
+			$this->memreas_session ();
+			$_SESSION ['username'] = $username = $_POST ['username'];
+			$_SESSION ['user_id'] = $userid = $postData ['status_user_id'];
 			return $this->redirect ()->toRoute ( 'index', array (
 					'action' => 'memreas' 
 			) );
 		}
 	}
 	public function logoutAction() {
-		Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__, '::enter'  );
+		Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__, '::enter' );
 		$this->memreas_session ();
 		/**
 		 * Logout FE Server
@@ -464,7 +459,7 @@ class IndexController extends AbstractActionController {
 		) );
 	}
 	public function changepasswordAction() {
-		Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__, '::enter'  );
+		Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__, '::enter' );
 		$this->memreas_session ();
 		$request = $this->getRequest ();
 		$postData = $request->getPost ()->toArray ();
@@ -489,7 +484,7 @@ class IndexController extends AbstractActionController {
 		return $path;
 	}
 	public function editmediaAction() {
-		Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__, '::enter'  );
+		Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__, '::enter' );
 		$this->memreas_session ();
 		$target_dir = getcwd () . '/app/memreas/temps_media_edit/';
 		$s3Object = new S3 ( MemreasConstants::S3_APPKEY, MemreasConstants::S3_APPSEC );
@@ -538,7 +533,7 @@ class IndexController extends AbstractActionController {
 	
 	// Process user add comment
 	public function audiocommentAction() {
-		Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__, '::enter'  );
+		Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__, '::enter' );
 		$this->memreas_session ();
 		if (isset ( $_POST ['file_data'] )) {
 			$user_id = $_POST ['user_id'];
@@ -617,7 +612,7 @@ class IndexController extends AbstractActionController {
 		die ();
 	}
 	private function createAudioFilename($user_id) {
-		Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__, '::enter'  );
+		Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__, '::enter' );
 		$this->memreas_session ();
 		$unique = uniqid ();
 		$today = date ( 'm-d-Y' );
@@ -628,7 +623,7 @@ class IndexController extends AbstractActionController {
 			return $filename;
 	}
 	public function error500Action() {
-		Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__, '::enter'  );
+		Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__, '::enter' );
 		$this->memreas_session ();
 		$path = "application/index/500.phtml";
 		$view = new ViewModel ();
@@ -639,7 +634,7 @@ class IndexController extends AbstractActionController {
 	// This is used for add profile pic at registration page when user still
 	// login
 	public function setTokenAction() {
-		Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__, '::enter'  );
+		Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__, '::enter' );
 		$this->memreas_session ();
 		$_SESSION [".$_POST ['sid']."];
 		die ();
@@ -649,7 +644,7 @@ class IndexController extends AbstractActionController {
 	 * For image downloading
 	 */
 	public function downloadMediaAction() {
-		Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__, '::enter'  );
+		Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__, '::enter' );
 		$this->memreas_session ();
 		$requestUrl = $_SERVER ['SERVER_NAME'] . $_SERVER ['REQUEST_URI'];
 		$requestUrl = explode ( "?", $requestUrl );
@@ -685,16 +680,35 @@ class IndexController extends AbstractActionController {
 		return $ipAddress;
 	}
 	public function memreas_session() {
+		$cm = __CLASS__ . __METHOD__;
+		Mlog::addone ( $cm . __LINE__ . '::', 'enter' );
+		Mlog::addone ( $cm . __LINE__ . '::session_status ()', session_status () );
 		if (session_status () !== PHP_SESSION_ACTIVE) {
-			if (!empty($_COOKIE['memreascookie'])) {
-				session_id ( $_COOKIE['memreascookie'] );
+			if (! empty ( $_COOKIE ['memreascookie'] )) {
+				Mlog::addone ( $cm . __LINE__ . '::!empty($_COOKIE[memreascookie])', '...' );
+				session_id ( $_COOKIE ['memreascookie'] );
 				session_start ();
 			} else {
+				Mlog::addone ( $cm . __LINE__ . '::empty($_COOKIE[memreascookie])', '...' );
 				// must be login
 				session_start ();
 			}
-			error_log ( '$_COOKIE---->' . print_r ( $_COOKIE, true ) );
-			error_log ( '$_SESSION---->' . print_r ( $_SESSION, true ) );
+		} else {
+			// session is active so set session id
+			Mlog::addone ( $cm . __LINE__ . '::session_status () === PHP_SESSION_ACTIVE', '...' );
+			session_id ( $_COOKIE ['memreascookie'] );
+		}
+		
+		Mlog::addone ( $cm . __LINE__ . '::$_COOKIE', $_COOKIE );
+		Mlog::addone ( $cm . __LINE__ . '::$_SESSION', $_SESSION );
+		if (!empty($_SESSION)){
+			if (isset ( $_SESSION ['LAST_ACTIVITY'] ) && (time () - $_SESSION ['LAST_ACTIVITY'] > 1800)) {
+				// last request was more than 30 minutes ago
+				session_unset (); // unset $_SESSION variable for the run-time
+				session_destroy (); // destroy session data in storage
+			}
+			$_SESSION ['LAST_ACTIVITY'] = time (); // update last activity time stamp
+			Mlog::addone ( $cm . __LINE__ . '::$_SESSION[LAST_ACTIVITY]', gmdate ( "Y-m-d\TH:i:s\Z", $_SESSION ['LAST_ACTIVITY'] ) );
 		}
 	}
 	
@@ -702,7 +716,7 @@ class IndexController extends AbstractActionController {
 	 * Action to return Android APK
 	 */
 	public function androidAction() {
-		return $this->redirect()->toUrl(MemreasConstants::ANDROID_DOWNLOAD_URL);
+		return $this->redirect ()->toUrl ( MemreasConstants::ANDROID_DOWNLOAD_URL );
 	}
 	
 	/**
@@ -710,8 +724,8 @@ class IndexController extends AbstractActionController {
 	 */
 	public function publicAction() {
 		$path = "application/index/public_page.phtml";
-		//$view = new ViewModel ( array (
-		//) );
+		// $view = new ViewModel ( array (
+		// ) );
 		$view->setTemplate ( $path ); // path to phtml file under view folder
 	}
 } // end class IndexController

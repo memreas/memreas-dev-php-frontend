@@ -344,6 +344,7 @@ var Account = function() {
 			data : 'json=' + data,
 			timeout : 20000,
 			success : function(response) {
+			    	console.log("response" + JSON.stringify(response));
 				setX_MEMREAS_CHAMELEON(response.x_memreas_chameleon);
 				response = JSON.parse(response.data);
 				if (response.status == 'Success') {
