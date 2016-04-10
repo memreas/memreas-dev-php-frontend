@@ -105,66 +105,93 @@ var AppSystem = function() {
 		+ '"json": ' + data_obj + '}';
 	var stripeCustomerUrl = $("input[name=stripe_url]").val()
 		+ 'stripe_getCustomerInfo';
-	$.ajax({
-	    url : stripeCustomerUrl,
-	    type : 'POST',
-	    dataType : 'jsonp',
-	    data : 'json=' + data,
-	    timeout : 30000,
-	    success : function(response) {
-            response = JSON.parse(response.data);
-            if (response.status == 'Success') {
-                var account = response.buyer_account;
-                if (typeof account != 'undefined') {
-                    var subscription = account.subscription;
-                    if (typeof subscription != 'undefined') {
-                        var plan_id = subscription.plan;
-                        if (plan_id == 'PLAN_A_2GB_MONTHLY') {
-                        	$(".sell-media-section").hide();
-							//Disable some features if user has free plan
-							$("form[name=sell_media_frm]").find("ul").hide();
-							$(".sell_media_bank").hide();
-							$("form[name=sell_media_frm]").next(".btn").remove();
-							$(".sell_media_bank").next(".btn").remove();
-							$("form[name=sell_media_frm] ul").before("<label>Please upgrade your subscription plan to register as seller</label>");
-							$(".sell_media_bank").before("<label>Please upgrade your subscription plan to register as seller</label>");
-                        } else {
-							$(".share-account-plan").html(
-								subscription.plan_description);
-                        }
-                    } else {
-                        //Disable some features if user has free plan
-						$("form[name=sell_media_frm]").find("ul").hide();
-						$(".sell_media_bank").hide();
-						$("form[name=sell_media_frm]").next(".btn").remove();
-						$(".sell_media_bank").next(".btn").remove();
-						$("form[name=sell_media_frm] ul").before("<label>Please upgrade your subscription plan to register as seller</label>");
-						$(".sell_media_bank").before("<label>Please upgrade your subscription plan to register as seller</label>");
-                    }
-                } else {
-					$("form[name=sell_media_frm]").find("ul").hide();
+	$
+		.ajax({
+		    url : stripeCustomerUrl,
+		    type : 'POST',
+		    dataType : 'jsonp',
+		    data : 'json=' + data,
+		    timeout : 30000,
+		    success : function(response) {
+			response = JSON.parse(response.data);
+			if (response.status == 'Success') {
+			    var account = response.buyer_account;
+			    if (typeof account != 'undefined') {
+				var subscription = account.subscription;
+				if (typeof subscription != 'undefined') {
+				    var plan_id = subscription.plan;
+				    if (plan_id == 'PLAN_A_2GB_MONTHLY') {
+					$(".sell-media-section").hide();
+					// Disable some features if user has
+					// free plan
+					$("form[name=sell_media_frm]").find(
+						"ul").hide();
 					$(".sell_media_bank").hide();
-					$("form[name=sell_media_frm]").next(".btn").remove();
-					$(".sell_media_bank").next(".btn").remove();
-					$("form[name=sell_media_frm] ul").before("<label>Please upgrade your subscription plan to register as seller</label>");
-					$(".sell_media_bank").before("<label>Please upgrade your subscription plan to register as seller</label>");
-                }
-            } else {
-				$("form[name=sell_media_frm]").find("ul").hide();
+					$("form[name=sell_media_frm]").next(
+						".btn").remove();
+					$(".sell_media_bank").next(".btn")
+						.remove();
+					$("form[name=sell_media_frm] ul")
+						.before(
+							"<label>Please upgrade your subscription plan to register as seller</label>");
+					$(".sell_media_bank")
+						.before(
+							"<label>Please upgrade your subscription plan to register as seller</label>");
+				    } else {
+					$(".share-account-plan").html(
+						subscription.plan_description);
+				    }
+				} else {
+				    // Disable some features if user has free
+				    // plan
+				    $("form[name=sell_media_frm]").find("ul")
+					    .hide();
+				    $(".sell_media_bank").hide();
+				    $("form[name=sell_media_frm]").next(".btn")
+					    .remove();
+				    $(".sell_media_bank").next(".btn").remove();
+				    $("form[name=sell_media_frm] ul")
+					    .before(
+						    "<label>Please upgrade your subscription plan to register as seller</label>");
+				    $(".sell_media_bank")
+					    .before(
+						    "<label>Please upgrade your subscription plan to register as seller</label>");
+				}
+			    } else {
+				$("form[name=sell_media_frm]").find("ul")
+					.hide();
 				$(".sell_media_bank").hide();
-				$("form[name=sell_media_frm]").next(".btn").remove();
+				$("form[name=sell_media_frm]").next(".btn")
+					.remove();
 				$(".sell_media_bank").next(".btn").remove();
-				$("form[name=sell_media_frm] ul").before("<label>Please upgrade your subscription plan to register as seller</label>");
-				$(".sell_media_bank").before("<label>Please upgrade your subscription plan to register as seller</label>");
-            }
-	    },
-	    error : function(response, textStatus, errorThrown) {
-		if (textStatus === 'timeout') {
-		    jerror('request timeout - please try again later');
-		    $('#loadingpopup').hide();
-		}
-	    }
-	});
+				$("form[name=sell_media_frm] ul")
+					.before(
+						"<label>Please upgrade your subscription plan to register as seller</label>");
+				$(".sell_media_bank")
+					.before(
+						"<label>Please upgrade your subscription plan to register as seller</label>");
+			    }
+			} else {
+			    $("form[name=sell_media_frm]").find("ul").hide();
+			    $(".sell_media_bank").hide();
+			    $("form[name=sell_media_frm]").next(".btn")
+				    .remove();
+			    $(".sell_media_bank").next(".btn").remove();
+			    $("form[name=sell_media_frm] ul")
+				    .before(
+					    "<label>Please upgrade your subscription plan to register as seller</label>");
+			    $(".sell_media_bank")
+				    .before(
+					    "<label>Please upgrade your subscription plan to register as seller</label>");
+			}
+		    },
+		    error : function(response, textStatus, errorThrown) {
+			if (textStatus === 'timeout') {
+			    jerror('request timeout - please try again later');
+			    $('#loadingpopup').hide();
+			}
+		    }
+		});
     }
 }
 var AppSystem = new AppSystem();
@@ -521,7 +548,7 @@ function fetchFriendsMemreas(friendMemreasType) {
 							.filter(
 								'profile_pic_79x80')
 							.html();
-							console.log(profile_img);
+						console.log(profile_img);
 						profile_img = removeCdataCorrectLink(profile_img);
 					    } else
 						profile_img = '/memreas/img/profile-pic.jpg';
@@ -599,6 +626,10 @@ function fetchFriendsMemreas(friendMemreasType) {
 							    event_resource)
 							    .filter('event_id')
 							    .html();
+						    var eventName = $(
+							    event_resource)
+							    .filter('event_name')
+							    .html();
 						    console.log('eventId-->'
 							    + eventId);
 						    // fetch event media
@@ -608,7 +639,7 @@ function fetchFriendsMemreas(friendMemreasType) {
 								    'event_media')
 							    .html();
 
-							console.log(event_resource);
+						    console.log(event_resource);
 						    var event_media_98x78 = $(
 							    event_media_resource)
 							    .filter(
@@ -617,12 +648,11 @@ function fetchFriendsMemreas(friendMemreasType) {
 						    console
 							    .log('event_media_98x78-->'
 								    + event_media_98x78);
-						    event_media_98x78 = removeCdataCorrectLink(event_media_98x78);
-						    console
-							    .log('event_media_98x78 after-->'
-								    + event_media_98x78);
-						    if (event_media_98x78 == '')
+						    if (event_media_98x78 == null) {
 							event_media_98x78 = '/memreas/img/small/1.jpg';
+						    } else {
+							event_media_98x78 = removeCdataCorrectLink(event_media_98x78);
+						    }
 						    var event_name = $(
 							    event_resource)
 							    .filter(
@@ -651,6 +681,8 @@ function fetchFriendsMemreas(friendMemreasType) {
 								sell_price = event_metadata.price;
 							}
 						    }
+						    console.log("account.checkownevent-->" + Account
+							    .checkOwnEvent(eventId));
 						    if (sell_price == ''
 							    || Account
 								    .checkOwnEvent(eventId)) {
@@ -676,27 +708,26 @@ function fetchFriendsMemreas(friendMemreasType) {
 										+ event_name
 										+ '</a></span></div>');
 						    } else {
-							console
-								.log('selling event???--');
+							console.log('sell eventId-->' + eventId);
+							console.log('sell creator_id-->' + creator_id);
+							console.log('sell sell_price-->' + sell_price);
+							console.log('sell event_name-->' + event_name);
+							var link = '';
+							link += '<div class="event_img" ';
+							link += ' id="' + sell_class + 'selling-' + eventId + '"';
+							link += ' data-owner="' + creator_id + '">';
+							link += '<a href="javascript:;" ';
+							link += 'onclick="popupBuyMedia( ';
+							link += "'" + eventId + "', '" + sell_price + "', '" + eventName + "' );" + '"';  
+							link += ' style="cursor: pointer;">';
+							link += ' <div class="sell-event-overlay">';
+							link += ' <span class="sell-event-buyme"><i>buy</i></span>';
+							link += ' <img src="' + event_media_98x78 + '" alt="">';
+							link += ' <span class="event_name_box"><a style="color:#FFF;" >!' + event_name + '</a></span>';
+							link += ' </a></div></div>';
+							console.log(link);
 							$("#" + friend_row)
-								.append(
-									'<div class="event_img" id="'
-										+ sell_class
-										+ 'selling-'
-										+ eventId
-										+ '" data-owner="'
-										+ creator_id
-										+ '" data-click="popupBuyMedia(\''
-										+ eventId
-										+ '\', \''
-										+ sell_price
-										+ '\', \''
-										+ event_name
-										+ '\');"><div class="sell-event-overlay"></div><span class="sell-event-buyme"><i>checking...</i></span><img src="'
-										+ event_media_98x78
-										+ '" alt=""><span class="event_name_box"><a style="color:#FFF;" href="javascript:;">!'
-										+ event_name
-										+ '</a></span></div>');
+								.append(link);
 						    }
 						} // end for loop for (var
 						// key=0;key <
@@ -1042,7 +1073,7 @@ function fetchpubsMemreas() {
 					    /**
 					     * Fetch events by friend
 					     */
-					    
+
 					}
 					$(".event_images_public")
 						.mCustomScrollbar('update');

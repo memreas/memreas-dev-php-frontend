@@ -423,7 +423,6 @@ function checkSellMediaDuration() {
 
 // add the new event by request to the server.
 share_addEvent = function(medianext) {
-    //debugger;
 	var sellmedia_duration_from = '';
 	var sellmedia_duration_to = ''
 

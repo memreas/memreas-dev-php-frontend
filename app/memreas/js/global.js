@@ -160,7 +160,9 @@ function getMediaUrl(element_object, mediatype) {
 }
 
 function removeCdata(media_link) {
-    media_link = media_link.replace("<!--[CDATA[", "").replace("]]-->", "");
+    if (media_link != null) {
+	    media_link = media_link.replace("<!--[CDATA[", "").replace("]]-->", "");
+    } 
     return media_link;
 }
 
