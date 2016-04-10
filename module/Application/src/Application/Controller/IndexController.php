@@ -96,6 +96,7 @@ class IndexController extends AbstractActionController {
 		return $response->getBody ();
 	}
 	public function indexAction() {
+		Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__, '::enter'  );
 		// Start buffering so cookies are set
 		//
 		// Check Headers sent
@@ -224,6 +225,9 @@ class IndexController extends AbstractActionController {
 				$_SESSION ['username'] = ( string ) $data->loginresponse->username;
 				$_SESSION ['email'] = ( string ) $data->loginresponse->email;
 				
+				//set secure cookies to retrieve this info and avoid 
+				
+				
 			} else if (($action == 'logout') || (! empty ( $data->logoutresponse ))) {
 				// $this->memreas_session ();
 				/**
@@ -254,6 +258,7 @@ class IndexController extends AbstractActionController {
 		}
 	}
 	private function setSignedCookie($name, $val, $domain) {
+		Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__, '::enter'  );
 		// using our own implementation because
 		// using php setcookie means the values are URL encoded and then AWS CF fails
 		header ( "Set-Cookie: $name=$val; path=/; domain=$domain; secure; httpOnly", false );
@@ -423,7 +428,7 @@ class IndexController extends AbstractActionController {
 	 * Login Action
 	 */
 	public function loginAction() {
-		Mlog::addone ( 'Enter::', 'loginAction()' );
+		Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__, '::enter'  );
 		Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__ . '::$_REQUEST--->', $_REQUEST );
 		
 		// Fetch the post data
@@ -447,6 +452,7 @@ class IndexController extends AbstractActionController {
 		}
 	}
 	public function logoutAction() {
+		Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__, '::enter'  );
 		$this->memreas_session ();
 		/**
 		 * Logout FE Server
@@ -458,6 +464,7 @@ class IndexController extends AbstractActionController {
 		) );
 	}
 	public function changepasswordAction() {
+		Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__, '::enter'  );
 		$this->memreas_session ();
 		$request = $this->getRequest ();
 		$postData = $request->getPost ()->toArray ();
@@ -482,6 +489,7 @@ class IndexController extends AbstractActionController {
 		return $path;
 	}
 	public function editmediaAction() {
+		Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__, '::enter'  );
 		$this->memreas_session ();
 		$target_dir = getcwd () . '/app/memreas/temps_media_edit/';
 		$s3Object = new S3 ( MemreasConstants::S3_APPKEY, MemreasConstants::S3_APPSEC );
@@ -530,6 +538,7 @@ class IndexController extends AbstractActionController {
 	
 	// Process user add comment
 	public function audiocommentAction() {
+		Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__, '::enter'  );
 		$this->memreas_session ();
 		if (isset ( $_POST ['file_data'] )) {
 			$user_id = $_POST ['user_id'];
@@ -608,6 +617,7 @@ class IndexController extends AbstractActionController {
 		die ();
 	}
 	private function createAudioFilename($user_id) {
+		Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__, '::enter'  );
 		$this->memreas_session ();
 		$unique = uniqid ();
 		$today = date ( 'm-d-Y' );
@@ -618,6 +628,7 @@ class IndexController extends AbstractActionController {
 			return $filename;
 	}
 	public function error500Action() {
+		Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__, '::enter'  );
 		$this->memreas_session ();
 		$path = "application/index/500.phtml";
 		$view = new ViewModel ();
@@ -628,6 +639,7 @@ class IndexController extends AbstractActionController {
 	// This is used for add profile pic at registration page when user still
 	// login
 	public function setTokenAction() {
+		Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__, '::enter'  );
 		$this->memreas_session ();
 		$_SESSION [".$_POST ['sid']."];
 		die ();
@@ -637,6 +649,7 @@ class IndexController extends AbstractActionController {
 	 * For image downloading
 	 */
 	public function downloadMediaAction() {
+		Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__, '::enter'  );
 		$this->memreas_session ();
 		$requestUrl = $_SERVER ['SERVER_NAME'] . $_SERVER ['REQUEST_URI'];
 		$requestUrl = explode ( "?", $requestUrl );
@@ -701,7 +714,5 @@ class IndexController extends AbstractActionController {
 		//) );
 		$view->setTemplate ( $path ); // path to phtml file under view folder
 	}
-	
-	
 } // end class IndexController
 
