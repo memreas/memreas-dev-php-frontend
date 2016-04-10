@@ -465,6 +465,7 @@ function fillUserDetail(currentUserId) {
 	value : currentUserId
     } ];
     ajaxRequest('getuserdetails', params, function(xml_response) {
+	console.log(xml_response);
 	if (getValueFromXMLTag(xml_response, 'status') == 'Success') {
 	    var username = getValueFromXMLTag(xml_response, 'username');
 	    var useremail = getValueFromXMLTag(xml_response, 'email');
@@ -483,12 +484,14 @@ function fillUserDetail(currentUserId) {
 	    $("input[name=account_alternate_email]").val(alternate_email);
 	    $("input[name=account_dob]").val(dob);
 
-	    if (gender == 'male')
+	    if (gender == 'male') {
 		$("#gender-male").attr("checked", "checked");
-	    else {
-		if (gender == 'female')
+	    } else {
+		if (gender == 'female') {
 		    $("#gender-female").attr("checked", "checked");
+		}
 	    }
+
 	} else
 	    jerror(getValueFromXMLTag(xml_response, 'messsage'));
     });
@@ -1903,18 +1906,17 @@ $(function() {
 		    function() {
 
 			var userId = $("input[name=user_id]").val();
-                        
+
 			/**
 			 * wrong - need to call dmca list web service...
 			 */
-                        
+
 			ajaxRequest(
 				'dcmalist',
 				[ {
 				    tag : 'user_id',
 				    value : userId
-				}
-                            ],
+				} ],
 				function(response) {
 				    console.log("DCMA-->" + response);
 				    var status = getValueFromXMLTag(response,
@@ -1936,21 +1938,22 @@ $(function() {
 					    // '+i+'-->'+media_detail);
 					    var media_id = $(media_detail)
 						    .filter('media_id').html();
-                                            var violation_id = $(media_detail)
-						    .filter('violation_id').html();
+					    var violation_id = $(media_detail)
+						    .filter('violation_id')
+						    .html();
 
 					    // console.log('media_id-->'+media_id);
-					    var dmca_violation_report_date = $(media_detail)
-						    .filter('dmca_violation_report_date')
+					    var dmca_violation_report_date = $(
+						    media_detail)
+						    .filter(
+							    'dmca_violation_report_date')
 						    .html();
-                                            
-                                            var counter_status = $(media_detail)
-						    .filter('status')
-						    .html();
-					  
+
+					    var counter_status = $(media_detail)
+						    .filter('status').html();
+
 					    var media_url = $(media_detail)
-						    .filter('media_url')
-						    .html();
+						    .filter('media_url').html();
 					    media_url = removeCdataCorrectLink(media_url);
 					    var row_class = '';
 					    if (i % 2 == 0)
@@ -1973,10 +1976,14 @@ $(function() {
 						    + '" width="80" /></td>'
 						    + '<td> <a href="javascript:;" onclick="reportCounterclaim(this);" class="counter-claim-btn reportCounterclaim" id="'
 						    + media_id
-						    + '" rel="'+violation_id+'">report counter claim</a>'
+						    + '" rel="'
+						    + violation_id
+						    + '">report counter claim</a>'
+						    + '</td>'
+						    + '<td>'
+						    + dmca_violation_report_date
 						    + '</td>' + '<td>'
-						    + dmca_violation_report_date + '</td>'
-						    + '<td>'+counter_status+'</td>'
+						    + counter_status + '</td>'
 						    + '</tr>';
 
 					}
@@ -2041,7 +2048,7 @@ function fetchS3PreSignedURLDMCACounterClaim() {
 	     * contains all the needed data to sign the request
 	     */
 	    form = $("#dmcaFileUploadForm");
-	    //data.files[0];
+	    // data.files[0];
 	    uploadHandle = data;
 	    dmcaMediaId = data.media_id;
 	    console.log("fetchMemreasTVM success function dmcaMediaId--->"
@@ -2055,7 +2062,9 @@ function fetchS3PreSignedURLDMCACounterClaim() {
 	    form.find('input[name=x-amz-date]').val(data.date);
 	    form.find('input[name=x-amz-expires]').val(data.expires);
 	    form.find('input[name=x-amz-signature]').val(data.signature);
-	    form.find('input[name=file]').val($("#dmcaReportCounterClaimForm").find('input[name=file]').val());
+	    form.find('input[name=file]').val(
+		    $("#dmcaReportCounterClaimForm").find('input[name=file]')
+			    .val());
 
 	    //
 	    // Set Key since user is registered
@@ -2074,9 +2083,8 @@ function fetchS3PreSignedURLDMCACounterClaim() {
 	    console.log("key-->" + form.find('input[name=key]').val());
 	    console.log("Calling uploadHandle.submit()");
 
-	    
 	    var jqXHR = uploadHandle.submit();
-	    
+
 	    /**
 	     * file is submitted so call ws to store to db
 	     */
@@ -2091,13 +2099,12 @@ function fetchS3PreSignedURLDMCACounterClaim() {
 }
 
 function reportCounterclaim(elm) {
-   //alert($(elm).attr('id'));
-   $('#media_id').val($(elm).attr('id'));
-   $('#violation_id').val($(elm).attr('rel'));
-   $('#copyright_owner_email_address').val(userObject.email);
-   popup('dmca-form-box');
-    
-   
+    // alert($(elm).attr('id'));
+    $('#media_id').val($(elm).attr('id'));
+    $('#violation_id').val($(elm).attr('rel'));
+    $('#copyright_owner_email_address').val(userObject.email);
+    popup('dmca-form-box');
+
 }
 
 function reportCounterClaimForm() {
@@ -2109,8 +2116,8 @@ function reportCounterClaimForm() {
     var mediaId_report = $('#media_id').val();
     var counter_claim_phone_number = $('#counter_claim_phone_number').val();
     var terms_condition = $('#dmca_term_condition').val();
-    var violation_id=$('#violation_id').val();
-    var counter_claim_url=$('#counter_claim_url').val();
+    var violation_id = $('#violation_id').val();
+    var counter_claim_url = $('#counter_claim_url').val();
 
     if (copy_right_owner == '') {
 	jerror("Please fill your name");
@@ -2120,8 +2127,8 @@ function reportCounterClaimForm() {
 	jerror("Please fill your Address");
 	return;
     }
-    if(counter_claim_url ==''){
-        jerror("Please fill Claim Url");
+    if (counter_claim_url == '') {
+	jerror("Please fill Claim Url");
 	return;
     }
     if (counter_claim_phone_number == '') {
@@ -2156,7 +2163,7 @@ function reportCounterClaimForm() {
     }, {
 	tag : "counter_claim_agreed_to_terms",
 	value : "1"
-    },  {
+    }, {
 	tag : "counter_claim_phone_number",
 	value : counter_claim_phone_number
     }, ];
@@ -2170,7 +2177,7 @@ function reportCounterClaimForm() {
 	console.log(ret_xml);
 
 	if (status == 'success') {
-		disablePopup('dmca-form-box');
+	    disablePopup('dmca-form-box');
 	    popup('popupComfirmDmca');
 	} else {
 	    jerror("your counter claim failed to upload");

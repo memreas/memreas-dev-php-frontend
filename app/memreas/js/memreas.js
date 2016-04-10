@@ -10,7 +10,7 @@ var AppSystem = function() {
 
     // Display page loading screen
     this.putPageLoading = function() {
-	$('#loadingpopup').fadeIn(1000);
+	$('#loadingpopup').fadeIn(500);
     }
 
     // Remove page loading screen
@@ -46,53 +46,97 @@ var AppSystem = function() {
 	} ];
 
 	// Fill in site account information
-	ajaxRequest('getuserdetails', params, function(xml_response) {
-	    if (getValueFromXMLTag(xml_response, 'status') == 'Success') {
-		var useremail = getValueFromXMLTag(xml_response, 'email');
-		var username = getValueFromXMLTag(xml_response, 'username');
+	ajaxRequest(
+		'getuserdetails',
+		params,
+		function(xml_response) {
+		    if (getValueFromXMLTag(xml_response, 'status') == 'Success') {
+			var useremail = getValueFromXMLTag(xml_response,
+				'email');
+			var username = getValueFromXMLTag(xml_response,
+				'username');
 
-		var userprofile = getValueFromXMLTag(xml_response, 'profile');
-		userprofile = removeCdataCorrectLink(userprofile);
+			var userprofile = getValueFromXMLTag(xml_response,
+				'profile');
+			userprofile = removeCdataCorrectLink(userprofile);
 
-		var alternate_email = getValueFromXMLTag(xml_response,
-			'alternate_email');
-		var gender = getValueFromXMLTag(xml_response, 'gender');
-		var dob = getValueFromXMLTag(xml_response, 'dob');
-		var username_length = username.length;
+			var alternate_email = getValueFromXMLTag(xml_response,
+				'alternate_email');
+			var gender = getValueFromXMLTag(xml_response, 'gender');
+			var dob = getValueFromXMLTag(xml_response, 'dob');
+			var username_length = username.length;
 
-		if (username_length > 10) {
-		    username = username.substring(0, 7) + '...';
-		}
+			if (username_length > 10) {
+			    username = username.substring(0, 7) + '...';
+			}
 
-		$("header").find(".pro-name").html(username);
-		$("#setting-username").html(
-			getValueFromXMLTag(xml_response, 'username'));
+			$("header").find(".pro-name").html(username);
+			$("#setting-username").html(
+				getValueFromXMLTag(xml_response, 'username'));
 
-		if (userprofile != '') {
-		    $("header").find("#profile_picture").attr('src',
-			    userprofile);
-		    $("#setting-userprofile img").attr('src', userprofile);
-		}
+			if (userprofile != '') {
+			    $("header").find("#profile_picture").attr('src',
+				    userprofile);
+			    $("#setting-userprofile img").attr('src',
+				    userprofile);
+			}
 
-		$("input[name=account_email]").val(useremail);
-		$("input[name=account_alternate_email]").val(alternate_email);
-		$("input[name=account_dob]").val(dob);
+			$("input[name=account_email]").val(useremail);
+			$("input[name=account_alternate_email]").val(
+				alternate_email);
+			$("input[name=account_dob]").val(dob);
 
-		if (gender == 'male') {
-		    $("#gender-male").attr("checked", "checked");
-		} else {
-		    if (gender == 'female') {
-			$("#gender-female").attr("checked", "checked");
+			if (gender == 'male') {
+			    $("#gender-male").attr("checked", "checked");
+			} else {
+			    if (gender == 'female') {
+				$("#gender-female").attr("checked", "checked");
+			    }
+			}
+
+			var account_type = getValueFromXMLTag(xml_response,
+				'account_type');
+			$(".share-account-type").html(account_type);
+
+			$("input[name=account_email]").val(useremail);
+
+			//
+			// Buyer / Seller section
+			//
+			var accounts_xml = getValueFromXMLTag(xml_response,
+				'accounts');
+			var xml = $.parseXML(accounts_xml);
+			var account = $(xml).find('account');
+			var account_types = '';
+			var seller_balance = 0;
+			var buyer_balance = 0;
+			var count = $(account).length;
+			$(account).each(
+				function(index) {
+				    account_types += $(this).find('account_type').text();
+				    if ((count > 1) && (index !=count)) {
+					account_types += ', ';	
+				    } 
+				    var account_balance = $(this).find('account_balance').text();
+				    if (account_type == 'seller'){
+					seller_balance = account_balance;
+				    } else {
+					buyer_balance = account_balance;
+				    }
+				});
+			$(".morepage-account-type").text(account_types);
+			$(".morepage-account-buyerbalance").text("$" + buyer_balance);
+			$(".morepage-account-sellerbalance").text("$" + seller_balance);
+			
+			//remove seller section if they're not a seller
+			if (seller_balance == 0) {
+			    $("#account-sellerbalance-div").remove();
+			}
+			
+			
+
 		    }
-		}
-
-		var account_type = getValueFromXMLTag(xml_response,
-			'account_type');
-		$(".share-account-type").html(account_type);
-
-		$("input[name=account_email]").val(useremail);
-	    }
-	}, 'undefined', true);
+		}, 'undefined', true);
 
 	// Checking for share page, account sale event
 	var obj = new Object();
@@ -628,7 +672,8 @@ function fetchFriendsMemreas(friendMemreasType) {
 							    .html();
 						    var eventName = $(
 							    event_resource)
-							    .filter('event_name')
+							    .filter(
+								    'event_name')
 							    .html();
 						    console.log('eventId-->'
 							    + eventId);
@@ -681,8 +726,10 @@ function fetchFriendsMemreas(friendMemreasType) {
 								sell_price = event_metadata.price;
 							}
 						    }
-						    console.log("account.checkownevent-->" + Account
-							    .checkOwnEvent(eventId));
+						    console
+							    .log("account.checkownevent-->"
+								    + Account
+									    .checkOwnEvent(eventId));
 						    if (sell_price == ''
 							    || Account
 								    .checkOwnEvent(eventId)) {
@@ -708,22 +755,44 @@ function fetchFriendsMemreas(friendMemreasType) {
 										+ event_name
 										+ '</a></span></div>');
 						    } else {
-							console.log('sell eventId-->' + eventId);
-							console.log('sell creator_id-->' + creator_id);
-							console.log('sell sell_price-->' + sell_price);
-							console.log('sell event_name-->' + event_name);
+							console
+								.log('sell eventId-->'
+									+ eventId);
+							console
+								.log('sell creator_id-->'
+									+ creator_id);
+							console
+								.log('sell sell_price-->'
+									+ sell_price);
+							console
+								.log('sell event_name-->'
+									+ event_name);
 							var link = '';
 							link += '<div class="event_img" ';
-							link += ' id="' + sell_class + 'selling-' + eventId + '"';
-							link += ' data-owner="' + creator_id + '">';
+							link += ' id="'
+								+ sell_class
+								+ 'selling-'
+								+ eventId + '"';
+							link += ' data-owner="'
+								+ creator_id
+								+ '">';
 							link += '<a href="javascript:;" ';
 							link += 'onclick="popupBuyMedia( ';
-							link += "'" + eventId + "', '" + sell_price + "', '" + eventName + "' );" + '"';  
+							link += "'" + eventId
+								+ "', '"
+								+ sell_price
+								+ "', '"
+								+ eventName
+								+ "' );" + '"';
 							link += ' style="cursor: pointer;">';
 							link += ' <div class="sell-event-overlay">';
 							link += ' <span class="sell-event-buyme"><i>buy</i></span>';
-							link += ' <img src="' + event_media_98x78 + '" alt="">';
-							link += ' <span class="event_name_box"><a style="color:#FFF;" >!' + event_name + '</a></span>';
+							link += ' <img src="'
+								+ event_media_98x78
+								+ '" alt="">';
+							link += ' <span class="event_name_box"><a style="color:#FFF;" >!'
+								+ event_name
+								+ '</a></span>';
 							link += ' </a></div></div>';
 							console.log(link);
 							$("#" + friend_row)
