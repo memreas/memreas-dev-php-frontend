@@ -202,8 +202,6 @@ function validateRegstration() {
 		tag : 'event_id',
 		value : assigned_event
 	} ];
-	console.log("About to call registration via ajax");
-	console.log("secret--->" + input_secret);
 
 	ajaxRequest(
 			'registration',
@@ -221,8 +219,6 @@ function validateRegstration() {
 						$
 								.ajax({
 									url : "/index/fetchMemreasTVM",
-									// url :
-									// "/index/fetchMemreasTVMPreSignedURL",
 									type : 'GET',
 									dataType : 'json',
 									data : {
