@@ -69,7 +69,7 @@ ajaxRequest = function(action, params, success_func, error_func,
 		timeout : 10000,
 		data : 'json=' + encodeURIComponent(json_data),
 		success : function(ret_xml) {
-		    // console.log("ret_xml--->" + ret_xml);
+		    console.log("ret_xml--->" + ret_xml);
 		    if ((action != 'findtag') && (action != 'findevent')) {
 			var x_memreas_chameleon = getValueFromXMLTag(ret_xml,
 				'x_memreas_chameleon').trim();
@@ -94,13 +94,14 @@ ajaxRequest = function(action, params, success_func, error_func,
 		    }
 
 		    // Make sure there is no ajax instance still processing
-		    if (stackAjaxInstance.length == 0)
+		    if (stackAjaxInstance.length == 0) {
 			$('#loadingpopup').fadeOut(500);
+		    }
 
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-		    // alert(jqXHR.responseText);
-		    // alert(jqXHR.status);
+		    alert(jqXHR.responseText);
+		    alert(jqXHR.status);
 		    if (!disableLoadingScreen)
 			removeItem(stackAjaxInstance, action);
 

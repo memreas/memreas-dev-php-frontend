@@ -30,7 +30,7 @@ $(document)
 			    switch (q.charAt(0)) {
 			    case '@':
 				$.each(objs.search, function(i, obj) {
-				    username = '@' + obj.username;
+				    username += obj.username;
 				    map[username] = obj;
 				    users.push(username);
 				});
@@ -43,15 +43,18 @@ $(document)
 				break;
 			    case '#':
 				$.each(objs.search, function(i, obj) {
-				    map[obj.name] = obj;
-				    users.push(obj.name);
+				    //console.log('obj' + obj);
+				    //console.log('obj json--->' + JSON.stringify(obj));
+				    map[obj.tag_name] = obj;
+				    users.push(obj.tag_name);
 				});
 				break;
 
 			    }
 			    removeLoading('.top-search');
+			    console.log("process(users)---->" + JSON.stringify(process(users)));
 			    return process(users);
-			}, 'undefined', true);
+			}, null, true);
 		    }, 3000);
 
 		    $('#search')
@@ -59,16 +62,19 @@ $(document)
 				    {
 					source : function(query, process) {
 					    console.log("query--->" + query);
-					    console.log("process--->" + process);
+					    console
+						    .log("process--->"
+							    + process);
 					    throttledRequest(query, process);
 					},
 					updater : function(item) {
 					    if ($("#searchi-result ul")
 						    .hasClass(
-							    "mCustomScrollbar"))
+							    "mCustomScrollbar")) {
 						var target = '#search-result ul .mCSB_container';
-					    else
+					    } else {
 						target = '#search-result ul';
+					    }
 					    var action = 'findtag';
 					    var param = [ {
 						tag : "tag",
@@ -324,16 +330,23 @@ $(document)
 						var page = 1;
 						var totalPage = 1;
 						var reqhandler = function(data) {
+						    //console.log("search obj---> " + JSON.stringify(obj));
+						    console.log("#data---> 1");
+
 						    $(".tabcontent-detail")
 							    .hide();
 						    $("#search-result").show();
 						    $(target).empty();
+						    console.log("#data---> 2");
 
 						    var objs = jQuery
 							    .parseJSON(data);
+						    console.log("#data---> 3");
 						    $('#search-count').text(
 							    objs.count);
+						    console.log("#data---> 3");
 						    totalPage = objs.totalPage;
+						    console.log("#data---> 4");
 						    $
 							    .each(
 								    objs.search,
@@ -380,6 +393,7 @@ $(document)
 										    action,
 										    param,
 										    reqhandler);
+									    console.log("called reqhandler");
 									}
 								    });
 						    // paginationlink();
@@ -396,8 +410,8 @@ $(document)
 					     * $(".btn-event-p").hide(); return; }
 					     * if (page == totalPage) {
 					     * $(".btn-event-n").hide();
-					     * $(".btn-event-p").show();
-					     *  } else if(page == 1) {
+					     * $(".btn-event-p").show(); } else
+					     * if(page == 1) {
 					     * $(".btn-event-p").hide();
 					     * $(".btn-event-n").show(); } else {
 					     * $(".btn-event-n").show();
@@ -415,8 +429,7 @@ $(document)
 					     * {tag: "page", value:
 					     * page.toString()} ];
 					     * ajaxRequest(action, param,
-					     * reqhandler);
-					     *  };
+					     * reqhandler); };
 					     */
 
 					    ajaxRequest(action, param,
@@ -447,24 +460,26 @@ var h = function(item) {
 	break;
     case '!':
 	if (map[item].event_photo.length > 0) {
-		var photo = map[item].event_photo[0];
-	}
-	else {
-		var photo = map[item].event_creator_pic[0];
+	    var photo = map[item].event_photo[0];
+	} else {
+	    var photo = map[item].event_creator_pic[0];
 	}
 	photo = removeCdataCorrectLink(photo);
 	var name = map[item].name + "!";
 	break;
     case '#':
-	var photo = map[item].event_photo;
+	var photo = map[item].event_media_url[0];
 	var name = map[item].event_name;
+	//var photo = map[item].commenter_photo;
+	//var name = map[item].commenter_name;
 	var comment = map[item].comment;
 	// html = '<div class="bond"><img src="' + photo + '"><strong>' + name +
 	// '</strong><strong>' + map[item].event_name + '</strong></div>';
 	if (comment.length > 25) {
 	    comment = comment.substring(0, 24) + "...";
 	}
-	photo = removeCdataCorrectLink(photo);
+	console.log(photo);
+	//photo = removeCdataCorrectLink(photo);
 	var html = '<div class="swipebox_comment" style="float: left;"><div class="event_pro"><img src="'
 		+ photo
 		+ '"></div>'
@@ -518,12 +533,11 @@ function personalSearchLi(target, item) {
 }
 function eventSearchLi(target, item) {
     console.log(item);
-	if (item.event_photo.length > 0) {
-		var event_img = item.event_photo[0];
-	}
-	else {
-		var event_img = item.event_creator_pic[0];
-	}
+    if (item.event_photo.length > 0) {
+	var event_img = item.event_photo[0];
+    } else {
+	var event_img = item.event_creator_pic[0];
+    }
     event_img = removeCdataCorrectLink(event_img);
     var name = $.trim(item.name);
 
