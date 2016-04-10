@@ -5,10 +5,10 @@
 
 var GLOBAL_ENV = 'development'; // development or live
 var CURRENT_URL = document.URL;
-if (CURRENT_URL.indexOf('localhost') < 0 && GLOBAL_ENV == 'development')
+if (CURRENT_URL.indexOf('localhost') < 0 && GLOBAL_ENV == 'development') {
     GLOBAL_ENV = 'live'; // Force set if URL is not localhost
+}
 
-var s3_bucket = 'memreasdev';
 var userBrowser = detectBrowser();
 var stackAjaxInstance = []; // This variable is used for stacking ajax
 // request(s) on site
@@ -280,6 +280,14 @@ function logout() {
 	window.location.href = "/";
     });
 }
+
+$(function () {
+    $(window).bind("beforeunload", function () {
+	jerror("logging you out...");
+        logout();
+        
+    })
+});
 
 // Remove item from an array
 function removeItem(array, item) {
