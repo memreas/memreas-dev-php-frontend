@@ -684,6 +684,7 @@ class IndexController extends AbstractActionController {
 		Mlog::addone ( $cm . __LINE__ . '::', 'enter' );
 		Mlog::addone ( $cm . __LINE__ . '::session_status ()', session_status () );
 		if (session_status () !== PHP_SESSION_ACTIVE) {
+			Mlog::addone ( $cm . __LINE__ . '::', '...' );
 			if (! empty ( $_COOKIE ['memreascookie'] )) {
 				Mlog::addone ( $cm . __LINE__ . '::!empty($_COOKIE[memreascookie])', '...' );
 				session_id ( $_COOKIE ['memreascookie'] );
@@ -698,10 +699,12 @@ class IndexController extends AbstractActionController {
 			Mlog::addone ( $cm . __LINE__ . '::session_status () === PHP_SESSION_ACTIVE', '...' );
 			session_id ( $_COOKIE ['memreascookie'] );
 		}
+		Mlog::addone ( $cm . __LINE__ . '::', '...' );
 		
 		Mlog::addone ( $cm . __LINE__ . '::$_COOKIE', $_COOKIE );
 		Mlog::addone ( $cm . __LINE__ . '::$_SESSION', $_SESSION );
-		if (!empty($_SESSION)){
+		if (! empty ( $_SESSION )) {
+			Mlog::addone ( $cm . __LINE__ . '::', '...' );
 			if (isset ( $_SESSION ['LAST_ACTIVITY'] ) && (time () - $_SESSION ['LAST_ACTIVITY'] > 1800)) {
 				// last request was more than 30 minutes ago
 				session_unset (); // unset $_SESSION variable for the run-time
@@ -710,6 +713,7 @@ class IndexController extends AbstractActionController {
 			$_SESSION ['LAST_ACTIVITY'] = time (); // update last activity time stamp
 			Mlog::addone ( $cm . __LINE__ . '::$_SESSION[LAST_ACTIVITY]', gmdate ( "Y-m-d\TH:i:s\Z", $_SESSION ['LAST_ACTIVITY'] ) );
 		}
+		Mlog::addone ( $cm . __LINE__ . '::', '...' );
 	}
 	
 	/**
@@ -724,9 +728,10 @@ class IndexController extends AbstractActionController {
 	 */
 	public function publicAction() {
 		$path = "application/index/public_page.phtml";
-		// $view = new ViewModel ( array (
-		// ) );
+		$view = new ViewModel ( array (
+		) );
 		$view->setTemplate ( $path ); // path to phtml file under view folder
+		return $view;
 	}
 } // end class IndexController
 
