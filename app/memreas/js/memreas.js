@@ -148,6 +148,7 @@ var AppSystem = function() {
 		+ '"json": ' + data_obj + '}';
 	var stripeCustomerUrl = $("input[name=stripe_url]").val()
 		+ 'stripe_getCustomerInfo';
+	alert("about to call stripe_getCustomerInfo..");
 	$
 		.ajax({
 		    url : stripeCustomerUrl,
