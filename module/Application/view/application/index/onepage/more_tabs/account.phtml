@@ -29,10 +29,10 @@
 					<li><label class="textfield_names">gender (optional):</label> <input
 						type="radio" id="gender-male" name="gender_choose"
 						class="regular-radio" value="male" />
-						<label class="textfield_names">male:</label>
+						<label for="gender-male" class="textfield_names mem-gend">male:</label>
 						<input type="radio" id="gender-female"
 							name="gender_choose" class="regular-radio" value="female" />
-							<label class="textfield_names">female:</label>
+							<label for="gender-female" class="textfield_names mem-gend">female:</label>
 					<li><label class="textfield_names">date of birth:</label> <input
 						name="account_dob" id="account_dob" type="text"
 						class="more-input date-picker" value="date of birth"
@@ -92,16 +92,16 @@
 		<div class="akordeon-item-content">
 			<div class="button-holder morepage-account-detail">
 				<div class="group">
-					<label for="change-password">Your account types:</label> <span
-						class="morepage-account-type">...</span>
+					<label for="account-type">Your account types:</label> <span
+						class="morepage-account-type"></span>
 				</div>
 				<div class="group">
-					<label for="change-password">Buyer's balance:</label> <span
-						class="morepage-account-buyerbalance">...</span>
+					<label for="account-buyerbalance">Buyer's balance:</label> <span
+						class="morepage-account-buyerbalance"></span>
 				</div>
-				<div class="group">
-					<label for="change-password">Seller's balance:</label> <span
-						class="morepage-account-sellerbalance">...</span>
+				<div id="account-sellerbalance-div" class="group">
+					<label for="account-sellerbalance">Seller's balance:</label> <span
+						class="morepage-account-sellerbalance"></span>
 				</div>
 			</div>
 		</div>

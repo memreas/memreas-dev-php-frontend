@@ -1660,9 +1660,9 @@ left
 	cursor: move;
 }
 
-.mouse_swip {
+/*.mouse_swip {
 	height: 150px;
-}
+}*/
 
 .event_img {
 	width: 120px;
@@ -1850,11 +1850,11 @@ ul.share_memreas_details li {
 	clear: both;
 	min-height: 35px;
 	margin: 10px 0;
-	width: 100%;
+	width: 98%;
 }
 
 .textfield_names {
-	width: 100px;
+	min-width: 100%;
 	float: left;
 	font-family: "Century Gothic";
 	font-size: 18px;
@@ -2421,6 +2421,16 @@ ul.option li small {
 	text-shadow: 0px;
 	left: 3px;
 	font-size: 32px;
+}
+
+.regular-radio:checked+label.mem-gend:after {
+	top: 15px;
+	left: 85px;
+}
+
+.mem-gend {
+	color: #292929!important;
+	min-width: 8%;
 }
 
 .regular-radio:checked+label {
@@ -3907,7 +3917,7 @@ select {
 }
 
 .share_memreas_details.sell_media_form input, .sell_media_bank input {
-	margin-left: 6%;
+	/*margin-left: 6%;*/
 	width: 74%;
 }
 
@@ -4013,7 +4023,7 @@ select {
 	display: none;
 }
 
-.member-guidelines, .privacy-policy, .terms-service, .dmca-policy {
+.member-guidelines, .privacy-policy, .terms-service, .dmca-policy, .marketplace-agree{
 	height: 300px;
 }
 
@@ -4075,7 +4085,7 @@ select {
 	line-height: 35px;
 }
 
-.popup-buymedia-credit, .popup-buymedia-price, .popup-event-name {
+.popup-buymedia-credit, .popup-buymedia-price, .popup-event-name, .buying-media-duration {
 	color: #F5FF00;
 	font-size: 18px;
 }

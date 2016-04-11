@@ -88,13 +88,22 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
     
     <div class="row-fluid">
         <div class="span12" style="text-align: center; margin-bottom: 10px;">
-                <input type="button" onclick=""  id="SignupReg" class="btn btn-lyt create-accnt" value="Sign Up" style="width: 96%;"> 
+	        <div class="mobile-content" id="Android">
+			     You will receive an email to verify your email address. You can download our APK for Android via this link  <a href="http://www.memreas.com/android">http://www.memreas.com/android</a>
+		     </div>
+	        <div class="mobile-content" id="iOS">
+			     You will receive an email to verify your email address. if you would like to join the iOS beta test please email admin@memreas.com with subject TestFlight Access.
+		     </div>
+	        <div class="mobile-content" id="unknown">
+			     You will receive an email to verify your email address
+		     </div>
+	        <p>&nbsp;</p>
+            <input type="button" onclick=""  id="SignupReg" class="btn btn-lyt create-accnt" value="Sign Up" style="width: 96%;">
         </div>
     </div>
     </section>
    
      <!--**********Mobile Login Layout************** -->
-     
      <!--**********Mobile Registration Layout************** -->
      
 
@@ -321,6 +330,10 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
         </script>
 	<script type="text/javascript" charset="utf-8">
             jQuery('#file').css('opacity',0);
+            $(function(){
+	            var mobile_device = getMobileOperatingSystem();
+	            $("#" + mobile_device).fadeIn(500);
+            });
         </script>
 	<!--End Script for File-->
         

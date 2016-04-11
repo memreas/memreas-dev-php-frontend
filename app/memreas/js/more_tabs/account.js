@@ -49,7 +49,7 @@ var Account = function() {
 		AppSystem.removePageLoading();
 		AppSystem.putStripeLoading();
 
-		$.ajax({url : stripeActionUrl, type : 'POST', dataType : 'jsonp', data : 'json=' + data, timeout : 10000,
+		$.ajax({url : stripeActionUrl, type : 'POST', dataType : 'jsonp', data : 'json=' + data, timeout : 20000,
 			error : function(response, textStatus, errorThrown) {
 				if (textStatus === 'timeout') {
 					AppSystem.removeStripeLoading(); // do something. Try again perhaps?
@@ -176,8 +176,8 @@ var Account = function() {
 			// Fetch the card
 			var selectedCard = '';
 			for (var i in Account.accountTab_cards) {
-				if (accountTab_cards[i].selected == 1) {
-					selectedCard = self.accountTab_cards[i].data.stripe_card_reference_id;
+				if (Account.accountTab_cards[i].selected == 1) {
+					selectedCard = Account.accountTab_cards[i].data.stripe_card_reference_id;
 					break;
 				}
 			}
@@ -197,7 +197,7 @@ var Account = function() {
 
 			AppSystem.putPageLoading();
 
-			$.ajax({ type : 'post', url : stripeActionUrl, dataType : 'jsonp', data : 'json=' + data,
+			$.ajax({ type : 'post', url : stripeActionUrl, dataType : 'jsonp', data : 'json=' + data, timeout : 20000,
 				success : function(response) {
 					response = jQuery.parseJSON(response.data);
 					AppSystem.removePageLoading();
@@ -273,7 +273,7 @@ var Account = function() {
 				+ json_storeCard + '}';
 
 			AppSystem.putStripeLoading();
-			$.ajax({ type : 'post', url : stripeActionUrl, dataType : 'jsonp', data : 'json=' + data, timeout : 10000,
+			$.ajax({ type : 'post', url : stripeActionUrl, dataType : 'jsonp', data : 'json=' + data, timeout : 20000,
 				error : function(response, textStatus, errorThrown) {
 					if (textStatus === 'timeout') {
 						jerror('Card adding failure. Please check card\'s information.');
@@ -342,7 +342,9 @@ var Account = function() {
 			type : 'POST',
 			dataType : 'jsonp',
 			data : 'json=' + data,
+			timeout : 20000,
 			success : function(response) {
+			    	console.log("response" + JSON.stringify(response));
 				setX_MEMREAS_CHAMELEON(response.x_memreas_chameleon);
 				response = JSON.parse(response.data);
 				if (response.status == 'Success') {
@@ -507,7 +509,6 @@ function accountViewCard() {
 		+ data_object + '}';
 
 	$('#loadingpopup').fadeIn(1000);
-	//alert("action=listCard memreascookie="+params.memreascookie+" user_id="+params.user_id);
 	if (deleteBoolean) {
 	    $
 		    .ajax({
@@ -528,7 +529,7 @@ function accountViewCard() {
 				jViewCard.find("#addcard_lname").val(last_name)
 					.attr('readonly', true);
 				jViewCard.find("#addcard_cctype").val(
-					card_info.type).attr('readonly', true);
+					card_info.brand).attr('readonly', true);
 				jViewCard.find("#addcard_ccnum").val(
 					'***' + card_info.last4).attr(
 					'readonly', true);
@@ -581,7 +582,7 @@ function accountViewCard() {
 					.val(first_name);
 				jViewCard.find("#addcard_lname").val(last_name);
 				jViewCard.find("#addcard_cctype").val(
-					card_info.type).attr('readonly', true);
+					card_info.brand).attr('readonly', true);
 				jViewCard.find("#addcard_ccnum").val(
 					'***' + card_info.last4).attr(
 					'readonly', true);
@@ -669,7 +670,7 @@ function accountUpdateCard() {
 		    url : stripeActionUrl,
 		    dataType : 'jsonp',
 		    data : 'json=' + data,
-		    timeout : 10000,
+		    timeout : 20000,
 		    error : function(response, textStatus, errorThrown) {
 			if (textStatus === 'timeout') {
 			    jerror('Card update failure. Please check card\'s information.');
@@ -708,7 +709,9 @@ function getAccountPlans() {
     obj.sid = getCookie("memreascookie");
     obj.x_memreas_chameleon = getCookie("x_memreas_chameleon");
     data_obj = JSON.stringify(obj, null, '\t');
-    data = '{"action": "getCustomerInfo", ' + '"type":"jsonp", ' + '"json": '
+    data = '{"action": "getCustomerInfo", ' +
+    	   '"memreascookie":"' + getCookie("memreascookie") + '", ' +
+    	   '"type":"jsonp", ' + '"json": '
 	    + data_obj + '}';
 
     var stripeCustomerUrl = $("input[name=stripe_url]").val()
@@ -722,33 +725,34 @@ function getAccountPlans() {
 		dataType : 'jsonp',
 		data : 'json=' + data,
 		success : function(response) {
-		    console.log("before parse data response--> " + response);
-		    response = jQuery.parseJSON(response.data);
-		    console.log("response--> " + response);
-		    if (response.status == 'Success') {
-				var account_stripe = response.account.customer;
-				if (account_stripe.exist) {
-					var total_subscriptions = account_stripe.info.subscriptions.total_count;
-					if (total_subscriptions > 0) {
-					jAccountPlans
-						.append('<li><label class="label_text2"><label for="account-plan-1"></label>Your current active plans:</label></li>');
-					var active_subscriptions = account_stripe.info.subscriptions.data;
-					for (var i = 0; i < total_subscriptions; i++) {
-						var plan = active_subscriptions[i].plan;
-						var html_element = '<li><label class="label_text2"><label for="account-plan-1"></label>'
-							+ plan.name + '</label></li>';
-						jAccountPlans.append(html_element);
-					}
+				response = JSON.parse(response.data);
+				if (response.status == 'Success') {
+					var account = response.buyer_account;
+					if (typeof account != 'undefined') {
+						var subscription = account.subscription;
+						if (typeof subscription != 'undefined') {
+							var plan_id = subscription.plan;
+							var plan_name = subscription.plan_description;
+							var html_element = '<p>'
+								+ plan_name
+								+ '</p>';
+							jAccountPlans
+								.append(html_element);
+							$("input#plan-" + plan_id).attr("checked", "checked");
+							planChange(plan_id);
+							check_user_subscription = 1;
+						} else {
+							jAccountPlans
+								.html('You are using our free plan. Use the subscriptions tab to upgrade.');
+						}
 					} else
+						jAccountPlans
+							.html('You are using our free plan. Use the subscriptions tab to upgrade.');
+				} else {
 					jAccountPlans
 						.html('You are using our free plan. Use the subscriptions tab to upgrade.');
-				} else
-					jAccountPlans
-						.html("You are using our free plan. Use the subscriptions tab to upgrade.");
-				} else
-				jAccountPlans
-					.html("You are using our free plan. Use the subscriptions tab to upgrade.");
-				$('#loadingpopup').fadeOut(500);
+				}
+				$('#loadingpopup').hide();
 			}
 	    });
 }

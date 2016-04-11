@@ -45,6 +45,7 @@ ajaxRequest = function(action, params, success_func, error_func,
     data.callback = '';
 
     var json_data = JSON.stringify(data);
+    console.log("json_data--->" + json_data);
     var cookies = document.cookie.split(";");
     if (!disableLoadingScreen) {
 	$('#loadingpopup').fadeIn(1000);
@@ -59,50 +60,56 @@ ajaxRequest = function(action, params, success_func, error_func,
 		beforeSend : function(xhr) {
 		    // console.log("before send cookies---> " +
 		    // document.cookie);
-		    // console.log("xml_input--->" + xml_input);
+		    console.log("xml_input--->" + xml_input);
 		},
 		crossDomain : true,
 		type : 'post',
 		url : feExecAjaxURL,
 		dataType : 'jsonp',
-		data : 'json=' + json_data,
+		timeout : 10000,
+		data : 'json=' + encodeURIComponent(json_data),
 		success : function(ret_xml) {
-
-		    // console.log("ret_xml--->" + ret_xml);
-		    var x_memreas_chameleon = getValueFromXMLTag(ret_xml,
-			    'x_memreas_chameleon').trim();
-		    if (x_memreas_chameleon != '') {
-			console.log('setting new x_memreas_chameleon--> '
-				+ x_memreas_chameleon);
-			setCookie("x_memreas_chameleon", x_memreas_chameleon)
-		    }
-
-		    if (action != 'findtag' && action != 'findevent') {
+		    console.log("ret_xml--->" + ret_xml);
+		    if ((action != 'findtag') && (action != 'findevent')) {
+			var x_memreas_chameleon = getValueFromXMLTag(ret_xml,
+				'x_memreas_chameleon').trim();
+			if (x_memreas_chameleon != '') {
+			    console.log('setting new x_memreas_chameleon--> '
+				    + x_memreas_chameleon);
+			    setCookie("x_memreas_chameleon",
+				    x_memreas_chameleon)
+			}
 			if (getValueFromXMLTag(ret_xml, 'error').trim() == 'Please Login') {
 			    document.location.href = "/index";
 			    return;
 			}
 		    }
 
-		    if (typeof success_func != "undefined")
+		    if (typeof success_func != "undefined") {
 			success_func(ret_xml);
+		    }
 
-		    if (!disableLoadingScreen)
+		    if (!disableLoadingScreen) {
 			removeItem(stackAjaxInstance, action);
+		    }
 
 		    // Make sure there is no ajax instance still processing
-		    if (stackAjaxInstance.length == 0)
+		    if (stackAjaxInstance.length == 0) {
 			$('#loadingpopup').fadeOut(500);
+		    }
 
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-		    // alert(jqXHR.responseText);
-		    // alert(jqXHR.status);
+		    alert(jqXHR.responseText);
+		    alert(jqXHR.status);
 		    if (!disableLoadingScreen)
 			removeItem(stackAjaxInstance, action);
 
-		    if (typeof error_func != "undefined")
+		    if (typeof error_func != "undefined"){
 			error_func();
+		    } else {
+			console.log("error_func = undefined")
+		    }
 
 		    if (stackAjaxInstance.length == 0)
 			$('#loadingpopup').fadeOut(500);
@@ -207,6 +214,7 @@ getXMLStringFromParamArray = function(action, params) {
 	break;
     case "findtag":
 	action_tag = "findtag";
+	console.log("params-->" + JSON.stringify(params));
 	break;
     case "listmemreasfriends":
 	action_tag = "listmemreasfriends";
@@ -286,7 +294,7 @@ getXMLStringFromParamArray = function(action, params) {
     default:
 	break;
     }
-    xml_str += "<memreascookie>" + getCookie("memreas") + "</memreascookie>";
+    xml_str += "<memreascookie>" + getCookie("memreascookie") + "</memreascookie>";
     xml_str += "<x_memreas_chameleon>" + getCookie("x_memreas_chameleon")
 	    + "</x_memreas_chameleon>";
     xml_str += "<" + action_tag + ">";
