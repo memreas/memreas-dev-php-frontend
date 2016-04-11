@@ -29,6 +29,7 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 // javascript constants
 $constants = "<script>";
 $constants .= "var S3BUCKET = '" . MemreasConstants::S3BUCKET . "';";
+$constants .= "var HOST = '" . $_SERVER['REMOTE_ADDR'] . "';";
 $constants .= "var LOGGED_USER_ID = '" . $_SESSION ['user_id'] . "';";
 $constants .= "var LISTNOTIFICATIONSPOLLTIME = '" . MemreasConstants::LISTNOTIFICATIONSPOLLTIME . "';";
 $constants .= "var GALLERYDELAYTIME = '" . MemreasConstants::GALLERYDELAYTIME . "';";
