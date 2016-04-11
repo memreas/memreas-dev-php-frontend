@@ -7,7 +7,7 @@
 namespace Application\Model;
 
 class MemreasConstants {
-	const MEMREAS_FE = "https://pfe.memreas.com";
+	const MEMREAS_FE = "https://www.memreas.com";
 	const MEMREAS_WS = "https://memreasprod-ws.memreas.com";
 	const MEMREAS_PAY = "https://memreasprod-ws.memreas.com/index?action=";
 	const MEMREAS_ADS = false;
@@ -18,6 +18,7 @@ class MemreasConstants {
 	const S3HLSBUCKET = "memreasprodhlssec";
 	const CLOUDFRONT_DOWNLOAD_HOST = 'https://d321rfaqc9owi4.cloudfront.net/';
 	const CLOUDFRONT_HLS_DOWNLOAD_HOST = 'https://d1fhgtf97i7jlq.cloudfront.net/';
+	const MAINTENANCE = false; //Enable / Disable Maintenance mode
 	
 		
 	const LISTNOTIFICATIONSPOLLTIME = 240000; // 5 minutes
@@ -33,4 +34,8 @@ class MemreasConstants {
 	const PAYMENT_TAB_SELL_MEDIA = true;
 	const VERSION = '0.987';
 	const COPYRIGHT = '&copy;2015 memreas, llc. all rights reserved.';
+	
+	//Android url for download
+	const ANDROID_DOWNLOAD_URL = "https://s3.amazonaws.com/memreas-android-build/memreas-armv7-universal-release.prod.apk";
+
 }
