@@ -728,8 +728,8 @@ class IndexController extends AbstractActionController {
 	 */
 	public function publicAction() {
 		$path = "application/index/public_page.phtml";
-		// $view = new ViewModel ( array (
-		// ) );
+		$view = new ViewModel ( array (
+		) );
 		$view->setTemplate ( $path ); // path to phtml file under view folder
 		return $view;
 	}
