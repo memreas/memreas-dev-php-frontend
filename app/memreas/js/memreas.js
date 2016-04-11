@@ -103,38 +103,37 @@ var AppSystem = function() {
 			//
 			// Buyer / Seller section
 			//
-			var accounts_xml = getValueFromXMLTag(xml_response,
-				'accounts');
-			var xml = $.parseXML(accounts_xml);
-			var account = $(xml).find('account');
-			var account_types = '';
-			var seller_balance = 0;
-			var buyer_balance = 0;
-			var count = $(account).length;
-			$(account).each(
-				function(index) {
-				    account_types += $(this).find('account_type').text();
-				    if ((count > 1) && (index !=count)) {
-					account_types += ', ';	
-				    } 
-				    var account_balance = $(this).find('account_balance').text();
-				    if (account_type == 'seller'){
-					seller_balance = account_balance;
-				    } else {
-					buyer_balance = account_balance;
-				    }
-				});
+			var accounts = getSubXMLFromTag(xml_response, 'account');
+			var account;
+			var account_types;
+			var seller_balance;
+			var buyer_balance;
+			for (var key = 0; key < accounts.length; key++) {
+			    var account = accounts[key];
+			    var account_type = getValueFromXMLTag(account,
+				    'account_type');
+			    var account_balance = getValueFromXMLTag(account,
+				    'account_balance');
+			    if (account_types != null) {
+				account_types += ", " + account_type;
+			    } else {
+				account_types = account_type;
+			    }
+			    if (account_type == 'seller') {
+				seller_balance = account_balance;
+			    } else {
+				buyer_balance = account_balance;
+			    }
+			}
 			$(".morepage-account-type").text(account_types);
-			$(".morepage-account-buyerbalance").text("$" + buyer_balance);
-			$(".morepage-account-sellerbalance").text("$" + seller_balance);
-			
-			//remove seller section if they're not a seller
-			if (seller_balance == 0) {
+			$(".morepage-account-buyerbalance").text(
+				"$" + buyer_balance);
+			$(".morepage-account-sellerbalance").text(
+				"$" + seller_balance);
+			// remove seller section if they're not a seller
+			if (seller_balance == null) {
 			    $("#account-sellerbalance-div").remove();
 			}
-			
-			
-
 		    }
 		}, 'undefined', true);
 
