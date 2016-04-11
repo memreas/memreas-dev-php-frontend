@@ -5,10 +5,10 @@
 
 var GLOBAL_ENV = 'development'; // development or live
 var CURRENT_URL = document.URL;
-if (CURRENT_URL.indexOf('localhost') < 0 && GLOBAL_ENV == 'development')
+if (CURRENT_URL.indexOf('localhost') < 0 && GLOBAL_ENV == 'development') {
     GLOBAL_ENV = 'live'; // Force set if URL is not localhost
+}
 
-var s3_bucket = 'memreasdev';
 var userBrowser = detectBrowser();
 var stackAjaxInstance = []; // This variable is used for stacking ajax
 // request(s) on site
@@ -160,7 +160,9 @@ function getMediaUrl(element_object, mediatype) {
 }
 
 function removeCdata(media_link) {
-    media_link = media_link.replace("<!--[CDATA[", "").replace("]]-->", "");
+    if (media_link != null) {
+	    media_link = media_link.replace("<!--[CDATA[", "").replace("]]-->", "");
+    } 
     return media_link;
 }
 
@@ -370,6 +372,21 @@ function detectHandheldIOSDevice() {
 	return false;
 }
 
+function getMobileOperatingSystem() {
+    var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+    if (userAgent.match(/iPad/i) || userAgent.match(/iPhone/i)
+	    || userAgent.match(/iPod/i)) {
+	return 'iOS';
+
+    } else if (userAgent.match(/Android/i)) {
+
+	return 'Android';
+    } else {
+	return 'unknown';
+    }
+}
+
 /*
  * Enable / Disable input field (for ajax calling and prevent user typing)
  */
@@ -440,16 +457,16 @@ function setCookie(cname, cvalue) {
 
 function isJson(str) {
     try {
-        JSON.parse(str);
+	JSON.parse(str);
     } catch (e) {
-        return false;
+	return false;
     }
     return true;
 }
 
 function setX_MEMREAS_CHAMELEON(x_memreas_chameleon) {
     document.cookie = 'x_memreas_chameleon=' + x_memreas_chameleon + ";";
-} 
+}
 
 /* Other */
 addLoading = function(element, typeLoading, additionClass) {

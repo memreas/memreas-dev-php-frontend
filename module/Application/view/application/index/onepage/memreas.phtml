@@ -42,30 +42,33 @@
             <a id="popupBuyMediaClose" onClick="disablePopup('popupBuyMedia');" class='popupClose'>x</a>
             <h2>Buying private media</h2>
             <p>&nbsp;</p>
-            <p>&nbsp;</p>
-            <p>&nbsp;</p>
             <ul id="content_1" class="give-message-form buying-media-detail">
                 <li>
-                    <label class="textfield_names" style="width: 150px;">Event name: </label>
-                    <span class="popup-event-name">Event name</span>
+                    <label class="textfield_names" style="width: 150px;">Event name: <span class="popup-event-name">Event name</span></label>
+                    
                     <div class="clear"></div>
                 </li>
                 <li>
-                    <label class="textfield_names" style="width: 150px;">Your credits: </label>
-                    <span class="popup-buymedia-credit">$5</span>
+                    <label class="textfield_names" style="width: 150px;">Your credits: <span class="popup-buymedia-credit">$5</span>
+                    
                     <a class="addcredit-popup-btn" href="javascript:;" onclick="popupBuyCredit();">Buy more</a>
                     -
                     <a href="javascript:;" onclick="Account.reloadAccountCredit('.popup-buymedia-credit');"><img src="/memreas/img/syns.png" width="30" border="0" /></a>
+                    </label><div class="clear"></div>
+                </li>
+                <li>
+                    <label class="textfield_names" style="width: 150px;">Event price: 
+                    <span class="popup-buymedia-price">$5</span> </label>
                     <div class="clear"></div>
                 </li>
                 <li>
-                    <label class="textfield_names" style="width: 150px;">Event price: </label>
-                    <span class="popup-buymedia-price">$5</span>
+                    <label class="textfield_names" style="width: 150px;">Duration: 
+                    <span class="buying-media-duration"></span> </label>
                     <div class="clear"></div>
                 </li>
                 <li>
-                    <label class="textfield_names" style="width: 150px;">Password: </label>
-                    <input name="input" type="password" id="buymedia_confirm_password" class="" value="" />
+                    <label class="textfield_names" style="width: 150px;">Password: 
+                    <input name="input" type="password" id="buymedia_confirm_password" class="" value="" defaultValue="" /></label>
                     <div class="clear"></div>
                 </li>
                 <!-- 
@@ -134,12 +137,6 @@
                 <li>
                     <label class="textfield_names" style="width: 150px;">Password</label>
                     <input name="input" type="password" id="buycredit_confirm_password" class="" value="" />
-                </li>
-                 <li>
-                    <input id="ckb_buycredit_agree" class="css-checkbox" type="checkbox" />
-                    <label id="lbl-sellmedia" for="ckb_buycredit_agree" name="demo_lbl_6" class="css-label margin-none" style="height: 100px; line-height: 21px;" >
-                        By checking this box I certify that I own the appropriate copyrights for any media within this memeas share.  Full terms are available <a href="javascript:;" onclick="sharePopupMarketTerm();">here</a>.
-                    </label>
                 </li>
             </ul>
             <div class="clear"></div>

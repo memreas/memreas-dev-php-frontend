@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Copyright (C) 2015 memreas llc. - All Rights Reserved
  * Unauthorized copying of this file, via any medium is strictly prohibited
@@ -6,6 +6,7 @@
  */
 ?>
 <?php
+
 use Application\Model\MemreasConstants;
 header ( 'Cache-Control: no-cache, no-store, must-revalidate' ); // HTTP 1.1.
 header ( 'Pragma: no-cache' ); // HTTP 1.0.
@@ -13,18 +14,19 @@ header ( 'Expires: 0' ); // Proxies.
 header ( 'Access-Control-Allow-Origin: *' );
 header ( "Access-Control-Allow-Methods: POST, GET" );
 header ( "Access-Control-Allow-Headers: x-requested-with" );
-$user_id = ! empty ( $_SESSION ['user_id'] ) ? ($_SESSION ['user_id']) : '';
-$username = ! empty ( $_SESSION ['username'] ) ? ($_SESSION ['username']) : '';
 ?>
 <!doctype html>
 <?php if ($this->enableAdvertising) : ?>
 <html class="ads">
 <?php else: ?>
+
+
+
 <html class="noads">
 <?php endif; ?>
 <head>
-<?php 
-//javascript constants
+<?php
+// javascript constants
 $constants = "<script>";
 $constants .= "var S3BUCKET = '" . MemreasConstants::S3BUCKET . "';";
 $constants .= "var LOGGED_USER_ID = '" . $_SESSION ['user_id'] . "';";
@@ -40,12 +42,17 @@ $constants .= "</script>";
 echo $constants;
 ?>
 <meta charset="utf-8">
-<meta name="viewport" content="user-scalable-no,initial-scale=1.0, minimum-scale=1.0,maximum-scale=1.0">
+<meta name="viewport"
+	content="user-scalable-no,initial-scale=1.0, minimum-scale=1.0,maximum-scale=1.0">
 <title>memreas</title>
 
 <script type="text/javascript">
-<?php 
-echo "var user_id = '" . $user_id . "';";  
+<?php
+if (! empty ( $_SESSION )) {
+	$user_id = $_SESSION ['user_id'];
+	$username = $_SESSION ['username'];
+}
+echo "var user_id = '" . $user_id . "';";
 echo "var username = '" . $username . "';";
 ?>
 
@@ -137,7 +144,7 @@ echo "var username = '" . $username . "';";
 	<!-- End : Content -->
 	</div>
 	<!-- Bottom Ads -->
-    <?php include('bottom_advertising.phtml'); ?>
+    <?php include('onepage/bottom_advertising.phtml'); ?>
     <!-- End Bottom Ads -->
 
         

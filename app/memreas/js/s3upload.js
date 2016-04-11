@@ -1531,10 +1531,12 @@ $(document)
 		    //$(".media-upload").find("input[type=file]").removeAttr(
 			//    'multiple');
 		    // Check if IOS only allow 1 file per upload
+			/*
 		    if (userBrowser[0].ios) {
 		     $(".media-upload").find("input[type=file]").removeAttr(
 		     'multiple');
 		    }
+		    */
 
 		    var ellipsisCount = 1;
 		    var name = '';

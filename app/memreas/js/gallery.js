@@ -188,15 +188,28 @@ jQuery.fetch_server_media = function() {
 			objArr.push(item);
 
 			// Delete Tab Data
-			$(".edit-area-scroll")
-				.append(
-					'<li><a class="image-sync" id="'
+			if (_media_type == 'video') {
+				$(".edit-area-scroll")
+					.append(
+						'<li><a class="image-sync" id="'
+						+ media_id
+						+ '" onclick="return imageChoosed(this.id);" href="'
+						+ _media_thumbnail_large
+						+ '"><img src="'
+						+ _media_thumbnail_large
+						+ '"/><span class="video-content-play-icon" style="position: absolute; left: 10%; top: -5%;"></span></a></li>');
+			}
+			else {
+				$(".edit-area-scroll")
+					.append(
+						'<li><a class="image-sync" id="'
 						+ media_id
 						+ '" onclick="return imageChoosed(this.id);" href="'
 						+ _media_thumbnail_large
 						+ '"><img src="'
 						+ _media_thumbnail_large
 						+ '"/></a></li>');
+			}
 
 			$(".preload-files .pics").append(
 				'<li><img src="' + _media_url + '"/></li>');

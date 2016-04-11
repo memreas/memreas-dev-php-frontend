@@ -44,7 +44,12 @@ function centerPopup(id) {
 	var windowHeight = window.innerHeight;
 	var popupHeight = $("#" + id).outerHeight();
 	var popupWidth = $("#" + id).outerWidth();
-	$("#" + id).css({
+	// JP Changes start here
+	// I Inserted the "Transform"
+	// and change the top
+	// to custom
+	// (windowHeight - popupHeight) / 2
+$("#" + id).css({
 		"position" : "absolute",
 		"top" : (windowHeight - popupHeight) / 2,
 		"left" : "37%"
