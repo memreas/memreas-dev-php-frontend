@@ -31,10 +31,10 @@ class MemreasConstants {
 	const PAYMENT_TAB_SUBSCRIPTION = true;
 	const PAYMENT_TAB_BUY_CREDIT = true;
 	const PAYMENT_TAB_SELL_MEDIA = true;
-	const VERSION = '8-APR-2016';
+	const VERSION = '11-APR-2016';
 	const COPYRIGHT = '&copy;2015 memreas llc';
 	
 	//Android url for download
-	const ANDROID_DOWNLOAD_URL = "https://s3.amazonaws.com/memreas-android-build/memreas-armv7-universal-release.dev.apk";
+	const ANDROID_DOWNLOAD_URL = "https://play.google.com/apps/testing/com.memreas";
 	
 }
