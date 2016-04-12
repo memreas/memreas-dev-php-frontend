@@ -33,6 +33,7 @@ php_value error_log php_errors.log
 #php_value log_errors_max_len 0
 
 php_value session.name "memreas"
+php_value session.save_path data/session/
 
 #Adding time zone setting to New York
 php_value date.timezone "America/New_York"

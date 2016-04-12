@@ -9,7 +9,7 @@ namespace Application\Model;
 class MemreasConstants {
 	
 	// const MEMREAS_FE = "https://fe.memreas.com";
-	// const MEMREAS_WS = "https://memreasdev-wsj.memreas.com";
+	// const MEMREAS_WS = "https://memreasdev-ws.memreas.com";
 	// const MEMREAS_PAY = "https://memreasdev-pay.memreas.com";
 	const MEMREAS_FE = "http://memreas-dev-php-frontend.localhost";
 	const MEMREAS_WS = "http://memreas-dev-php-ws.localhost";
@@ -34,7 +34,7 @@ class MemreasConstants {
 	const PAYMENT_TAB_SUBSCRIPTION = true;
 	const PAYMENT_TAB_BUY_CREDIT = true;
 	const PAYMENT_TAB_SELL_MEDIA = true;
-	const VERSION = '8-APR-2016';
+	const VERSION = '11-APR-2016';
 	const COPYRIGHT = '&copy;2015 memreas llc';
 	
 	//Android url for download

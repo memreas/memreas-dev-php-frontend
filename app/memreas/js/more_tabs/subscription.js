@@ -346,8 +346,6 @@ function getPlans() {
 	var data = '{"action": "listPlan", ' + '"type":"jsonp", ' + '"json": '
 			+ data_obj + '}';
 
-	console.log("stripeActionUrl--->" + stripeActionUrl);
-	console.log("about to call stripe_listPlan with data--->" + data);
 	$('#loadingpopup').show();
 	$
 			.ajax({
