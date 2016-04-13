@@ -668,8 +668,8 @@ class IndexController extends AbstractActionController {
 		/*
 		 * Fetch the user's ip address
 		 */
-		// Mlog::addone ( '$_SERVER [REMOTE_ADDR]', $_SERVER ['REMOTE_ADDR'] );
-		// Mlog::addone ( '$_SERVER [HTTP_X_FORWARDED_FOR]', $_SERVER ['HTTP_X_FORWARDED_FOR'] );
+		Mlog::addone ( '$_SERVER [REMOTE_ADDR]', $_SERVER ['REMOTE_ADDR'] );
+		Mlog::addone ( '$_SERVER [HTTP_X_FORWARDED_FOR]', $_SERVER ['HTTP_X_FORWARDED_FOR'] );
 		if (! empty ( $_SERVER ['HTTP_X_FORWARDED_FOR'] )) {
 			$ipAddress = $_SERVER ['HTTP_X_FORWARDED_FOR'];
 		} else {
@@ -681,39 +681,39 @@ class IndexController extends AbstractActionController {
 	}
 	public function memreas_session() {
 		$cm = __CLASS__ . __METHOD__;
-		Mlog::addone ( $cm . __LINE__ . '::', 'enter' );
-		Mlog::addone ( $cm . __LINE__ . '::session_status ()', session_status () );
+		//Mlog::addone ( $cm . __LINE__ . '::', 'enter' );
+		//Mlog::addone ( $cm . __LINE__ . '::session_status ()', session_status () );
 		if (session_status () !== PHP_SESSION_ACTIVE) {
-			Mlog::addone ( $cm . __LINE__ . '::', '...' );
+			//Mlog::addone ( $cm . __LINE__ . '::', '...' );
 			if (! empty ( $_COOKIE ['memreascookie'] )) {
-				Mlog::addone ( $cm . __LINE__ . '::!empty($_COOKIE[memreascookie])', '...' );
+				//Mlog::addone ( $cm . __LINE__ . '::!empty($_COOKIE[memreascookie])', '...' );
 				session_id ( $_COOKIE ['memreascookie'] );
 				session_start ();
 			} else {
-				Mlog::addone ( $cm . __LINE__ . '::empty($_COOKIE[memreascookie])', '...' );
+				//Mlog::addone ( $cm . __LINE__ . '::empty($_COOKIE[memreascookie])', '...' );
 				// must be login
 				session_start ();
 			}
 		} else {
 			// session is active so set session id
-			Mlog::addone ( $cm . __LINE__ . '::session_status () === PHP_SESSION_ACTIVE', '...' );
+			//Mlog::addone ( $cm . __LINE__ . '::session_status () === PHP_SESSION_ACTIVE', '...' );
 			session_id ( $_COOKIE ['memreascookie'] );
 		}
-		Mlog::addone ( $cm . __LINE__ . '::', '...' );
+		//Mlog::addone ( $cm . __LINE__ . '::', '...' );
 		
-		Mlog::addone ( $cm . __LINE__ . '::$_COOKIE', $_COOKIE );
-		Mlog::addone ( $cm . __LINE__ . '::$_SESSION', $_SESSION );
+		//Mlog::addone ( $cm . __LINE__ . '::$_COOKIE', $_COOKIE );
+		//Mlog::addone ( $cm . __LINE__ . '::$_SESSION', $_SESSION );
 		if (! empty ( $_SESSION )) {
-			Mlog::addone ( $cm . __LINE__ . '::', '...' );
+			//Mlog::addone ( $cm . __LINE__ . '::', '...' );
 			if (isset ( $_SESSION ['LAST_ACTIVITY'] ) && (time () - $_SESSION ['LAST_ACTIVITY'] > 1800)) {
 				// last request was more than 30 minutes ago
 				session_unset (); // unset $_SESSION variable for the run-time
 				session_destroy (); // destroy session data in storage
 			}
 			$_SESSION ['LAST_ACTIVITY'] = time (); // update last activity time stamp
-			Mlog::addone ( $cm . __LINE__ . '::$_SESSION[LAST_ACTIVITY]', gmdate ( "Y-m-d\TH:i:s\Z", $_SESSION ['LAST_ACTIVITY'] ) );
+			//Mlog::addone ( $cm . __LINE__ . '::$_SESSION[LAST_ACTIVITY]', gmdate ( "Y-m-d\TH:i:s\Z", $_SESSION ['LAST_ACTIVITY'] ) );
 		}
-		Mlog::addone ( $cm . __LINE__ . '::', '...' );
+		//Mlog::addone ( $cm . __LINE__ . '::', '...' );
 	}
 	
 	/**
