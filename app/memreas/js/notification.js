@@ -54,9 +54,10 @@ $(function() {
 					    var notification_status = getValueFromXMLTag(
 						    notifications[i],
 						    'notification_status');
-					    if (user_profile_pic == '')
+					    if (user_profile_pic == '') {
 						user_profile_pic = '/memreas/img/profile-pic.jpg';
-					    if (notification_status == '0')
+					    }
+					    if (notification_status == '0') {
 						var link_action = '<a class="black_btn_skin" href="javascript:;" onclick="updateNotification(\''
 							+ notification_id
 							+ '\', \'accept\');">accept</a>'
@@ -66,8 +67,9 @@ $(function() {
 							+ '<a class="black_btn_skin" href="javascript:;" onclick="updateNotification(\''
 							+ notification_id
 							+ '\', \'ignore\');">ignore</a>';
-					    else
+					    } else {
 						var link_action = '';
+					    }
 					    if ($(".notificationresults")
 						    .hasClass(
 							    "mCustomScrollbar"))
@@ -159,6 +161,7 @@ function updateNotification(notification_id, update_status) {
 		jsuccess(getValueFromXMLTag(response, 'message'));
 		setTimeout(function() {
 		    // Reload notification
+		    console.log("calling--->$(a.notification_icon).click()");
 		    $("a.notification_icon").click();
 		}, 1000);
 	    } else
