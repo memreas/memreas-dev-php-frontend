@@ -41,15 +41,33 @@ header("Access-Control-Allow-Headers: x-requested-with");
                 <![endif]-->
         <!-- End Mark update -->
         <script src="/memreas/js/jquery-register.js"></script>
+        <style type="text/css">
+            .logibnt{margin-right: 10px;
+    font-family: "Century Gothic";
+    font-size: 16px; cursor:pointer;
+    padding: 7px 25px;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #e2e3e7),
+ color-stop(100%, #b5b9c0));
+    border-radius: 7px;
+    color: #3b3b3b;
+    padding: 10px 20px;
+   
+    text-shadow: 0 1px 1px #fff;
+            
+            }
+            .btnactioncont{width: auto !important; margin-right: 10px; margin-top: 16px;}
+            
+        </style>
     </head>
 
     <body style=" background: #193D65 !important;;">
 
 
         <header class="rel" style="position: relative;">
-            <div class="pull-right" style="width: auto; margin-right: 10px;">
-                <input type="button" onclick="{window.location= '/index';}" value="log in" name="log in" class="btn btn-sm login-btn" style="margin-right: 10px;">
-                <input type="button" onclick="{window.location= '/index';}" value="Register" name="log in" class="btn btn-sm login-btn">
+            <div class="pull-right btnactioncont">
+                
+                <a href="/index" class="logibnt"> Login</a>
+                <a href="/index" class="logibnt"> Sign Up </a>
             </div>
             <div class="container">
                 <div class="header-inner">
@@ -63,6 +81,29 @@ header("Access-Control-Allow-Headers: x-requested-with");
         </header>
         <div style="clear: both;"></div>
         <section id="MobileHomeScreen" style="overflow: hidden; background: #193D65; padding-left: 15px; padding-top: 15px;">
+            
+            
+            <div class="row-fluid" style="margin-bottom: 20px;">
+                <div class="span12 text-center">
+
+                    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                    <!-- memreas_auto_size_ad -->
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-client="ca-pub-2182144607113281"
+                         data-ad-slot="4950165058"
+                         data-ad-format="auto"></ins>
+                    <script>
+                                                (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>   
+
+
+
+                </div>
+
+
+            </div>
+            
             <div class="row-fluid" style="margin-bottom: 20px;">
                 <div class="span9">
                     <ul class=" scrollClass  publicMemreas scroll-area mCustomScrollbar _mCS_9 _mCS_16">
@@ -142,26 +183,6 @@ header("Access-Control-Allow-Headers: x-requested-with");
 
 
 
-            <div class="row-fluid">
-                <div class="span12">
-
-                    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-                    <!-- memreas_auto_size_ad -->
-                    <ins class="adsbygoogle"
-                         style="display:block"
-                         data-ad-client="ca-pub-2182144607113281"
-                         data-ad-slot="4950165058"
-                         data-ad-format="auto"></ins>
-                    <script>
-                                                (adsbygoogle = window.adsbygoogle || []).push({});
-                    </script>   
-
-
-
-                </div>
-
-
-            </div>
 
             
 
@@ -201,6 +222,9 @@ header("Access-Control-Allow-Headers: x-requested-with");
                                                         $('.mobileReform').show();
 
                                                     });
+                                                    $('.logibnt').click(function(){
+                                                      window.location='../index';  
+                                                    })
                                                 });
         </script>
 
