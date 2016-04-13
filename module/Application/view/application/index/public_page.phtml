@@ -44,7 +44,7 @@ header("Access-Control-Allow-Headers: x-requested-with");
         <style type="text/css">
             .logibnt{margin-right: 10px;
     font-family: "Century Gothic";
-    font-size: 16px;}
+    font-size: 16px; cursor:pointer;}
             .btnactioncont{width: auto !important; margin-right: 10px; margin-top: 11px;}
             
         </style>
@@ -55,8 +55,9 @@ header("Access-Control-Allow-Headers: x-requested-with");
 
         <header class="rel" style="position: relative;">
             <div class="pull-right btnactioncont">
-                <input type="button" onclick="{window.location= '/index';}" value="log in" name="log in" class="btn btn-sm login-btn logibnt" />
-                <input type="button" onclick="{window.location= '/index';}" value="Sign Up" name="" class="btn btn-sm login-btn logibnt" />
+                
+                <a href="/index"> <button class="btn btn-sm login-btn logibnt">Login</button> </a>
+                <a href="/index"> <button class="btn btn-sm login-btn logibnt">Sign Up</button> </a>
             </div>
             <div class="container">
                 <div class="header-inner">
