@@ -93,9 +93,27 @@ jQuery.addSeller = function () {
 
 </script>
 
+<?php include './bottom_advertising.phtml';?>
+
 <div class="span11 tabcontent-detail" id="gallery">
+    
+    <div class="row-fluid" style="margin-bottom: 20px;">
+         <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                    <!-- memreas_auto_size_ad -->
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-client="ca-pub-2182144607113281"
+                         data-ad-slot="4950165058"
+                         data-ad-format="auto"></ins>
+                    <script>
+                                                (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>  
+        
+    </div>
+    
+    
 	<!--<div class="<?php echo ($this->enableAdvertising) ? 'span9' : 'span11';?> left-gallery">-->
-	<div class="span11 left-gallery">
+	<div class="span9 left-gallery">
 		<ul id="tabs" class="medium_tabs">
 			<li><a href="#" title="tab1">view</a></li>
 			<li><a href="#" title="tab2" class="delete-tab">delete</a></li>
@@ -170,7 +188,7 @@ jQuery.addSeller = function () {
     <!-- End Ads Section -->
 
 	<!-- Bottom Ads -->
-    <?php include('bottom_advertising.phtml'); ?>
+    
     <!-- End Bottom Ads -->
 
 </div>
