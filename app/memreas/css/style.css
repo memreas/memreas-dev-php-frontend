@@ -3971,7 +3971,7 @@ select {
 		margin-bottom: 0px;
                 max-height: 440px;
 	}
-/*        .linksDatacnt{max-height: 420px; overflow: auto;}
+      /* .linksDatacnt{max-height: 420px; overflow: auto;}
         .myMemreas {max-height: 420px ; }*/
         
         
@@ -3996,7 +3996,7 @@ select {
 		/*margin-top: -61px;*/
 		
 	}
-        .linksDatacnt{max-height: 420px; overflow: auto;}
+        .linksDatacnt{max-height: 420px !important;}
         .myMemreas {max-height: 420px ; }
         
 	#tab-content, #tab-content-queue, #tab-content-share,
@@ -4441,4 +4441,4 @@ background-image: url(../img/video-play.svg);
      .dmca-table-data tbody tr td { text-align: center; vertical-align: middle;}
      .counter-claim-btn{color:#fff; border:1px solid #fff; background: #3A9ACA; border-radius: 7px; font-size: 17px; padding: 7px;}
      .fileupload-dmca{float: left!important; margin: 0px !important;}
-     .linksDatacnt{max-height: 700px; overflow: auto;}
+     .linksDatacnt{max-height: 400px; overflow: auto;}
