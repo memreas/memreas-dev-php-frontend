@@ -2793,7 +2793,9 @@ ul.memreas_results li .event_members .event_gallery_pro {
 @media ( min-height : 800px) and (min-width:1359px) {
 	#gallery #tab-content {
 		min-height: 540px;
+                max-height: 540px;
 	}
+        .linksDatacnt{max-height: 520px !important; }
 }
 
 @media only screen and (min-device-width : 1200px) and (max-device-width
@@ -3942,6 +3944,8 @@ select {
 		/*margin-top: -71px;*/
 		
 	}
+        
+        .linksDatacnt{}
 }
 
 @media ( min-height : 751px) {
@@ -3949,6 +3953,7 @@ select {
 		/*margin-top: 31px;*/
 		
 	}
+        .linksDatacnt{}
 }
 
 @media ( max-height : 750px) {
@@ -3967,7 +3972,12 @@ select {
 		#tab-content-memreas, #tab-content-memreas-detail, #tab-content-more {
 		min-height: 418px;
 		margin-bottom: 0px;
+                max-height: 440px;
 	}
+      .linksDatacnt{}
+        
+        
+        
 	#tab-content div.hideCls {
 		min-height: 418px !important;
 	}
@@ -3989,6 +3999,9 @@ select {
 		/*margin-top: -61px;*/
 		
 	}
+        .linksDatacnt{max-height: 420px !important;}
+        .myMemreas {max-height: 420px ; }
+        
 	#tab-content, #tab-content-queue, #tab-content-share,
 		#tab-content-memreas, #tab-content-memreas-detail, #tab-content-more {
 		/*max-height: 388px;*/
@@ -4017,6 +4030,7 @@ select {
 		/*margin-top: -85px;*/
 		
 	}
+        .linksDatacnt{}
 }
 
 .hideCls {
@@ -4253,9 +4267,13 @@ html.noads #tab-content, html.noads #tab-content-queue, html.noads #tab-content-
                 html.noads #tab-content-more {
                     max-height: 470px;
                 }
+                
+                .linksDatacnt{}
 }
 @media only screen and(min-width :700px) and (max-width:1400){
 /*    .fotorama__img{width:100% !important; height: 500px !important;}*/
+
+.linksDatacnt{}
 }
 @media (max-height:690px ){
     .fotorama__stage {
@@ -4267,18 +4285,24 @@ html.noads #tab-content, html.noads #tab-content-queue, html.noads #tab-content-
     .fotorama__stage {
 		height: 700px !important;
 	}
+        
+        .linksDatacnt{}
 }
 
 @media ( max-height : 979px) and (max-width:1920px) {
 	.fotorama__stage {
 height: 549px !important;
 	}
+        
+        .linksDatacnt{}
 }
 @media (min-width:1921px){
     
     .fotorama__stage {
  height:1100px  !important;
 	}
+        
+        .linksDatacnt{}
   
 }
 
@@ -4431,3 +4455,4 @@ background-image: url(../img/video-play.svg);
      .dmca-table-data tbody tr td { text-align: center; vertical-align: middle;}
      .counter-claim-btn{color:#fff; border:1px solid #fff; background: #3A9ACA; border-radius: 7px; font-size: 17px; padding: 7px;}
      .fileupload-dmca{float: left!important; margin: 0px !important;}
+     .linksDatacnt{max-height: 400px; overflow: auto;}

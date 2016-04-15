@@ -6,22 +6,10 @@
  */
 ?>
 
-<div class="span11 tabcontent-detail" id="memreas" >
-      <div class="row-fluid" style="margin-bottom: 20px; text-align: center;">
-         <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-                    <!-- memreas_auto_size_ad -->
-                    <ins class="adsbygoogle"
-                         style="display:block"
-                         data-ad-client="ca-pub-2182144607113281"
-                         data-ad-slot="4950165058"
-                         data-ad-format="auto"></ins>
-                    <script>
-                                                (adsbygoogle = window.adsbygoogle || []).push({});
-                    </script>  
-        
-    </div>
+<div class="span11 tabcontent-detail" id="memreas" style="display: none;" >
+     <?php include 'bottom_advertising.phtml' ;?>
     <div class="memreas-main">
-        <div class="span9<?php //echo ($this->enableAdvertising) ? 'span9' : 'span11'; ?>">
+        <div class="<?php echo ($this->enableAdvertising) ? 'span9' : 'span11'; ?>">
            
             <div class="row-fluid">
                 <ul id="tabs-memreas" class="medium_tabs">
@@ -256,6 +244,6 @@
     <!-- End Ads Section -->
 
     <!-- Bottom Ads -->
-        <?php include ('bottom_advertising.phtml'); ?>
+        
     <!-- End Bottom Ads -->
     </div>
