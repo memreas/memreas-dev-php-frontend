@@ -37,57 +37,45 @@ jQuery.fetchPublic = function() {
 		value : '100'
 	    } ],
 	    function(response) {
-
-		console.log("viewevents response-->" + response);
-
 		if (getValueFromXMLTag(response, 'status') == "Success") {
-		    var friends = getSubXMLFromTag(response, 'event');
-		    if (friends.length > 0) {
+		    var events = getSubXMLFromTag(response, 'event');
+		    if (events.length > 0) {
 			
 			/**
-			 * Fetch Friends array
+			 * Fetch events array
 			 */
 			var event = {};
 			var objArr = [];
 			var linksContainer = [];
-			var friend_count = friends.length;
-			for (var i = 0; i < friend_count; i++) {
-			    var friend = friends[i].innerHTML;
-			    var event_media = [];
-			    console.log('Event Tag Iterate -->' + friend);
-			    event.creator_id = $(friend).filter(
+			var event_count = events.length;
+			for (var i = 0; i < event_count; i++) {
+			    var event = events[i].innerHTML;
+			    console.log("event--->" + event);
+			    var event_media;
+			    //console.log('Event Tag Iterate -->' + friend);
+			    event.creator_id = $(event).filter(
 				    'event_creator_user_id').html();
-			    event.event_id = $(friend).filter('event_id')
+			    event.event_id = $(event).filter('event_id')
 				    .html();
-			    event.event_name = $(friend).filter('event_name')
+			    console.log("event.event_id--->" + event.event_id);
+			    event.event_name = $(event).filter('event_name')
 				    .html();
-			    event.event_like_total = $(friend).filter(
+			    event.event_like_total = $(event).filter(
 				    'event_like_total').html();
-			    event.event_comment_total = $(friend).filter(
+			    event.event_comment_total = $(event).filter(
 				    'event_comment_total').html();
-			    event.profile_img = $(friend).filter(
-				    'profile_pic_79x80').html();
+			    event.profile_img = $(event).filter(
+			        'profile_pic_79x80').html();
 			    event.profile_img = removeCdataCorrectLink(event.profile_img);
 			    event.friend_row = 'friendPublic-' + event.creator_id;
-			    event.event_creator = $(friend).filter(
+			    event.event_creator = $(event).filter(
 				    'event_creator').html();
-			    event.event_name = $(friend).filter('event_name')
+			    event.event_name = $(event).filter('event_name')
 				    .html();
 
-			    var event_media = getSubXMLFromTag(friends[i],
-				    'event_media');
-			    var event_media_count = event_media.length;
-			    // var StrMedia = '<div
-			    // style="clear:both;"></div><ul
-			    // class="event-pics">';
-			    var event_metadata = getValueFromXMLTag(friends[i],
-				    'event_metadata');
-			    if (typeof (event_metadata) != 'undefined') {
-				event_metadata = JSON.parse(event_metadata);
-				var event_price = event_metadata.price;
-			    } else {
-				var event_price = 0;
-			    }
+			    console.log("event-->" + event);
+			    console.log("event-->" + JSON.stringify(event));
+
 
 			    //HTML for profile section
 			    //start adding to html
@@ -110,7 +98,7 @@ jQuery.fetchPublic = function() {
 			    listItem += '			<span style="position: relative; top: -8px; left: -19px; color: #fff;">' + event.event_comment_total + '</span>';
 			    listItem += '			<div style="clear: both;"></div>';
 			    // for loop here for images
-			    listItem += '			<div id="links" class="links' + i + '"></div>';
+			    listItem += '			<div id="links' + i + '" class="links' + i + '"></div>';
 			    listItem += '				<div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" data-start-slideshow="false">';
 			    listItem += '				<div class="slides"></div>';
 			    listItem += '				<h3 class="title"></h3>';
@@ -125,20 +113,33 @@ jQuery.fetchPublic = function() {
 			    listItem += '	</div>';
 			    listItem += '</li>';
 			    
-			    linksContainer[i] = $(links);
-			    $("#public_list").append(listItem);
-			    
 			    //Now populate with media
 			    // media for loop
 			    var event_media_array = [];
-			    var event_friends = getSubXMLFromTag(friends[i],
-				    'event_friends');
-			    var event_friend = getSubXMLFromTag(event_friends,
-				    'event_friend');
 			    var linksContainerData = [];
+			    var event_medias = getSubXMLFromTag(
+				    events[i], 'event_media');
+			    var event_media_count = event_medias.length;
+                		    var event_metadata = getValueFromXMLTag(event,
+                			    'event_metadata');
+            		    var event_price = 0;
+                		    if (typeof (event_metadata) != 'undefined') {
+                			try{
+                			    event_metadata = JSON.parse(event_metadata);
+                			}catch(e){
+                			   console.log("metadata parse error--->" + e); //error in the above string(in this case,yes)!
+                			}
+                			event_price = event_metadata.price;
+                		    } else {
+                			event_price = 0;
+                		    }
+			    
+			    
+			    console.log("event_media ---> " + JSON.stringify(event_media));
 			    for (var j = 0; j < event_media_count; j++) {
 				var event_media_entry = {};
-				var event_media = event_media[j];
+				var event_media = event_medias[j];
+				
 				event_media_entry.event_media_id = getValueFromXMLTag(
 					event_media, 'event_media_id');
 				event_media_entry.event_media_image = getValueFromXMLTag(
@@ -158,6 +159,7 @@ jQuery.fetchPublic = function() {
 				// Setup blueimp
 				//
 				var item = new Object();
+				console.log("event_media_entry._event_media_type_--->" + event_media_entry._event_media_type_);
 				if (event_media_entry._event_media_type_ == 'video') {
 				    item['title'] = event_media_entry.event_media_id;
 				    item['type'] = "video/*";
@@ -201,19 +203,27 @@ jQuery.fetchPublic = function() {
 				}
 				// console.log("item" + JSON.stringify(item));
 				objArr.push(item);
+			    }// end event for loop
+			    
+			    
 
-			    }
 			    //
 			    // Set blueimp array
 			    //
-			    $(linksContainer).append(linksContainerData[i]);
+			    //linksContainer[i] = ;
+			    //console.log("linksContainerData[i]--->" + JSON.stringify(linksContainerData[i]));
+			    $(links).append(linksContainerData[i]);
+			    $("#public_list").append(listItem);
 			    $('#blueimp-gallery').hide();
 
 
+			    var event_friends = getSubXMLFromTag(events[i], 'event_friends');
+			    var event_friend = getSubXMLFromTag(event,'event_friend');
+			    var event_friend_count = event_friend.length;
 			    var event_friend_count = event_friend.length;
 			    var event_friend_string = "";
 			    var event_friend_array = [];
-			    // friends loop
+			    // events loop
 			    for (var k = 1; k <= event_friend_count; k++) {
 				var event_friend_entry = {};
 				var event_friend_list = event_friend[k];
@@ -225,7 +235,7 @@ jQuery.fetchPublic = function() {
 				event_friend_entry.event_friend_url_image = getValueFromXMLTag(
 					event_friend_list,
 					'event_friend_url_image');
-				event_friend_entry.event_friend_url_image = removeCdataCorrectLink(event_friend_url_image);
+				event_friend_entry.event_friend_url_image = removeCdataCorrectLink(event_friend_entry.event_friend_url_image);
 				event_friend_array[k] = event_friend_entry;
 
 			    }
