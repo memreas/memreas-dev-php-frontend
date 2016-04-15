@@ -167,7 +167,7 @@ getXMLStringFromParamArray = function(action, params) {
 	action_tag = "viewevent";
 	break;
     case "vieweventspublic":
-	action_tag = "vieweventspublic";
+	action_tag = "viewevent";
 	break;
     case "likemedia":
 	action_tag = "likemedia";
