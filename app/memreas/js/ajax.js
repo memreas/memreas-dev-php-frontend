@@ -69,8 +69,9 @@ ajaxRequest = function(action, params, success_func, error_func,
 		timeout : 10000,
 		data : 'json=' + encodeURIComponent(json_data),
 		success : function(ret_xml) {
-		    console.log("ret_xml--->" + ret_xml);
-		    if ((action != 'findtag') && (action != 'findevent')) {
+
+		    if ((action != 'findtag') && (action != 'findevent')
+			    && (action != 'vieweventspublic')) {
 			var x_memreas_chameleon = getValueFromXMLTag(ret_xml,
 				'x_memreas_chameleon').trim();
 			if (x_memreas_chameleon != '') {
@@ -100,12 +101,12 @@ ajaxRequest = function(action, params, success_func, error_func,
 
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-		    alert(jqXHR.responseText);
-		    alert(jqXHR.status);
+		    //alert(jqXHR.responseText);
+		    //alert(jqXHR.status);
 		    if (!disableLoadingScreen)
 			removeItem(stackAjaxInstance, action);
 
-		    if (typeof error_func != "undefined"){
+		    if (typeof error_func != "undefined") {
 			error_func();
 		    } else {
 			console.log("error_func = undefined")
@@ -164,6 +165,9 @@ getXMLStringFromParamArray = function(action, params) {
 	break;
     case "viewevents":
 	action_tag = "viewevent";
+	break;
+    case "vieweventspublic":
+	action_tag = "vieweventspublic";
 	break;
     case "likemedia":
 	action_tag = "likemedia";
@@ -294,7 +298,8 @@ getXMLStringFromParamArray = function(action, params) {
     default:
 	break;
     }
-    xml_str += "<memreascookie>" + getCookie("memreascookie") + "</memreascookie>";
+    xml_str += "<memreascookie>" + getCookie("memreascookie")
+	    + "</memreascookie>";
     xml_str += "<x_memreas_chameleon>" + getCookie("x_memreas_chameleon")
 	    + "</x_memreas_chameleon>";
     xml_str += "<" + action_tag + ">";
