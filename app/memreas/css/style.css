@@ -2793,7 +2793,9 @@ ul.memreas_results li .event_members .event_gallery_pro {
 @media ( min-height : 800px) and (min-width:1359px) {
 	#gallery #tab-content {
 		min-height: 540px;
+                max-height: 540px;
 	}
+        .linksDatacnt{max-height: 520px !important; }
 }
 
 @media only screen and (min-device-width : 1200px) and (max-device-width
@@ -3967,7 +3969,12 @@ select {
 		#tab-content-memreas, #tab-content-memreas-detail, #tab-content-more {
 		min-height: 418px;
 		margin-bottom: 0px;
+                max-height: 440px;
 	}
+/*        .linksDatacnt{max-height: 420px; overflow: auto;}
+        .myMemreas {max-height: 420px ; }*/
+        
+        
 	#tab-content div.hideCls {
 		min-height: 418px !important;
 	}
@@ -3990,7 +3997,7 @@ select {
 		
 	}
         .linksDatacnt{max-height: 420px; overflow: auto;}
-        .myMemreas {max-height: 420px; }
+        .myMemreas {max-height: 420px ; }
         
 	#tab-content, #tab-content-queue, #tab-content-share,
 		#tab-content-memreas, #tab-content-memreas-detail, #tab-content-more {
@@ -4434,3 +4441,4 @@ background-image: url(../img/video-play.svg);
      .dmca-table-data tbody tr td { text-align: center; vertical-align: middle;}
      .counter-claim-btn{color:#fff; border:1px solid #fff; background: #3A9ACA; border-radius: 7px; font-size: 17px; padding: 7px;}
      .fileupload-dmca{float: left!important; margin: 0px !important;}
+     .linksDatacnt{max-height: 700px; overflow: auto;}
