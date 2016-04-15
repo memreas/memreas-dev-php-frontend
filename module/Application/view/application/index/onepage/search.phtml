@@ -6,7 +6,7 @@
  */
 ?>
 <div  id="search-result" class="span11 tabcontent-detail" style="display: none;">
-
+<?php include 'bottom_advertising.phtml' ;?>
      <div  class="<?php echo ($this->enableAdvertising) ? 'span9' : 'span11';?>">
          <div class="results">Results found:  <span id="search-count"></span>.
 		 <div id="linkpaginations">
@@ -25,6 +25,6 @@
     <!-- End Ads Section -->
 
     <!-- Bottom Ads -->
-    <?php include('bottom_advertising.phtml'); ?>
+    <?php //include('bottom_advertising.phtml'); ?>
     <!-- End Bottom Ads -->
 </div>

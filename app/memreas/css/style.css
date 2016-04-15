@@ -3944,6 +3944,8 @@ select {
 		/*margin-top: -71px;*/
 		
 	}
+        
+        .linksDatacnt{}
 }
 
 @media ( min-height : 751px) {
@@ -3951,6 +3953,7 @@ select {
 		/*margin-top: 31px;*/
 		
 	}
+        .linksDatacnt{}
 }
 
 @media ( max-height : 750px) {
@@ -3971,8 +3974,8 @@ select {
 		margin-bottom: 0px;
                 max-height: 440px;
 	}
-      /* .linksDatacnt{max-height: 420px; overflow: auto;}
-        .myMemreas {max-height: 420px ; }*/
+      .linksDatacnt{}
+        
         
         
 	#tab-content div.hideCls {
@@ -4027,6 +4030,7 @@ select {
 		/*margin-top: -85px;*/
 		
 	}
+        .linksDatacnt{}
 }
 
 .hideCls {
@@ -4263,9 +4267,13 @@ html.noads #tab-content, html.noads #tab-content-queue, html.noads #tab-content-
                 html.noads #tab-content-more {
                     max-height: 470px;
                 }
+                
+                .linksDatacnt{}
 }
 @media only screen and(min-width :700px) and (max-width:1400){
 /*    .fotorama__img{width:100% !important; height: 500px !important;}*/
+
+.linksDatacnt{}
 }
 @media (max-height:690px ){
     .fotorama__stage {
@@ -4277,18 +4285,24 @@ html.noads #tab-content, html.noads #tab-content-queue, html.noads #tab-content-
     .fotorama__stage {
 		height: 700px !important;
 	}
+        
+        .linksDatacnt{}
 }
 
 @media ( max-height : 979px) and (max-width:1920px) {
 	.fotorama__stage {
 height: 549px !important;
 	}
+        
+        .linksDatacnt{}
 }
 @media (min-width:1921px){
     
     .fotorama__stage {
  height:1100px  !important;
 	}
+        
+        .linksDatacnt{}
   
 }
 
