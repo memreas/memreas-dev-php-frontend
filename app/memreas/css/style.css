@@ -3972,9 +3972,9 @@ select {
 		#tab-content-memreas, #tab-content-memreas-detail, #tab-content-more {
 		min-height: 418px;
 		margin-bottom: 0px;
-                max-height: 440px;
+                max-height: 400px !important;
 	}
-      .linksDatacnt{}
+      .linksDatacnt{ max-height: 400px !important;}
         
         
         
@@ -3999,12 +3999,13 @@ select {
 		/*margin-top: -61px;*/
 		
 	}
-        .linksDatacnt{max-height: 420px !important;}
+        .linksDatacnt{max-height: 378px !important;}
         .myMemreas {max-height: 420px ; }
         
 	#tab-content, #tab-content-queue, #tab-content-share,
 		#tab-content-memreas, #tab-content-memreas-detail, #tab-content-more {
-		/*max-height: 388px;*/
+		 min-height: 370px !important;
+                    max-height: 388px !important;
 		
 	}
 	html.noads #tab-content, html.noads #tab-content-queue, html.noads #tab-content-share,
