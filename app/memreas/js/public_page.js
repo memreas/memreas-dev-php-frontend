@@ -7,6 +7,16 @@ $(document).ready(function() {
     $.fetchPublic();
 });
 
+// Display page loading screen
+this.putPageLoading = function() {
+	$('#loadingpopup').fadeIn(200);
+}
+
+// Remove page loading screen
+this.removePageLoading = function() {
+	$('#loadingpopup').fadeOut(200);
+}
+
 jQuery.fetchPublic = function() {
     console.log("Inside jQuery.fetchPublic");
     var verticalHeight = window.innerHeight;
@@ -132,25 +142,27 @@ jQuery.fetchPublic = function() {
 			    
 			    
         			    var event_media_array = [];
-        			    var event_medias = getSubXMLFromTag(
-					    events[i], 'event_media');
+        			    var event_medias = getSubXMLFromTag(events[i], 'event_media');
         			    var event_media_count = event_medias.length;
-        			    //console.log("event_medias ---> " + event_medias);
-                		    console.log("event_media_count ---> " + event_media_count);
         			    //console.log("event ---> " + event);
-        			    console.log("event_medias ---> " + event_medias);
+        			    console.log("event_media_count ---> " + event_media_count);
+        			    console.log("event_medias ---> " + JSON.stringify(event_medias));
 			    for (var j = 0; j < event_media_count; j++) {
 				var event_media_entry = {};
 				var event_media = event_medias[j];
 				var linksContainerData = '';
 				
+				//console.log("event_media ---> " + JSON.stringify(event_media));
 				event_media_entry.event_media_name = getValueFromXMLTag(
 					event_media, 'event_name');
+				
 				event_media_entry.event_media_id = getValueFromXMLTag(
 					event_media, 'event_media_id');
 				event_media_entry.event_media_image = removeCdataCorrectLink(getValueFromXMLTag(
 					event_media, 'event_media_448x306'));
+				
 				console.log('event_media_entry.event_media_image-->' + event_media_entry.event_media_image);
+				
 				event_media_entry._event_media_type_ = getValueFromXMLTag(
 					event_media, 'event_media_type');
 				event_media_entry.event_media_url = removeCdataCorrectLink(getValueFromXMLTag(
@@ -272,7 +284,7 @@ $(document).on('click', '[data-gallery]', function(event) {
     var media_id;
     var obj;
     selected_media_id = widget.selector;
-    console.log("objArr.length-->"+objArr.length);
+    //console.log("objArr.length-->"+objArr.length);
     for (i=0; i<objArr.length; i++) {
 	obj = objArr[i];
 	if (selected_media_id == obj['title']) {

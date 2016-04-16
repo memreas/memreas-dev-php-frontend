@@ -48,7 +48,7 @@ ajaxRequest = function(action, params, success_func, error_func,
     console.log("json_data--->" + json_data);
     var cookies = document.cookie.split(";");
     if (!disableLoadingScreen) {
-	$('#loadingpopup').fadeIn(1000);
+	$('#loadingpopup').fadeIn(500);
 	pushStackAjax(action);
     }
 

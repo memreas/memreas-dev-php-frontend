@@ -10,7 +10,7 @@ var AppSystem = function() {
 
     // Display page loading screen
     this.putPageLoading = function() {
-	$('#loadingpopup').fadeIn(500);
+	$('#loadingpopup').fadeIn(200);
     }
 
     // Remove page loading screen
