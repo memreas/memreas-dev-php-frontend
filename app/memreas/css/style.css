@@ -3970,7 +3970,7 @@ select {
 	}
 	#tab-content, #tab-content-queue, #tab-content-share,
 		#tab-content-memreas, #tab-content-memreas-detail, #tab-content-more {
-		min-height: 418px;
+		min-height: 350px;
 		margin-bottom: 0px;
                 max-height: 400px !important;
 	}
@@ -4004,8 +4004,8 @@ select {
         
 	#tab-content, #tab-content-queue, #tab-content-share,
 		#tab-content-memreas, #tab-content-memreas-detail, #tab-content-more {
-		 min-height: 370px !important;
-                    max-height: 388px !important;
+		 min-height: 366px !important;
+                    max-height: 378px !important;
 		
 	}
 	html.noads #tab-content, html.noads #tab-content-queue, html.noads #tab-content-share,
