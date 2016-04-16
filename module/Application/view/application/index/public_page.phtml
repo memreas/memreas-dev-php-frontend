@@ -1,234 +1,177 @@
 <?php
-
 use Application\Model\MemreasConstants;
-
-header('Cache-Control: no-cache, no-store, must-revalidate'); // HTTP 1.1.
-header('Pragma: no-cache'); // HTTP 1.0.
-header('Expires: 0'); // Proxies.
-header('Access-Control-Allow-Origin: *');
-header("Access-Control-Allow-Methods: POST, GET");
-header("Access-Control-Allow-Headers: x-requested-with");
+header ( 'Cache-Control: no-cache, no-store, must-revalidate' ); // HTTP 1.1.
+header ( 'Pragma: no-cache' ); // HTTP 1.0.
+header ( 'Expires: 0' ); // Proxies.
+header ( 'Access-Control-Allow-Origin: *' );
+header ( "Access-Control-Allow-Methods: POST, GET" );
+header ( "Access-Control-Allow-Headers: x-requested-with" );
 ?>
 <!doctype html>
 <html lang="en" class="no-js">
-    <head>
+<head>
 
-        <meta name="description" content="PUT YOUR Description here">
-        <meta name="keywords" content="PUT YOUR Keyword here">
-        <title>memreas - public page</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!--meta responsive-->
-        <!-- Mark update -->
-        <link rel="stylesheet" type="text/css" href="/memreas/css/reset.css">
-        <link rel="stylesheet" type="text/css" href="/memreas/css/bootstrap.css">
-        <link rel="stylesheet" type="text/css"
-              href="/memreas/css/responsiveslides.css">
-        <link href="/memreas/css/jquery.mCustomScrollbar.css" rel="stylesheet" />
+<meta name="description" content="PUT YOUR Description here">
+<meta name="keywords" content="PUT YOUR Keyword here">
+<title>memreas - public page</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--meta responsive-->
+<!-- Mark update -->
+<link rel="stylesheet" type="text/css" href="/memreas/css/reset.css">
+<link rel="stylesheet" type="text/css" href="/memreas/css/bootstrap.css">
+<link rel="stylesheet" type="text/css"
+	href="/memreas/css/responsiveslides.css">
+<link href="/memreas/css/jquery.mCustomScrollbar.css" rel="stylesheet" />
 
-        <link href="/memreas/css/style.css" rel="stylesheet" type="text/css">
+<link href="/memreas/css/style.css" rel="stylesheet" type="text/css">
 
-        <link rel="stylesheet" type="text/css" href="/memreas/css/register.css">
-        <link rel="shortcut icon" href="/memreas/img/icon.png" />
-        
-        
+<link rel="stylesheet" type="text/css" href="/memreas/css/register.css">
+<link rel="shortcut icon" href="/memreas/img/icon.png" />
+
+
 <link rel="stylesheet" href="/memreas/cssblue/blueimp-gallery.css">
-<link rel="stylesheet" href="/memreas/cssblue/blueimp-gallery-indicator.css">
+<link rel="stylesheet"
+	href="/memreas/cssblue/blueimp-gallery-indicator.css">
 <link rel="stylesheet" href="/memreas/cssblue/blueimp-gallery-video.css">
 
-        <!-- HTML5 shim for IE backwards compatibility -->
-        <!--[if lt IE 9]>
+<!-- HTML5 shim for IE backwards compatibility -->
+<!--[if lt IE 9]>
                 <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
                 <![endif]-->
-        <!-- End Mark update -->
-        <script src="/memreas/js/jquery-register.js"></script>
-        <style type="text/css">
-            .logibnt{margin-right: 10px;
-    font-family: "Century Gothic";
-    font-size: 16px; cursor:pointer;
-    padding: 7px 25px;
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #e2e3e7),
- color-stop(100%, #b5b9c0));
-    border-radius: 7px;
-    color: #3b3b3b;
-    padding: 10px 20px;
-   
-    text-shadow: 0 1px 1px #fff;
-            
-            }
-            .btnactioncont{width: auto !important; margin-right: 10px; margin-top: 16px;}
-            
-        </style>
-    </head>
+<!-- End Mark update -->
+<script src="/memreas/js/jquery-register.js"></script>
+<style type="text/css">
+.logibnt {
+	margin-right: 10px;
+	font-family: "Century Gothic";
+	font-size: 16px;
+	cursor: pointer;
+	padding: 7px 25px;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #e2e3e7),
+		color-stop(100%, #b5b9c0));
+	border-radius: 7px;
+	color: #3b3b3b;
+	padding: 10px 20px;
+	text-shadow: 0 1px 1px #fff;
+}
 
-    <body style=" background: #193D65 !important;;">
+.btnactioncont {
+	width: auto !important;
+	margin-right: 10px;
+	margin-top: 16px;
+}
+</style>
+</head>
+
+<body style="background: #193D65 !important;">
 
 
-        <header class="rel" style="position: relative;">
-            <div class="pull-right btnactioncont">
-                
-                <a href="/index" class="logibnt"> Login</a>
-                <a href="/index" class="logibnt"> Sign Up </a>
-            </div>
-            <div class="container">
-                <div class="header-inner">
+	<header class="rel" style="position: relative;">
+		<div class="pull-right btnactioncont">
 
-                    <h1 id="logo" style="float: none;">
-                        <a href="" style="height: auto; background: url('/memreas/img/logo.png') no-repeat scroll 5px 3px rgba(0, 0, 0, 0)">memreas</a>
-                    </h1>
-                </div>
-            </div>
-            <div style="clear: both;"></div>
-        </header>
-        <div style="clear: both;"></div>
-        <section id="MobileHomeScreen" style="overflow: hidden; background: #193D65; padding-left: 15px; padding-top: 15px;">
-            
-            
-            <div class="row-fluid" style="margin-bottom: 20px;">
-                <div class="span12 text-center">
+			<a href="/index" class="logibnt"> Login</a> <a href="/index"
+				class="logibnt"> Sign Up </a>
+		</div>
+		<div class="container">
+			<div class="header-inner">
 
-                    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-                    <!-- memreas_auto_size_ad -->
-                    <ins class="adsbygoogle"
-                         style="display:block"
-                         data-ad-client="ca-pub-2182144607113281"
-                         data-ad-slot="4950165058"
-                         data-ad-format="auto"></ins>
-                    <script>
+				<h1 id="logo" style="float: none;">
+					<a href=""
+						style="height: auto; background: url('/memreas/img/logo.png') no-repeat scroll 5px 3px rgba(0, 0, 0, 0)">memreas</a>
+				</h1>
+			</div>
+		</div>
+		<div style="clear: both;"></div>
+	</header>
+	<div style="clear: both;"></div>
+	<section id="MobileHomeScreen"
+		style="overflow: hidden; background: #193D65; padding-left: 15px; padding-top: 15px;">
+
+
+		<div class="row-fluid" style="margin-bottom: 20px;">
+			<div class="span12 text-center">
+
+				<script async
+					src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+				<!-- memreas_auto_size_ad -->
+				<ins class="adsbygoogle" style="display: block"
+					data-ad-client="ca-pub-2182144607113281" data-ad-slot="4950165058"
+					data-ad-format="auto"></ins>
+				<script>
                                                 (adsbygoogle = window.adsbygoogle || []).push({});
-                    </script>   
+                    </script>
 
 
 
-                </div>
+			</div>
 
 
-            </div>
-            
-            <div class="row-fluid" style="margin-bottom: 20px;">
-                <div class="span9">
-                    <ul class=" scrollClass  publicMemreas scroll-area mCustomScrollbar _mCS_9 _mCS_16">
-                        <li>
-                            <div class="event_section">
-                                <section class="row-fluid clearfix">
-                                    <figure class="pro-pics2"><img class="public-profile-img" src="https://d3sisat5gdssl6.cloudfront.net/static/profile-pic.jpg?Expires=1460582237&Signature=ffI1X-r1N5S1mgXzjSAGbIK5VWzwno0NTO8fOVDf1w4Ciht1ERri0oaslLtSfZmSBLiwG7jJj1fzJZQHgxUYfvZHQbrslRw5W6RGytUn40EdeSB2S7qJjGM0JRoYSasw4wW9LLk66grvYs1XjuZBvFdYf94~Op0MzW9OO~noTI5vmwIP4cNCKRP6tLXE~kOIQzg3QdeAn1OfWLpUix~ut1AyLKrm0p3oagcI0VwUCTnfCvgVv7BOpvRKqZ6sf1zMmwjwjBZ9bSrq~0orx3fTwgr0NRKq2K8uoj-5L41wF5IWLBESVokNpDxiNU9Hq8kvoM7-kVd5SKATZ4Cmraap2g__&Key-Pair-Id=APKAISSKGZE3DR5HQCHA" alt=""></figure>
-                                    <aside class="pro-names2" style="margin-top:0px;">@glenn12 : !test1234</aside>
-                                    <a href="javascript:;" title="Like media" class="memreas-detail-likecount" style="margin-left:10px;"><img src="/memreas/img/like.png" alt=""></a><span style="position: relative;top: -10px;left: -17px;color: #fff;">1</span><a href="javascript:;" title="Comment" style="position: relative;top:5px;"><img src="/memreas/img/comment.png" alt=""></a><span style="position: relative;top: -8px;left: -19px;color: #fff;">1</span>
-                                    <div style="clear:both;"></div>
-                                    <ul class="event-pics">
-                                        <li class="image"><a href="javascript:;"  style="cursor: pointer;"><img src="https://d3sisat5gdssl6.cloudfront.net/3f68e4a4-74bc-4c2d-bf5c-09f8fd501b7d/44b090e0-7274-42d3-a640-ad7dc0d855f3/thumbnails/448x306/IMG_20141114_135338.jpg?Expires=1460584265&Signature=XWBFQPqt0gjQ4kexBxwlIxZUVjQUxKAVwTj0QWbEMYCluTbc3wkini3lM3qlLRzIKx2do1KDRxy4Q6rKVhMK0BpbRyZFCZ-GU6p2uNVQKDhJvuCExPeto~tmmoqV2FNG26E~0ETlq0ssdGjvwSAb7MHqNMT00w12hb6Icng4AWRCsBlBiWxgtQfO-rtiEaVlW1qV3DDPw~Q461bkVb5~rl-~7Xg16bTiltUgEXoyfzy3KEkxIMJmA2l5HY-sWllSq2yLKkHjKS-MyoCKB9NAD8j6LmU7X99XehuYYn4dnmBgy2x7I-9zVDc0tmQIt3qxQ8E3A5M83FMOaF0~RMHqmQ__&Key-Pair-Id=APKAISSKGZE3DR5HQCHA" style=""></a></li>
-                                        <li class="image"><a href="javascript:;"  style="cursor: pointer;"><img src="https://d3sisat5gdssl6.cloudfront.net/3f68e4a4-74bc-4c2d-bf5c-09f8fd501b7d/f8dee962-c0d6-44c3-969b-ce99c35fd96f/thumbnails/448x306/IMG_20141113_184021.jpg?Expires=1460584266&Signature=DfIliFiGDzNS4-2MqqV1CwWGoVcQgGo1SXjBHbzkIPL2lt7~g7s0QP7gAnGHcP-dtruI8DzBV8-JAPwwAEJ-Mcm1i4MTFlCwh1pEAuHYCzh-tDhH5WgTWIu0SgG~AahDtQCjuuVCcm48DsNmlworAT1gffrXZEZcLJm~~zzslHxFrdxgEk1uUfmzzw-rsypRtBIFZrMMDuRvZDPoi8~xLl5iV7GmCgRW-LzG5QGfycbR0nUo7VUVBkIL8dcVQ~i4yEPtvxlYG1BnwsEFJwpuidKfZW-OWlXJWoAs6cBb6zLVd9Iw2kapztUDptUfCoqr4uJntPzawJwjbpc6W9VQMw__&Key-Pair-Id=APKAISSKGZE3DR5HQCHA" style=""></a></li>
-                                        <li class="image"><a href="javascript:;"  style="cursor: pointer;"><img src="https://d3sisat5gdssl6.cloudfront.net/3f68e4a4-74bc-4c2d-bf5c-09f8fd501b7d/6b780040-0077-4360-9b32-d6e8383abd25/thumbnails/448x306/IMG_20140816_170103.jpg?Expires=1460584266&Signature=OtV04B-FHd~nxnYrxNhYuczwx2eG0AiVD6LCtZoyvR4ODDZU8lRMWJRdQsQYkjTKrRLMilx1-RRcgHwcMZpVHJllpNSkFWOmusiPnC5JErObPS1vHSXBvCf6dnvlo2yfRl4~LMwrApt0e6wGrxtrV1CJ9TohUJQuwyv2di9B4sAyv0aifdH4BCcX3nJnLAzFIWm5z2An3nLnNF5g5u~YZvAHZBsdFO4SB0LvMbjr6GikEM341mxii0bxkloaJIWnDwCyQEyep6zaZ1d8eh0ohl3xCcdl6NE65IlyYHOzjHiadvvieBGdxA7ALZYf7bNsH0ScljPt1rFd93Wi-gywDA__&Key-Pair-Id=APKAISSKGZE3DR5HQCHA" style=""></a></li>
-                                    </ul>
-                                    <div style="clear:both;"></div>
-                                </section>
-                                <div id="viewport" class="mouse_swip" onselectstart="return false;">
-                                    <div id="friendPublic-d94e8835-5379-4c55-bbc4-3c3028c433bc" class="swipeclass"></div>
-                                </div>
-                            </div>
-                        </li>
+		</div>
 
+		<div class="row-fluid" style="margin-bottom: 20px;">
+			<div class="span9">
+				<ul id="public_list"
+					class=" scrollClass  publicMemreas scroll-area mCustomScrollbar _mCS_9 _mCS_16">
+					<!-- js populates -->
 
-                        <li>
-
-                            <div class="event_section">
-                                <section class="row-fluid clearfix">
-                                    <figure class="pro-pics2"><img class="public-profile-img" src="https://d3sisat5gdssl6.cloudfront.net/static/profile-pic.jpg?Expires=1460582237&Signature=ffI1X-r1N5S1mgXzjSAGbIK5VWzwno0NTO8fOVDf1w4Ciht1ERri0oaslLtSfZmSBLiwG7jJj1fzJZQHgxUYfvZHQbrslRw5W6RGytUn40EdeSB2S7qJjGM0JRoYSasw4wW9LLk66grvYs1XjuZBvFdYf94~Op0MzW9OO~noTI5vmwIP4cNCKRP6tLXE~kOIQzg3QdeAn1OfWLpUix~ut1AyLKrm0p3oagcI0VwUCTnfCvgVv7BOpvRKqZ6sf1zMmwjwjBZ9bSrq~0orx3fTwgr0NRKq2K8uoj-5L41wF5IWLBESVokNpDxiNU9Hq8kvoM7-kVd5SKATZ4Cmraap2g__&Key-Pair-Id=APKAISSKGZE3DR5HQCHA" alt=""></figure>
-                                    <aside class="pro-names2" style="margin-top:0px;">@glenn : !test buys na</aside>
-                                    <a href="javascript:;" title="Like media" class="memreas-detail-likecount" style="margin-left:10px;"><img src="/memreas/img/like.png" alt=""></a><span style="position: relative;top: -10px;left: -17px;color: #fff;">0</span><a href="javascript:;" title="Comment" style="position: relative;top:5px;"><img src="/memreas/img/comment.png" alt=""></a><span style="position: relative;top: -8px;left: -19px;color: #fff;">2</span>
-                                    <div style="clear:both;"></div>
-                                    <ul class="event-pics">
-                                        <li class="image">
-                                            <a href="javascript:;" onclick="popupBuyMedia();" style="cursor: pointer;">
-                                                <div class="sell-event-overlay"></div>
-                                                <span class="sell-event-buyme"><i>Buy</i></span><img src="https://d3sisat5gdssl6.cloudfront.net/3f68e4a4-74bc-4c2d-bf5c-09f8fd501b7d/4fd71f1b-69b1-4f59-8bbb-5ecdddbc08cd/thumbnails/448x306/IMG_20141114_150245.jpg?Expires=1460584266&Signature=K2u2SgzJbAlmQv0FJ~2Na-LE4ZH7MU9BRgcfiQE3DIfBBHWsKGC-ruDoOthR~w0CsvodDhCFYxmZk4NQ-7ugOV9OBM1AzYH5emC8Ls5GfVR6KKYVdvpZPjXNNCPq3G3T9wrrzAQ36~pUzCpcqAef7wv5JS17Tn44QXRSrPH2JLAC11Q4xounrsSS8Drn58YNZhD4G42IIBdhG-Jt7VaTl18cKpRGz0FRs0r~-TykGKuj-B91-VXSF5Cm54hX3L2Y9NCVSAGZjFApRkGO0S5oPQaxxQZukWtcziLoW-X2HgUZNTrRtd~CXRatGE-y2U0NZKwgdh0t9jaWn8ECNGObLw__&Key-Pair-Id=APKAISSKGZE3DR5HQCHA" style="">
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    <div style="clear:both;"></div>
-                                </section>
-                                <div id="viewport" class="mouse_swip" onselectstart="return false;">
-                                    <div id="friendPublic-622772ff-ecad-41de-b176-2271d8f81f21" class="swipeclass"></div>
-                                </div>
-                            </div>
-                        </li>
-
-
-                    </ul>
+				</ul>
 
 
 
 
 
-                </div>
-                <div class="span3">
-                   <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- memreas_responsive_side_bar_ad -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2182144607113281"
-     data-ad-slot="9363121856"
-     data-ad-format="auto"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-                </div>
+			</div>
+			<div class="span3">
+				<script async
+					src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+				<!-- memreas_responsive_side_bar_ad -->
+				<ins class="adsbygoogle" style="display: block"
+					data-ad-client="ca-pub-2182144607113281" data-ad-slot="9363121856"
+					data-ad-format="auto"></ins>
+				<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+				</script>
+			</div>
+		</div>
+		<!-- layout-->
+		<!-- layout-->
+	</section>
+	<footer>
+		<div class="rel">
+			<p>©2016 memreas llc</p>
+		</div>
 
-            </div>
-
-            <!-- layuout-->
-
-
-            <!-- layuout-->
-
-
-
-
-
-            
-
-        </section>
-
-        
-        
-        <footer>
-            
-            <div class="rel">
-            <p>©2016 memreas llc</p>    
-            </div>
-            
 	</footer>
 
-        <!-- Modal JS -->
+	<!-- Modal JS -->
 
-        <script src="/memreas/js/responsiveslides.min.js"></script>
-        <script src="/memreas/js/jquery-ui.min.js"></script>
-        <script src="/memreas/js/jquery.mCustomScrollbar.concat.min.js"></script>
-        
-        <script src="/memreas/jsblue/blueimp-helper.js"></script>
-<script src="/memreas/jsblue/blueimp-gallery.js"></script>
-<script src="/memreas/jsblue/blueimp-gallery-fullscreen.js"></script>
-<script src="/memreas/jsblue/blueimp-gallery-indicator.js"></script>
-<script src="/memreas/jsblue/blueimp-gallery-video.js"></script>
-<script src="/memreas/jsblue/jquery.blueimp-gallery.js"></script>
+	<script src="/memreas/js/responsiveslides.min.js"></script>
+	<script src="/memreas/js/jquery-ui.min.js"></script>
+	<script src="/memreas/js/jquery.mCustomScrollbar.concat.min.js"></script>
 
-
-
-        <script>
-                                                $(function () {
-                                                    $(".rslides").responsiveSlides();
-
-                                                    $('#SignupReg').click(function () {
-                                                        $('#MobileHomeScreen').hide();
-                                                        $('.mobileReform').show();
-
-                                                    });
-                                                    $('.logibnt').click(function(){
-                                                      window.location='../index';  
-                                                    })
-                                                });
+	<script src="/memreas/jsblue/blueimp-helper.js"></script>
+	<script src="/memreas/jsblue/blueimp-gallery.js"></script>
+	<script src="/memreas/jsblue/blueimp-gallery-fullscreen.js"></script>
+	<script src="/memreas/jsblue/blueimp-gallery-indicator.js"></script>
+	<script src="/memreas/jsblue/blueimp-gallery-video.js"></script>
+	<script src="/memreas/jsblue/jquery.blueimp-gallery.js"></script>
+	<script src="/memreas/js/ajax.js"></script>
+	<script src="/memreas/js/global.js"></script>
+	<script src="/memreas/js/public_page.js"></script>
+	<script>
+$(function () {
+	$(".rslides").responsiveSlides();
+	$('#SignupReg').click(function () {
+		$('#MobileHomeScreen').hide();
+		$('.mobileReform').show();
+	});
+	$('.logibnt').click(function(){
+		window.location='/index';  
+	})
+});
         </script>
 
 
 
-    </body>
+</body>
 </html>

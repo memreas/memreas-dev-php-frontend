@@ -13,9 +13,12 @@ function listFriends(){
             for (var i = 0;i < count_people;i++){
                 var friend = friends[i];
                 var friend_photo = '';
-                if (getValueFromXMLTag(friend, 'photo') == '' || getValueFromXMLTag(friend, 'photo') == 'null')
+                if (getValueFromXMLTag(friend, 'photo') == '' || getValueFromXMLTag(friend, 'photo') == 'null') {
                    friend_photo= '/memreas/img/profile-pic.jpg';
-                else friend_photo = getValueFromXMLTag(friend, 'photo');
+                } else {
+                    friend_photo = getValueFromXMLTag(friend, 'photo');
+                }
+                friend_photo = removeCdataCorrectLink(friend_photo);
                 var friend_id = getValueFromXMLTag(friend, 'friend_id');
                 var friend_name = getValueFromXMLTag(friend, 'friend_name');
                 var html_str = '<li>';

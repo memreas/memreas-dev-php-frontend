@@ -903,8 +903,8 @@ function fetchpubsMemreas() {
 					/**
 					 * Fetch Friends array
 					 */
-					friends = getSubXMLFromTag(response,
-						'event');
+					//friends = getSubXMLFromTag(response,
+					//	'event');
 					var friend_count = friends.length;
 					for (var i = 0; i < friend_count; i++) {
 					    var friend = friends[i].innerHTML;
