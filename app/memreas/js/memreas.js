@@ -1005,14 +1005,6 @@ function fetchpubsMemreas() {
 								+ '"  style=""/></a></li>';
 						    }
 						}
-						// console
-						// .log('Each Event:'
-						// +
-						// removeCdataCorrectLink(event_media_image));
-						// StrMedia +='<li><img
-						// src="'+removeCdataCorrectLink(event_media_image)+'"
-						// style="width:100%"/></li>';
-
 					    }
 
 					    StrMedia += '</ul><div style="clear:both;"></div>';
@@ -1067,44 +1059,6 @@ function fetchpubsMemreas() {
 							    + 'Event Id--> '
 							    + event_id);
 
-					    // var friend_row = 'friendPublic-'
-					    // + creator_id;
-					    // if (typeof
-					    // ($(friend).filter('profile_pic_79x80'))
-					    // != 'undefined') {
-					    // var profile_img =
-					    // $(friend).filter(
-					    // 'profile_pic_79x80').html();
-					    // profile_img =
-					    // removeCdataCorrectLink(profile_img);
-					    // } else
-					    // profile_img =
-					    // '/memreas/img/profile-pic.jpg';
-					    // if (profile_img == '')
-					    // profile_img =
-					    // '/memreas/img/profile-pic.jpg';
-					    // console.log('profile_pic-->' +
-					    // profile_img);
-					    // console
-					    // .log('$(friend).filter("profile_pic_79x80").html()-->'
-					    // +
-					    // removeCdataCorrectLink($(friend)
-					    // .filter('profile_pic_79x80')
-					    // .html()));
-					    // console
-					    // .log('$(friend).filter("profile_pic_448x306").html()-->'
-					    // +
-					    // removeCdataCorrectLink($(friend)
-					    // .filter(
-					    // 'profile_pic_448x306')
-					    // .html()));
-					    // console
-					    // .log('$(friend).filter("profile_pic_98x78").html()-->'
-					    // +
-					    // removeCdataCorrectLink($(friend)
-					    // .filter('profile_pic_98x78')
-					    // .html()));
-					    //
 					    console.log('Tr Object'
 						    + target_object);
 
