@@ -12,7 +12,7 @@ class MemreasConstants {
 	const MEMREAS_PAY = "https://memreasdev-ws.memreas.com/index?action=";
 	//change..
 	//const MEMREAS_PAY = "https://memreasdev-pay.memreas.com";
-	const MEMREAS_ADS = true;
+	const MEMREAS_ADS = false;
 	const MEMREAS_SELL_MEDIA = 1; // Enable or Disable selling media
 	const CLOUDFRONT_DOWNLOAD_HOST = 'https://d3sisat5gdssl6.cloudfront.net/';
 	const CLOUDFRONT_HLS_DOWNLOAD_HOST = 'https://d2b3944zpv2o6x.cloudfront.net/';
