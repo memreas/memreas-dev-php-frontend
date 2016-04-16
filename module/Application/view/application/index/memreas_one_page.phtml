@@ -107,7 +107,13 @@ echo "var username = '" . $username . "';";
                 <?php include('onepage/nav.phtml'); ?>
 
                 <!-- Main Tab Content -->
-			<div id="maintab-content">
+                <div id="maintab-content" >
+                    <?php include('onepage/bottom_advertising.phtml'); ?>     
+                    
+                            
+                    <div class="<?php echo ($this->enableAdvertising) ? 'span9' : 'span11';?>">
+                    
+                   
 				<!-- Begin : Content - For search -->
                     <?php include('onepage/search.phtml'); ?>
                     <!-- End : search -->
@@ -136,6 +142,13 @@ echo "var username = '" . $username . "';";
 				<!-- More Tab -->
 				<?php include ('onepage/more_page.phtml'); ?>
 				<!-- End : More Tab -->
+                       </div>
+                    
+                      <?php include('onepage/right_advertising.phtml'); ?>
+                                
+                                
+                                
+                                
 			</div>
 			<!-- End: Main Tab Content -->
 			<div class="clear"></div>
@@ -145,7 +158,7 @@ echo "var username = '" . $username . "';";
 	<!-- End : Content -->
 	</div>
 	<!-- Bottom Ads -->
-    <?php include('onepage/bottom_advertising.phtml'); ?>
+    
     <!-- End Bottom Ads -->
 
         

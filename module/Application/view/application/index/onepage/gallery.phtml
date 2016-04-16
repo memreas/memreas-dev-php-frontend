@@ -93,9 +93,15 @@ jQuery.addSeller = function () {
 
 </script>
 
+
+
 <div class="span11 tabcontent-detail" id="gallery">
-	<!--<div class="<?php echo ($this->enableAdvertising) ? 'span9' : 'span11';?> left-gallery">-->
-	<div class="span11 left-gallery">
+    
+    
+    
+    
+	<div class="span11<?php //echo ($this->enableAdvertising) ? 'span9' : 'span11';?> left-gallery esle">
+<!--	<div class="span9 left-gallery">-->
 		<ul id="tabs" class="medium_tabs">
 			<li><a href="#" title="tab1">view</a></li>
 			<li><a href="#" title="tab2" class="delete-tab">delete</a></li>
@@ -104,7 +110,7 @@ jQuery.addSeller = function () {
 		<div id="tab-content" class="clearfix">
 			<div id="tab1" class="hideCls hidden-onload">
 				<!-- The Gallery as lightbox dialog, should be a child element of the document body -->
-				<div id="links" class="links"></div>
+				<div id="links" class="links linksDatacnt"></div>
 				
                     <div id="blueimp-video-carousel-gallery"
 						class="blueimp-gallery blueimp-gallery-controls blueimp-gallery-carousel " data-start-slideshow="false">
@@ -166,11 +172,11 @@ jQuery.addSeller = function () {
 	</div>
 
 	<!-- Ads Section -->
-    <?php include('right_advertising.phtml'); ?>
+    <?php //include('right_advertising.phtml'); ?>
     <!-- End Ads Section -->
 
 	<!-- Bottom Ads -->
-    <?php include('bottom_advertising.phtml'); ?>
+    
     <!-- End Bottom Ads -->
 
 </div>

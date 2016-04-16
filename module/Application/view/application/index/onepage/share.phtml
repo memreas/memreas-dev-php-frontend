@@ -6,7 +6,8 @@
  */
 ?>
 <div class="span11 tabcontent-detail" id="share" style="display: none;">
-    <div class="<?php echo ($this->enableAdvertising) ? 'span9' : 'span11';?>">
+    <?php //include 'bottom_advertising.phtml' ;?>
+    <div class="span11<?php //echo ($this->enableAdvertising) ? 'span9' : 'span11';?>">
         <div class="row-fluid">
             <ul id="tabs-share" class="medium_tabs">
                 <li><a href="#" title="tab1-share">memreas details</a></li>
@@ -180,8 +181,13 @@
                 <label class="textfield_names">Price :</label>
                 <select name="sellmedia_price" id="sellmedia_price">
                     <option value="">-Choose-</option>
+                    <option value="0.25">$0.05</option>
+                    <option value="0.25">$0.10</option>
+                    <option value="0.25">$0.15</option>
+                    <option value="0.25">$0.20</option>
                     <option value="0.25">$0.25</option>
                     <option value="0.5">$0.5</option>
+                    <option value="0.5">$0.75</option>
                     <option value="1">$1</option>
                     <option value="2">$2</option>
                     <option value="5">$5</option>
@@ -206,11 +212,11 @@
     </div>
     <div id="bgpopupSellMedia" class="backgroundPopup"></div>
     <!-- Ads Section -->
-    <?php include('right_advertising.phtml'); ?>
+    <?php //include('right_advertising.phtml'); ?>
     <!-- End Ads Section -->
 
     <!-- Bottom Ads -->
-    <?php include('bottom_advertising.phtml'); ?>
+    <?php //include('bottom_advertising.phtml'); ?>
     <!-- End Bottom Ads -->
 </div>
 

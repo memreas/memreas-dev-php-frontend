@@ -26,3 +26,17 @@
 <link rel="stylesheet" href="/memreas/cssblue/blueimp-gallery.css">
 <link rel="stylesheet" href="/memreas/cssblue/blueimp-gallery-indicator.css">
 <link rel="stylesheet" href="/memreas/cssblue/blueimp-gallery-video.css">
+<?php
+ if ($this->enableAdvertising){
+   ?> 
+<link href="/memreas/css/mobile-style-with-ads.css" rel="stylesheet" type="text/css">
+<?php 
+ } 
+   
+ else{
+  ?>
+ <link href="/memreas/css/mobile-style-without-ads.css" rel="stylesheet" type="text/css">     
+  <?php  
+ }
+
+?>

@@ -10,8 +10,9 @@
 use Application\Model\MemreasConstants;
 ?>
 <div class="span11 tabcontent-detail" id="more" style="display: none;">
+    <?php include 'bottom_advertising.phtml' ;?>
 	<div
-		class="<?php echo ($this->enableAdvertising) ? 'span9' : 'span11';?>">
+		class="span11<?php //echo ($this->enableAdvertising) ? 'span9' : 'span11';?>">
 		<div class="row-fluid">
 			<ul id="tabs-more" class="medium_tabs">
 				<li><a href="#" title="tab1-more" class="account-tab">account</a></li>
@@ -192,7 +193,7 @@ use Application\Model\MemreasConstants;
         <!-- End Ads Section -->
 
 	<!-- Bottom Ads -->
-        <?php include('bottom_advertising.phtml'); ?>
+        <?php //include('bottom_advertising.phtml'); ?>
         <!-- End Bottom Ads -->
 </div>
 <div class="loadingpopup stripe-payment">
