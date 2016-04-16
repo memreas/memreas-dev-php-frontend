@@ -66,7 +66,7 @@ jQuery.fetchPublic = function() {
 			    eventObj.event_comment_total = $(event).filter(
 				    'event_comment_total').html();
 			    eventObj.profile_img = $(event).filter(
-			        'profile_pic').html();
+			        'profile_pic_79x80').html();
 			    eventObj.profile_img = removeCdataCorrectLink(eventObj.profile_img);
 			    //eventObj.friend_row = 'friendPublic-' + eventObj.creator_id;
 			    eventObj.event_creator = $(event).filter(
@@ -96,7 +96,7 @@ jQuery.fetchPublic = function() {
 			    listItem += '			<div style="clear: both;"></div>';
 			    // for loop here for images
 			    listItem += '			<div id="links' + i + '" class="links' + i + '"></div>';
-			    listItem += '				<div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" data-start-slideshow="false">';
+			    listItem += '			<div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" data-start-slideshow="false">';
 			    listItem += '				<div class="slides"></div>';
 			    listItem += '				<h3 class="title"></h3>';
 			    listItem += '				<a class="prev">‹</a> <a class="next">›</a> <a class="close">×</a>';
@@ -105,10 +105,14 @@ jQuery.fetchPublic = function() {
 			    listItem += '			<div style="clear: both;"></div>';
 			    listItem += '		</section>';
 			    listItem += '		<div id="viewport" class="mouse_swip" onselectstart="return false;">';
-			    listItem += '			<div id="friendPublic-d94e8835-5379-4c55-bbc4-3c3028c433bc" class="swipeclass"></div>';
+			    listItem += '			<div id="friendPublic-' + i + '" class="swipeclass"></div>';
 			    listItem += '		</div>';
 			    listItem += '	</div>';
 			    listItem += '</li>';
+			    
+			    $("#public_list").append(listItem);
+			    $('#blueimp-gallery').hide();
+
 			    
 			    //Now populate with media
 			    // media for loop
@@ -128,7 +132,6 @@ jQuery.fetchPublic = function() {
 			    
 			    
         			    var event_media_array = [];
-        			    var linksContainerData = [];
         			    var event_medias = getSubXMLFromTag(
 					    events[i], 'event_media');
         			    var event_media_count = event_medias.length;
@@ -139,6 +142,7 @@ jQuery.fetchPublic = function() {
 			    for (var j = 0; j < event_media_count; j++) {
 				var event_media_entry = {};
 				var event_media = event_medias[j];
+				var linksContainerData = '';
 				
 				event_media_entry.event_media_name = getValueFromXMLTag(
 					event_media, 'event_name');
@@ -146,6 +150,7 @@ jQuery.fetchPublic = function() {
 					event_media, 'event_media_id');
 				event_media_entry.event_media_image = removeCdataCorrectLink(getValueFromXMLTag(
 					event_media, 'event_media_448x306'));
+				console.log('event_media_entry.event_media_image-->' + event_media_entry.event_media_image);
 				event_media_entry._event_media_type_ = getValueFromXMLTag(
 					event_media, 'event_media_type');
 				event_media_entry.event_media_url = removeCdataCorrectLink(getValueFromXMLTag(
@@ -155,6 +160,14 @@ jQuery.fetchPublic = function() {
 					event_media, 'event_media_url_hls'));
 				event_media_entry.event_media_url_web = removeCdataCorrectLink(getValueFromXMLTag(
 					event_media, 'event_media_url_web'));
+				//event_media_entry._media_thumbnail_large = getValueFromXMLTag(event_media,
+				//    'event_media_448x306');
+				//console.log('event_media_entry._media_thumbnail_large-->' + event_media_entry._media_thumbnail_large);
+				//event_media_entry._media_thumbnail_large = JSON
+				//    .parse(removeCdata(event_media_entry._media_thumbnail_large));
+				//console.log('event_media_entry._media_thumbnail_large-->' + event_media_entry._media_thumbnail_large);
+				//event_media_entry._media_thumbnail_large = event_media_entry._media_thumbnail_large[0];
+				//console.log('event_media_entry._media_thumbnail_large-->' + event_media_entry._media_thumbnail_large);
 				event_media_array[j] = event_media_entry;
 
 				//
@@ -174,14 +187,14 @@ jQuery.fetchPublic = function() {
 					type : "video/mp4"
 				    } ];
 
-				    linksContainerData[i] += '<a href="'
+				    linksContainerData += '<a href="'
 					    + event_media_entry.event_media_url_web + '"';
-				    linksContainerData[i] += ' title="' + event_media_entry.event_media_id
+				    linksContainerData += ' title="' + event_media_entry.event_media_id
 					    + '"';
-				    linksContainerData[i] += ' type="video/mp4" data-gallery="'
+				    linksContainerData += ' type="video/mp4" data-gallery="'
 					    + event_media_entry.event_media_id
 					    + '" class="blueimp-gallery-thumb-anchor "';
-				    linksContainerData[i] += ' style="background:url('
+				    linksContainerData += ' style="background:url('
 					    + event_media_entry.event_media_image
 					    + ')"><span class="video-content-play-icon"></span></a>';
 
@@ -189,17 +202,17 @@ jQuery.fetchPublic = function() {
 				    item['title'] = event_media_entry.event_media_id;
 				    item['type'] = "image/jpeg";
 				    item['href'] = event_media_entry.event_media_url;
-				    item['poster'] = event_media_entry.event_media_url;
+				    item['poster'] = event_media_entry._media_thumbnail_large;
 
-				    linksContainerData[i] += '<a href="'
+				    linksContainerData += '<a href="'
 					    + event_media_entry.event_media_url
 					    + '" title="'
 					    + event_media_entry.event_media_id
 					    + '" data-gallery="'
 					    + event_media_entry.event_media_id
 					    + '" class="blueimp-gallery-thumb-anchor"';
-				    linksContainerData[i] += ' style="background:url('
-					    + event_media_entry.event_media_url
+				    linksContainerData += ' style="background:url('
+					    + event_media_entry.event_media_image
 					    + ')"><span></span></a>';
 
 				}
@@ -212,12 +225,11 @@ jQuery.fetchPublic = function() {
 			    //
 			    // Set blueimp array
 			    //
-			    //linksContainer[i] = ;
-			    //console.log("linksContainerData[i]--->" + JSON.stringify(linksContainerData[i]));
-			    $(links).append(linksContainerData[i]);
-			    $("#public_list").append(listItem);
-			    $('#blueimp-gallery').hide();
-
+			    //linksContainer[i] = linksCo;
+			    console.log("linksContainerData--->" + JSON.stringify(linksContainerData));
+			    $(links).append(linksContainerData);
+			    //console.log("html " + links + "--->" + $(links).innerHTML);
+			    
 
 			    var event_friends = getSubXMLFromTag(events[i], 'event_friends');
 			    var event_friend = getSubXMLFromTag(event,'event_friend');
