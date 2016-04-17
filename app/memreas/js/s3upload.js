@@ -863,7 +863,7 @@ var S3UploadInstance = function() {
 							form
 								.find(
 									'input[name=key]')
-								.val(Account.id + '/' + media_id + '/dmca/' + filename);
+								.val(Account.id + '\/' + $("#media_id").val() + '\/dmca\/' + filename);
 							form
 								.find(
 									'input[name=acl]')
