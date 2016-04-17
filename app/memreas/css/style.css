@@ -3665,3 +3665,11 @@ background-image: url(../img/video-play.svg);
      .counter-claim-btn{color:#fff; border:1px solid #fff; background: #3A9ACA; border-radius: 7px; font-size: 17px; padding: 7px;}
      .fileupload-dmca{float: left!important; margin: 0px !important;}
      .linksDatacnt{max-height: 400px; overflow: auto;}
+     
+     .share_memreas_detaill_dcma li{width: 47%; float: left; margin-right: 10px;}
+     .share_memreas_detaill_dcma li .textfield_names{font-family: "Century Gothic";font-size: 18px; color: #FFF;}
+     .share_memreas_detaill_dcma li .share-txtfield{width: 90% !important;   font-family: "Century Gothic";}
+     
+     .add_card_buy_credit li{width: 47%; float: left; margin-right: 10px;}
+     .add_card_buy_credit li .textfield_names{font-family: "Century Gothic";font-size: 18px; color: #FFF;}
+     .add_card_buy_credit li .field-txtfield{width: 90% !important;   font-family: "Century Gothic";}

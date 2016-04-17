@@ -83,7 +83,7 @@ use Application\Model\MemreasConstants;
 
         <h2 class="dmcaTitle" style="width: 100%;">dmca violation - counter
             claim</h2>
-        <ul id="content_1" class="share_memreas_details">
+        <ul id="content_1" class="share_memreas_detaill_dcma">
 
             <li><label class="textfield_names">Full Name :</label> <input
                     name="copyright_owner_name" type="text" id="copyright_owner_name"
@@ -110,36 +110,37 @@ use Application\Model\MemreasConstants;
             <!-- remove - use email on file-->
             <li><label class="textfield_names">media Id</label> 
                 <input
-                    type="text" name="media_id" id="media_id" readonly />
+                    type="text" name="media_id" id="media_id" class="share-txtfield" readonly />
                 <input type="hidden" name="violation_id" id="violation_id"  />
                 <input name="copyright_owner_email_address" type="hidden" id="copyright_owner_email_address" class="share-txtfield" value="" placeholder="Email" readonly/>
             </li>
 
             <li><label class="textfield_names">Signed Written Communication:</label>
                 <!--<a class="black_btn_skin f-center change-profile-btn fileupload-dmca" href="javascript:;">Choose file</a>-->
-                <div class="dmca-upload-progress" style="width: 80%; float: right; vertical-align: top;">
+                <div class="dmca-upload-progress" style=" vertical-align: top;">
                     <a class="black_btn_skin f-left dmca-file-btn" href="javascript:;" onclick="$('.dmcaFileUploadForm').find('input[type=file]').click();">Choose file</a>
                 </div>
             </li>
 
-            <li><input id="dmca_term_condition" class="css-checkbox"
-                       type="checkbox"> <label for="dmca_term_condition"
-                       name="demo_lbl_5" class="css-label margin-none"
-                       style="text-align: left; margin-left: 90px !important;" id="dmca_term_condition_label">by
-                    submission of my counter claim and memreas terms and conditions i
-                    agree to provide my email address to the reporter and will resolve
-                    this violation without any further involvement from memreas.</label>
-                <div style="clear: both;"></div>
+            <li>
             </li>
 
         </ul>
-        <div
-            style="clear: both; margin-top: 10px; margin-bottom: 10px; padding-top: 10px;"></div>
+        <div class="clearfix"></div>
+       <div style="clear: both; margin-bottom: 20px;"> <input id="dmca_term_condition" class="css-checkbox" type="checkbox"> <label for="dmca_term_condition"
+                       name="demo_lbl_5" class="css-label margin-none"
+                       style="text-align: left; height: auto;" id="dmca_term_condition_label">by
+                    submission of my counter claim and memreas terms and conditions i
+                    agree to provide my email address to the reporter and will resolve
+                    this violation without any further involvement from memreas.</label>
+                </div>
+        <div style="clear: both; margin-top: 10px; margin-bottom: 10px; padding-top: 10px;"></div>
+        <div style="clear: both;"></div>
         <div class="btn">
 
             <a class="black_btn_skin" href="javascript:reportCounterClaimForm();"
                onclick="">ok</a> <a class="black_btn_skin" href="javascript:;"
-               onclick="disablePopup('dmca-check-box');"  class='popupClose'>cancel</a>
+               onclick="disablePopup('dmca-form-box');"  class='popupClose'>cancel</a>
         </div>
     </form>
 </div>
