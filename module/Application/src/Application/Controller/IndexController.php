@@ -88,6 +88,7 @@ class IndexController extends AbstractActionController {
 		
 		if (empty ( $response )) {
 			// something is wrong - logout
+			Mlog::addone ( __CLASS__ . __METHOD__ . 'LOGOUT occurred for guzzle url+action+xml', MemreasConstants::MEMREAS_WS . $action . $xml );
 			return $this->logoutAction ();
 		}
 		
