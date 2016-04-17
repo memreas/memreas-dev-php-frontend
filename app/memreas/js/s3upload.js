@@ -822,8 +822,8 @@ var S3UploadInstance = function() {
 				multiple : true,
 				type : 'POST',
 				autoUpload : true,
-				//5GB max
-				maxFileSize : 5000000,
+				//50MB max
+				maxFileSize : 50000,
 				add : function(event, data) {
 					var filename = data.files[0].name;
 					filename = correctUploadFilename(filename);
@@ -863,7 +863,7 @@ var S3UploadInstance = function() {
 							form
 								.find(
 									'input[name=key]')
-								.val(Account.id + '/dmca/' + filename);
+								.val(Account.id + '/' + media_id + '/dmca/' + filename);
 							form
 								.find(
 									'input[name=acl]')
@@ -931,99 +931,8 @@ var S3UploadInstance = function() {
 							filetype = 'image';
 							is_valid = true;
 							break;
-						case 'gif':
-							filetype = 'image';
-							is_valid = true;
-							break;
-
-						// video types
-						// allowed
-						case 'mpeg':
-							filetype = 'video';
-							is_valid = true;
-							break;
-						case 'mp4':
-							filetype = 'video';
-							is_valid = true;
-							break;
-						case 'avi':
-							filetype = 'video';
-							is_valid = true;
-							break;
-						case 'mov':
-							filetype = 'video';
-							is_valid = true;
-							break;
-						case '3gp':
-							filetype = 'video';
-							is_valid = true;
-							break;
-						case '3gpp':
-							filetype = 'video';
-							is_valid = true;
-							break;
-						case 'mkv':
-							filetype = 'video';
-							is_valid = true;
-							break;
-						case 'mpg':
-							filetype = 'video';
-							is_valid = true;
-							break;
-						case 'avi':
-							filetype = 'video';
-							is_valid = true;
-							break;
-						case 'flv':
-							filetype = 'video';
-							is_valid = true;
-							break;
-						case 'wmv':
-							filetype = 'video';
-							is_valid = true;
-							break;
-						case 'divx':
-							filetype = 'video';
-							is_valid = true;
-							break;
-						case 'ogv':
-							filetype = 'video';
-							is_valid = true;
-							break;
-						case 'ogm':
-							filetype = 'video';
-							is_valid = true;
-							break;
-						case 'nut':
-							filetype = 'video';
-							is_valid = true;
-							break;
-						case 'vob':
-							filetype = 'video';
-							is_valid = true;
-							break;
-						case 'vro':
-							filetype = 'video';
-							is_valid = true;
-							break;
-
-						// audio types
-						// allowed
-						case 'mp3':
-							filetype = 'audio';
-							is_valid = true;
-							break;
-						case 'wav':
-							filetype = 'audio';
-							is_valid = true;
-							break;
-						case 'caf':
-							filetype = 'audio';
-							is_valid = true;
-							break;
-
 						case 'pdf':
-							filetype = 'pdf';
+							filetype = 'image';
 							is_valid = true;
 							break;
 						default:
