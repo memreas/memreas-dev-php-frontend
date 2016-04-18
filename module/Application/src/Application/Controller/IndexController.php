@@ -267,7 +267,10 @@ class IndexController extends AbstractActionController {
 		if (isset ( $_REQUEST ['user_id'] )) {
 			// Fetch parms
 			$user_id = $_REQUEST ['user_id'];
-			$xml = '<xml><user_id>' . $user_id . '</user_id><memreas_tvm>0</memreas_tvm><memreas_pre_signed_url>1</memreas_pre_signed_url></xml>';
+			if (! empty ( $_COOKIE ['memreascookie'] )) {
+				$memreascookie = '<memreascookie>'.$_COOKIE ['memreascookie'].'</memreascookie>';
+			}
+			$xml = '<xml>'.$memreascookie.'<user_id>' . $user_id . '</user_id><memreas_tvm>0</memreas_tvm><memreas_pre_signed_url>1</memreas_pre_signed_url></xml>';
 			Mlog::addone ( __CLASS__ . __METHOD__ . 'REGISTRATION RELATED data->memreas_tvm->xml-->', $xml );
 		} else {
 			$xml = '<xml><username>' . $_SESSION ['username'] . '</username><memreas_tvm>0</memreas_tvm><memreas_pre_signed_url>1</memreas_pre_signed_url></xml>';
