@@ -1974,7 +1974,7 @@ $(function() {
 						    ' <td><img src="'
 						    + media_url
 						    + '" width="80" /></td>'
-						    + '<td> <a href="javascript:;" onclick="reportCounterclaim(this);" class="counter-claim-btn reportCounterclaim" id="'
+						    + '<td> <a href="javascript:;"  onclick="reportCounterclaim(this);" class="counter-claim-btn reportCounterclaim" id="'
 						    + media_id
 						    + '" rel="'
 						    + violation_id
@@ -2102,6 +2102,7 @@ function reportCounterclaim(elm) {
     // alert($(elm).attr('id'));
     $('#media_id').val($(elm).attr('id'));
     $('#violation_id').val($(elm).attr('rel'));
+    $('#VIDNO').html($(elm).attr('rel'));
     $('#copyright_owner_email_address').val(userObject.email);
     popup('dmca-form-box');
 
@@ -2144,6 +2145,7 @@ function reportCounterClaimForm() {
 	jerror("Please checkbox");
 	return;
     }
+    $('#dmcaSubmit').addClass('not-active-anchor');
 
     var params = [ {
 	tag : "violation_id",
@@ -2178,7 +2180,14 @@ function reportCounterClaimForm() {
 
 	if (status == 'success') {
 	    disablePopup('dmca-form-box');
-	    popup('popupComfirmDmca');
+            $(copy_right_owner).val('');
+            $(copyright_owner_address).val('');
+            $(copyright_owner_email_address).val('');
+            $(mediaId_report).val('');
+            $(counter_claim_phone_number).val('');
+            $(violation_id).val('');
+            $('#dmcaSubmit').removeClass('not-active-anchor');
+            popup('popupComfirmDmca');
 	} else {
 	    jerror("your counter claim failed to upload");
 	    disablePopup('popupReportMedia');

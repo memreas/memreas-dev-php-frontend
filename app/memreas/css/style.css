@@ -3673,3 +3673,7 @@ background-image: url(../img/video-play.svg);
      .add_card_buy_credit li{width: 47%; float: left; margin-right: 10px;}
      .add_card_buy_credit li .textfield_names{font-family: "Century Gothic";font-size: 18px; color: #FFF;}
      .add_card_buy_credit li .field-txtfield{width: 90% !important;   font-family: "Century Gothic";}
+     .not-active-anchor {
+   pointer-events: none !important;
+   cursor: default !important;
+}
