@@ -138,7 +138,7 @@ use Application\Model\MemreasConstants;
         <div style="clear: both;"></div>
         <div class="btn">
 
-            <a class="black_btn_skin" href="javascript:reportCounterClaimForm();"
+            <a class="black_btn_skin" id="dmcaSubmit"  href="javascript:reportCounterClaimForm();"
                onclick="">ok</a> <a class="black_btn_skin" href="javascript:;"
                onclick="disablePopup('dmca-form-box');"  class='popupClose'>cancel</a>
         </div>
@@ -152,7 +152,7 @@ use Application\Model\MemreasConstants;
     <ul id="content_1" class="give-message-form buying-media-detail">
         <li>
             <label class="margin-none" style="line-height: 21px;" >
-                We've received your dcma report violation and have taken steps to notify the user who posted the media and remove the media from our site through our automated processes. Your violation id number is: violation id.
+                We've received your dcma report violation and have taken steps to notify the user who posted the media and remove the media from our site through our automated processes. Your violation id number is: <span id="VIDNO"></span>.
                 <br><br>
                 Thanks,<br>
                 memreas team<br>
