@@ -358,6 +358,15 @@ function showEventDetail(eventId, userId) {
         eventdetail_object.friends_can_share = getValueFromXMLTag(response,
                 'friends_can_share');
         eventdetail_object.public = getValueFromXMLTag(response, 'public');
+        console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXeventdetail_object.public--->" + eventdetail_object.public);
+        if (eventdetail_object.public == "1" ) {
+            $("#btnAddMedia").hide();
+            $("#btnAddFriends").hide();
+        } else {
+            $("#btnAddMedia").show();
+            $("#btnAddFriends").show();
+        }
+
 
         var event_metadata = getValueFromXMLTag(response, 'event_metadata');
         var sell_price = 0;
