@@ -624,7 +624,7 @@ input[name="account_email"], input[name="account_alternate_email"],
 }
 */
 
-#memreas-detail-tab3{margin:0 10px !important; }
+#memreas-detail-tabDetails{margin:0 10px !important; }
 #avpw_footer, .avpw_close_button, #avpw_tool_content_header {
 	display: none !important;
 }
@@ -683,7 +683,7 @@ input[name="account_email"], input[name="account_alternate_email"],
 }
 
 @media ( min-width :1039px) {
-	#memreas-detail-tab3 {
+	#memreas-detail-tabDetails {
 		max-width: 100%;
 		display: block;
 /*		margin: 0 auto;*/
