@@ -88,8 +88,8 @@ class IndexController extends AbstractActionController {
 		
 		if (empty ( $response )) {
 			// something is wrong - logout
-			Mlog::addone ( __CLASS__ . __METHOD__ . 'LOGOUT occurred for guzzle url+action+xml', MemreasConstants::MEMREAS_WS . $action . $xml );
-			return $this->logoutAction ();
+			Mlog::addone ( __CLASS__ . __METHOD__ . 'EMPTY RESPONSE occurred for guzzle url+action+xml', MemreasConstants::MEMREAS_WS . $action . $xml );
+			//return $this->logoutAction ();
 		}
 		
 		return $response->getBody ();
@@ -225,32 +225,13 @@ class IndexController extends AbstractActionController {
 				$_SESSION ['email'] = ( string ) $data->loginresponse->email;
 				
 				// set secure cookies to retrieve this info and avoid
-			} else if (($action == 'logout') || (! empty ( $data->logoutresponse ))) {
+			} else if ($action == 'logout') {
 				// $this->memreas_session ();
 				/**
 				 * Handle logout
 				 */
 				$this->logoutAction ();
 			}
-		} else {
-			// foreach ( libxml_get_errors () as $error ) {
-			// error_log ( 'Error parsing XML file : ' . $error->message );
-			// }
-			/**
-			 * data is bad logout
-			 */
-			$this->logoutAction ();
-		}
-		
-		//
-		// if refresh and no session logout
-		//
-		if (empty ( $_SESSION )) {
-			//
-			// something is wrong
-			//
-			error_log ( 'session_id()---->' . session_id () );
-			$this->logoutAction ();
 		}
 	}
 	private function setSignedCookie($name, $val, $domain) {
@@ -264,10 +245,13 @@ class IndexController extends AbstractActionController {
 		
 		Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__, 'About to fetch S3Key' );
 		$action = 'memreas_tvm';
-		if (isset ( $_REQUEST ['user_id'] )) {
+		$user_id = (isset ( $_REQUEST ['user_id'] )) ? $_REQUEST ['user_id'] : $_SESSION ['user_id'];
+		if (isset ( $user_id )) {
 			// Fetch parms
-			$user_id = $_REQUEST ['user_id'];
-			$xml = '<xml><user_id>' . $user_id . '</user_id><memreas_tvm>0</memreas_tvm><memreas_pre_signed_url>1</memreas_pre_signed_url></xml>';
+			if (! empty ( $_COOKIE ['memreascookie'] )) {
+				$memreascookie = '<memreascookie>'.$_COOKIE ['memreascookie'].'</memreascookie>';
+			}
+			$xml = '<xml>'.$memreascookie.'<user_id>' . $user_id . '</user_id><memreas_tvm>0</memreas_tvm><memreas_pre_signed_url>1</memreas_pre_signed_url></xml>';
 			Mlog::addone ( __CLASS__ . __METHOD__ . 'REGISTRATION RELATED data->memreas_tvm->xml-->', $xml );
 		} else {
 			$xml = '<xml><username>' . $_SESSION ['username'] . '</username><memreas_tvm>0</memreas_tvm><memreas_pre_signed_url>1</memreas_pre_signed_url></xml>';
@@ -344,7 +328,9 @@ class IndexController extends AbstractActionController {
 		// - something must be wrong...
 		//
 		if (empty ( $_SESSION ['user_id'] )) {
-			$this->logoutAction ();
+			//$this->logoutAction ();
+			//reset session from cookie
+			$this->memreas_session();
 		}
 		
 		//
@@ -697,8 +683,8 @@ class IndexController extends AbstractActionController {
 			}
 		} else {
 			// session is active so set session id
-			//Mlog::addone ( $cm . __LINE__ . '::session_status () === PHP_SESSION_ACTIVE', '...' );
 			session_id ( $_COOKIE ['memreascookie'] );
+			Mlog::addone ( $cm . __LINE__ . '::$_SESSION-->', $_SESSION );
 		}
 		//Mlog::addone ( $cm . __LINE__ . '::', '...' );
 		

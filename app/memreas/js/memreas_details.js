@@ -34,7 +34,7 @@ $(function () {
         // tab
     });
 
-    $("a[title=memreas-detail-tab3]")
+    $("a[title=memreas-detail-tabDetails]")
             .click(
                     function () {
                         BlueIMPGallery();
@@ -47,7 +47,7 @@ $(function () {
 //                        var checkEmpty = target_element.html();
 //                        if (checkEmpty.trim() == '') {
 //                            jerror('There is no media on this event. Please try adding some first.');
-//                            $("a[title=memreas-detail-tab1]").click();
+//                            $("a[title=memreas-detail-tabGallery]").click();
 //                            return false;
 //                        }
 
@@ -57,7 +57,7 @@ $(function () {
                     });
 
     // Memreas detail location tab click
-    $("a[title=memreas-detail-tab4]")
+    $("a[title=memreas-detail-tabLocation]")
             .click(
                     function () {
                         if (eventdetail_media_id == '') {
@@ -82,7 +82,9 @@ $(function () {
                                             'latitude');
                                     if (lng == '' || lat == '') {
                                         jerror('There is no location for this media');
-                                        return false;
+                                        lat = 0;
+                                        lng = 0;
+                                        //return false;
                                     }
                                     gallery_initGoogleMap(
                                             "memreas-detail-location", lat, lng);

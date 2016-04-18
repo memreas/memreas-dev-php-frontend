@@ -82,8 +82,8 @@ jQuery.addSeller = function () {
 	  },
 	  error: function (jqXHR, textStatus, errorThrown) {
 	  	//alert("Inside error jqXHR...");
-    	alert(jqXHR.responseText);
-    	alert(jqXHR.status);
+    	//alert(jqXHR.responseText);
+    //alert(jqXHR.status);
  	//alert(textStatus);
     	//alert(errorThrown);
 	  }
@@ -92,16 +92,10 @@ jQuery.addSeller = function () {
 }
 
 </script>
-
-
-
 <div class="span11 tabcontent-detail" id="gallery">
-    
-    
-    
-    
-	<div class="span11<?php //echo ($this->enableAdvertising) ? 'span9' : 'span11';?> left-gallery esle">
-<!--	<div class="span9 left-gallery">-->
+	<div
+		class="span11<?php //echo ($this->enableAdvertising) ? 'span9' : 'span11';?> left-gallery esle">
+		<!--	<div class="span9 left-gallery">-->
 		<ul id="tabs" class="medium_tabs">
 			<li><a href="#" title="tab1">view</a></li>
 			<li><a href="#" title="tab2" class="delete-tab">delete</a></li>
@@ -111,25 +105,25 @@ jQuery.addSeller = function () {
 			<div id="tab1" class="hideCls hidden-onload">
 				<!-- The Gallery as lightbox dialog, should be a child element of the document body -->
 				<div id="links" class="links linksDatacnt"></div>
-				
-                    <div id="blueimp-video-carousel-gallery"
-						class="blueimp-gallery blueimp-gallery-controls blueimp-gallery-carousel " data-start-slideshow="false">
-						<div class="slides"></div>
-						<h3 class="title"></h3>
-						<a class="prev">‹</a> 
-						<a class="next">›</a>
-                                                
-						<!-- <a class="play-pause"></a> --> 
-                                                <p class="description"></p>
-                                                
-					</div>
-				
-				<div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" data-start-slideshow="false">
+
+				<div id="blueimp-video-carousel-gallery"
+					class="blueimp-gallery blueimp-gallery-controls blueimp-gallery-carousel "
+					data-start-slideshow="false">
 					<div class="slides"></div>
 					<h3 class="title"></h3>
-					<a class="prev">‹</a>
-					<a class="next">›</a> 
-					<a class="close">×</a>
+					<a class="prev">‹</a> <a class="next">›</a>
+
+					<!-- <a class="play-pause"></a> -->
+					<p class="description"></p>
+
+				</div>
+
+				<div id="blueimp-gallery"
+					class="blueimp-gallery blueimp-gallery-controls"
+					data-start-slideshow="false">
+					<div class="slides"></div>
+					<h3 class="title"></h3>
+					<a class="prev">‹</a> <a class="next">›</a> <a class="close">×</a>
 				</div>
 			</div>
 			<div id="tab2" class="hideCls hidden-onload">
@@ -162,8 +156,8 @@ jQuery.addSeller = function () {
 		</div>
 		<!------------------First-pop-up-------------------->
 		<div id="popupgalleryplayer" class="video_popups">
-			<a id="popupgalleryplayerClose" onClick="disablePopup('popupgalleryplayer')"
-				class='popupClose'>x</a>
+			<a id="popupgalleryplayerClose"
+				onClick="disablePopup('popupgalleryplayer')" class='popupClose'>x</a>
 		</div>
 		<div id="bgpopupgalleryplayer" class="backgroundPopup"></div>
 	</div>
@@ -173,7 +167,7 @@ jQuery.addSeller = function () {
     <!-- End Ads Section -->
 
 	<!-- Bottom Ads -->
-    
-    <!-- End Bottom Ads -->
+
+	<!-- End Bottom Ads -->
 
 </div>

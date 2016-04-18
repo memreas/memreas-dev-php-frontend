@@ -1251,7 +1251,7 @@ ul.pics li img, .aviary-thumbs img, .galleries-location img {
 	height: 100%;
 }
 
-#memreas-detail-tab1 ul.pics li img, #share_medialist img {
+#memreas-detail-tabGallery ul.pics li img, #share_medialist img {
 	width: 100%;
 }
 
@@ -4355,7 +4355,7 @@ ul.event-pics li img, .aviary-thumbs img, .galleries-location img {
 	height: 100%;
 }
 
-#memreas-detail-tab1 ul.pics li img, #share_medialist img {
+#memreas-detail-tabGallery ul.pics li img, #share_medialist img {
 	width: 100%;
 }
 

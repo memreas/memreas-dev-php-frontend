@@ -18,7 +18,6 @@ var gallery;
 $(document).ready(
 	function() {
 
-	    console.log("Inside gallery tabs click functions");
 	    $("a[title=gallery]").click(function() {
 		$("#gallery #tabs a[title=tab1]").click();
 	    });
@@ -90,10 +89,10 @@ jQuery.fetch_server_media = function() {
 
 		    var linksContainer = $('#links');
 
-			//Reset area to prevent from duplicating items
-			linksContainer.html('');
-			$(".edit-area-scroll").html('');
-			objArr = new Array();
+		    // Reset area to prevent from duplicating items
+		    linksContainer.html('');
+		    $(".edit-area-scroll").html('');
+		    objArr = new Array();
 
 		    var linksContainerData = '';
 
@@ -187,45 +186,45 @@ jQuery.fetch_server_media = function() {
 			// console.log("item" + JSON.stringify(item));
 			objArr.push(item);
 
-			// Delete Tab Data
+			// Delete and Location Tab Data
 			if (_media_type == 'video') {
-				$(".edit-area-scroll")
-					.append(
-						'<li><a class="image-sync" id="'
-						+ media_id
-						+ '" onclick="return imageChoosed(this.id);" href="'
-						+ _media_thumbnail_large
-						+ '"><img src="'
-						+ _media_thumbnail_large
-						+ '"/><span class="video-content-play-icon" style="position: absolute; left: 10%; top: -5%;"></span></a></li>');
-			}
-			else {
-				$(".edit-area-scroll")
-					.append(
-						'<li><a class="image-sync" id="'
-						+ media_id
-						+ '" onclick="return imageChoosed(this.id);" href="'
-						+ _media_thumbnail_large
-						+ '"><img src="'
-						+ _media_thumbnail_large
-						+ '"/></a></li>');
+			    $(".edit-area-scroll")
+				    .append(
+					    '<li><a class="image-sync" id="'
+						    + media_id
+						    + '" onclick="return imageChoosed(this.id);" href="'
+						    + _media_thumbnail_large
+						    + '"><img src="'
+						    + _media_thumbnail_large
+						    + '"/><span class="video-content-play-icon" style="position: absolute; left: 10%; top: -5%;"></span></a></li>');
+
+			} else {
+			    $(".edit-area-scroll")
+				    .append(
+					    '<li><a class="image-sync" id="'
+						    + media_id
+						    + '" onclick="return imageChoosed(this.id);" href="'
+						    + _media_thumbnail_large
+						    + '"><img src="'
+						    + _media_thumbnail_large
+						    + '"/></a></li>');
+
+			    $(".galleries-location").append(
+				    '<li><img id="location' + media_id
+					    + '" class="img-gallery" src="'
+					    + _media_thumbnail_large + '" /></li>');
+
 			}
 
-			$(".preload-files .pics").append(
-				'<li><img src="' + _media_url + '"/></li>');
-			$(".aviary-thumbs")
-				.append(
-					'<li><img id="edit'
-						+ media_id
-						+ '" src="'
-						+ _media_thumbnail_large
-						+ '" onclick="openEditMedia(this.id, \''
-						+ _media_thumbnail_large
-						+ '\');"/></li>');
-			$(".galleries-location").append(
-				'<li><img id="location' + media_id
-					+ '" class="img-gallery" src="'
-					+ _media_thumbnail + '" /></li>');
+			/*
+			 * 
+			 * $(".preload-files .pics").append( '<li><img src="' +
+			 * _media_url + '"/></li>'); $(".aviary-thumbs")
+			 * .append( '<li><img id="edit' + media_id + '" src="' +
+			 * _media_thumbnail_large + '"
+			 * onclick="openEditMedia(this.id, \'' +
+			 * _media_thumbnail_large + '\');"/></li>');
+			 */
 			checkHasImage = true;
 
 			// End Delete Tab
@@ -275,14 +274,17 @@ $(document).on('click', '[data-gallery]', function(event) {
     var media_id;
     var obj;
     selected_media_id = widget.selector;
-    console.log("objArr.length-->"+objArr.length);
-    for (i=0; i<objArr.length; i++) {
+    console.log("objArr.length-->" + objArr.length);
+    for (i = 0; i < objArr.length; i++) {
 	obj = objArr[i];
 	if (selected_media_id == obj['title']) {
 	    break;
 	}
     }
-    return blueimp.Gallery([obj], { container : '#blueimp-gallery', carousel : true});
+    return blueimp.Gallery([ obj ], {
+	container : '#blueimp-gallery',
+	carousel : true
+    });
 });
 
 function getUserNotificationsHeader() {
@@ -644,13 +646,15 @@ function gotoEventDetail(eventId, notification_id) {
 			    }
 			}
 		    }
-		} else
+		} else {
 		    jerror(getValueFromXMLTag(response, 'message'));
+		}
+
 		$(".memreas-addfriend-btn").attr('href',
 			"javascript:addFriendToEvent('" + eventId + "');");
 		$(".memreas-detail-gallery .swipebox").swipebox();
 		ajaxScrollbarElement('.memreas-detail-gallery');
-		$("a[title=memreas-detail-tab3]").trigger('click');
+		$("a[title=memreas-detail-tabDetails]").trigger('click');
 
 		var checkCommentLoaded = setInterval(function() {
 
