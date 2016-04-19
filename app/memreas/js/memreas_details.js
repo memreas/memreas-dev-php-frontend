@@ -358,13 +358,10 @@ function showEventDetail(eventId, userId) {
         eventdetail_object.friends_can_share = getValueFromXMLTag(response,
                 'friends_can_share');
         eventdetail_object.public = getValueFromXMLTag(response, 'public');
-        console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXeventdetail_object.public--->" + eventdetail_object.public);
-        if (eventdetail_object.public == "1" ) {
-            $("#btnAddMedia").hide();
-            $("#btnAddFriends").hide();
+        if (eventdetail_object.public == 1 ) {
+            $("#add_buttons").hide();
         } else {
-            $("#btnAddMedia").show();
-            $("#btnAddFriends").show();
+            $("#add_buttons").show();
         }
 
 
