@@ -326,5 +326,5 @@ $(document).on('click', '[data-gallery]', function(event) {
 });
 
 function jalert(){
-    popup('popupReqisterToBuy');
+    alert('you must be registered to purchase access');
 }
