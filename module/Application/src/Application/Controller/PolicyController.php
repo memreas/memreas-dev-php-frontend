@@ -37,4 +37,10 @@ class PolicyController extends AbstractActionController {
 		$view->setTemplate ( $path );
 		return $view;
 	}
+	public function mtosAction() {
+		$path = "application/index/onepage/more_tabs/help/marketplace-terms-service.phtml";
+		$view = new ViewModel ();
+		$view->setTemplate ( $path );
+		return $view;
+	}
 }

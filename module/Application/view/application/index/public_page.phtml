@@ -61,7 +61,12 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 	margin-top: 16px;
 }
 
-.sell-event-buyme{position: relative;}
+.sell-event-buyme{position: static;
+    display: inline-block;
+    cursor: pointer;
+    float: left;
+    margin-left: -104px;}
+.navbar-fixed-top{position: relative;}
 </style>
 </head>
 
@@ -100,7 +105,6 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 		<div class="row-fluid" style="margin-top: 20px; margin-bottom: 20px;">
 			<div class="span12 text-center"
 				style="margin-top: 20px; margin-bottom: 20px;">
-				<!-- 
 				<script async
 					src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 				<ins class="adsbygoogle" style="display: block"
@@ -109,11 +113,10 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 				<script>
                 		(adsbygoogle = window.adsbygoogle || []).push({});
                 </script>
-                -->
 			</div>
 		</div>
 		<div class="row-fluid" style="margin-bottom: 20px;">
-			<div class="<?php echo ($this->enableAdvertising) ? 'span9' : 'span11';?>">
+			<div class="<?php echo $this->enableAdvertising; echo ($this->enableAdvertising) ? 'span9' : 'span9';?>">
 				<ul id="public_list"
                                     class=" scrollClass  publicMemreas scroll-area mCustomScrollbar _mCS_9 _mCS_16" style="height: 100%; overflow: auto;">
 					<!-- js populates -->
@@ -124,7 +127,6 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 				</ul>
 			</div>
 			<div class="span3">
-				<!-- 
 				<script async
 					src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 				<ins class="adsbygoogle" style="display: block"
@@ -133,7 +135,6 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 				<script>
 					(adsbygoogle = window.adsbygoogle || []).push({});
 				</script>
-			-->
 			</div>
 		</div>
 		<!-- layout-->
@@ -143,12 +144,12 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 	<!-- Memreas tab popup section -->
 	<div id="popupReqisterToBuy" class="popups">
 		<a id="popupReqisterToClose"
-			onClick="disablePopup('popupReqisterToClose');" class='popupClose'>x</a>
+			onClick="disablePopup('popupReqisterToBuy');" class='popupClose'>x</a>
 		<h2>Private Media - Register to purchase</h2>
 		<p>&nbsp;</p>
 		<ul id="content_1" class="give-message-form buying-media-detail">
 			<li><label class="textfield_names" style="width: 150px;">you must
-					register to purchase access/label>
+					register to purchase access</label>
 					<div class="clear"></div></li>
 		</ul>
 		<div class="clear"></div>
@@ -166,10 +167,11 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 	</footer>
 
 	<!-- Modal JS -->
-
+<?php ?>
 	<script src="/memreas/js/responsiveslides.min.js"></script>
 	<script src="/memreas/js/jquery-ui.min.js"></script>
 	<script src="/memreas/js/jquery.mCustomScrollbar.concat.min.js"></script>
+        <script src="/memreas/js/jquery.oauthpopup.js"></script>
 	<script src="/memreas/jsblue/blueimp-helper.js"></script>
 	<script src="/memreas/jsblue/blueimp-gallery.js"></script>
 	<script src="/memreas/jsblue/blueimp-gallery-fullscreen.js"></script>
@@ -178,6 +180,7 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 	<script src="/memreas/jsblue/jquery.blueimp-gallery.js"></script>
 	<script src="/memreas/js/ajax.js"></script>
 	<script src="/memreas/js/global.js"></script>
+        <script src="/memreas/js/popup.js"></script>
 	<script src="/memreas/js/public_page.js"></script>
 	<script>
 $(function () {
@@ -189,6 +192,9 @@ $(function () {
 	$('.logibnt').click(function(){
 		window.location='/index';  
 	})
+       
+        
+        
 });
         </script>
 
