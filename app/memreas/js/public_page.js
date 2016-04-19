@@ -222,6 +222,7 @@ jQuery.fetchPublic = function() {
 				    linksContainerData += ' type="video/mp4" data-gallery="'
 					    + event_media_entry.event_media_id
 					    + '" class="blueimp-gallery-thumb-anchor "';
+				    console.log("video event_price--->" + event_price);
 				    if (event_price > 0) {
 					linksContainerData += ' style="background:url('
 						+ event_media_entry.event_media_image
@@ -245,6 +246,7 @@ jQuery.fetchPublic = function() {
 					    + '" data-gallery="'
 					    + event_media_entry.event_media_id
 					    + '" class="blueimp-gallery-thumb-anchor"';
+				    console.log("image event_price--->" + event_price);
 				    if (event_price > 0) {
 					linksContainerData += ' style="background:url('
 						+ event_media_entry.event_media_image

@@ -15,7 +15,7 @@ var AppSystem = function() {
 
     // Remove page loading screen
     this.removePageLoading = function() {
-	$('#loadingpopup').fadeOut(500);
+	$('#loadingpopup').fadeOut(200);
     }
 
     // Put stripe processing loading state
@@ -489,6 +489,7 @@ function popupDetailMedia(eventdetail_media_id, html_str, comment_count) {
 }
 function fetchFriendsMemreas(friendMemreasType) {
 
+    console.log
     var params = new Object;
     params.user_id = Account.id;
     params.memreascookie = getCookie("memreascookie");
@@ -894,6 +895,7 @@ function fetchpubsMemreas() {
 				    var target_object = ".event_images_public .mCSB_container";
 				else
 				    var target_object = ".event_images_public";
+				
 				ajaxScrollbarElement('.event_images_public');
 				// $(".event_images_public").empty();
 				var friends = getSubXMLFromTag(response,

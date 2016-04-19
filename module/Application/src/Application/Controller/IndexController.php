@@ -254,8 +254,8 @@ class IndexController extends AbstractActionController {
 			$xml = '<xml>'.$memreascookie.'<user_id>' . $user_id . '</user_id><memreas_tvm>0</memreas_tvm><memreas_pre_signed_url>1</memreas_pre_signed_url></xml>';
 			Mlog::addone ( __CLASS__ . __METHOD__ . 'REGISTRATION RELATED data->memreas_tvm->xml-->', $xml );
 		} else {
-			$xml = '<xml><username>' . $_SESSION ['username'] . '</username><memreas_tvm>0</memreas_tvm><memreas_pre_signed_url>1</memreas_pre_signed_url></xml>';
-			Mlog::addone ( __CLASS__ . __METHOD__ . 'REGISTRATION RELATED missing user_id data->memreas_tvm->xml-->', $xml );
+			//if both request_id and session_id are empty the session has timed out...
+			return $this->logoutAction();
 		}
 		
 		$action = 'memreas_tvm';
