@@ -60,13 +60,21 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 	margin-right: 10px;
 	margin-top: 16px;
 }
+
+.sell-event-buyme{position: relative;}
 </style>
 </head>
 
 <body style="background: #193D65 !important;">
+	<div id="loadingpopup">
+		<div id="loadingpopupinner">
+			<img id="loadingimg" src="/memreas/img/loading.gif"> <span
+				id="loadingtext">loading...</span>
+		</div>
+	</div>
 
-
-	<header class="rel" style="position: relative;">
+	<!-- <header class="rel" style="position: fixed; top: 0;">  -->
+	<header class="navbar-fixed-top">
 		<div class="pull-right btnactioncont">
 
 			<a href="/index" class="logibnt"> Login</a> <a href="/index"
@@ -82,60 +90,74 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 			</div>
 		</div>
 		<div style="clear: both;"></div>
+		<div style="clear: both;"></div>
 	</header>
-	<div style="clear: both;"></div>
-	<section id="MobileHomeScreen"
+	<div class="container-fluid body-content">
+		<!-- 
+    <section id="MobileHomeScreen"
 		style="overflow: hidden; background: #193D65; padding-left: 15px; padding-top: 15px;">
-
-
-		<div class="row-fluid" style="margin-bottom: 20px;">
-			<div class="span12 text-center">
-
+	-->
+		<div class="row-fluid" style="margin-top: 20px; margin-bottom: 20px;">
+			<div class="span12 text-center"
+				style="margin-top: 20px; margin-bottom: 20px;">
+				<!-- 
 				<script async
 					src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-				<!-- memreas_auto_size_ad -->
 				<ins class="adsbygoogle" style="display: block"
 					data-ad-client="ca-pub-2182144607113281" data-ad-slot="4950165058"
 					data-ad-format="auto"></ins>
 				<script>
-                                                (adsbygoogle = window.adsbygoogle || []).push({});
-                    </script>
-
-
-
+                		(adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+                -->
 			</div>
-
-
 		</div>
-
 		<div class="row-fluid" style="margin-bottom: 20px;">
-			<div class="span9">
+			<div class="<?php echo ($this->enableAdvertising) ? 'span9' : 'span11';?>">
 				<ul id="public_list"
-					class=" scrollClass  publicMemreas scroll-area mCustomScrollbar _mCS_9 _mCS_16">
+                                    class=" scrollClass  publicMemreas scroll-area mCustomScrollbar _mCS_9 _mCS_16" style="height: 100%; overflow: auto;">
 					<!-- js populates -->
-
+                                        
+     
+                                        
+                                       
 				</ul>
-
-
-
-
-
 			</div>
 			<div class="span3">
+				<!-- 
 				<script async
 					src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-				<!-- memreas_responsive_side_bar_ad -->
 				<ins class="adsbygoogle" style="display: block"
 					data-ad-client="ca-pub-2182144607113281" data-ad-slot="9363121856"
 					data-ad-format="auto"></ins>
 				<script>
 					(adsbygoogle = window.adsbygoogle || []).push({});
 				</script>
+			-->
 			</div>
 		</div>
 		<!-- layout-->
-		<!-- layout-->
-	</section>
+		<!-- </section>-->
+	</div>
+
+	<!-- Memreas tab popup section -->
+	<div id="popupReqisterToBuy" class="popups">
+		<a id="popupReqisterToClose"
+			onClick="disablePopup('popupReqisterToClose');" class='popupClose'>x</a>
+		<h2>Private Media - Register to purchase</h2>
+		<p>&nbsp;</p>
+		<ul id="content_1" class="give-message-form buying-media-detail">
+			<li><label class="textfield_names" style="width: 150px;">you must
+					register to purchase access/label>
+					<div class="clear"></div></li>
+		</ul>
+		<div class="clear"></div>
+		<a class="black_btn_skin f-right"
+			href="javascript:disablePopup('popupReqisterToBuy');">close</a>
+	</div>
+	<!-- end popup section -->
+
+
 	<footer>
 		<div class="rel">
 			<p>©2016 memreas llc</p>
@@ -148,7 +170,6 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 	<script src="/memreas/js/responsiveslides.min.js"></script>
 	<script src="/memreas/js/jquery-ui.min.js"></script>
 	<script src="/memreas/js/jquery.mCustomScrollbar.concat.min.js"></script>
-
 	<script src="/memreas/jsblue/blueimp-helper.js"></script>
 	<script src="/memreas/jsblue/blueimp-gallery.js"></script>
 	<script src="/memreas/jsblue/blueimp-gallery-fullscreen.js"></script>

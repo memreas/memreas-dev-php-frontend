@@ -11,33 +11,24 @@
 		class="span11<?php //echo ($this->enableAdvertising) ? 'span9' : 'span11'; ?>">
 		<div class="row-fluid">
 			<ul id="tabs-memreas-detail" class="medium_tabs">
-				<li><a href="#" title="memreas-detail-tab1">gallery</a></li>
-				<li><a href="#" title="memreas-detail-tab3">details</a></li>
-				<li><a href="#" title="memreas-detail-tab4">location</a></li>
+				<li><a href="#" title="memreas-detail-tabGallery">gallery</a></li>
+				<li><a href="#" title="memreas-detail-tabDetails">details</a></li>
+				<li><a href="#" title="memreas-detail-tabLocation">location</a></li>
 			</ul>
 			<div id="tab-content-memreas-detail">
-				<div id="memreas-detail-tab1" class="hideCls">
+				<div id="memreas-detail-tabGallery" class="hideCls">
 					<ul id="content_1" class="pics memreas-detail-gallery">
 
 					</ul>
-					<a id="button" class="black_btn_skin f-left" href="javascript:;"
-						onClick="popupAddMemreasGallery();">add media</a> <a id="button"
-						class="black_btn_skin f-right" href="javascript:;"
-						onClick="popupMemreasAddfriends();">add friends</a>
+					<a id="btnAddMedia" class="black_btn_skin f-left"
+						href="javascript:;" onClick="popupAddMemreasGallery();">add media</a>
+					<a id="btnAddFriends" class="black_btn_skin f-right"
+						href="javascript:;" onClick="popupMemreasAddfriends();">add
+						friends</a>
 				</div>
-				<div id="memreas-detail-tab3" class="hideCls">
+				<div id="memreas-detail-tabDetails" class="hideCls">
 					<div class="span6 memreas-span-6">
-
-						<!--                  <div class=" MemreasDetailfotoramaSlde fotorama" data-click="false"
-                                                                data-swipe="true"  data-max-width="100%" data-width="100%" data-height="100%"
-                               
-                                                                data-allow-full-screen="true" data-fit="cover" data-click="true"
-                                                                data-nav="thumbs">
-                                                                 
-                                            </div>-->
-
 						<aside id="left">
-
 							<div id="blueimp-video-carousel-gallery-detail"
 								class="blueimp-gallery blueimp-gallery-controls blueimp-gallery-carousel "
 								data-start-slideshow="false">
@@ -47,25 +38,6 @@
 									class="play-pause"></a>
 								<p class="description"></p>
 							</div>
-
-							<!--                            
-                            <figure class="event" style="height: auto;">
-                                <div class="video-preview" style="display: none;">
-
-                                    <video id="" style="width: 100%; height: 300px;" autoplay controls="" >
-                                        <source src="" type="video/webm">
-                                        <source src="" type="video/mp4">
-                                        <source src="" type="application/x-mpegURL">
-                                        Your browser does not support the video tag.
-                                    </video>
-
-
-
-
-
-                                </div>
-                                <div class="image-preview"><img id="preview" data-preview="/memreas/img/large/1.jpg" alt="" /></div>
-                            </figure>-->
 						</aside>
 					</div>
 					<div class="clear-2"></div>
@@ -106,9 +78,19 @@
 						</div>
 					</div>
 				</div>
-				<div id="memreas-detail-tab4" class="hideCls">
+				<!-- 
+				<div id="memreas-detail-tabLocation" class="hideCls">
 					<div class="map" id="memreas-detail-location"></div>
 				</div>
+				-->
+				<div id="memreas-detail-tabLocation" class="hideCls hidden-onload">
+					<div id="memreas-detail-location"></div>
+					<div class="row-fluid carousel-area">
+						<ul id="memreas-detail-location-slider"
+							class="elastislide-list galleries-location"></ul>
+					</div>
+				</div>
+
 			</div>
 			<!------------------first-pop-up-------------------->
 			<div id="popupAddMedia" class="popups">
