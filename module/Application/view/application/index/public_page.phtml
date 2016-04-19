@@ -61,7 +61,12 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 	margin-top: 16px;
 }
 
-.sell-event-buyme{position: relative;}
+.sell-event-buyme{position: static;
+    display: inline-block;
+    cursor: pointer;
+    float: left;
+    margin-left: -104px;}
+.navbar-fixed-top{position: relative;}
 </style>
 </head>
 
@@ -139,12 +144,12 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 	<!-- Memreas tab popup section -->
 	<div id="popupReqisterToBuy" class="popups">
 		<a id="popupReqisterToClose"
-			onClick="disablePopup('popupReqisterToClose');" class='popupClose'>x</a>
+			onClick="disablePopup('popupReqisterToBuy');" class='popupClose'>x</a>
 		<h2>Private Media - Register to purchase</h2>
 		<p>&nbsp;</p>
 		<ul id="content_1" class="give-message-form buying-media-detail">
 			<li><label class="textfield_names" style="width: 150px;">you must
-					register to purchase access/label>
+					register to purchase access</label>
 					<div class="clear"></div></li>
 		</ul>
 		<div class="clear"></div>
@@ -174,6 +179,7 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 	<script src="/memreas/jsblue/jquery.blueimp-gallery.js"></script>
 	<script src="/memreas/js/ajax.js"></script>
 	<script src="/memreas/js/global.js"></script>
+        <script src="/memreas/js/popup.js"></script>
 	<script src="/memreas/js/public_page.js"></script>
 	<script>
 $(function () {
@@ -185,6 +191,12 @@ $(function () {
 	$('.logibnt').click(function(){
 		window.location='/index';  
 	})
+        $('.public_page_sell_event').click(function(){
+           
+           
+        });
+        
+        
 });
         </script>
 
