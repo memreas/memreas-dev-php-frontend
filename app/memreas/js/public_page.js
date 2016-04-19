@@ -226,7 +226,7 @@ jQuery.fetchPublic = function() {
 				    if (event_price > 0) {
 					linksContainerData += ' style="background:url('
 						+ event_media_entry.event_media_image
-						+ ')"><span class="sell-event-buyme">buy</span></a>';
+						+ ')"></a><span class="sell-event-buyme public_page_sell_event" onclick="jalert();">buy</span>';
 				    } else {
 					linksContainerData += ' style="background:url('
 						+ event_media_entry.event_media_image
@@ -250,7 +250,7 @@ jQuery.fetchPublic = function() {
 				    if (event_price > 0) {
 					linksContainerData += ' style="background:url('
 						+ event_media_entry.event_media_image
-						+ ')"><span class="sell-event-buyme">buy</span></a>';
+						+ ')"></a><span class="sell-event-buyme public_page_sell_event" onclick="jalert();">buy</span>';
 				    } else {
 					linksContainerData += ' style="background:url('
 						+ event_media_entry.event_media_image
@@ -321,4 +321,10 @@ $(document).on('click', '[data-gallery]', function(event) {
 	container : '#blueimp-gallery',
 	carousel : true
     });
+    
+   
 });
+
+function jalert(){
+    popup('popupReqisterToBuy');
+}
