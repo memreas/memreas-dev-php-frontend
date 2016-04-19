@@ -715,7 +715,9 @@ class IndexController extends AbstractActionController {
 	 */
 	public function publicAction() {
 		$path = "application/index/public_page.phtml";
+		$enableAdvertising = MemreasConstants::MEMREAS_ADS;
 		$view = new ViewModel ( array (
+			'enableAdvertising' => $enableAdvertising,
 		) );
 		$view->setTemplate ( $path ); // path to phtml file under view folder
 		return $view;
