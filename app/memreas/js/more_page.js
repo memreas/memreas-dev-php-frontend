@@ -2179,15 +2179,20 @@ function reportCounterClaimForm() {
 	console.log(ret_xml);
 
 	if (status == 'success') {
-	    disablePopup('dmca-form-box');
-            $(copy_right_owner).val('');
-            $(copyright_owner_address).val('');
-            $(copyright_owner_email_address).val('');
-            $(mediaId_report).val('');
-            $(counter_claim_phone_number).val('');
-            $(violation_id).val('');
+             $('#copyright_owner_name').val('');
+            alert( $('#copyright_owner_name').val(''));
+            $('#copyright_owner_address').val('');
+            $('#copyright_owner_email_address').val('');
+            $('#media_id').val('');
+            $('#counter_claim_phone_number').val('');
+            $('#violation_id').val('');
             $('#dmcaSubmit').removeClass('not-active-anchor');
+            
+	    disablePopup('dmca-form-box');
+            
             popup('popupComfirmDmca');
+            
+            
 	} else {
 	    jerror("your counter claim failed to upload");
 	    disablePopup('popupReportMedia');
