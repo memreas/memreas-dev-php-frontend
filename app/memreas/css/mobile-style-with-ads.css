@@ -726,8 +726,8 @@ and open the template in the editor.
         
 	#tab-content, #tab-content-queue, #tab-content-share,
 		#tab-content-memreas, #tab-content-memreas-detail, #tab-content-more {
-		 min-height: 366px !important;
-                    max-height: 378px !important;
+		 min-height: 355px !important;
+                    max-height: 360px !important;
 		
 	}
 	html.noads #tab-content, html.noads #tab-content-queue, html.noads #tab-content-share,

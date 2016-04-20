@@ -3276,7 +3276,7 @@ select {
 }
 
 #maintab-content>.right-ads {
-	display: none;
+/*	display: none;*/
 }
 
 .share_memreas_details.sell_media_form input, .sell_media_bank input {
