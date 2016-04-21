@@ -27,12 +27,12 @@ and open the template in the editor.
 	}
 }
 
-@media ( min-height : 800px) and (min-width:1359px) {
+@media ( min-height : 1000px) and (min-width:1359px) {
 	#gallery #tab-content {
 		min-height: 540px;
-                max-height: 540px;
+                max-height: 729px;
 	}
-        .linksDatacnt{max-height: 520px !important; }
+        .linksDatacnt{max-height: 740px !important; }
 }
 
 @media only screen and (min-device-width : 1200px) and (max-device-width
@@ -795,10 +795,10 @@ input.disabled {
 html.noads #tab-content, html.noads #tab-content-queue, html.noads #tab-content-share,
 		html.noads #tab-content-memreas, html.noads #tab-content-memreas-detail,
                 html.noads #tab-content-more {
-                    max-height: 470px;
+                    max-height: 670px;
                 }
                 
-                .linksDatacnt{}
+                .linksDatacnt{max-height: 641px;}
 }
 @media only screen and(min-width :700px) and (max-width:1400){
 /*    .fotorama__img{width:100% !important; height: 500px !important;}*/
