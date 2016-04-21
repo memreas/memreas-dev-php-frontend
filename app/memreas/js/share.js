@@ -541,6 +541,16 @@ share_addEvent = function(medianext) {
 				jsuccess('Event "' + name + '" was registered successfully.');
 				pushReloadItem('view_my_events');
                                 
+                                if(medianext =='done'){
+                                   
+                                     setTimeout(function() {
+					var text_ids = [ 'txt_name', 'txt_location', 'dtp_date',
+							'dtp_from', 'dtp_to', 'dtp_selfdestruct' ];
+					clearTextField(text_ids);
+					share_gotoPage(SHAREPAGE_TAB_MEMREAS);
+				}, 2000);
+                                }
+                                
                                 if(medianext =='next'){
                                           setTimeout(function() {
 					var text_ids = [ 'txt_name', 'txt_location', 'dtp_date',
@@ -704,6 +714,14 @@ share_addComment = function(next_step) {
 
 				if (status.toLowerCase() == 'success') {
 					jsuccess('comments was added successfully.');
+                                        
+                                        if(next_step =='done'){
+                                            
+                                           setTimeout(function() {
+						share_gotoPage(SHAREPAGE_TAB_MEMREAS);
+					}, 2000); 
+                                        }
+                                        
                                         if(next_step =='next'){
                                            setTimeout(function() {
 						share_gotoPage(SHAREPAGE_TAB_FRIENDS);
