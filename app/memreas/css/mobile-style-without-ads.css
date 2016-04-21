@@ -240,6 +240,8 @@ and open the template in the editor.
 		/*min-height: 430px; No Point*/
 		height: auto;
 	}
+        
+        .linksDatacnt{max-height: 500px;}
 	.event_gallery_pro {
 		width: 35px;
 		height: 35px;
@@ -697,7 +699,7 @@ and open the template in the editor.
 		#tab-content-memreas, #tab-content-memreas-detail, #tab-content-more {
 		min-height: 350px;
 		margin-bottom: 0px;
-                max-height: 400px !important;
+               
 	}
       .linksDatacnt{ max-height: 400px !important;}
         
@@ -727,7 +729,7 @@ and open the template in the editor.
 	#tab-content, #tab-content-queue, #tab-content-share,
 		#tab-content-memreas, #tab-content-memreas-detail, #tab-content-more {
 		 min-height: 366px !important;
-                    max-height: 378px !important;
+                    
 		
 	}
 	html.noads #tab-content, html.noads #tab-content-queue, html.noads #tab-content-share,
