@@ -721,13 +721,13 @@ and open the template in the editor.
 		margin-bottom: 12px;
 	}
 	
-        .linksDatacnt{max-height: 378px !important;}
+        .linksDatacnt{max-height: 448px !important;}
         .myMemreas {max-height: 420px ; }
         
 	#tab-content, #tab-content-queue, #tab-content-share,
 		#tab-content-memreas, #tab-content-memreas-detail, #tab-content-more {
-		 min-height: 355px !important;
-                    max-height: 360px !important;
+		 min-height: 454px !important;
+                    max-height: 456px !important;
 		
 	}
 	html.noads #tab-content, html.noads #tab-content-queue, html.noads #tab-content-share,
