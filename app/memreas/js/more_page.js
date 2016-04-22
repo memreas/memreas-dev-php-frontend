@@ -108,6 +108,17 @@ $(function() {
     }).bind("click", function() {
 	$("#sell-media-username").val(userObject.username);
 	$("#sell-media-email").val(userObject.email);
+         if(isSeller){
+             $('#fromSellInfo1').hide();
+             //$('.sellmedia-btn-group').hide();
+             //$('.susername').html('Username:' + userObject.username);
+            // $('.semail').html('Email:' + userObject.email);
+         }else{
+            $('.selleerdata').hide();
+             $('#fromSellInfo1').show();
+            // $('.sellmedia-btn-group').show();
+            
+         }
     });
 
     /* Action tabs click */
