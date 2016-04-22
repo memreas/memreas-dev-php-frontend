@@ -5,6 +5,13 @@
  * Proprietary and confidential
  */
 ?>
+
+<div class="selleerdata">
+    <h2>Seller information</h2>
+                                <label class="textfield_names susername sellertxt">Username: <?php echo $_SESSION['username']; ?></label>
+                                <label class="textfield_names semail sellertxt">Email: <?php echo $_SESSION['email']; ?></label>
+ </div>
+<div id="fromSellInfo1">
 <div class="akordeon-item sell-media-info-tab expanded">
 	<div class="akordeon-item-head subscription-payment-plans">
 		<div class="akordeon-item-head-container">
@@ -14,8 +21,10 @@
 	<div class="akordeon-item-body" style="padding-bottom: 10px;">
 		<div class="akordeon-item-content">
 			<div class="button-holder">
-				<form name="sell_media_frm" />
-				<ul class="share_memreas_details sell_media_form">
+                            
+                            
+				<form name="sell_media_frm"   id="fromSellInfo">
+				<ul class="share_memreas_details sell_media_form" id="sellerform">
 					<li><label class="textfield_names">username*</label> <input
 						name="sell-media-username" type="text" class="more-input"
 						value="<?php echo $_SESSION['username']; ?>"
@@ -78,7 +87,7 @@
 					</li>
 				</ul>
 				</form>
-				<div class="btn">
+				<div class="btn sellmedia-btn-group">
 					<a class="black_btn_skin f-left" href="javascript:;"
 						onclick="sellMediaStep2();">Next</a> <a
 						class="black_btn_skin f-left" href="javascript:;"
@@ -159,7 +168,7 @@
 			</div>
 		</div>
 	</div>
-</div>
+</div></div>
 <div id="popupMarketplaceTerms" class="popups">
 	<a id="popupMarketplaceTermsClose"
 		onClick="disablePopup('popupMarketplaceTerms')"

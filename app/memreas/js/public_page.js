@@ -92,7 +92,7 @@ jQuery.fetchPublic = function() {
 			    var links = '#links' + i;
 			    listItem += '<li>';
 			    listItem += '	<div class="event_section">';
-			    listItem += '		<section class="row-fluid clearfix">';
+			    listItem += '		<section class="row-fluid clearfix"><div class="overlaypopUp" onclick="jalert();"><a href="#" class="btnpublicbuynow">Buy Now</a></div>';
 			    listItem += '			<figure class="pro-pics2">';
 			    listItem += '				<img class="public-profile-img" src="'
 				    + eventObj.profile_img + '" alt="">';
