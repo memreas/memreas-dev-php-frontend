@@ -669,16 +669,13 @@ class IndexController extends AbstractActionController {
 	public function memreas_session() {
 		$cm = __CLASS__ . __METHOD__;
 		//Mlog::addone ( $cm . __LINE__ . '::', 'enter' );
-		//Mlog::addone ( $cm . __LINE__ . '::session_status ()', session_status () );
 		if (session_status () !== PHP_SESSION_ACTIVE) {
 			//Mlog::addone ( $cm . __LINE__ . '::', '...' );
 			if (! empty ( $_COOKIE ['memreascookie'] )) {
-				//Mlog::addone ( $cm . __LINE__ . '::!empty($_COOKIE[memreascookie])', '...' );
 				session_id ( $_COOKIE ['memreascookie'] );
 				session_start ();
 			} else {
-				//Mlog::addone ( $cm . __LINE__ . '::empty($_COOKIE[memreascookie])', '...' );
-				// must be login
+				// must be login so startup session
 				session_start ();
 			}
 		} else {
