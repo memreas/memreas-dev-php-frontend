@@ -69,8 +69,8 @@ jQuery.fetchPublic = function() {
 			    eventObj.event_id = $(event).filter('event_id')
 				    .html();
 
-			    console.log("eventObj.event_id--->"
-				    + eventObj.event_id);
+			    // console.log("eventObj.event_id--->" +
+			    // eventObj.event_id);
 			    eventObj.event_name = $(event).filter('event_name')
 				    .text();
 			    eventObj.event_like_total = $(event).filter(
@@ -157,7 +157,6 @@ jQuery.fetchPublic = function() {
 			    listItem += '		</div>';
 			    listItem += '	</div>';
 			    listItem += '</li>';
-
 			    $("#public_list").append(listItem);
 			    $('#blueimp-gallery').hide();
 
@@ -198,9 +197,8 @@ jQuery.fetchPublic = function() {
 				// Setup blueimp
 				//
 				var item = new Object();
-				console
-					.log("event_media_entry._event_media_type_--->"
-						+ event_media_entry._event_media_type_);
+				// console.log("event_media_entry._event_media_type_--->"
+				// + event_media_entry._event_media_type_);
 				if (event_media_entry._event_media_type_ == 'video') {
 
 				    //
@@ -244,8 +242,8 @@ jQuery.fetchPublic = function() {
 				    linksContainerData += ' type="video/mp4" data-gallery="'
 					    + event_media_entry.event_media_id
 					    + '" class="blueimp-gallery-thumb-anchor "';
-				    console.log("video event_price--->"
-					    + event_price);
+				    // console.log("video event_price--->" +
+				    // event_price);
 				    linksContainerData += ' style="background:url('
 					    + event_media_entry.event_media_image
 					    + ')"><span class="video-content-play-icon"></span></a>';
@@ -258,9 +256,9 @@ jQuery.fetchPublic = function() {
 				    event_media_entry.event_media_image = removeCdataCorrectLink(getValueFromXMLTag(
 					    event_media, 'event_media_448x306'));
 
-				    console
-					    .log('image event_media_entry.event_media_image-->'
-						    + event_media_entry.event_media_image);
+				    // console.log('image
+				    // event_media_entry.event_media_image-->' +
+				    // event_media_entry.event_media_image);
 
 				    //
 				    // Setup item
@@ -277,22 +275,22 @@ jQuery.fetchPublic = function() {
 					    + '" data-gallery="'
 					    + event_media_entry.event_media_id
 					    + '" class="blueimp-gallery-thumb-anchor"';
-				    console.log("image event_price--->"
-					    + event_price);
+				    // console.log("image event_price--->" +
+				    // event_price);
 				    linksContainerData += ' style="background:url('
 					    + event_media_entry.event_media_image
 					    + ')"><span></span></a>';
 
 				}
-				console.log("item" + JSON.stringify(item));
+				// console.log("item" + JSON.stringify(item));
 				objArr.push(item);
 			    }// end event for loop
 			    //
 			    // Set blueimp array
 			    //
 			    // linksContainer[i] = linksCo;
-			    console.log("linksContainerData--->"
-				    + JSON.stringify(linksContainerData));
+			    // console.log("linksContainerData--->" +
+			    // JSON.stringify(linksContainerData));
 			    $(links).append(linksContainerData);
 			    // console.log("html " + links + "--->" +
 			    // $(links).innerHTML);
