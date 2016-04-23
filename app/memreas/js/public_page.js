@@ -47,7 +47,7 @@ jQuery.fetchPublic = function() {
 		value : '100'
 	    } ],
 	    function(response) {
-		console.log("response--->" + response);
+		// console.log("response--->" + response);
 		if (getValueFromXMLTag(response, 'status') == "Success") {
 		    var events = getSubXMLFromTag(response, 'event');
 		    if (events.length > 0) {
@@ -95,15 +95,16 @@ jQuery.fetchPublic = function() {
 			    var event_price = 0;
 			    if (typeof (event_metadata) != 'undefined') {
 				try {
-				    console.log("event_metadata --> "
-					    + event_metadata);
+				    // console.log("event_metadata --> " +
+				    // event_metadata);
 				    event_metadata = JSON.parse(event_metadata);
 				} catch (e) {
-				    console.log("metadata parse error--->" + e);
+				    // console.log("metadata parse error--->" +
+				    // e);
 				}
 				event_price = event_metadata.price;
-				console.log("PRICE IS > 0 :: price --> "
-					+ event_price);
+				// console.log("PRICE IS > 0 :: price --> " +
+				// event_price);
 			    } else {
 				event_price = 0;
 			    }
@@ -166,10 +167,10 @@ jQuery.fetchPublic = function() {
 			    var event_medias = getSubXMLFromTag(events[i],
 				    'event_media');
 			    var event_media_count = event_medias.length;
-			    console.log("event_media_count ---> "
-				    + event_media_count);
-			    console.log("event_medias ---> "
-				    + JSON.stringify(event_medias));
+			    // console.log("event_media_count ---> " +
+			    // event_media_count);
+			    // console.log("event_medias ---> " +
+			    // JSON.stringify(event_medias));
 
 			    var linksContainerData = '';
 			    for (var j = 0; j < event_media_count; j++) {
@@ -183,18 +184,10 @@ jQuery.fetchPublic = function() {
 
 				event_media_entry.event_media_id = getValueFromXMLTag(
 					event_media, 'event_media_id');
-				event_media_entry.event_media_image = removeCdataCorrectLink(getValueFromXMLTag(
-					event_media, 'event_media_448x306'));
-
-				console
-					.log('event_media_entry.event_media_image-->'
-						+ event_media_entry.event_media_image);
-
 				event_media_entry._event_media_type_ = getValueFromXMLTag(
 					event_media, 'event_media_type');
 				event_media_entry.event_media_url = removeCdataCorrectLink(getValueFromXMLTag(
 					event_media, 'event_media_url'));
-				event_media_entry.event_media_image = removeCdataCorrectLink(event_media_entry.event_media_image);
 				event_media_entry.event_media_url_hls = removeCdataCorrectLink(getValueFromXMLTag(
 					event_media, 'event_media_url_hls'));
 				event_media_entry.event_media_url_web = removeCdataCorrectLink(getValueFromXMLTag(
@@ -209,6 +202,26 @@ jQuery.fetchPublic = function() {
 					.log("event_media_entry._event_media_type_--->"
 						+ event_media_entry._event_media_type_);
 				if (event_media_entry._event_media_type_ == 'video') {
+
+				    //
+				    // Fetch thumbnail for video
+				    //
+				    event_media_entry.event_media_image = getValueFromXMLTag(
+					    event_media, 'event_media_448x306');
+				    console
+					    .log("JSON 448x306--->"
+						    + removeCdata(event_media_entry.event_media_image));
+				    event_media_entry.event_media_image = JSON
+					    .parse(removeCdata(event_media_entry.event_media_image));
+				    event_media_entry.event_media_image = event_media_entry.event_media_image[0];
+
+				    console
+					    .log('video event_media_entry.event_media_image-->'
+						    + event_media_entry.event_media_image);
+
+				    //
+				    // Setup item
+				    //
 				    item['title'] = event_media_entry.event_media_id;
 				    item['type'] = "video/*";
 				    item['poster'] = event_media_entry.event_media_image;
@@ -233,11 +246,25 @@ jQuery.fetchPublic = function() {
 					    + '" class="blueimp-gallery-thumb-anchor "';
 				    console.log("video event_price--->"
 					    + event_price);
-					linksContainerData += ' style="background:url('
-						+ event_media_entry.event_media_image
-						+ ')"><span class="video-content-play-icon"></span></a>';
+				    linksContainerData += ' style="background:url('
+					    + event_media_entry.event_media_image
+					    + ')"><span class="video-content-play-icon"></span></a>';
 
 				} else {
+
+				    //
+				    // Fetch thumbnail for video
+				    //
+				    event_media_entry.event_media_image = removeCdataCorrectLink(getValueFromXMLTag(
+					    event_media, 'event_media_448x306'));
+
+				    console
+					    .log('image event_media_entry.event_media_image-->'
+						    + event_media_entry.event_media_image);
+
+				    //
+				    // Setup item
+				    //
 				    item['title'] = event_media_entry.event_media_id;
 				    item['type'] = "image/jpeg";
 				    item['href'] = event_media_entry.event_media_url;
@@ -252,9 +279,9 @@ jQuery.fetchPublic = function() {
 					    + '" class="blueimp-gallery-thumb-anchor"';
 				    console.log("image event_price--->"
 					    + event_price);
-					linksContainerData += ' style="background:url('
-						+ event_media_entry.event_media_image
-						+ ')"><span></span></a>';
+				    linksContainerData += ' style="background:url('
+					    + event_media_entry.event_media_image
+					    + ')"><span></span></a>';
 
 				}
 				console.log("item" + JSON.stringify(item));
