@@ -39,7 +39,6 @@ var AppSystem = function() {
      * Fetch current logged user detail and fill into site section
      */
     this.getUserDetail = function() {
-	console.log("About to get UserDetails...");
 	var params = [ {
 	    tag : 'user_id',
 	    value : $("input[name=user_id]").val(),
@@ -250,7 +249,7 @@ var ConsoleLog = function() {
     // Set log into window console panel
     this.setLog = function(variable) {
 	if (self.enableSystemLog) {
-	    console.log(variable);
+	    console.log("self.enableSystemLog variable ==>" + variable);
 	}
     }
 }
@@ -323,7 +322,6 @@ $(function() {
     });
     $("#tabs-memreas li:eq(2) a").click(function() {
 	if (checkReloadItem('view_public_events')) {
-	    // console.log('Public Event');
 	    fetchpubsMemreas();
 	}
     });
@@ -360,7 +358,7 @@ function fetchMyMemreas() {
 	    } ],
 	    function(response) {
 		if (getValueFromXMLTag(response, 'status') == "Success") {
-		    console.log("response " + response);
+		    //console.log("response " + response);
 		    var events = getSubXMLFromTag(response, 'event');
 
 		    var event_count = events.length;
@@ -369,7 +367,6 @@ function fetchMyMemreas() {
 			var event_media = getSubXMLFromTag(events[i],
 				'event_media');
 			var event_media_count = event_media.length;
-			console.log('Media Event Length: ' + event_media_count);
 			var event = events[i].innerHTML;
 
 			var StrMedia = '<ul class="event-pics">';
@@ -397,26 +394,11 @@ function fetchMyMemreas() {
 					+ removeCdataCorrectLink(event_media_image)
 					+ '"  style=""/></a></li>';
 			    }
-			    console
-				    .log('Each Event:'
-					    + removeCdataCorrectLink(event_media_image));
-			    // StrMedia +='<li><img
-			    // src="'+removeCdataCorrectLink(event_media_image)+'"
-			    // style="width:100%"/></li>';
-
 			}
 			StrMedia += '</ul><div style="clear:both;"></div>';
-			console.log('STR MEDIA' + StrMedia);
 			var like_count = $(event).filter('like_count').html();
-			var comment_count = $(event).filter('comment_count')
-				.html();
-
-			// var
-			// event_media_image=$(event_medi).filter('event_media_448x306').html();
+			var comment_count = $(event).filter('comment_count').html();
 			var event_name = $(event).filter('event_name').html();
-			// var
-			// evetn_im=$(event).filter('event_media_448x306').html();
-			console.log(i + ":event name:" + event_media_image);
 			var element = '<div class="event_section">'
 				+ '<aside class="event_name" onclick="showEventDetail(\''
 				+ eventId
@@ -489,7 +471,6 @@ function popupDetailMedia(eventdetail_media_id, html_str, comment_count) {
 }
 function fetchFriendsMemreas(friendMemreasType) {
 
-    console.log
     var params = new Object;
     params.user_id = Account.id;
     params.memreascookie = getCookie("memreascookie");
@@ -544,11 +525,7 @@ function fetchFriendsMemreas(friendMemreasType) {
 				value : '20'
 			    } ],
 			    function(response) {
-				console.log("response--->" + response);
-
 				if (friendMemreasType == 'private') {
-				    console.log('friendMemreasType-->'
-					    + friendMemreasType);
 				    var target_object = ".event_images";
 				    ajaxScrollbarElement('.event_images');
 				    $(".event_images").empty();
@@ -573,13 +550,6 @@ function fetchFriendsMemreas(friendMemreasType) {
 					    var creator_id = $(friend).filter(
 						    'event_creator_user_id')
 						    .html();
-					    // console.log('event_creator_user_id-->'
-					    // +
-					    // JSON.stringify(friends, null,
-					    // '\t'));
-					    console
-						    .log('event_creator_user_id-->'
-							    + creator_id);
 					    if (friendMemreasType == 'private') {
 						var friend_row = 'friendPrivate-'
 							+ creator_id;
@@ -592,40 +562,14 @@ function fetchFriendsMemreas(friendMemreasType) {
 							.filter(
 								'profile_pic_79x80')
 							.html();
-						console.log(profile_img);
 						profile_img = removeCdataCorrectLink(profile_img);
 					    } else
 						profile_img = '/memreas/img/profile-pic.jpg';
 					    if (profile_img == '')
 						profile_img = '/memreas/img/profile-pic.jpg';
-					    console.log('profile_pic-->'
-						    + profile_img);
-					    console
-						    .log('$(friend).filter("profile_pic_79x80").html()-->'
-							    + removeCdataCorrectLink($(
-								    friend)
-								    .filter(
-									    'profile_pic_79x80')
-								    .html()));
-					    console
-						    .log('$(friend).filter("profile_pic_448x306").html()-->'
-							    + removeCdataCorrectLink($(
-								    friend)
-								    .filter(
-									    'profile_pic_448x306')
-								    .html()));
-					    console
-						    .log('$(friend).filter("profile_pic_98x78").html()-->'
-							    + removeCdataCorrectLink($(
-								    friend)
-								    .filter(
-									    'profile_pic_98x78')
-								    .html()));
 					    var event_creator = $(friend)
 						    .filter('event_creator')
 						    .html();
-					    console.log('Tr Object'
-						    + target_object);
 					    $(target_object)
 						    .append(
 							    '<div class="event_section"><section class="row-fluid clearfix">'
@@ -675,24 +619,17 @@ function fetchFriendsMemreas(friendMemreasType) {
 							    .filter(
 								    'event_name')
 							    .html();
-						    console.log('eventId-->'
-							    + eventId);
 						    // fetch event media
 						    var event_media_resource = $(
 							    event_resource)
 							    .filter(
 								    'event_media')
 							    .html();
-
-						    console.log(event_resource);
 						    var event_media_98x78 = $(
 							    event_media_resource)
 							    .filter(
 								    'event_media_98x78')
 							    .html();
-						    console
-							    .log('event_media_98x78-->'
-								    + event_media_98x78);
 						    if (event_media_98x78 == null) {
 							event_media_98x78 = '/memreas/img/small/1.jpg';
 						    } else {
@@ -708,12 +645,6 @@ function fetchFriendsMemreas(friendMemreasType) {
 							    .filter(
 								    'event_metadata')
 							    .html();
-						    console.log('event_name-->'
-							    + event_name);
-						    console
-							    .log('event_metadata-->'
-								    + event_metadata);
-
 						    // Check if event is selling
 						    // or not
 						    var sell_price = '';
@@ -794,14 +725,10 @@ function fetchFriendsMemreas(friendMemreasType) {
 								+ event_name
 								+ '</a></span>';
 							link += ' </a></div></div>';
-							console.log(link);
 							$("#" + friend_row)
 								.append(link);
 						    }
 						} // end for loop for (var
-						// key=0;key <
-						// friend_resources_count;key++)
-
 						if (total_event_row_width > global_width) {
 						    $("#" + friend_row).swipe({
 							TYPE : 'mouseSwipe',
@@ -887,9 +814,6 @@ function fetchpubsMemreas() {
 				value : '20'
 			    } ],
 			    function(response) {
-
-				// console.log('PUb RES' + response);
-
 				if ($(".event_images_public").hasClass(
 					"mCustomScrollbar"))
 				    var target_object = ".event_images_public .mCSB_container";
@@ -910,8 +834,6 @@ function fetchpubsMemreas() {
 					var friend_count = friends.length;
 					for (var i = 0; i < friend_count; i++) {
 					    var friend = friends[i].innerHTML;
-					    console.log('Event Tag Iterate -->'
-						    + friend);
 					    var creator_id = $(friend).filter(
 						    'event_creator_user_id')
 						    .html();
@@ -1037,33 +959,7 @@ function fetchpubsMemreas() {
 							+ '<aside class="pro-names2" style="margin-top:0px;">@ '
 							+ event_friend_social_username
 							+ '</aside>';
-
-						console.log('Friend ID -->'
-							+ event_friend_id);
-						console
-							.log('Friend userName -->'
-								+ event_friend_social_username);
-						console
-							.log('Friend URL -->'
-								+ event_friend_url_image);
 					    }
-
-					    console.log('Friend Length -->'
-						    + event_friend_count);
-
-					    // console.log('event_creator_user_id-->'
-					    // +
-					    // JSON.stringify(friends, null,
-					    // '\t'));
-					    console
-						    .log('event_creator_user_id-->'
-							    + creator_id
-							    + 'Event Id--> '
-							    + event_id);
-
-					    console.log('Tr Object'
-						    + target_object);
-
 					    $(target_object)
 						    .append(
 							    '<div class="event_section"><section class="row-fluid clearfix">'

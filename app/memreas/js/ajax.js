@@ -218,7 +218,6 @@ getXMLStringFromParamArray = function(action, params) {
 	break;
     case "findtag":
 	action_tag = "findtag";
-	console.log("params-->" + JSON.stringify(params));
 	break;
     case "listmemreasfriends":
 	action_tag = "listmemreasfriends";
