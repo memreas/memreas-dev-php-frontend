@@ -8,6 +8,7 @@ var eventdetail_user = '';
 var event_owner_name = 'User Name';
 var eventdetail_user_pic = '/memreas/img/profile-pic-2.jpg';
 var eventdetail_media_id = '';
+var eventdetail_owner_id = '';
 var current_friendnw_selected = '';
 var reportMediaFormOffensiveSelected = false;
 $(function() {
@@ -278,32 +279,6 @@ function updateMemreasMediaDetailsScript() {
 
 		updateMediaLike();
 		getMediaComment();
-
-		/*
-		 * if($("#carousel > li").attr('class') == 'videoArea'){ //
-		 * alert('video'); $('image-preview').hide(); $preview.hide();
-		 * $('.video-preview').show(); var rel1 =
-		 * $(this).attr('data-preview'); var rel2 =
-		 * $(this).attr('data-source'); $('.video-preview
-		 * >video').first().attr('poster', rel1); $('.video-preview >
-		 * video >source').attr('src', rel2); //eventdetail_media_id =
-		 * el.attr("media-id"); }else { alert('image');
-		 * $('.video-preview').hide(); $('image-preview').show();
-		 * $preview.show(); var dtpr=$(this).attr('data-preview')
-		 * $preview.attr('src',dtpr); //$preview.attr('data-preview',
-		 * el.data('preview'));
-		 * $carouselItems.removeClass('current-img');
-		 * //eventdetail_media_id = el.attr("media-id"); //
-		 * el.addClass('current-img'); carousel.setCurrent(pos);
-		 * evt.preventDefault(); $(".image-preview
-		 * .swipebox").swipebox(); } var download_url =
-		 * $(this).attr('data-source');; download_url =
-		 * "/index/downloadMedia?file=" + download_url;
-		 * $(".memreas-detail-download").attr("href", download_url);
-		 * updateMediaLike(); getMediaComment();
-		 * 
-		 */
-
 	    }
 	});
     }
@@ -350,6 +325,8 @@ function showEventDetail(eventId, userId) {
 	eventdetail_object.friends_can_share = getValueFromXMLTag(response,
 		'friends_can_share');
 	eventdetail_object.publik = getValueFromXMLTag(response, 'public');
+	eventdetail_owner_id = getValueFromXMLTag(response, 'event_owner');
+
 	//
 	// remove add buttons for public events if not owner
 	//
@@ -994,7 +971,7 @@ function BlueIMPGallery() {
 	onslide : function() {
 	    // Getting Media ID Per SLider
 	    var index = this.getIndex();
-	    var eventdetail_media_id = DetailObj2[index].M_id;
+	    eventdetail_media_id = DetailObj2[index].M_id;
 	    event_media_ID_variable = DetailObj2[index].M_id;
 	    var down_load_media_URL = DetailObj2[index].M_url;
 	    var eventdetail_id = DetailObj2[index].M_eventId;
@@ -1173,39 +1150,33 @@ $('#term_condition_label').click(function() {
 });
 
 function submitOffensiveContent() {
-    //var copy_right_owner = $('#copyrightowner').val();
-    //var copyright_owner_address = $('#addressV').val();
-    //var copyright_owner_email_address = $('#emailvoilcation').val();
-    //var mediaId_report = $('#mediaId').val(event_media_ID_variable);
-    //var terms_condition = $('#term_condition').val();
-    /*
-    var event_id;
-    var user_id;
-    var reporting_user_id;,
-    var media_id;
-    var reason;
 
-    if (reason == '') {
-	jerror("Please enter a reason");
-	return;
-    }
+    console.log("event_id-->" + eventdetail_id);
+    console.log("reporting_user_id-->" + LOGGED_USER_ID);
+    console.log("media_id-->" + event_media_ID_variable);
+    console.log("reason--->" + $("#ocform_reason").val());
+    var inappropriate = "1";
+    console.log("inappropriate-->" + inappropriate);
+    if ($("#ocform_reason").val() != "") {
 
-    if (terms_condition == "1") {
 	var params = [ {
 	    tag : "event_id",
-	    value : XXXXX
+	    value : eventdetail_id
 	}, {
 	    tag : "user_id",
-	    value : XXXXX
+	    value : LOGGED_USER_ID
 	}, {
 	    tag : "reporting_user_id",
-	    value : XXXXX
+	    value : LOGGED_USER_ID
 	}, {
 	    tag : "media_id",
-	    value : XXXXX
+	    value : event_media_ID_variable
+	}, {
+	    tag : "inappropriate",
+	    value : inappropriate
 	}, {
 	    tag : "reason",
-	    value : XXXXXobject
+	    value : $("#ocform_reason").val()
 	}, ];
 
 	ajaxRequest('mediainappropriate', params, function(ret_xml) {
@@ -1216,9 +1187,10 @@ function submitOffensiveContent() {
 	    console.log('message-->' + message + 'Status-->' + status);
 	    console.log(ret_xml);
 
-	    if (status == 'success') {
+	    if (status.toLowerCase() == "success") {
 		jsuccess("your report was received");
 		disablePopup('popupReportMedia');
+		$("#ocform_reason").val("");
 	    } else {
 		jerror("an error occurred");
 		disablePopup('popupReportMedia');
@@ -1228,7 +1200,6 @@ function submitOffensiveContent() {
     } else {
 	jerror("Please review your entries");
     }
-    */
 
 }
 
@@ -1291,9 +1262,18 @@ function submitDMCA() {
 	    console.log('message-->' + message + 'Status-->' + status);
 	    console.log(ret_xml);
 
-	    if (status == 'success') {
+	    if (status.toLowerCase() == 'success') {
 		jsuccess("your Report added");
 		disablePopup('popupReportMedia');
+
+		//
+		// reset values
+		//
+		$('#copyrightowner').val("");
+		$('#addressV').val("");
+		$('#emailvoilcation').val("");
+		$('#term_condition').attr('checked', false);
+
 	    } else {
 		jerror("your Report is not added");
 		disablePopup('popupReportMedia');
@@ -1305,4 +1285,3 @@ function submitDMCA() {
     }
 
 }
-
