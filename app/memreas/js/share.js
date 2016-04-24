@@ -27,7 +27,6 @@ var friendList = null;
 var current_sharefriendnw_selected = '';
 
 $(function() {
-
 	$("a[title=share]").click(function() {
 		event_id = -1;
 		$('#tabs-share li:nth-child(1) a').click();
