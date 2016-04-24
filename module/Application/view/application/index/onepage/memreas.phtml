@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Copyright (C) 2015 memreas llc. - All Rights Reserved
  * Unauthorized copying of this file, via any medium is strictly prohibited
@@ -6,231 +6,255 @@
  */
 ?>
 
-<div class="span11 tabcontent-detail" id="memreas" style="display: none;" >
-    
-    <div class="memreas-main">
-        <div class="span11<?php //echo ($this->enableAdvertising) ? 'span9' : 'span11'; ?>">
-           
-            <div class="row-fluid">
-                <ul id="tabs-memreas" class="medium_tabs">
-                    <li><a href="#" title="memreas-tab1">me</a></li>
-                    <li><a href="#" title="memreas-tab2">friends</a></li>
-                    <li><a href="#" title="memreas-tab3">public</a></li>
-                </ul>
+<div class="span11 tabcontent-detail" id="memreas"
+	style="display: none;">
 
-                <div id="tab-content-memreas">
-                    <div id="memreas-tab1" class="hideCls">
-                              <ul id="content_1" class="pics scroll-area myMemreas scrollClass">
+	<div class="memreas-main">
+		<div
+			class="span11<?php //echo ($this->enableAdvertising) ? 'span9' : 'span11'; ?>">
+			<div class="row-fluid">
+				<ul id="tabs-memreas" class="medium_tabs">
+					<li><a href="#" title="memreas-tab1">me</a></li>
+					<li><a href="#" title="memreas-tab2">friends</a></li>
+					<li><a href="#" title="memreas-tab3">public</a></li>
+				</ul>
 
-                              </ul>
-                          <a class="black_btn_skin f-left" href="javascript:addMemreas(); share_clearMemreas(true);">add memreas</a>
-                    </div>
-                    <div id="memreas-tab2" class="hideCls">
-                            <ul id="content_1" class="pics scroll-area event_images friendMemreas scrollClass">
+				<div id="tab-content-memreas">
+					<div id="memreas-tab1" class="hideCls">
+						<ul id="content_1" class="pics scroll-area myMemreas scrollClass">
 
-                              </ul>
-                          <a class="black_btn_skin f-left" href="javascript:addMemreas();">add memreas</a>
-                    </div>
-                    <div id="memreas-tab3" class="hideCls">
-                        <ul id="content_1" class="pics scrollClass event_images_public publicMemreas scroll-area">
+						</ul>
+						<a class="black_btn_skin f-left"
+							href="javascript:addMemreas(); share_clearMemreas(true);">add
+							memreas</a>
+					</div>
+					<div id="memreas-tab2" class="hideCls">
+						<ul id="content_1"
+							class="pics scroll-area event_images friendMemreas scrollClass">
 
-                              </ul>
-                          <a class="black_btn_skin f-left" href="javascript:addMemreas();">add memreas</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Memreas tab popup section -->
-        <div id="popupBuyMedia" class="popups">
-            <a id="popupBuyMediaClose" onClick="disablePopup('popupBuyMedia');" class='popupClose'>x</a>
-            <h2>Buying private media</h2>
-            <p>&nbsp;</p>
-            <ul id="content_1" class="give-message-form buying-media-detail">
-                <li>
-                    <label class="textfield_names" style="width: 150px;">memreas name: <span class="popup-event-name">memreas name</span></label>
-                    
-                    <div class="clear"></div>
-                </li>
-                <li>
-                    <label class="textfield_names" style="width: 150px;">Your credits: <span class="popup-buymedia-credit">$5</span>
-                    
-                    <a class="addcredit-popup-btn" href="javascript:;" onclick="popupBuyCredit();">Buy more</a>
-                    -
-                    <a href="javascript:;" onclick="Account.reloadAccountCredit('.popup-buymedia-credit');"><img src="/memreas/img/syns.png" width="30" border="0" /></a>
-                    </label><div class="clear"></div>
-                </li>
-                <li>
-                    <label class="textfield_names" style="width: 150px;">Event price: 
-                    <span class="popup-buymedia-price">$5</span> </label>
-                    <div class="clear"></div>
-                </li>
-                <li>
-                    <label class="textfield_names" style="width: 150px;">Duration: 
-                    <span class="buying-media-duration"></span> </label>
-                    <div class="clear"></div>
-                </li>
-                <li>
-                    <label class="textfield_names" style="width: 150px;">Password: 
-                    <input name="input" type="password" id="buymedia_confirm_password" class="" value="" defaultValue="" /></label>
-                    <div class="clear"></div>
-                </li>
-            </ul>
-            <div class="clear"></div>
-            <a class="black_btn_skin f-left" href="javascript:;" id="accept-buymedia" onclick="">Buy now</a>
-            <a class="black_btn_skin f-right" href="javascript:disablePopup('popupBuyMedia');">close</a>
-        </div>
-        <div id="bgpopupBuyMedia" class="backgroundPopup"></div>
+						</ul>
+						<a class="black_btn_skin f-left" href="javascript:addMemreas();">add
+							memreas</a>
+					</div>
+					<div id="memreas-tab3" class="hideCls">
+						<ul id="content_1"
+							class="pics scrollClass event_images_public publicMemreas scroll-area">
 
-        <!-- POPUP Buy media confirmation -->
-        <div id="popupBuyMediaConfirmation" class="popups">
-            <a id="popupBuyMediaConfirmationClose" onClick="disablePopup('popupBuyMediaConfirmation');" class='popupClose'>x</a>
-            <h2>memreas purchase confirmation</h2>
-            <p>&nbsp;</p>
-            <p>&nbsp;</p>
-            <p>&nbsp;</p>
-            <ul id="content_1" class="give-message-form buying-media-detail">
-                <li>
-                    <label class="margin-none" style="line-height: 21px;" >
-                        Thanks for your purchase. Your confirmation number is: <span id="buymedia-confirmation-trans-id"></span> We've also sent you an email confirmation of the purchase.
-                    </label>
-                </li>
-            </ul>
-            <div class="clear"></div>
-            <a class="black_btn_skin f-right" href="javascript:disablePopup('popupBuyMediaConfirmation');">close</a>
-        </div>
-        <div id="bgpopupBuyMediaConfirmation" class="backgroundPopup"></div>
+						</ul>
+						<a class="black_btn_skin f-left" href="javascript:addMemreas();">add
+							memreas</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Memreas tab popup section -->
+		<div id="popupBuyMedia" class="popups">
+			<a id="popupBuyMediaClose" onClick="disablePopup('popupBuyMedia');"
+				class='popupClose'>x</a>
+			<h2>Buying private media</h2>
+			<p>&nbsp;</p>
+			<ul id="content_1" class="give-message-form buying-media-detail">
+				<li><label class="textfield_names" style="width: 150px;">memreas
+						name: <span class="popup-event-name">memreas name</span>
+				</label>
 
-        <div id="popupBuyCredit" class="popups">
-            <a id="popupBuyCreditClose" onClick="disablePopup('popupBuyCredit');" class='popupClose'>x</a>
-            <h2>Buy credits</h2>
-            <p>&nbsp;</p>
-            <p>&nbsp;</p>
-            <p>&nbsp;</p>
-            <ul id="content_1" class="give-message-form buying-credit-detail">
-                <li>
-                    <label class="textfield_names" style="width: 150px;">Select card: </label>
-                    <select name="popup_buycredit_card">
-                        <option value="">-Choose-</option>
-                    </select>
-                    <div class="clear"></div>
-                </li>
-                <li>
-                    <label class="textfield_names" style="width: 150px;">Select amount: </label>
-                    <select name="popup_buycredit_amount">
-                        <option value="10">$10</option>
-                        <option value="15">$15</option>
-                        <option value="20">$20</option>
-                        <option value="25">$25</option>
-                        <option value="30">$35</option>
-                        <option value="35">$35</option>
-                        <option value="40">$40</option>
-                        <option value="45">$45</option>
-                        <option value="50">$50</option>
-                    </select>
-                    <div class="clear"></div>
-                </li>
-                <li>
-                    <label class="textfield_names" style="width: 150px;">Password</label>
-                    <input name="input" type="password" id="buycredit_confirm_password" class="" value="" />
-                </li>
-            </ul>
-            <div class="clear"></div>
-            <a class="black_btn_skin f-left" href="javascript:;" id="accept-buycredit" onclick="acceptBuyCredit();">Buy now</a> <a class="black_btn_skin f-right" href="javascript:disablePopup('popupBuyCredit');">close</a>
-        </div>
-        <div id="bgpopupBuyCredit" class="backgroundPopup"></div>
+					<div class="clear"></div></li>
+				<li><label class="textfield_names" style="width: 150px;">Your
+						credits: <span class="popup-buymedia-credit">$5</span> <a
+						class="addcredit-popup-btn" href="javascript:;"
+						onclick="popupBuyCredit();">Buy more</a> - <a href="javascript:;"
+						onclick="Account.reloadAccountCredit('.popup-buymedia-credit');"><img
+							src="/memreas/img/syns.png" width="30" border="0" /></a>
+				</label>
+				<div class="clear"></div></li>
+				<li><label class="textfield_names" style="width: 150px;">Event
+						price: <span class="popup-buymedia-price">$5</span>
+				</label>
+					<div class="clear"></div></li>
+				<li><label class="textfield_names" style="width: 150px;">Duration: <span
+						class="buying-media-duration"></span>
+				</label>
+					<div class="clear"></div></li>
+				<li><label class="textfield_names" style="width: 150px;">Password: <input
+						name="input" type="password" id="buymedia_confirm_password"
+						class="" value="" defaultValue="" /></label>
+					<div class="clear"></div></li>
+			</ul>
+			<div class="clear"></div>
+			<a class="black_btn_skin f-left" href="javascript:;"
+				id="accept-buymedia" onclick="">Buy now</a> <a
+				class="black_btn_skin f-right"
+				href="javascript:disablePopup('popupBuyMedia');">close</a>
+		</div>
+		<div id="bgpopupBuyMedia" class="backgroundPopup"></div>
 
-        <div id="popupCreditAddCard" class="popups">
-            <a id="popupCreditAddCardClose" onClick="disablePopup('popupCreditAddCard');" class='popupClose'>x</a>
-            <h2>Add new card</h2>
-            <ul id="content_1" class="scrollpopup memreasAddCardForm">
-                <li>
-                    <label class="textfield_names">Card type*</label>
-                    <select name="addcard_cctype" id="addcard_cctype">
-                        <option value="">-Choose-</option>
-                        <option value="visa">Visa Card</option>
-                        <option value="master">Master Card</option>
-                        <option value="discover">Discover Card</option>
-                        <option value="amex">Amex Card</option>
-                    </select>
-                </li>
-                <li>
-                    <label class="textfield_names">Card no.*</label>
-                    <input name="input" type="text" id="addcard_ccnum" class="" value="Card number" default="Card number" onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }" onFocus="if(this.value == 'Card number'){ this.value = ''; $(this).css('color', '#000'); }"/>
-                </li>
-                <li>
-                    <label class="textfield_names">Exp mon.*</label>
-                    <select name="addcard_expmonth" id="addcard_expmonth">
-                        <option value="">-Choose-</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                        <option value="11">11</option>
-                        <option value="12">12</option>
-                    </select>
-                </li>
-                <li>
-                    <label class="textfield_names">Exp year*</label>
-                    <select name="addcard_expyear" id="addcard_expyear">
-                        <option value="">-Choose-</option>
-                        <option value="2016">2016</option>
-                        <option value="2017">2017</option>
-                        <option value="2018">2018</option>
-                        <option value="2019">2019</option>
-                        <option value="2020">2020</option>
-                        <option value="2021">2021</option>
-                    </select>
-                </li>
-                <li>
-                    <label class="textfield_names">Card CVC*</label>
-                    <input name="input" type="text" id="addcard_ccv" class="" value="Card code" onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }" onFocus="if(this.value == 'Card code'){ this.value = ''; $(this).css('color', '#000'); }"/>
-                </li>
-                <li>
-                    <label class="textfield_names">First name*</label>
-                    <input name="input" type="text" id="addcard_fname" class="" value="first name" default="first name" onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#A0A0A0'); }" onFocus="if(this.value == 'first name'){ this.value = ''; $(this).css('color', '#000'); }"/>
-                </li>
-                <li>
-                    <label class="textfield_names">Last name*</label>
-                    <input name="input" type="text" id="addcard_lname" class="" value="last name" default="last name" onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }" onFocus="if(this.value == 'last name'){ this.value = ''; $(this).css('color', '#000'); }"/>
-                </li>
-                 <li>
-                    <label class="textfield_names">Address 1*</label>
-                    <input name="input" type="text" id="addcard_address1" class="" value="Address line 1" default="Address line 1" onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }" onFocus="if(this.value == 'Address line 1'){ this.value = ''; $(this).css('color', '#000'); }"/>
-                </li>
-                <li>
-                    <label class="textfield_names">Address 2</label>
-                    <input name="input" type="text" id="addcard_address2" class="" value="Address line 2" default="Address line 2" onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }" onFocus="if(this.value == 'Address line 2'){ this.value = ''; $(this).css('color', '#000'); }"/>
-                </li>
-                <li>
-                    <label class="textfield_names">City*</label>
-                    <input name="input" type="text" id="addcard_city" class="" value="City" default="City" onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }" onFocus="if(this.value == 'City'){ this.value = ''; $(this).css('color', '#000'); }"/>
-                </li>
-                <li>
-                    <label class="textfield_names">State*</label>
-                    <input name="input" type="text" id="addcard_state" class="" value="State" default="State" onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }" onFocus="if(this.value == 'State'){ this.value = ''; $(this).css('color', '#000'); }"/>
-                </li>
-                <li>
-                    <label class="textfield_names">Zip*</label>
-                    <input name="input" type="text" id="addcard_zip" class="" value="Zip" default="Zip" onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }" onFocus="if(this.value == 'Zip'){ this.value = ''; $(this).css('color', '#000'); }"/>
-                </li>
+		<!-- POPUP Buy media confirmation -->
+		<div id="popupBuyMediaConfirmation" class="popups">
+			<a id="popupBuyMediaConfirmationClose"
+				onClick="disablePopup('popupBuyMediaConfirmation');"
+				class='popupClose'>x</a>
+			<h2>memreas purchase confirmation</h2>
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			<ul id="content_1" class="give-message-form buying-media-detail">
+				<li><label class="margin-none" style="line-height: 21px;"> Thanks
+						for your purchase. Your confirmation number is: <span
+						id="buymedia-confirmation-trans-id"></span> We've also sent you an
+						email confirmation of the purchase.
+				</label></li>
+			</ul>
+			<div class="clear"></div>
+			<a class="black_btn_skin f-right"
+				href="javascript:disablePopup('popupBuyMediaConfirmation');">close</a>
+		</div>
+		<div id="bgpopupBuyMediaConfirmation" class="backgroundPopup"></div>
 
-            </ul>
-            <a class="black_btn_skin f-left" href="javascript:;" onclick="popupCreditAddCard();">ok</a> <a class="black_btn_skin f-right" href="javascript:disablePopup('popupCreditAddCard');">cancel</a>
-        </div>
-        <div id="bgpopupCreditAddCard" class="backgroundPopup" onclick="disablePopup('popupCreditAddCard');"></div>
-        <!-- END Memreas tab popup section -->
+		<div id="popupBuyCredit" class="popups">
+			<a id="popupBuyCreditClose" onClick="disablePopup('popupBuyCredit');"
+				class='popupClose'>x</a>
+			<h2>Buy credits</h2>
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			<ul id="content_1" class="give-message-form buying-credit-detail">
+				<li><label class="textfield_names" style="width: 150px;">Select
+						card: </label> <select name="popup_buycredit_card">
+						<option value="">-Choose-</option>
+				</select>
+					<div class="clear"></div></li>
+				<li><label class="textfield_names" style="width: 150px;">Select
+						amount: </label> <select name="popup_buycredit_amount">
+						<option value="10">$10</option>
+						<option value="15">$15</option>
+						<option value="20">$20</option>
+						<option value="25">$25</option>
+						<option value="30">$35</option>
+						<option value="35">$35</option>
+						<option value="40">$40</option>
+						<option value="45">$45</option>
+						<option value="50">$50</option>
+				</select>
+					<div class="clear"></div></li>
+				<li><label class="textfield_names" style="width: 150px;">Password</label>
+					<input name="input" type="password" id="buycredit_confirm_password"
+					class="" value="" /></li>
+			</ul>
+			<div class="clear"></div>
+			<a class="black_btn_skin f-left" href="javascript:;"
+				id="accept-buycredit" onclick="acceptBuyCredit();">Buy now</a> <a
+				class="black_btn_skin f-right"
+				href="javascript:disablePopup('popupBuyCredit');">close</a>
+		</div>
+		<div id="bgpopupBuyCredit" class="backgroundPopup"></div>
 
-    <!-- Ads Section -->
+		<div id="popupCreditAddCard" class="popups">
+			<a id="popupCreditAddCardClose"
+				onClick="disablePopup('popupCreditAddCard');" class='popupClose'>x</a>
+			<h2>Add new card</h2>
+			<ul id="content_1" class="scrollpopup memreasAddCardForm">
+				<li><label class="textfield_names">Card type*</label> <select
+					name="addcard_cctype" id="addcard_cctype">
+						<option value="">-Choose-</option>
+						<option value="visa">Visa Card</option>
+						<option value="master">Master Card</option>
+						<option value="discover">Discover Card</option>
+						<option value="amex">Amex Card</option>
+				</select></li>
+				<li><label class="textfield_names">Card no.*</label> <input
+					name="input" type="text" id="addcard_ccnum" class=""
+					value="Card number" default="Card number"
+					onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }"
+					onFocus="if(this.value == 'Card number'){ this.value = ''; $(this).css('color', '#000'); }" />
+				</li>
+				<li><label class="textfield_names">Exp mon.*</label> <select
+					name="addcard_expmonth" id="addcard_expmonth">
+						<option value="">-Choose-</option>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						<option value="6">6</option>
+						<option value="7">7</option>
+						<option value="8">8</option>
+						<option value="9">9</option>
+						<option value="10">10</option>
+						<option value="11">11</option>
+						<option value="12">12</option>
+				</select></li>
+				<li><label class="textfield_names">Exp year*</label> <select
+					name="addcard_expyear" id="addcard_expyear">
+						<option value="">-Choose-</option>
+						<option value="2016">2016</option>
+						<option value="2017">2017</option>
+						<option value="2018">2018</option>
+						<option value="2019">2019</option>
+						<option value="2020">2020</option>
+						<option value="2021">2021</option>
+				</select></li>
+				<li><label class="textfield_names">Card CVC*</label> <input
+					name="input" type="text" id="addcard_ccv" class=""
+					value="Card code"
+					onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }"
+					onFocus="if(this.value == 'Card code'){ this.value = ''; $(this).css('color', '#000'); }" />
+				</li>
+				<li><label class="textfield_names">First name*</label> <input
+					name="input" type="text" id="addcard_fname" class=""
+					value="first name" default="first name"
+					onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#A0A0A0'); }"
+					onFocus="if(this.value == 'first name'){ this.value = ''; $(this).css('color', '#000'); }" />
+				</li>
+				<li><label class="textfield_names">Last name*</label> <input
+					name="input" type="text" id="addcard_lname" class=""
+					value="last name" default="last name"
+					onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }"
+					onFocus="if(this.value == 'last name'){ this.value = ''; $(this).css('color', '#000'); }" />
+				</li>
+				<li><label class="textfield_names">Address 1*</label> <input
+					name="input" type="text" id="addcard_address1" class=""
+					value="Address line 1" default="Address line 1"
+					onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }"
+					onFocus="if(this.value == 'Address line 1'){ this.value = ''; $(this).css('color', '#000'); }" />
+				</li>
+				<li><label class="textfield_names">Address 2</label> <input
+					name="input" type="text" id="addcard_address2" class=""
+					value="Address line 2" default="Address line 2"
+					onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }"
+					onFocus="if(this.value == 'Address line 2'){ this.value = ''; $(this).css('color', '#000'); }" />
+				</li>
+				<li><label class="textfield_names">City*</label> <input name="input"
+					type="text" id="addcard_city" class="" value="City" default="City"
+					onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }"
+					onFocus="if(this.value == 'City'){ this.value = ''; $(this).css('color', '#000'); }" />
+				</li>
+				<li><label class="textfield_names">State*</label> <input
+					name="input" type="text" id="addcard_state" class="" value="State"
+					default="State"
+					onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }"
+					onFocus="if(this.value == 'State'){ this.value = ''; $(this).css('color', '#000'); }" />
+				</li>
+				<li><label class="textfield_names">Zip*</label> <input name="input"
+					type="text" id="addcard_zip" class="" value="Zip" default="Zip"
+					onBlur="if(!/\S/.test(this.value)){ this.value=defaultValue; $(this).css('color', '#a0a0a0'); }"
+					onFocus="if(this.value == 'Zip'){ this.value = ''; $(this).css('color', '#000'); }" />
+				</li>
+
+			</ul>
+			<a class="black_btn_skin f-left" href="javascript:;"
+				onclick="popupCreditAddCard();">ok</a> <a
+				class="black_btn_skin f-right"
+				href="javascript:disablePopup('popupCreditAddCard');">cancel</a>
+		</div>
+		<div id="bgpopupCreditAddCard" class="backgroundPopup"
+			onclick="disablePopup('popupCreditAddCard');"></div>
+		<!-- END Memreas tab popup section -->
+
+		<!-- Ads Section -->
         <?php //include ('right_advertising.phtml'); ?>
     <!-- End Ads Section -->
 
-    <!-- Bottom Ads -->
-        
-    <!-- End Bottom Ads -->
-    </div>
+		<!-- Bottom Ads -->
+
+		<!-- End Bottom Ads -->
+	</div>
