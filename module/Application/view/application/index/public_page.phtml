@@ -61,25 +61,48 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 	margin-top: 16px;
 }
 
-.sell-event-buyme{position: relative;
-    display: inline-block;
-    cursor: pointer;
-    float: left;
-    /* margin-left: -104px; */
-    width: 145px;
-    height: 141px;
-    background-color: rgba(249,249,249,0.4);
-    margin-left: -174px;
-    top: 3px;;
-    background-image: url("/memreas/img/blue-btn.png");
-     background-repeat: no-repeat;
-     background-position: top center
+.sell-event-buyme {
+	position: relative;
+	display: inline-block;
+	cursor: pointer;
+	float: left;
+	/* margin-left: -104px; */
+	width: 145px;
+	height: 141px;
+	background-color: rgba(249, 249, 249, 0.4);
+	margin-left: -174px;
+	top: 3px;;
+	background-image: url("/memreas/img/blue-btn.png");
+	background-repeat: no-repeat;
+	background-position: top center
 }
-.navbar-fixed-top{position: relative;}
-.overlaypopUp{position: absolute; cursor: pointer; background: rgba(246,246,246,0.5); height: 235px; z-index:999; width: 72%; }
-.btnpublicbuynow{width: 100px; color:#fff; background-color: #2DA1EA; color:#fff; border-radius: 10px; padding: 12px; font-size:28px;left: 30%;font-family: "Century Gothic";
-    position: relative;
-    top: 50%;}
+
+.navbar-fixed-top {
+	position: relative;
+}
+
+.overlaypopUp {
+	position: absolute;
+	cursor: pointer;
+	background: rgba(246, 246, 246, 0.5);
+	height: 235px;
+	z-index: 999;
+	width: 72%;
+}
+
+.btnpublicbuynow {
+	width: 100px;
+	color: #fff;
+	background-color: #2DA1EA;
+	color: #fff;
+	border-radius: 10px;
+	padding: 12px;
+	font-size: 28px;
+	left: 30%;
+	font-family: "Century Gothic";
+	position: relative;
+	top: 50%;
+}
 </style>
 </head>
 
@@ -111,10 +134,6 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 		<div style="clear: both;"></div>
 	</header>
 	<div class="container-fluid body-content">
-		<!-- 
-    <section id="MobileHomeScreen"
-		style="overflow: hidden; background: #193D65; padding-left: 15px; padding-top: 15px;">
-	-->
 		<div class="row-fluid" style="margin-top: 20px; margin-bottom: 20px;">
 			<div class="span12 text-center"
 				style="margin-top: 20px; margin-bottom: 20px;">
@@ -129,14 +148,12 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 			</div>
 		</div>
 		<div class="row-fluid" style="margin-bottom: 20px;">
-			<div class="<?php echo $this->enableAdvertising; echo ($this->enableAdvertising) ? 'span9' : 'span9';?>">
+			<div
+				class="<?php echo ($this->enableAdvertising) ? 'span9' : 'span9';?>">
 				<ul id="public_list"
-                                    class=" scrollClass  publicMemreas scroll-area mCustomScrollbar _mCS_9 _mCS_16" style="height: 100%; overflow: auto;">
-					<!-- js populates -->
-                                        
-     
-                                        
-                                       
+					class=" scrollClass  publicMemreas scroll-area mCustomScrollbar _mCS_9 _mCS_16"
+					style="height: 100%; overflow: auto;">
+					<?php //js populates... ?>
 				</ul>
 			</div>
 			<div class="span3">
@@ -163,7 +180,7 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 		<ul id="content_1" class="give-message-form buying-media-detail">
 			<li><label class="textfield_names" style="width: 150px;">you must
 					register to purchase access</label>
-					<div class="clear"></div></li>
+				<div class="clear"></div></li>
 		</ul>
 		<div class="clear"></div>
 		<a class="black_btn_skin f-right"
@@ -184,7 +201,7 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 	<script src="/memreas/js/responsiveslides.min.js"></script>
 	<script src="/memreas/js/jquery-ui.min.js"></script>
 	<script src="/memreas/js/jquery.mCustomScrollbar.concat.min.js"></script>
-        <script src="/memreas/js/jquery.oauthpopup.js"></script>
+	<script src="/memreas/js/jquery.oauthpopup.js"></script>
 	<script src="/memreas/jsblue/blueimp-helper.js"></script>
 	<script src="/memreas/jsblue/blueimp-gallery.js"></script>
 	<script src="/memreas/jsblue/blueimp-gallery-fullscreen.js"></script>
@@ -193,7 +210,7 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 	<script src="/memreas/jsblue/jquery.blueimp-gallery.js"></script>
 	<script src="/memreas/js/ajax.js"></script>
 	<script src="/memreas/js/global.js"></script>
-        <script src="/memreas/js/popup.js"></script>
+	<script src="/memreas/js/popup.js"></script>
 	<script src="/memreas/js/public_page.js"></script>
 	<script>
 $(function () {

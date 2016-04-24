@@ -18,7 +18,6 @@ this.removePageLoading = function() {
 }
 
 jQuery.fetchPublic = function() {
-    console.log("Inside jQuery.fetchPublic");
     var verticalHeight = window.innerHeight;
     var HorizontalWidth = window.innerWidth;
 
@@ -47,8 +46,8 @@ jQuery.fetchPublic = function() {
 		value : '100'
 	    } ],
 	    function(response) {
-		// console.log("response--->" + response);
 		if (getValueFromXMLTag(response, 'status') == "Success") {
+		    //console.log("response--->" + response);
 		    var events = getSubXMLFromTag(response, 'event');
 		    if (events.length > 0) {
 
@@ -61,16 +60,12 @@ jQuery.fetchPublic = function() {
 			var event_count = events.length;
 			for (var i = 0; i < event_count; i++) {
 			    var event = events[i].innerHTML;
-			    // console.log("event--->" + event);
 			    var event_media;
-			    // console.log('Event Tag Iterate -->' + friend);
 			    eventObj.event_creator = $(event).filter(
 				    'event_creator').html();
 			    eventObj.event_id = $(event).filter('event_id')
 				    .html();
 
-			    // console.log("eventObj.event_id--->" +
-			    // eventObj.event_id);
 			    eventObj.event_name = $(event).filter('event_name')
 				    .text();
 			    eventObj.event_like_total = $(event).filter(
@@ -80,13 +75,12 @@ jQuery.fetchPublic = function() {
 			    eventObj.profile_img = $(event).filter(
 				    'profile_pic_79x80').html();
 			    eventObj.profile_img = removeCdataCorrectLink(eventObj.profile_img);
-			    // eventObj.friend_row = 'friendPublic-' +
-			    // eventObj.creator_id;
 			    eventObj.event_creator = $(event).filter(
 				    'event_creator').html();
 			    eventObj.event_name = $(event).filter('event_name')
 				    .html();
 
+			    console.log("eventObj.profile_img--->" + eventObj.profile_img);
 			    //
 			    // Check price to see if we need overlay
 			    //
@@ -95,16 +89,11 @@ jQuery.fetchPublic = function() {
 			    var event_price = 0;
 			    if (typeof (event_metadata) != 'undefined') {
 				try {
-				    // console.log("event_metadata --> " +
-				    // event_metadata);
 				    event_metadata = JSON.parse(event_metadata);
 				} catch (e) {
-				    // console.log("metadata parse error--->" +
-				    // e);
+				    console.log("metadata parse error--->" + e);
 				}
 				event_price = event_metadata.price;
-				// console.log("PRICE IS > 0 :: price --> " +
-				// event_price);
 			    } else {
 				event_price = 0;
 			    }
@@ -139,7 +128,12 @@ jQuery.fetchPublic = function() {
 			    listItem += '			</a>';
 			    listItem += '			<span style="position: relative; top: -8px; left: -19px; color: #fff;">'
 				    + eventObj.event_comment_total + '</span>';
+			    listItem += '			<ul id="friendsPics">';
+			    listItem += '			</ul>';
 			    listItem += '			<div style="clear: both;"></div>';
+			    listItem += '			</div>';
+			    
+			    
 			    // for loop here for images
 			    listItem += '			<div id="links' + i
 				    + '" class="links' + i + '"></div>';
@@ -166,11 +160,6 @@ jQuery.fetchPublic = function() {
 			    var event_medias = getSubXMLFromTag(events[i],
 				    'event_media');
 			    var event_media_count = event_medias.length;
-			    // console.log("event_media_count ---> " +
-			    // event_media_count);
-			    // console.log("event_medias ---> " +
-			    // JSON.stringify(event_medias));
-
 			    var linksContainerData = '';
 			    for (var j = 0; j < event_media_count; j++) {
 				var event_media_entry = {};
@@ -197,8 +186,6 @@ jQuery.fetchPublic = function() {
 				// Setup blueimp
 				//
 				var item = new Object();
-				// console.log("event_media_entry._event_media_type_--->"
-				// + event_media_entry._event_media_type_);
 				if (event_media_entry._event_media_type_ == 'video') {
 
 				    //
@@ -206,16 +193,9 @@ jQuery.fetchPublic = function() {
 				    //
 				    event_media_entry.event_media_image = getValueFromXMLTag(
 					    event_media, 'event_media_448x306');
-				    console
-					    .log("JSON 448x306--->"
-						    + removeCdata(event_media_entry.event_media_image));
 				    event_media_entry.event_media_image = JSON
 					    .parse(removeCdata(event_media_entry.event_media_image));
 				    event_media_entry.event_media_image = event_media_entry.event_media_image[0];
-
-				    console
-					    .log('video event_media_entry.event_media_image-->'
-						    + event_media_entry.event_media_image);
 
 				    //
 				    // Setup item
@@ -242,8 +222,6 @@ jQuery.fetchPublic = function() {
 				    linksContainerData += ' type="video/mp4" data-gallery="'
 					    + event_media_entry.event_media_id
 					    + '" class="blueimp-gallery-thumb-anchor "';
-				    // console.log("video event_price--->" +
-				    // event_price);
 				    linksContainerData += ' style="background:url('
 					    + event_media_entry.event_media_image
 					    + ')"><span class="video-content-play-icon"></span></a>';
@@ -256,9 +234,10 @@ jQuery.fetchPublic = function() {
 				    event_media_entry.event_media_image = removeCdataCorrectLink(getValueFromXMLTag(
 					    event_media, 'event_media_448x306'));
 
-				    // console.log('image
-				    // event_media_entry.event_media_image-->' +
-				    // event_media_entry.event_media_image);
+				    //disable the url for paid events
+				    if (event_price > 0) {
+					event_media_entry.event_media_url = '#';
+				    }
 
 				    //
 				    // Setup item
@@ -275,26 +254,17 @@ jQuery.fetchPublic = function() {
 					    + '" data-gallery="'
 					    + event_media_entry.event_media_id
 					    + '" class="blueimp-gallery-thumb-anchor"';
-				    // console.log("image event_price--->" +
-				    // event_price);
 				    linksContainerData += ' style="background:url('
 					    + event_media_entry.event_media_image
 					    + ')"><span></span></a>';
 
 				}
-				// console.log("item" + JSON.stringify(item));
 				objArr.push(item);
 			    }// end event for loop
 			    //
 			    // Set blueimp array
 			    //
-			    // linksContainer[i] = linksCo;
-			    // console.log("linksContainerData--->" +
-			    // JSON.stringify(linksContainerData));
 			    $(links).append(linksContainerData);
-			    // console.log("html " + links + "--->" +
-			    // $(links).innerHTML);
-
 			    var event_friends = getSubXMLFromTag(events[i],
 				    'event_friends');
 			    var event_friend = getSubXMLFromTag(event,
@@ -304,6 +274,8 @@ jQuery.fetchPublic = function() {
 			    var event_friend_string = "";
 			    var event_friend_array = [];
 			    // events loop
+			    if (event_friend_count > 0) {
+				
 			    for (var k = 1; k <= event_friend_count; k++) {
 				var event_friend_entry = {};
 				var event_friend_list = event_friend[k];
@@ -316,8 +288,16 @@ jQuery.fetchPublic = function() {
 					event_friend_list,
 					'event_friend_url_image');
 				event_friend_entry.event_friend_url_image = removeCdataCorrectLink(event_friend_entry.event_friend_url_image);
+				console.log("event_friend_entry.event_friend_url_image--->" + event_friend_entry.event_friend_url_image);
 				event_friend_array[k] = event_friend_entry;
+				var pic = '<figure class="pro-pics2"><img class="public-profile-img" src="' + event_friend_entry.event_friend_url_image + '" alt=""></figure>';
+				$("#friendsPics").append(pic);
 			    } // end for friends
+			    } else {
+				//remove the list
+				$("#friendsPics").remove();
+			    }
+
 			}// end for events.length
 		    }
 		} // end if
