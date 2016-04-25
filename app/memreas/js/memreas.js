@@ -477,7 +477,8 @@ function fetchFriendsMemreas(friendMemreasType) {
     params.x_memreas_chameleon = getCookie("x_memreas_chameleon");
     var params_json = JSON.stringify(params, null, '\t');
     var data = '{"action": "check_own_event", ' + '"type":"jsonp", '
-	    + '"json": ' + params_json + '}';
+
+    + '"json": ' + params_json + '}';
 
     var stripeActionUrl = $("input[name=stripe_url]").val()
 	    + 'stripe_checkOwnEvent';
