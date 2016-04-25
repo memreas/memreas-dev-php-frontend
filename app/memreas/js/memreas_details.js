@@ -1151,20 +1151,12 @@ $('#term_condition_label').click(function() {
 
 function submitOffensiveContent() {
 
-    console.log("event_id-->" + eventdetail_id);
-    console.log("reporting_user_id-->" + LOGGED_USER_ID);
-    console.log("media_id-->" + event_media_ID_variable);
-    console.log("reason--->" + $("#ocform_reason").val());
     var inappropriate = "1";
-    console.log("inappropriate-->" + inappropriate);
     if ($("#ocform_reason").val() != "") {
 
 	var params = [ {
 	    tag : "event_id",
 	    value : eventdetail_id
-	}, {
-	    tag : "user_id",
-	    value : LOGGED_USER_ID
 	}, {
 	    tag : "reporting_user_id",
 	    value : LOGGED_USER_ID
@@ -1212,76 +1204,72 @@ function submitDMCA() {
     var mediaId_report = $('#mediaId').val(event_media_ID_variable);
     var terms_condition = $('#term_condition').val();
     if (copy_right_owner == '') {
-	jerror("Please fill your name");
+	jerror(getString("dmca_missing_name"));
 	return;
     }
     if (copyright_owner_address == '') {
-	jerror("Please fill your Address");
+	jerror(getString("dmca_missing_address"));
 	return;
     }
 
     if (copyright_owner_email_address == '') {
-	jerror("Please fill your email");
+	jerror(getString("dmca_missing_email"));
 	return;
     }
 
     if (mediaId_report == '') {
-	jerror("Please fill your Media Id");
+	jerror(getString("dmca_missing_media_id"));
 	return;
     }
 
-    if (terms_condition == '') {
-	jerror("Please checkbox");
+    if (terms_condition != '1') {
+	jerror(getString("dmca_missing_terms"));
 	return;
     }
 
     var legalvalue = '';
-    if (terms_condition == "1") {
-	var params = [ {
-	    tag : "media_id",
-	    value : event_media_ID_variable
-	}, {
-	    tag : "copyright_owner_name",
-	    value : copy_right_owner
-	}, {
-	    tag : "copyright_owner_address",
-	    value : copyright_owner_address
-	}, {
-	    tag : "copyright_owner_email_address",
-	    value : copyright_owner_email_address
-	}, {
-	    tag : "copyright_owner_agreed_to_terms",
-	    value : "1"
-	}, ];
+    var params = [ {
+	tag : "media_id",
+	value : event_media_ID_variable
+    }, {
+	tag : "copyright_owner_name",
+	value : copy_right_owner
+    }, {
+	tag : "copyright_owner_address",
+	value : copyright_owner_address
+    }, {
+	tag : "copyright_owner_email_address",
+	value : copyright_owner_email_address
+    }, {
+	tag : "copyright_owner_agreed_to_terms",
+	value : "1"
+    }, ];
 
-	ajaxRequest('dcmareportviolation', params, function(ret_xml) {
+    ajaxRequest('dcmareportviolation', params, function(ret_xml) {
 
-	    var message = getValueFromXMLTag(ret_xml, 'message')
-	    var status = getValueFromXMLTag(ret_xml, 'status');
+	var message = getValueFromXMLTag(ret_xml, 'message')
+	var status = getValueFromXMLTag(ret_xml, 'status');
 
-	    console.log('message-->' + message + 'Status-->' + status);
-	    console.log(ret_xml);
+	console.log('message-->' + message + 'Status-->' + status);
+	console.log(ret_xml);
 
-	    if (status.toLowerCase() == 'success') {
-		jsuccess("your Report added");
-		disablePopup('popupReportMedia');
+	if (status.toLowerCase() == 'success') {
+	    jsuccess(getString("dmca_success"));
+	    disablePopup('popupReportMedia');
 
-		//
-		// reset values
-		//
-		$('#copyrightowner').val("");
-		$('#addressV').val("");
-		$('#emailvoilcation').val("");
-		$('#term_condition').attr('checked', false);
+	    //
+	    // reset values
+	    //
+	    $('#copyrightowner').val("");
+	    $('#addressV').val("");
+	    $('#emailvoilcation').val("");
+	    $('#term_condition').attr('checked', false);
 
-	    } else {
-		jerror("your Report is not added");
-		disablePopup('popupReportMedia');
-	    }
+	} else {
+	    jerror(getString("dmca_failure"));
+	    disablePopup('popupReportMedia');
+	}
 
-	}, 'undefined', true);
-    } else {
-	jerror("Please check your form");
-    }
+    }, 'undefined', true);
 
 }

@@ -293,7 +293,6 @@ getXMLStringFromParamArray = function(action, params) {
     case "dcmacounterclaim":
 	action_tag = "dcmacounterclaim";
 	break;
-
     default:
 	break;
     }
