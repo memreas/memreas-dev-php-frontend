@@ -271,22 +271,16 @@ var ConsoleLog = new ConsoleLog();
 				function(e) {
 
 				    e.preventDefault();
+				    // Hide all content
 				    $("#tab-content-memreas div.hideCls")
-					    .hide(); // Hide all content
-				    $("#tabs-memreas li").attr("id", ""); // Reset
-				    // id's
-				    $(this).parent().attr("id", "current"); // Activate
-				    // this
-				    $('#' + $(this).attr('title')).fadeIn(); // Show
-				    // content
-				    // for
-				    // current
-				    // tab
-				    $('#' + $(this).attr('title')).fadeIn(); // Show
-				    // content
-				    // for
-				    // current
-				    // tab
+					    .hide();
+				    // Reset id's
+				    $("#tabs-memreas li").attr("id", "");
+				    // Activate this
+				    $(this).parent().attr("id", "current");
+				    $('#' + $(this).attr('title')).fadeIn();
+				    // Show content for current tab
+				    $('#' + $(this).attr('title')).fadeIn();
 				    if (!($('#' + $(this).attr('title')
 					    + " .scroll-area")
 					    .hasClass('mCustomScrollbar'))) {
@@ -358,7 +352,7 @@ function fetchMyMemreas() {
 	    } ],
 	    function(response) {
 		if (getValueFromXMLTag(response, 'status') == "Success") {
-		    //console.log("response " + response);
+		    // console.log("response " + response);
 		    var events = getSubXMLFromTag(response, 'event');
 
 		    var event_count = events.length;
@@ -397,7 +391,8 @@ function fetchMyMemreas() {
 			}
 			StrMedia += '</ul><div style="clear:both;"></div>';
 			var like_count = $(event).filter('like_count').html();
-			var comment_count = $(event).filter('comment_count').html();
+			var comment_count = $(event).filter('comment_count')
+				.html();
 			var event_name = $(event).filter('event_name').html();
 			var element = '<div class="event_section">'
 				+ '<aside class="event_name" onclick="showEventDetail(\''
@@ -820,7 +815,7 @@ function fetchpubsMemreas() {
 				    var target_object = ".event_images_public .mCSB_container";
 				else
 				    var target_object = ".event_images_public";
-				
+
 				ajaxScrollbarElement('.event_images_public');
 				// $(".event_images_public").empty();
 				var friends = getSubXMLFromTag(response,
@@ -830,8 +825,8 @@ function fetchpubsMemreas() {
 					/**
 					 * Fetch Friends array
 					 */
-					//friends = getSubXMLFromTag(response,
-					//	'event');
+					// friends = getSubXMLFromTag(response,
+					// 'event');
 					var friend_count = friends.length;
 					for (var i = 0; i < friend_count; i++) {
 					    var friend = friends[i].innerHTML;
