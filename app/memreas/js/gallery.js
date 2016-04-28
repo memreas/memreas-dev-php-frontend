@@ -211,7 +211,12 @@ jQuery.fetch_server_media = function() {
 					    + '" class="img-gallery" src="'
 					    + _media_thumbnail_large
 					    + '" /></li>');
+                                
+                                     $('#carousellocation').append('<li data-preview="'+ _media_thumbnail_large +'"><a href="javascript:;">'
+                                                +'<img src="'+ _media_thumbnail_large +'" id="location'+ media_id +'" alt="image04" /></a></li>');       
 
+                                 
+                             
 			} else {
 			    $(".edit-area-scroll")
 				    .append(
@@ -229,6 +234,12 @@ jQuery.fetch_server_media = function() {
 					    + '" class="img-gallery" src="'
 					    + _media_thumbnail_large
 					    + '" /></li>');
+                                    
+                             
+                                     $('#carousellocation').append('<li data-preview="'+ _media_thumbnail_large +'"><a href="javascript:;">'
+                                                +'<img src="'+ _media_thumbnail_large +'" id="location'+ media_id +'" alt="image04" /></a></li>');       
+
+                               
 
 			}
 
@@ -817,3 +828,36 @@ function popupGalleryVideoPlayer(media_video_url, thumbnail) {
 			    + '</video>');
     popup('popupgalleryplayer');
 }
+
+setTimeout(function(){
+   var current = 0,
+				$preview = $( '#preview6' ),
+				$carouselEl = $( '#carousellocation' ),
+				$carouselItems = $carouselEl.children(),
+				carousel = $carouselEl.elastislide( {
+					current : current,
+					minItems : 4,
+					onClick : function( el, pos, evt ) {
+
+						changeImage( el, pos );
+						evt.preventDefault();
+
+					},
+					onReady : function() {
+
+						changeImage( $carouselItems.eq( current ), current );
+						
+					}
+				} );
+
+			function changeImage( el, pos ) {
+
+				$preview.attr( 'src', el.data( 'preview' ) );
+				$carouselItems.removeClass( 'current-img' );
+				el.addClass( 'current-img' );
+				carousel.setCurrent( pos );
+
+			}
+
+ 
+},8000)
