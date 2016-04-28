@@ -205,15 +205,10 @@ jQuery.fetch_server_media = function() {
 						    + _media_thumbnail_large
 						    + '"/><span class="video-content-play-icon" style="position: absolute; left: 10%; top: -5%;"></span></a></li>');
 
-			    $("#location-list").append(
-				    '<li class="video-media"><img id="location'
-					    + media_id
-					    + '" class="img-gallery" src="'
-					    + _media_thumbnail_large
-					    + '" /></li>');
+			   
                                 
                                      $('#carousellocation').append('<li data-preview="'+ _media_thumbnail_large +'"><a href="javascript:;">'
-                                                +'<img src="'+ _media_thumbnail_large +'" id="location'+ media_id +'" alt="image04" /></a></li>');       
+                                                +'<img src="'+ _media_thumbnail_large +'" class="img-gallery" id="location'+ media_id +'" alt="image04" /></a></li>');       
 
                                  
                              
@@ -229,15 +224,11 @@ jQuery.fetch_server_media = function() {
 						    + '"/></a></li>');
 
 			    // Location
-			    $("#location-list").append(
-				    '<li><img id="location' + media_id
-					    + '" class="img-gallery" src="'
-					    + _media_thumbnail_large
-					    + '" /></li>');
+			   
                                     
                              
                                      $('#carousellocation').append('<li data-preview="'+ _media_thumbnail_large +'"><a href="javascript:;">'
-                                                +'<img src="'+ _media_thumbnail_large +'" id="location'+ media_id +'" alt="image04" /></a></li>');       
+                                                +'<img src="'+ _media_thumbnail_large +'" class="img-gallery" id="location'+ media_id +'" alt="image04" /></a></li>');       
 
                                
 
