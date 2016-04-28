@@ -208,7 +208,7 @@ jQuery.fetch_server_media = function() {
 			   
                                 
                                      $('#carousellocation').append('<li data-preview="'+ _media_thumbnail_large +'"><a href="javascript:;">'
-                                                +'<img src="'+ _media_thumbnail_large +'" id="location'+ media_id +'" alt="image04" /></a></li>');       
+                                                +'<img src="'+ _media_thumbnail_large +'" class="img-gallery" id="location'+ media_id +'" alt="image04" /></a></li>');       
 
                                  
                              
