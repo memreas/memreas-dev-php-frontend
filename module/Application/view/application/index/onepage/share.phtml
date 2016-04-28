@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Copyright (C) 2015 memreas llc. - All Rights Reserved
  * Unauthorized copying of this file, via any medium is strictly prohibited
@@ -6,238 +6,253 @@
  */
 ?>
 <div class="span11 tabcontent-detail" id="share" style="display: none;">
-    <?php //include 'bottom_advertising.phtml' ;?>
-    <div class="span11<?php //echo ($this->enableAdvertising) ? 'span9' : 'span11';?>">
-        <div class="row-fluid">
-            <ul id="tabs-share" class="medium_tabs">
-                <li><a href="#" title="tab1-share">memreas details</a></li>
-                <li><a href="#" title="tab2-share" class="control-tab-share">media</a></li>
-                <li><a href="#" title="tab3-share" class="control-tab-share">friends</a></li>
-            </ul>
-            <div id="tab-content-share">
-                <div id="tab1-share" class="hideCls">
-                    <div class="required">only name is required</div>
-                    <ul id="content_1" class="share_memreas_details">
-                        <li>
-                            <label class="textfield_names">name :</label>
-                            <div class="input-wrap share-event-name">
-<!--                                <input name="input" type="text" id="txt_name" class="share-txtfield" value="sample" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'sample')this.value = '';"/>-->
-                                <input name="input" type="text" id="txt_name" class="share-txtfield" value="" placeholder="sample" >
-                            </div>
-                        </li>
-                        <li>
-                            <label class="textfield_names">date :</label>
-<!--                            <input name="input" type="text" id="dtp_date" class="share-txtfield date-picker" readonly value="from" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'from')this.value = '';"/>-->
-                            <input name="input" type="text" id="dtp_date" class="share-txtfield date-picker" readonly value="from" placeholder="From">
-                        </li>
-                        <li>
-                            <label class="textfield_names">location :</label>
-                            <input name="input3" type="text" id="txt_location" class="share-txtfield" value="address or current location" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'address or current location')this.value = '';" onClick="share_showGoogleMap('div_locationmap_maparea');"/>
-                        </li>
-                        <li>
-                            <input id="ckb_canpost" class="css-checkbox" type="checkbox" name="ckb_canpost"/>
-                            <label for="ckb_canpost" name="demo_lbl_1" class="css-label margin-none" >friends can post pics/videos</label>
-                        </li>
-                        <li>
-                            <input id="ckb_canadd" class="css-checkbox" type="checkbox" name="ckb_canadd"/>
-                            <label for="ckb_canadd" name="demo_lbl_2" class="css-label margin-none" >friends can add Friends</label>
-                        </li>
-                        <li>
-                            <input id="ckb_public" class="css-checkbox" type="checkbox" name="ckb_public"/>
-                            <label for="ckb_public" name="demo_lbl_3" class="css-label margin-none" onClick="javascript:share_clickCkbPublic();" >public</label>
-                        </li>
-                        <li>
-                             <input id="ckb_viewable" class="css-checkbox" type="checkbox" />
-                             <label id="lbl-viewable" for="ckb_viewable" name="demo_lbl_4" class="css-label margin-none" >viewable :</label>
-                             <input name="inputdtpfrom" type="text" id="dtp_from" class="date-picker" readonly value="from" placeholder="From" disabled />
-                             <input name="inputdtpto" type="text" id="dtp_to" class="date-picker" readonly value="to" placeholder="To" disabled />
-                        </li>
-                        <li>
-                         <input id="ckb_selfdestruct" class="css-checkbox" type="checkbox" />
-                         <label for="ckb_selfdestruct" name="demo_lbl_5" class="css-label margin-none" >ghost :</label>
-                         <input name="input" type="text" id="dtp_selfdestruct" class="share-txtfield-2 date-picker" readonly value="" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == '')this.value = '';" disabled />
-                        </li>
-                        <?php if ($this->enableSellMedia) { ?>
-                        <li class="sell-media-section">
-                            <input id="ckb_sellmedia" class="css-checkbox css-label" type="checkbox"  />
-<!--                            <label id="lbl-sellmedia" for="ckb_sellmedia" name="demo_lbl_6" class="css-label margin-none">Price :</label>-->
-                             <label id="" for="ckb_sellmedia" name="demo_lbl_6" class="css-label margin-none">Set Pricing (public events only)</label>
-                        </li>
-                        <?php }  else { ?>
-                            <input id="ckb_sellmedia" class="css-checkbox css-label" type="hidden"  />
-                            <div class="input-wrap share-media-price">
-                                <p class="italic-description">
-                                    You can sell media if you have registered as a seller <span class="share-register-seller">(<a href="javascript:;" onclick="registerSeller();">Register now</a>)</span> - Your account type : <strong class="share-account-type"></strong>
-                                    <br/> And you have an activated paid subscription <span class="share-register-plan">(<a href="javascript:;" onclick="activeSubscription();">Active now</a>)</span> - Your plan : <strong class="share-account-plan"></strong>
-                                </p>
-                            </div>
-                        <?php } ?>
-                    </ul>
-                    <span class="clear"></span>
-                    <div class="mr-auto">
-                        <a class="black_btn_skin" href="javascript:;" onclick="share_addEvent('next');">next</a>
-                        <a class="black_btn_skin" href="javascript:;" onclick="share_addEvent('done');">Done</a>
-                        <a class="black_btn_skin" href="javascript:share_clearMemreas(false);">cancel</a>
-                    </div>
-                </div>
-                <div id="tab2-share" class="hideCls">
-                    <ul id="share_medialist" class="pics scroll-area scrollClass">
-                        <!--<li><a href="/memreas/img/large-pic-1.jpg" class="swipebox" title="photo-1"><img src="/memreas/img/small-pic-1.jpg" alt=""></a></li>-->
-                    </ul>
-                    <div class="event-upload-area" style="display: none;">
-                         <ul class="event-upload-image">
-                              <li class="first-upload"></li>
-                          </ul>
-                        <div class="upload-dropzone-removed upload-from-event"></div>
-                    </div>
-                    <div class="comment">
-                        <ul>
-                            <li>
-                                <div class="comment-txt clearfix">add a comment</div>
-                            </li>
-                            <li style="position: relative;">
-                                <input name="input2" accept="audio/*;capture=microphone" type="text" id="txt_comment" class="comment_txtfield" value="your comments here" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'your comments here')this.value = '';"/>
-                                <a href="javascript:voiceComment();" class="voice-icon"></a>
+	<?php //include 'bottom_advertising.phtml' ; ?>
+	<div class="span11<?php //echo ($this->enableAdvertising) ? 'span9' : 'span11'; ?>">
+		<div class="row-fluid">
+			<ul id="tabs-share" class="medium_tabs">
+				<li>
+					<a href="#" title="tab1-share">memreas details</a>
+				</li>
+				<li>
+					<a href="#" title="tab2-share" class="control-tab-share">media</a>
+				</li>
+				<li>
+					<a href="#" title="tab3-share" class="control-tab-share">friends</a>
+				</li>
+			</ul>
+			<div id="tab-content-share">
+				<div id="tab1-share" class="hideCls">
+					<div class="required">
+						only name is required
+					</div>
+					<ul id="content_1" class="share_memreas_details">
+						<li>
+							<label class="textfield_names">name :</label>
+							<div class="input-wrap share-event-name">
+								<!--                                <input name="input" type="text" id="txt_name" class="share-txtfield" value="sample" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'sample')this.value = '';"/>-->
+								<input name="input" type="text" id="txt_name" class="share-txtfield" value="" placeholder="sample" >
+							</div>
+						</li>
+						<li>
+						<label class="textfield_names">date :</label>
+						<!--                            <input name="input" type="text" id="dtp_date" class="share-txtfield date-picker" readonly value="from" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'from')this.value = '';"/>-->
+						<input name="input" type="text" id="dtp_date" class="share-txtfield date-picker" readonly value="from" placeholder="From">
+						</li>
+						<li>
+						<label class="textfield_names">location :</label>
+						<input name="input3" type="text" id="txt_location" class="share-txtfield" value="address or current location" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'address or current location')this.value = '';" onClick="share_showGoogleMap('div_locationmap_maparea');"/>
+						</li>
+						<li>
+						<input id="ckb_canpost" class="css-checkbox" type="checkbox" name="ckb_canpost"/>
+						<label for="ckb_canpost" name="demo_lbl_1" class="css-label margin-none" >friends can post pics/videos</label>
+						</li>
+						<li>
+						<input id="ckb_canadd" class="css-checkbox" type="checkbox" name="ckb_canadd"/>
+						<label for="ckb_canadd" name="demo_lbl_2" class="css-label margin-none" >friends can add Friends</label>
+						</li>
+						<li>
+						<input id="ckb_public" class="css-checkbox" type="checkbox" name="ckb_public"/>
+						<label for="ckb_public" name="demo_lbl_3" class="css-label margin-none" onClick="javascript:share_clickCkbPublic();" >public</label>
+						</li>
+						<li>
+						<input id="ckb_viewable" class="css-checkbox" type="checkbox" />
+						<label id="lbl-viewable" for="ckb_viewable" name="demo_lbl_4" class="css-label margin-none" >viewable :</label>
+						<input name="inputdtpfrom" type="text" id="dtp_from" class="date-picker" readonly value="from" placeholder="From" disabled />
+						<input name="inputdtpto" type="text" id="dtp_to" class="date-picker" readonly value="to" placeholder="To" disabled />
+						</li>
+						<li>
+						<input id="ckb_selfdestruct" class="css-checkbox" type="checkbox" />
+						<label for="ckb_selfdestruct" name="demo_lbl_5" class="css-label margin-none" >ghost :</label>
+						<input name="input" type="text" id="dtp_selfdestruct" class="share-txtfield-2 date-picker" readonly value="" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == '')this.value = '';" disabled />
+						</li>
+						<?php if ($this->enableSellMedia) {
+						?>
+						<li class="sell-media-section">
+							<input id="ckb_sellmedia" class="css-checkbox css-label" type="checkbox"  />
+							<!--                            <label id="lbl-sellmedia" for="ckb_sellmedia" name="demo_lbl_6" class="css-label margin-none">Price :</label>-->
+							<label id="" for="ckb_sellmedia" name="demo_lbl_6" class="css-label margin-none">Set Pricing (public events only)</label>
+						</li>
+						<?php }  else { ?>
+						<input id="ckb_sellmedia" class="css-checkbox css-label" type="hidden"  />
+						<div class="input-wrap share-media-price">
+							<p class="italic-description">
+								You can sell media if you have registered as a seller <span class="share-register-seller">(<a href="javascript:;" onclick="registerSeller();">Register now</a>)</span> - Your account type : <strong class="share-account-type"></strong>
+								<br/>
+								And you have an activated paid subscription <span class="share-register-plan">(<a href="javascript:;" onclick="activeSubscription();">Active now</a>)</span> - Your plan : <strong class="share-account-plan"></strong>
+							</p>
+						</div>
+						<?php } ?>
+					</ul>
+					<span class="clear"></span>
+					<div class="mr-auto">
+						<a class="black_btn_skin" href="javascript:;" onclick="share_addEvent('next');">next</a>
+						<a class="black_btn_skin" href="javascript:;" onclick="share_addEvent('done');">Done</a>
+						<a class="black_btn_skin" href="javascript:share_clearMemreas(false);">cancel</a>
+					</div>
+				</div>
+				<div id="tab2-share" class="hideCls">
+					<ul id="share_medialist" class="pics scroll-area scrollClass">
+						<!--<li><a href="/memreas/img/large-pic-1.jpg" class="swipebox" title="photo-1"><img src="/memreas/img/small-pic-1.jpg" alt=""></a></li>-->
+					</ul>
+					<!--
+					<div class="event-upload-area" style="display: none;">
+					<ul class="event-upload-image">
+					<li class="first-upload"></li>
+					</ul>
+					<div class="upload-dropzone-removed upload-from-event"></div>
+					</div>
+					<div class="comment">
+					<ul>
+					<li>
+					<div class="comment-txt clearfix">add a comment</div>
+					</li>
+					<li style="position: relative;">
+					<input name="input2" accept="audio/*;capture=microphone" type="text" id="txt_comment" class="comment_txtfield" value="your comments here" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'your comments here')this.value = '';"/>
+					<a href="javascript:voiceComment();" class="voice-icon"></a>
 
-                                <a class="button" id="download-audio" href="javascript:ar_saveAudio();" style="display: none;">Download Audio</a>
+					<a class="button" id="download-audio" href="javascript:ar_saveAudio();" style="display: none;">Download Audio</a>
 
-                            </li>
-                        </ul>
-                       <div class="clearfix"></div> 
+					</li>
+					</ul>
+					<div class="clearfix"></div>
 
-                    </div>
-                    <div class="clearfix"></div>
-                    <div class="add-comment-buttons" style="text-align: center; margin-top: 10px;">
-                        <a class="black_btn_skin" href="javascript:share_addComment('next');">next</a>
-                        <a class="black_btn_skin" href="javascript:share_addComment('done');">Done</a>
-                        <a class="black_btn_skin" href="javascript:share_clearMemreas(false);">cancel</a>
-                    </div>
-                    <div class="clearfix"></div>
-                    <div class="upload-event-buttons" style="display: none;">
-                        <a class="black_btn_skin f-middle" href="javascript:hideUploadEvent();">back to media</a>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-                <div id="tab3-share" class="hideCls">
-                    <div class="styled-select hidden-memreas">
-                        <select id="cmb_socialtype" style="display:none;" >
-                            <option value="">-Choose-</option>
-                            <option value="memreas" selected="">memreas</option>
-                        </select>
-                        
-                    </div>
-                    
-                     <div class="styled-select">
-                        
-                        <label class="memreas-txt">memreas</label>
-                    </div>
-                    
-                    <ul id="share_friendslist" class="share_friends_contents scrollClass scroll-area">
-                        <!--
-                        <li>
-                          <figure class="pro-pics2"><img src="/memreas/img/profile-pic.jpg" alt=""></figure>
-                          <aside class="pro-pic_names2">Friend Name</aside>
-                        </li>
-                        -->
-                    </ul>
-                    <div id="buttons-sharefriend">
-                        <div class="akordeon-item expanded">
-                            <div class="akordeon-item-head">
-                                <div class="akordeon-item-head-container">
-                                    <div class="akordeon-heading">
-                                        email address list
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="akordeon-item-body">
-                                <div class="akordeon-item-content" style="padding:0px 10px;">
-                                  <input id="txt_emaillist" name="input" type="text" class="more-input" value="add your email list here" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'add your email list here')this.value = '';"/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="clear"></div>
-                    <ul class="share_friends_check_box hidden-memreas">
-                        <li>
-                            <input id="ckb_makegroup" class="css-checkbox" type="checkbox" />
-                            <label for="ckb_makegroup" name="demo_lbl_6" class="css-label">make this a group</label>
-                            <input id="txt_groupname" name="input" type="text" class="share-txtfield-3" value="group name here" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'group name here')this.value = '';"/>
-                        </li>
-                    </ul>
-                    <div class="clear"></div>
-                    <a class="black_btn_skin f-center" href="javascript:;" onclick="return share_makeGroup();">done</a>
-                    <a class="black_btn_skin f-middle" href="javascript:backToMedia();">cancel</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="popupSellMedia" class="popups">
-        <a id="popupSellMediaClose" onClick="disablePopup('popupSellMedia');" class='popupClose'>x</a>
-        <h2>Sell media</h2>
-        <p>&nbsp;</p>
-        
-        <ul id="content_1" class="scrollpopup give-message-form">
-            <li style="margin-bottom: 10px;">
-                <label class="textfield_names" style="width: 100%;; float: none;">Note: your price may change based on the media you select and their associated file size(s)./</label>
-            <li>
-                <label class="textfield_names">Price :</label>
-                <select name="sellmedia_price" id="sellmedia_price">
-                    <option value="">-Choose-</option>
-                    <option value="0.25">$0.05</option>
-                    <option value="0.25">$0.10</option>
-                    <option value="0.25">$0.15</option>
-                    <option value="0.25">$0.20</option>
-                    <option value="0.25">$0.25</option>
-                    <option value="0.5">$0.5</option>
-                    <option value="0.5">$0.75</option>
-                    <option value="1">$1</option>
-                    <option value="2">$2</option>
-                    <option value="5">$5</option>
-                </select>
-            </li>
-            <li>
-                <label class="textfield_names">duration :</label>
-                <input name="input3" type="text" id="sellmedia_duration_from" class="share-txtfield date-picker" value="available from" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'available from')this.value = '';" />
-            </li>
-            <li class="clear">
-                <label class="textfield_names">&nbsp;</label>
-                <input name="input4" type="text" id="sellmedia_duration_to" class="share-txtfield date-picker" value="available to" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'available to')this.value = '';" />
-            </li>
-            <li>
-                <input id="ckb_sellmedia_agree" class="css-checkbox" type="checkbox" />
-                <label id="" for="ckb_sellmedia_agree" name="demo_lbl_6" class="css-label margin-none" style="height: 100px;" >
-                    By checking this box I certify that I own the appropriate copyrights for any media within this memeas share.  Full terms are available <a href="javascript:;" onclick="sharePopupMarketTerm();">here</a>.
-                </label>
-            </li>
-        </ul>
-        <a class="black_btn_skin f-left" href="javascript:;" id="accept-notification" onclick="share_addEvent('next');">OK</a> <a class="black_btn_skin f-right" href="javascript:disablePopup('popupSellMedia');">close</a>
-    </div>
-    <div id="bgpopupSellMedia" class="backgroundPopup"></div>
-    <!-- Ads Section -->
-    <?php //include('right_advertising.phtml'); ?>
-    <!-- End Ads Section -->
+					</div>
+					-->
 
-    <!-- Bottom Ads -->
-    <?php //include('bottom_advertising.phtml'); ?>
-    <!-- End Bottom Ads -->
+					<div class="clearfix"></div>
+					<div class="add-comment-buttons" style="text-align: center; margin-top: 10px;">
+						<a class="black_btn_skin" href="javascript:share_addComment('next');">next</a>
+						<a class="black_btn_skin" href="javascript:share_addComment('done');">Done</a>
+						<a class="black_btn_skin" href="javascript:share_clearMemreas(false);">cancel</a>
+					</div>
+					<div class="clearfix"></div>
+					<div class="upload-event-buttons" style="display: none;">
+						<a class="black_btn_skin f-middle" href="javascript:hideUploadEvent();">back to media</a>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<div id="tab3-share" class="hideCls">
+					<div class="styled-select hidden-memreas">
+						<select id="cmb_socialtype" style="display:none;" >
+							<option value="">-Choose-</option>
+							<option value="memreas" selected="">memreas</option>
+						</select>
+
+					</div>
+
+					<div class="styled-select">
+
+						<label class="memreas-txt">memreas</label>
+					</div>
+
+					<ul id="share_friendslist" class="share_friends_contents scrollClass scroll-area">
+						<!--
+						<li>
+						<figure class="pro-pics2"><img src="/memreas/img/profile-pic.jpg" alt=""></figure>
+						<aside class="pro-pic_names2">Friend Name</aside>
+						</li>
+						-->
+					</ul>
+					<div id="buttons-sharefriend">
+						<div class="akordeon-item expanded">
+							<div class="akordeon-item-head">
+								<div class="akordeon-item-head-container">
+									<div class="akordeon-heading">
+										email address list
+									</div>
+								</div>
+							</div>
+							<div class="akordeon-item-body">
+								<div class="akordeon-item-content" style="padding:0px 10px;">
+									<input id="txt_emaillist" name="input" type="text" class="more-input" value="add your email list here" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'add your email list here')this.value = '';"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="clear"></div>
+					<ul class="share_friends_check_box hidden-memreas">
+						<li>
+							<input id="ckb_makegroup" class="css-checkbox" type="checkbox" />
+							<label for="ckb_makegroup" name="demo_lbl_6" class="css-label">make this a group</label>
+							<input id="txt_groupname" name="input" type="text" class="share-txtfield-3" value="group name here" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'group name here')this.value = '';"/>
+						</li>
+					</ul>
+					<div class="clear"></div>
+					<a class="black_btn_skin f-center" href="javascript:;" onclick="return share_makeGroup();">done</a>
+					<a class="black_btn_skin f-middle" href="javascript:backToMedia();">cancel</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="popupSellMedia" class="popups">
+		<a id="popupSellMediaClose" onClick="disablePopup('popupSellMedia');" class='popupClose'>x</a>
+		<h2>Sell media</h2>
+		<p>
+			&nbsp;
+		</p>
+
+		<ul id="content_1" class="scrollpopup give-message-form">
+			<li style="margin-bottom: 10px;">
+				<label class="textfield_names" style="width: 100%;; float: none;">Note: your price may change based on the media you select and their associated file size(s)./</label>
+			<li>
+				<label class="textfield_names">Price :</label>
+				<select name="sellmedia_price" id="sellmedia_price">
+					<option value="">-Choose-</option>
+					<option value="0.25">$0.05</option>
+					<option value="0.25">$0.10</option>
+					<option value="0.25">$0.15</option>
+					<option value="0.25">$0.20</option>
+					<option value="0.25">$0.25</option>
+					<option value="0.5">$0.5</option>
+					<option value="0.5">$0.75</option>
+					<option value="1">$1</option>
+					<option value="2">$2</option>
+					<option value="5">$5</option>
+				</select>
+			</li>
+			<li>
+				<label class="textfield_names">duration :</label>
+				<input name="input3" type="text" id="sellmedia_duration_from" class="share-txtfield date-picker" value="available from" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'available from')this.value = '';" />
+			</li>
+			<li class="clear">
+				<label class="textfield_names">&nbsp;</label>
+				<input name="input4" type="text" id="sellmedia_duration_to" class="share-txtfield date-picker" value="available to" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'available to')this.value = '';" />
+			</li>
+			<li>
+				<input id="ckb_sellmedia_agree" class="css-checkbox" type="checkbox" />
+				<label id="" for="ckb_sellmedia_agree" name="demo_lbl_6" class="css-label margin-none" style="height: 100px;" > By checking this box I certify that I own the appropriate copyrights for any media within this memeas share.  Full terms are available <a href="javascript:;" onclick="sharePopupMarketTerm();">here</a>. </label>
+			</li>
+		</ul>
+		<a class="black_btn_skin f-left" href="javascript:;" id="accept-notification" onclick="share_addEvent('next');">OK</a><a class="black_btn_skin f-right" href="javascript:disablePopup('popupSellMedia');">close</a>
+	</div>
+	<div id="bgpopupSellMedia" class="backgroundPopup"></div>
+	<!-- Ads Section -->
+	<?php //include('right_advertising.phtml'); ?>
+	<!-- End Ads Section -->
+
+	<!-- Bottom Ads -->
+	<?php //include('bottom_advertising.phtml'); ?>
+	<!-- End Bottom Ads -->
 </div>
 
 <div id="dlg_locationmap" class="popups2">
-    <a id="btn_locationmap_close" onClick="javascript:share_closeGoogleMap(false);" class='popupClose '>x</a>
-    <h2>location</h2>
-    <a id="btn_locationmap_ok" class="black_btn_skin btn_locationmap_ok" href="javascript:share_closeGoogleMap(true);">OK</a>
-    <input id="txt_locationmap_address" class="txt_locationmap_address " name="input" type="text" />
-    <div class="clear"></div>
-    <div id="div_locationmap_maparea" class="map_box"></div>
+	<a id="btn_locationmap_close" onClick="javascript:share_closeGoogleMap(false);" class='popupClose '>x</a>
+	<h2>location</h2>
+	<a id="btn_locationmap_ok" class="black_btn_skin btn_locationmap_ok" href="javascript:share_closeGoogleMap(true);">OK</a>
+	<input id="txt_locationmap_address" class="txt_locationmap_address " name="input" type="text" />
+	<div class="clear"></div>
+	<div id="div_locationmap_maparea" class="map_box"></div>
 </div>
 <div id="div_locationmap_back" class="backgroundPopup"></div>
 
 <div id="popupMarketTerms" class="popups">
-  <a id="popupMarketTermsClose" onclick="" class='popupTermsAndService callback-btn'>x</a>
-    <h2>Marketplace Terms of Service</h2>
-    <ul id="TermsAndServiceContent" class="popup_legal scrollpopup">
-        <?php include 'more_tabs/help/marketplace-terms-service.phtml'; ?>
-    </ul>
-    <a class="black_btn_skin f-left callback-btn" href="javascript:;" onclick="">ok</a>
+	<a id="popupMarketTermsClose" onclick="" class='popupTermsAndService callback-btn'>x</a>
+	<h2>Marketplace Terms of Service</h2>
+	<ul id="TermsAndServiceContent" class="popup_legal scrollpopup">
+		<?php
+        include 'more_tabs/help/marketplace-terms-service.phtml';
+ ?>
+	</ul>
+	<a class="black_btn_skin f-left callback-btn" href="javascript:;" onclick="">ok</a>
 </div>
 <div id="bgpopupMarketTerms" class="backgroundPopup"></div>
