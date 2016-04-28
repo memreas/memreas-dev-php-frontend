@@ -362,23 +362,6 @@ class IndexController extends AbstractActionController {
 	}
 	
 	/*
-	 * Canvas page
-	 */
-	public function canvasAction() {
-		$this->memreas_session ();
-		$event_id = $_GET ['event'];
-		if (empty ( $event_id ))
-			$path = $this->security ( "application/index/fb_default.phtml" );
-		else
-			$path = $this->security ( "application/index/canvas.phtml" );
-		$view = new ViewModel ( array (
-				"event_id" => $event_id 
-		) );
-		$view->setTemplate ( $path );
-		return $view;
-	}
-	
-	/*
 	 * Write constant to javascript
 	 */
 	public function writeJsConstants() {

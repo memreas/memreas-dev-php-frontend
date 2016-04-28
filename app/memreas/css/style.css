@@ -655,7 +655,7 @@ nav ul li a {
 	margin-bottom: -1px;
 	font-size: 12px;
 	overflow: hidden;
-	padding: 13%;
+/*	padding: 13%;*/
 	text-align: center;
 }
 
@@ -3677,3 +3677,22 @@ background-image: url(../img/video-play.svg);
    pointer-events: none !important;
    cursor: default !important;
 }
+
+//Location
+.fixed-bar {
+    position: fixed;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+}
+
+ .gallery {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    border-radius: 0px;
+    position: relative;
+    background: #000 url(/memreas/img/black_denim.png);
+    box-shadow: 0 2px 1px rgba(255,255,255,0.9), 0 -2px 1px rgba(255,255,255,0.9);
+}
+

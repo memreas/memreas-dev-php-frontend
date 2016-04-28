@@ -80,7 +80,7 @@ jQuery.fetchPublic = function() {
 			    eventObj.event_name = $(event).filter('event_name')
 				    .html();
 
-			    console.log("eventObj.profile_img--->" + eventObj.profile_img);
+			    //console.log("eventObj.profile_img--->" + eventObj.profile_img);
 			    //
 			    // Check price to see if we need overlay
 			    //
@@ -169,7 +169,6 @@ jQuery.fetchPublic = function() {
 				// JSON.stringify(event_media));
 				event_media_entry.event_media_name = getValueFromXMLTag(
 					event_media, 'event_name');
-
 				event_media_entry.event_media_id = getValueFromXMLTag(
 					event_media, 'event_media_id');
 				event_media_entry._event_media_type_ = getValueFromXMLTag(
