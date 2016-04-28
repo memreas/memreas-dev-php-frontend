@@ -23,6 +23,9 @@
 	* Licensed under the MIT license.
 	*/
 	
+	var autoSlide = false; //set this to enable autoslide.
+	var delayTime = 3000; //ms — autoslide delay.
+	
 	var $event = $.event,
 	$special,
 	resizeTimeout;
@@ -204,13 +207,6 @@
 		imgSizeItemSelector : 'img',
 		// index of the current item (left most item of the carousel)
 		start : 0,
-		// autoslide feature: true || false
-		// automatically loops through the carousel (after hitting the end of the list goes back to front)
-		// disabled by default
-		autoSlide: false,
-		// autoslide delay time, specifies time interval between autoslide steps (in milliseconds)
-		// 3000ms by default
-		delayTime: 3000,
 		// click item callback
 		onClick : function( el, position, evt ) { return false; },
 		onReady : function() { return false; },
@@ -398,14 +394,14 @@
 
 			this.$navPrev = this.$navigation.find( 'span.elastislide-prev' ).on( 'mousedown.elastislide', function( event ) {
 
-				self._slide( 'prev' );
+				self._slide( 'next' );
 				return false;
 
 			} );
 
 			this.$navNext = this.$navigation.find( 'span.elastislide-next' ).on( 'mousedown.elastislide', function( event ) {
 
-				self._slide( 'next' );
+				self._slide( 'prev' );
 				return false;
 
 			} );
@@ -452,7 +448,7 @@
 			
 			var self = this;
 			//autoslide. To enablethis, set "var autoSlide" to "true" above.
-			if( this.options.autoSlide ) {
+			if( autoSlide ) {
 				var translation = 0;
 				// width/height of an item ( <li> )
 				var itemSpace = this.options.orientation === 'horizontal' ? this.$items.outerWidth( true ) : this.$items.outerHeight( true );
@@ -472,7 +468,7 @@
 				        self._slideTo(0);
 				        translation = 0;
 				    }
-				}, this.options.delayTime);
+				}, delayTime);
 			}
 			
 			$window.on( 'debouncedresize.elastislide', function() {
@@ -567,12 +563,12 @@
 
 			if( display ) {
 
-				( dir === 'next' ) ? this.$navNext.show() : this.$navPrev.show();
+				( dir === 'prev' ) ? this.$navNext.show() : this.$navPrev.show();
 
 			}
 			else {
 
-				( dir === 'next' ) ? this.$navNext.hide() : this.$navPrev.hide();
+				( dir === 'prev' ) ? this.$navNext.hide() : this.$navPrev.hide();
 
 			}
 			
@@ -668,11 +664,11 @@
 			if( this.support ) {
 			
 		                if (this.options.orientation === 'horizontal') {
-		                    this.$el.css( '-webkit-transform', 'translateX(' + tvalue + 'px)' );
-		                    this.$el.css( '-o-transform', 'translateX(' + tvalue + 'px)' );
-		                    this.$el.css( '-ms-transform', 'translateX(' + tvalue + 'px)' );
-		                    this.$el.css( '-moz-transform', 'translateX(' + tvalue + 'px)' );
-		                    this.$el.css( 'transform', 'translateX(' + tvalue + 'px)' );
+		                    this.$el.css( '-webkit-transform', 'translateX(' + -tvalue + 'px)' );
+		                    this.$el.css( '-o-transform', 'translateX(' + -tvalue + 'px)' );
+		                    this.$el.css( '-ms-transform', 'translateX(' + -tvalue + 'px)' );
+		                    this.$el.css( '-moz-transform', 'translateX(' + -tvalue + 'px)' );
+		                    this.$el.css( 'transform', 'translateX(' + -tvalue + 'px)' );
 		                } else {
 		                    this.$el.css( '-webkit-transform', 'translateY(' + tvalue + 'px)' );
 		                    this.$el.css( '-o-transform', 'translateY(' + tvalue + 'px)' );
@@ -709,7 +705,6 @@
 
 		},
 		_slideTo : function( pos ) {
-
 			var pos = pos || this.current,
 				translation = Math.abs( this.translation ) || 0,
 				itemSpace = this.options.orientation === 'horizontal' ? this.$items.outerWidth( true ) : this.$items.outerHeight( true ),

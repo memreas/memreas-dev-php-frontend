@@ -17,8 +17,17 @@
 			</ul>
 			<div id="tab-content-memreas-detail">
 				<div id="memreas-detail-tabGallery" class="hideCls">
-					<ul id="content_1" class="pics memreas-detail-gallery">
+					<div id="links" class="links linksDatacnt"></div>
+					<div id="blueimp-gallery"
+						class="blueimp-gallery blueimp-gallery-controls"
+						data-start-slideshow="false">
+						<div class="slides"></div>
+						<h3 class="title"></h3>
+						<a class="prev">‹</a> <a class="next">›</a> <a class="close">×</a>
+					</div>
 
+					<ul id="content_1" class="pics memreas-detail-gallery">
+						<?php //js populates this list?>
 					</ul>
 					<div id="add_buttons">
 						<a id="btnAddMedia" class="black_btn_skin f-left"
@@ -203,9 +212,9 @@
 				<form enctype="multipart/form-data" action="" method="post" name=""
 					class="HideReport" id="offensivereportform"
 					style="background: none; border-bottom: none;">
-					<label for="ocform_reason">reason:</label> 
-					<input name="ocform_reason" id="ocform_reason" type="text" placeholder="add reason here""/>
-					<br /> <br />
+					<label for="ocform_reason">reason:</label> <input
+						name="ocform_reason" id="ocform_reason" type="text"
+						placeholder="add reason here" "/> <br /> <br />
 					<div style="clear: both;"></div>
 
 
@@ -258,8 +267,6 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-
-       // $("#memreas-detail-gallery").fotorama().fadeIn(500);
     });
 
 </script>

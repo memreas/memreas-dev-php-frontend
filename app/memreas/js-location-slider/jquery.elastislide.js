@@ -392,7 +392,7 @@
 			var self = this;
 
 			// add navigation elements
-			this.$navigation = $( '<nav><span class="elastislide-prev">Previous</span><span class="elastislide-next">Next</span></nav>' )
+			this.$navigation = $( '<nav style="height:40px !important;"><span class="elastislide-prev" style="display:block;">Previous</span><span class="elastislide-next" style="display:block;">Next</span></nav>' )
 				.appendTo( this.$wrapper );
 
 
