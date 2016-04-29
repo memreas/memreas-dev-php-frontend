@@ -3693,6 +3693,6 @@ background-image: url(../img/video-play.svg);
     border-radius: 0px;
     position: relative;
     background: #000 url(/memreas/img/black_denim.png);
-    box-shadow: 0 2px 1px rgba(255,255,255,0.9), 0 -2px 1px rgba(255,255,255,0.9);
+/*    box-shadow: 0 2px 1px rgba(255,255,255,0.9), 0 -2px 1px rgba(255,255,255,0.9);*/
 }
 
