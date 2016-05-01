@@ -135,8 +135,8 @@ jQuery.fetchPublic = function() {
 			    
 			    
 			    // for loop here for images
-			    listItem += '			<div id="links' + i
-				    + '" class="links' + i + '"></div>';
+			    listItem += '			<div class=" customscrollarnew"><div id="links' + i
+				    + '" class="links' + i + '"></div></div>';
 			    listItem += '			<div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" data-start-slideshow="false">';
 			    listItem += '				<div class="slides"></div>';
 			    listItem += '				<h3 class="title"></h3>';
