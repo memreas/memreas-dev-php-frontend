@@ -444,7 +444,7 @@ function showEventDetail(eventId, userId) {
 						+ _media_url
 						+ '" alt=""></a></li>');
                                         
-                                $('#carousellocation2').append('<li data-preview="'+ _media_thumbnail_large +'"><a href="javascript:;">'
+                                $('#carousellocation2').append('<li data-preview="'+ _media_thumbnail_large +'" class="DocumentItem"><a href="javascript:;">'
                                                 +'<img src="'+ _media_thumbnail_large +'" class="img-gallery" id="location'+ mediaId +'" alt="image04" /></a></li>');       
          
 
@@ -471,7 +471,7 @@ function showEventDetail(eventId, userId) {
                                 
                                 
                                          
-                                $('#carousellocation2').append('<li data-preview="'+ _media_thumbnail_large +'"><a href="javascript:;">'
+                                $('#carousellocation2').append('<li data-preview="'+ _media_thumbnail_large +'" class="DocumentItem"><a href="javascript:;">'
                                                 +'<img src="'+ _media_thumbnail_large +'" class="img-gallery" id="location'+ mediaId +'" alt="image04" /></a></li>');       
          
 
@@ -546,25 +546,25 @@ function showEventDetail(eventId, userId) {
 			}
 			// console.log("objArr2" + JSON.stringify(objArr2));
                         
-                    setTimeout(function () {
-                            var current = 0,
-                                    $preview = $('#preview6'),
-                                    $carouselEl = $('#carousellocation2'),
-                                    $carouselItems = $carouselEl.children(),
-                                    carousel = $carouselEl.elastislide({
-                                        current: current,
-                                        minItems: 4,
-                                        onClick: function (el, pos, evt) {
-
-
-                                            evt.preventDefault();
-
-                                        },
-                                    });
-
-
-
-                        }, 2000)
+//                    setTimeout(function () {
+//                            var current = 0,
+//                                    $preview = $('#preview6'),
+//                                    $carouselEl = $('#carousellocation2'),
+//                                    $carouselItems = $carouselEl.children(),
+//                                    carousel = $carouselEl.elastislide({
+//                                        current: current,
+//                                        minItems: 4,
+//                                        onClick: function (el, pos, evt) {
+//
+//
+//                                            evt.preventDefault();
+//
+//                                        },
+//                                    });
+//
+//
+//
+//                        }, 2000)
                         
                         
                         
