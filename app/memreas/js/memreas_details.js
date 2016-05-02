@@ -62,8 +62,8 @@ $(function() {
 	    .click(
 		    function() {
 			if (eventdetail_media_id == '') {
-			    jerror("Please choose a media from detail tab to view it's location");
-			    return false;
+			    //jerror("Please choose a media from detail tab to view it's location");
+			   // return false;
 			}
 			$("#memreas-detail-location").empty().removeAttr(
 				'style');
@@ -89,6 +89,10 @@ $(function() {
 				    }
 				    gallery_initGoogleMap(
 					    "memreas-detail-location", lat, lng);
+                                    console.log('Response Memreas-->'+response);
+                                    
+      
+                                    
 				});
 		    });
 });
@@ -439,6 +443,10 @@ function showEventDetail(eventId, userId) {
 						+ '" class="swipebox" title="photo-2"><img src="'
 						+ _media_url
 						+ '" alt=""></a></li>');
+                                        
+                                $('#carousellocation2').append('<li data-preview="'+ _media_thumbnail_large +'" class="DocumentItem"><a href="javascript:;">'
+                                                +'<img src="'+ _media_thumbnail_large +'" class="img-gallery" id="location'+ mediaId +'" alt="image04" /></a></li>');       
+         
 
 			    } else if (_media_type == 'video') {
 				_media_url_hls = getValueFromXMLTag(media,
@@ -460,6 +468,12 @@ function showEventDetail(eventId, userId) {
 				_media_thumbnail = _media_thumbnail[0];
 
 				media_download_url = _media_url_web;
+                                
+                                
+                                         
+                                $('#carousellocation2').append('<li data-preview="'+ _media_thumbnail_large +'" class="DocumentItem"><a href="javascript:;">'
+                                                +'<img src="'+ _media_thumbnail_large +'" class="img-gallery" id="location'+ mediaId +'" alt="image04" /></a></li>');       
+         
 
 				target_element
 					.append('<li class="video-media" id="memreasvideo-'
@@ -531,6 +545,30 @@ function showEventDetail(eventId, userId) {
 
 			}
 			// console.log("objArr2" + JSON.stringify(objArr2));
+                        
+//                    setTimeout(function () {
+//                            var current = 0,
+//                                    $preview = $('#preview6'),
+//                                    $carouselEl = $('#carousellocation2'),
+//                                    $carouselItems = $carouselEl.children(),
+//                                    carousel = $carouselEl.elastislide({
+//                                        current: current,
+//                                        minItems: 4,
+//                                        onClick: function (el, pos, evt) {
+//
+//
+//                                            evt.preventDefault();
+//
+//                                        },
+//                                    });
+//
+//
+//
+//                        }, 2000)
+                        
+                        
+                        
+                        
 
 			blueimp.Gallery(objArr2, {
 			    container : '#blueimp-video-carousel-gallery',
@@ -1273,3 +1311,6 @@ function submitDMCA() {
     }, 'undefined', true);
 
 }
+
+
+

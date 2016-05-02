@@ -85,7 +85,7 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 	position: absolute;
 	cursor: pointer;
 	background: rgba(246, 246, 246, 0.5);
-	height: 235px;
+	height: 260px;
 	z-index: 999;
 	width: 72%;
 }
@@ -103,6 +103,45 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 	position: relative;
 	top: 50%;
 }
+#content-1{
+    height: 300px;
+    width: auto;
+    max-width: 50%;
+    min-width: 600px;
+    display: inline-block;
+    vertical-align: bottom;
+    
+}
+#content-1 img{width:90px; height: 90px; }
+#content-1 li{display: block;}
+.public-profile-img{width: 80px; height: 80px;}
+ .event_section{border-bottom:none;}
+
+ ::-webkit-scrollbar {
+	width: 8px;
+}
+::-webkit-scrollbar-button {
+	width: 8px;
+	height:5px;
+}
+::-webkit-scrollbar-track {
+	background:#eee;
+	border: thin solid lightgray;
+	box-shadow: 0px 0px 3px #dfdfdf inset;
+	border-radius:10px;
+}
+::-webkit-scrollbar-thumb {
+	background:#193D65;
+	border: thin solid gray;
+	border-radius:10px;
+}
+::-webkit-scrollbar-thumb:hover {
+	background:#7d7d7d;
+}			
+
+
+
+
 </style>
 </head>
 
@@ -150,8 +189,11 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 		<div class="row-fluid" style="margin-bottom: 20px;">
 			<div
 				class="<?php echo ($this->enableAdvertising) ? 'span9' : 'span9';?>">
-				<ul id="public_list"
-					class=" scrollClass  publicMemreas scroll-area mCustomScrollbar _mCS_9 _mCS_16"
+                           
+                                       
+                            
+				<ul id="public_list" 
+					class="publicpagelising scrollClass  publicMemreas scroll-area"
 					style="height: 100%; overflow: auto;">
 					<?php //js populates... ?>
 				</ul>
@@ -223,7 +265,8 @@ $(function () {
 		window.location='/index';  
 	})
        
-        
+       
+       				
         
 });
         </script>
