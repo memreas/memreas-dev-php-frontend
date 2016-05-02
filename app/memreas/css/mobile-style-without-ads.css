@@ -27,6 +27,16 @@ and open the template in the editor.
 	}
 }
 
+@media only screen 
+  and (min-device-width: 768px) 
+  and (max-device-width: 1024px) 
+  and (orientation: landscape) 
+  and (-webkit-min-device-pixel-ratio: 1) {
+#gallery-location{height: 320px;}
+.noads #tab-content{margin-bottom: 10px;}
+}
+
+
 @media ( min-height : 1000px) and (min-width:1359px) {
 	#gallery #tab-content {
 		min-height: 540px;
@@ -799,6 +809,7 @@ html.noads #tab-content, html.noads #tab-content-queue, html.noads #tab-content-
                 html.noads #tab-content-more {
                     max-height: 670px;
                 }
+                .noads #tab-content{margin-bottom: 10px;}
                 
                 .linksDatacnt{max-height: 641px;}
 }
