@@ -858,6 +858,7 @@ function fetchpubsMemreas() {
 						    friends[i], 'event_media');
 					    var event_media_count = event_media.length;
 					    var StrMedia = '<div style="clear:both;"></div><ul class="event-pics">';
+                                            var overlaydiv='';
 
 					    var event_metadata = getValueFromXMLTag(
 						    friends[i],
@@ -924,6 +925,13 @@ function fetchpubsMemreas() {
 								+ removeCdataCorrectLink(event_media_image)
 								+ '"  style=""/></a></li>';
 						    }
+                                                    overlaydiv='<div class="overlaypopUp2" onclick="popupBuyMedia(\''
+								+ event_id
+								+ '\', \''
+								+ event_price
+								+ '\', \''
+								+ event_name
+								+ '\');"></div>';
 						}
 					    }
 
@@ -958,7 +966,9 @@ function fetchpubsMemreas() {
 					    }
 					    $(target_object)
 						    .append(
-							    '<div class="event_section"><section class="row-fluid clearfix">'
+							    '<div class="event_section">'
+                                                                    +overlaydiv
+                                                                    +'<section class="row-fluid clearfix">'
 								    + '<figure class="pro-pics2"><img class="public-profile-img" src="'
 								    + profile_img
 								    + '" alt=""></figure>'
