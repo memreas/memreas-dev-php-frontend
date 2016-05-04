@@ -3732,3 +3732,21 @@ background-image: url(../img/video-play.svg);
 }
 .customscrollarnew a{display: inline-block; float: none; height: 113px;}
 .publicpagelising li{ margin-bottom: 20px; padding-bottom: 20px;  border-bottom:1px dotted #fff;}
+
+.overlaypopUp {
+	position: absolute;
+	cursor: pointer;
+	background: rgba(246, 246, 246, 0.5);
+	height: 260px;
+	z-index: 999;
+	width: 72%;
+}
+.overlaypopUp2{
+    position: absolute;
+	cursor: pointer;
+	background: rgba(246, 246, 246, 0.5);
+	height: 187px;
+	z-index: 999;
+	width: 100%;
+    
+}

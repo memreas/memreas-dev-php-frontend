@@ -8,6 +8,7 @@
 <?php
 
 use Application\Model\MemreasConstants;
+use Application\Model\MemreasStringsFE;
 header ( 'Cache-Control: no-cache, no-store, must-revalidate' ); // HTTP 1.1.
 header ( 'Pragma: no-cache' ); // HTTP 1.0.
 header ( 'Expires: 0' ); // Proxies.
@@ -89,7 +90,7 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
     <div class="row-fluid">
         <div class="span12" style="text-align: center; margin-bottom: 10px;">
 	        <div class="mobile-content" id="Android">
-			     You will receive an email to verify your email address. You can download our APK for Android via this link  <a href="http://www.memreas.com/android">http://www.memreas.com/android</a>
+	        <?php echo MemreasStringsFE::getString("MOBILE_ANDROID_INVITE");?> <a href="http://www.memreas.com/android">http://www.memreas.com/android</a>
 		     </div>
 	        <div class="mobile-content" id="iOS">
 			     You will receive an email to verify your email address. if you would like to join the iOS beta test please email admin@memreas.com with subject TestFlight Access.
