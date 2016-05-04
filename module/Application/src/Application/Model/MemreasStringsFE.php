@@ -10,7 +10,7 @@ namespace Application\Model;
 class MemreasStringsFE {
 	
 	//en section
-	const MYSTRING_EN = 'my string en';
+	const MOBILE_ANDROID_INVITE_EN = 'You will receive an email to verify your email address. You can download our APK for Android via this link ';
 
     static function getString($string, $locale = "_EN") {
         return constant('self::'. $string . $locale);
