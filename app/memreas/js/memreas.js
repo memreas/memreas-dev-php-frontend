@@ -363,7 +363,7 @@ function fetchMyMemreas() {
 			var event_media_count = event_media.length;
 			var event = events[i].innerHTML;
 
-			var StrMedia = '<ul class="event-pics">';
+			var StrMedia = '<div class="DocumentList3"><ul class="event-pics list-inline">';
 			var eventId = $(event).filter('event_id').html();
 			for (var j = 0; j < event_media_count; j++) {
 			    var event_medi = event_media[j];
@@ -372,7 +372,7 @@ function fetchMyMemreas() {
 			    var _event_media_type_ = getValueFromXMLTag(
 				    event_medi, 'event_media_type');
 			    if (_event_media_type_ == 'image') {
-				StrMedia += '<li class="image"><a href="javascript:;" onclick="showEventDetail(\''
+				StrMedia += '<li class="image DocumentItem1"><a href="javascript:;" onclick="showEventDetail(\''
 					+ eventId
 					+ '\', \''
 					+ user_id
@@ -380,7 +380,7 @@ function fetchMyMemreas() {
 					+ removeCdataCorrectLink(event_media_image)
 					+ '"  style=""/></a></li>';
 			    } else if (_event_media_type_ == 'video') {
-				StrMedia += '<li class="video"><a href="javascript:;" onclick="showEventDetail(\''
+				StrMedia += '<li class="video DocumentItem1"><a href="javascript:;" onclick="showEventDetail(\''
 					+ eventId
 					+ '\', \''
 					+ user_id
@@ -389,12 +389,12 @@ function fetchMyMemreas() {
 					+ '"  style=""/></a></li>';
 			    }
 			}
-			StrMedia += '</ul><div style="clear:both;"></div>';
+			StrMedia += '</ul></div><div style="clear:both;"></div>';
 			var like_count = $(event).filter('like_count').html();
 			var comment_count = $(event).filter('comment_count')
 				.html();
 			var event_name = $(event).filter('event_name').html();
-			var element = '<div class="event_section">'
+			var element = '<div class="event_section ">'
 				+ '<aside class="event_name" onclick="showEventDetail(\''
 				+ eventId
 				+ '\', \''
@@ -857,7 +857,7 @@ function fetchpubsMemreas() {
 					    var event_media = getSubXMLFromTag(
 						    friends[i], 'event_media');
 					    var event_media_count = event_media.length;
-					    var StrMedia = '<div style="clear:both;"></div><ul class="event-pics">';
+					    var StrMedia = '<div style="clear:both;"></div><div class="DocumentList"><ul class="event-pics">';
                                             var overlaydiv='';
 
 					    var event_metadata = getValueFromXMLTag(
@@ -887,7 +887,7 @@ function fetchpubsMemreas() {
 							|| Account
 								.checkOwnEvent(event_id)) {
 						    if (_event_media_type_ == 'image') {
-							StrMedia += '<li class="image"><a href="javascript:;" onclick="showEventDetail(\''
+							StrMedia += '<li class="image DocumentItem"><a href="javascript:;" onclick="showEventDetail(\''
 								+ event_id
 								+ '\', \''
 								+ user_id
@@ -895,7 +895,7 @@ function fetchpubsMemreas() {
 								+ removeCdataCorrectLink(event_media_image)
 								+ '"  style=""/></a></li>';
 						    } else if (_event_media_type_ == 'video') {
-							StrMedia += '<li class="video"><a href="javascript:;" onclick="showEventDetail(\''
+							StrMedia += '<li class="video DocumentItem"><a href="javascript:;" onclick="showEventDetail(\''
 								+ event_id
 								+ '\', \''
 								+ user_id
@@ -905,7 +905,7 @@ function fetchpubsMemreas() {
 						    }
 						} else {
 						    if (_event_media_type_ == 'image') {
-							StrMedia += '<li class="image"><a href="javascript:;" onclick="popupBuyMedia(\''
+							StrMedia += '<li class="image DocumentItem"><a href="javascript:;" onclick="popupBuyMedia(\''
 								+ event_id
 								+ '\', \''
 								+ event_price
@@ -915,7 +915,7 @@ function fetchpubsMemreas() {
 								+ removeCdataCorrectLink(event_media_image)
 								+ '"  style=""/></a></li>';
 						    } else if (_event_media_type_ == 'video') {
-							StrMedia += '<li class="video"><a href="javascript:;" onclick="popupBuyMedia(\''
+							StrMedia += '<li class="video DocumentItem" ><a href="javascript:;" onclick="popupBuyMedia(\''
 								+ event_id
 								+ '\', \''
 								+ event_price
@@ -931,11 +931,11 @@ function fetchpubsMemreas() {
 								+ event_price
 								+ '\', \''
 								+ event_name
-								+ '\');"></div>';
+								+ '\');"><a href="#" class="btnpublicbuynow">purchase access $'+event_price+'</a></div>';
 						}
 					    }
 
-					    StrMedia += '</ul><div style="clear:both;"></div>';
+					    StrMedia += '</ul></div><div style="clear:both;"></div>';
 
 					    var event_friends = getSubXMLFromTag(
 						    friends[i], 'event_friends');
@@ -966,7 +966,7 @@ function fetchpubsMemreas() {
 					    }
 					    $(target_object)
 						    .append(
-							    '<div class="event_section">'
+							    '<div class="event_section addstyling">'
                                                                     +overlaydiv
                                                                     +'<section class="row-fluid clearfix">'
 								    + '<figure class="pro-pics2"><img class="public-profile-img" src="'
