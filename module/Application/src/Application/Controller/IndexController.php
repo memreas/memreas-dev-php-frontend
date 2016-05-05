@@ -44,7 +44,7 @@ class IndexController extends AbstractActionController {
 		}
 		return $xml->asXML ();
 	}
-	public function fetchXML($action, $xml) {
+	public function fetchXML($action, $xml, $wsurl=MemreasConstants::MEMREAS_WS) {
 		$this->memreas_session ();
 		/**
 		 * Handle session and fetch sid
@@ -71,9 +71,11 @@ class IndexController extends AbstractActionController {
 		 */
 		// $guzzle = new \GuzzleHttp\Client (['verify' => false]);
 		$guzzle = new \GuzzleHttp\Client ();
-		Mlog::addone ( __CLASS__ . __METHOD__ . 'about to guzzle url+action+xml', MemreasConstants::MEMREAS_WS . $action . $xml );
+		Mlog::addone ( __CLASS__ . __METHOD__ . 'guzzle url', $wsurl);
+		Mlog::addone ( __CLASS__ . __METHOD__ . 'guzzle $action', $action);
+		Mlog::addone ( __CLASS__ . __METHOD__ . 'guzzle $xml', $xml);
 		try {
-			$response = $guzzle->post ( MemreasConstants::MEMREAS_WS, [ 
+			$response = $guzzle->post ( $wsurl, [ 
 					'form_params' => [ 
 							'action' => $action,
 							'xml' => $xml 
@@ -172,13 +174,24 @@ class IndexController extends AbstractActionController {
 			$json = $_REQUEST ['json'];
 			$message_data = json_decode ( $json, true );
 			
+			Mlog::addone ( $cm . __LINE__ . '::$message_data--->', $message_data );
+			$wsurl = MemreasConstants::MEMREAS_WS;
+			if (isset($message_data['json'])) {
+				$data = simplexml_load_string ( $message_data['json'] );
+				// use public controller if public_page
+				if (isset($data->viewevent) && isset($data->viewevent->public_page)) {
+					$wsurl = MemreasConstants::MEMREAS_WS_PUBLIC;
+				}
+			}
+			
+			Mlog::addone ( $cm . __LINE__ . '::web service url--->', $wsurl );
 			// Setup the URL and action
 			$ws_action = $message_data ['ws_action'];
 			$type = $message_data ['type'];
 			$xml = $message_data ['json'];
 			
 			// Guzzle the Web Service
-			$result = $this->fetchXML ( $ws_action, $xml );
+			$result = $this->fetchXML ( $ws_action, $xml, $wsurl );
 			// Mlog::addone ( $cm . __LINE__. '::$result--->', $result );
 			$json = json_encode ( $result );
 			
@@ -196,10 +209,13 @@ class IndexController extends AbstractActionController {
 			
 			exit ();
 		} else {
-			// $path = $this->security ( "application/index/sample-ajax.phtml"
-			// );
-			// $view = new ViewModel ();
-			// ->setTemplate ( $path ); // path to phtml file under view folder
+			// return 500 
+			$path = "application/index/500.phtml";
+			$view = new ViewModel ( array (
+			) );
+			$view->setTemplate ( $path ); // path to phtml file under view folder
+			return $view;
+				
 		}
 		
 		return $view;
@@ -698,9 +714,37 @@ class IndexController extends AbstractActionController {
 		$enableAdvertising = MemreasConstants::MEMREAS_ADS;
 		$view = new ViewModel ( array (
 			'enableAdvertising' => $enableAdvertising,
+			'public_url' => MemreasConstants::MEMREAS_WS
 		) );
 		$view->setTemplate ( $path ); // path to phtml file under view folder
 		return $view;
 	}
+
+	/**
+	 * Action to return Public Person Page
+	 */
+	public function publicPersonAction() {
+		$path = "application/index/person_page.phtml";
+		$enableAdvertising = MemreasConstants::MEMREAS_ADS;
+		$view = new ViewModel ( array (
+				'enableAdvertising' => $enableAdvertising,
+		) );
+		$view->setTemplate ( $path ); // path to phtml file under view folder
+		return $view;
+	}
+	
+	/**
+	 * Action to return Public Person Page
+	 */
+	public function publicMemreasAction() {
+		$path = "application/index/memreas_page.phtml";
+		$enableAdvertising = MemreasConstants::MEMREAS_ADS;
+		$view = new ViewModel ( array (
+				'enableAdvertising' => $enableAdvertising,
+		) );
+		$view->setTemplate ( $path ); // path to phtml file under view folder
+		return $view;
+	}
+	
 } // end class IndexController
 

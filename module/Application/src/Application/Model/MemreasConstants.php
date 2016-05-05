@@ -7,8 +7,11 @@
 namespace Application\Model;
 
 class MemreasConstants {
+
+	//Server URLs
 	const MEMREAS_FE = "https://fe.memreas.com";
 	const MEMREAS_WS = "https://memreasdev-ws.memreas.com";
+	const MEMREAS_WS_PUBLIC = "https://memreasdev-ws.memreas.com/public";
 	const MEMREAS_PAY = "https://memreasdev-ws.memreas.com/index?action=";
 	//change..
 	//const MEMREAS_PAY = "https://memreasdev-pay.memreas.com";
@@ -36,5 +39,10 @@ class MemreasConstants {
 	
 	//Android url for download
 	const ANDROID_DOWNLOAD_URL = "https://play.google.com/apps/testing/com.memreas";
+	
+	//Meta
+	const MEMREAS_DESCRIPTION = "memreas is a social media network that allows users to access their content on the web or our Android and iOS apps.  memreas members have the ability to upload or access images or video with 4k support.";
+	const MEMREAS_KEYWORDS = "social networking media streaming 4k HDR";
+	
 	
 }
