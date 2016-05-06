@@ -451,7 +451,7 @@ function showEventDetail(eventId, userId) {
                                 $('#carousellocation2').append('<li data-preview="'+ _media_thumbnail_large +'" class="DocumentItem"><a href="javascript:;">'
                                                 +'<img src="'+ _media_thumbnail_large +'" class="img-gallery" id="location'+ mediaId +'" alt="image04" /></a></li>');       
          
-                                   linksContainerData2 += '<a href="' + _media_url_web
+                                   linksContainerData2 += '<a href="' + main_media_url
 				    + '"';
 			    linksContainerData2 += ' title="' + mediaId + '"';
 			    linksContainerData2 += ' type="video/mp4" data-gallery="'
@@ -484,7 +484,7 @@ function showEventDetail(eventId, userId) {
 
 				media_download_url = _media_url_web;
                                 
-                                  linksContainerData2 += '<a href="' + main_media_url
+                                  linksContainerData2 += '<a href="' + _media_url_web
 				    + '" title="' + mediaId
 				    + '" data-gallery="' + mediaId
 				    + '" class="blueimp-gallery-thumb-anchor"';
@@ -574,7 +574,7 @@ function showEventDetail(eventId, userId) {
                         $(linksContainer2).append(linksContainerData2);
                         
                         
-			// console.log("objArr2" + JSON.stringify(objArr2));
+			 console.log("objArr2ARR" + JSON.stringify(objArr2));
                         
 //                    setTimeout(function () {
 //                            var current = 0,
@@ -1039,17 +1039,17 @@ $('.elastislide-list > li >a').click(function() {
     return false;
 });
 
-$("#tabs-memreas-detail li:first").click(function() {
-    blueimp.Gallery(objArr2, {
-	onslide : function() {
-	},
-	container : '#blueimp-video-carousel-gallery',
-	carousel : 'true',
-	preloadRange : 2,
-	transitionSpeed : 400
-    });
-
-});
+//$("#tabs-memreas-detail li:first").click(function() {
+//    blueimp.Gallery(objArr2, {
+//	onslide : function() {
+//	},
+//	container : '#blueimp-video-carousel-gallery',
+//	carousel : 'true',
+//	preloadRange : 2,
+//	transitionSpeed : 400
+//    });
+//
+//});
 var event_media_ID_variable = '';
 var eventdetail_id = '';
 function BlueIMPGallery() {
