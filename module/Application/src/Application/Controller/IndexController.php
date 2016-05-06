@@ -44,7 +44,7 @@ class IndexController extends AbstractActionController {
 		}
 		return $xml->asXML ();
 	}
-	public function fetchXML($action, $xml) {
+	public function fetchXML($action, $xml, $wsurl = MemreasConstants::MEMREAS_WS) {
 		$this->memreas_session ();
 		/**
 		 * Handle session and fetch sid
@@ -71,9 +71,11 @@ class IndexController extends AbstractActionController {
 		 */
 		// $guzzle = new \GuzzleHttp\Client (['verify' => false]);
 		$guzzle = new \GuzzleHttp\Client ();
-		Mlog::addone ( __CLASS__ . __METHOD__ . 'about to guzzle url+action+xml', MemreasConstants::MEMREAS_WS . $action . $xml );
+		Mlog::addone ( __CLASS__ . __METHOD__ . 'guzzle url', $wsurl );
+		Mlog::addone ( __CLASS__ . __METHOD__ . 'guzzle $action', $action );
+		Mlog::addone ( __CLASS__ . __METHOD__ . 'guzzle $xml', $xml );
 		try {
-			$response = $guzzle->post ( MemreasConstants::MEMREAS_WS, [ 
+			$response = $guzzle->post ( $wsurl, [ 
 					'form_params' => [ 
 							'action' => $action,
 							'xml' => $xml 
@@ -89,7 +91,7 @@ class IndexController extends AbstractActionController {
 		if (empty ( $response )) {
 			// something is wrong - logout
 			Mlog::addone ( __CLASS__ . __METHOD__ . 'EMPTY RESPONSE occurred for guzzle url+action+xml', MemreasConstants::MEMREAS_WS . $action . $xml );
-			//return $this->logoutAction ();
+			// return $this->logoutAction ();
 		}
 		
 		return $response->getBody ();
@@ -172,13 +174,24 @@ class IndexController extends AbstractActionController {
 			$json = $_REQUEST ['json'];
 			$message_data = json_decode ( $json, true );
 			
+			Mlog::addone ( $cm . __LINE__ . '::$message_data--->', $message_data );
+			$wsurl = MemreasConstants::MEMREAS_WS;
+			if (isset ( $message_data ['json'] )) {
+				$data = simplexml_load_string ( $message_data ['json'] );
+				// use public controller if public_page
+				if (isset ( $data->viewevent ) && isset ( $data->viewevent->public_page )) {
+					$wsurl = MemreasConstants::MEMREAS_WS_PUBLIC;
+				}
+			}
+			
+			Mlog::addone ( $cm . __LINE__ . '::web service url--->', $wsurl );
 			// Setup the URL and action
 			$ws_action = $message_data ['ws_action'];
 			$type = $message_data ['type'];
 			$xml = $message_data ['json'];
 			
 			// Guzzle the Web Service
-			$result = $this->fetchXML ( $ws_action, $xml );
+			$result = $this->fetchXML ( $ws_action, $xml, $wsurl );
 			// Mlog::addone ( $cm . __LINE__. '::$result--->', $result );
 			$json = json_encode ( $result );
 			
@@ -196,10 +209,11 @@ class IndexController extends AbstractActionController {
 			
 			exit ();
 		} else {
-			// $path = $this->security ( "application/index/sample-ajax.phtml"
-			// );
-			// $view = new ViewModel ();
-			// ->setTemplate ( $path ); // path to phtml file under view folder
+			// return 500
+			$path = "application/index/500.phtml";
+			$view = new ViewModel ( array () );
+			$view->setTemplate ( $path ); // path to phtml file under view folder
+			return $view;
 		}
 		
 		return $view;
@@ -249,13 +263,13 @@ class IndexController extends AbstractActionController {
 		if (isset ( $user_id )) {
 			// Fetch parms
 			if (! empty ( $_COOKIE ['memreascookie'] )) {
-				$memreascookie = '<memreascookie>'.$_COOKIE ['memreascookie'].'</memreascookie>';
+				$memreascookie = '<memreascookie>' . $_COOKIE ['memreascookie'] . '</memreascookie>';
 			}
-			$xml = '<xml>'.$memreascookie.'<user_id>' . $user_id . '</user_id><memreas_tvm>0</memreas_tvm><memreas_pre_signed_url>1</memreas_pre_signed_url></xml>';
+			$xml = '<xml>' . $memreascookie . '<user_id>' . $user_id . '</user_id><memreas_tvm>0</memreas_tvm><memreas_pre_signed_url>1</memreas_pre_signed_url></xml>';
 			Mlog::addone ( __CLASS__ . __METHOD__ . 'REGISTRATION RELATED data->memreas_tvm->xml-->', $xml );
 		} else {
-			//if both request_id and session_id are empty the session has timed out...
-			return $this->logoutAction();
+			// if both request_id and session_id are empty the session has timed out...
+			return $this->logoutAction ();
 		}
 		
 		$action = 'memreas_tvm';
@@ -328,9 +342,9 @@ class IndexController extends AbstractActionController {
 		// - something must be wrong...
 		//
 		if (empty ( $_SESSION ['user_id'] )) {
-			//$this->logoutAction ();
-			//reset session from cookie
-			$this->memreas_session();
+			// $this->logoutAction ();
+			// reset session from cookie
+			$this->memreas_session ();
 		}
 		
 		//
@@ -651,9 +665,9 @@ class IndexController extends AbstractActionController {
 	}
 	public function memreas_session() {
 		$cm = __CLASS__ . __METHOD__;
-		//Mlog::addone ( $cm . __LINE__ . '::', 'enter' );
+		// Mlog::addone ( $cm . __LINE__ . '::', 'enter' );
 		if (session_status () !== PHP_SESSION_ACTIVE) {
-			//Mlog::addone ( $cm . __LINE__ . '::', '...' );
+			// Mlog::addone ( $cm . __LINE__ . '::', '...' );
 			if (! empty ( $_COOKIE ['memreascookie'] )) {
 				session_id ( $_COOKIE ['memreascookie'] );
 				session_start ();
@@ -666,21 +680,21 @@ class IndexController extends AbstractActionController {
 			session_id ( $_COOKIE ['memreascookie'] );
 			Mlog::addone ( $cm . __LINE__ . '::$_SESSION-->', $_SESSION );
 		}
-		//Mlog::addone ( $cm . __LINE__ . '::', '...' );
+		// Mlog::addone ( $cm . __LINE__ . '::', '...' );
 		
-		//Mlog::addone ( $cm . __LINE__ . '::$_COOKIE', $_COOKIE );
-		//Mlog::addone ( $cm . __LINE__ . '::$_SESSION', $_SESSION );
+		// Mlog::addone ( $cm . __LINE__ . '::$_COOKIE', $_COOKIE );
+		// Mlog::addone ( $cm . __LINE__ . '::$_SESSION', $_SESSION );
 		if (! empty ( $_SESSION )) {
-			//Mlog::addone ( $cm . __LINE__ . '::', '...' );
+			// Mlog::addone ( $cm . __LINE__ . '::', '...' );
 			if (isset ( $_SESSION ['LAST_ACTIVITY'] ) && (time () - $_SESSION ['LAST_ACTIVITY'] > 1800)) {
 				// last request was more than 30 minutes ago
 				session_unset (); // unset $_SESSION variable for the run-time
 				session_destroy (); // destroy session data in storage
 			}
 			$_SESSION ['LAST_ACTIVITY'] = time (); // update last activity time stamp
-			//Mlog::addone ( $cm . __LINE__ . '::$_SESSION[LAST_ACTIVITY]', gmdate ( "Y-m-d\TH:i:s\Z", $_SESSION ['LAST_ACTIVITY'] ) );
+				                                       // Mlog::addone ( $cm . __LINE__ . '::$_SESSION[LAST_ACTIVITY]', gmdate ( "Y-m-d\TH:i:s\Z", $_SESSION ['LAST_ACTIVITY'] ) );
 		}
-		//Mlog::addone ( $cm . __LINE__ . '::', '...' );
+		// Mlog::addone ( $cm . __LINE__ . '::', '...' );
 	}
 	
 	/**
@@ -694,10 +708,53 @@ class IndexController extends AbstractActionController {
 	 * Action to return Public Page
 	 */
 	public function publicAction() {
-		$path = "application/index/public_page.phtml";
+		$type = ! empty ( $_REQUEST ["type"] ) ? $_REQUEST ["type"] : '';
+		
+		if (! empty ( $type )) {
+			$name = substr ( $type, 1 );
+			$tag = $type [0];
+			$path = "application/index/public_person_page.phtml";
+			$enableAdvertising = MemreasConstants::MEMREAS_ADS;
+			$view = new ViewModel ( array (
+					'enableAdvertising' => $enableAdvertising,
+					'type' => $type,
+					'tag' => $tag,
+					'name' => $name,
+			) );
+			$view->setTemplate ( $path ); // path to phtml file under view folder
+		} else if (! empty ( $type )) {
+			$tag = substr ( $type, 1 );
+			$type = $type [0];
+			$path = "application/index/public_memreas_page.phtml";
+			$enableAdvertising = MemreasConstants::MEMREAS_ADS;
+			$view = new ViewModel ( array (
+					'enableAdvertising' => $enableAdvertising,
+					'type' => $type,
+					'tag' => $tag,
+					'name' => $name,
+			) );
+			$view->setTemplate ( $path ); // path to phtml file under view folder
+		} else {
+			$path = "application/index/public_page.phtml";
+			$enableAdvertising = MemreasConstants::MEMREAS_ADS;
+			$view = new ViewModel ( array (
+					'enableAdvertising' => $enableAdvertising,
+					'public_url' => MemreasConstants::MEMREAS_WS 
+			) );
+			$view->setTemplate ( $path ); // path to phtml file under view folder
+		}
+		
+		return $view;
+	}
+	
+	/**
+	 * Action to return Public Person Page
+	 */
+	public function publicMemreasAction() {
+		$path = "application/index/memreas_page.phtml";
 		$enableAdvertising = MemreasConstants::MEMREAS_ADS;
 		$view = new ViewModel ( array (
-			'enableAdvertising' => $enableAdvertising,
+				'enableAdvertising' => $enableAdvertising 
 		) );
 		$view->setTemplate ( $path ); // path to phtml file under view folder
 		return $view;

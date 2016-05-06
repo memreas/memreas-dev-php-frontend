@@ -6,30 +6,6 @@
 var feExecAjaxURL = '/index/execAjax';
 var xml_str = "";
 
-// ///////////////////////////////
-// fetchChameleon - validate entry
-// - not working - setting in session...
-// ////////////////////////////////
-
-/*
- * fetchChameleon = function() { var action = 'fetchchameleon'; var params = [ {
- * tag : 'x_memreas_chameleon', value : getCookie('x_memreas_chameleon') } ];
- * var xml_input = getXMLStringFromParamArray(action, params); var data = new
- * Object(); var token_test = ''; data.ws_action = action; data.type = "jsonp";
- * data.json = xml_input; data.callback = ''; var json_data =
- * JSON.stringify(data);
- * 
- * $.ajax({ crossDomain : true, type : 'post', url : feExecAjaxURL, async :
- * false, dataType : 'jsonp', data : 'json=' + json_data, success :
- * function(response) { setCookie('x_memreas_chameleon',
- * getValueFromXMLTag(response, 'x_memreas_chameleon').trim());
- * console.log('cookie x_memreas_chameleon-->' +
- * getCookie('x_memreas_chameleon')); token_test = getValueFromXMLTag(response,
- * 'token_test').trim(); if (token_test != '') { console.log("token_test-->" +
- * token_test); } }, error : function(jqXHR, textStatus, errorThrown) { // do
- * nothing } }); }
- */
-
 // ////////////////////////////////
 // Input xml and fetch output xml
 // ////////////////////////////////
