@@ -42,6 +42,12 @@ jQuery.fetchPublic = function() {
 		tag : 'public_page',
 		value : '1'
 	    }, {
+		tag : 'tag',
+		value : tag
+	    }, {
+		tag : 'name',
+		value : name
+	    }, {
 		tag : 'page',
 		value : '1'
 	    }, {
