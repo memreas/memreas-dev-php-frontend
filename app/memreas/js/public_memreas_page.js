@@ -21,6 +21,9 @@ jQuery.fetchPublic = function() {
     var verticalHeight = window.innerHeight;
     var HorizontalWidth = window.innerWidth;
 
+    console.log("type::" + type );
+    console.log("tag::" + tag );
+    console.log("name::" + name );
     ajaxRequest(
 	    'viewevents',
 	    [ {
