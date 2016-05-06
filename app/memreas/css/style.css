@@ -2432,6 +2432,7 @@ ul.option li small {
 .mem-gend {
 	color: #292929!important;
 	min-width: 8%;
+        max-width: 130px;
 }
 
 .regular-radio:checked+label {

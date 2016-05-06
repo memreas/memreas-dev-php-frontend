@@ -566,7 +566,7 @@ function showEventDetail(eventId, userId) {
 					+ mediaId;
 
 			    }
-			    objArr2.push(item);
+			    objArr2.push(DetailImage);
 			    objDetail.push(DetailImage);
 			    mediaIDArray.push(Item_media_Id);
 

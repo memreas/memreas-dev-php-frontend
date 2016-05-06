@@ -163,7 +163,7 @@ $(document)
 												"@",
 												"")
 										+ ' will have to confirm that you are friends.</p>';
-									pophtml += '<p>add a persional message: </p>';
+									pophtml += '<p>add a personal message: </p>';
 									pophtml += '<textarea id="msg-'
 										+ mid
 											.replace(
