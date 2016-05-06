@@ -1,5 +1,5 @@
 <?php
-    use Zend\Session\Container;
+    use memreas\Model\;
     header('Cache-Control: no-cache, no-store, must-revalidate'); // HTTP 1.1.
     header('Pragma: no-cache'); // HTTP 1.0.
     header('Expires: 0'); // Proxies.
@@ -11,8 +11,8 @@
 <html lang="en" class="no-js">
     <head>
 
-        <meta name="description" content="PUT YOUR Description here">
-        <meta name="keywords" content="PUT YOUR Keyword here">
+		<meta name="description" content="<?php echo MemreasConstants::MEMREAS_DESCRIPTION ?>">
+		<meta name="keywords" content="<?php echo MemreasConstants::MEMREAS_KEYWORDS ?>">
         <title>memreas - Login</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!--meta responsive-->
         <!-- Mark update -->
