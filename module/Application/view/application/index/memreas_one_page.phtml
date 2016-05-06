@@ -20,8 +20,6 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 <html class="ads">
 <?php else: ?>
 
-
-
 <html class="noads">
 <?php endif; ?>
 <head>
@@ -29,7 +27,7 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 // javascript constants
 $constants = "<script>";
 $constants .= "var S3BUCKET = '" . MemreasConstants::S3BUCKET . "';";
-$constants .= "var HOST = '" . $_SERVER['REMOTE_ADDR'] . "';";
+$constants .= "var HOST = '" . $_SERVER ['REMOTE_ADDR'] . "';";
 $constants .= "var LOGGED_USER_ID = '" . $_SESSION ['user_id'] . "';";
 $constants .= "var LISTNOTIFICATIONSPOLLTIME = '" . MemreasConstants::LISTNOTIFICATIONSPOLLTIME . "';";
 $constants .= "var GALLERYDELAYTIME = '" . MemreasConstants::GALLERYDELAYTIME . "';";
@@ -107,42 +105,43 @@ echo "var username = '" . $username . "';";
                 <?php include('onepage/nav.phtml'); ?>
 
                 <!-- Main Tab Content -->
-                <div id="maintab-content" >
+			<div id="maintab-content">
                     <?php include('onepage/bottom_advertising.phtml'); ?>     
                     
                             
-                    <div class="<?php echo ($this->enableAdvertising) ? 'span9' : 'span11';?>">
-                    
-                   
-				<!-- Begin : Content - For search -->
+                    <div
+					class="<?php echo ($this->enableAdvertising) ? 'span9' : 'span11';?>">
+
+
+					<!-- Begin : Content - For search -->
                     <?php include('onepage/search.phtml'); ?>
                     <!-- End : search -->
 
-				<!-- Begin : Content - For notification -->
+					<!-- Begin : Content - For notification -->
                     <?php include('onepage/notification.phtml'); ?>
                     <!-- End : Notification -->
 
-				<!-- Gallery Main Tab -->
+					<!-- Gallery Main Tab -->
                     <?php include('onepage/gallery.phtml'); ?>
                     <!-- End: Gallery Main Tab -->
 
-				<!-- Queue Main Tab -->
+					<!-- Queue Main Tab -->
                     <?php include ('onepage/queue.phtml'); ?>
                     <!-- End: Queue Main Tab -->
 
-				<!-- Share Main Tab -->
+					<!-- Share Main Tab -->
                     <?php include ('onepage/share.phtml'); ?>
                     <!-- End : Share Main Tab -->
 
-				<!-- Memreas Main Tab -->
+					<!-- Memreas Main Tab -->
                     <?php include ('onepage/memreas.phtml'); ?>
                     <?php include ('onepage/memreas_detail.phtml'); ?>
                     <!-- End : Memreas Main Tab -->
 
-				<!-- More Tab -->
+					<!-- More Tab -->
 				<?php include ('onepage/more_page.phtml'); ?>
 				<!-- End : More Tab -->
-                       </div>
+				</div>
                     
                       <?php include('onepage/right_advertising.phtml'); ?>
                                 
@@ -158,8 +157,8 @@ echo "var username = '" . $username . "';";
 	<!-- End : Content -->
 	</div>
 	<!-- Bottom Ads -->
-    
-    <!-- End Bottom Ads -->
+
+	<!-- End Bottom Ads -->
 
         
     <?php include 'onepage/footer.phtml'; ?>

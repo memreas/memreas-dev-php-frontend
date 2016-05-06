@@ -13,7 +13,7 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 
 <meta name="description" content="<?php echo MemreasConstants::MEMREAS_DESCRIPTION ?>">
 <meta name="keywords" content="<?php echo MemreasConstants::MEMREAS_KEYWORDS ?>">
-<title>memreas - public page</title>
+<title>memreas - public <?php echo $this->type ?> page</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!--meta responsive-->
 <!-- Mark update -->
@@ -138,11 +138,12 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 ::-webkit-scrollbar-thumb:hover {
 	background:#7d7d7d;
 }			
-
-
-
-
 </style>
+<script>
+var type = "<?php echo $this->type; ?>";
+var tag = "<?php echo $this->tag; ?>";
+var name = "<?php echo $this->name; ?>";
+</script>
 </head>
 
 <body style="background: #193D65 !important;">
@@ -253,7 +254,7 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 	<script src="/memreas/js/ajax.js"></script>
 	<script src="/memreas/js/global.js"></script>
 	<script src="/memreas/js/popup.js"></script>
-	<script src="/memreas/js/public_page.js"></script>
+	<script src="/memreas/js/public_memreas_page.js"></script>
 	<script>
 $(function () {
 	$(".rslides").responsiveSlides();
