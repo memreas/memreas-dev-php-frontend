@@ -6,11 +6,7 @@
  */
 ?>
 
-<div class="selleerdata">
-    <h2>Seller information</h2>
-                                <label class="textfield_names susername sellertxt">Username: <?php echo $_SESSION['username']; ?></label>
-                                <label class="textfield_names semail sellertxt">Email: <?php echo $_SESSION['email']; ?></label>
- </div>
+
 <div id="fromSellInfo1">
 <div class="akordeon-item sell-media-info-tab expanded">
 	<div class="akordeon-item-head subscription-payment-plans">
@@ -18,6 +14,14 @@
 			<div class="akordeon-heading">Seller information</div>
 		</div>
 	</div>
+    
+    <div class="selleerdata">
+    <h2>Seller information</h2>
+                                <label class="textfield_names susername sellertxt">Username: <?php echo $_SESSION['username']; ?></label>
+                                <label class="textfield_names semail sellertxt">Email: <?php echo $_SESSION['email']; ?></label>
+                                <div class="clearfix"></div>
+ </div>
+    <div class="clearfix"></div>
 	<div class="akordeon-item-body" style="padding-bottom: 10px;">
 		<div class="akordeon-item-content">
 			<div class="button-holder">
