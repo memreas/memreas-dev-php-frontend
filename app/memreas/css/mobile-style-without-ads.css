@@ -807,11 +807,11 @@ input.disabled {
 html.noads #tab-content, html.noads #tab-content-queue, html.noads #tab-content-share,
 		html.noads #tab-content-memreas, html.noads #tab-content-memreas-detail,
                 html.noads #tab-content-more {
-                    min-height: 720px
+                    min-height: 640px
                 }
                 .noads #tab-content{margin-bottom: 10px;}
                 
-                .linksDatacnt{max-height: 700px;}
+                .linksDatacnt{max-height: 620px;}
 }
 @media only screen and(min-width :700px) and (max-width:1400){
 /*    .fotorama__img{width:100% !important; height: 500px !important;}*/
