@@ -477,7 +477,7 @@ and open the template in the editor.
 		overflow: auto;
 	}
 	ul.pics li {
-		width: 16%;
+/*		width: 16%;*/
 	}
 	.event_gallery_comment .event_pro {
 		height: 40px;
