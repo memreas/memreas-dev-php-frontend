@@ -548,13 +548,16 @@ share_addEvent = function(medianext) {
 				jsuccess('Event "' + name + '" was registered successfully.');
 				pushReloadItem('view_my_events');
 
-				if (medianext == 'done') {
+				if (medianext === 'done') {
 
-					setTimeout(function() {
+					
+                                        setTimeout(function() {
 						var text_ids = ['txt_name', 'txt_location', 'dtp_date', 'dtp_from', 'dtp_to', 'dtp_selfdestruct'];
 						clearTextField(text_ids);
-						share_gotoPage(SHAREPAGE_TAB_MEMREAS);
+						
 					}, 2000);
+                                        
+                                        $('.memrsclick').trigger('click');
 				}
 
 				if (medianext == 'next') {
@@ -715,9 +718,11 @@ share_addComment = function(next_step) {
 
 					if (next_step == 'done') {
 
-						setTimeout(function() {
-							share_gotoPage(SHAREPAGE_TAB_MEMREAS);
-						}, 2000);
+//						setTimeout(function() {
+//							share_gotoPage(SHAREPAGE_TAB_MEMREAS);
+//         						}, 2000);
+                                            $('.memrsclick').trigger('click');
+
 					}
 
 					if (next_step == 'next') {

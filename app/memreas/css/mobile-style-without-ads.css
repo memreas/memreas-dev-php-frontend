@@ -233,7 +233,7 @@ and open the template in the editor.
 		height: 350px;
 	}
 	ul.pics li {
-		width: 16%;
+		width: 180px;
 	}
 	.event_gallery_comment .event_pro {
 		height: 40px;
@@ -251,7 +251,7 @@ and open the template in the editor.
 		height: auto;
 	}
         
-        .linksDatacnt{max-height: 500px;}
+        .linksDatacnt{max-height: 590px;}
 	.event_gallery_pro {
 		width: 35px;
 		height: 35px;
@@ -477,7 +477,7 @@ and open the template in the editor.
 		overflow: auto;
 	}
 	ul.pics li {
-		width: 16%;
+/*		width: 16%;*/
 	}
 	.event_gallery_comment .event_pro {
 		height: 40px;
@@ -807,11 +807,11 @@ input.disabled {
 html.noads #tab-content, html.noads #tab-content-queue, html.noads #tab-content-share,
 		html.noads #tab-content-memreas, html.noads #tab-content-memreas-detail,
                 html.noads #tab-content-more {
-                    max-height: 670px;
+                    min-height: 730px
                 }
                 .noads #tab-content{margin-bottom: 10px;}
                 
-                .linksDatacnt{max-height: 641px;}
+                .linksDatacnt{max-height: 690px;}
 }
 @media only screen and(min-width :700px) and (max-width:1400){
 /*    .fotorama__img{width:100% !important; height: 500px !important;}*/
