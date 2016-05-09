@@ -811,7 +811,7 @@ html.noads #tab-content, html.noads #tab-content-queue, html.noads #tab-content-
                 }
                 .noads #tab-content{margin-bottom: 10px;}
                 
-                .linksDatacnt{max-height: 816px;}
+                .linksDatacnt{max-height: 840px;}
 }
 @media only screen and(min-width :700px) and (max-width:1400){
 /*    .fotorama__img{width:100% !important; height: 500px !important;}*/
