@@ -138,8 +138,8 @@ ul.edit-area-scroll {
 	display: block;
 	font-size: 10px;
 	position: absolute;
-	right: 7px;
-	top: 4px;
+	right: 8px;
+	top: 6px;
 }
 
 .event_comment span {
@@ -379,7 +379,7 @@ li.working-upload .progress-text {
 
 .myMemreas, .friendMemreas, .publicMemreas {
 /*	height: 400px;*/
-height: 750px;
+/*height: 750px;*/
 }
 
 img.loading-small {

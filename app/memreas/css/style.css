@@ -1219,9 +1219,10 @@ input[type=checkbox].css-checkbox:checked+label.css-label {
 	-moz-border-radius: 15px;
 	border-radius: 15px;
 	float: left;
-	margin: 20px 0px 0px 20px;
+	margin: 0px 0px 0px 20px;
 	border: 3px #FFF solid;
         padding: 0 5px;
+        margin-right: 10px
 }
 
 ul.pics {
@@ -1609,9 +1610,12 @@ left
 }
 
 .event_section {
-	border-bottom: 1px #FFF solid;
+/*	border-bottom: 1px #FFF solid;
 	padding-bottom: 10px;
-	margin-bottom: 10px;
+	margin-bottom: 10px;*/
+background: #2C63A2;
+    padding: 10px;
+    margin-bottom: 10px;
 }
 
 .event_name {
@@ -1670,7 +1674,7 @@ left
 	height: 98px;
 	background-color: silver;
 	border: 1px #FFF solid;
-	margin: 5px;
+	
 	float: left !important;
 	position: relative;
 }
@@ -3546,19 +3550,20 @@ input.disabled {
 }
 .hidden-memreas{display:none !important;}
 ul.event-pics li {
-	width: 180px;
-	border: 1px #d6d6d6 solid;
+	width: 170px;
+	border: 2px #d6d6d6 solid;
 	float: left;
 	margin: 10px;
 	position: relative;
 	height: 98px;
 	overflow: hidden;
 	background: #112A4B;
+        border-radius: 3px;
 }
 
 ul.event-pics li img, .aviary-thumbs img, .galleries-location img {
 	height: auto;
-	width: 180px;
+	width: 170px;
 	cursor: pointer;
 	max-width: 100%;
 	max-height: 100%;
@@ -3575,8 +3580,8 @@ ul.event-pics li a {
 	height: 100%;
 }
 
-.blueimp-gallery-thumb-anchor{width:145px; height: 145px; margin-right: 12px; border:2px solid #fff; margin-bottom: 12px; float: left;}
-.blueimp-gallery-thumb-anchor img{ width:145px; height: 145px; border:2px solid #fff; margin-bottom: 12px;}
+.blueimp-gallery-thumb-anchor{width:110px; height: 110px; margin-right: 12px; border:2px solid #fff; margin-bottom: 12px; float: left;}
+.blueimp-gallery-thumb-anchor img{ width:110px; height: 110px; border:2px solid #fff; margin-bottom: 12px;}
 
 .video-content-play-icon{
 background-image: url(../img/video-play.svg);
@@ -3584,8 +3589,8 @@ background-image: url(../img/video-play.svg);
     right: 0;
     left: 0;
    
-    width: 128px;
-    height: 128px;
+    width: 99px;
+    height: 99x;
     display: inline-block;
     background: url(../img/video-play.png) center no-repeat;
     opacity: 0.8;
