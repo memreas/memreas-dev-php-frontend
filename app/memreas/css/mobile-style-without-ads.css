@@ -802,17 +802,7 @@ input.disabled {
     pointer-events: none; cursor: default;
 }
 
-@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : portrait)
-{ 
-html.noads #tab-content, html.noads #tab-content-queue, html.noads #tab-content-share,
-		html.noads #tab-content-memreas, html.noads #tab-content-memreas-detail,
-                html.noads #tab-content-more {
-                    min-height: 730px
-                }
-                .noads #tab-content{margin-bottom: 10px;}
-                
-                .linksDatacnt{max-height: 690px;}
-}
+
 @media only screen and(min-width :700px) and (max-width:1400){
 /*    .fotorama__img{width:100% !important; height: 500px !important;}*/
 
@@ -857,4 +847,24 @@ height: 549px !important;
 }*/
 
 
+//Portrait Mode CSS
 
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : portrait)
+{ 
+html.noads #tab-content, html.noads #tab-content-queue, html.noads #tab-content-share,
+		html.noads #tab-content-memreas, html.noads #tab-content-memreas-detail,
+                html.noads #tab-content-more {
+                    min-height: 730px
+                }
+                .noads #tab-content{margin-bottom: 10px;}
+                
+                .linksDatacnt{max-height: 690px;}
+
+                .myMemreas, .friendMemreas, .publicMemreas{
+                    max-height: 650px;
+                }
+ 
+}
+
+
+//Landscape Mode CSS
