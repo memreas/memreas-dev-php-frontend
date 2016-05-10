@@ -862,6 +862,7 @@ html.noads #tab-content, html.noads #tab-content-queue, html.noads #tab-content-
 
                 .myMemreas, .friendMemreas, .publicMemreas{
                     max-height: 650px;
+                    height: 650px
                 }
  
 }

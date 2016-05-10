@@ -85,15 +85,7 @@ jQuery.fetch_server_media = function() {
 		if (getValueFromXMLTag(response, 'status') == "Success") {
 
 		    var medias = getSubXMLFromTag(response, 'media');
-
-		    // $(
-		    // ".user-resources, .scrollClass .mCSB_container,
-		    // .sync-content .scrollClass")
-		    // .html('');
 		    var count_media = medias.length;
-
-		    var items_for_gallery = "[";
-
 		    var linksContainer = $('#links');
 
 		    // Reset area to prevent from duplicating items
@@ -105,9 +97,6 @@ jQuery.fetch_server_media = function() {
 
 		    /** Initialize empty gallery and add within loop */
 		    for (var json_key = 0; json_key < count_media; json_key++) {
-			if (json_key > 0) {
-			    items_for_gallery += ",\n";
-			}
 			var media = medias[json_key];
 			var media_id = getValueFromXMLTag(media, 'media_id');
 			var content_type;
@@ -124,7 +113,6 @@ jQuery.fetch_server_media = function() {
 			if (_media_type == 'image') {
 			    _media_url = getMediaUrl(media, _media_type);
 			    content_type = 'image/jpeg';
-
 			    main_media_url = getValueFromXMLTag(media,
 				    'main_media_url');
 			    // main_media_url=getValueFromXMLTag(media,'media_url_448x306');

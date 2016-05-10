@@ -58,43 +58,33 @@ $(function() {
     });
 
     // Memreas detail location tab click
-    $("a[title=memreas-detail-tabLocation]")
-	    .click(
-		    function() {
-			if (eventdetail_media_id == '') {
-			    //jerror("Please choose a media from detail tab to view it's location");
-			   // return false;
-			}
-			$("#memreas-detail-location").empty().removeAttr(
-				'style');
-			ajaxRequest(
-				"viewmediadetails",
-				[ {
-				    tag : 'event_id',
-				    value : ''
-				}, {
-				    tag : 'media_id',
-				    value : eventdetail_media_id
-				} ],
-				function(response) {
-				    var lng = getValueFromXMLTag(response,
-					    'longitude');
-				    var lat = getValueFromXMLTag(response,
-					    'latitude');
-				    if (lng == '' || lat == '') {
-					jerror('There is no location for this media');
-					lat = 0;
-					lng = 0;
-					// return false;
-				    }
-				    gallery_initGoogleMap(
-					    "memreas-detail-location", lat, lng);
-                                    console.log('Response Memreas-->'+response);
-                                    
-      
-                                    
-				});
-		    });
+    $("a[title=memreas-detail-tabLocation]").click(function() {
+	if (eventdetail_media_id == '') {
+	    // jerror("Please choose a media from detail tab to view it's
+	    // location");
+	    // return false;
+	}
+	$("#memreas-detail-location").empty().removeAttr('style');
+	ajaxRequest("viewmediadetails", [ {
+	    tag : 'event_id',
+	    value : ''
+	}, {
+	    tag : 'media_id',
+	    value : eventdetail_media_id
+	} ], function(response) {
+	    var lng = getValueFromXMLTag(response, 'longitude');
+	    var lat = getValueFromXMLTag(response, 'latitude');
+	    if (lng == '' || lat == '') {
+		jerror('There is no location for this media');
+		lat = 0;
+		lng = 0;
+		// return false;
+	    }
+	    gallery_initGoogleMap("memreas-detail-location", lat, lng);
+	    console.log('Response Memreas-->' + response);
+
+	});
+    });
 });
 
 function getMediaComment() {
@@ -299,7 +289,8 @@ $(function() {
 	$(".memreas-main").fadeIn(500);
     });
 });
-var objArr2 = new Array();
+var objArrMemreasGallery = new Array();
+var objArrMemreasDetail = new Array();
 var objDetail = new Array();
 var mediaIDArray = new Array();
 var media_download_url = '';
@@ -386,19 +377,19 @@ function showEventDetail(eventId, userId) {
 		value : media_page_index
 	    } ],
 	    function(response) {
-            console.log('ListALL MEDIA-->'+response);
+		console.log('ListALL MEDIA-->' + response);
 		var eventId = getValueFromXMLTag(response, 'event_id');
 		if (getValueFromXMLTag(response, 'status') == "Success") {
-		    var medias = getSubXMLFromTag(response, 'media');
 		    if (typeof (eventId != 'undefined')) {
 			event_owner_name = getValueFromXMLTag(response,
 				'username');
 			eventdetail_user_pic = getValueFromXMLTag(response,
 				'profile_pic');
-			if (eventdetail_user_pic != '')
+			if (eventdetail_user_pic != '') {
 			    eventdetail_user_pic = removeCdataCorrectLink(eventdetail_user_pic);
-			else
+			} else {
 			    eventdetail_user_pic = '/memreas/img/profile-pic.jpg';
+			}
 
 			$(".memreas-detail-comments .event-owner .pro-pics img")
 				.attr(
@@ -408,20 +399,16 @@ function showEventDetail(eventId, userId) {
 			$(".memreas-detail-comments .pro-names").html(
 				event_owner_name);
 
+			var medias = getSubXMLFromTag(response, 'media');
 			var media_count = medias.length;
-
-			var _media_url = '';
-			var _media_url_hls = '';
-			var _media_url_web = '';
-			var _media_thumbnail = ''
-			var _media_thumbnail_large = "";
-                        var linksContainerData2 = '';
-                        var linksContainer2 = $('#links2');
-                        linksContainer2.html('');
+			var linksContainerMemreasGallery = $('#linksMemreasGallery');
+			var linksContainerDataMemreasGallery = '';
+			linksContainerMemreasGallery.html('');
 
 			for (var i = 0; i < media_count; i++) {
 			    var media = medias[i];
 			    var mediaId = getValueFromXMLTag(media, 'media_id');
+			    var content_type;
 			    var _media_type = getValueFromXMLTag(media, 'type');
 			    var _media_url = '';
 			    var _media_url_hls = '';
@@ -430,6 +417,8 @@ function showEventDetail(eventId, userId) {
 			    var _media_thumbnail_large = "";
 			    var main_media_url = '';
 			    var main_media_url_m3u8 = '';
+			    var source = "";
+			    var media_thummb_448 = "";
 
 			    if (_media_type == 'image') {
 				_media_url = getMediaUrl(media, _media_type);
@@ -437,6 +426,9 @@ function showEventDetail(eventId, userId) {
 				main_media_url = getValueFromXMLTag(media,
 					'main_media_url');
 				_media_thumbnail_large = main_media_url = removeCdataCorrectLink(main_media_url);
+				media_thummb_448 = getValueFromXMLTag(media,
+					'media_url_448x306');
+				media_thummb_448 = removeCdataCorrectLink(media_thummb_448);
 				media_download_url = _media_thumbnail_large;
 
 				target_element
@@ -447,21 +439,6 @@ function showEventDetail(eventId, userId) {
 						+ '" class="swipebox" title="photo-2"><img src="'
 						+ _media_url
 						+ '" alt=""></a></li>');
-                                        
-                                $('#carousellocation2').append('<li data-preview="'+ _media_thumbnail_large +'" class="DocumentItem"><a href="javascript:;">'
-                                                +'<img src="'+ _media_thumbnail_large +'" class="img-gallery" id="location'+ mediaId +'" alt="image04" /></a></li>');       
-         
-                                   linksContainerData2 += '<a href="' + main_media_url
-				    + '"';
-			    linksContainerData2 += ' title="' + mediaId + '"';
-			    linksContainerData2 += ' type="video/mp4" data-gallery="'
-				    + mediaId
-				    + '" class="blueimp-gallery-thumb-anchor "';
-			    linksContainerData2 += ' style="background:url('
-				    + _media_thumbnail_large
-				    + ')"><span class="video-content-play-icon"></span></a>';              
-         
-         
 
 			    } else if (_media_type == 'video') {
 				_media_url_hls = getValueFromXMLTag(media,
@@ -483,19 +460,6 @@ function showEventDetail(eventId, userId) {
 				_media_thumbnail = _media_thumbnail[0];
 
 				media_download_url = _media_url_web;
-                                
-                                  linksContainerData2 += '<a href="' + _media_url_web
-				    + '" title="' + mediaId
-				    + '" data-gallery="' + mediaId
-				    + '" class="blueimp-gallery-thumb-anchor"';
-			    linksContainerData2 += ' style="background:url('
-				    + _media_thumbnail_large + ')"><span></span></a>';
-                                
-                                
-                                         
-                                $('#carousellocation2').append('<li data-preview="'+ _media_thumbnail_large +'" class="DocumentItem"><a href="javascript:;">'
-                                                +'<img src="'+ _media_thumbnail_large +'" class="img-gallery" id="location'+ mediaId +'" alt="image04" /></a></li>');       
-         
 
 				target_element
 					.append('<li class="video-media" id="memreasvideo-'
@@ -508,11 +472,9 @@ function showEventDetail(eventId, userId) {
 						+ _media_thumbnail
 						+ '" alt=""><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a></li>');
 			    }
-
 			    var item = new Object();
-			   var Item_media_Id = new Object();
-			   var DetailImage = new Object();
-                            
+			    Item_media_Id = new Object();
+			    DetailImage = new Object();
 
 			    if (_media_type == 'video') {
 
@@ -520,7 +482,7 @@ function showEventDetail(eventId, userId) {
 				Item_media_Id['M_url'] = _media_url_web;
 				Item_media_Id['M_eventId'] = eventId;
 
-				item['title'] = eventId + "_" + mediaId;
+				item['title'] = mediaId;
 				item['type'] = "video/*";
 				item['poster'] = _media_thumbnail_large;
 				item['description'] = media_download_url;
@@ -531,9 +493,7 @@ function showEventDetail(eventId, userId) {
 				    href : _media_url_web,
 				    type : "video/mp4"
 				} ];
-                                
-                                
-                                
+
 				DetailImage['title'] = eventId + "_" + mediaId;
 				DetailImage['type'] = "video/*";
 				DetailImage['poster'] = _media_thumbnail_large;
@@ -545,18 +505,28 @@ function showEventDetail(eventId, userId) {
 				    href : _media_url_web,
 				    type : "video/mp4"
 				} ];
+
+				linksContainerDataMemreasGallery += '<a href="'
+					+ _media_url_web + '"';
+				linksContainerDataMemreasGallery += ' title="' + mediaId
+					+ '"';
+				linksContainerDataMemreasGallery += ' type="video/mp4" data-gallery="'
+					+ mediaId
+					+ '" class="blueimp-gallery-thumb-anchor "';
+				linksContainerDataMemreasGallery += ' style="background:url('
+					+ _media_thumbnail_large
+					+ ')"><span class="video-content-play-icon"></span></a>';
+
 			    } else {
 				Item_media_Id['M_id'] = mediaId;
 				Item_media_Id['M_url'] = _media_thumbnail_large;
 				Item_media_Id['M_eventId'] = eventId;
 
-				item['title'] = eventId + "_" + mediaId;
+				item['title'] = mediaId;
 				item['type'] = "image/jpeg";
 				item['href'] = main_media_url;
 				item['poster'] = media_download_url;
 				item['description'] = eventId + "_" + mediaId;
-                                
-                                
 
 				DetailImage['title'] = eventId + "_" + mediaId;
 				DetailImage['type'] = "image/jpeg";
@@ -565,48 +535,38 @@ function showEventDetail(eventId, userId) {
 				DetailImage['description'] = eventId + "_"
 					+ mediaId;
 
+				linksContainerDataMemreasGallery += '<a href="'
+					+ main_media_url
+					+ '" title="'
+					+ mediaId
+					+ '" data-gallery="'
+					+ mediaId
+					+ '" class="blueimp-gallery-thumb-anchor"';
+				linksContainerDataMemreasGallery += ' style="background:url('
+					+ media_thummb_448
+					+ ')"><span></span></a>';
+
 			    }
-			    objArr2.push(DetailImage);
+			    objArrMemreasGallery.push(item);
 			    objDetail.push(DetailImage);
 			    mediaIDArray.push(Item_media_Id);
 
 			}
-                        $(linksContainer2).append(linksContainerData2);
-                        
-                        
-			 console.log("objArr2ARR" + JSON.stringify(objArr2));
-                        
-//                    setTimeout(function () {
-//                            var current = 0,
-//                                    $preview = $('#preview6'),
-//                                    $carouselEl = $('#carousellocation2'),
-//                                    $carouselItems = $carouselEl.children(),
-//                                    carousel = $carouselEl.elastislide({
-//                                        current: current,
-//                                        minItems: 4,
-//                                        onClick: function (el, pos, evt) {
-//
-//
-//                                            evt.preventDefault();
-//
-//                                        },
-//                                    });
-//
-//
-//
-//                        }, 2000)
-                        
-                        
-                        
-                        
+			console.log('*******************************');
+			console.log('objArrMemreasGallery---> ' + JSON.stringify(objArrMemreasGallery));
+			console.log('*******************************');
+			blueimp.Gallery(objArrMemreasGallery, {
+			    container : '#blueimp-video-carousel-gallery',
+			    carousel : 'true',
+			    preloadRange : 2,
+			    transitionSpeed : 400
+			});
 
-//			blueimp.Gallery(objArr2, {
-//			    container : '#blueimp-video-carousel-gallery',
-//			    carousel : 'true',
-//			    preloadRange : 2,
-//			    transitionSpeed : 400
-//			});
-
+			$(linksContainerMemreasGallery).append(
+				linksContainerDataMemreasGallery);
+			$('#blueimp-video-carousel-gallery-memreas').hide();
+			console.log("objArrMemreasGalleryARR"
+				+ JSON.stringify(objArrMemreasGallery));
 		    }
 		} else
 		    jerror(getValueFromXMLTag(response, 'message'));
@@ -630,9 +590,11 @@ $(document).on('click', '[data-gallery]', function(event) {
     var media_id;
     var obj;
     selected_media_id = widget.selector;
-    console.log("objArr.length-->" + objArr2.length);
-    for (i = 0; i < objArr2.length; i++) {
-	obj = objArr2[i];
+    console.log("objArrMemreasGallery.length-->" + objArrMemreasGallery.length);
+    for (i = 0; i < objArrMemreasGallery.length; i++) {
+	obj = objArrMemreasGallery[i];
+	console.log("selected_media_id-->" + selected_media_id);
+	console.log("obj['title']-->" + obj['title']);
 	if (selected_media_id == obj['title']) {
 	    break;
 	}
@@ -642,9 +604,6 @@ $(document).on('click', '[data-gallery]', function(event) {
 	carousel : true
     });
 });
-
-
-
 
 function popupVideoPlayer(video_id) {
     var media_video_url = $("#" + video_id).attr('media-url');
@@ -865,7 +824,7 @@ memreas_clickFriends = function(id) {
 	    $('#' + id).next('aside').css('border', '3px solid #FFF');
 	}
     }
-} 
+}
 
 function memreas_fillFriends(info) {
     if (friendList == null)
@@ -1039,24 +998,21 @@ $('.elastislide-list > li >a').click(function() {
     return false;
 });
 
-//$("#tabs-memreas-detail li:first").click(function() {
-//    blueimp.Gallery(objArr2, {
-//	onslide : function() {
-//	},
-//	container : '#blueimp-video-carousel-gallery',
-//	carousel : 'true',
-//	preloadRange : 2,
-//	transitionSpeed : 400
-//    });
+// $("#tabs-memreas-detail li:first").click(function() {
+// blueimp.Gallery(objArrMemreasGallery, {
+// onslide : function() {
+// },
+// container : '#blueimp-video-carousel-gallery',
+// carousel : 'true',
+// preloadRange : 2,
+// transitionSpeed : 400
+// });
 //
-//});
+// });
 var event_media_ID_variable = '';
 var eventdetail_id = '';
 function BlueIMPGallery() {
 
-    // console.log("Media Array Blue Gallery" + JSON.stringify(mediaIDArray));
-    // console.log("Media Array Object Detail Gallery" +
-    // JSON.stringify(objDetail));
     var jsonstrong2 = JSON.stringify(mediaIDArray);
     var DetailObj2 = JSON.parse(jsonstrong2);
     blueimp.Gallery(objDetail, {
@@ -1365,6 +1321,3 @@ function submitDMCA() {
     }, 'undefined', true);
 
 }
-
-
-
