@@ -38,4 +38,9 @@ class MemreasConstants {
 	//Android url for download
 	const ANDROID_DOWNLOAD_URL = "https://s3.amazonaws.com/memreas-android-build/memreas-armv7-universal-release.prod.apk";
 
+	//Meta
+	const MEMREAS_DESCRIPTION = "memreas is a social media network that allows users to access their content on the web or our Android and iOS apps.  memreas members have the ability to upload or access images or video with 4k support.";
+	const MEMREAS_KEYWORDS = "social networking media streaming 4k HDR";
+
+
 }
