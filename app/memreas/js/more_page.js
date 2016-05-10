@@ -1974,10 +1974,10 @@ $(function() {
 					    report_v_row += '<tr class="'
 						    + row_class
 						    + '">'
-						    + '<td>'
+						    + '<td width="16%">'
 						    + violation_id
 						    + '</td>'
-						    + '<td>'
+						    + '<td width="16%">'
 						    + media_id
 						    + '</td>'
 						    +
@@ -1991,9 +1991,9 @@ $(function() {
 						    + violation_id
 						    + '">report counter claim</a>'
 						    + '</td>'
-						    + '<td>'
+						    + '<td width="7%">'
 						    + dmca_violation_report_date
-						    + '</td>' + '<td>'
+						    + '</td>' + '<td width="5%">'
 						    + counter_status + '</td>'
 						    + '</tr>';
 

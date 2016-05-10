@@ -3590,7 +3590,7 @@ background-image: url(../img/video-play.svg);
     left: 0;
    
     width: 99px;
-    height: 99x;
+    height: 99px;
     display: inline-block;
     background: url(../img/video-play.png) center no-repeat;
     opacity: 0.8;
@@ -3667,9 +3667,9 @@ background-image: url(../img/video-play.svg);
      .oddrow{background:#18529B; }
      .evenrow{background: #CCCCCC;}
      .dmca-table-data form{margin-bottom: 20px;}
-     .dmca-table-data tbody tr {height:50px;}
+     .dmca-table-data tbody tr {height:60px;}
      .dmca-table-data tbody tr td { text-align: center; vertical-align: middle;}
-     .counter-claim-btn{color:#fff; border:1px solid #fff; background: #3A9ACA; border-radius: 7px; font-size: 17px; padding: 7px;}
+     .counter-claim-btn{color:#fff; border:1px solid #fff; background: #3A9ACA; border-radius: 7px; font-size: 15px; padding: 7px;}
      .fileupload-dmca{float: left!important; margin: 0px !important;}
      .linksDatacnt{max-height: 400px; overflow: auto;}
      
