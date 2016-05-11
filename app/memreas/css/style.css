@@ -3785,3 +3785,8 @@ background-image: url(../img/video-play.svg);
 	top: 50%;
 }
 .addstyling{margin-bottom: 25px !important; border-bottom:2px solid #fff; }
+
+.helpform li {width: 24% !important; float: left; margin-right: 1%; clear: none !important}
+.helpform-field{width: 90% !important;}
+.helpform .black_btn_skin{padding: 8px 28px !important;}
+.member-guidelines, .privacy-policy, .terms-service, .dmca-policy, .marketplace-agree{max-height: 170px;}
