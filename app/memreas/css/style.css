@@ -3789,4 +3789,8 @@ background-image: url(../img/video-play.svg);
 .helpform li {width: 24% !important; float: left; margin-right: 1%; clear: none !important}
 .helpform-field{width: 90% !important;}
 .helpform .black_btn_skin{padding: 8px 28px !important;}
+
+.Accform li {width: 24% !important; float: left; margin-right: 1%; clear: none !important}
+.Accform-field{width: 90% !important;}
+.Accform .black_btn_skin{padding: 8px 28px !important;}
 .member-guidelines, .privacy-policy, .terms-service, .dmca-policy, .marketplace-agree{max-height: 170px;}
