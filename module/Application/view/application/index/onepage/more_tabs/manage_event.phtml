@@ -15,20 +15,20 @@
     </div>
     <div class="akordeon-item-body"  style="padding-bottom: 10px;">
         <div class="akordeon-item-content">
-            <ul id="content_1" class="share_memreas_details">
+            <ul id="content_1" class="share_memreas_details   memreas-form">
                 <li>
                     <label class="textfield_names">name :</label>
                     <div class="styled-select" style="margin: 0; float: left;">
-                        <select id="cmd_MorepageEvents" ></select>
+                        <select id="cmd_MorepageEvents" class="memreas_form_field" ></select>
                     </div>
                 </li>
                 <li>
                     <label class="textfield_names">date :</label>
-                    <input name="input" type="text" id="morepage_eventDate" class="share-txtfield date-picker" readonly value="from" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'from')this.value = '';"/>
+                    <input name="input" type="text" id="morepage_eventDate" class="memreas_form_field share-txtfield date-picker" readonly value="from" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'from')this.value = '';"/>
                 </li>
                 <li>
                     <label class="textfield_names">location :</label>
-                    <input name="input3" type="text" id="morepage_eventLocation" class="share-txtfield" value="address or current location" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'address or current location')this.value = '';" onClick="more_showGoogleMap('more_div_locationmap_maparea');"/>
+                    <input name="input3" type="text" id="morepage_eventLocation" class="memreas_form_field share-txtfield" value="address or current location" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'address or current location')this.value = '';" onClick="more_showGoogleMap('more_div_locationmap_maparea');"/>
                 </li>
                 <li>
                     <input id="morepage_eventFriendsCanPost" class="css-checkbox" type="checkbox" name="morepage_eventFriendsCanPost"/>

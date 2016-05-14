@@ -15,25 +15,30 @@
     </div>  
     <div class="akordeon-item-body">
         <div class="akordeon-item-content">
-            <ul class="share_memreas_details">
+            <ul class="share_memreas_details helpform">
                 <li>
                     <label class="textfield_names">name :</label>
-                    <input name="name_feedback" type="text" class="share-txtfield" value="your name" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'your name')this.value = '';"/>
+                    <input name="name_feedback" type="text" class="share-txtfield helpform-field" value="your name" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'your name')this.value = '';"/>
                 </li>
                 <li>
                     <label class="textfield_names">email :</label>
-                    <input name="email_feedback" type="text" class="share-txtfield" value="your email" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'your email')this.value = '';"/>
+                    <input name="email_feedback" type="text" class="share-txtfield helpform-field" value="your email" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'your email')this.value = '';"/>
                 </li>
                 <li>
                     <label class="textfield_names">message :</label>
-                    <textarea name="message_feedback" cols="" rows="" class="share-txtfield"></textarea>
-                    <a class="black_btn_skin f-center" href="javascript:;" style="margin-left: 30% !important;" onclick="submitFeedback();">ok</a>
+                    <textarea name="message_feedback" cols="" rows="" class="share-txtfield helpform-field"></textarea>
+                    
+                </li>
+                <li>
+                    <a class="black_btn_skin f-center" href="javascript:;" style="margin-left: 0% !important;" onclick="submitFeedback();">ok</a>
                     <a class="black_btn_skin" href="#">cancel</a>
                 </li>
             </ul>
+            <div class="clearfix"></div>
         </div>
     </div>
 </div>
+<div class="clearfix"></div>
 <div class="akordeon-item expanded">
     <div class="akordeon-item-head">
         <div class="akordeon-item-head-container">
