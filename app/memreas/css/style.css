@@ -844,7 +844,8 @@ ul.right textarea {
 
 footer {
 	position: fixed;
-	z-index: -1;
+/*	z-index: -1;*/
+        z-index: 2;
 	left: 0;
 	bottom: 0;
 	right: 0;
@@ -3785,3 +3786,15 @@ background-image: url(../img/video-play.svg);
 	top: 50%;
 }
 .addstyling{margin-bottom: 25px !important; border-bottom:2px solid #fff; }
+
+.helpform li {width: 24% !important; float: left; margin-right: 1%; clear: none !important}
+.helpform-field{width: 90% !important;}
+.helpform .black_btn_skin{padding: 8px 28px !important;}
+
+.Accform li {width: 24% !important; float: left; margin-right: 1%; clear: none !important}
+.Accform-field{width: 90% !important;}
+.Accform .black_btn_skin{padding: 8px 28px !important;}
+.member-guidelines, .privacy-policy, .terms-service, .dmca-policy, .marketplace-agree{max-height: 170px;}
+.memreas-form li{width: 48% !important; float: left; margin-right: 2%; clear: none !important;}
+.memreas-form li  .memreas_form_field{width: 95% !important;}
+.memreas-form li .styled-select{width: 95% !important;}

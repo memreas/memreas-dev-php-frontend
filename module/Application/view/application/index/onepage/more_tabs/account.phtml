@@ -16,13 +16,13 @@
 		<div class="akordeon-item-content">
 			<div class="button-holder">
 
-				<ul class="share_memreas_details account_form">
+				<ul class="share_memreas_details account_form Accform">
 					<li><label class="textfield_names">profile email</label> <input
-						name="account_email" type="text" class="more-input" value="<?php echo $_SESSION['email']; ?>"
+						name="account_email" type="text" class="more-input Accform-field" value="<?php echo $_SESSION['email']; ?>"
 						onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue"
 						onFocus="if(this.value == 'email')this.value = '';" readonly /></li>
 					<li><label class="textfield_names">alternative email:</label> <input
-						name="account_alternate_email" type="text" class="more-input"
+						name="account_alternate_email" type="text" class="more-input Accform-field"
 						value="alternate email"
 						onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue"
 						onFocus="if(this.value == 'alternate email')this.value = '';" />
@@ -35,7 +35,7 @@
 							<label for="gender-female" class="textfield_names mem-gend">female:</label>
 					<li><label class="textfield_names">date of birth:</label> <input
 						name="account_dob" id="account_dob" type="text"
-						class="more-input date-picker" value="date of birth"
+						class="more-input date-picker Accform-field" value="date of birth"
 						onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue"
 						onFocus="if(this.value == 'date of birth')this.value = '';"
 						readonly /></li>
