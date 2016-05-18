@@ -578,7 +578,7 @@ function fetchFriendsMemreas(friendMemreasType) {
 								    + '</section><div id="viewport" class="mouse_swip" onselectstart="return false;">'
 								    + '<div id="'
 								    + friend_row
-								    + '" class="swipeclass"></div></div></div>');
+								    + '" class="swipeclass scrollbarhorizontal"></div></div></div>');
 
 					    var global_width = $(
 						    "#tab-content-memreas")
