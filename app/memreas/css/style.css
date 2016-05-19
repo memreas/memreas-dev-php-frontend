@@ -3812,35 +3812,3 @@ background-image: url(../img/video-play.svg);
 
 .floatcompare a{float: left !important;}
 
-
-
-.btn-eventNNNN {
-	background: none repeat scroll 0 0 #fff;
-	border: medium none;
-	display: block !important;
-	float: none;
-	position: absolute;
-	right: 0;
-	top: 25px;
-}
-
-.btn-eventNNNN {
-	float: left;
-	width: 100%;
-}
-
-.btn-eventNNNN li {
-	float: left;
-	width: 48%;
-	margin-right: 1%;
-	margin-left: 1%;
-	height: 80px;
-}
-
-.btn-event-lll li {
-	float: left;
-	width: 48%;
-	margin-right: 1%;
-	margin-left: 1%;
-	height: 80px;
-}

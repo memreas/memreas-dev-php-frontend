@@ -5,6 +5,7 @@
 
 var feExecAjaxURL = '/index/execAjax';
 var xml_str = "";
+$('#').typeahead()
 
 // ////////////////////////////////
 // Input xml and fetch output xml
