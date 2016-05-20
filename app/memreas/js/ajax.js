@@ -82,12 +82,12 @@ ajaxRequest = function(action, params, success_func, error_func,
 			removeItem(stackAjaxInstance, action);
 
 		    if (typeof error_func != "undefined") {
-			consol.log("jqXHR.responseText ->" + jqXHR.responseText);
-			consol.log("jqXHR.status ->" + jqXHR.status);
-
-			
+			console.log("jqXHR.responseText ->" + jqXHR.responseText);
+			console.log("jqXHR.status ->" + jqXHR.status);
 		    } else {
 			console.log("error_func = undefined")
+			console.log("jqXHR.responseText ->" + jqXHR.responseText);
+			console.log("jqXHR.status ->" + jqXHR.status);
 		    }
 
 		    if (stackAjaxInstance.length == 0) {

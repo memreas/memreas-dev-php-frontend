@@ -294,6 +294,8 @@ var objArrMemreasDetail = new Array();
 var objDetail = new Array();
 var mediaIDArray = new Array();
 var media_download_url = '';
+var detailGallery = null;
+var gallery = null;
 
 var Item_media_Id = '';
 var DetailImage = '';
@@ -305,7 +307,7 @@ function showEventDetail(eventId, userId) {
     console.log('eventId -> ' + eventId);
     console.log('userId -> ' + userId);
     console.log('*****************************************************');
-    //$('#blueimp-video-carousel-gallery-memreas').find('slides').remove();
+
     $("#add_buttons").show();
 
     ajaxRequest('geteventdetails', [ {
@@ -368,9 +370,9 @@ function showEventDetail(eventId, userId) {
 	    [ {
 		tag : 'event_id',
 		value : eventId
-	    //}, {
-		//tag : 'user_id',
-		//value : userId
+	    }, {
+		tag : 'user_id',
+		value : userId
 	    }, {
 		tag : 'device_id',
 		value : device_id
@@ -410,15 +412,15 @@ function showEventDetail(eventId, userId) {
 			var media_count = medias.length;
 			var linksContainerMemreasGallery = $('#linksMemreasGallery');
 			var linksContainerDataMemreasGallery = '';
-			linksContainerMemreasGallery.html('');
+			$('#linksMemreasGallery').empty();
 
 			//
 			// Reset the arrays
 			//
 			objArrMemreasGallery = new Array();
 			objArrMemreasDetail = new Array();
+			objDetail = new Array();
 			mediaIDArray = new Array();
-
 
 			for (var i = 0; i < media_count; i++) {
 			    var media = medias[i];
@@ -523,8 +525,8 @@ function showEventDetail(eventId, userId) {
 
 				linksContainerDataMemreasGallery += '<a href="'
 					+ _media_url_web + '"';
-				linksContainerDataMemreasGallery += ' title="' + mediaId
-					+ '"';
+				linksContainerDataMemreasGallery += ' title="'
+					+ mediaId + '"';
 				linksContainerDataMemreasGallery += ' type="video/mp4" data-gallery="'
 					+ mediaId
 					+ '" class="blueimp-gallery-thumb-anchor "';
@@ -567,14 +569,20 @@ function showEventDetail(eventId, userId) {
 			    mediaIDArray.push(Item_media_Id);
 			} // end for loop
 			console.log('*******************************');
-			console.log('objArrMemreasGallery---> ' + JSON.stringify(objArrMemreasGallery));
+			console.log('objArrMemreasGallery---> '
+				+ JSON.stringify(objArrMemreasGallery));
 			console.log('*******************************');
-			blueimp.Gallery(objArrMemreasGallery, {
-			    container : '#blueimp-video-carousel-gallery-detail',
-			    carousel : 'true',
-			    preloadRange : 2,
-			    transitionSpeed : 400
-			});
+
+			$('#blueimp-video-carousel-gallery-memreas').find('slides').empty();
+			blueimp
+				.Gallery(
+					objArrMemreasGallery,
+					{
+					    container : '#blueimp-video-carousel-gallery-memreas',
+					    carousel : 'true',
+					    preloadRange : 2,
+					    transitionSpeed : 400
+					});
 
 			$(linksContainerMemreasGallery).append(
 				linksContainerDataMemreasGallery);
@@ -595,27 +603,29 @@ function showEventDetail(eventId, userId) {
     $(".memreas-detail").fadeIn(500);
 }
 
-$(document).on('click', '[data-gallery]', function(event) {
-    var id = $(this).data('gallery');
-    var widget = $(id);
-    var selected_media_id;
-    var media_id;
-    var obj;
-    selected_media_id = widget.selector;
-    console.log("objArrMemreasGallery.length-->" + objArrMemreasGallery.length);
-    for (i = 0; i < objArrMemreasGallery.length; i++) {
-	obj = objArrMemreasGallery[i];
-	console.log("selected_media_id-->" + selected_media_id);
-	console.log("obj['title']-->" + obj['title']);
-	if (selected_media_id == obj['title']) {
-	    break;
-	}
-    }
-    return blueimp.Gallery([ obj ], {
-	container : '#blueimp-video-carousel-gallery-memreas',
-	carousel : true
-    });
-});
+$(document).on(
+	'click',
+	'[data-gallery]',
+	function(event) {
+	    var id = $(this).data('gallery');
+	    var widget = $(id);
+	    var selected_media_id;
+	    var media_id;
+	    var obj;
+	    selected_media_id = widget.selector;
+	    for (i = 0; i < objArrMemreasGallery.length; i++) {
+		obj = objArrMemreasGallery[i];
+		console.log("selected_media_id-->" + selected_media_id);
+		console.log("obj['title']-->" + obj['title']);
+		if (selected_media_id == obj['title']) {
+		    break;
+		}
+	    }
+	    return blueimp.Gallery([ obj ], {
+		container : '#blueimp-video-carousel-gallery-memreas',
+		carousel : true
+	    });
+	});
 
 function popupVideoPlayer(video_id) {
     var media_video_url = $("#" + video_id).attr('media-url');
@@ -637,6 +647,7 @@ function popupVideoPlayer(video_id) {
     popup('popupplayerMemreas');
 }
 function popupAddMemreasGallery() {
+    console.log('INSIDE function popupAddMemreasGallery()');
     ajaxRequest(
 	    'listallmedia',
 	    [ {
@@ -871,26 +882,18 @@ function memreas_fillFriends(info) {
     $('#popupContact').mCustomScrollbar('update');
 }
 
-function memreas_TwFriends() {
-    var friend_list = $.cookie('twitter_friends');
-    if (typeof (friend_list) == 'undefined') {
-	$('#loadingpopup').hide();
-	// jerror ('authentication failed! please try again');
-	$("#memreas-dropfriend").val(current_friendnw_selected);
-	return false;
-    }
-    friend_list = JSON.parse(friend_list);
-    var friend_count = friend_list.length;
-    for (var i = 0; i < friend_count; i++) {
-	var temp_id = friend_list[i]['div_id'];
-	temp_id = temp_id.split('_');
-	friend_list[i]['div_id'] = 'twmemreas_' + temp_id[1];
-    }
-    tw_friendsInfo = friend_list;
-    memreas_fillFriends(friend_list);
-    current_friendnw_selected = 'tw';
-    $('#loadingpopup').hide();
-}
+/*
+ * function memreas_TwFriends() { var friend_list = $.cookie('twitter_friends');
+ * if (typeof (friend_list) == 'undefined') { $('#loadingpopup').hide(); //
+ * jerror ('authentication failed! please try again');
+ * $("#memreas-dropfriend").val(current_friendnw_selected); return false; }
+ * friend_list = JSON.parse(friend_list); var friend_count = friend_list.length;
+ * for (var i = 0; i < friend_count; i++) { var temp_id =
+ * friend_list[i]['div_id']; temp_id = temp_id.split('_');
+ * friend_list[i]['div_id'] = 'twmemreas_' + temp_id[1]; } tw_friendsInfo =
+ * friend_list; memreas_fillFriends(friend_list); current_friendnw_selected =
+ * 'tw'; $('#loadingpopup').hide(); }
+ */
 
 function addFriendToEvent(eventId) {
     var groupName = $('input[name=memreas_groupname]').val();
@@ -1024,7 +1027,7 @@ $('.elastislide-list > li >a').click(function() {
 var event_media_ID_variable = '';
 var eventdetail_id = '';
 function BlueIMPGallery() {
-
+    $('#blueimp-video-carousel-gallery-detail').find('slides').empty();
     var jsonstrong2 = JSON.stringify(mediaIDArray);
     var DetailObj2 = JSON.parse(jsonstrong2);
     blueimp.Gallery(objDetail, {
@@ -1042,11 +1045,9 @@ function BlueIMPGallery() {
 	    $(".memreas-detail-download")
 		    .attr("href", media_download_url_final);
 	    // Getting Event ID Per SLider
-
 	    getMediaComment();
 	    updateMediaLike();
 	    $('#reportMediaform').attr('rel', event_media_ID_variable);
-
 	},
 	container : '#blueimp-video-carousel-gallery-detail',
 	carousel : 'true',
