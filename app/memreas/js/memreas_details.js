@@ -301,7 +301,11 @@ var DetailImage = '';
 function showEventDetail(eventId, userId) {
     eventdetail_id = eventId;
     eventdetail_user = userId;
-    $('#blueimp-video-carousel-gallery').find('slides').remove();
+    console.log('*****************************************************');
+    console.log('eventId -> ' + eventId);
+    console.log('userId -> ' + userId);
+    console.log('*****************************************************');
+    //$('#blueimp-video-carousel-gallery-memreas').find('slides').remove();
     $("#add_buttons").show();
 
     ajaxRequest('geteventdetails', [ {
@@ -358,14 +362,15 @@ function showEventDetail(eventId, userId) {
     var jcarousel_element = $("ul#carousel");
     jcarousel_element.empty();
 
+    console.log('ListALL MEDIA eventId sent -->' + eventId);
     ajaxRequest(
 	    'listallmedia',
 	    [ {
 		tag : 'event_id',
 		value : eventId
-	    }, {
-		tag : 'user_id',
-		value : userId
+	    //}, {
+		//tag : 'user_id',
+		//value : userId
 	    }, {
 		tag : 'device_id',
 		value : device_id
@@ -377,6 +382,8 @@ function showEventDetail(eventId, userId) {
 		value : media_page_index
 	    } ],
 	    function(response) {
+		var eventId = getValueFromXMLTag(response, 'event_id');
+		console.log('ListALL MEDIA eventId-->' + eventId);
 		console.log('ListALL MEDIA-->' + response);
 		var eventId = getValueFromXMLTag(response, 'event_id');
 		if (getValueFromXMLTag(response, 'status') == "Success") {
@@ -404,6 +411,14 @@ function showEventDetail(eventId, userId) {
 			var linksContainerMemreasGallery = $('#linksMemreasGallery');
 			var linksContainerDataMemreasGallery = '';
 			linksContainerMemreasGallery.html('');
+
+			//
+			// Reset the arrays
+			//
+			objArrMemreasGallery = new Array();
+			objArrMemreasDetail = new Array();
+			mediaIDArray = new Array();
+
 
 			for (var i = 0; i < media_count; i++) {
 			    var media = medias[i];
@@ -473,8 +488,8 @@ function showEventDetail(eventId, userId) {
 						+ '" alt=""><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></a></li>');
 			    }
 			    var item = new Object();
-			    Item_media_Id = new Object();
-			    DetailImage = new Object();
+			    var Item_media_Id = new Object();
+			    var DetailImage = new Object();
 
 			    if (_media_type == 'video') {
 
@@ -550,13 +565,12 @@ function showEventDetail(eventId, userId) {
 			    objArrMemreasGallery.push(item);
 			    objDetail.push(DetailImage);
 			    mediaIDArray.push(Item_media_Id);
-
-			}
+			} // end for loop
 			console.log('*******************************');
 			console.log('objArrMemreasGallery---> ' + JSON.stringify(objArrMemreasGallery));
 			console.log('*******************************');
 			blueimp.Gallery(objArrMemreasGallery, {
-			    container : '#blueimp-video-carousel-gallery',
+			    container : '#blueimp-video-carousel-gallery-detail',
 			    carousel : 'true',
 			    preloadRange : 2,
 			    transitionSpeed : 400
@@ -565,8 +579,6 @@ function showEventDetail(eventId, userId) {
 			$(linksContainerMemreasGallery).append(
 				linksContainerDataMemreasGallery);
 			$('#blueimp-video-carousel-gallery-memreas').hide();
-			console.log("objArrMemreasGalleryARR"
-				+ JSON.stringify(objArrMemreasGallery));
 		    }
 		} else
 		    jerror(getValueFromXMLTag(response, 'message'));
