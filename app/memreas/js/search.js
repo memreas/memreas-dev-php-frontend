@@ -22,6 +22,7 @@ $(document)
 			    tag : 'user_id',
 			    value : user_id
 			} ], function(data) {
+                        console.log('DATA TAG-->'+data);
 			    var q = $('#search').val();
 			    users = [];
 			    map = {};
@@ -92,7 +93,7 @@ $(document)
 						var page = 1;
 						var totalPage = 1;
 						var reqhandler = function(data) {
-
+                                                    console.log('@ data'+data);
 						    $(".tabcontent-detail")
 							    .hide();
 						    $("#search-result").show();
@@ -100,6 +101,7 @@ $(document)
 
 						    var objs = jQuery
 							    .parseJSON(data);
+                                                    console.log('!!!' +objs);
 						    $('#search-count').text(
 							    objs.count);
 						    totalPage = objs.totalPage;
