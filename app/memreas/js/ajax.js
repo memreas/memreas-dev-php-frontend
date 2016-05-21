@@ -78,19 +78,21 @@ ajaxRequest = function(action, params, success_func, error_func,
 
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-		    //alert(jqXHR.responseText);
-		    //alert(jqXHR.status);
 		    if (!disableLoadingScreen)
 			removeItem(stackAjaxInstance, action);
 
 		    if (typeof error_func != "undefined") {
-			error_func();
+			console.log("jqXHR.responseText ->" + jqXHR.responseText);
+			console.log("jqXHR.status ->" + jqXHR.status);
 		    } else {
 			console.log("error_func = undefined")
+			console.log("jqXHR.responseText ->" + jqXHR.responseText);
+			console.log("jqXHR.status ->" + jqXHR.status);
 		    }
 
-		    if (stackAjaxInstance.length == 0)
+		    if (stackAjaxInstance.length == 0) {
 			$('#loadingpopup').fadeOut(500);
+		    }
 		}
 	    });
     return false;
