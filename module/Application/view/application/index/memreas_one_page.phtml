@@ -26,6 +26,7 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 <?php
 // javascript constants
 $constants = "<script>";
+$constants .= "var DRC = " . MemreasConstants::DISABLE_RIGHT_CLICK . ";";
 $constants .= "var S3BUCKET = '" . MemreasConstants::S3BUCKET . "';";
 $constants .= "var HOST = '" . $_SERVER ['REMOTE_ADDR'] . "';";
 $constants .= "var LOGGED_USER_ID = '" . $_SESSION ['user_id'] . "';";
