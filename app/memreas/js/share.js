@@ -430,6 +430,13 @@ function checkSellMediaDuration() {
 	}
 }
 
+//
+// Create objects accesible outside of funciton and reset on done
+//
+var event = {};
+var media = {};
+var friends = {};
+
 // add the new event by request to the server.
 share_addEvent = function(medianext) {
 	var sellmedia_duration_from = '';
@@ -496,6 +503,10 @@ share_addEvent = function(medianext) {
 			// return true;
 		}
 
+
+		//
+		// Move to ajaxAddEvent
+		//
 		// send the request.
 		shareDisableFields();
 		ajaxRequest('addevent', [{
@@ -539,7 +550,6 @@ share_addEvent = function(medianext) {
 			value : sellmedia_duration_to
 		}], function(ret_xml) {
 			// parse the returned xml.
-
 			//console.log('Sell Media: ' + ret_xml);
 			var status = getValueFromXMLTag(ret_xml, 'status');
 			var message = getValueFromXMLTag(ret_xml, 'message');
@@ -550,14 +560,13 @@ share_addEvent = function(medianext) {
 
 				if (medianext === 'done') {
 
-					
-                                        setTimeout(function() {
+					setTimeout(function() {
 						var text_ids = ['txt_name', 'txt_location', 'dtp_date', 'dtp_from', 'dtp_to', 'dtp_selfdestruct'];
 						clearTextField(text_ids);
-						
+
 					}, 2000);
-                                        
-                                        $('.memrsclick').trigger('click');
+
+					$('.memrsclick').trigger('click');
 				}
 
 				if (medianext == 'next') {
@@ -576,6 +585,14 @@ share_addEvent = function(medianext) {
 		}, 'undefined', true);
 	}
 }
+
+//
+// call ajax add event
+//
+ajaxAddEvent = function() {
+}
+
+
 // Prevent enter invalid character to duration media selling price
 $(function() {
 	$("#sellmedia_duration").keydown(function(e) {
@@ -662,6 +679,9 @@ share_clickCkbPublic = function() {
 
 // go to the other page (1: memreas details, 2: media, 3: friends)
 share_gotoPage = function(tab_no) {
+	//
+	// Check code here to see navigation
+	//
 	$('#tabs-share li:nth-child(' + tab_no + ') a').click();
 };
 
@@ -718,10 +738,10 @@ share_addComment = function(next_step) {
 
 					if (next_step == 'done') {
 
-//						setTimeout(function() {
-//							share_gotoPage(SHAREPAGE_TAB_MEMREAS);
-//         						}, 2000);
-                                            $('.memrsclick').trigger('click');
+						//						setTimeout(function() {
+						//							share_gotoPage(SHAREPAGE_TAB_MEMREAS);
+						//         						}, 2000);
+						$('.memrsclick').trigger('click');
 
 					}
 
@@ -770,6 +790,10 @@ share_uploadMedias = function(success) {
 		value : media_id_params
 	}];
 	disableButtons("#tab2-share");
+
+	//
+	// Call addexistingmediatoevent
+	//
 	ajaxRequest('addexistmediatoevent', params, function(xml_response) {
 		if (getValueFromXMLTag(xml_response, 'status') == 'Success') {
 			jsuccess(getValueFromXMLTag(xml_response, 'message'));
@@ -790,6 +814,13 @@ share_uploadMedias = function(success) {
 		}
 	}, 'undefined', true);
 };
+
+//
+// call ajax add existing media to event
+//
+ajaxAddExistingMediaToEvent = function() {
+}
+
 
 // clear all fields on Media page when click "cancel" button.
 share_clearMedia = function() {
@@ -1035,6 +1066,9 @@ share_makeGroup = function() {
 		return;
 	}
 
+	//
+	// Move to ajaxAddFriendToEvent
+	//
 	// Add friend to event
 	// send the request.
 	ajaxRequest('addfriendtoevent', [{
@@ -1067,6 +1101,13 @@ share_makeGroup = function() {
 			jerror(message);
 	});
 };
+
+//
+// call ajax add existing media to event
+//
+ajaxAddFriendToEvent = function() {
+}
+
 
 // clear all fields on Friends page when click "cancel" button.
 share_clearFriends = function() {
