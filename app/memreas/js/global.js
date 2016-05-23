@@ -714,7 +714,6 @@ function randomShowAds() {
 			    * bottomadarr.length)];
 		    var badhtml = '<div class="adbox"><a href="' + bad1.link
 			    + '"><img src="' + bad1.img + '"/></a></div>';
-		    $(this).fadeOut();
 		    $(this).empty().append(badhtml);
 		    $(this).fadeIn();
 		});
