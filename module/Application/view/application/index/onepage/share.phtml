@@ -14,10 +14,10 @@
 					<a href="#" title="tab1-share">memreas details</a>
 				</li>
 				<li>
-					<a href="#" title="tab2-share" class="control-tab-share">media</a>
+					<a href="#" title="tab2-share" class="">media</a>
 				</li>
 				<li>
-					<a href="#" title="tab3-share" class="control-tab-share">friends</a>
+					<a href="#" title="tab3-share" class="">friends</a>
 				</li>
 			</ul>
 			<div id="tab-content-share">
@@ -85,12 +85,24 @@
 					</ul>
 					<span class="clear"></span>
 					<div class="mr-auto">
+					    <?php 
+					       //
+					       // change so the only done calls share add event
+					       //
+					        
+					     ?>
 						<a class="black_btn_skin" href="javascript:;" onclick="share_addEvent('next');">next</a>
 						<a class="black_btn_skin" href="javascript:;" onclick="share_addEvent('done');">Done</a>
 						<a class="black_btn_skin" href="javascript:share_clearMemreas(false);">cancel</a>
 					</div>
 				</div>
 				<div id="tab2-share" class="hideCls">
+                        <?php 
+                           //
+                           // change so only done calls share add event and then share media
+                           //
+                            
+                         ?>
 					<ul id="share_medialist" class="pics scroll-area scrollClass">
 						<!--<li><a href="/memreas/img/large-pic-1.jpg" class="swipebox" title="photo-1"><img src="/memreas/img/small-pic-1.jpg" alt=""></a></li>-->
 					</ul>
@@ -132,6 +144,14 @@
 					<div class="clearfix"></div>
 				</div>
 				<div id="tab3-share" class="hideCls">
+				    
+                        <?php 
+                           //
+                           // change so only done calls share add event and then add media and then add friends
+                           //
+                            
+                         ?>
+				    
 					<div class="styled-select hidden-memreas">
 						<select id="cmb_socialtype" style="display:none;" >
 							<option value="">-Choose-</option>

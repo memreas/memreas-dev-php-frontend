@@ -8,6 +8,7 @@
 <?php
 
 use Application\Model\MemreasConstants;
+use Application\memreas\Mlog;
 header ( 'Cache-Control: no-cache, no-store, must-revalidate' ); // HTTP 1.1.
 header ( 'Pragma: no-cache' ); // HTTP 1.0.
 header ( 'Expires: 0' ); // Proxies.
@@ -26,7 +27,6 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 <?php
 // javascript constants
 $constants = "<script>";
-$constants .= "var DRC = " . MemreasConstants::DISABLE_RIGHT_CLICK . ";";
 $constants .= "var S3BUCKET = '" . MemreasConstants::S3BUCKET . "';";
 $constants .= "var HOST = '" . $_SERVER ['REMOTE_ADDR'] . "';";
 $constants .= "var LOGGED_USER_ID = '" . $_SESSION ['user_id'] . "';";
@@ -41,6 +41,7 @@ $constants .= "var SEARCH_MIN_LENGTH = 1;";
 $constants .= "</script>";
 echo $constants;
 ?>
+
 <meta charset="utf-8">
 <meta name="viewport"
 	content="user-scalable-no,initial-scale=1.0, minimum-scale=1.0,maximum-scale=1.0">
