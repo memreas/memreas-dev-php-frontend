@@ -23,6 +23,11 @@ $(function() {
     // first tab
     $("#tab-content-memreas-detail div:first").fadeIn(); // Show first tab
     // content*/
+    
+    //height Adujust
+     var mcommentHeight=$(window).height()-205;
+        $('.memreas-detail-comments').attr('style', 'height: '+mcommentHeight+'px !important');
+    
 
     $('#tabs-memreas-detail a').click(function(e) {
 
@@ -533,6 +538,10 @@ function showEventDetail(eventId, userId) {
 				linksContainerDataMemreasGallery += ' style="background:url('
 					+ _media_thumbnail_large
 					+ ')"><span class="video-content-play-icon"></span></a>';
+                                
+                                 $('#carousellocationMemreasDetail').append('<li data-preview="'+ _media_thumbnail_large +'" class="DocumentItem"><a href="javascript:;">'
+                                                +'<img src="'+ _media_thumbnail_large +'" class="img-gallery imagescls" id="location'+ mediaId +'" alt="image04" /></a></li>');       
+
 
 			    } else {
 				Item_media_Id['M_id'] = mediaId;
@@ -562,6 +571,11 @@ function showEventDetail(eventId, userId) {
 				linksContainerDataMemreasGallery += ' style="background:url('
 					+ media_thummb_448
 					+ ')"><span></span></a>';
+                                
+                                
+                               $('#carousellocationMemreasDetail').append('<li data-preview="'+ _media_thumbnail_large +'"  class="DocumentItem"><a href="javascript:;">'
+                                                +'<img src="'+ _media_thumbnail_large +'" class="img-gallery" id="location'+ mediaId +'" alt="image04" /></a></li>');       
+  
 
 			    }
 			    objArrMemreasGallery.push(item);

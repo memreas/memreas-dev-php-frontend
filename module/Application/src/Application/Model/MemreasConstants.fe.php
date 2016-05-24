@@ -25,7 +25,6 @@ class MemreasConstants {
 	const LISTNOTIFICATIONSPOLLTIME = 240000; // 5 minutes
 	const GALLERYDELAYTIME = 500; // 500 ms
 	const MAINTENANCE = false; //Enable / Disable Maintenance mode
-	const DISABLE_RIGHT_CLICK = 'false';
 	                              
 	// For file limit upload
 	const FREE_ACCOUNT_FILE_LIMIT = 100; // 100MB limited upload for free user
