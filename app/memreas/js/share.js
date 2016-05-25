@@ -439,115 +439,138 @@ var friends = {};
 
 // add the new event by request to the server.
 share_addEvent = function(medianext) {
-	var sellmedia_duration_from = '';
-	var sellmedia_duration_to = ''
+	event.sellmedia_duration_from = '';
+	event.sellmedia_duration_to = ''
 
 	// Precheck for selling media is popup or not and check for correction
 	if ($("#popupSellMedia").is(":visible")) {
-		var sellmedia_price_select = $("#sellmedia_price").val();
+		event.sellmedia_price_select = $("#sellmedia_price").val();
 		if (sellmedia_price_select == '') {
 			jerror("please select the price");
 			return false;
 		}
 
-		var passDuration = checkSellMediaDuration();
+		event.passDuration = checkSellMediaDuration();
 		if (!passDuration)
 			return false;
 
-		sellmedia_duration_from = $("#sellmedia_duration_from").val();
-		sellmedia_duration_to = $("#sellmedia_duration_to").val();
+		event.sellmedia_duration_from = $("#sellmedia_duration_from").val();
+		event.sellmedia_duration_to = $("#sellmedia_duration_to").val();
 
 		if (!$("#ckb_sellmedia_agree").is(":checked")) {
 			jerror("You must agree with our terms and conditions");
 			return false;
 		}
-		sell_media_price = sellmedia_price_select;
+		event.sell_media_price = sellmedia_price_select;
 	}
 
 	disablePopup('popupSellMedia');
 	share_closeGoogleMap(true);
-	var name = getElementValue('txt_name');
+	event.name = getElementValue('txt_name');
 	if (name == "") {
 		jerror("You have to input the name.");
 		return;
 	}
 	if (checkValidDateFromTo(true)) {
 
-		var date = getElementValue('dtp_date');
-		var location = getElementValue('txt_location');
-		var date_from = getElementValue('dtp_from');
-		var date_to = getElementValue('dtp_to');
-		var date_selfdestruct = getElementValue('dtp_selfdestruct');
+		event.date = getElementValue('dtp_date');
+		event.location = getElementValue('txt_location');
+		event.date_from = getElementValue('dtp_from');
+		event.date_to = getElementValue('dtp_to');
+		event.date_selfdestruct = getElementValue('dtp_selfdestruct');
 
-		var ckb_canpost = getCheckBoxValue('ckb_canpost');
-		var ckb_canadd = getCheckBoxValue('ckb_canadd');
-		var ckb_public = getCheckBoxValue('ckb_public');
+		event.ckb_canpost = getCheckBoxValue('ckb_canpost');
+		event.ckb_canadd = getCheckBoxValue('ckb_canadd');
+		event.ckb_public = getCheckBoxValue('ckb_public');
 
 		// Sell media public as default
-		if (sell_media_price > 0) {
-			ckb_public = 1;
-			ckb_canpost = 0;
-			ckb_canadd = 0;
-			date_from = sellmedia_duration_from;
-			date_to = sellmedia_duration_to;
+		if (event.sell_media_price > 0) {
+			event.ckb_public = 1;
+			event.ckb_canpost = 0;
+			event.ckb_canadd = 0;
+			event.date_from = sellmedia_duration_from;
+			event.date_to = sellmedia_duration_to;
 		}
 
-		var ckb_viewable = getCheckBoxValue('ckb_viewable');
-		var ckb_selfdestruct = getCheckBoxValue('ckb_selfdestruct');
+		event.ckb_viewable = getCheckBoxValue('ckb_viewable');
+		event.ckb_selfdestruct = getCheckBoxValue('ckb_selfdestruct');
 
 		// Checking for selling media
-		if ($("#ckb_sellmedia").is(":checked") && sell_media_price > 0) {
+		if ($("#ckb_sellmedia").is(":checked") && event.sell_media_price > 0) {
 			// alert('hello');
-
 			// popup("popupSellMedia");
 			// return true;
 		}
 
 
 		//
-		// Move to ajaxAddEvent
+		// Share Page Changes: Move to ajaxAddEvent
 		//
 		// send the request.
 		shareDisableFields();
-		ajaxRequest('addevent', [{
+		//
+		// call ajaxAddEvent only if done
+		//
+		ajaxAddEvent();
+}
+
+
+doneAction = function() {
+	
+	/*
+	 * if media details  ! filled out then goto media details and show error
+	 * if media detail and done then just add event
+	 * if media detail and media and done then add event, in success call addexistingmediatoevent
+	 * if media detail and media and friends and done then add event, in success call addexisting mediat to event, in success call addfrientto event
+	 * else next button.
+	 */
+	
+}
+
+//
+// call ajax add event
+//
+ajaxAddEvent = function() {
+	
+			ajaxRequest('addevent', [{
 			tag : 'user_id',
 			value : user_id
 		}, {
 			tag : 'event_name',
-			value : name
+			value : event.name
 		}, {
 			tag : 'event_date',
-			value : formatDateToDMY(date)
+			value : formatDateToDMY(event.date)
 		}, {
 			tag : 'event_location',
-			value : location
+			value : event.location
 		}, {
 			tag : 'event_from',
-			value : formatDateToDMY(date_from)
+			value : formatDateToDMY(event.date_from)
 		}, {
 			tag : 'event_to',
-			value : formatDateToDMY(date_to)
+			value : formatDateToDMY(event.date_to)
 		}, {
 			tag : 'is_friend_can_add_friend',
-			value : ckb_canadd.toString()
+			value : event.ckb_canadd.toString()
 		}, {
 			tag : 'is_friend_can_post_media',
-			value : ckb_canpost.toString()
+			value : event.ckb_canpost.toString()
 		}, {
 			tag : 'event_self_destruct',
-			value : formatDateToDMY(date_selfdestruct)
+			value : formatDateToDMY(event.date_selfdestruct)
 		}, {
 			tag : 'is_public',
-			value : ckb_public.toString()
+			value : event.ckb_public.toString()
 		}, {
 			tag : 'price',
-			value : sell_media_price.toString()
+			value : event.sell_media_price.toString()
 		}, {
 			tag : 'duration_from',
-			value : sellmedia_duration_from
+			value : event.sellmedia_duration_from
 		}, {
 			tag : 'duration_to',
-			value : sellmedia_duration_to
+			value : event.sellmedia_duration_to
 		}], function(ret_xml) {
 			// parse the returned xml.
 			//console.log('Sell Media: ' + ret_xml);
@@ -584,12 +607,7 @@ share_addEvent = function(medianext) {
 			shareEnableFields();
 		}, 'undefined', true);
 	}
-}
 
-//
-// call ajax add event
-//
-ajaxAddEvent = function() {
 }
 
 
@@ -792,8 +810,14 @@ share_uploadMedias = function(success) {
 	disableButtons("#tab2-share");
 
 	//
-	// Call addexistingmediatoevent
+	// Call addexistingmediatoevent if done
 	//
+};
+
+//
+// call ajax add existing media to event
+//
+ajaxAddExistingMediaToEvent = function() {
 	ajaxRequest('addexistmediatoevent', params, function(xml_response) {
 		if (getValueFromXMLTag(xml_response, 'status') == 'Success') {
 			jsuccess(getValueFromXMLTag(xml_response, 'message'));
@@ -813,12 +837,6 @@ share_uploadMedias = function(success) {
 			jerror(getValueFromXMLTag(xml_response, 'message'));
 		}
 	}, 'undefined', true);
-};
-
-//
-// call ajax add existing media to event
-//
-ajaxAddExistingMediaToEvent = function() {
 }
 
 
@@ -1067,11 +1085,21 @@ share_makeGroup = function() {
 	}
 
 	//
-	// Move to ajaxAddFriendToEvent
+	// Share Page Changes: Move to ajaxAddFriendToEvent
 	//
 	// Add friend to event
 	// send the request.
-	ajaxRequest('addfriendtoevent', [{
+	// only call if done selected
+	ajaxAddFriendToEvent();
+
+};
+
+//
+// call ajax add existing media to event
+//
+ajaxAddFriendToEvent = function() {
+	
+		ajaxRequest('addfriendtoevent', [{
 		tag : 'user_id',
 		value : user_id
 	}, {
@@ -1100,12 +1128,6 @@ share_makeGroup = function() {
 		} else
 			jerror(message);
 	});
-};
-
-//
-// call ajax add existing media to event
-//
-ajaxAddFriendToEvent = function() {
 }
 
 
