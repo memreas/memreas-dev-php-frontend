@@ -17,6 +17,11 @@ var gallery;
 
 $(document).ready(
 	function() {
+            
+            resizeWindowBluepanel();
+        $(window).resize(function(){
+           resizeWindowBluepanel(); 
+        });
 
 	    $("a[title=gallery]").click(function() {
 		$("#gallery #tabs a[title=tab1]").click();

@@ -467,10 +467,10 @@ share_addEvent = function(medianext) {
 	disablePopup('popupSellMedia');
 	share_closeGoogleMap(true);
 	event.name = getElementValue('txt_name');
-	if (name == "") {
-		jerror("You have to input the name.");
-		return;
-	}
+//	if (event.name == "") {
+//		jerror("You have to input the name.");
+//		return;
+//	}
 	if (checkValidDateFromTo(true)) {
 
 		event.date = getElementValue('dtp_date');
@@ -515,7 +515,7 @@ share_addEvent = function(medianext) {
 }
 
 
-doneAction = function() {
+doneAction = function(medianext) {
 	
 	/*
 	 * if media details  ! filled out then goto media details and show error
@@ -524,6 +524,18 @@ doneAction = function() {
 	 * if media detail and media and friends and done then add event, in success call addexisting mediat to event, in success call addfrientto event
 	 * else next button.
 	 */
+        
+        if ( medianext=== 'done')
+        {
+
+            setTimeout(function () {
+                var text_ids = ['txt_name', 'txt_location', 'dtp_date', 'dtp_from', 'dtp_to', 'dtp_selfdestruct'];
+                clearTextField(text_ids);
+
+            }, 2000);
+
+            $('.memrsclick').trigger('click');
+        }
 	
 }
 
@@ -822,8 +834,8 @@ ajaxAddExistingMediaToEvent = function() {
 		if (getValueFromXMLTag(xml_response, 'status') == 'Success') {
 			jsuccess(getValueFromXMLTag(xml_response, 'message'));
 
-			var media_id_list = new Array();
-			var count = 0;
+			media.media_id_list = new Array();
+			media.count = 0;
 			$("ul#share_medialist li.setchoosed").each(function() {
 				media_id_list[++count] = $(this).find('a').attr('id');
 				$(this).find('a').find('img.loading').remove();
@@ -999,10 +1011,11 @@ share_clickFriends = function(id) {
 		mr_friendsInfo[idx].selected = !mr_friendsInfo[idx].selected;
 		if (mr_friendsInfo[idx].selected) {
 			$('#' + id + ' img').addClass('setchoosed');
+                        alert('hello');
 			$('#' + id).next('aside').css('border', '3px solid green');
 		} else {
 			$('#' + id + ' img').removeClass('setchoosed');
-			$('#' + id).next('aside').css('border', '3px solid #FFF');
+                        $('#' + id).next('aside').css('border', '3px solid #FFF');
 		}
 	}
 };
