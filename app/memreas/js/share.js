@@ -35,6 +35,13 @@ var sell_media_price = 0;
 var friendList = null;
 var current_sharefriendnw_selected = '';
 
+//
+// doneAction related objects
+//
+var event = {};
+var media = {};
+var friends = {};
+
 $(function() {
 	$("a[title=share]").click(function() {
 		event_id = -1;
@@ -86,7 +93,6 @@ $(function() {
 			$("#ckb_canadd").attr('checked', false);
 			$("#ckb_public").attr("checked", true);
 			$("#ckb_viewable").attr("checked", true);
-			// alert('hello');
 			popup("popupSellMedia");
 			return false;
 		}
@@ -114,7 +120,7 @@ share_initObjects = function() {
 
 	if (!userBrowser[0].ios)
 		ar_initAudio();
-}
+};
 // initialize the akordeon.
 share_initAkordeon = function() {
 	$('#ckb_canpost')[0].checked = false;
@@ -150,25 +156,26 @@ share_initAkordeon = function() {
 		toggle : true,
 		itemsOrder : [2, 0, 1]
 	});
-}
+};
 // change the friend list by social type.
 share_changeSocialType = function() {
 	var socialType = $("#cmb_socialtype option:selected").val();
 	// Reset friend element
-	friendList = null;
 	switch (socialType) {
 	case "memreas":
-		if (mr_friendsInfo == null)
+		if (mr_friendsInfo == null) {
+			friendList = null;
 			memreas_getFriendList();
-		else
+		} else {
 			share_addFriends(mr_friendsInfo);
+		}
 		break;
 	default:
 		$("#cmb_socialtype option[value=memreas]").attr('selected', true);
 		share_changeSocialType();
 		break;
 	}
-}
+};
 // initialize and customize the scroll bar.
 share_customScrollbar = function() {
 
@@ -249,13 +256,13 @@ share_customScrollbar = function() {
 			// scroll to appended content
 		});
 	});
-}
+};
 // popup the window with google map when focus the location text field.
 // div_id: identifier of div for google map.
 share_showGoogleMap = function(div_id) {
 	popup('dlg_locationmap');
 	share_initGoogleMap(div_id);
-}
+};
 // close the popup window with google map.
 // save_address: variable indicating if the address is saved or not.
 share_closeGoogleMap = function(save_address) {
@@ -268,7 +275,7 @@ share_closeGoogleMap = function(save_address) {
 	}
 
 	disablePopup('dlg_locationmap');
-}
+};
 // initialize the google map.
 share_initGoogleMap = function(div_id) {
 	if (location_map == null || typeof location_map == "undefined") {
@@ -368,7 +375,7 @@ share_initGoogleMap = function(div_id) {
 			jerror(err_msg);
 		}
 	}
-}
+};
 // Check valid duration
 function checkSellMediaDuration() {
 	// debugger;
@@ -430,17 +437,10 @@ function checkSellMediaDuration() {
 	}
 }
 
-//
-// Create objects accesible outside of funciton and reset on done
-//
-var event = {};
-var media = {};
-var friends = {};
-
 // add the new event by request to the server.
 share_addEvent = function(medianext) {
 	event.sellmedia_duration_from = '';
-	event.sellmedia_duration_to = ''
+	event.sellmedia_duration_to = '';
 
 	// Precheck for selling media is popup or not and check for correction
 	if ($("#popupSellMedia").is(":visible")) {
@@ -467,10 +467,10 @@ share_addEvent = function(medianext) {
 	disablePopup('popupSellMedia');
 	share_closeGoogleMap(true);
 	event.name = getElementValue('txt_name');
-//	if (event.name == "") {
-//		jerror("You have to input the name.");
-//		return;
-//	}
+	//	if (event.name == "") {
+	//		jerror("You have to input the name.");
+	//		return;
+	//	}
 	if (checkValidDateFromTo(true)) {
 
 		event.date = getElementValue('dtp_date');
@@ -497,11 +497,9 @@ share_addEvent = function(medianext) {
 
 		// Checking for selling media
 		if ($("#ckb_sellmedia").is(":checked") && event.sell_media_price > 0) {
-			// alert('hello');
 			// popup("popupSellMedia");
 			// return true;
 		}
-
 
 		//
 		// Share Page Changes: Move to ajaxAddEvent
@@ -512,11 +510,11 @@ share_addEvent = function(medianext) {
 		// call ajaxAddEvent only if done
 		//
 		ajaxAddEvent();
-}
-
+	}
+};
 
 doneAction = function(medianext) {
-	
+
 	/*
 	 * if media details  ! filled out then goto media details and show error
 	 * if media detail and done then just add event
@@ -524,104 +522,100 @@ doneAction = function(medianext) {
 	 * if media detail and media and friends and done then add event, in success call addexisting mediat to event, in success call addfrientto event
 	 * else next button.
 	 */
-        
-        if ( medianext=== 'done')
-        {
 
-            setTimeout(function () {
-                var text_ids = ['txt_name', 'txt_location', 'dtp_date', 'dtp_from', 'dtp_to', 'dtp_selfdestruct'];
-                clearTextField(text_ids);
+	if (medianext === 'done') {
 
-            }, 2000);
+		setTimeout(function() {
+			var text_ids = ['txt_name', 'txt_location', 'dtp_date', 'dtp_from', 'dtp_to', 'dtp_selfdestruct'];
+			clearTextField(text_ids);
 
-            $('.memrsclick').trigger('click');
-        }
-	
-}
+		}, 2000);
+
+		$('.memrsclick').trigger('click');
+	}
+
+};
 
 //
 // call ajax add event
 //
 ajaxAddEvent = function() {
-	
-			ajaxRequest('addevent', [{
-			tag : 'user_id',
-			value : user_id
-		}, {
-			tag : 'event_name',
-			value : event.name
-		}, {
-			tag : 'event_date',
-			value : formatDateToDMY(event.date)
-		}, {
-			tag : 'event_location',
-			value : event.location
-		}, {
-			tag : 'event_from',
-			value : formatDateToDMY(event.date_from)
-		}, {
-			tag : 'event_to',
-			value : formatDateToDMY(event.date_to)
-		}, {
-			tag : 'is_friend_can_add_friend',
-			value : event.ckb_canadd.toString()
-		}, {
-			tag : 'is_friend_can_post_media',
-			value : event.ckb_canpost.toString()
-		}, {
-			tag : 'event_self_destruct',
-			value : formatDateToDMY(event.date_selfdestruct)
-		}, {
-			tag : 'is_public',
-			value : event.ckb_public.toString()
-		}, {
-			tag : 'price',
-			value : event.sell_media_price.toString()
-		}, {
-			tag : 'duration_from',
-			value : event.sellmedia_duration_from
-		}, {
-			tag : 'duration_to',
-			value : event.sellmedia_duration_to
-		}], function(ret_xml) {
-			// parse the returned xml.
-			//console.log('Sell Media: ' + ret_xml);
-			var status = getValueFromXMLTag(ret_xml, 'status');
-			var message = getValueFromXMLTag(ret_xml, 'message');
-			event_id = getValueFromXMLTag(ret_xml, 'event_id');
-			if (status.toLowerCase() == 'success') {
-				jsuccess('Event "' + name + '" was registered successfully.');
-				pushReloadItem('view_my_events');
 
-				if (medianext === 'done') {
+	ajaxRequest('addevent', [{
+		tag : 'user_id',
+		value : user_id
+	}, {
+		tag : 'event_name',
+		value : event.name
+	}, {
+		tag : 'event_date',
+		value : formatDateToDMY(event.date)
+	}, {
+		tag : 'event_location',
+		value : event.location
+	}, {
+		tag : 'event_from',
+		value : formatDateToDMY(event.date_from)
+	}, {
+		tag : 'event_to',
+		value : formatDateToDMY(event.date_to)
+	}, {
+		tag : 'is_friend_can_add_friend',
+		value : event.ckb_canadd.toString()
+	}, {
+		tag : 'is_friend_can_post_media',
+		value : event.ckb_canpost.toString()
+	}, {
+		tag : 'event_self_destruct',
+		value : formatDateToDMY(event.date_selfdestruct)
+	}, {
+		tag : 'is_public',
+		value : event.ckb_public.toString()
+	}, {
+		tag : 'price',
+		value : event.sell_media_price.toString()
+	}, {
+		tag : 'duration_from',
+		value : event.sellmedia_duration_from
+	}, {
+		tag : 'duration_to',
+		value : event.sellmedia_duration_to
+	}], function(ret_xml) {
+		// parse the returned xml.
+		//console.log('Sell Media: ' + ret_xml);
+		var status = getValueFromXMLTag(ret_xml, 'status');
+		var message = getValueFromXMLTag(ret_xml, 'message');
+		event_id = getValueFromXMLTag(ret_xml, 'event_id');
+		if (status.toLowerCase() == 'success') {
+			jsuccess('Event "' + name + '" was registered successfully.');
+			pushReloadItem('view_my_events');
 
-					setTimeout(function() {
-						var text_ids = ['txt_name', 'txt_location', 'dtp_date', 'dtp_from', 'dtp_to', 'dtp_selfdestruct'];
-						clearTextField(text_ids);
+			if (medianext === 'done') {
 
-					}, 2000);
+				setTimeout(function() {
+					var text_ids = ['txt_name', 'txt_location', 'dtp_date', 'dtp_from', 'dtp_to', 'dtp_selfdestruct'];
+					clearTextField(text_ids);
 
-					$('.memrsclick').trigger('click');
-				}
+				}, 2000);
 
-				if (medianext == 'next') {
-					setTimeout(function() {
-						var text_ids = ['txt_name', 'txt_location', 'dtp_date', 'dtp_from', 'dtp_to', 'dtp_selfdestruct'];
-						clearTextField(text_ids);
-						share_gotoPage(SHAREPAGE_TAB_MEDIA);
-					}, 2000);
-				}
-
-				sell_media_price = 0;
-			} else {
-				jerror(message);
+				$('.memrsclick').trigger('click');
 			}
-			shareEnableFields();
-		}, 'undefined', true);
-	}
 
-}
+			if (medianext == 'next') {
+				setTimeout(function() {
+					var text_ids = ['txt_name', 'txt_location', 'dtp_date', 'dtp_from', 'dtp_to', 'dtp_selfdestruct'];
+					clearTextField(text_ids);
+					share_gotoPage(SHAREPAGE_TAB_MEDIA);
+				}, 2000);
+			}
 
+			sell_media_price = 0;
+		} else {
+			jerror(message);
+		}
+		shareEnableFields();
+	}, 'undefined', true);
+};
 
 // Prevent enter invalid character to duration media selling price
 $(function() {
@@ -849,8 +843,7 @@ ajaxAddExistingMediaToEvent = function() {
 			jerror(getValueFromXMLTag(xml_response, 'message'));
 		}
 	}, 'undefined', true);
-}
-
+};
 
 // clear all fields on Media page when click "cancel" button.
 share_clearMedia = function() {
@@ -960,45 +953,46 @@ share_getAllMedia = function() {
 
 // clear the friend list.
 share_clearFriendsList = function() {
-	if (friendList == null)
+	if (friendList == null) {
 		friendList = $('#share_friendslist .mCSB_container');
-
+	}
 	friendList.empty();
 };
 
 // add friends to the list from social friends information.
 share_addFriends = function(info) {
-	if (friendList == null)
+	if (friendList == null) {
 		friendList = $('#share_friendslist .mCSB_container');
+		friendList.empty();
 
-	friendList.empty();
+		var i = 0,
+		    el;
 
-	var i = 0,
-	    el;
+		for ( i = 0; i < info.length; i++) {
 
-	for ( i = 0; i < info.length; i++) {
+			el = '';
+			el += '<li>';
+			el += '<figure class="pro-pics2" id="' + info[i].div_id + '" onclick="javascript:share_clickFriends(this.id);"><img src="/memreas/img/profile-pic.jpg" class="new-memreas" alt="" ' + (info[i].selected ? 'class="setchoosed"' : '') + '></figure>';
+			el += '<aside class="pro-pic_names2" name="' + info[i].name + '" id="a' + info[i].div_id + '" onclick="javascript:share_clickFriends(this.id.substr(1));">' + info[i].name + '</aside>';
+			el += '</li>';
 
-		el = '';
-		el += '<li>';
-		el += '<figure class="pro-pics2" id="' + info[i].div_id + '" onclick="javascript:share_clickFriends(this.id);"><img src="/memreas/img/profile-pic.jpg" class="new-memreas" alt="" ' + (info[i].selected ? 'class="setchoosed"' : '') + '></figure>';
-		el += '<aside class="pro-pic_names2" name="' + info[i].name + '" id="a' + info[i].div_id + '" onclick="javascript:share_clickFriends(this.id.substr(1));">' + info[i].name + '</aside>';
-		el += '</li>';
-
-		friendList.append(el);
-	}
-
-	var imgList = $('#share_friendslist .mCSB_container li img');
-
-	for ( i = 0; i < imgList.length; i++) {
-		if (info[i].photo) {
-			$(imgList[i]).prop('src', info[i].photo);
-		} else {
-			$(imgList[i]).prop('src', '/memreas/img/profile-pic.jpg');
+			friendList.append(el);
 		}
-		// $(imgList[i]).prop('src', info[i].photo);
+
+		var imgList = $('#share_friendslist .mCSB_container li img');
+
+		for ( i = 0; i < imgList.length; i++) {
+			if (info[i].photo) {
+				$(imgList[i]).prop('src', info[i].photo);
+			} else {
+				$(imgList[i]).prop('src', '/memreas/img/profile-pic.jpg');
+			}
+			// $(imgList[i]).prop('src', info[i].photo);
+
+		}
+		$('#share_friendslist').mCustomScrollbar('update');
 
 	}
-	$('#share_friendslist').mCustomScrollbar('update');
 };
 
 share_clickFriends = function(id) {
@@ -1011,11 +1005,10 @@ share_clickFriends = function(id) {
 		mr_friendsInfo[idx].selected = !mr_friendsInfo[idx].selected;
 		if (mr_friendsInfo[idx].selected) {
 			$('#' + id + ' img').addClass('setchoosed');
-                        alert('hello');
 			$('#' + id).next('aside').css('border', '3px solid green');
 		} else {
 			$('#' + id + ' img').removeClass('setchoosed');
-                        $('#' + id).next('aside').css('border', '3px solid #FFF');
+			$('#' + id).next('aside').css('border', '3px solid #FFF');
 		}
 	}
 };
@@ -1111,8 +1104,8 @@ share_makeGroup = function() {
 // call ajax add existing media to event
 //
 ajaxAddFriendToEvent = function() {
-	
-		ajaxRequest('addfriendtoevent', [{
+
+	ajaxRequest('addfriendtoevent', [{
 		tag : 'user_id',
 		value : user_id
 	}, {
@@ -1142,8 +1135,6 @@ ajaxAddFriendToEvent = function() {
 			jerror(message);
 	});
 }
-
-
 // clear all fields on Friends page when click "cancel" button.
 share_clearFriends = function() {
 	clearTextField(['txt_emaillist', 'txt_groupname']);
