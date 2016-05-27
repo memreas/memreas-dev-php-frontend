@@ -509,10 +509,13 @@ share_addEvent = function(medianext) {
 		//
 		// call ajaxAddEvent only if done
 		//
-		ajaxAddEvent();
+		return true;
 	}
 };
 
+//
+// may not be necessary
+//
 doneAction = function(medianext) {
 
 	/*
@@ -525,18 +528,40 @@ doneAction = function(medianext) {
 
 	if (medianext === 'done') {
 
+		//
+		// Check if memreas details name filled out...
+		//
+
 		setTimeout(function() {
-			var text_ids = ['txt_name', 'txt_location', 'dtp_date', 'dtp_from', 'dtp_to', 'dtp_selfdestruct'];
-			clearTextField(text_ids);
+
+			//
+			// Call ajaxAddEvent which will call ajaxAddMedia and ajaxAddFriends on success
+			//
+			if (share_addEvent()) {
+				ajaxAddEvent();
+			}
+			//var text_ids = ['txt_name', 'txt_location', 'dtp_date', 'dtp_from', 'dtp_to', 'dtp_selfdestruct'];
+			//clearTextField(text_ids);
 
 		}, 2000);
 
 		$('.memrsclick').trigger('click');
 	}
 
+	if (medianext == 'next') {
+		setTimeout(function() {
+			//var text_ids = ['txt_name', 'txt_location', 'dtp_date', 'dtp_from', 'dtp_to', 'dtp_selfdestruct'];
+			//clearTextField(text_ids);
+			if (SHAREPAGE_TAB_MEDIA) {
+				share_gotoPage(SHAREPAGE_TAB_FRIENDS);
+			} else {
+				share_gotoPage(SHAREPAGE_TAB_MEDIA);
+			}
+		}, 2000);
+	}
+
 };
 
-//
 // call ajax add event
 //
 ajaxAddEvent = function() {
@@ -588,26 +613,21 @@ ajaxAddEvent = function() {
 		event_id = getValueFromXMLTag(ret_xml, 'event_id');
 		if (status.toLowerCase() == 'success') {
 			jsuccess('Event "' + name + '" was registered successfully.');
+
+			//
+			// Check media and call share_AddComment which calls the Ajax function
+			//
+			share_addComment();
+
+			//
+			// Check friends and call add friends which calls the ajax function
+			//
+			share_makeGroup();
+
+			//
+			// change page to view my events.
+			//
 			pushReloadItem('view_my_events');
-
-			if (medianext === 'done') {
-
-				setTimeout(function() {
-					var text_ids = ['txt_name', 'txt_location', 'dtp_date', 'dtp_from', 'dtp_to', 'dtp_selfdestruct'];
-					clearTextField(text_ids);
-
-				}, 2000);
-
-				$('.memrsclick').trigger('click');
-			}
-
-			if (medianext == 'next') {
-				setTimeout(function() {
-					var text_ids = ['txt_name', 'txt_location', 'dtp_date', 'dtp_from', 'dtp_to', 'dtp_selfdestruct'];
-					clearTextField(text_ids);
-					share_gotoPage(SHAREPAGE_TAB_MEDIA);
-				}, 2000);
-			}
 
 			sell_media_price = 0;
 		} else {
@@ -710,11 +730,7 @@ share_gotoPage = function(tab_no) {
 };
 
 // add the comment to Media when click "next" button on the Media Page.
-share_addComment = function(next_step) {
-	if (event_id == '') {
-		jerror("Please complete event detail at step 1");
-		return false;
-	}
+share_addComment = function() {
 
 	media_ids = fetch_selected_media();
 	if (media_ids.length <= 0) {
@@ -758,22 +774,24 @@ share_addComment = function(next_step) {
 				var message = getValueFromXMLTag(ret_xml, 'message');
 
 				if (status.toLowerCase() == 'success') {
-					jsuccess('comments was added successfully.');
+					jsuccess('comments were added successfully.');
 
-					if (next_step == 'done') {
+					/*
+					 if (next_step == 'done') {
 
-						//						setTimeout(function() {
-						//							share_gotoPage(SHAREPAGE_TAB_MEMREAS);
-						//         						}, 2000);
-						$('.memrsclick').trigger('click');
+					 //						setTimeout(function() {
+					 //							share_gotoPage(SHAREPAGE_TAB_MEMREAS);
+					 //         						}, 2000);
+					 $('.memrsclick').trigger('click');
 
-					}
+					 }
 
-					if (next_step == 'next') {
-						setTimeout(function() {
-							share_gotoPage(SHAREPAGE_TAB_FRIENDS);
-						}, 2000);
-					}
+					 if (next_step == 'next') {
+					 setTimeout(function() {
+					 share_gotoPage(SHAREPAGE_TAB_FRIENDS);
+					 }, 2000);
+					 }
+					 */
 
 				} else {
 					jerror(message);
@@ -806,7 +824,7 @@ share_uploadMedias = function(success) {
 		};
 	}
 
-	var params = [{
+	media.params = [{
 		tag : 'event_id',
 		value : event_id
 	}, {
@@ -818,31 +836,36 @@ share_uploadMedias = function(success) {
 	//
 	// Call addexistingmediatoevent if done
 	//
+	ajaxAddExistingMediaToEvent();
 };
 
 //
 // call ajax add existing media to event
 //
 ajaxAddExistingMediaToEvent = function() {
-	ajaxRequest('addexistmediatoevent', params, function(xml_response) {
+	ajaxRequest('addexistmediatoevent', media.params, function(xml_response) {
 		if (getValueFromXMLTag(xml_response, 'status') == 'Success') {
 			jsuccess(getValueFromXMLTag(xml_response, 'message'));
 
-			media.media_id_list = new Array();
-			media.count = 0;
+			media_id_list = new Array();
+			count = 0;
 			$("ul#share_medialist li.setchoosed").each(function() {
 				media_id_list[++count] = $(this).find('a').attr('id');
 				$(this).find('a').find('img.loading').remove();
 			});
 			enableButtons("#tab2-share");
-			setTimeout(function() {
-				share_gotoPage(SHAREPAGE_TAB_FRIENDS);
-			}, 500);
+
 		} else {
 			enableButtons("#tab2-share");
 			jerror(getValueFromXMLTag(xml_response, 'message'));
 		}
 	}, 'undefined', true);
+
+	//
+	// clear the media since we posted it
+	//
+	share_clearMedia();
+
 };
 
 // clear all fields on Media page when click "cancel" button.
@@ -1015,10 +1038,12 @@ share_clickFriends = function(id) {
 
 // make the group with selected friends and e-mail list.
 share_makeGroup = function() {
-	if (event_id == '') {
-		jerror('Please complete event detail at step 1');
-		return false;
-	}
+	/* - not called unless we have event_id
+	 if (event_id == '') {
+	 jerror('Please complete event detail at step 1');
+	 return false;
+	 }
+	 */
 
 	var emailList = splitByDelimeters(getElementValue('txt_emaillist'), [',', ';']);
 	var emailTags = [];
@@ -1057,7 +1082,13 @@ share_makeGroup = function() {
 				};
 			}
 		}
-	}
+
+		//
+		// Share Page Changes: Move to ajaxAddFriendToEvent
+		// Add friend to event
+		//
+		ajaxAddFriendToEvent(); 
+	}// end if (mr_friendsInfo)
 
 	if (groupName != '') {
 		// send the request.
@@ -1089,15 +1120,6 @@ share_makeGroup = function() {
 		$("a.memreas").click();
 		return;
 	}
-
-	//
-	// Share Page Changes: Move to ajaxAddFriendToEvent
-	//
-	// Add friend to event
-	// send the request.
-	// only call if done selected
-	ajaxAddFriendToEvent();
-
 };
 
 //
@@ -1110,13 +1132,13 @@ ajaxAddFriendToEvent = function() {
 		value : user_id
 	}, {
 		tag : 'emails',
-		value : emailTags
+		value : friends.emailTags
 	}, {
 		tag : 'event_id',
 		value : event_id
 	}, {
 		tag : 'friends',
-		value : selFriends
+		value : friends.selFriends
 	}], function(ret_xml) {
 		// parse the returned xml.
 		var status = getValueFromXMLTag(ret_xml, 'status');
@@ -1124,17 +1146,28 @@ ajaxAddFriendToEvent = function() {
 		if (status.toLowerCase() == 'success') {
 			jsuccess('your friends added successfully.');
 			setTimeout(function() {
+				/*
 				var text_ids = ['txt_name', 'txt_location', 'dtp_date', 'dtp_from', 'dtp_to', 'dtp_selfdestruct'];
 				var checkbox_ids = ['ckb_canpost', 'ckb_canadd', 'ckb_public', 'ckb_viewable', 'ckb_selfdestruct'];
 				clearTextField(text_ids);
 				clearCheckBox(checkbox_ids);
 				$("a.memreas").click();
+				*/
 				// Send user to memreas page
 			}, 2000);
-		} else
+		} else {
 			jerror(message);
+		}
+
+		//
+		// Friends request succeeded so clear list
+		//
+		mr_friendsInfo = null;
+		share_changeSocialType();
+
 	});
-}
+};
+
 // clear all fields on Friends page when click "cancel" button.
 share_clearFriends = function() {
 	clearTextField(['txt_emaillist', 'txt_groupname']);
