@@ -517,6 +517,7 @@ share_addEvent = function(medianext) {
 // may not be necessary
 //
 doneAction = function(medianext) {
+	alert("medianext -> " + medianext);
 
 	/*
 	 * if media details  ! filled out then goto media details and show error
