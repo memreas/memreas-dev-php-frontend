@@ -1295,18 +1295,20 @@ function getMemreasEventMedia() {
 			var media_id = getValueFromXMLTag(media, 'media_id');
 			var _media_url = getMediaThumbnail(media,
 				'/memreas/img/small/1.jpg');
-			if (media_type == 'video')
+			if (media_type == 'video'){
 			    jMemreasEventMedia
 				    .append('<li class="event_img video-media" id="moremedia-'
 					    + media_id
 					    + '" onclick="more_clickMedia(this.id);"><img src="'
 					    + _media_url
 					    + '"/><img class="overlay-videoimg" src="/memreas/img/video-overlay.png" /></li>');
+                                }else{
 			jMemreasEventMedia
 				.append('<li class="event_img" id="moremedia-'
 					+ media_id
 					+ '" onclick="more_clickMedia(this.id);"><img src="'
-					+ _media_url + '"/></li>');
+					+ _media_url + '"/></li>'); 
+                            }
 		    }
 		    ajaxScrollbarElement("#memreasEventMedia");
 		    updateAkordeonContent($(".memreas-media"));

@@ -943,7 +943,7 @@ function resizeWindowBluepanel(){
         queueHeight=queueHeight-205
     }
     
-    $("#tab-content, #tab-content-queue, #tab-content-share, #tab-content-memreas, #tab-content-memreas-detail, #tab-content-more").attr('style', 'height: '+queueHeight+'px !important; min-height: '+queueHeight+'px !important');
+    $("#tab-content, #tab-content-queue, #tab-content-share, #tab-content-memreas, #tab-content-memreas-detail, #tab-content-more").attr('style', 'height: auto !important; min-height: '+queueHeight+'px !important');
     console.log(queueHeight);
 }
 
