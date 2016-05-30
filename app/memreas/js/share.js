@@ -467,6 +467,7 @@ share_addEvent = function(medianext) {
 	disablePopup('popupSellMedia');
 	share_closeGoogleMap(true);
 	event.name = getElementValue('txt_name');
+        
 	//	if (event.name == "") {
 	//		jerror("You have to input the name.");
 	//		return;
