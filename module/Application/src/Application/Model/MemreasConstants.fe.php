@@ -10,9 +10,9 @@ class MemreasConstants {
 
 	//Server URLs
 	const MEMREAS_FE = "https://fe.memreas.com";
-	const MEMREAS_WS = "https://memreasdev-ws.memreas.com";
-	const MEMREAS_WS_PUBLIC = "https://memreasdev-ws.memreas.com/public";
-	const MEMREAS_PAY = "https://memreasdev-ws.memreas.com/index?action=";
+	const MEMREAS_WS = "https://memreasdev-wsa.memreas.com";
+	const MEMREAS_WS_PUBLIC = "https://memreasdev-wsa.memreas.com/public";
+	const MEMREAS_PAY = "https://memreasdev-wsa.memreas.com/index?action=";
 	//change..
 	//const MEMREAS_PAY = "https://memreasdev-pay.memreas.com";
 	const MEMREAS_ADS = false;

@@ -936,3 +936,14 @@ var md5 = (function() {
     var a = "0123456789abcdef".split("");
     return d
 })();
+
+function resizeWindowBluepanel(){
+    var queueHeight=$(window).height();
+    if(queueHeight >205){
+        queueHeight=queueHeight-205
+    }
+    
+    $("#tab-content, #tab-content-queue, #tab-content-share, #tab-content-memreas, #tab-content-memreas-detail, #tab-content-more").attr('style', 'height: auto !important; min-height: '+queueHeight+'px !important');
+    console.log(queueHeight);
+}
+
