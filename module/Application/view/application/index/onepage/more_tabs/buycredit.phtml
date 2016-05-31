@@ -27,9 +27,10 @@
                     </li>
                 </ul>
                 <div style="clear: both;"></div>
-                <a class="black_btn_skin" href="javascript:;" onclick="buycredit_addCardPopup();" style="margin-top: 20px; display: inline-block;">Add</a>
+                <div class="text-center" style="margin-bottom:20px;"> <a class="black_btn_skin" href="javascript:;" onclick="buycredit_addCardPopup();" style="margin-top: 20px; display: inline-block;">Add</a>
                 <!-- <a class="black_btn_skin buycredit-card-functions hide-onload" href="javascript:;" onclick="buycredit_removeCard();" style="margin-top: 20px; display: inline-block;">Remove</a> -->
                 <a class="black_btn_skin" href="javascript:;" onclick="activeAkordeon('buycredit-order-tab', fill_account_detail);" style="margin-top: 20px; display: inline-block;">Next</a>
+                </div>
             </div>
         </div>
     </div>
@@ -55,7 +56,7 @@
                 </li>
                <li>
                     <label class="textfield_names"style="min-width: 50px;">Amount to add :</label>
-                    <div class="styled-select" style="width: 72%; float: left;  min-width: 50px; margin: 0 0 0 10px;;margin-bottom:100px;">
+                    <div class="styled-select" style="width: 72%; float: left;  min-width: 50px; margin: 0 0 0 10px;;margin-bottom:20px;">
                         <select id="credit-amount">
                             <option value="10">$10</option>
                             <option value="15">$15</option>
@@ -66,8 +67,9 @@
             </ul>
             <div style="clear: both;"></div>
             <div style="text-align: center;" class="credit-message-order hide-onload">Thank you! You will receive an email confirmation shortly</div>
-            <a class="black_btn_skin" href="javascript:;" onclick="buycredit_confirmAmount();" style="margin-top: 20px; display: inline-block;">Ok</a>
+            <div class="text-center" style="text-align: center;"><a class="black_btn_skin" href="javascript:;" onclick="buycredit_confirmAmount();" style="margin-top: 20px; display: inline-block;">Ok</a>
             <a class="black_btn_skin" href="javascript:;" onclick="activeAkordeon('buycredit-order-init', false);" style="margin-top: 20px; display: inline-block;">Cancel</a>
+            </div>
         </div>
     </div>
 </div>

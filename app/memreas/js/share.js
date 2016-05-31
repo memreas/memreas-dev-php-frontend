@@ -3,11 +3,11 @@
  * this file, via any medium is strictly prohibited Proprietary and confidential
  */
 // MACROS for tab indices.
-var SHAREPAGE_TAB_MEMREAS = 1;
+var SHAREPAGE_TAB_MEMREAS = 0;
 // tab index of memreas details on share page
-var SHAREPAGE_TAB_MEDIA = 2;
+var SHAREPAGE_TAB_MEDIA = 1;
 // tab index of media on share page
-var SHAREPAGE_TAB_FRIENDS = 3;
+var SHAREPAGE_TAB_FRIENDS = 2;
 // tab index of friends on share page
 
 // google map object
@@ -518,7 +518,7 @@ share_addEvent = function(medianext) {
 // may not be necessary
 //
 doneAction = function(medianext) {
-	alert("medianext -> " + medianext);
+	//alert("medianext -> " + medianext);
 
 	/*
 	 * if media details  ! filled out then goto media details and show error
@@ -547,20 +547,31 @@ doneAction = function(medianext) {
 
 		}, 2000);
 
-		$('.memrsclick').trigger('click');
+		//$('.memrsclick').trigger('click');
 	}
 
 	if (medianext == 'next') {
 		setTimeout(function() {
 			//var text_ids = ['txt_name', 'txt_location', 'dtp_date', 'dtp_from', 'dtp_to', 'dtp_selfdestruct'];
 			//clearTextField(text_ids);
-			if (SHAREPAGE_TAB_MEDIA) {
+		//alert(SHAREPAGE_TAB_MEDIA);	
+                    if (SHAREPAGE_TAB_MEDIA) {
 				share_gotoPage(SHAREPAGE_TAB_FRIENDS);
-			} else {
-				share_gotoPage(SHAREPAGE_TAB_MEDIA);
-			}
+			} 
+                     
 		}, 2000);
 	}
+        
+        
+        if (medianext == 'friendnext') {
+		setTimeout(function() {
+				//share_gotoPage(SHAREPAGE_TAB_FRIENDS);
+                                $('.mfriendsclick').trigger('click');
+			
+
+		}, 2000);
+	}
+        
 
 };
 
