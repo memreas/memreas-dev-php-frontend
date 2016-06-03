@@ -1,0 +1,47 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Apr 20, 2016, 4:32:21 PM
+    Author     : Shyam
+*/
+.navbr{
+    background: #b0bccd; /* Old browsers Khan Changes*/
+	background: -moz-linear-gradient(top, #b0bccd 0%, #7e92ad 100%);
+	/* FF3.6+ Khan Changes*/
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #b0bccd),
+		color-stop(100%, #7e92ad)); /* Chrome,Safari4+ Khan Changes*/
+	background: -webkit-linear-gradient(top, #b0bccd 0%, #7e92ad 100%);
+	/* Chrome10+,Safari5.1+ Khan Changes*/
+	background: -o-linear-gradient(top, #b0bccd 0%, #7e92ad 100%);
+	/* Opera 11.10+ Khan Changes*/
+	background: -ms-linear-gradient(top, #b0bccd 0%, #7e92ad 100%);
+	/* IE10+ Khan Changes*/
+	background: linear-gradient(to bottom, #b0bccd 0%, #7e92ad 100%);
+	/* W3C Khan Changes*/
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b0bccd',
+		endColorstr='#7e92ad', GradientType=0); /* IE6-9 Khan Changes*/
+    
+        max-height: 75px;
+        height: 75px;
+}
+.container{max-width: 1000px;}
+.body-top{background: #4e8dd4; /* Old browsers */
+	background: -moz-linear-gradient(top, #4e8dd4 0%, #083b7a 100%);
+	/* FF3.6+ Khan Changes*/
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #4e8dd4),
+		color-stop(100%, #083b7a)); /* Chrome,Safari4+ Khan Changes*/
+	background: -webkit-linear-gradient(top, #4e8dd4 0%, #083b7a 100%);
+	/* Chrome10+,Safari5.1+ Khan Changes*/
+	background: -o-linear-gradient(top, #4e8dd4 0%, #083b7a 100%);
+	/* Opera 11.10+ Khan Changes*/
+	background: -ms-linear-gradient(top, #4e8dd4 0%, #083b7a 100%);
+	/* IE10+ Khan Changes*/
+	background: linear-gradient(to bottom, #4e8dd4 0%, #083b7a 100%);
+	/* W3C Khan Changes*/
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4e8dd4',
+		endColorstr='#083b7a', GradientType=0); /* IE6-9 Khan Changes*/
+
+	/*min-height: 581px; Khan Changes MFE-458*/}
