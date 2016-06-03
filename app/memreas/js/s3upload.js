@@ -20,7 +20,10 @@ var S3UploadInstance = function() {
      *                S3 targetPath where file will be stored
      * 
      */
-
+    
+    //
+    // Functions for upload
+    //
     this.doomMediaUploadForm = function(element) {
 	this.instance = $(element);
 	var self = this;
@@ -28,7 +31,6 @@ var S3UploadInstance = function() {
 		.each(function() {
 
 		    var form = self.instance;
-
 		    form
 			    .fileupload({
 
@@ -41,6 +43,9 @@ var S3UploadInstance = function() {
 				autoUpload : true,
 				// 5GB max
 				maxFileSize : 5000000,
+				//
+				// Start add function
+				//
 				add : function(event, data) {
 				    //
 				    // Drop Zone or Explorer selection
@@ -454,6 +459,7 @@ var S3UploadInstance = function() {
 						    }
 
 						    /*-
+						     * Form is set so now check media exists...
 						     * Check if media exist or not
 						     */
 						    var params = [
@@ -481,6 +487,7 @@ var S3UploadInstance = function() {
 								    xml_response) {
 								var filename = data.files[0].name;
 								filename = correctUploadFilename(filename);
+								console.log("checkexistmedia filename ---> " + filename);
 								if (getValueFromXMLTag(
 									xml_response,
 									'status') == 'Failure') {
@@ -500,6 +507,7 @@ var S3UploadInstance = function() {
 									    2000);
 								    return false;
 								} else {
+								    console.log("SHOULD NOT BE CALLED - Checking if file name has space");
 								    /*-
 								     * Checking if file name has space
 								     */
