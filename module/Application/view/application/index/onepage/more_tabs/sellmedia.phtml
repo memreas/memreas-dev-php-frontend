@@ -16,9 +16,17 @@
 	</div>
     
     <div class="selleerdata">
-    <h2>Seller information</h2>
-                                <label class="textfield_names susername sellertxt">Username: <?php echo $_SESSION['username']; ?></label>
-                                <label class="textfield_names semail sellertxt">Email: <?php echo $_SESSION['email']; ?></label>
+    
+    
+    <ul>
+        <li><label class="textfield_names">Username</label> <input name="email_user" type="text" class="more-input Accform-field" value="<?php echo $_SESSION['username']; ?>"  readonly=""></li>
+        <li><label class="textfield_names">Username</label> <input name="email_user" type="text" class="more-input Accform-field" value="<?php  echo $_SESSION['email']; ?>"  readonly=""></li>
+        
+    </ul>
+    
+    
+<!--                                <label class="textfield_names susername sellertxt">Username: <?php //echo $_SESSION['username']; ?></label>
+                                <label class="textfield_names semail sellertxt">Email: <?php //echo $_SESSION['email']; ?></label>-->
                                 <div class="clearfix"></div>
  </div>
     <div class="clearfix"></div>
