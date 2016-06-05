@@ -210,9 +210,30 @@
 				<form enctype="multipart/form-data" action="" method="post" name=""
 					class="HideReport" id="offensivereportform"
 					style="background: none; border-bottom: none;">
-					<label for="ocform_reason">reason:</label> <input
-						name="ocform_reason" id="ocform_reason" type="text"
-						placeholder="add reason here" "/> <br /> <br />
+					
+					
+					<label for="ocform_reason">reason types:</label>
+					<ul id="ocform_reason_types" class="share_memreas_details  ">
+                		<li> 
+						<input id="esc_content" class="css-checkbox" type="checkbox" />
+                    		<label for="esc_content" id="lbl_esc_content" class="css-label margin-none">explicit sexual content</label>
+					</li> 
+                		<li> 
+						<input id="evc_content" class="css-checkbox" type="checkbox" />
+                    		<label for="evc_content" id="lbl_evc_content" class="css-label margin-none">explicit violent content</label>
+					</li> 
+                		<li> 
+						<input id="ehs_content" class="css-checkbox" type="checkbox" />
+                    		<label for="ehs_content" id="lbl_ehs_content" class="css-label margin-none">explicit hate speech content</label>
+					</li> 
+                		<li> 
+						<input id="ioc_content" class="css-checkbox" type="checkbox" />
+                    		<label for="ioc_content" id="lbl_ioc_content" class="css-label margin-none">inappropriate other content</label>
+					</li> 
+					</ul> 
+					 
+					<br/> 
+					<br/>
 					<div style="clear: both;"></div>
 
 
