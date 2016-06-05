@@ -1227,7 +1227,24 @@ $('#term_condition_label').click(function() {
 function submitOffensiveContent() {
 
     var inappropriate = "1";
-    if ($("#ocform_reason").val() != "") {
+    var reason_types = "";
+    var reason_type_start = "<reason_type>";
+    var reason_type_end = "</reason_type>";
+    
+    if ($("#esc_content").is(':checked')) {
+	reason_types += reason_type_start + $("#lbl_esc_content").text() + reason_type_end;
+    }
+    if ($("#evc_content").is(':checked')) {
+	reason_types += reason_type_start + $("#lbl_evc_content").text() + reason_type_end;
+    }
+    if ($("#ehs_content").is(':checked')) {
+	reason_types += reason_type_start + $("#lbl_ehs_content").text() + reason_type_end;
+    }
+    if ($("#ioc_content").is(':checked')) {
+	reason_types += reason_type_start + $("#lbl_ioc_content").text() + reason_type_end;
+    }
+    
+    if (reason_types != "") {
 
 	var params = [ {
 	    tag : "event_id",
@@ -1242,8 +1259,8 @@ function submitOffensiveContent() {
 	    tag : "inappropriate",
 	    value : inappropriate
 	}, {
-	    tag : "reason",
-	    value : $("#ocform_reason").val()
+	    tag : "reason_types",
+	    value : reason_types
 	}, ];
 
 	ajaxRequest('mediainappropriate', params, function(ret_xml) {
