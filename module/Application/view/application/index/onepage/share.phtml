@@ -17,7 +17,7 @@
 					<a href="#" title="tab2-share" class="">media</a>
 				</li>
 				<li>
-					<a href="#" title="tab3-share" class="">friends</a>
+					<a href="#" title="tab3-share" class="mfriendsclick">friends</a>
 				</li>
 			</ul>
 			<div id="tab-content-share">
@@ -58,12 +58,12 @@
 						<input id="ckb_viewable" class="css-checkbox" type="checkbox" />
 						<label id="lbl-viewable" for="ckb_viewable" name="demo_lbl_4" class="css-label margin-none" >viewable :</label>
 						<input name="inputdtpfrom" type="text" id="dtp_from" class="date-picker" readonly value="from" placeholder="From" disabled />
-						<input name="inputdtpto" type="text" id="dtp_to" class="date-picker" readonly value="to" placeholder="To" disabled />
+						<input name="inputdtpto" type="text" id="dtp_to" class="date-picker" readonly value="to" placeholder="To" disabled  style="width: 34.4%;"/>
 						</li>
 						<li>
 						<input id="ckb_selfdestruct" class="css-checkbox" type="checkbox" />
 						<label for="ckb_selfdestruct" name="demo_lbl_5" class="css-label margin-none" >ghost :</label>
-						<input name="input" type="text" id="dtp_selfdestruct" class="share-txtfield-2 date-picker" readonly value="" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == '')this.value = '';" disabled />
+						<input name="input" type="text" id="dtp_selfdestruct" class="share-txtfield-2 date-picker" readonly value="" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == '')this.value = '';" disabled  />
 						</li>
 						<?php if ($this->enableSellMedia) {
 						?>
@@ -91,8 +91,8 @@
 					       //
 					        
 					     ?>
-						<a class="black_btn_skin" href="javascript:;" onclick="share_addEvent('next');">next</a>
-						<a class="black_btn_skin" href="javascript:;" onclick="share_addEvent('done');">Done</a>
+						<a class="black_btn_skin" href="javascript:;" onclick="doneAction('next');">next</a>
+						<a class="black_btn_skin" href="javascript:;" onclick="doneAction('done');">Done</a>
 						<a class="black_btn_skin" href="javascript:share_clearMemreas(false);">cancel</a>
 					</div>
 				</div>
@@ -133,8 +133,8 @@
 
 					<div class="clearfix"></div>
 					<div class="add-comment-buttons" style="text-align: center; margin-top: 10px;">
-						<a class="black_btn_skin" href="javascript:share_addComment('next');">next</a>
-						<a class="black_btn_skin" href="javascript:share_addComment('done');">Done</a>
+						<a class="black_btn_skin" href="javascript:doneAction('friendnext');">next</a>
+						<a class="black_btn_skin" href="javascript:doneAction('done');">Done</a>
 						<a class="black_btn_skin" href="javascript:share_clearMemreas(false);">cancel</a>
 					</div>
 					<div class="clearfix"></div>
@@ -255,13 +255,13 @@
 	<!-- End Bottom Ads -->
 </div>
 
-<div id="dlg_locationmap" class="popups2">
+<div id="dlg_locationmap" class="popups2" style="height: 80%">
 	<a id="btn_locationmap_close" onClick="javascript:share_closeGoogleMap(false);" class='popupClose '>x</a>
 	<h2>location</h2>
 	<a id="btn_locationmap_ok" class="black_btn_skin btn_locationmap_ok" href="javascript:share_closeGoogleMap(true);">OK</a>
 	<input id="txt_locationmap_address" class="txt_locationmap_address " name="input" type="text" />
 	<div class="clear"></div>
-	<div id="div_locationmap_maparea" class="map_box"></div>
+	<div id="div_locationmap_maparea" class="map_box" style="height: 86%"></div>
 </div>
 <div id="div_locationmap_back" class="backgroundPopup"></div>
 
