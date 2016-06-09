@@ -1210,7 +1210,7 @@ input[type=checkbox].css-checkbox:checked+label.css-label {
 }
 
 .pro-names2 {
-	min-width: 200px;
+/*	min-width: 200px;*/
 	font-family: "Century Gothic";
 	font-size: 15px;
 	color: #FFF;
@@ -3599,6 +3599,7 @@ background-image: url(../img/video-play.svg);
     
 }
 
+
 .mobile-form{background: none !important; }
 .mobile-form input {width: 100% !important; }
 
@@ -3711,7 +3712,7 @@ background-image: url(../img/video-play.svg);
     overflow-y:hidden;
     height:130px;
     width:95%;
-    padding: 0 15px;
+    padding: 10px 15px;
 }
 
 .DocumentItem
@@ -3813,8 +3814,26 @@ background-image: url(../img/video-play.svg);
 .floatcompare a{float: left !important;}
 
 
+.video-content-play-icon-2{
+    background-image: url(../img/video-play.svg);
+
+    right: 0;
+    left: 35px;
+     width: 99px;
+    height: 99px;
+    display: inline-block;
+    background: url(../img/video-play.png) center no-repeat;
+    opacity: 0.8;
+    cursor: pointer;
+    position: absolute;
+    z-index: 999;
+    
+    
+}
 
 
+
+/*
 .Accform2 li {width: 24% !important; float: left; margin-right: 1%; clear: none !important}
 .Accform2-field{width: 90% !important;}
 .Accform .black_btn_skin{padding: 8px 28px !important;}
@@ -3825,4 +3844,4 @@ background-image: url(../img/video-play.svg);
 
 .Accform3 li {width: 24% !important; float: left; margin-right: 1%; clear: none !important}
 .Accform3-field{width: 90% !important;}
-.Accform45 .black_btn_skin{padding: 8px 28px !important;}
+.Accform45 .black_btn_skin{padding: 8px 28px !important;}*/
