@@ -26,7 +26,8 @@ $(function() {
     
     //height Adujust
      var mcommentHeight=$(window).height()-205;
-        $('.memreas-detail-comments').attr('style', 'height: '+mcommentHeight+'px !important');
+        //$('.memreas-detail-comments').attr('style', 'height: '+mcommentHeight+'px !important');
+        $('.memreas-detail-comments').attr('style', 'height: 400px !important');
     
 
     $('#tabs-memreas-detail a').click(function(e) {
