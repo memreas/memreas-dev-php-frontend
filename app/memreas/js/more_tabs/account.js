@@ -736,8 +736,10 @@ function getAccountPlans() {
 							var html_element = '<p>'
 								+ plan_name
 								+ '</p>';
-							jAccountPlans
-								.append(html_element);
+							//jAccountPlans
+								//.append(html_element);
+                                                            //console.log('HTMLCONTENT'+html_element);    
+                                                          $('.my-list-plans').append(html_element);      
 							$("input#plan-" + plan_id).attr("checked", "checked");
 							planChange(plan_id);
 							check_user_subscription = 1;

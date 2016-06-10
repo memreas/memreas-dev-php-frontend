@@ -3831,17 +3831,15 @@ background-image: url(../img/video-play.svg);
     
 }
 
-
-
-/*
-.Accform2 li {width: 24% !important; float: left; margin-right: 1%; clear: none !important}
-.Accform2-field{width: 90% !important;}
-.Accform .black_btn_skin{padding: 8px 28px !important;}
-
-.Accform2 li {width: 24% !important; float: left; margin-right: 1%; clear: none !important}
-.Accform2-field{width: 90% !important;}
-.Accform .black_btn_skin{padding: 8px 28px !important;}
-
-.Accform3 li {width: 24% !important; float: left; margin-right: 1%; clear: none !important}
-.Accform3-field{width: 90% !important;}
-.Accform45 .black_btn_skin{padding: 8px 28px !important;}*/
+.customer-active-format{background: #327AC9;
+    padding-left: 10px;
+    padding-top: 10px;
+    font-size:  19px;
+    border-radius: 5px;}
+.action-plan-heading{margin-right: 10px;}
+.my-customer-active-format{background: #327AC9;
+    padding-left: 10px;
+    padding-top: 10px;
+    font-size:  19px;
+    border-radius: 5px;}
+.action-plan-heading{margin-right: 10px;}
