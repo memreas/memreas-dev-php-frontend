@@ -46,5 +46,10 @@ class MemreasConstants {
 	const MEMREAS_DESCRIPTION = "memreas is a social media network that allows users to access their content on the web or our Android and iOS apps.  memreas members have the ability to upload or access images or video with 4k support.";
 	const MEMREAS_KEYWORDS = "social networking media streaming 4k HDR";
 	
+	// HLS mime types
+	//document.createElement('video').canPlayType('application/vnd.apple.mpegURL')
+	//document.createElement('video').canPlayType('application/x-mpegURL')
+	const HLS_MIME_TYPEX = 'application/x-mpegURL';
+	const HLS_MIME_TYPEV = 'application/vnd.apple.mpegURL';
 	
 }
