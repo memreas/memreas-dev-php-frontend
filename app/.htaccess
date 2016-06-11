@@ -34,7 +34,6 @@ php_value session.gc_maxlifetime 3600
 
 #Add mime types for hls
 AddType application/x-mpegurl m3u8
-AddType application/vnd.apple.mpegURL
 AddType video/mp2t ts
 
 #Set Browser caching
