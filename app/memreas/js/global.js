@@ -963,10 +963,10 @@ function useJQueryInputDisabler(disable) {
 
         if (disable) {
         		// Disabled on all:
-        		$('input, button').disable(true);
+        		$('input, button', 'a').disable(true);
         		
         } else {
         		// Enabled on all:
-        		$('input, button').enable(false);
+        		$('input, button', 'a').enable(false);
         }
 }
