@@ -710,7 +710,10 @@ class IndexController extends AbstractActionController {
 	public function publicAction() {
 		$type = ! empty ( $_REQUEST ["type"] ) ? $_REQUEST ["type"] : '';
 		
-		if (! empty ( $type )) {
+		if (! empty ( $type ) && ($type[0] == '@')) {
+			//
+			// url ex. https://fe.memreas.com/index/public?type=@jmeah1
+			//
 			$name = substr ( $type, 1 );
 			$tag = $type [0];
 			$path = "application/index/public_person_page.phtml";
@@ -722,7 +725,11 @@ class IndexController extends AbstractActionController {
 					'name' => $name,
 			) );
 			$view->setTemplate ( $path ); // path to phtml file under view folder
-		} else if (! empty ( $type )) {
+		} else if (! empty ( $type ) && ($type[0] == '!')) {
+			//
+			// url ex. https://fe.memreas.com/index/public?type=!test video public
+			// note on enter spaces change to %20 for encoding
+			//
 			$tag = substr ( $type, 1 );
 			$type = $type [0];
 			$path = "application/index/public_memreas_page.phtml";
