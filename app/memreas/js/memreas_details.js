@@ -391,9 +391,6 @@ function showEventDetail(eventId, userId) {
 	    } ],
 	    function(response) {
 		var eventId = getValueFromXMLTag(response, 'event_id');
-		console.log('ListALL MEDIA eventId-->' + eventId);
-		console.log('ListALL MEDIA-->' + response);
-		var eventId = getValueFromXMLTag(response, 'event_id');
 		if (getValueFromXMLTag(response, 'status') == "Success") {
 		    if (typeof (eventId != 'undefined')) {
 			event_owner_name = getValueFromXMLTag(response,
