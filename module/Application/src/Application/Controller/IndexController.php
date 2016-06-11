@@ -730,8 +730,8 @@ class IndexController extends AbstractActionController {
 			// url ex. https://fe.memreas.com/index/public?type=!test video public
 			// note on enter spaces change to %20 for encoding
 			//
-			$tag = substr ( $type, 1 );
-			$type = $type [0];
+			$name = substr ( $type, 1 );
+			$tag = $type [0];
 			$path = "application/index/public_memreas_page.phtml";
 			$enableAdvertising = MemreasConstants::MEMREAS_ADS;
 			$view = new ViewModel ( array (
