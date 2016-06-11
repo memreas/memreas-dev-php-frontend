@@ -1964,6 +1964,12 @@ $(function() {
 
 					    var counter_status = $(media_detail)
 						    .filter('status').html();
+                                            var counter_claim_status='onclick="reportCounterclaim(this);"';
+                                            var counter_claim_text='report counter claim';
+                                            if(counter_status =='claim reported'){
+                                                counter_claim_status ='style="cursor:default; background:#828080;"  onclick=""';
+                                                counter_claim_text='claim Submitted';
+                                            }
 
 					    var media_url = $(media_detail)
 						    .filter('media_url').html();
@@ -1987,11 +1993,11 @@ $(function() {
 						    ' <td><img src="'
 						    + media_url
 						    + '" width="80" /></td>'
-						    + '<td> <a href="javascript:;"  onclick="reportCounterclaim(this);" class="counter-claim-btn reportCounterclaim" id="'
+						    + '<td > <a href="javascript:;" '+counter_claim_status+'   class="counter-claim-btn reportCounterclaim" id="'
 						    + media_id
 						    + '" rel="'
 						    + violation_id
-						    + '">report counter claim</a>'
+						    + '">'+counter_claim_text+'</a>'
 						    + '</td>'
 						    + '<td width="7%">'
 						    + dmca_violation_report_date
