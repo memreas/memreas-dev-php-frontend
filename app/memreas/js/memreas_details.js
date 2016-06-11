@@ -633,7 +633,9 @@ $(document).on(
 		    break;
 		}
 	    }
-	    return blueimp.Gallery([ obj ], {
+	    //Deep Copy due to blueimp internal error
+	    var newObject = jQuery.extend(true, {}, obj);
+	    return blueimp.Gallery([ newObject ], {
 		container : '#blueimp-video-carousel-gallery-memreas',
 		carousel : true
 	    });
