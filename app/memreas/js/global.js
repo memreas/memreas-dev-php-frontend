@@ -167,11 +167,18 @@ function removeCdata(media_link) {
 }
 
 function removeCdataCorrectLink(media_link) {
-    media_link = media_link.replace('<!--[CDATA[["', "").replace('"]]]-->', "")
-	    .replace("<!--[CDATA[", "").replace("]]-->", "").replace('["', "")
-	    .replace('"]', "");
-    if (media_link.indexOf("\\/") >= 0)
-	media_link = media_link.split("\\/").join('/');
+
+    // if (typeof media_link === "undefined") {
+    // return "";
+    // }
+    if (media_link != null) {
+	media_link = media_link.replace('<!--[CDATA[["', "").replace('"]]]-->',
+		"").replace("<!--[CDATA[", "").replace("]]-->", "").replace(
+		'["', "").replace('"]', "");
+	if (media_link.indexOf("\\/") >= 0) {
+	    media_link = media_link.split("\\/").join('/');
+	}
+    }
 
     return media_link;
 }
@@ -937,36 +944,41 @@ var md5 = (function() {
     return d
 })();
 
-function resizeWindowBluepanel(){
-    var queueHeight=$(window).height();
-    if(queueHeight >205){
-        queueHeight=queueHeight-205
+function resizeWindowBluepanel() {
+    var queueHeight = $(window).height();
+    if (queueHeight > 205) {
+	queueHeight = queueHeight - 205
     }
-    
-    $("#tab-content, #tab-content-queue, #tab-content-share, #tab-content-memreas, #tab-content-memreas-detail, #tab-content-more").attr('style', 'height: auto !important; min-height: '+queueHeight+'px !important');
+
+    $(
+	    "#tab-content, #tab-content-queue, #tab-content-share, #tab-content-memreas, #tab-content-memreas-detail, #tab-content-more")
+	    .attr(
+		    'style',
+		    'height: auto !important; min-height: ' + queueHeight
+			    + 'px !important');
     console.log(queueHeight);
 }
 
 function useJQueryInputDisabler(disable) {
-	
-	jQuery.fn.extend({
-	    disable: function(state) {
-	        return this.each(function() {
-	            var $this = $(this);
-	            if($this.is('input, button, textarea, select'))
-	              this.disabled = state;
-	            else
-	              $this.toggleClass('disabled', state);
-	        });
-	    }
-	});
 
-        if (disable) {
-        		// Disabled on all:
-        		$('input, button', 'a').disable(true);
-        		
-        } else {
-        		// Enabled on all:
-        		$('input, button', 'a').enable(false);
-        }
+    jQuery.fn.extend({
+	disable : function(state) {
+	    return this.each(function() {
+		var $this = $(this);
+		if ($this.is('input, button, textarea, select'))
+		    this.disabled = state;
+		else
+		    $this.toggleClass('disabled', state);
+	    });
+	}
+    });
+
+    if (disable) {
+	// Disabled on all:
+	$('input, button', 'a').disable(true);
+
+    } else {
+	// Enabled on all:
+	$('input, button', 'a').enable(false);
+    }
 }
