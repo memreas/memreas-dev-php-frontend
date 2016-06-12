@@ -682,7 +682,7 @@ class IndexController extends AbstractActionController {
 		}
 		// Mlog::addone ( $cm . __LINE__ . '::', '...' );
 		
-		// Mlog::addone ( $cm . __LINE__ . '::$_COOKIE', $_COOKIE );
+		Mlog::addone ( $cm . __LINE__ . '::$_COOKIE', $_COOKIE );
 		// Mlog::addone ( $cm . __LINE__ . '::$_SESSION', $_SESSION );
 		if (! empty ( $_SESSION )) {
 			// Mlog::addone ( $cm . __LINE__ . '::', '...' );
