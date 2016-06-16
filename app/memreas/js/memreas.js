@@ -901,7 +901,7 @@ function fetchpubsMemreas() {
 								+ user_id
 								+ '\');" style="cursor: pointer;"><img src="'
 								+ removeCdataCorrectLink(event_media_image)
-								+ '"  style=""/></a></li>';
+								+ '"  style=""/></a><span class="video-content-play-icon-2"></span></li>';
 						    }
 						} else {
 						    if (_event_media_type_ == 'image') {
@@ -923,7 +923,7 @@ function fetchpubsMemreas() {
 								+ event_name
 								+ '\');" style="cursor: pointer;"><div class="sell-event-overlay"></div><span class="sell-event-buyme"><i>Buy</i></span><img src="'
 								+ removeCdataCorrectLink(event_media_image)
-								+ '"  style=""/></a></li>';
+								+ '"  style=""/></a><span class="video-content-play-icon-2"></span></li>';
 						    }
                                                     overlaydiv='<div class="overlaypopUp2" onclick="popupBuyMedia(\''
 								+ event_id
