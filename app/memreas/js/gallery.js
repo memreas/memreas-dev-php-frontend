@@ -279,6 +279,8 @@ jQuery.fetch_server_media = function() {
 }
 
 $(document).on('click', '[data-gallery]', function(event) {
+    $('footer').attr('style','z-index:-1');
+    //alert('Hello');
     var id = $(this).data('gallery');
     var widget = $(id);
     var selected_media_id;
