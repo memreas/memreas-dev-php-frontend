@@ -958,3 +958,19 @@ function resizeWindowBluepanel() {
 			    + 'px !important');
     console.log(queueHeight);
 }
+
+
+ $("a[title=share]").hover (function(){
+        $('footer').attr('style','z-index:2');
+    });
+$("a[title=more]").hover (function(){
+        $('footer').attr('style','z-index:2');
+    });
+
+$("a[title=queue]").hover (function(){
+        $('footer').attr('style','z-index:2');
+    });
+ $("a[title=memreas]").hover (function(){
+        $('footer').attr('style','z-index:2');
+    });   
+    
