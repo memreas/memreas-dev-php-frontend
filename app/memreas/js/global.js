@@ -958,27 +958,3 @@ function resizeWindowBluepanel() {
 			    + 'px !important');
     console.log(queueHeight);
 }
-
-function useJQueryInputDisabler(disable) {
-
-    jQuery.fn.extend({
-	disable : function(state) {
-	    return this.each(function() {
-		var $this = $(this);
-		if ($this.is('input, button, textarea, select'))
-		    this.disabled = state;
-		else
-		    $this.toggleClass('disabled', state);
-	    });
-	}
-    });
-
-    if (disable) {
-	// Disabled on all:
-	$('input, button', 'a').disable(true);
-
-    } else {
-	// Enabled on all:
-	$('input, button', 'a').enable(false);
-    }
-}
