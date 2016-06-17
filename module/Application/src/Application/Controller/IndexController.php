@@ -682,7 +682,7 @@ class IndexController extends AbstractActionController {
 		}
 		// Mlog::addone ( $cm . __LINE__ . '::', '...' );
 		
-		// Mlog::addone ( $cm . __LINE__ . '::$_COOKIE', $_COOKIE );
+		Mlog::addone ( $cm . __LINE__ . '::$_COOKIE', $_COOKIE );
 		// Mlog::addone ( $cm . __LINE__ . '::$_SESSION', $_SESSION );
 		if (! empty ( $_SESSION )) {
 			// Mlog::addone ( $cm . __LINE__ . '::', '...' );
@@ -710,7 +710,10 @@ class IndexController extends AbstractActionController {
 	public function publicAction() {
 		$type = ! empty ( $_REQUEST ["type"] ) ? $_REQUEST ["type"] : '';
 		
-		if (! empty ( $type )) {
+		if (! empty ( $type ) && ($type[0] == '@')) {
+			//
+			// url ex. https://fe.memreas.com/index/public?type=@jmeah1
+			//
 			$name = substr ( $type, 1 );
 			$tag = $type [0];
 			$path = "application/index/public_person_page.phtml";
@@ -722,9 +725,13 @@ class IndexController extends AbstractActionController {
 					'name' => $name,
 			) );
 			$view->setTemplate ( $path ); // path to phtml file under view folder
-		} else if (! empty ( $type )) {
-			$tag = substr ( $type, 1 );
-			$type = $type [0];
+		} else if (! empty ( $type ) && ($type[0] == '!')) {
+			//
+			// url ex. https://fe.memreas.com/index/public?type=!test video public
+			// note on enter spaces change to %20 for encoding
+			//
+			$name = substr ( $type, 1 );
+			$tag = $type [0];
 			$path = "application/index/public_memreas_page.phtml";
 			$enableAdvertising = MemreasConstants::MEMREAS_ADS;
 			$view = new ViewModel ( array (

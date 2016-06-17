@@ -36,8 +36,8 @@ class MemreasConstants {
 	const PAYMENT_TAB_SUBSCRIPTION = true;
 	const PAYMENT_TAB_BUY_CREDIT = true;
 	const PAYMENT_TAB_SELL_MEDIA = true;
-	const VERSION = '20-MAY-2016';
-	const COPYRIGHT = '&copy;2015 memreas llc';
+	const VERSION = '16-JUN-2016';
+	const COPYRIGHT = '&copy; memreas llc';
 	
 	//Android url for download
 	const ANDROID_DOWNLOAD_URL="https://s3.amazonaws.com/memreas-android-build/memreas-armv7-universal-release.dev.apk";
@@ -46,5 +46,10 @@ class MemreasConstants {
 	const MEMREAS_DESCRIPTION = "memreas is a social media network that allows users to access their content on the web or our Android and iOS apps.  memreas members have the ability to upload or access images or video with 4k support.";
 	const MEMREAS_KEYWORDS = "social networking media streaming 4k HDR";
 	
+	// HLS mime types
+	//document.createElement('video').canPlayType('application/vnd.apple.mpegURL')
+	//document.createElement('video').canPlayType('application/x-mpegURL')
+	const HLS_MIME_TYPEX = 'application/x-mpegURL';
+	const HLS_MIME_TYPEV = 'application/vnd.apple.mpegURL';
 	
 }

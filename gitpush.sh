@@ -23,9 +23,6 @@ echo "Pushing to github..."
 set -v verbose #echo on
 git push
 
-if [ "$local" = "y" ]
-then
-	cp module/Application/src/Application/Model/MemreasConstants.localhost.php module/Application/src/Application/Model/MemreasConstants.php
-fi
+cp module/Application/src/Application/Model/MemreasConstants.localhost.php module/Application/src/Application/Model/MemreasConstants.php
 
 #eb events -f

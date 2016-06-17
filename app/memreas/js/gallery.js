@@ -292,7 +292,10 @@ $(document).on('click', '[data-gallery]', function(event) {
 	    break;
 	}
     }
-    return blueimp.Gallery([ obj ], {
+    //console.log(JSON.stringify(obj));
+    // Deep copy - due to internal blueimp error
+    var newObject = jQuery.extend(true, {}, obj);
+    return blueimp.Gallery([ newObject ], {
 	container : '#blueimp-gallery',
 	carousel : true
     });

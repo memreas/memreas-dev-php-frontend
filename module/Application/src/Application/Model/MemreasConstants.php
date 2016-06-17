@@ -7,16 +7,14 @@
 namespace Application\Model;
 
 class MemreasConstants {
-	
-	// const MEMREAS_FE = "https://fe.memreas.com";
-	// const MEMREAS_WS = "https://memreasdev-ws.memreas.com";
-	// const MEMREAS_WS_PUBLIC = "https://memreasdev-ws.memreas.com/public";
-	// const MEMREAS_PAY = "https://memreasdev-pay.memreas.com";
-	const MEMREAS_FE = "http://memreas-dev-php-frontend.localhost";
-	const MEMREAS_WS = "http://memreas-dev-php-ws.localhost";
-	const MEMREAS_WS_PUBLIC = "http://memreas-dev-php-ws.localhost/public";
-	const MEMREAS_PAY = "http://memreas-dev-php-ws.localhost/index?action=";
-	//const MEMREAS_PAY = "http://memreas-dev-php-stripe.localhost";
+
+	//Server URLs
+	const MEMREAS_FE = "https://fe.memreas.com";
+	const MEMREAS_WS = "https://memreasdev-wsa.memreas.com";
+	const MEMREAS_WS_PUBLIC = "https://memreasdev-wsa.memreas.com/public";
+	const MEMREAS_PAY = "https://memreasdev-wsa.memreas.com/index?action=";
+	//change..
+	//const MEMREAS_PAY = "https://memreasdev-pay.memreas.com";
 	const MEMREAS_ADS = false;
 	const MEMREAS_SELL_MEDIA = 1; // Enable or Disable selling media
 	const CLOUDFRONT_DOWNLOAD_HOST = 'https://d3sisat5gdssl6.cloudfront.net/';
@@ -40,11 +38,16 @@ class MemreasConstants {
 	const COPYRIGHT = '&copy;2015 memreas llc';
 	
 	//Android url for download
-	const ANDROID_DOWNLOAD_URL="https://s3.amazonaws.com/memreas-android-build/memreas-armv7-universal-release.dev.apk";
-
+	const ANDROID_DOWNLOAD_URL = "https://play.google.com/apps/testing/com.memreas";
+	
 	//Meta
 	const MEMREAS_DESCRIPTION = "memreas is a social media network that allows users to access their content on the web or our Android and iOS apps.  memreas members have the ability to upload or access images or video with 4k support.";
 	const MEMREAS_KEYWORDS = "social networking media streaming 4k HDR";
 	
+	// HLS mime types
+	//document.createElement('video').canPlayType('application/vnd.apple.mpegURL')
+	//document.createElement('video').canPlayType('application/x-mpegURL')
+	const HLS_MIME_TYPEX = 'application/x-mpegURL';
+	const HLS_MIME_TYPEV = 'application/vnd.apple.mpegURL';
 	
 }
