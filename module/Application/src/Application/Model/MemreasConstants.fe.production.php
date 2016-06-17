@@ -33,7 +33,7 @@ class MemreasConstants {
 	const PAYMENT_TAB_SUBSCRIPTION = true;
 	const PAYMENT_TAB_BUY_CREDIT = true;
 	const PAYMENT_TAB_SELL_MEDIA = true;
-	const VERSION = '16-JUN-2016';
+	const VERSION = '17-JUN-2016';
 	const COPYRIGHT = '&copy; memreas llc';
 	
 	//Android url for download
