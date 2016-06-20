@@ -15,10 +15,8 @@ var S3UploadInstance = function() {
 
     /**
      * Doom for uploading
-     * 
      * @param targetPath
-     *                S3 targetPath where file will be stored
-     * 
+     *  S3 targetPath where file will be stored
      */
     
     //

@@ -8,26 +8,28 @@ namespace Application\Model;
 
 class MemreasConstants {
 	
-	// const MEMREAS_FE = "https://fe.memreas.com";
-	// const MEMREAS_WS = "https://memreasdev-ws.memreas.com";
-	// const MEMREAS_WS_PUBLIC = "https://memreasdev-ws.memreas.com/public";
-	// const MEMREAS_PAY = "https://memreasdev-pay.memreas.com";
 	const MEMREAS_FE = "http://memreas-dev-php-frontend.localhost";
 	const MEMREAS_WS = "http://memreas-dev-php-ws.localhost";
 	const MEMREAS_WS_PUBLIC = "http://memreas-dev-php-ws.localhost/public";
 	const MEMREAS_PAY = "http://memreas-dev-php-ws.localhost/index?action=";
-	//const MEMREAS_PAY = "http://memreas-dev-php-stripe.localhost";
+	//Server URLs
+	// const MEMREAS_FE = "https://fe.memreas.com";
+	// const MEMREAS_WS = "https://memreasdev-ws.memreas.com";
+	// const MEMREAS_WS_PUBLIC = "https://memreasdev-ws.memreas.com/public";
+	// const MEMREAS_PAY = "https://memreasdev-pay.memreas.com";
 	const MEMREAS_ADS = false;
 	const MEMREAS_SELL_MEDIA = 1; // Enable or Disable selling media
-	const CLOUDFRONT_DOWNLOAD_HOST = 'https://d3sisat5gdssl6.cloudfront.net/';
-	const CLOUDFRONT_HLS_DOWNLOAD_HOST = 'https://d2b3944zpv2o6x.cloudfront.net/';
 	const S3_APPKEY = 'AKIAJZE2O2WDMXLGR27A';
 	const S3_APPSEC = 'FI09T7vRXcWx+QBE/n5ysEtZxx/DOAxkks/o2rzG';
+	const S3_ENCRYPTION = 'AES256';
 	const S3BUCKET = "memreasdevsec";
+	const CLOUDFRONT_DOWNLOAD_HOST = 'https://d3sisat5gdssl6.cloudfront.net/';
+	const CLOUDFRONT_HLS_DOWNLOAD_HOST = 'https://d2b3944zpv2o6x.cloudfront.net/';
+	const MAINTENANCE = false; //Enable / Disable Maintenance mode
+
 	const LISTNOTIFICATIONSPOLLTIME = 240000; // 5 minutes
 	const GALLERYDELAYTIME = 500; // 500 ms
-	const MAINTENANCE = false; //Enable / Disable Maintenance mode
-	                              
+	
 	// For file limit upload
 	const FREE_ACCOUNT_FILE_LIMIT = 100; // 100MB limited upload for free user
 	const PAID_ACCOUNT_FILE_LIMIT = 5000; // 5GB limited upload for paid user
@@ -40,8 +42,8 @@ class MemreasConstants {
 	const COPYRIGHT = '&copy; memreas llc';
 	
 	//Android url for download
-	const ANDROID_DOWNLOAD_URL="https://s3.amazonaws.com/memreas-android-build/memreas-armv7-universal-release.dev.apk";
-
+	const ANDROID_DOWNLOAD_URL = "https://play.google.com/apps/testing/com.memreas";
+	
 	//Meta
 	const MEMREAS_DESCRIPTION = "memreas is a social media network that allows users to access their content on the web or our Android and iOS apps.  memreas members have the ability to upload or access images or video with 4k support.";
 	const MEMREAS_KEYWORDS = "social networking media streaming 4k HDR";
