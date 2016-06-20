@@ -1425,9 +1425,12 @@ $(document)
 					var formHolder = $(".media-upload");
 					var form = jQuery.extend(true, {},
 						formHolder);
+					var uploadHolder = $(".upload-from-event");
+					var upload = jQuery.extend(true, {},
+						formHolder);
 					form
 						.fileupload({
-						    dropZone : $('.upload-from-event'),
+						    dropZone : upload,
 						    url : form.attr('action'),
 						    dataType : 'xml',
 						    crossDomain : true,
