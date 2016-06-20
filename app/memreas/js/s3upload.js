@@ -15,10 +15,10 @@ var S3UploadInstance = function() {
 
     /**
      * Doom for uploading
+     * 
      * @param targetPath
-     *  S3 targetPath where file will be stored
+     *                S3 targetPath where file will be stored
      */
-    
     //
     // Functions for upload
     //
@@ -28,6 +28,9 @@ var S3UploadInstance = function() {
 	self.instance
 		.each(function() {
 
+		    //
+		    // form for .fileupload
+		    //
 		    var form = self.instance;
 		    form
 			    .fileupload({
@@ -52,6 +55,7 @@ var S3UploadInstance = function() {
 				    var filename = data.files[0].name;
 				    filename = correctUploadFilename(filename);
 				    var filetype = data.files[0].type;
+				    console.log(filename);
 
 				    FileInstances[filename] = data;
 
@@ -95,8 +99,12 @@ var S3UploadInstance = function() {
 				     * name is currently uploading
 				     */
 				    for (var i = 0; i < currentUploadFileCount; i++) {
-					console.log("Check dup upload uploadFilesInstance[i]: " + uploadFilesInstance[i]);
-					console.log("Check dup upload filename: " + filename);
+					// console.log("Check dup upload
+					// uploadFilesInstance[i]: "
+					// + uploadFilesInstance[i]);
+					// console.log("Check dup upload
+					// filename: "
+					// + filename);
 					if (uploadFilesInstance[i] == filename) {
 					    jerror('not allowed to upload same files at same time');
 					    return false;
@@ -111,7 +119,7 @@ var S3UploadInstance = function() {
 					    && ((!options.multipart && $.support.xhrFileUpload) || $.support.xhrFormDataFileUpload);
 
 				    if (!use_xhr) {
-					console.log("using_iframe_transport");
+					// console.log("using_iframe_transport");
 					using_iframe_transport = true;
 				    }
 
@@ -135,10 +143,10 @@ var S3UploadInstance = function() {
 						async : false,
 						error : function(jqXHR, status,
 							thrownError) {
-						    alert(jqXHR.status);
-						    alert(jqXHR.responseText);
-						    alert(status);
-						    alert(thrownError);
+						    // console.log(jqXHR.status);
+						    // console.log(jqXHR.responseText);
+						    // console.log(status);
+						    // console.log(thrownError);
 						},
 						success : function(response) {
 						    /*-
@@ -150,6 +158,15 @@ var S3UploadInstance = function() {
 						    var userid = $(
 							    "input[name=user_id]")
 							    .val();
+						    var key = form
+							    .find(
+								    'input[name=key]')
+							    .val(
+								    userid
+									    + '/'
+									    + response.media_id
+									    + '/'
+									    + filename);
 						    form
 							    .find(
 								    'input[name=key]')
@@ -159,7 +176,6 @@ var S3UploadInstance = function() {
 									    + response.media_id
 									    + '/'
 									    + filename);
-
 						    FileKeyInstances[filename] = userid
 							    + '/'
 							    + response.media_id
@@ -371,16 +387,16 @@ var S3UploadInstance = function() {
 							    && filetype
 								    .indexOf('image') >= 0) {
 							var file = data.files[0]; // Files[0]
-							console.log("file ---> " + file);
 							//
-							// read in first file via FileReader
+							// read in first file
+							// via FileReader
 							//
 							var reader = new FileReader();
-							reader.readAsDataURL(file);
+							reader
+								.readAsDataURL(file);
 							reader.onload = (function(
 								event) {
 							    var preview_thumbnail = event.target.result;
-							    console.log("preview_thumbnail ---> " + preview_thumbnail);
 							    data.context
 								    .find(
 									    '.upload_progress_img')
@@ -393,7 +409,8 @@ var S3UploadInstance = function() {
 							});
 						    } else {
 							//
-							// show default thumbnail
+							// show default
+							// thumbnail
 							//
 							data.context
 								.find(
@@ -485,7 +502,6 @@ var S3UploadInstance = function() {
 								    xml_response) {
 								var filename = data.files[0].name;
 								filename = correctUploadFilename(filename);
-								console.log("checkexistmedia filename ---> " + filename);
 								if (getValueFromXMLTag(
 									xml_response,
 									'status') == 'Failure') {
@@ -505,7 +521,6 @@ var S3UploadInstance = function() {
 									    2000);
 								    return false;
 								} else {
-								    console.log("SHOULD NOT BE CALLED - Checking if file name has space");
 								    /*-
 								     * Checking if file name has space
 								     */
@@ -609,16 +624,15 @@ var S3UploadInstance = function() {
 				    }
 				},
 				error : function(jqXHR, status, thrownError) {
-				    alert(jqXHR.status);
-				    alert(jqXHR.responseText);
-				    alert(status);
-				    alert(thrownError);
+				    // console.log(jqXHR.status);
+				    // console.log(jqXHR.responseText);
+				    // console.log(status);
+				    // console.log(thrownError);
 				},
 				fail : function(e, data) {
 				    window.onbeforeunload = null;
 				},
 				success : function(data, status, jqXHR) {
-				    console.log('Inside Success function');
 				    var _media_url = getValueFromXMLTag(
 					    jqXHR.responseText, 'Location');
 
@@ -747,7 +761,7 @@ var S3UploadInstance = function() {
 							    .mCustomScrollbar(
 								    "update");
 						}
-						// alert(xml_response);
+						// console.log(xml_response);
 					    }, 'undefined', true);
 
 				},
@@ -803,10 +817,10 @@ var S3UploadInstance = function() {
 						async : false,
 						error : function(jqXHR, status,
 							thrownError) {
-						    alert(jqXHR.status);
-						    alert(jqXHR.responseText);
-						    alert(status);
-						    alert(thrownError);
+						    // console.log(jqXHR.status);
+						    // console.log(jqXHR.responseText);
+						    // console.log(status);
+						    // console.log(thrownError);
 						},
 						success : function(data) {
 						    /*-
@@ -974,10 +988,10 @@ var S3UploadInstance = function() {
 				    }
 				},
 				error : function(jqXHR, status, thrownError) {
-				    console.log(jqXHR.status);
-				    console.log(jqXHR.responseText);
-				    console.log(status);
-				    alert(thrownError);
+				    // console.log(jqXHR.status);
+				    // console.log(jqXHR.responseText);
+				    // console.log(status);
+				    // console.log(thrownError);
 				    return false;
 				},
 				fail : function(e, data) {
@@ -985,7 +999,6 @@ var S3UploadInstance = function() {
 				    return false;
 				},
 				success : function(data, status, jqXHR) {
-				    console.log('Inside Success function');
 				    var s3_media_url = getValueFromXMLTag(
 					    jqXHR.responseText, 'Location');
 				    $("#counter_claim_url").val(s3_media_url);
@@ -1037,7 +1050,8 @@ var S3UploadInstance = function() {
 					target = 'media';
 
 				    if (profile_filename.indexOf(" ") >= 0) {
-					alert("Please remove spaces from filename.");
+					// console.log("Please remove spaces
+					// from filename.");
 					return;
 				    }
 
@@ -1060,10 +1074,10 @@ var S3UploadInstance = function() {
 						async : false,
 						error : function(jqXHR, status,
 							thrownError) {
-						    alert(jqXHR.status);
-						    alert(jqXHR.responseText);
-						    alert(status);
-						    alert(thrownError);
+						    // console.log(jqXHR.status);
+						    // console.log(jqXHR.responseText);
+						    // console.log(status);
+						    // console.log(thrownError);
 						},
 						success : function(data,
 							status, response) {
@@ -1147,10 +1161,10 @@ var S3UploadInstance = function() {
 
 				},
 				error : function(jqXHR, status, thrownError) {
-				    console.log(jqXHR.status);
-				    console.log(jqXHR.responseText);
-				    console.log(status);
-				    alert(thrownError);
+				    // console.log(jqXHR.status);
+				    // console.log(jqXHR.responseText);
+				    // console.log(status);
+				    // console.log(thrownError);
 				    return false;
 				},
 				fail : function(e, data) {
@@ -1158,9 +1172,9 @@ var S3UploadInstance = function() {
 				    return false;
 				},
 				success : function(data, status, jqXHR) {
-				    console.log("data.submit success...");
-				    console.log("jqXHR.responseText--->"
-					    + jqXHR.responseText);
+				    // console.log("data.submit success...");
+				    // console.log("jqXHR.responseText--->"
+				    // + jqXHR.responseText);
 
 				    var _media_url = getValueFromXMLTag(
 					    jqXHR.responseText, 'Key');
@@ -1169,12 +1183,9 @@ var S3UploadInstance = function() {
 				    _media_extension = _media_extension[_media_extension.length - 1];
 				    var media_type = 'image/'
 					    + _media_extension.toLowerCase(); // only
-				    // image
-				    // allowed
-				    // for
-				    // profile
-				    // pic...
-				    console.log('media_type::' + media_type);
+				    // image allowed
+				    // for profile pic...
+				    // console.log('media_type::' + media_type);
 				    var s3url = s3path + s3file;
 				    var params = [ {
 					tag : 's3url',
@@ -1347,8 +1358,16 @@ var S3UploadInstance = function() {
 		});
     }
 }
+
+//
+// Regular media uplaod
+//
 var MediaUpload = new S3UploadInstance();
 MediaUpload.doomMediaUploadForm('.media-upload');
+
+//
+// DMCA related uplaod
+//
 var DmcaUpload = new S3UploadInstance();
 DmcaUpload.doomDmcaUploadForm('.dmcaFileUploadForm');
 var ProfileUpload = new S3UploadInstance();
@@ -1361,23 +1380,34 @@ var contentTypeOfFile = "";
 var mimeTypeOfFile = "";
 var media_id;
 
+var uploadFile = function() {
+    console.log("Upload dropzone called me...");
+};
+var isIOS = false;
+
 $(document)
 	.ready(
 		function() {
-		    /*
-		     * $("#upload-dropzone").click( function() {
-		     * $("#media-upload-form").find("input[type=file]")
-		     * .trigger('click'); });
-		     */
+		    console
+			    .log("Inside document.ready ... $('.media-upload-removed-temporary')")
+
+		    // $("#upload-dropzone").click(
+		    // function() {
+		    // $("#media-upload-form")
+		    // .find("input[type=file]").trigger(
+		    // 'click');
+		    // });
+
 		    // Single upload for now
 		    // $(".media-upload").find("input[type=file]").removeAttr(
 		    // 'multiple');
 		    // Check if IOS only allow 1 file per upload
-		    /*
-		     * if (userBrowser[0].ios) {
-		     * $(".media-upload").find("input[type=file]").removeAttr(
-		     * 'multiple'); }
-		     */
+
+		    if (userBrowser[0].ios) {
+			isIOS = true;
+			//$(".media-upload").find("input[type=file]").removeAttr(
+			//	'multiple');
+		    }
 
 		    var ellipsisCount = 1;
 		    var name = '';
@@ -1386,8 +1416,15 @@ $(document)
 		    $('.media-upload-removed-temporary')
 			    .each(
 				    function() {
-					var form = $(".media-upload");
-
+					console
+						.log("MediaUpload.doomMediaUploadForm('.media-upload');");
+					//
+					// Deep copy form so there is one for
+					// each recurrence of upload...
+					//
+					var formHolder = $(".media-upload");
+					var form = jQuery.extend(true, {},
+						formHolder);
 					$('.media-upload')
 						.fileupload(
 							{
@@ -1469,10 +1506,14 @@ $(document)
 										    jqXHR,
 										    status,
 										    thrownError) {
-										alert(jqXHR.status);
-										alert(jqXHR.responseText);
-										alert(status);
-										alert(thrownError);
+										console
+											.log(jqXHR.status);
+										console
+											.log(jqXHR.responseText);
+										console
+											.log(status);
+										console
+											.log(thrownError);
 									    },
 									    success : function(
 										    data) {
@@ -1973,10 +2014,14 @@ $(document)
 								    jqXHR,
 								    status,
 								    thrownError) {
-								alert(jqXHR.status);
-								alert(jqXHR.responseText);
-								alert(status);
-								alert(thrownError);
+								console
+									.log(jqXHR.status);
+								console
+									.log(jqXHR.responseText);
+								console
+									.log(status);
+								console
+									.log(thrownError);
 							    },
 							    fail : function(e,
 								    data) {
@@ -2147,7 +2192,7 @@ $(document)
 											.mCustomScrollbar(
 												"update");
 									    }
-									    // alert(xml_response);
+									    // console.log(xml_response);
 									},
 									'undefined',
 									true);
