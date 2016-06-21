@@ -12,7 +12,7 @@ class MemreasConstants {
 	const MEMREAS_WS_PUBLIC = "https://memreasprod-ws.memreas.com/public";
 	const MEMREAS_PAY = "https://memreasprod-ws.memreas.com/index?action=";
 	const MEMREAS_ADS = true;
-	const MEMREAS_SELL_MEDIA = 1; // Enable or Disable selling media
+	const MEMREAS_SELL_MEDIA = 0; // Enable or Disable selling media
 	const S3_APPKEY = 'AKIAISDIQFVJMWFYXCIA';
 	const S3_APPSEC = 'eM5HG4MbYhkW1Jz1RWIdMapo2s+DbB+KnkhzTt91';
 	const S3_ENCRYPTION = 'AES256';
