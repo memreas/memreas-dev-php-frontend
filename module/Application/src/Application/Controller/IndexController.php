@@ -698,13 +698,6 @@ class IndexController extends AbstractActionController {
 	}
 	
 	/**
-	 * Action to return Android APK
-	 */
-	public function androidAction() {
-		return $this->redirect ()->toUrl ( MemreasConstants::ANDROID_DOWNLOAD_URL );
-	}
-	
-	/**
 	 * Action to return Public Page
 	 */
 	public function publicAction() {
