@@ -78,6 +78,75 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 
                 </div>
             </div>
+            
+            
+            <div class="signup">
+							<h2>Sign up</h2>
+							<div class="profile clearfix">
+								<figure class="profile_picture">
+									<output id="list"></output>
+								</figure>
+                                                            <div class="btn-lg file relative" style="float: none; margin-left: 81px;">
+									<input type="hidden" name="profile_image" value="0">
+									<form name="frm_profile_pic" id="frm-profile-pic"
+										class="direct-upload" enctype="multipart/form-data"
+										action="https://<?php echo $data['bucket']; ?>.s3.amazonaws.com/">
+										<input type="hidden" name="key" value="{$filename}"> <input
+											type="hidden" name="Content-Type" value=""> <input
+											type="hidden" name="acl" value=""> <input type="hidden"
+											name="success_action_status" value=""> <input type="hidden"
+											name="policy" value=""> <input type="hidden"
+											name="x-amz-algorithm" value=""> <input type="hidden"
+											name="x-amz-credential" value=""> <input type="hidden"
+											name="x-amz-date" value=""> <input type="hidden"
+											name="x-amz-expires" value=""> <input type="hidden"
+											name="x-amz-signature" value=""> <input type="hidden"
+											name="x-amz-server-side-encryption" value="AES256"> <input
+											class="" id="file" type="file" name="file">
+									</form>
+									<input id="btnChooseProfilePicture" type="hidden" name="register_user_id" value="" /> <span
+										class="absolute">choose profile picture</span>
+								</div>
+							</div>
+
+							<form enctype="multipart/form-data"
+								action="<?php echo $this->url('index',array('action'=>'registration'));?>"
+								method="post" name="register" id="register"
+								onsubmit="return validateRegstration();">
+								 <input name="email" id="inEmail" type="email" placeholder="Your Email"/> 
+                                                                 <label for="username">username</label> 
+                                                                 <input name="username" type="text" id="inUserName" placeholder="Your Username" />
+                                                                 <label for="password">password</label>
+								<div class="password">
+									<input maxlength="32" name="password" id="inPassword" type="password" placeholder="Password"/>
+                                                                        <span class="password-level"></span>
+								</div>
+								<label for="inVerifyPassword">verify password</label> 
+                                                                <input name="verifypassword" id="inVerifyPassword" type="password"
+									placeholder="Verify Password" />
+								<!-- testing deploy -->
+								<input name="secret" id="secret" class="signup_textfields"
+									type="text" value="secret" /> 
+                                                                <label for="invited_by" class="event-name">!event name</label> 
+                                                                <input name="invited_by" id="invited_by" class="signup_textfields"
+									type="text" value="invited by @person (optional)"
+									onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue"
+									onFocus="if(this.value == 'invited by @person (optional)')this.value = '';"
+									style="display: none;"> <input type="checkbox"
+									class="css-checkbox" id="demo_box_2" name="legal_agree"> <label
+									class="css-label" for="demo_box_2"><a
+									onclick="popup('popupContact');" href="javascript:;"
+									class="legal clicker-1" id="button">terms of service</a></label>
+								<input type="submit" id="btnCall"
+									class="btn btn-lyt create-accnt" value="Create an account">
+							</form>
+						</div>
+
+            
+            
+            
+            
+            
 
         </div>
     </div>
