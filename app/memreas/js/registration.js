@@ -158,11 +158,13 @@ function validateRegstration() {
 	$("#register input[name=verifypassword]").focus();
 	return false;
     }
+    /*
     if (input_secret == '' || input_secret == 'secret') {
 	jerror("We're in beta, please enter the secret to pass");
 	$("#register input[name=username]").focus();
 	return false;
     }
+    */
     if (!legal_agree.is(":checked")) {
 	jerror('You must agree with our terms of service');
 	return false;
