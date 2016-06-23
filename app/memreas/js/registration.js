@@ -136,7 +136,8 @@ function validateRegstration() {
     var input_upass = $("#register input[name=password]").val();
     var input_rpass = $("#register input[name=verifypassword]").val();
     var legal_agree = $("#register input[name=legal_agree]");
-    var input_secret = $("#register input[name=secret]").val();
+    //var input_secret = $("#register input[name=secret]").val();
+    var input_secret = 'freedom tower';
     if (input_email == '' || input_email == 'Your Email') {
 	jerror('Please fill email');
 	$("#register input[name=email]").focus();
