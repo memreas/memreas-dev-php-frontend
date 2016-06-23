@@ -291,16 +291,6 @@ function validateRegstration() {
 						.val(media_type);
 					form.find('input[name=key]').val(
 						s3path + s3file);
-					console.log("media_type-->"
-						+ media_type);
-					console.log("s3path-->" + s3path);
-					console.log("s3file-->" + s3file);
-					console.log("key-->"
-						+ form.find('input[name=key]')
-							.val());
-					console
-						.log("Calling uploadHandle.submit()");
-
 					var jqXHR = uploadHandle.submit();
 				    },
 				    error : function(jqXHR, textStatus,
