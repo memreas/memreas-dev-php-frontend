@@ -136,7 +136,8 @@ function validateRegstration() {
     var input_upass = $("#register input[name=password]").val();
     var input_rpass = $("#register input[name=verifypassword]").val();
     var legal_agree = $("#register input[name=legal_agree]");
-    var input_secret = $("#register input[name=secret]").val();
+    //var input_secret = $("#register input[name=secret]").val();
+    var input_secret = 'freedom tower';
     if (input_email == '' || input_email == 'Your Email') {
 	jerror('Please fill email');
 	$("#register input[name=email]").focus();
@@ -155,11 +156,6 @@ function validateRegstration() {
     if (input_upass != input_rpass) {
 	jerror('Password confirm no match');
 	$("#register input[name=verifypassword]").focus();
-	return false;
-    }
-    if (input_secret == '' || input_secret == 'secret') {
-	jerror("We're in beta, please enter the secret to pass");
-	$("#register input[name=username]").focus();
 	return false;
     }
     if (!legal_agree.is(":checked")) {
@@ -288,16 +284,6 @@ function validateRegstration() {
 						.val(media_type);
 					form.find('input[name=key]').val(
 						s3path + s3file);
-					console.log("media_type-->"
-						+ media_type);
-					console.log("s3path-->" + s3path);
-					console.log("s3file-->" + s3file);
-					console.log("key-->"
-						+ form.find('input[name=key]')
-							.val());
-					console
-						.log("Calling uploadHandle.submit()");
-
 					var jqXHR = uploadHandle.submit();
 				    },
 				    error : function(jqXHR, textStatus,
