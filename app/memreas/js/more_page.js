@@ -538,7 +538,7 @@ function saveUserDetail() {
 	var alternate_email = $("input[name=account_alternate_email]").val();
 	var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 	if (!regex.test(alternate_email)) {
-	    jerror('your email address does not correct format.');
+	    jerror('please enter valid email');
 	    return false;
 	} else {
 	    if ($.trim(orginal_email) == $.trim(alternate_email)) {

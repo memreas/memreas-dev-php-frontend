@@ -60,7 +60,7 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
     
     <div class="row-fluid">
         <div class="span12">
-            <div class="span12">
+            <div class="span12" style="display:none;">
                 <div class="relative feature" style="min-height: auto;">
                     <div class="film film-phone" style="margin: 0 auto;">
 
@@ -80,13 +80,13 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
             </div>
             
             
-            <div class="signup">
+<!--            <div class="signup">
 							<h2>Sign up</h2>
 							<div class="profile clearfix">
 								<figure class="profile_picture">
 									<output id="list"></output>
 								</figure>
-                                                            <div class="btn-lg file relative" style="float: none; margin-left: 81px;">
+                                                            <div class="btn-lg file relative" style="float: none; margin-left: 90px;">
 									<input type="hidden" name="profile_image" value="0">
 									<form name="frm_profile_pic" id="frm-profile-pic"
 										class="direct-upload" enctype="multipart/form-data"
@@ -124,9 +124,8 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 								<label for="inVerifyPassword">verify password</label> 
                                                                 <input name="verifypassword" id="inVerifyPassword" type="password"
 									placeholder="Verify Password" />
-								<!-- testing deploy -->
-								<input name="secret" id="secret" class="signup_textfields"
-									type="text" value="secret" /> 
+								 testing deploy 
+								
                                                                 <label for="invited_by" class="event-name">!event name</label> 
                                                                 <input name="invited_by" id="invited_by" class="signup_textfields"
 									type="text" value="invited by @person (optional)"
@@ -140,7 +139,7 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 								<input type="submit" id="btnCall"
 									class="btn btn-lyt create-accnt" value="Create an account">
 							</form>
-						</div>
+						</div>-->
 
             
             
@@ -168,7 +167,7 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 			     You will receive an email to verify your email address
 		     </div>
 	        <p>&nbsp;</p>
-            <input type="button" onclick=""  id="SignupReg" class="btn btn-lyt create-accnt" value="Sign Up" style="width: 96%;">
+<!--            <input type="button" onclick=""  id="SignupReg" class="btn btn-lyt create-accnt" value="Sign Up" style="width: 96%;">-->
         </div>
     </div>
     </section>
@@ -178,7 +177,7 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
      
 
     
-    <div class="row-fluid mobileReform" style="display: none;">
+    <div class="row-fluid mobileReform" style="">
         <div class="span12">
            <div class="signup">
 							
@@ -404,6 +403,19 @@ header ( "Access-Control-Allow-Headers: x-requested-with" );
 	            var mobile_device = getMobileOperatingSystem();
 	            $("#" + mobile_device).fadeIn(500);
             });
+        </script>
+        
+        <script type="text/javascript">
+        
+        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+            window.location='https://play.google.com/store/apps/details?id=com.memreas&ah=WO-9gaOkUtX4_GZX-610Xbz_hDU';
+       }
+         if(!!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform)){
+             console.log('IOS Mobile Borwser');
+         }else{
+             console.log('Not Mobile Borwser');
+         }
+        
         </script>
 	<!--End Script for File-->
         
