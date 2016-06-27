@@ -959,6 +959,24 @@ function resizeWindowBluepanel() {
     console.log(queueHeight);
 }
 
+function resizeBlueIMpGallerypanel() {
+    var queueHeight = $(window).height();
+    if (queueHeight > 205) {
+	queueHeight = queueHeight - 205
+    }
+
+    $(
+	    ".linksDatacnt")
+	    .attr(
+		    'style',
+		    'height: '+queueHeight+'px; min-height: ' + queueHeight
+			    + 'px !important');
+    console.log(queueHeight);
+}
+
+
+
+
 
  $("a[title=share]").hover (function(){
         $('footer').attr('style','z-index:2');

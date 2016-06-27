@@ -3673,7 +3673,7 @@ background-image: url(../img/video-play.svg);
      .dmca-table-data tbody tr td { text-align: center; vertical-align: middle;}
      .counter-claim-btn{color:#fff; border:1px solid #fff; background: #3A9ACA; border-radius: 7px; font-size: 15px; padding: 7px;}
      .fileupload-dmca{float: left!important; margin: 0px !important;}
-     .linksDatacnt{max-height: 400px; overflow: auto;}
+     .linksDatacnt{ overflow: auto;}
      
      .share_memreas_detaill_dcma li{width: 47%; float: left; margin-right: 10px;}
      .share_memreas_detaill_dcma li .textfield_names{font-family: "Century Gothic";font-size: 18px; color: #FFF;}

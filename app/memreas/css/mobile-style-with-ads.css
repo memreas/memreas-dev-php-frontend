@@ -32,7 +32,7 @@ and open the template in the editor.
 		min-height: 540px;
                 max-height: 540px;
 	}
-        .linksDatacnt{max-height: 520px !important; }
+/*        .linksDatacnt{max-height: 520px !important; }*/
 }
 
 @media only screen and (min-device-width : 1200px) and (max-device-width
@@ -699,7 +699,7 @@ and open the template in the editor.
 		margin-bottom: 0px;
                 max-height: 400px !important;
 	}
-      .linksDatacnt{ max-height: 400px !important;}
+/*      .linksDatacnt{ max-height: 400px !important;}*/
         
         
         
@@ -721,7 +721,7 @@ and open the template in the editor.
 		margin-bottom: 12px;
 	}
 	
-        .linksDatacnt{max-height: 448px !important;}
+/*        .linksDatacnt{max-height: 448px !important;}*/
         .myMemreas {max-height: 420px ; }
         
 	#tab-content, #tab-content-queue, #tab-content-share,
