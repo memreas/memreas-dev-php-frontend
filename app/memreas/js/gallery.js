@@ -19,8 +19,10 @@ $(document).ready(
 	function() {
             
             resizeWindowBluepanel();
+            resizeBlueIMpGallerypanel();
         $(window).resize(function(){
-           resizeWindowBluepanel(); 
+           resizeWindowBluepanel();
+           resizeBlueIMpGallerypanel();
         });
 
 	    $("a[title=gallery]").click(function() {
