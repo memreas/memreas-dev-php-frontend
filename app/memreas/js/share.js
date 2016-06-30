@@ -38,9 +38,12 @@ var current_sharefriendnw_selected = '';
 //
 // doneAction related objects
 //
-var event = {};
-var media = {};
-var friends = {};
+var event_share_object = {};
+var media_share_object = {};
+var friends_share_object = {};
+
+console.log('Event Object 45' +JSON.stringify(event_share_object));
+
 
 $(function() {
 	$("a[title=share]").click(function() {
@@ -97,6 +100,7 @@ $(function() {
 			return false;
 		}
 	});
+        console.log('Event Object 105' +JSON.stringify(event_share_object));
 });
 
 // initialize the share page objects.
@@ -438,35 +442,37 @@ function checkSellMediaDuration() {
 }
 
 // add the new event by request to the server.
-share_addEvent = function(medianext) {
-	event.sellmedia_duration_from = '';
-	event.sellmedia_duration_to = '';
+share_addEvent = function() {
+    console.log('Event share Object 448' +JSON.stringify(event_share_object));
+	event_share_object.sellmedia_duration_from = '';
+	event_share_object.sellmedia_duration_to = '';
+        event_share_object.sell_media_price=0;
 
 	// Precheck for selling media is popup or not and check for correction
 	if ($("#popupSellMedia").is(":visible")) {
-		event.sellmedia_price_select = $("#sellmedia_price").val();
+		event_share_object.sellmedia_price_select = $("#sellmedia_price").val();
 		if (sellmedia_price_select == '') {
 			jerror("please select the price");
 			return false;
 		}
 
-		event.passDuration = checkSellMediaDuration();
+		event_share_object.passDuration = checkSellMediaDuration();
 		if (!passDuration)
 			return false;
 
-		event.sellmedia_duration_from = $("#sellmedia_duration_from").val();
-		event.sellmedia_duration_to = $("#sellmedia_duration_to").val();
+		event_share_object.sellmedia_duration_from = $("#sellmedia_duration_from").val();
+		event_share_object.sellmedia_duration_to = $("#sellmedia_duration_to").val();
 
 		if (!$("#ckb_sellmedia_agree").is(":checked")) {
 			jerror("You must agree with our terms and conditions");
 			return false;
 		}
-		event.sell_media_price = sellmedia_price_select;
+		event_share_object.sell_media_price = sellmedia_price_select;
 	}
 
 	disablePopup('popupSellMedia');
 	share_closeGoogleMap(true);
-	event.name = getElementValue('txt_name');
+	event_share_object.name = getElementValue('txt_name');
         
 	//	if (event.name == "") {
 	//		jerror("You have to input the name.");
@@ -474,30 +480,30 @@ share_addEvent = function(medianext) {
 	//	}
 	if (checkValidDateFromTo(true)) {
 
-		event.date = getElementValue('dtp_date');
-		event.location = getElementValue('txt_location');
-		event.date_from = getElementValue('dtp_from');
-		event.date_to = getElementValue('dtp_to');
-		event.date_selfdestruct = getElementValue('dtp_selfdestruct');
+		event_share_object.date = getElementValue('dtp_date');
+		event_share_object.location = getElementValue('txt_location');
+		event_share_object.date_from = getElementValue('dtp_from');
+		event_share_object.date_to = getElementValue('dtp_to');
+		event_share_object.date_selfdestruct = getElementValue('dtp_selfdestruct');
 
-		event.ckb_canpost = getCheckBoxValue('ckb_canpost');
-		event.ckb_canadd = getCheckBoxValue('ckb_canadd');
-		event.ckb_public = getCheckBoxValue('ckb_public');
+		event_share_object.ckb_canpost = getCheckBoxValue('ckb_canpost');
+		event_share_object.ckb_canadd = getCheckBoxValue('ckb_canadd');
+		event_share_object.ckb_public = getCheckBoxValue('ckb_public');
 
 		// Sell media public as default
-		if (event.sell_media_price > 0) {
-			event.ckb_public = 1;
-			event.ckb_canpost = 0;
-			event.ckb_canadd = 0;
-			event.date_from = sellmedia_duration_from;
-			event.date_to = sellmedia_duration_to;
+		if (event_share_object.sell_media_price > 0) {
+			event_share_object.ckb_public = 1;
+			event_share_object.ckb_canpost = 0;
+			event_share_object.ckb_canadd = 0;
+			event_share_object.date_from = sellmedia_duration_from;
+			event_share_object.date_to = sellmedia_duration_to;
 		}
 
-		event.ckb_viewable = getCheckBoxValue('ckb_viewable');
-		event.ckb_selfdestruct = getCheckBoxValue('ckb_selfdestruct');
+		event_share_object.ckb_viewable = getCheckBoxValue('ckb_viewable');
+		event_share_object.ckb_selfdestruct = getCheckBoxValue('ckb_selfdestruct');
 
 		// Checking for selling media
-		if ($("#ckb_sellmedia").is(":checked") && event.sell_media_price > 0) {
+		if ($("#ckb_sellmedia").is(":checked") && event_share_object.sell_media_price > 0) {
 			// popup("popupSellMedia");
 			// return true;
 		}
@@ -533,17 +539,21 @@ doneAction = function(medianext) {
 		//
 		// Check if memreas details name filled out...
 		//
+               
 
 		setTimeout(function() {
 
 			//
 			// Call ajaxAddEvent which will call ajaxAddMedia and ajaxAddFriends on success
 			//
+                        //share_addEvent();
+                        //ajaxAddEvent();
+                        
 			if (share_addEvent()) {
 				ajaxAddEvent();
 			}
-			//var text_ids = ['txt_name', 'txt_location', 'dtp_date', 'dtp_from', 'dtp_to', 'dtp_selfdestruct'];
-			//clearTextField(text_ids);
+			var text_ids = ['txt_name', 'txt_location', 'dtp_date', 'dtp_from', 'dtp_to', 'dtp_selfdestruct'];
+			clearTextField(text_ids);
 
 		}, 2000);
 
@@ -565,8 +575,8 @@ doneAction = function(medianext) {
         
         if (medianext == 'friendnext') {
 		setTimeout(function() {
-				//share_gotoPage(SHAREPAGE_TAB_FRIENDS);
-                                $('.mfriendsclick').trigger('click');
+				share_gotoPage(SHAREPAGE_TAB_FRIENDS);
+                               
 			
 
 		}, 2000);
@@ -584,40 +594,40 @@ ajaxAddEvent = function() {
 		value : user_id
 	}, {
 		tag : 'event_name',
-		value : event.name
+		value : event_share_object.name
 	}, {
 		tag : 'event_date',
-		value : formatDateToDMY(event.date)
+		value : formatDateToDMY(event_share_object.date)
 	}, {
 		tag : 'event_location',
-		value : event.location
+		value : event_share_object.location
 	}, {
 		tag : 'event_from',
-		value : formatDateToDMY(event.date_from)
+		value : formatDateToDMY(event_share_object.date_from)
 	}, {
 		tag : 'event_to',
-		value : formatDateToDMY(event.date_to)
+		value : formatDateToDMY(event_share_object.date_to)
 	}, {
 		tag : 'is_friend_can_add_friend',
-		value : event.ckb_canadd.toString()
+		value : event_share_object.ckb_canadd.toString()
 	}, {
 		tag : 'is_friend_can_post_media',
-		value : event.ckb_canpost.toString()
+		value : event_share_object.ckb_canpost.toString()
 	}, {
 		tag : 'event_self_destruct',
-		value : formatDateToDMY(event.date_selfdestruct)
+		value : formatDateToDMY(event_share_object.date_selfdestruct)
 	}, {
 		tag : 'is_public',
-		value : event.ckb_public.toString()
+		value : event_share_object.ckb_public.toString()
 	}, {
 		tag : 'price',
-		value : event.sell_media_price.toString()
+		value : event_share_object.sell_media_price.toString()
 	}, {
 		tag : 'duration_from',
-		value : event.sellmedia_duration_from
+		value : event_share_object.sellmedia_duration_from
 	}, {
 		tag : 'duration_to',
-		value : event.sellmedia_duration_to
+		value : event_share_object.sellmedia_duration_to
 	}], function(ret_xml) {
 		// parse the returned xml.
 		//console.log('Sell Media: ' + ret_xml);
@@ -630,24 +640,46 @@ ajaxAddEvent = function() {
 			//
 			// Check media and call share_AddComment which calls the Ajax function
 			//
-			share_addComment();
+                        
+                        
+                            
+                                 console.log('Share Add  Comment 642' +JSON.stringify(media_ids));
+                                 share_addComment(); 
+                                 
+                            
+                          
+                        
+                        
 
 			//
 			// Check friends and call add friends which calls the ajax function
 			//
-			share_makeGroup();
+                        if(mr_friendsInfo !=null){
+                            if( mr_friendsInfo.length > 0){
+                                  console.log('Share Make Group 647' +JSON.stringify(mr_friendsInfo));
+			          share_makeGroup();
+                                  
+                                  mr_friendsInfo = [];
+                                  
+                            }
+                           
+                        }
+                        
 
 			//
 			// change page to view my events.
 			//
-			pushReloadItem('view_my_events');
+                        console.log('memreas click  673' );
+			//pushReloadItem('view_my_events');
+                         $('.memrsclick').trigger('click');
 
-			sell_media_price = 0;
+			
 		} else {
 			jerror(message);
 		}
 		shareEnableFields();
 	}, 'undefined', true);
+        
 };
 
 // Prevent enter invalid character to duration media selling price
@@ -744,13 +776,13 @@ share_gotoPage = function(tab_no) {
 
 // add the comment to Media when click "next" button on the Media Page.
 share_addComment = function() {
+    console.log('share_addComment 758');
 
 	media_ids = fetch_selected_media();
-	if (media_ids.length <= 0) {
-		jconfirm("You didn't add any media! Continue?", 'share_uploadMedias(true)');
-		return false;
-	} else {
+	if (media_ids.length > 0) {
+		
 		share_uploadMedias(function() {
+                    console.log('share_uploadMedias 766');
 			var comments = getElementValue('txt_comment');
 			var media_id = "";
 
@@ -815,17 +847,19 @@ share_addComment = function() {
 };
 
 function fetch_selected_media() {
+     console.log('fetch_selected_media 849');
 	var media_id_list = new Array();
 	var count = 0;
 	$("ul#share_medialist li.setchoosed").each(function() {
 		media_id_list[++count] = $(this).find('a').attr('id');
 		$(this).find('a').append('<img src="/memreas/img/loading-line.gif" class="loading-small loading" />');
 	});
+        console.log('fetch_selected_media ' +JSON.stringify(media_id_list));
 	return media_id_list;
 }
 
 share_uploadMedias = function(success) {
-
+console.log('share_uploadMedias 841');
 	media_ids = fetch_selected_media();
 	var media_id_params = [];
 	var increase = 0;
@@ -837,7 +871,7 @@ share_uploadMedias = function(success) {
 		};
 	}
 
-	media.params = [{
+	media_share_object.params = [{
 		tag : 'event_id',
 		value : event_id
 	}, {
@@ -856,7 +890,10 @@ share_uploadMedias = function(success) {
 // call ajax add existing media to event
 //
 ajaxAddExistingMediaToEvent = function() {
-	ajaxRequest('addexistmediatoevent', media.params, function(xml_response) {
+    
+    console.log('Share ajaxAddExistingMediaToEvent 868' );
+	ajaxRequest('addexistmediatoevent', media_share_object.params, function(xml_response) {
+            console.log('Share ajaxAddExistingMediaToEvent 873' +xml_response);
 		if (getValueFromXMLTag(xml_response, 'status') == 'Success') {
 			jsuccess(getValueFromXMLTag(xml_response, 'message'));
 
@@ -883,7 +920,7 @@ ajaxAddExistingMediaToEvent = function() {
 
 // clear all fields on Media page when click "cancel" button.
 share_clearMedia = function() {
-	clearTextField('txt_comment');
+	
 
 	var mediaList = $("#share_medialist .mCSB_container li a img");
 
@@ -946,14 +983,14 @@ share_getAllMedia = function() {
 						var event_for_sale = false;
 					}
 					metadata = JSON.parse(metadata);
-					console.log("media section for loop copyright --> *" + metadata.S3_files.copyright + "*");
+					//console.log("media section for loop copyright --> *" + metadata.S3_files.copyright + "*");
 					if (event_for_sale && sellmedia_price_select > 0) {
 						if (metadata.S3_files.copyright == 'null') {
-							console.log("media section for loop copyright --> null found");
+							//console.log("media section for loop copyright --> null found");
 							// Skip non-copyright media available for listing at select media for sale
 							continue;
 						} else {
-							console.log("media section for loop copyright --> is not null");
+							//console.log("media section for loop copyright --> is not null");
 
 						}
 					}
@@ -1029,6 +1066,7 @@ share_addFriends = function(info) {
 		$('#share_friendslist').mCustomScrollbar('update');
 
 	}
+        
 };
 
 share_clickFriends = function(id) {
@@ -1057,27 +1095,27 @@ share_makeGroup = function() {
 	 return false;
 	 }
 	 */
-
+console.log('Share Make group 1070');
 	var emailList = splitByDelimeters(getElementValue('txt_emaillist'), [',', ';']);
-	var emailTags = [];
+        friends_share_object.emailTags = [];
 	if (emailList.length > 0) {
 		var counter = 0;
 		for ( i = 0; i < emailList.length; i++) {
-			emailTags[counter++] = {
+			friends_share_object.emailTags[counter++] = {
 				tag : 'email',
 				value : emailList[i]
 			};
 		}
 	}
 	var groupName = getElementValue('txt_groupname');
-	var selFriends = [];
+	friends_share_object.selFriends = [];
 	var i = 0,
 	    count = 0;
 
 	if (mr_friendsInfo) {
 		for ( i = 0; i < mr_friendsInfo.length; i++) {
 			if (mr_friendsInfo[i].selected) {
-				selFriends[count++] = {
+				friends_share_object.selFriends[count++] = {
 					tag : 'friend',
 					value : [{
 						tag : 'friend_name',
@@ -1113,7 +1151,7 @@ share_makeGroup = function() {
 			value : user_id
 		}, {
 			tag : 'friends',
-			value : selFriends
+			value : friends_share_object.selFriends
 		}], function(ret_xml) {
 			// parse the returned xml.
 			var status = getValueFromXMLTag(ret_xml, 'status');
@@ -1128,7 +1166,7 @@ share_makeGroup = function() {
 		});
 	}
 
-	if (emailTags.length == 0 && selFriends.length == 0) {
+	if (friends_share_object.emailTags.length == 0 && friends_share_object.selFriends.length == 0) {
 		share_clearMemreas(true);
 		$("a.memreas").click();
 		return;
@@ -1140,19 +1178,21 @@ share_makeGroup = function() {
 //
 ajaxAddFriendToEvent = function() {
 
+console.log('Share ajaxAddFriendToEvent 1154');
 	ajaxRequest('addfriendtoevent', [{
 		tag : 'user_id',
 		value : user_id
 	}, {
 		tag : 'emails',
-		value : friends.emailTags
+		value : friends_share_object.emailTags
 	}, {
 		tag : 'event_id',
 		value : event_id
 	}, {
 		tag : 'friends',
-		value : friends.selFriends
+		value : friends_share_object.selFriends
 	}], function(ret_xml) {
+        console.log('Share ajaxAddFriendToEvent 1168' +ret_xml);
 		// parse the returned xml.
 		var status = getValueFromXMLTag(ret_xml, 'status');
 		var message = getValueFromXMLTag(ret_xml, 'message');
@@ -1179,6 +1219,7 @@ ajaxAddFriendToEvent = function() {
 		share_changeSocialType();
 
 	});
+        share_clearFriendsList();
 };
 
 // clear all fields on Friends page when click "cancel" button.
