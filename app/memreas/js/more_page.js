@@ -1317,7 +1317,8 @@ function getMemreasEventMedia() {
 	    });
 }
 
-function morepage_saveEvent(confirmed) {
+function morepage_saveEvent(confirmed, delete_event) {
+    
     var viewable_from = (($("#moredate_eventDateFrom").val() != '' && $(
 	    "#moredate_eventDateFrom").val() != 'from') ? $(
 	    "#moredate_eventDateFrom").val() : '');
@@ -1359,6 +1360,7 @@ function morepage_saveEvent(confirmed) {
 	var friend_can_add = 0;
 
     // Check if event has selling event and check box, confirm
+    var sell_media = 0;
     if ($("#morepage_event_sellmedia").is(":visible")) {
 	if (!$("input#morepage_ckb_sellmedia").is(":checked") && !confirmed) {
 	    jconfirm("Your event will become free. Are you sure?",
@@ -1366,39 +1368,41 @@ function morepage_saveEvent(confirmed) {
 	    return false;
 	}
 
-	if ($("input#morepage_ckb_sellmedia").is(":checked"))
-	    var sell_media = 1;
-	else
-	    var sell_media = 0;
-    } else
-	var sell_media = 0;
+	if ($("input#morepage_ckb_sellmedia").is(":checked")) {
+	    sell_media = 1;
+	}
+    }
+    
+    //
+    // Check if delete - jconfirm onclick
+    //
+    if (delete_event) {
+	delete_event = '1';
+    } else {
+	delete_event = '0';
+    }
 
     var params = [
 	    {
 		tag : 'event_id',
 		value : $("#cmd_MorepageEvents").val()
-	    },
-	    {
+	    }, {
 		tag : 'event_name',
 		value : $(
 			"#cmd_MorepageEvents option[value='"
 				+ $("#cmd_MorepageEvents").val() + "']").html()
-	    },
-	    {
+	    }, {
 		tag : 'event_location',
 		value : (($("#morepage_eventLocation").val() != '' && $(
 			"#morepage_eventLocation").val() != 'address or current location') ? $(
 			"#morepage_eventLocation").val()
 			: '')
-	    },
-	    {
+	    }, {
 		tag : 'event_date',
 		value : (($("#morepage_eventDate").val() != '' && $(
 			"#morepage_eventDate").val() != 'from') ? $(
 			"#morepage_eventDate").val() : '')
-	    },
-	    // {tag: 'viewable'}
-	    {
+	    }, {
 		tag : 'event_from',
 		value : viewable_from
 	    }, {
@@ -1416,23 +1420,23 @@ function morepage_saveEvent(confirmed) {
 	    }, {
 		tag : 'sell_media',
 		value : sell_media.toString()
+	    }, {
+		tag : 'delete_event',
+		value : delete_event
 	    } ];
     ajaxRequest('editevent', params, function(response) {
-	if (getValueFromXMLTag(response, 'status')) {
-	    var ssMsg = getValueFromXMLTag(response, 'message');
-
-	    if ($.trim(ssMsg).toLowerCase() == 'record not updated') {
-		ssMsg = "No record to update";
-	    }
-	    jsuccess(ssMsg);
-	    if (ssMsg.toLowerCase() == "no record to update") {
-		$("#jSuccess").css("background-image", "none");
-		$("#jSuccess").css("padding-left", "10px");
-	    }
+	var status = getValueFromXMLTag(response, 'status');
+	if (status == 'Failure') {
+	    ssMsg = "failed to update";
+	    jerror(ssMsg);
+	    //$("#jSuccess").css("background-image", "none");
+	    //$("#jSuccess").css("padding-left", "10px");
+	} else {
+	    var event_name = getValueFromXMLTag(response, 'event_name');
+	    jsuccess(getValueFromXMLTag(response, 'message'));
+	    var remove_event = "#cmd_MorepageEvents option[value='" + remove_event + "']";  
+	    $(remove_event).remove();
 	}
-
-	else
-	    jerror(getValueFromXMLTag(response, 'message'));
     });
 }
 
