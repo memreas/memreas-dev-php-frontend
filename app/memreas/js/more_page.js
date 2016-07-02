@@ -1425,21 +1425,18 @@ function morepage_saveEvent(confirmed, delete_event) {
 		value : delete_event
 	    } ];
     ajaxRequest('editevent', params, function(response) {
-	if (getValueFromXMLTag(response, 'status')) {
-	    var ssMsg = getValueFromXMLTag(response, 'message');
-
-	    if ($.trim(ssMsg).toLowerCase() == 'record not updated') {
-		ssMsg = "No record to update";
-	    }
-	    jsuccess(ssMsg);
-	    if (ssMsg.toLowerCase() == "no record to update") {
-		$("#jSuccess").css("background-image", "none");
-		$("#jSuccess").css("padding-left", "10px");
-	    }
+	var status = getValueFromXMLTag(response, 'status');
+	if (status == 'Failure') {
+	    ssMsg = "failed to update";
+	    jerror(ssMsg);
+	    //$("#jSuccess").css("background-image", "none");
+	    //$("#jSuccess").css("padding-left", "10px");
+	} else {
+	    var event_name = getValueFromXMLTag(response, 'event_name');
+	    jsuccess(getValueFromXMLTag(response, 'message'));
+	    var remove_event = "#cmd_MorepageEvents option[value='" + remove_event + "']";  
+	    $(remove_event).remove();
 	}
-
-	else
-	    jerror(getValueFromXMLTag(response, 'message'));
     });
 }
 
