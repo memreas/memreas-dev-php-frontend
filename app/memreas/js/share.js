@@ -575,9 +575,9 @@ doneAction = function(medianext) {
         
         if (medianext == 'friendnext') {
 		setTimeout(function() {
-				share_gotoPage(SHAREPAGE_TAB_FRIENDS);
+				//share_gotoPage(SHAREPAGE_TAB_FRIENDS);
                                
-			
+			$('.mfriendsclick').trigger('click');
 
 		}, 2000);
 	}
