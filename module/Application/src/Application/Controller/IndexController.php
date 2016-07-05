@@ -672,7 +672,6 @@ class IndexController extends AbstractActionController {
 		} else {
 			$ipAddress = $_SERVER ['REMOTE_ADDR'];
 		}
-		// error_log ( 'ip is ' . $ipAddress );
 		
 		return $ipAddress;
 	}
