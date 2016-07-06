@@ -992,6 +992,4 @@ $("a[title=queue]").hover (function(){
         $('footer').attr('style','z-index:2');
     });   
   
-//$(".DocumentList3").mCustomScrollbar({
-//    axis:"x" 
-//});
+
