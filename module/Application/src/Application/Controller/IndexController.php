@@ -225,7 +225,7 @@ class IndexController extends AbstractActionController {
 		//
 		libxml_use_internal_errors ( true );
 		$data = simplexml_load_string ( $result );
-		//MLog::addone ( $cm . __LINE__ . '::response $data->', $data );
+		MLog::addone ( $cm . __LINE__ . '::response $data->', $data );
 		if (!empty($data)) {
 			// Process XML structure here
 			if ($action == 'login') {
@@ -262,7 +262,7 @@ class IndexController extends AbstractActionController {
 	private function getS3Key() {
 		$this->memreas_session ();
 		
-		////MLog::addone ( __CLASS__ . __METHOD__ . __LINE__, 'About to fetch S3Key' );
+		MLog::addone ( __CLASS__ . __METHOD__ . __LINE__, 'About to fetch S3Key' );
 		$action = 'memreas_tvm';
 		$user_id = (isset ( $_REQUEST ['user_id'] )) ? $_REQUEST ['user_id'] : $_SESSION ['user_id'];
 		//Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__, 'About to fetch S3Key for $user_id->' . $user_id );
@@ -336,12 +336,16 @@ class IndexController extends AbstractActionController {
 		//
 		// Check session
 		//
+		//MLog::addone ( __CLASS__.__METHOD__.__LINE__, 'enter memreasAction()' );
+		$this->memreas_session ();
+		//MLog::addone ( __CLASS__.__METHOD__.__LINE__.'$_SESSION-->', $_SESSION );
 		if (empty($_SESSION)) {
+			MLog::addone ( __CLASS__.__METHOD__.__LINE__, 'empty($_SESSION)' );
 			$this->logoutAction();
 		}
 		
-		$this->memreas_session ();
-		// error_log ( 'Inside memreasAction...' . PHP_EOL );
+		//MLog::addone ( __CLASS__.__METHOD__.__LINE__, '$this->memreas_session ()' );
+		//error_log ( 'Inside memreasAction...' . PHP_EOL );
 		// Configure Ads on page
 		$enableAdvertising = MemreasConstants::MEMREAS_ADS;
 		$payment_tabs = array (
@@ -420,8 +424,8 @@ class IndexController extends AbstractActionController {
 	 * Login Action
 	 */
 	public function loginAction() {
-		//MLog::addone ( __CLASS__ . __METHOD__ . __LINE__, '::enter' );
-		//MLog::addone ( __CLASS__ . __METHOD__ . __LINE__ . '::$_REQUEST--->', $_REQUEST );
+		MLog::addone ( __CLASS__ . __METHOD__ . __LINE__, '::enter' );
+		MLog::addone ( __CLASS__ . __METHOD__ . __LINE__ . '::$_REQUEST--->', $_REQUEST );
 		
 		// Fetch the post data
 		$request = $this->getRequest ();
@@ -429,15 +433,16 @@ class IndexController extends AbstractActionController {
 		
 		$password = $postData ['password'];
 		if (empty ( $postData ['status_user_id'] )) {
-			//MLog::addone ( 'Returning view::', 'this->redirect ()->toRoute ( index, array (action => index) )' );
+			MLog::addone ( 'Returning view::', 'this->redirect ()->toRoute ( index, array (action => index) )' );
 			return $this->redirect ()->toRoute ( 'index', array (
 					'action' => "index" 
 			) );
 		} else {
-			//MLog::addone ( 'Returning view::', 'this->redirect ()->toRoute ( index, array (action => memreas) )' );
+			MLog::addone ( 'Returning view::', 'this->redirect ()->toRoute ( index, array (action => memreas) )' );
 			$this->memreas_session ();
 			$_SESSION ['username'] = $username = $_POST ['username'];
 			$_SESSION ['user_id'] = $userid = $postData ['status_user_id'];
+			MLog::addone ( 'login success user_id --->',$_SESSION ['user_id'] );
 			return $this->redirect ()->toRoute ( 'index', array (
 					'action' => 'memreas' 
 			) );

@@ -303,10 +303,20 @@ var ConsoleLog = new ConsoleLog();
 })(jQuery);
 
 $(function() {
+    
+//    setTimeout(function(){
+//                  var scrollbarwidth= $('#memreas').width();
+//                 scrollbarwidth=scrollbarwidth-20;
+//                 $('.event-listing-memreas').attr('style','width:'+scrollbarwidth +'px;');
+//                
+//            },2000);
     $("a.memreas").click(function() {
 	ajaxScrollbarElement('.myMemreas');
 	if (checkReloadItem('view_my_events')) {
 	    fetchMyMemreas();
+            
+          
+            
 	}
     });
     $("#tabs-memreas li:eq(1) a").click(function() {
@@ -356,14 +366,15 @@ function fetchMyMemreas() {
 		    var events = getSubXMLFromTag(response, 'event');
 
 		    var event_count = events.length;
-
+                      var scrollbarwidth= $('#memreas').width();
+                       scrollbarwidth=scrollbarwidth-40;
 		    for (var i = 0; i < event_count; i++) {
 			var event_media = getSubXMLFromTag(events[i],
 				'event_media');
 			var event_media_count = event_media.length;
 			var event = events[i].innerHTML;
 
-			var StrMedia = '<div class="DocumentList3"><ul class="event-pics list-inline">';
+			var StrMedia = '<div class="documentscls"><ul class="event-pics event-listing-memreas" style="width:'+scrollbarwidth+'px;">';
 			var eventId = $(event).filter('event_id').html();
 			for (var j = 0; j < event_media_count; j++) {
 			    var event_medi = event_media[j];
@@ -372,7 +383,7 @@ function fetchMyMemreas() {
 			    var _event_media_type_ = getValueFromXMLTag(
 				    event_medi, 'event_media_type');
 			    if (_event_media_type_ == 'image') {
-				StrMedia += '<li class="image DocumentItem1"><a href="javascript:;" onclick="showEventDetail(\''
+				StrMedia += '<li class="image " style="float:none; display:inline-block;"><a href="javascript:;" onclick="showEventDetail(\''
 					+ eventId
 					+ '\', \''
 					+ user_id
@@ -380,7 +391,7 @@ function fetchMyMemreas() {
 					+ removeCdataCorrectLink(event_media_image)
 					+ '"  style=""/></a></li>';
 			    } else if (_event_media_type_ == 'video') {
-				StrMedia += '<li class="video DocumentItem1"><a href="javascript:;" onclick="showEventDetail(\''
+				StrMedia += '<li class="video" style="float:none; display:inline-block;"><a href="javascript:;" onclick="showEventDetail(\''
 					+ eventId
 					+ '\', \''
 					+ user_id
@@ -857,7 +868,7 @@ function fetchpubsMemreas() {
 					    var event_media = getSubXMLFromTag(
 						    friends[i], 'event_media');
 					    var event_media_count = event_media.length;
-					    var StrMedia = '<div style="clear:both;"></div><div class="DocumentList"><ul class="event-pics">';
+					    var StrMedia = '<div style="clear:both;"></div><div class="documentscls"><ul class="event-pics event-listing-public-memreas">';
                                             var overlaydiv='';
 
 					    var event_metadata = getValueFromXMLTag(
@@ -887,7 +898,7 @@ function fetchpubsMemreas() {
 							|| Account
 								.checkOwnEvent(event_id)) {
 						    if (_event_media_type_ == 'image') {
-							StrMedia += '<li class="image DocumentItem"><a href="javascript:;" onclick="showEventDetail(\''
+							StrMedia += '<li class="image" style="float:none; display:inline-block;"><a href="javascript:;" onclick="showEventDetail(\''
 								+ event_id
 								+ '\', \''
 								+ user_id
@@ -895,7 +906,7 @@ function fetchpubsMemreas() {
 								+ removeCdataCorrectLink(event_media_image)
 								+ '"  style=""/></a></li>';
 						    } else if (_event_media_type_ == 'video') {
-							StrMedia += '<li class="video DocumentItem"><a href="javascript:;" onclick="showEventDetail(\''
+							StrMedia += '<li class="video" float:none; display:inline-block;><a href="javascript:;" onclick="showEventDetail(\''
 								+ event_id
 								+ '\', \''
 								+ user_id
