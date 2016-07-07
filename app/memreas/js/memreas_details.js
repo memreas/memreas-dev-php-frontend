@@ -580,17 +580,20 @@ function showEventDetail(eventId, userId) {
 			    objDetail.push(DetailImage);
 			    mediaIDArray.push(Item_media_Id);
 			} // end for loop
-			console.log('*******************************');
-			console.log('objArrMemreasGallery---> '
-				+ JSON.stringify(objArrMemreasGallery));
-			console.log('*******************************');
+			//console.log('*******************************');
+			//console.log('objArrMemreasGallery---> '
+			//	+ JSON.stringify(objArrMemreasGallery));
+			//console.log('*******************************');
 
-			$('#blueimp-video-carousel-gallery-memreas').find('slides').empty();
+			//$('#blueimp-video-carousel-gallery-memreas').find('slides').empty();
+			//
+			// Gallery and Detail Details tab
+			//
 			blueimp
 				.Gallery(
-					objArrMemreasGallery,
+					objDetail,
 					{
-					    container : '#blueimp-video-carousel-gallery-memreas',
+					    container : '#blueimp-video-carousel-gallery-detail',
 					    carousel : 'true',
 					    preloadRange : 2,
 					    transitionSpeed : 400
@@ -615,10 +618,7 @@ function showEventDetail(eventId, userId) {
     $(".memreas-detail").fadeIn(500);
 }
 
-$(document).on(
-	'click',
-	'[data-gallery]',
-	function(event) {
+$(document).on('click','[data-gallery]', function(event) {
 	    var id = $(this).data('gallery');
 	    var widget = $(id);
 	    var selected_media_id;
@@ -627,12 +627,11 @@ $(document).on(
 	    selected_media_id = widget.selector;
 	    for (i = 0; i < objArrMemreasGallery.length; i++) {
 		obj = objArrMemreasGallery[i];
-		console.log("selected_media_id-->" + selected_media_id);
-		console.log("obj['title']-->" + obj['title']);
 		if (selected_media_id == obj['title']) {
 		    break;
 		}
 	    }
+	    //alert ('obj--->' + JSON.stringify(obj));
 	    //Deep Copy due to blueimp internal error
 	    var newObject = jQuery.extend(true, {}, obj);
 	    return blueimp.Gallery([ newObject ], {
