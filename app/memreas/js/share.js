@@ -91,6 +91,7 @@ $(function() {
 
 	$("#ckb_sellmedia").change(function() {
 		if ($(this).is(":checked")) {
+		    //alert ("popupSellMedia...");
 
 			$("#ckb_canpost").attr('checked', false);
 			$("#ckb_canadd").attr('checked', false);
@@ -125,6 +126,7 @@ share_initObjects = function() {
 	if (!userBrowser[0].ios)
 		ar_initAudio();
 };
+
 // initialize the akordeon.
 share_initAkordeon = function() {
 	$('#ckb_canpost')[0].checked = false;
@@ -161,6 +163,7 @@ share_initAkordeon = function() {
 		itemsOrder : [2, 0, 1]
 	});
 };
+
 // change the friend list by social type.
 share_changeSocialType = function() {
 	var socialType = $("#cmb_socialtype option:selected").val();
@@ -180,6 +183,7 @@ share_changeSocialType = function() {
 		break;
 	}
 };
+
 // initialize and customize the scroll bar.
 share_customScrollbar = function() {
 
@@ -261,12 +265,14 @@ share_customScrollbar = function() {
 		});
 	});
 };
+
 // popup the window with google map when focus the location text field.
 // div_id: identifier of div for google map.
 share_showGoogleMap = function(div_id) {
 	popup('dlg_locationmap');
 	share_initGoogleMap(div_id);
 };
+
 // close the popup window with google map.
 // save_address: variable indicating if the address is saved or not.
 share_closeGoogleMap = function(save_address) {
@@ -280,6 +286,7 @@ share_closeGoogleMap = function(save_address) {
 
 	disablePopup('dlg_locationmap');
 };
+
 // initialize the google map.
 share_initGoogleMap = function(div_id) {
 	if (location_map == null || typeof location_map == "undefined") {
@@ -380,30 +387,33 @@ share_initGoogleMap = function(div_id) {
 		}
 	}
 };
+
 // Check valid duration
 function checkSellMediaDuration() {
 	// debugger;
-	var sellmedia_duration_from = $("#sellmedia_duration_from").val();
-	var sellmedia_duration_to = $("#sellmedia_duration_to").val();
+    	event_share_object.sellmedia_duration_from = $("#sellmedia_duration_from").val();
+    	event_share_object.sellmedia_duration_to = $("#sellmedia_duration_to").val();
 
 	// Reset default values
-	if (sellmedia_duration_from == 'available from')
-		sellmedia_duration_from = '';
-	if (sellmedia_duration_to == 'available to')
-		sellmedia_duration_to = '';
+	if (event_share_object.sellmedia_duration_from == 'available from') {
+	    event_share_object.sellmedia_duration_from = '';
+	}
+	if (event_share_object.sellmedia_duration_to == 'available to') {
+	    event_share_object.sellmedia_duration_to = '';
+	}
 
-	if (sellmedia_duration_from != '' || sellmedia_duration_to != '') {
-		if (sellmedia_duration_from == '') {
+	if (event_share_object.sellmedia_duration_from != '' || event_share_object.sellmedia_duration_to != '') {
+		if (event_share_object.sellmedia_duration_from == '') {
 			jerror("please input available from");
 			return false;
 		}
-		if (sellmedia_duration_to == '') {
+		if (event_share_object.sellmedia_duration_to == '') {
 			jerror('please input available to');
 			return false;
 		}
 
-		var date_from = new Date(sellmedia_duration_from);
-		var date_to = new Date(sellmedia_duration_to);
+		var date_from = new Date(event_share_object.sellmedia_duration_from);
+		var date_to = new Date(event_share_object.sellmedia_duration_to);
 
 		var date1 = new Date(date_from);
 		var date2 = new Date(date_to);
@@ -412,7 +422,7 @@ function checkSellMediaDuration() {
 		// alert(diffDays);
 
 		if (date_to <= date_from) {
-			jerror("Date to must be larger than date from");
+			jerror("Duration to date must be greater than date from");
 			return false;
 		}
 
@@ -421,43 +431,43 @@ function checkSellMediaDuration() {
 		current_date = new Date(current_date);
 
 		if (date_from < current_date) {
-			jerror("Date from must be larger than date today");
+			jerror("Duration from date must be current or a later date");
 			return false;
 		}
 
 		if (date_to < current_date) {
-			jerror("Date to must be larger than date today");
+			jerror("Duration to date must be greater than start date");
 			return false;
 		}
-		if (diffDays > 30) {
-			jerror('Date  should be selected only for 30 days ');
-			return false;
-		}
+		//if (diffDays > 30) {
+		//	jerror('Date  should be selected only for 30 days ');
+		//	return false;
+		//}
 
 		return true;
 	} else {
-		jerror("Please specify media available for viewing");
+		jerror("Please specify dates for viewing");
 		return false;
 	}
 }
 
 // add the new event by request to the server.
 share_addEvent = function() {
-    console.log('Event share Object 448' +JSON.stringify(event_share_object));
-	event_share_object.sellmedia_duration_from = '';
-	event_share_object.sellmedia_duration_to = '';
-        event_share_object.sell_media_price=0;
+    	console.log('Event share Object 448' +JSON.stringify(event_share_object));
+	//event_share_object.sellmedia_duration_from = '';
+	//event_share_object.sellmedia_duration_to = '';
+        //event_share_object.sell_media_price=0;
 
 	// Precheck for selling media is popup or not and check for correction
 	if ($("#popupSellMedia").is(":visible")) {
 		event_share_object.sellmedia_price_select = $("#sellmedia_price").val();
-		if (sellmedia_price_select == '') {
+		if (event_share_object.sellmedia_price_select == '') {
 			jerror("please select the price");
 			return false;
 		}
 
 		event_share_object.passDuration = checkSellMediaDuration();
-		if (!passDuration)
+		if (!event_share_object.passDuration)
 			return false;
 
 		event_share_object.sellmedia_duration_from = $("#sellmedia_duration_from").val();
@@ -467,17 +477,17 @@ share_addEvent = function() {
 			jerror("You must agree with our terms and conditions");
 			return false;
 		}
-		event_share_object.sell_media_price = sellmedia_price_select;
+		event_share_object.sell_media_price = event_share_object.sellmedia_price_select;
 	}
 
 	disablePopup('popupSellMedia');
 	share_closeGoogleMap(true);
 	event_share_object.name = getElementValue('txt_name');
-        
-	//	if (event.name == "") {
-	//		jerror("You have to input the name.");
-	//		return;
-	//	}
+	
+	if (event_share_object.name == "") {
+		jerror("name is required.");
+		return;
+	}
 	if (checkValidDateFromTo(true)) {
 
 		event_share_object.date = getElementValue('dtp_date');
@@ -495,18 +505,18 @@ share_addEvent = function() {
 			event_share_object.ckb_public = 1;
 			event_share_object.ckb_canpost = 0;
 			event_share_object.ckb_canadd = 0;
-			event_share_object.date_from = sellmedia_duration_from;
-			event_share_object.date_to = sellmedia_duration_to;
+			event_share_object.date_from = event_share_object.sellmedia_duration_from;
+			event_share_object.date_to = event_share_object.sellmedia_duration_to;
 		}
 
 		event_share_object.ckb_viewable = getCheckBoxValue('ckb_viewable');
 		event_share_object.ckb_selfdestruct = getCheckBoxValue('ckb_selfdestruct');
 
 		// Checking for selling media
-		if ($("#ckb_sellmedia").is(":checked") && event_share_object.sell_media_price > 0) {
+		//if ($("#ckb_sellmedia").is(":checked") && event_share_object.sell_media_price > 0) {
 			// popup("popupSellMedia");
 			// return true;
-		}
+		//}/
 
 		//
 		// Share Page Changes: Move to ajaxAddEvent
@@ -546,9 +556,6 @@ doneAction = function(medianext) {
 			//
 			// Call ajaxAddEvent which will call ajaxAddMedia and ajaxAddFriends on success
 			//
-                        //share_addEvent();
-                        //ajaxAddEvent();
-                        
 			if (share_addEvent()) {
 				ajaxAddEvent();
 			}
@@ -564,7 +571,7 @@ doneAction = function(medianext) {
 		setTimeout(function() {
 			//var text_ids = ['txt_name', 'txt_location', 'dtp_date', 'dtp_from', 'dtp_to', 'dtp_selfdestruct'];
 			//clearTextField(text_ids);
-		//alert(SHAREPAGE_TAB_MEDIA);	
+		// alert(SHAREPAGE_TAB_MEDIA);
                     if (SHAREPAGE_TAB_MEDIA) {
 				share_gotoPage(SHAREPAGE_TAB_FRIENDS);
 			} 
