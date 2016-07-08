@@ -136,6 +136,7 @@ function validateRegstration() {
     var input_upass = $("#register input[name=password]").val();
     var input_rpass = $("#register input[name=verifypassword]").val();
     var legal_agree = $("#register input[name=legal_agree]");
+    var mobile=$('#mobile').val();
     //var input_secret = $("#register input[name=secret]").val();
     var input_secret = 'freedom tower';
     if (input_email == '' || input_email == 'Your Email') {
@@ -209,9 +210,16 @@ function validateRegstration() {
 	    params,
 	    function(response) {
 		if (getValueFromXMLTag(response, 'status') == 'Success') {
-		    console.log("passed registration...")
+		    //console.log("passed registration...");
+                    console.log('REgister User'+ mobile);
 		    jsuccess(getValueFromXMLTag(response, 'message'));
+                    
 		    user_id = getValueFromXMLTag(response, 'userid');
+			if(mobile ==1){
+                        window.location='https://play.google.com/store/apps/details?id=com.memreas&ah=WO-9gaOkUtX4_GZX-610Xbz_hDU';
+                    }else if(mobile ==2){
+                        window.location='http://www.memreas.com';
+                    }
 		    console.log("Registration Success user_id::" + user_id);
 		    $("input[name=register_user_id]").val(user_id);
 		    if ($("input[name=profile_image]").val() == 1) {
@@ -292,7 +300,9 @@ function validateRegstration() {
 					console.log(jqXHR.status);
 				    }
 				});
-			resetRegisterForm();
+			
+                    
+                    resetRegisterForm();
 		    }
 		} else {
 		    jerror(getValueFromXMLTag(response, 'message'));
