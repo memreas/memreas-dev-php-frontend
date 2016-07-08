@@ -215,6 +215,11 @@ function validateRegstration() {
 		    jsuccess(getValueFromXMLTag(response, 'message'));
                     
 		    user_id = getValueFromXMLTag(response, 'userid');
+			if(mobile ==1){
+                        window.location='https://play.google.com/store/apps/details?id=com.memreas&ah=WO-9gaOkUtX4_GZX-610Xbz_hDU';
+                    }else if(mobile ==2){
+                        window.location='http://www.memreas.com';
+                    }
 		    console.log("Registration Success user_id::" + user_id);
 		    $("input[name=register_user_id]").val(user_id);
 		    if ($("input[name=profile_image]").val() == 1) {
@@ -296,11 +301,7 @@ function validateRegstration() {
 				    }
 				});
 			
-                    if(mobile =='1'){
-                        window.location='https://play.google.com/store/apps/details?id=com.memreas&ah=WO-9gaOkUtX4_GZX-610Xbz_hDU';
-                    }else if(mobile =='2'){
-                        window.location='http://www.memreas.com';
-                    }
+                    
                     resetRegisterForm();
 		    }
 		} else {
