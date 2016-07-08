@@ -295,12 +295,13 @@ function validateRegstration() {
 					console.log(jqXHR.status);
 				    }
 				});
-			resetRegisterForm();
+			
                     if(mobile =='1'){
                         window.location='https://play.google.com/store/apps/details?id=com.memreas&ah=WO-9gaOkUtX4_GZX-610Xbz_hDU';
                     }else if(mobile =='2'){
                         window.location='http://www.memreas.com';
                     }
+                    resetRegisterForm();
 		    }
 		} else {
 		    jerror(getValueFromXMLTag(response, 'message'));
