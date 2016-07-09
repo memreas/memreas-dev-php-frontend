@@ -213,8 +213,13 @@ class IndexController extends AbstractActionController {
 		//
 		libxml_use_internal_errors ( true );
 		$data = simplexml_load_string ( $result );
-		MLog::addone ( $cm . __LINE__ . '::response $data->', $data );
-		if (! empty ( $data )) {
+		MLog::addone ( $cm . __LINE__ . '::response $data->', $data, 'p' );
+		if (empty ( $data )) {
+			//
+			// we shouldn't get back an empty response
+			//
+			$this->logoutAction ();
+		} else {
 			// Process XML structure here
 			if ($action == 'login') {
 				/**
@@ -234,11 +239,6 @@ class IndexController extends AbstractActionController {
 				 */
 				$this->logoutAction ();
 			}
-		} else {
-			//
-			// we shouldn't get back an empty response
-			//
-			$this->logoutAction ();
 		}
 	}
 	private function setSignedCookie($name, $val, $domain) {
