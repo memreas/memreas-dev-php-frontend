@@ -320,7 +320,7 @@ function popupCreditAddCard() {
 			// setX_MEMREAS_CHAMELEON(response.x_memreas_chameleon);
 
 			if (response.status == 'Success') {
-			    jsuccess("Your card added successfully");
+			    jsuccess("succes - card stored");
 			    disablePopup('popupCreditAddCard');
 			    pushReloadItem('reload_subscription_cards');
 			    pushReloadItem('reload_buy_credit_cards');
