@@ -38,6 +38,8 @@ function buycredit_addCardPopup(){
     // Reset form;
     var jAddCard = $(".accountAddCardForm");
     jAddCard.find('input[type=text]').each(function(){
+	console.log('jAddCard for loop key --> $(this).attr(default)' + $(this).attr('default'));
+	console.log('jAddCard for loop value --> $(this).val($(this).attr(default))' + $(this).val($(this).attr('default')));
         $(this).val($(this).attr('default'));
     });
     jAddCard.find('select').val('');

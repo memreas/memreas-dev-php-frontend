@@ -218,8 +218,8 @@ class IndexController extends AbstractActionController {
 			//
 			// we shouldn't get back an empty response
 			//
-		} else {
 			$this->logoutAction ();
+		} else {
 			// Process XML structure here
 			if ($action == 'login') {
 				/**
