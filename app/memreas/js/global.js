@@ -581,6 +581,7 @@ clearCheckBox = function(elements) {
     } else if (typeof elements.length != "undefined") {
 	for (i = 0; i < elements.length; i++) {
 	    id = '#' + elements[i];
+	    alert('checkbox id is-->' + id); 
 	    $(id)[0].checked = true;
 	}
     }
