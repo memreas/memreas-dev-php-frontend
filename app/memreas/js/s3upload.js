@@ -229,9 +229,12 @@ var S3UploadInstance = function() {
 						     * - matches checking on server
 						     */
 						    var key_value = filename;
+						    var splitter = '/';
 						    var extension = filename
 							    .substr((filename
 								    .lastIndexOf('.') + 1));
+						    // used for augment
+						    // extension by case
 						    var is_valid = false;
 						    switch (extension
 							    .toLowerCase()) {
@@ -344,7 +347,7 @@ var S3UploadInstance = function() {
 						    }
 						    contentTypeOfFile = filetype;
 						    mimeTypeOfFile = filetype
-							    + '/'
+							    + splitter
 							    + extension
 								    .toLowerCase()
 						    if (!is_valid) {
