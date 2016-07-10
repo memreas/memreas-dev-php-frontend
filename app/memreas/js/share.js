@@ -1309,7 +1309,6 @@ $(function() {
     $("#dtp_to").change(
 	    function() {
 		var current_date = new Date();
-		alert('current_date->' + current_date);
 		var date_to = new Date($(this).val());
 		if (date_to < current_date) {
 		    jerror('Date to can not less than today.');
