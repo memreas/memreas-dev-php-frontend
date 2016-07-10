@@ -454,9 +454,9 @@ function checkSellMediaDuration() {
 // add the new event by request to the server.
 share_addEvent = function() {
     	console.log('Event share Object 448' +JSON.stringify(event_share_object));
-	//event_share_object.sellmedia_duration_from = '';
-	//event_share_object.sellmedia_duration_to = '';
-        //event_share_object.sell_media_price=0;
+	event_share_object.sellmedia_duration_from = '';
+	event_share_object.sellmedia_duration_to = '';
+        event_share_object.sell_media_price=0;
 
 	// Precheck for selling media is popup or not and check for correction
 	if ($("#popupSellMedia").is(":visible")) {
