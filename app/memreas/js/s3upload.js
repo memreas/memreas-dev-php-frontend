@@ -296,9 +296,6 @@ var S3UploadInstance = function() {
 							filetype = 'video';
 							is_valid = true;
 							break;
-						    case 'mts':
-						    	filetype = 'video';
-						    	is_valid = 'true';
 						    case 'wmv':
 							filetype = 'video';
 							is_valid = true;
