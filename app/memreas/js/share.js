@@ -517,10 +517,6 @@ share_addEvent = function() {
 	jerror("name is required.");
 	return false;
     }
-    alert('getElementValue(dtp_date)-->' + getElementValue('dtp_date'));
-    alert('getElementValue(dtp_from)-->' + getElementValue('dtp_from'));
-    alert('getElementValue(dtp_to)-->' + getElementValue('dtp_to'));
-    return false;
     if (checkValidDateFromTo(true)) {
 	event_share_object.date = getElementValue('dtp_date');
 	event_share_object.location = getElementValue('txt_location');
