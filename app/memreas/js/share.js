@@ -429,11 +429,7 @@ function checkSellMediaDuration() {
 	    return false;
 	}
 
-	var cdate = new Date();
-	var current_date = ("0" + (cdate.getMonth() + 1)).slice(-2) + '/'
-		+ ("0" + cdate.getDate()).slice(-2) + '/' + cdate.getFullYear();
-	current_date = new Date(current_date);
-
+	var current_date = new Date();
 	if (date_from < current_date) {
 	    jerror("Duration from date must be current or a later date");
 	    return false;
@@ -521,6 +517,10 @@ share_addEvent = function() {
 	jerror("name is required.");
 	return false;
     }
+    alert('getElementValue(dtp_date)-->' + getElementValue('dtp_date'));
+    alert('getElementValue(dtp_from)-->' + getElementValue('dtp_from'));
+    alert('getElementValue(dtp_to)-->' + getElementValue('dtp_to'));
+    return false;
     if (checkValidDateFromTo(true)) {
 	event_share_object.date = getElementValue('dtp_date');
 	event_share_object.location = getElementValue('txt_location');
@@ -1025,10 +1025,10 @@ share_getAllMedia = function() {
 			    //
 			    metadata = JSON.parse(metadata);
 			    if ($("#ckb_sellmedia").is(":checked")) {
-				    if ((!metadata.S3_files.copyright)
-					    || (metadata.S3_files.copyright == 'null')) {
-					continue;
-				    }
+				if ((!metadata.S3_files.copyright)
+					|| (metadata.S3_files.copyright == 'null')) {
+				    continue;
+				}
 			    }
 
 			    //
@@ -1312,11 +1312,8 @@ $(function() {
     });
     $("#dtp_to").change(
 	    function() {
-		var cdate = new Date();
-		var current_date = ("0" + (cdate.getMonth() + 1)).slice(-2)
-			+ '/' + ("0" + cdate.getDate()).slice(-2) + '/'
-			+ cdate.getFullYear();
-		current_date = new Date(current_date);
+		var current_date = new Date();
+		alert('current_date->' + current_date);
 		var date_to = new Date($(this).val());
 		if (date_to < current_date) {
 		    jerror('Date to can not less than today.');
@@ -1325,6 +1322,19 @@ $(function() {
 		    checkValidDateFromTo();
 	    });
 });
+
+function getThreeLetterMonth(index) {
+    var monthNames = [ "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG",
+	    "SEP", "OCT", "NOV", "DEC" ];
+
+    return monthNames(index);
+
+}
+function fetchDateFormatted(month, day, year) {
+    var date = day + '-' + getThreeLetterMonth(month) + '-' + year;
+    return date;
+}
+
 function checkValidDateFromTo(isSubmit) {
     var date_viewable_from = $("#dtp_from").val();
     var date_viewable_to = $("#dtp_to").val();
@@ -1333,10 +1343,8 @@ function checkValidDateFromTo(isSubmit) {
     if (date_viewable_from != 'from' && date_viewable_to != 'to') {
 	var date_from = new Date(date_viewable_from);
 	var date_to = new Date(date_viewable_to);
-	var cdate = new Date();
-	var current_date = ("0" + (cdate.getMonth() + 1)).slice(-2) + '/'
-		+ ("0" + cdate.getDate()).slice(-2) + '/' + cdate.getFullYear();
-	current_date = new Date(current_date);
+
+	var current_date = new Date();
 	if (date_from > date_to) {
 	    jerror('Viewable date must valid. From date must less than to date.');
 	    $("#dtp_to").val('').focus();
