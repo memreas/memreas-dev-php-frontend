@@ -392,7 +392,6 @@ share_initGoogleMap = function(div_id) {
 
 // Check valid duration
 function checkSellMediaDuration() {
-    // debugger;
     event_share_object.sellmedia_duration_from = $("#sellmedia_duration_from")
 	    .val();
     event_share_object.sellmedia_duration_to = $("#sellmedia_duration_to")
@@ -409,11 +408,11 @@ function checkSellMediaDuration() {
     if (event_share_object.sellmedia_duration_from != ''
 	    || event_share_object.sellmedia_duration_to != '') {
 	if (event_share_object.sellmedia_duration_from == '') {
-	    jerror("please input available from");
+	    jerror("please set available from");
 	    return false;
 	}
 	if (event_share_object.sellmedia_duration_to == '') {
-	    jerror('please input available to');
+	    jerror('please set available to');
 	    return false;
 	}
 
@@ -449,6 +448,26 @@ function checkSellMediaDuration() {
 	// return false;
 	// }
 
+	//
+	// Set viewable checkbox and dates
+	//
+	$("#ckb_selfdestruct").prop('checked', false);
+	$("#ckb_viewable").prop('checked', true);
+	$("#dtp_from").val(event_share_object.sellmedia_duration_from);
+	$("#dtp_to").val(event_share_object.sellmedia_duration_to);
+
+	// Sell media public as default
+	if (event_share_object.sell_media_price > 0) {
+	    event_share_object.ckb_public = 1;
+	    event_share_object.ckb_canpost = 0;
+	    event_share_object.ckb_canadd = 0;
+	    event_share_object.date_from = event_share_object.sellmedia_duration_from;
+	    event_share_object.date_to = event_share_object.sellmedia_duration_to;
+	}
+
+	event_share_object.ckb_viewable = getCheckBoxValue('ckb_viewable');
+	event_share_object.ckb_selfdestruct = getCheckBoxValue('ckb_selfdestruct');
+
 	return true;
     } else {
 	jerror("Please specify dates for viewing");
@@ -470,13 +489,16 @@ share_addEvent = function() {
     } else if ($("#popupSellMedia").is(":visible")) {
 	event_share_object.sellmedia_price_select = $("#sellmedia_price").val();
 	if (event_share_object.sellmedia_price_select == '') {
+	    $('#loadingpopup').fadeOut(200);
 	    jerror("please select the price");
 	    return false;
 	}
 
 	event_share_object.passDuration = checkSellMediaDuration();
-	if (!event_share_object.passDuration)
+	if (!event_share_object.passDuration) {
+	    $('#loadingpopup').fadeOut(200);
 	    return false;
+	}
 
 	event_share_object.sellmedia_duration_from = $(
 		"#sellmedia_duration_from").val();
@@ -640,12 +662,13 @@ ajaxAddEvent = function() {
 	value : event_share_object.sellmedia_duration_to
     } ], function(ret_xml) {
 	// parse the returned xml.
-	//console.log('Sell Media: ' + ret_xml);
+	// console.log('Sell Media: ' + ret_xml);
 	var status = getValueFromXMLTag(ret_xml, 'status');
 	var message = getValueFromXMLTag(ret_xml, 'message');
 	event_id = getValueFromXMLTag(ret_xml, 'event_id');
 	if (status.toLowerCase() == 'success') {
-	    jsuccess('Event "' + event_share_object.name + '" was registered successfully.');
+	    jsuccess('Event "' + event_share_object.name
+		    + '" was registered successfully.');
 
 	    //
 	    // Clear form variables
@@ -765,19 +788,6 @@ share_clearMemreas = function(confirmed) {
 	//
 	$("#sellmedia_price option:eq(0)").attr("selected", "selected");
 
-	/*
-	 * $("#dtp_date").removeAttr('readonly');
-	 * $("#txt_location").removeAttr('readonly');
-	 * $("#ckb_canpost").removeAttr('readonly');
-	 * $("#ckb_canadd").removeAttr('readonly');
-	 * $("#ckb_public").removeAttr('readonly');
-	 * $("#ckb_viewable").removeAttr('readonly');
-	 * $("#dtp_from").removeAttr('readonly');
-	 * $("#dtp_to").removeAttr('readonly');
-	 * $("#ckb_selfdestruct").removeAttr('readonly');
-	 * $("#dtp_selfdestruct").removeAttr('readonly');
-	 */
-
 	$("a[title=share]").click();
     } else {
 	jconfirm('Are you sure want to restart progress?',
@@ -870,7 +880,7 @@ share_addComment = function() {
 };
 
 function fetch_selected_media() {
-    console.log('fetch_selected_media 849');
+    // console.log('fetch_selected_media 849');
     var media_id_list = new Array();
     var count = 0;
     $("ul#share_medialist li.setchoosed")
@@ -887,7 +897,7 @@ function fetch_selected_media() {
 }
 
 share_uploadMedias = function(success) {
-    console.log('share_uploadMedias 841');
+    // console.log('share_uploadMedias 841');
     media_ids = fetch_selected_media();
     var media_id_params = [];
     var increase = 0;
@@ -919,10 +929,10 @@ share_uploadMedias = function(success) {
 //
 ajaxAddExistingMediaToEvent = function() {
 
-    console.log('Share ajaxAddExistingMediaToEvent 868');
+    // console.log('Share ajaxAddExistingMediaToEvent 868');
     ajaxRequest('addexistmediatoevent', media_share_object.params, function(
 	    xml_response) {
-	console.log('Share ajaxAddExistingMediaToEvent 873' + xml_response);
+	// console.log('Share ajaxAddExistingMediaToEvent 873' + xml_response);
 	if (getValueFromXMLTag(xml_response, 'status') == 'Success') {
 	    jsuccess(getValueFromXMLTag(xml_response, 'message'));
 
@@ -1013,28 +1023,12 @@ share_getAllMedia = function() {
 			    //
 			    // Checking for sale event with media copyright
 			    //
-			    var sellmedia_price_select = $("#sellmedia_price")
-				    .val();
-			    if ($("#ckb_sellmedia").is(":checked")) {
-				var event_for_sale = true;
-			    } else {
-				var event_for_sale = false;
-			    }
 			    metadata = JSON.parse(metadata);
-			    // console.log("media section for loop copyright -->
-			    // *" + metadata.S3_files.copyright + "*");
-			    if (event_for_sale && sellmedia_price_select > 0) {
-				if (metadata.S3_files.copyright == 'null') {
-				    // console.log("media section for loop
-				    // copyright --> null found");
-				    // Skip non-copyright media available for
-				    // listing at select media for sale
-				    continue;
-				} else {
-				    // console.log("media section for loop
-				    // copyright --> is not null");
-
-				}
+			    if ($("#ckb_sellmedia").is(":checked")) {
+				    if ((!metadata.S3_files.copyright)
+					    || (metadata.S3_files.copyright == 'null')) {
+					continue;
+				    }
 			    }
 
 			    //
