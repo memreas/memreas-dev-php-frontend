@@ -586,8 +586,6 @@ doneAction = function(medianext) {
 		ajaxAddEvent();
 	    }
 	}, 2000);
-
-	// $('.memrsclick').trigger('click');
     }
 
     //
@@ -598,7 +596,6 @@ doneAction = function(medianext) {
 	    if (SHAREPAGE_TAB_MEDIA) {
 		share_gotoPage(SHAREPAGE_TAB_FRIENDS);
 	    }
-
 	}, 2000);
     }
 
@@ -658,7 +655,7 @@ ajaxAddEvent = function() {
 	value : event_share_object.sellmedia_duration_to
     } ], function(ret_xml) {
 	// parse the returned xml.
-	// console.log('Sell Media: ' + ret_xml);
+	console.log('Add Event return xml: ' + ret_xml);
 	var status = getValueFromXMLTag(ret_xml, 'status');
 	var message = getValueFromXMLTag(ret_xml, 'message');
 	event_id = getValueFromXMLTag(ret_xml, 'event_id');
@@ -667,16 +664,11 @@ ajaxAddEvent = function() {
 		    + '" was registered successfully.');
 
 	    //
-	    // Clear form variables
-	    //
-	    share_clearMemreas(true);
-
-	    //
 	    // Check media and call share_AddComment which calls the Ajax
 	    // function
 	    //
 	    console.log('Share Add  Comment 642' + JSON.stringify(media_ids));
-	    share_addComment();
+	    share_uploadMedias(true);
 
 	    //
 	    // Check friends and call add friends which calls the ajax function
@@ -692,6 +684,11 @@ ajaxAddEvent = function() {
 		}
 
 	    }
+
+	    //
+	    // Clear form variables
+	    //
+	    share_clearMemreas(true);
 
 	    //
 	    // change page to view my events.
@@ -893,7 +890,7 @@ function fetch_selected_media() {
 }
 
 share_uploadMedias = function(success) {
-    // console.log('share_uploadMedias 841');
+    console.log('share_uploadMedias 841');
     media_ids = fetch_selected_media();
     var media_id_params = [];
     var increase = 0;
@@ -925,10 +922,10 @@ share_uploadMedias = function(success) {
 //
 ajaxAddExistingMediaToEvent = function() {
 
-    // console.log('Share ajaxAddExistingMediaToEvent 868');
+    console.log('Share ajaxAddExistingMediaToEvent 868');
     ajaxRequest('addexistmediatoevent', media_share_object.params, function(
 	    xml_response) {
-	// console.log('Share ajaxAddExistingMediaToEvent 873' + xml_response);
+	console.log('Share ajaxAddExistingMediaToEvent 873' + xml_response);
 	if (getValueFromXMLTag(xml_response, 'status') == 'Success') {
 	    jsuccess(getValueFromXMLTag(xml_response, 'message'));
 
