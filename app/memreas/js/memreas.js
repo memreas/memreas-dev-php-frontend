@@ -306,17 +306,17 @@ $(function() {
     $("a.memreas").click(function() {
 	ajaxScrollbarElement('.myMemreas');
 	if (checkReloadItem('view_my_events')) {
-	    fetchMyMemreas();
+	 fetchMyMemreas();
 	}
     });
     $("#tabs-memreas li:eq(1) a").click(function() {
 	if (checkReloadItem('view_friend_events')) {
-	    fetchFriendsMemreas('private');
+	 fetchFriendsMemreas('private');
 	}
     });
     $("#tabs-memreas li:eq(2) a").click(function() {
 	if (checkReloadItem('view_public_events')) {
-	    fetchpubsMemreas();
+	 fetchpubsMemreas();
 	}
     });
 });
@@ -355,6 +355,7 @@ function fetchMyMemreas() {
 		$('#loadingpopup').fadeOut(200);
 		if (getValueFromXMLTag(response, 'status') == "Success") {
 		    // console.log("response " + response);
+		    alert("memreas me response " + response);
 		    var events = getSubXMLFromTag(response, 'event');
 
 		    var event_count = events.length;
@@ -480,7 +481,7 @@ function fetchFriendsMemreas(friendMemreasType) {
     + '"json": ' + params_json + '}';
 
     $('#loadingpopup').fadeIn(200);
-var stripeActionUrl = $("input[name=stripe_url]").val()
+    var stripeActionUrl = $("input[name=stripe_url]").val()
 	    + 'stripe_checkOwnEvent';
     $
 	    .ajax({
@@ -502,7 +503,7 @@ var stripeActionUrl = $("input[name=stripe_url]").val()
 			var sell_class = 'private-';
 		    } else {
 			var showPublic = '1';
-			var showAccepted = '1';
+			var showAccepted = '0';
 			var sell_class = 'public-';
 		    }
 		    ajaxRequest(
