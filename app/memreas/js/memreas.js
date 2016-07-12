@@ -397,7 +397,11 @@ function fetchMyMemreas() {
 					+ user_id
 					+ '\');" style="cursor: pointer;"><img src="'
 					+ removeCdataCorrectLink(event_media_image)
-					+ '"  style=""/></a><span class="video-content-play-icon-2"></span></li>';
+					+ '"  style=""/></a><span class="video-content-play-icon-2" onclick="showEventDetail(\''
+					+ eventId
+					+ '\', \''
+					+ user_id
+					+ '\');" ></span></li>';
 			    }
 			}
 			StrMedia += '</ul></div><div style="clear:both;"></div>';
