@@ -42,8 +42,6 @@ var event_share_object = {};
 var media_share_object = {};
 var friends_share_object = {};
 
-console.log('Event Object 45' + JSON.stringify(event_share_object));
-
 $(function() {
     $("a[title=share]").click(function() {
 	event_id = -1;
@@ -98,7 +96,6 @@ $(function() {
 	    return false;
 	}
     });
-    console.log('Event Object 105' + JSON.stringify(event_share_object));
 });
 
 // initialize the share page objects.
@@ -475,8 +472,6 @@ function checkSellMediaDuration() {
 share_addEvent = function() {
     $('#loadingpopup').fadeIn(200);
 
-    console.log('Event share Object 448' + JSON.stringify(event_share_object));
-
     // Precheck for selling media is popup or not and check for correction
     if (!$('#ckb_sellmedia').is(":checked")) {
 	event_share_object.sellmedia_duration_from = '';
@@ -655,7 +650,6 @@ ajaxAddEvent = function() {
 	value : event_share_object.sellmedia_duration_to
     } ], function(ret_xml) {
 	// parse the returned xml.
-	console.log('Add Event return xml: ' + ret_xml);
 	var status = getValueFromXMLTag(ret_xml, 'status');
 	var message = getValueFromXMLTag(ret_xml, 'message');
 	event_id = getValueFromXMLTag(ret_xml, 'event_id');
@@ -667,7 +661,6 @@ ajaxAddEvent = function() {
 	    // Check media and call share_AddComment which calls the Ajax
 	    // function
 	    //
-	    console.log('Share Add  Comment 642' + JSON.stringify(media_ids));
 	    share_uploadMedias(true);
 
 	    //
@@ -675,23 +668,18 @@ ajaxAddEvent = function() {
 	    //
 	    if (mr_friendsInfo != null) {
 		if (mr_friendsInfo.length > 0) {
-		    console.log('Share Make Group 647'
-			    + JSON.stringify(mr_friendsInfo));
 		    share_makeGroup();
-
 		    mr_friendsInfo = [];
-
 		}
-
 	    }
 
 	    //
 	    // Clear form variables
 	    //
 	    share_clearMemreas(true);
-
+	    
 	    //
-	    // change page to view my events.
+	    // redirect to memreas page
 	    //
 	    $('.memrsclick').trigger('click');
 
@@ -777,6 +765,11 @@ share_clearMemreas = function(confirmed) {
 	$("#ckb_sellmedia").prop('checked', false);
 
 	//
+	// reset vars
+	//
+	medianext = "next";
+
+	//
 	// reset price
 	//
 	$("#sellmedia_price option:eq(0)").attr("selected", "selected");
@@ -820,13 +813,10 @@ share_gotoPage = function(tab_no) {
 
 // add the comment to Media when click "next" button on the Media Page.
 share_addComment = function() {
-    console.log('share_addComment 758');
-
     media_ids = fetch_selected_media();
     if (media_ids.length > 0) {
 
 	share_uploadMedias(function() {
-	    console.log('share_uploadMedias 766');
 	    var comments = getElementValue('txt_comment');
 	    var media_id = "";
 
@@ -873,7 +863,6 @@ share_addComment = function() {
 };
 
 function fetch_selected_media() {
-    // console.log('fetch_selected_media 849');
     var media_id_list = new Array();
     var count = 0;
     $("ul#share_medialist li.setchoosed")
@@ -885,12 +874,10 @@ function fetch_selected_media() {
 				.append(
 					'<img src="/memreas/img/loading-line.gif" class="loading-small loading" />');
 		    });
-    console.log('fetch_selected_media ' + JSON.stringify(media_id_list));
     return media_id_list;
 }
 
 share_uploadMedias = function(success) {
-    console.log('share_uploadMedias 841');
     media_ids = fetch_selected_media();
     var media_id_params = [];
     var increase = 0;
@@ -922,10 +909,8 @@ share_uploadMedias = function(success) {
 //
 ajaxAddExistingMediaToEvent = function() {
 
-    console.log('Share ajaxAddExistingMediaToEvent 868');
     ajaxRequest('addexistmediatoevent', media_share_object.params, function(
 	    xml_response) {
-	console.log('Share ajaxAddExistingMediaToEvent 873' + xml_response);
 	if (getValueFromXMLTag(xml_response, 'status') == 'Success') {
 	    jsuccess(getValueFromXMLTag(xml_response, 'message'));
 
@@ -986,21 +971,13 @@ share_getAllMedia = function() {
 		    value : '1'
 		} ],
 		function(response) {
-		    // console.log("media response-->" + response);
 		    if (getValueFromXMLTag(response, 'status') == "Success") {
 
-			console.log("media section start");
 			var medias = getSubXMLFromTag(response, 'media');
 			var count_media = medias.length;
 			var jtarget_element = $('#share_medialist');
-			// if (jtarget_element.hasClass('mCustomScrollbar')) {
-			// jtarget_element = $('#share_medialist
-			// .mCSB_container');
-			// }
 			jtarget_element.empty();
 			for (var json_key = 0; json_key < count_media; json_key++) {
-			    console.log("media section for loop json_key = "
-				    + json_key);
 			    var media = medias[json_key];
 			    var _media_type = getValueFromXMLTag(media, 'type');
 			    var _media_url = getMediaThumbnail(media,
@@ -1028,8 +1005,6 @@ share_getAllMedia = function() {
 			    // Video section
 			    //
 			    if (_media_type == 'video') {
-				console
-					.log("media section for loop video section");
 				//
 				// Check if web transcode is completed or not
 				//
@@ -1148,7 +1123,6 @@ share_makeGroup = function() {
      * - not called unless we have event_id if (event_id == '') { jerror('Please
      * complete event detail at step 1'); return false; }
      */
-    console.log('Share Make group 1070');
     var emailList = splitByDelimeters(getElementValue('txt_emaillist'), [ ',',
 	    ';' ]);
     friends_share_object.emailTags = [];
@@ -1232,7 +1206,6 @@ share_makeGroup = function() {
 //
 ajaxAddFriendToEvent = function() {
 
-    console.log('Share ajaxAddFriendToEvent 1154');
     ajaxRequest('addfriendtoevent', [ {
 	tag : 'user_id',
 	value : user_id
@@ -1246,7 +1219,6 @@ ajaxAddFriendToEvent = function() {
 	tag : 'friends',
 	value : friends_share_object.selFriends
     } ], function(ret_xml) {
-	console.log('Share ajaxAddFriendToEvent 1168' + ret_xml);
 	// parse the returned xml.
 	var status = getValueFromXMLTag(ret_xml, 'status');
 	var message = getValueFromXMLTag(ret_xml, 'message');
@@ -1303,16 +1275,15 @@ $(function() {
     $("#dtp_from").change(function() {
 	checkValidDateFromTo();
     });
-    $("#dtp_to").change(
-	    function() {
-		var current_date = new Date();
-		var date_to = new Date($(this).val());
-		if (date_to < current_date) {
-		    jerror('Date to can not less than today.');
-		    $("#dtp_to").val('').focus();
-		} else
-		    checkValidDateFromTo();
-	    });
+    $("#dtp_to").change(function() {
+	var current_date = new Date();
+	var date_to = new Date($(this).val());
+	if (date_to < current_date) {
+	    jerror('Date to can not less than today.');
+	    $("#dtp_to").val('').focus();
+	} else
+	    checkValidDateFromTo();
+    });
 });
 
 function getThreeLetterMonth(index) {
