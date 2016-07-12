@@ -303,30 +303,20 @@ var ConsoleLog = new ConsoleLog();
 })(jQuery);
 
 $(function() {
-    
-//    setTimeout(function(){
-//                  var scrollbarwidth= $('#memreas').width();
-//                 scrollbarwidth=scrollbarwidth-20;
-//                 $('.event-listing-memreas').attr('style','width:'+scrollbarwidth +'px;');
-//                
-//            },2000);
     $("a.memreas").click(function() {
 	ajaxScrollbarElement('.myMemreas');
 	if (checkReloadItem('view_my_events')) {
-	    fetchMyMemreas();
-            
-          
-            
+	 fetchMyMemreas();
 	}
     });
     $("#tabs-memreas li:eq(1) a").click(function() {
 	if (checkReloadItem('view_friend_events')) {
-	    fetchFriendsMemreas('private');
+	 fetchFriendsMemreas('private');
 	}
     });
     $("#tabs-memreas li:eq(2) a").click(function() {
 	if (checkReloadItem('view_public_events')) {
-	    fetchpubsMemreas();
+	 fetchpubsMemreas();
 	}
     });
 });
@@ -339,6 +329,7 @@ function fetchMyMemreas() {
 	var jTarget_object = $(".myMemreas");
     jTarget_object.empty();
 
+    $('#loadingpopup').fadeIn(200);
     ajaxRequest(
 	    'viewevents',
 	    [ {
@@ -361,20 +352,23 @@ function fetchMyMemreas() {
 		value : '20'
 	    } ],
 	    function(response) {
+		$('#loadingpopup').fadeOut(200);
 		if (getValueFromXMLTag(response, 'status') == "Success") {
 		    // console.log("response " + response);
+		    alert("memreas me response " + response);
 		    var events = getSubXMLFromTag(response, 'event');
 
 		    var event_count = events.length;
-                      var scrollbarwidth= $('#memreas').width();
-                       scrollbarwidth=scrollbarwidth-40;
+		    var scrollbarwidth = $('#memreas').width();
+		    scrollbarwidth = scrollbarwidth - 40;
 		    for (var i = 0; i < event_count; i++) {
 			var event_media = getSubXMLFromTag(events[i],
 				'event_media');
 			var event_media_count = event_media.length;
 			var event = events[i].innerHTML;
 
-			var StrMedia = '<div class="documentscls"><ul class="event-pics event-listing-memreas" style="width:'+scrollbarwidth+'px;">';
+			var StrMedia = '<div class="documentscls"><ul class="event-pics event-listing-memreas" style="width:'
+				+ scrollbarwidth + 'px;">';
 			var eventId = $(event).filter('event_id').html();
 			for (var j = 0; j < event_media_count; j++) {
 			    var event_medi = event_media[j];
@@ -490,6 +484,7 @@ function fetchFriendsMemreas(friendMemreasType) {
 
     + '"json": ' + params_json + '}';
 
+    $('#loadingpopup').fadeIn(200);
     var stripeActionUrl = $("input[name=stripe_url]").val()
 	    + 'stripe_checkOwnEvent';
     $
@@ -499,6 +494,7 @@ function fetchFriendsMemreas(friendMemreasType) {
 		dataType : 'jsonp',
 		data : 'json=' + data,
 		success : function(response) {
+		    $('#loadingpopup').fadeOut(200);
 		    response = JSON.parse(response.data);
 		    if (response.status == 'Success') {
 			Account.eventPurchases = response.events;
@@ -511,7 +507,7 @@ function fetchFriendsMemreas(friendMemreasType) {
 			var sell_class = 'private-';
 		    } else {
 			var showPublic = '1';
-			var showAccepted = '1';
+			var showAccepted = '0';
 			var sell_class = 'public-';
 		    }
 		    ajaxRequest(
@@ -787,6 +783,7 @@ function fetchpubsMemreas() {
 
     var stripeActionUrl = $("input[name=stripe_url]").val()
 	    + 'stripe_checkOwnEvent';
+    $('#loadingpopup').fadeIn(200);
     $
 	    .ajax({
 		url : stripeActionUrl,
@@ -794,6 +791,7 @@ function fetchpubsMemreas() {
 		dataType : 'jsonp',
 		data : 'json=' + data,
 		success : function(response) {
+		    $('#loadingpopup').fadeOut(200);
 		    response = JSON.parse(response.data);
 		    if (response.status == 'Success') {
 			Account.eventPurchases = response.events;
@@ -873,7 +871,7 @@ function fetchpubsMemreas() {
 						    friends[i], 'event_media');
 					    var event_media_count = event_media.length;
 					    var StrMedia = '<div style="clear:both;"></div><div class="documentscls"><ul class="event-pics event-listing-public-memreas">';
-                                            var overlaydiv='';
+					    var overlaydiv = '';
 
 					    var event_metadata = getValueFromXMLTag(
 						    friends[i],
@@ -940,13 +938,15 @@ function fetchpubsMemreas() {
 								+ removeCdataCorrectLink(event_media_image)
 								+ '"  style=""/></a><span class="video-content-play-icon-2"></span></li>';
 						    }
-                                                    overlaydiv='<div class="overlaypopUp2" onclick="popupBuyMedia(\''
-								+ event_id
-								+ '\', \''
-								+ event_price
-								+ '\', \''
-								+ event_name
-								+ '\');"><a href="#" class="btnpublicbuynow">purchase access $'+event_price+'</a></div>';
+						    overlaydiv = '<div class="overlaypopUp2" onclick="popupBuyMedia(\''
+							    + event_id
+							    + '\', \''
+							    + event_price
+							    + '\', \''
+							    + event_name
+							    + '\');"><a href="#" class="btnpublicbuynow">purchase access $'
+							    + event_price
+							    + '</a></div>';
 						}
 					    }
 
@@ -982,8 +982,8 @@ function fetchpubsMemreas() {
 					    $(target_object)
 						    .append(
 							    '<div class="event_section addstyling">'
-                                                                    +overlaydiv
-                                                                    +'<section class="row-fluid clearfix">'
+								    + overlaydiv
+								    + '<section class="row-fluid clearfix">'
 								    + '<figure class="pro-pics2"><img class="public-profile-img" src="'
 								    + profile_img
 								    + '" alt=""></figure>'
@@ -1024,4 +1024,3 @@ function fetchpubsMemreas() {
 		}
 	    });
 }
-

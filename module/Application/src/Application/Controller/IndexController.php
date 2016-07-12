@@ -93,7 +93,8 @@ class IndexController extends AbstractActionController {
 			// return $this->logoutAction ();
 		}
 		
-		return $response->getBody ();
+		//return $response->getBody ();
+		return $response->getBody()->getContents();
 	}
 	public function indexAction() {
 		Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__, '::enter' );
@@ -213,33 +214,26 @@ class IndexController extends AbstractActionController {
 		//
 		libxml_use_internal_errors ( true );
 		$data = simplexml_load_string ( $result );
-		MLog::addone ( $cm . __LINE__ . '::response $data->', $data, 'p' );
-		if (empty ( $data )) {
-			//
-			// we shouldn't get back an empty response
-			//
+		// Process XML structure here
+		if ($action == 'login') {
+			/**
+			 * Handle login
+			 */
+			$this->writeJsConstants ();
+			$this->memreas_session ();
+			$_SESSION ['user_id'] = ( string ) $data->loginresponse->user_id;
+			$_SESSION ['username'] = ( string ) $data->loginresponse->username;
+			$_SESSION ['email'] = ( string ) $data->loginresponse->email;
+			
+			// set secure cookies to retrieve this info and avoid
+		} else if (($action == 'logout') || (!empty($data->loginresponse))) {
+			// $this->memreas_session ();
+			/**
+			 * Handle logout
+			 */
 			$this->logoutAction ();
-		} else {
-			// Process XML structure here
-			if ($action == 'login') {
-				/**
-				 * Handle login
-				 */
-				$this->writeJsConstants ();
-				$this->memreas_session ();
-				$_SESSION ['user_id'] = ( string ) $data->loginresponse->user_id;
-				$_SESSION ['username'] = ( string ) $data->loginresponse->username;
-				$_SESSION ['email'] = ( string ) $data->loginresponse->email;
-				
-				// set secure cookies to retrieve this info and avoid
-			} else if ($action == 'logout') {
-				// $this->memreas_session ();
-				/**
-				 * Handle logout
-				 */
-				$this->logoutAction ();
-			}
 		}
+		
 	}
 	private function setSignedCookie($name, $val, $domain) {
 		// MLog::addone ( __CLASS__ . __METHOD__ . __LINE__, '::enter' );
@@ -250,7 +244,7 @@ class IndexController extends AbstractActionController {
 	private function getS3Key() {
 		$this->memreas_session ();
 		
-		MLog::addone ( __CLASS__ . __METHOD__ . __LINE__, 'About to fetch S3Key' );
+		MLog::addone ( __CLASS__ . __METHOD__ . __LINE__, '::About to fetch S3Key' );
 		$action = 'memreas_tvm';
 		$user_id = (isset ( $_REQUEST ['user_id'] )) ? $_REQUEST ['user_id'] : $_SESSION ['user_id'];
 		// Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__, 'About to fetch S3Key for $user_id->' . $user_id );
@@ -260,16 +254,26 @@ class IndexController extends AbstractActionController {
 				$memreascookie = '<memreascookie>' . $_COOKIE ['memreascookie'] . '</memreascookie>';
 			}
 			$xml = '<xml>' . $memreascookie . '<user_id>' . $user_id . '</user_id><memreas_tvm>0</memreas_tvm><memreas_pre_signed_url>1</memreas_pre_signed_url></xml>';
-			// MLog::addone ( __CLASS__ . __METHOD__ . 'REGISTRATION RELATED data->memreas_tvm->xml-->', $xml );
-		} else {
-			// if both request_id and session_id are empty the session has timed out...
-			return $this->logoutAction ();
 		}
 		
 		$action = 'memreas_tvm';
 		// $xml = '<xml><username>' . $_SESSION ['username'] . '</username><memreas_tvm>1</memreas_tvm></xml>';
 		$s3Authenticate = $this->fetchXML ( $action, $xml );
+		Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__.'$s3Authenticate--->', $s3Authenticate);
+
+		//
+		// Check for dead session
+		//
+		$data = simplexml_load_string ( $s3Authenticate );
+		//. __LINE__.'$data--->', $data);
+		//Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__.'$data->loginresponse->logout--->', $data->loginresponse->logout);
+		if ($data->logoutresponse) {
+			return $this->logoutAction ();
+		}
 		
+		//
+		// s3authenticate passed
+		//
 		return $s3Authenticate;
 	}
 	public function fetchMemreasTVMAction() {

@@ -957,7 +957,7 @@ function resizeWindowBluepanel() {
 		    'style',
 		    'height: auto !important; min-height: ' + queueHeight
 			    + 'px !important');
-    console.log(queueHeight);
+    //console.log(queueHeight);
 }
 
 function resizeBlueIMpGallerypanel() {
@@ -972,7 +972,7 @@ function resizeBlueIMpGallerypanel() {
 		    'style',
 		    'height: '+queueHeight+'px; min-height: ' + queueHeight
 			    + 'px !important');
-    console.log(queueHeight);
+    //console.log(queueHeight);
 }
 
 
