@@ -103,7 +103,7 @@ jQuery.fetchPublic = function() {
 			    var buyOverlay = '';
                             var preventclickcss='';
 			    if (event_price > 0) {
-				buyOverlay = '<div class="overlaypopUp" ><a href="#" class="btnpublicbuynow">register to purchase access</a></div>';
+				buyOverlay = '<div class="overlaypopUp" ><a href="/" class="btnpublicbuynow">register to purchase access</a></div>';
                                 preventclickcss='pointer-events:none; cursor:default';
 			    }
 			    var listItem = '';
