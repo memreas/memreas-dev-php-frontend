@@ -88,7 +88,7 @@ jQuery.fetch_server_media = function() {
 		value : '1'
 	    } ],
 	    function(response) {
-		// console.log("listallmedia response-->" + response);
+		 console.log("listallmedia response-->" + response);
 		if (getValueFromXMLTag(response, 'status') == "Success") {
 
 		    var medias = getSubXMLFromTag(response, 'media');
@@ -117,6 +117,7 @@ jQuery.fetch_server_media = function() {
 			var main_media_url_m3u8 = '';
 			var source = "";
 			var media_thummb_448 = "";
+                        var media_transcode_status=getValueFromXMLTag(media, 'media_transcode_status');
 			if (_media_type == 'image') {
 			    _media_url = getMediaUrl(media, _media_type);
 			    content_type = 'image/jpeg';
