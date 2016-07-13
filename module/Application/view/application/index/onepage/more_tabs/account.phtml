@@ -333,53 +333,53 @@
 	<a id="popupaccountviewcardClose"
 		onClick="disablePopup('popupaccountviewcard');" class='popupClose'>x</a>
 	<h2>Card information</h2>
-	<ul id="content_1" class="scrollpopup accountEditCardForm">
+	<ul id="content_1" class="scrollpopup accountEditCardForm view_card_buy_credit">
 		<li><input type="hidden" name="card_id" id="card_id" value=""> <label
-			class="textfield_names">First name*</label> <input name="input"
-			type="text" id="addcard_fname" class="" value="first name"
+			class="textfield_names ">First name*</label> <input name="input"
+			type="text" id="addcard_fname" class="field-txtfield" value="first name"
 			default="first name"
 			onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue"
 			onFocus="if(this.value == 'first name')this.value = '';" /></li>
 		<li><label class="textfield_names">Last name*</label> <input
-			name="input" type="text" id="addcard_lname" class=""
+			name="input" type="text" id="addcard_lname" class="field-txtfield"
 			value="last name" default="last name"
 			onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue"
 			onFocus="if(this.value == 'last name')this.value = '';" /></li>
 		<li><label class="textfield_names">Address 1*</label> <input
-			name="input" type="text" id="addcard_address1" class=""
+			name="input" type="text" id="addcard_address1" class="field-txtfield"
 			value="Address line 1" default="Address line 1"
 			onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue"
 			onFocus="if(this.value == 'Address line 1')this.value = '';" /></li>
 		<li><label class="textfield_names">Address 2</label> <input
-			name="input" type="text" id="addcard_address2" class=""
+			name="input" type="text" id="addcard_address2" class="field-txtfield"
 			value="Address line 2" default="Address line 2"
 			onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue"
 			onFocus="if(this.value == 'Address line 2')this.value = '';" /></li>
 		<li><label class="textfield_names">City*</label> <input name="input"
-			type="text" id="addcard_city" class="" value="City" default="City"
+			type="text" id="addcard_city" class="field-txtfield" value="City" default="City"
 			onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue"
 			onFocus="if(this.value == 'City')this.value = '';" /></li>
 		<li><label class="textfield_names">State*</label> <input name="input"
-			type="text" id="addcard_state" class="" value="State" default="State"
+			type="text" id="addcard_state" class="field-txtfield" value="State" default="State"
 			onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue"
 			onFocus="if(this.value == 'State')this.value = '';" /></li>
 		<li><label class="textfield_names">Zip*</label> <input name="input"
-			type="text" id="addcard_zip" class="" value="Zip" default="Zip"
+			type="text" id="addcard_zip" class="field-txtfield" value="Zip" default="Zip"
 			onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue"
 			onFocus="if(this.value == 'Zip')this.value = '';" /></li>
 		<li><label class="textfield_names">Card type*</label> <input
 			name="addcard_cctype" id="addcard_cctype" type="text" /></li>
 		<li><label class="textfield_names">Card no.*</label> <input
-			name="input" type="text" id="addcard_ccnum" class=""
+			name="input" type="text" id="addcard_ccnum" class="field-txtfield"
 			value="Card number" default="Card number"
 			onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue"
 			onFocus="if(this.value == 'Card number')this.value = '';" /></li>
 		<li><label class="textfield_names">Exp mon.*</label> <input
-			name="addcard_expmonth" id="addcard_expmonth" type="text" /></li>
+                        name="addcard_expmonth" id="addcard_expmonth" type="text" class="field-txtfield" /></li>
 		<li><label class="textfield_names">Exp year*</label> <input
-			name="addcard_expyear" id="addcard_expyear" type="text" /></li>
+                        name="addcard_expyear" id="addcard_expyear" type="text" class="field-txtfield" /></li>
 		<li><label class="textfield_names">Card CVC*</label> <input
-			name="input" type="text" id="addcard_ccv" class="" value="Card code"
+			name="input" type="text" id="addcard_ccv" class="field-txtfield" value="Card code"
 			onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue"
 			onFocus="if(this.value == 'Card code')this.value = '';" /></li>
 	</ul>

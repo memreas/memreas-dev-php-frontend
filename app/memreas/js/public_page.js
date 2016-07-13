@@ -101,8 +101,10 @@ jQuery.fetchPublic = function() {
 			    // HTML for profile section
 			    // start adding to html
 			    var buyOverlay = '';
+                            var preventclickcss='';
 			    if (event_price > 0) {
-				buyOverlay = '<div class="overlaypopUp" ><a href="#" class="btnpublicbuynow">register to purchase access</a></div>';
+				buyOverlay = '<div class="overlaypopUp" ><a href="/" class="btnpublicbuynow">register to purchase access</a></div>';
+                                preventclickcss='pointer-events:none; cursor:default';
 			    }
 			    var listItem = '';
 			    var links = '#links' + i;
@@ -223,7 +225,7 @@ jQuery.fetchPublic = function() {
 					    + '" class="blueimp-gallery-thumb-anchor "';
 				    linksContainerData += ' style="background:url('
 					    + event_media_entry.event_media_image
-					    + ')"><span class="video-content-play-icon"></span></a>';
+					    + ');'+preventclickcss+' "><span class="video-content-play-icon"></span></a>';
 
 				} else {
 
