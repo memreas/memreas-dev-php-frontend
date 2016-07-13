@@ -148,11 +148,11 @@ var Account = function() {
 				}
 			    } else {
 				jMemberCard
-					.append('<li>Please add a card.</li>');
+					.append('<li class="add-a-card-message">Please add a card.</li>');
 			    }
 			    removeItem(reloadItems, 'reload_account_cards');
 			} else {
-			    jMemberCard.append('<li>Please add a card.</li>');
+			    jMemberCard.append('<li class="add-a-card-message">Please add a card.</li>');
 			    jerror(response.message);
 			}
 			AppSystem.removeStripeLoading();

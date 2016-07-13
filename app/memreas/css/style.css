@@ -3862,3 +3862,10 @@ background-image: url(../img/video-play.svg);
 
 .documentscls{width: 99%;}
 #tab-content-share{margin-bottom: 40px !important;}
+.add-a-card-message{
+    background: #327AC9;
+    padding-left: 10px;
+    padding-top: 10px;
+    font-size: 19px;
+    border-radius: 5px;
+}
