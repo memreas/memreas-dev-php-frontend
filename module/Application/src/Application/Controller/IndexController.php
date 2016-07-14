@@ -93,8 +93,8 @@ class IndexController extends AbstractActionController {
 			// return $this->logoutAction ();
 		}
 		
-		//return $response->getBody ();
-		return $response->getBody()->getContents();
+		return $response->getBody ();
+		//return $response->getBody()->getContents();
 	}
 	public function indexAction() {
 		Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__, '::enter' );
