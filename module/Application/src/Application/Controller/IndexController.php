@@ -264,11 +264,14 @@ class IndexController extends AbstractActionController {
 		//
 		// Check for dead session
 		//
-		$data = simplexml_load_string ( $s3Authenticate );
-		//. __LINE__.'$data--->', $data);
-		//Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__.'$data->loginresponse->logout--->', $data->loginresponse->logout);
-		if ($data->logoutresponse) {
-			return $this->logoutAction ();
+		$checkXML = substr($s3Authenticate, 0, 1);
+		if ($checkXML == '<') {
+			$data = simplexml_load_string ( $s3Authenticate );
+			//. __LINE__.'$data--->', $data);
+			//Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__.'$data->loginresponse->logout--->', $data->loginresponse->logout);
+			if ($data->logoutresponse) {
+				return $this->logoutAction ();
+			}
 		}
 		
 		//

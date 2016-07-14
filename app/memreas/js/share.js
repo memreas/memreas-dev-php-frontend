@@ -605,89 +605,100 @@ doneAction = function(medianext) {
 
 };
 
+//
 // call ajax add event
 //
 ajaxAddEvent = function() {
 
-    ajaxRequest('addevent', [ {
-	tag : 'user_id',
-	value : user_id
-    }, {
-	tag : 'event_name',
-	value : event_share_object.name
-    }, {
-	tag : 'event_date',
-	value : formatDateToDMY(event_share_object.date)
-    }, {
-	tag : 'event_location',
-	value : event_share_object.location
-    }, {
-	tag : 'event_from',
-	value : formatDateToDMY(event_share_object.date_from)
-    }, {
-	tag : 'event_to',
-	value : formatDateToDMY(event_share_object.date_to)
-    }, {
-	tag : 'is_friend_can_add_friend',
-	value : event_share_object.ckb_canadd.toString()
-    }, {
-	tag : 'is_friend_can_post_media',
-	value : event_share_object.ckb_canpost.toString()
-    }, {
-	tag : 'event_self_destruct',
-	value : formatDateToDMY(event_share_object.date_selfdestruct)
-    }, {
-	tag : 'is_public',
-	value : event_share_object.ckb_public.toString()
-    }, {
-	tag : 'price',
-	value : event_share_object.sell_media_price.toString()
-    }, {
-	tag : 'duration_from',
-	value : event_share_object.sellmedia_duration_from
-    }, {
-	tag : 'duration_to',
-	value : event_share_object.sellmedia_duration_to
-    } ], function(ret_xml) {
-	// parse the returned xml.
-	var status = getValueFromXMLTag(ret_xml, 'status');
-	var message = getValueFromXMLTag(ret_xml, 'message');
-	event_id = getValueFromXMLTag(ret_xml, 'event_id');
-	if (status.toLowerCase() == 'success') {
-	    jsuccess('Event "' + event_share_object.name
-		    + '" was registered successfully.');
+    ajaxRequest(
+	    'addevent',
+	    [ {
+		tag : 'user_id',
+		value : user_id
+	    }, {
+		tag : 'event_name',
+		value : event_share_object.name
+	    }, {
+		tag : 'event_date',
+		value : formatDateToDMY(event_share_object.date)
+	    }, {
+		tag : 'event_location',
+		value : event_share_object.location
+	    }, {
+		tag : 'event_from',
+		value : formatDateToDMY(event_share_object.date_from)
+	    }, {
+		tag : 'event_to',
+		value : formatDateToDMY(event_share_object.date_to)
+	    }, {
+		tag : 'is_friend_can_add_friend',
+		value : event_share_object.ckb_canadd.toString()
+	    }, {
+		tag : 'is_friend_can_post_media',
+		value : event_share_object.ckb_canpost.toString()
+	    }, {
+		tag : 'event_self_destruct',
+		value : formatDateToDMY(event_share_object.date_selfdestruct)
+	    }, {
+		tag : 'is_public',
+		value : event_share_object.ckb_public.toString()
+	    }, {
+		tag : 'price',
+		value : event_share_object.sell_media_price.toString()
+	    }, {
+		tag : 'duration_from',
+		value : event_share_object.sellmedia_duration_from
+	    }, {
+		tag : 'duration_to',
+		value : event_share_object.sellmedia_duration_to
+	    } ],
+	    function(ret_xml) {
+		// parse the returned xml.
+		var status = getValueFromXMLTag(ret_xml, 'status');
+		var message = getValueFromXMLTag(ret_xml, 'message');
+		event_id = getValueFromXMLTag(ret_xml, 'event_id');
+		if (status.toLowerCase() == 'success') {
+		    jsuccess('Event "' + event_share_object.name
+			    + '" was registered successfully.');
 
-	    //
-	    // Check media and call share_AddComment which calls the Ajax
-	    // function
-	    //
-	    share_uploadMedias(true);
+		    event_share_object.hasMedia = false;
+		    event_share_object.hasFriends = false;
+		    //
+		    // Check media and call share_AddComment which calls the
+		    // Ajax
+		    // function
+		    //
+		    media_ids = fetch_selected_media();
+		    if (media_ids.length > 0) {
+			event_share_object.hasMedia = true;
+			share_uploadMedias(true);
+		    }
 
-	    //
-	    // Check friends and call add friends which calls the ajax function
-	    //
-	    if (mr_friendsInfo != null) {
-		if (mr_friendsInfo.length > 0) {
-		    share_makeGroup();
-		    mr_friendsInfo = [];
+		    //
+		    // Check friends and call add friends which calls the ajax
+		    // function
+		    //
+		    if (mr_friendsInfo != null) {
+			if (mr_friendsInfo.length > 0) {
+			    event_share_object.hasFriends = true;
+			    share_makeGroup();
+			    mr_friendsInfo = [];
+			}
+		    }
+
+		    //
+		    // clear variable ans redirect to memreas page
+		    //
+		    if ((!event_share_object.hasMedia && !event_share_object.hasFriends)) {
+			share_clearMemreas(true);
+			$('.memrsclick').trigger('click');
+		    }
+
+		} else {
+		    jerror(message);
 		}
-	    }
-
-	    //
-	    // Clear form variables
-	    //
-	    share_clearMemreas(true);
-	    
-	    //
-	    // redirect to memreas page
-	    //
-	    $('.memrsclick').trigger('click');
-
-	} else {
-	    jerror(message);
-	}
-	shareEnableFields();
-    }, 'undefined', true);
+		shareEnableFields();
+	    }, 'undefined', true);
 
 };
 
@@ -813,53 +824,49 @@ share_gotoPage = function(tab_no) {
 
 // add the comment to Media when click "next" button on the Media Page.
 share_addComment = function() {
-    media_ids = fetch_selected_media();
-    if (media_ids.length > 0) {
+    share_uploadMedias(function() {
+	var comments = getElementValue('txt_comment');
+	var media_id = "";
 
-	share_uploadMedias(function() {
-	    var comments = getElementValue('txt_comment');
-	    var media_id = "";
+	if (media_ids.length > 0)
+	    media_id = media_ids[0];
 
-	    if (media_ids.length > 0)
-		media_id = media_ids[0];
+	var audio_media_id = "";
 
-	    var audio_media_id = "";
+	// Prepair request params
+	var request_params = [ {
+	    tag : 'event_id',
+	    value : event_id
+	}, {
+	    tag : 'user_id',
+	    value : user_id
+	}, {
+	    tag : 'comments',
+	    value : comments
+	}, {
+	    tag : 'audio_media_id',
+	    value : audio_media_id
+	} ];
 
-	    // Prepair request params
-	    var request_params = [ {
-		tag : 'event_id',
-		value : event_id
-	    }, {
-		tag : 'user_id',
-		value : user_id
-	    }, {
-		tag : 'comments',
-		value : comments
-	    }, {
-		tag : 'audio_media_id',
-		value : audio_media_id
-	    } ];
+	var count = 3;
+	for ( var key in media_ids) {
+	    request_params[++count] = new Array();
+	    request_params[count]['tag'] = 'media_id';
+	    request_params[count]['value'] = media_ids[key];
+	}
 
-	    var count = 3;
-	    for ( var key in media_ids) {
-		request_params[++count] = new Array();
-		request_params[count]['tag'] = 'media_id';
-		request_params[count]['value'] = media_ids[key];
+	ajaxRequest('addcomments', request_params, function(ret_xml) {
+	    // parse the returned xml.
+	    var status = getValueFromXMLTag(ret_xml, 'status');
+	    var message = getValueFromXMLTag(ret_xml, 'message');
+
+	    if (status.toLowerCase() == 'success') {
+		jsuccess('comments were added successfully.');
+	    } else {
+		jerror(message);
 	    }
-
-	    ajaxRequest('addcomments', request_params, function(ret_xml) {
-		// parse the returned xml.
-		var status = getValueFromXMLTag(ret_xml, 'status');
-		var message = getValueFromXMLTag(ret_xml, 'message');
-
-		if (status.toLowerCase() == 'success') {
-		    jsuccess('comments were added successfully.');
-		} else {
-		    jerror(message);
-		}
-	    });
 	});
-    }
+    });
 };
 
 function fetch_selected_media() {
@@ -912,8 +919,6 @@ ajaxAddExistingMediaToEvent = function() {
     ajaxRequest('addexistmediatoevent', media_share_object.params, function(
 	    xml_response) {
 	if (getValueFromXMLTag(xml_response, 'status') == 'Success') {
-	    jsuccess(getValueFromXMLTag(xml_response, 'message'));
-
 	    media_id_list = new Array();
 	    count = 0;
 	    $("ul#share_medialist li.setchoosed").each(function() {
@@ -921,17 +926,27 @@ ajaxAddExistingMediaToEvent = function() {
 		$(this).find('a').find('img.loading').remove();
 	    });
 	    enableButtons("#tab2-share");
-
 	} else {
 	    enableButtons("#tab2-share");
-	    jerror(getValueFromXMLTag(xml_response, 'message'));
 	}
-    }, 'undefined', true);
 
-    //
-    // clear the media since we posted it
-    //
-    share_clearMedia();
+	//
+	// clear variables and Redirect to memreas tab after success
+	//
+	if (!event_share_object.hasFriends) {
+	    share_clearMemreas(true);
+	    share_clearMedia();
+	    $('.memrsclick').trigger('click');
+	    console.log('redirecting to memreas tab...');
+	    // $("a.memreas").click();
+
+	    //
+	    // Clear form variables
+	    //
+
+	}
+
+    }, 'undefined', true);
 
 };
 
@@ -1184,7 +1199,7 @@ share_makeGroup = function() {
 	    var status = getValueFromXMLTag(ret_xml, 'status');
 	    var message = getValueFromXMLTag(ret_xml, 'message');
 	    if (status.toLowerCase() == 'success') {
-		jsuccess('group was created successfully.');
+		// jsuccess('group was created successfully.');
 		share_gotoPage(SHAREPAGE_TAB_MEMREAS);
 	    }
 
@@ -1238,7 +1253,18 @@ ajaxAddFriendToEvent = function() {
 	mr_friendsInfo = null;
 	share_changeSocialType();
     });
+
+    //
+    // Clearvariables
+    //
+    share_clearMemreas(true);
     share_clearFriendsList();
+
+    //
+    // Redirect to memreas tab after success
+    //
+    $('.memrsclick').trigger('click');
+
 };
 
 // clear all fields on Friends page when click "cancel" button.
