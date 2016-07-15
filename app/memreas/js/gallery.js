@@ -88,7 +88,6 @@ jQuery.fetch_server_media = function() {
 		value : '1'
 	    } ],
 	    function(response) {
-		 console.log("listallmedia response-->" + response);
 		if (getValueFromXMLTag(response, 'status') == "Success") {
 
 		    var medias = getSubXMLFromTag(response, 'media');
