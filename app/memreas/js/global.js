@@ -975,35 +975,7 @@ function resizeBlueIMpGallerypanel() {
     //console.log(queueHeight);
 }
 
-function resizeBlueIMpGallerypanel() {
-    var queueHeight = $(window).height();
-    if (queueHeight > 205) {
-	queueHeight = queueHeight - 205
-    }
 
-    $(
-	    ".linksDatacnt")
-	    .attr(
-		    'style',
-		    'height: '+queueHeight+'px; min-height: ' + queueHeight
-			    + 'px !important');
-    //console.log(queueHeight);
-}
-
-function resizeshareGalleryPanel() {
-    var queueHeight = $(window).height();
-    if (queueHeight > 205) {
-	queueHeight = queueHeight - 205
-    }
-
-    $(
-	    "#share_medialist")
-	    .attr(
-		    'style',
-		    'height: '+queueHeight+'px; min-height: ' + queueHeight
-			    + 'px !important; overflow:auto;');
-    //console.log(queueHeight);
-}
 
 
 

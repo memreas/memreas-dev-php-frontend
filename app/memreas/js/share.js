@@ -60,6 +60,45 @@ $(function() {
     $("#cmb_socialtype").chosen({
 	width : "95%"
     });
+    
+    function resizeBlueIMpGallerypanel() {
+    var queueHeight = $(window).height();
+    if (queueHeight > 205) {
+	queueHeight = queueHeight - 205
+    }
+
+    $(
+	    ".linksDatacnt")
+	    .attr(
+		    'style',
+		    'height: '+queueHeight+'px; min-height: ' + queueHeight
+			    + 'px !important');
+    //console.log(queueHeight);
+}
+
+function resizeshareGalleryPanel() {
+    var queueHeight = $(window).height();
+    if (queueHeight > 205) {
+	queueHeight = queueHeight - 205
+    }
+
+    $(
+	    "#share_medialist")
+	    .attr(
+		    'style',
+		    'height: '+queueHeight+'px; min-height: ' + queueHeight
+			    + 'px !important; overflow:auto;');
+    //console.log(queueHeight);
+}
+    
+    
+    
+    resizeshareGalleryPanel()
+        $(window).resize(function(){
+           resizeshareGalleryPanel();
+           
+        });
+
 
     // Handle for checkbox viewable and self destruct
     $("#ckb_viewable").change(function() {
@@ -691,7 +730,7 @@ ajaxAddEvent = function() {
 		    //
 		    if ((!event_share_object.hasMedia && !event_share_object.hasFriends)) {
 			share_clearMemreas(true);
-			$('.memrsclick').trigger('click');
+                        $('.memrsclick').trigger('click');
 		    }
 
 		} else {
@@ -991,6 +1030,11 @@ share_getAllMedia = function() {
 			var medias = getSubXMLFromTag(response, 'media');
 			var count_media = medias.length;
 			var jtarget_element = $('#share_medialist');
+                        $(jtarget_element).mCustomScrollbar({
+						    scrollButtons : {
+							enable : true
+						    }
+						});
 			jtarget_element.empty();
 			for (var json_key = 0; json_key < count_media; json_key++) {
 			    var media = medias[json_key];

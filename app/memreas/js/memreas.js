@@ -306,7 +306,7 @@ $(function() {
     $("a.memreas").click(function() {
 	ajaxScrollbarElement('.myMemreas');
 	if (checkReloadItem('view_my_events')) {
-	 fetchMyMemreas();
+	   fetchMyMemreas();
 	}
     });
     $("#tabs-memreas li:eq(1) a").click(function() {
@@ -354,7 +354,7 @@ function fetchMyMemreas() {
 	    function(response) {
 		$('#loadingpopup').fadeOut(200);
 		if (getValueFromXMLTag(response, 'status') == "Success") {
-		    // console.log("response " + response);
+		   console.log("response Memreas " + response);
 		    //alert("memreas me response " + response);
 		    var events = getSubXMLFromTag(response, 'event');
 
