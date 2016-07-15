@@ -979,6 +979,8 @@ function resizeBlueIMpGallerypanel() {
 
 
 
+
+
  $("a[title=share]").hover (function(){
         $('footer').attr('style','z-index:2');
     });
