@@ -507,6 +507,7 @@ var S3UploadInstance = function() {
 							    params,
 							    function(
 								    xml_response) {
+                                                                alert('XML RESPONSE EXIT' +xml_response);
 								var filename = data.files[0].name;
 								filename = correctUploadFilename(filename);
 								if (getValueFromXMLTag(
@@ -576,7 +577,7 @@ var S3UploadInstance = function() {
 												    .find(
 													    ".upload_progress_bar .progress")
 												    .width()
-												    / data.context
+												     data.context
 													    .find(
 														    ".upload_progress_bar .progress")
 													    .parent()
