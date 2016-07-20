@@ -60,45 +60,38 @@ $(function() {
     $("#cmb_socialtype").chosen({
 	width : "95%"
     });
-    
+
     function resizeBlueIMpGallerypanel() {
-    var queueHeight = $(window).height();
-    if (queueHeight > 205) {
-	queueHeight = queueHeight - 205
+	var queueHeight = $(window).height();
+	if (queueHeight > 205) {
+	    queueHeight = queueHeight - 205
+	}
+
+	$(".linksDatacnt").attr(
+		'style',
+		'height: ' + queueHeight + 'px; min-height: ' + queueHeight
+			+ 'px !important');
+	// console.log(queueHeight);
     }
 
-    $(
-	    ".linksDatacnt")
-	    .attr(
-		    'style',
-		    'height: '+queueHeight+'px; min-height: ' + queueHeight
-			    + 'px !important');
-    //console.log(queueHeight);
-}
+    function resizeshareGalleryPanel() {
+	var queueHeight = $(window).height();
+	if (queueHeight > 205) {
+	    queueHeight = queueHeight - 205
+	}
 
-function resizeshareGalleryPanel() {
-    var queueHeight = $(window).height();
-    if (queueHeight > 205) {
-	queueHeight = queueHeight - 205
+	$("#share_medialist").attr(
+		'style',
+		'height: ' + queueHeight + 'px; min-height: ' + queueHeight
+			+ 'px !important; overflow:auto;');
+	// console.log(queueHeight);
     }
 
-    $(
-	    "#share_medialist")
-	    .attr(
-		    'style',
-		    'height: '+queueHeight+'px; min-height: ' + queueHeight
-			    + 'px !important; overflow:auto;');
-    //console.log(queueHeight);
-}
-    
-    
-    
     resizeshareGalleryPanel()
-        $(window).resize(function(){
-           resizeshareGalleryPanel();
-           
-        });
+    $(window).resize(function() {
+	resizeshareGalleryPanel();
 
+    });
 
     // Handle for checkbox viewable and self destruct
     $("#ckb_viewable").change(function() {
@@ -730,7 +723,7 @@ ajaxAddEvent = function() {
 		    //
 		    if ((!event_share_object.hasMedia && !event_share_object.hasFriends)) {
 			share_clearMemreas(true);
-                        $('.memrsclick').trigger('click');
+			$('.memrsclick').trigger('click');
 		    }
 
 		} else {
@@ -818,6 +811,8 @@ share_clearMemreas = function(confirmed) {
 	// reset vars
 	//
 	medianext = "next";
+	event_share_object.hasMedia = false;
+	event_share_object.hasFriends = false;
 
 	//
 	// reset price
@@ -1030,11 +1025,11 @@ share_getAllMedia = function() {
 			var medias = getSubXMLFromTag(response, 'media');
 			var count_media = medias.length;
 			var jtarget_element = $('#share_medialist');
-                        $(jtarget_element).mCustomScrollbar({
-						    scrollButtons : {
-							enable : true
-						    }
-						});
+			$(jtarget_element).mCustomScrollbar({
+			    scrollButtons : {
+				enable : true
+			    }
+			});
 			jtarget_element.empty();
 			for (var json_key = 0; json_key < count_media; json_key++) {
 			    var media = medias[json_key];
@@ -1227,37 +1222,20 @@ share_makeGroup = function() {
 	ajaxAddFriendToEvent();
     }// end if (mr_friendsInfo)
 
-    if (groupName != '') {
-	// send the request.
-	ajaxRequest('creategroup', [ {
-	    tag : 'group_name',
-	    value : groupName
-	}, {
-	    tag : 'user_id',
-	    value : user_id
-	}, {
-	    tag : 'friends',
-	    value : friends_share_object.selFriends
-	} ], function(ret_xml) {
-	    // parse the returned xml.
-	    var status = getValueFromXMLTag(ret_xml, 'status');
-	    var message = getValueFromXMLTag(ret_xml, 'message');
-	    if (status.toLowerCase() == 'success') {
-		// jsuccess('group was created successfully.');
-		share_gotoPage(SHAREPAGE_TAB_MEMREAS);
-	    }
-
-	    // else
-	    // jerror(message);
-	});
-    }
-
-    if (friends_share_object.emailTags.length == 0
-	    && friends_share_object.selFriends.length == 0) {
-	share_clearMemreas(true);
-	$("a.memreas").click();
-	return;
-    }
+    /*
+     * if (groupName != '') { // send the request. ajaxRequest('creategroup', [ {
+     * tag : 'group_name', value : groupName }, { tag : 'user_id', value :
+     * user_id }, { tag : 'friends', value : friends_share_object.selFriends } ],
+     * function(ret_xml) { // parse the returned xml. var status =
+     * getValueFromXMLTag(ret_xml, 'status'); var message =
+     * getValueFromXMLTag(ret_xml, 'message'); if (status.toLowerCase() ==
+     * 'success') { // jsuccess('group was created successfully.');
+     * share_gotoPage(SHAREPAGE_TAB_MEMREAS); } // else // jerror(message); }); }
+     * 
+     * if (friends_share_object.emailTags.length == 0 &&
+     * friends_share_object.selFriends.length == 0) { share_clearMemreas(true);
+     * $("a.memreas").click(); return; }
+     */
 };
 
 //
@@ -1295,19 +1273,20 @@ ajaxAddFriendToEvent = function() {
 	// Friends request succeeded so clear list
 	//
 	mr_friendsInfo = null;
-	share_changeSocialType();
+	//share_changeSocialType();
+	
+	//
+	// Clearvariables
+	//
+	share_clearMemreas(true);
+	share_clearFriendsList();
+
+	//
+	// Redirect to memreas tab after success
+	//
+	$('.memrsclick').trigger('click');
+
     });
-
-    //
-    // Clearvariables
-    //
-    share_clearMemreas(true);
-    share_clearFriendsList();
-
-    //
-    // Redirect to memreas tab after success
-    //
-    $('.memrsclick').trigger('click');
 
 };
 

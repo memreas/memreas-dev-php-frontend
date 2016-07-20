@@ -14,8 +14,8 @@ class MemreasConstants {
 	const MEMREAS_PAY = "http://memreas-dev-php-ws.localhost/index?action=";
 	//Server URLs
 	// const MEMREAS_FE = "https://fe.memreas.com";
-	// const MEMREAS_WS = "https://memreasdev-ws.memreas.com";
-	// const MEMREAS_WS_PUBLIC = "https://memreasdev-ws.memreas.com/public";
+	// const MEMREAS_WS = "https://memreasdev-wsa.memreas.com";
+	// const MEMREAS_WS_PUBLIC = "https://memreasdev-wsa.memreas.com/public";
 	// const MEMREAS_PAY = "https://memreasdev-pay.memreas.com";
 	const MEMREAS_ADS = false;
 	const MEMREAS_SELL_MEDIA = 1; // Enable or Disable selling media

@@ -43,7 +43,7 @@ ajaxRequest = function(action, params, success_func, error_func,
 		type : 'post',
 		url : feExecAjaxURL,
 		dataType : 'jsonp',
-		timeout : 10000,
+		timeout : 20000,
 		data : 'json=' + encodeURIComponent(json_data),
 		success : function(ret_xml) {
 
