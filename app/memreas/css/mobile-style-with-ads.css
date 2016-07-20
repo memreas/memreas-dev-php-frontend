@@ -837,6 +837,22 @@ height: 549px !important;
 }
 
 
+.share_friends_contents-1{
+     display: block;
+    list-style: none;
+    height: 230px;
+    margin-top: 10px;
+    clear: left;   
+}
+
+.share_friends_contents-2{
+     display: block;
+    list-style: none;
+    height: 230px;
+    margin-top: 10px;
+    clear: left;   
+}
+
 /*@media only screen and(min-width :1360px) and (min-height:800){
 .fotorama__stage {
 		height: 800px !important;
