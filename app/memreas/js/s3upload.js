@@ -57,9 +57,18 @@ var S3UploadInstance = function() {
 				    //
 
 				    var filename = data.files[0].name;
+                                    var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+                                    var d = new Date();
+                                    var n = d.getTime();
+                                    if(iOS){
+                                        filename=n +'_'+filename;
+                                    }
+                                    alert(filename);
+                                    if(filename)
 				    filename = correctUploadFilename(filename);
 				    var filetype = data.files[0].type;
 				    console.log(filename);
+                                    console.log(new Date().toISOString());
 
 				    FileInstances[filename] = data;
 
@@ -507,6 +516,7 @@ var S3UploadInstance = function() {
 							    params,
 							    function(
 								    xml_response) {
+                                                                alert('XML RESPONSE EXIT' +xml_response);
 								var filename = data.files[0].name;
 								filename = correctUploadFilename(filename);
 								if (getValueFromXMLTag(
@@ -576,7 +586,7 @@ var S3UploadInstance = function() {
 												    .find(
 													    ".upload_progress_bar .progress")
 												    .width()
-												    / data.context
+												     data.context
 													    .find(
 														    ".upload_progress_bar .progress")
 													    .parent()
