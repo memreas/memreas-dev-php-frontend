@@ -57,9 +57,18 @@ var S3UploadInstance = function() {
 				    //
 
 				    var filename = data.files[0].name;
+                                    var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+                                    var d = new Date();
+                                    var n = d.getTime();
+                                    if(iOS){
+                                        filename=n +'_'+filename;
+                                    }
+                                    alert(filename);
+                                    if(filename)
 				    filename = correctUploadFilename(filename);
 				    var filetype = data.files[0].type;
 				    console.log(filename);
+                                    console.log(new Date().toISOString());
 
 				    FileInstances[filename] = data;
 
