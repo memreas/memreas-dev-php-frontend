@@ -15,45 +15,42 @@ var blueIMPGallery = new Array();
 var blueIMPGalleryData = '';
 var gallery;
 
-$(document).ready(
-	function() {
-            
-            resizeWindowBluepanel();
-            resizeBlueIMpGallerypanel();
-        $(window).resize(function(){
-           resizeWindowBluepanel();
-           resizeBlueIMpGallerypanel();
-        });
+$(document).ready(function() {
 
-	    $("a[title=gallery]").click(function() {
-		$("#gallery #tabs a[title=tab1]").click();
-	    });
+    resizeWindowBluepanel();
+    resizeBlueIMpGallerypanel();
+    $(window).resize(function() {
+	resizeWindowBluepanel();
+	resizeBlueIMpGallerypanel();
+    });
 
-	    $("#gallery #tabs a[title=tab1]").click(function() {
-		if (checkReloadItem('listallmedia')) {
-		    console.log("gallery.js $.fetch_server_media() fired...");
-		    $.fetch_server_media();
-		}
-	    });
+    $("a[title=gallery]").click(function() {
+	$("#gallery #tabs a[title=tab1]").click();
+    });
 
-	    $(".location-tab").click(
-		    function() {
-			/*
-			 * if (!($(".galleries-location").parent(
-			 * ".elastislide-carousel").length > 0))
-			 * $('.galleries-location').elastislide();
-			 */
-			
-			if (!($("#location-list").parent(
-				  ".elastislide-carousel").length > 0))
-				  $("#location-list").elastislide();
-			
-			gallery_showGoogleMap("gallery-location");
-			// $('.galleries-location').find('li:eq(0)
-			// img').trigger("click");
-		    });
+    $("#gallery #tabs a[title=tab1]").click(function() {
+	if (checkReloadItem('listallmedia')) {
+	    console.log("gallery.js $.fetch_server_media() fired...");
+	    $.fetch_server_media();
+	}
+    });
 
-	});
+    $(".location-tab").click(function() {
+	/*
+	 * if (!($(".galleries-location").parent(
+	 * ".elastislide-carousel").length > 0))
+	 * $('.galleries-location').elastislide();
+	 */
+
+	if (!($("#location-list").parent(".elastislide-carousel").length > 0))
+	    $("#location-list").elastislide();
+
+	gallery_showGoogleMap("gallery-location");
+	// $('.galleries-location').find('li:eq(0)
+	// img').trigger("click");
+    });
+
+});
 
 var checkHasImage = false;
 var objArr = new Array();
@@ -110,13 +107,15 @@ jQuery.fetch_server_media = function() {
 			var _media_url = '';
 			var _media_url_hls = '';
 			var _media_url_web = '';
+			var _media_url_webm = '';
 			var _media_thumbnail = ''
 			var _media_thumbnail_large = "";
 			var main_media_url = '';
 			var main_media_url_m3u8 = '';
 			var source = "";
 			var media_thummb_448 = "";
-                        var media_transcode_status=getValueFromXMLTag(media, 'media_transcode_status');
+			var media_transcode_status = getValueFromXMLTag(media,
+				'media_transcode_status');
 			if (_media_type == 'image') {
 			    _media_url = getMediaUrl(media, _media_type);
 			    content_type = 'image/jpeg';
@@ -128,12 +127,19 @@ jQuery.fetch_server_media = function() {
 				    'media_url_448x306');
 			    media_thummb_448 = removeCdataCorrectLink(media_thummb_448);
 			} else if (_media_type == 'video') {
+			    //hls
 			    _media_url_hls = getValueFromXMLTag(media,
 				    'media_url_hls');
 			    _media_url_hls = removeCdataCorrectLink(_media_url_hls);
+			    //web
 			    _media_url_web = getValueFromXMLTag(media,
 				    'media_url_web');
 			    _media_url_web = removeCdataCorrectLink(_media_url_web);
+			    //webm
+			    _media_url_webm = getValueFromXMLTag(media,
+				    'media_url_webm');
+			    _media_url_webm = removeCdataCorrectLink(_media_url_webm);
+			    //thumbnails
 			    _media_thumbnail_large = getValueFromXMLTag(media,
 				    'media_url_448x306');
 			    _media_thumbnail_large = JSON
@@ -156,6 +162,9 @@ jQuery.fetch_server_media = function() {
 			    item['sources'] = [ {
 				href : _media_url_hls,
 				type : "application/x-mpegurl"
+			    }, {
+				href : _media_url_webm,
+				type : "video/webm"
 			    }, {
 				href : _media_url_web,
 				type : "video/mp4"
@@ -200,13 +209,17 @@ jQuery.fetch_server_media = function() {
 						    + _media_thumbnail_large
 						    + '"/><span class="video-content-play-icon" style="position: absolute; left: 10%; top: -5%;"></span></a></li>');
 
-			   
-                                
-                                     $('#carousellocation').append('<li data-preview="'+ _media_thumbnail_large +'" class="DocumentItem"><a href="javascript:;">'
-                                                +'<img src="'+ _media_thumbnail_large +'" class="img-gallery imagescls" id="location'+ media_id +'" alt="image04" /></a></li>');       
+			    $('#carousellocation')
+				    .append(
+					    '<li data-preview="'
+						    + _media_thumbnail_large
+						    + '" class="DocumentItem"><a href="javascript:;">'
+						    + '<img src="'
+						    + _media_thumbnail_large
+						    + '" class="img-gallery imagescls" id="location'
+						    + media_id
+						    + '" alt="image04" /></a></li>');
 
-                                 
-                             
 			} else {
 			    $(".edit-area-scroll")
 				    .append(
@@ -219,13 +232,17 @@ jQuery.fetch_server_media = function() {
 						    + '"/></a></li>');
 
 			    // Location
-			   
-                                    
-                             
-                                     $('#carousellocation').append('<li data-preview="'+ _media_thumbnail_large +'"  class="DocumentItem"><a href="javascript:;">'
-                                                +'<img src="'+ _media_thumbnail_large +'" class="img-gallery" id="location'+ media_id +'" alt="image04" /></a></li>');       
 
-                               
+			    $('#carousellocation')
+				    .append(
+					    '<li data-preview="'
+						    + _media_thumbnail_large
+						    + '"  class="DocumentItem"><a href="javascript:;">'
+						    + '<img src="'
+						    + _media_thumbnail_large
+						    + '" class="img-gallery" id="location'
+						    + media_id
+						    + '" alt="image04" /></a></li>');
 
 			}
 
@@ -281,8 +298,8 @@ jQuery.fetch_server_media = function() {
 }
 
 $(document).on('click', '[data-gallery]', function(event) {
-    $('footer').attr('style','z-index:-1');
-    //alert('Hello');
+    $('footer').attr('style', 'z-index:-1');
+    // alert('Hello');
     var id = $(this).data('gallery');
     var widget = $(id);
     var selected_media_id;
@@ -296,7 +313,7 @@ $(document).on('click', '[data-gallery]', function(event) {
 	    break;
 	}
     }
-    //console.log(JSON.stringify(obj));
+    // console.log(JSON.stringify(obj));
     // Deep copy - due to internal blueimp error
     var newObject = jQuery.extend(true, {}, obj);
     return blueimp.Gallery([ newObject ], {
@@ -819,4 +836,3 @@ function popupGalleryVideoPlayer(media_video_url, thumbnail) {
 			    + '</video>');
     popup('popupgalleryplayer');
 }
-
