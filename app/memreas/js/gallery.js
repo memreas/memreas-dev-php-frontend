@@ -178,7 +178,7 @@ jQuery.fetch_server_media = function() {
 				    + '" class="blueimp-gallery-thumb-anchor "';
 			    linksContainerData += ' style="background:url('
 				    + _media_thumbnail_large
-				    + ')"><span class="video-content-play-icon"></span></a>';
+				    + ')"><span class="video-content-play-icon"  style="position: relative;z-index:999; left:24px;"></span><img src="'+_media_thumbnail_large+'" alt="" style="margin-left:-99px;" /></a>';
 
 			} else {
 			    item['title'] = media_id;
@@ -191,7 +191,7 @@ jQuery.fetch_server_media = function() {
 				    + '" data-gallery="' + media_id
 				    + '" class="blueimp-gallery-thumb-anchor"';
 			    linksContainerData += ' style="background:url('
-				    + media_thummb_448 + ')"><span></span></a>';
+				    + media_thummb_448 + ')"> <img src="'+media_thummb_448+'" alt="" /></a>';
 
 			}
 			// console.log("item" + JSON.stringify(item));

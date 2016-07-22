@@ -3581,8 +3581,8 @@ ul.event-pics li a {
 	height: 100%;
 }
 
-.blueimp-gallery-thumb-anchor{width:110px; height: 110px; margin-right: 12px; border:2px solid #fff; margin-bottom: 12px; float: left;}
-.blueimp-gallery-thumb-anchor img{ width:110px; height: 110px; border:2px solid #fff; margin-bottom: 12px;}
+.blueimp-gallery-thumb-anchor{width:168px; height: 98px; margin-right: 12px; border:2px solid #fff; margin-bottom: 12px; float: left;}
+.blueimp-gallery-thumb-anchor img{ width:168px; height: 98px; position: absolute;  margin-bottom: 12px;}
 
 .video-content-play-icon{
 background-image: url(../img/video-play.svg);
