@@ -127,19 +127,19 @@ jQuery.fetch_server_media = function() {
 				    'media_url_448x306');
 			    media_thummb_448 = removeCdataCorrectLink(media_thummb_448);
 			} else if (_media_type == 'video') {
-			    //hls
+			    // hls
 			    _media_url_hls = getValueFromXMLTag(media,
 				    'media_url_hls');
 			    _media_url_hls = removeCdataCorrectLink(_media_url_hls);
-			    //web
+			    // web
 			    _media_url_web = getValueFromXMLTag(media,
 				    'media_url_web');
 			    _media_url_web = removeCdataCorrectLink(_media_url_web);
-			    //webm
+			    // webm
 			    _media_url_webm = getValueFromXMLTag(media,
 				    'media_url_webm');
 			    _media_url_webm = removeCdataCorrectLink(_media_url_webm);
-			    //thumbnails
+			    // thumbnails
 			    _media_thumbnail_large = getValueFromXMLTag(media,
 				    'media_url_448x306');
 			    _media_thumbnail_large = JSON
@@ -178,7 +178,9 @@ jQuery.fetch_server_media = function() {
 				    + '" class="blueimp-gallery-thumb-anchor "';
 			    linksContainerData += ' style="background:url('
 				    + _media_thumbnail_large
-				    + ')"><span class="video-content-play-icon"  style="position: relative;z-index:999; left:24px;"></span><img src="'+_media_thumbnail_large+'" alt="" style="margin-left:-99px;" /></a>';
+				    + ')"><span class="video-content-play-icon"  style="position: relative;z-index:999; left:24px;"></span><img src="'
+				    + _media_thumbnail_large
+				    + '" alt="" style="margin-left:-99px;" /></a>';
 
 			} else {
 			    item['title'] = media_id;
@@ -191,7 +193,8 @@ jQuery.fetch_server_media = function() {
 				    + '" data-gallery="' + media_id
 				    + '" class="blueimp-gallery-thumb-anchor"';
 			    linksContainerData += ' style="background:url('
-				    + media_thummb_448 + ')"> <img src="'+media_thummb_448+'" alt="" /></a>';
+				    + media_thummb_448 + ')"> <img src="'
+				    + media_thummb_448 + '" alt="" /></a>';
 
 			}
 			// console.log("item" + JSON.stringify(item));
