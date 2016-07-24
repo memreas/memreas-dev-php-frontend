@@ -188,6 +188,8 @@ jQuery.fetchPublic = function() {
 					event_media, 'event_media_url_hls'));
 				event_media_entry.event_media_url_web = removeCdataCorrectLink(getValueFromXMLTag(
 					event_media, 'event_media_url_web'));
+				event_media_entry.event_media_url_webm = removeCdataCorrectLink(getValueFromXMLTag(
+					event_media, 'event_media_url_webm'));
 				event_media_array[j] = event_media_entry;
 
 				//
@@ -215,6 +217,10 @@ jQuery.fetchPublic = function() {
 					    {
 						href : event_media_entry.event_media_url_hls,
 						type : "application/x-mpegurl"
+					    },
+					    {
+						href : event_media_entry.event_media_url_webm,
+						type : "video/webm"
 					    },
 					    {
 						href : event_media_entry.event_media_url_web,
