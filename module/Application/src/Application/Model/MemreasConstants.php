@@ -15,8 +15,8 @@ class MemreasConstants {
 	const MEMREAS_SELL_MEDIA = 1; // Enable or Disable selling media
 	const S3_APPKEY = 'AKIAISDIQFVJMWFYXCIA';
 	const S3_APPSEC = 'eM5HG4MbYhkW1Jz1RWIdMapo2s+DbB+KnkhzTt91';
+	const S3_ENCRYPTION = 'AES256';
 	const S3BUCKET = "memreasprodsec";
-	const S3HLSBUCKET = "memreasprodhlssec";
 	const CLOUDFRONT_DOWNLOAD_HOST = 'https://d321rfaqc9owi4.cloudfront.net/';
 	const CLOUDFRONT_HLS_DOWNLOAD_HOST = 'https://d1fhgtf97i7jlq.cloudfront.net/';
 	const MAINTENANCE = false; //Enable / Disable Maintenance mode
@@ -33,15 +33,19 @@ class MemreasConstants {
 	const PAYMENT_TAB_SUBSCRIPTION = true;
 	const PAYMENT_TAB_BUY_CREDIT = true;
 	const PAYMENT_TAB_SELL_MEDIA = true;
-	const VERSION = '10-MAY-2016';
-	const COPYRIGHT = '&copy;2015 memreas llc';
+	const VERSION = '7-JUL-2016';
+	const COPYRIGHT = '&copy; memreas llc';
 	
-	//Android url for download
-	const ANDROID_DOWNLOAD_URL = "https://s3.amazonaws.com/memreas-android-build/memreas-armv7-universal-release.prod.apk";
-
 	//Meta
 	const MEMREAS_DESCRIPTION = "memreas is a social media network that allows users to access their content on the web or our Android and iOS apps.  memreas members have the ability to upload or access images or video with 4k support.";
 	const MEMREAS_KEYWORDS = "social networking media streaming 4k HDR";
+
+	// HLS mime types
+	//document.createElement('video').canPlayType('application/vnd.apple.mpegURL')
+	//document.createElement('video').canPlayType('application/x-mpegURL')
+	const HLS_MIME_TYPEX = 'application/x-mpegURL';
+	const HLS_MIME_TYPEV = 'application/vnd.apple.mpegURL';
+	
 
 
 }
