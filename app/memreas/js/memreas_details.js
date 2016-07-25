@@ -23,11 +23,12 @@ $(function() {
     // first tab
     $("#tab-content-memreas-detail div:first").fadeIn(); // Show first tab
     // content*/
-    
-    //height Adujust
-     var mcommentHeight=$(window).height()-205;
-        $('.memreas-detail-comments').attr('style', 'height: '+mcommentHeight+'px !important');
-    
+
+    // height Adujust
+    var mcommentHeight = $(window).height() - 205;
+    // $('.memreas-detail-comments').attr('style', 'height: '+mcommentHeight+'px
+    // !important');
+    $('.memreas-detail-comments').attr('style', 'height: 400px !important');
 
     $('#tabs-memreas-detail a').click(function(e) {
 
@@ -390,9 +391,6 @@ function showEventDetail(eventId, userId) {
 	    } ],
 	    function(response) {
 		var eventId = getValueFromXMLTag(response, 'event_id');
-		console.log('ListALL MEDIA eventId-->' + eventId);
-		console.log('ListALL MEDIA-->' + response);
-		var eventId = getValueFromXMLTag(response, 'event_id');
 		if (getValueFromXMLTag(response, 'status') == "Success") {
 		    if (typeof (eventId != 'undefined')) {
 			event_owner_name = getValueFromXMLTag(response,
@@ -463,12 +461,19 @@ function showEventDetail(eventId, userId) {
 						+ '" alt=""></a></li>');
 
 			    } else if (_media_type == 'video') {
+				// hls
 				_media_url_hls = getValueFromXMLTag(media,
 					'media_url_hls');
 				_media_url_hls = removeCdataCorrectLink(_media_url_hls);
+				// web
 				_media_url_web = getValueFromXMLTag(media,
 					'media_url_web');
 				_media_url_web = removeCdataCorrectLink(_media_url_web);
+				// webm
+				_media_url_webm = getValueFromXMLTag(media,
+					'media_url_webm');
+				_media_url_web = removeCdataCorrectLink(_media_url_webm);
+				// thumbnails
 				_media_thumbnail_large = getValueFromXMLTag(
 					media, 'media_url_448x306');
 				_media_thumbnail_large = JSON
@@ -512,6 +517,9 @@ function showEventDetail(eventId, userId) {
 				    href : _media_url_hls,
 				    type : "application/x-mpegurl"
 				}, {
+				    href : _media_url_webm,
+				    type : "video/webm"
+				}, {
 				    href : _media_url_web,
 				    type : "video/mp4"
 				} ];
@@ -523,6 +531,9 @@ function showEventDetail(eventId, userId) {
 				DetailImage['sources'] = [ {
 				    href : _media_url_hls,
 				    type : "application/x-mpegurl"
+				}, {
+				    href : _media_url_webm,
+				    type : "video/webm"
 				}, {
 				    href : _media_url_web,
 				    type : "video/mp4"
@@ -537,11 +548,18 @@ function showEventDetail(eventId, userId) {
 					+ '" class="blueimp-gallery-thumb-anchor "';
 				linksContainerDataMemreasGallery += ' style="background:url('
 					+ _media_thumbnail_large
-					+ ')"><span class="video-content-play-icon"></span></a>';
-                                
-                                 $('#carousellocationMemreasDetail').append('<li data-preview="'+ _media_thumbnail_large +'" class="DocumentItem"><a href="javascript:;">'
-                                                +'<img src="'+ _media_thumbnail_large +'" class="img-gallery imagescls" id="location'+ mediaId +'" alt="image04" /></a></li>');       
+					+ ')"><span class="video-content-play-icon"  style="position: relative;z-index:999; left:24px;"></span><img src="'+_media_thumbnail_large+'" alt="" style="margin-left:-99px;" /></a>';
 
+				$('#carousellocationMemreasDetail')
+					.append(
+						'<li data-preview="'
+							+ _media_thumbnail_large
+							+ '" class="DocumentItem"><a href="javascript:;">'
+							+ '<img src="'
+							+ _media_thumbnail_large
+							+ '" class="img-gallery imagescls" id="location'
+							+ mediaId
+							+ '" alt="image04" /></a></li>');
 
 			    } else {
 				Item_media_Id['M_id'] = mediaId;
@@ -570,29 +588,38 @@ function showEventDetail(eventId, userId) {
 					+ '" class="blueimp-gallery-thumb-anchor"';
 				linksContainerDataMemreasGallery += ' style="background:url('
 					+ media_thummb_448
-					+ ')"><span></span></a>';
-                                
-                                
-                               $('#carousellocationMemreasDetail').append('<li data-preview="'+ _media_thumbnail_large +'"  class="DocumentItem"><a href="javascript:;">'
-                                                +'<img src="'+ _media_thumbnail_large +'" class="img-gallery" id="location'+ mediaId +'" alt="image04" /></a></li>');       
-  
+					+ ')"><img src="'+media_thummb_448+'" alt="" /></a>';
+
+				$('#carousellocationMemreasDetail')
+					.append(
+						'<li data-preview="'
+							+ _media_thumbnail_large
+							+ '"  class="DocumentItem"><a href="javascript:;">'
+							+ '<img src="'
+							+ _media_thumbnail_large
+							+ '" class="img-gallery" id="location'
+							+ mediaId
+							+ '" alt="image04" /></a></li>');
 
 			    }
 			    objArrMemreasGallery.push(item);
 			    objDetail.push(DetailImage);
 			    mediaIDArray.push(Item_media_Id);
 			} // end for loop
-			console.log('*******************************');
-			console.log('objArrMemreasGallery---> '
-				+ JSON.stringify(objArrMemreasGallery));
-			console.log('*******************************');
+			// console.log('*******************************');
+			// console.log('objArrMemreasGallery---> '
+			// + JSON.stringify(objArrMemreasGallery));
+			// console.log('*******************************');
 
-			$('#blueimp-video-carousel-gallery-memreas').find('slides').empty();
+			// $('#blueimp-video-carousel-gallery-memreas').find('slides').empty();
+			//
+			// Gallery and Detail Details tab
+			//
 			blueimp
 				.Gallery(
-					objArrMemreasGallery,
+					objDetail,
 					{
-					    container : '#blueimp-video-carousel-gallery-memreas',
+					    container : '#blueimp-video-carousel-gallery-detail',
 					    carousel : 'true',
 					    preloadRange : 2,
 					    transitionSpeed : 400
@@ -617,29 +644,27 @@ function showEventDetail(eventId, userId) {
     $(".memreas-detail").fadeIn(500);
 }
 
-$(document).on(
-	'click',
-	'[data-gallery]',
-	function(event) {
-	    var id = $(this).data('gallery');
-	    var widget = $(id);
-	    var selected_media_id;
-	    var media_id;
-	    var obj;
-	    selected_media_id = widget.selector;
-	    for (i = 0; i < objArrMemreasGallery.length; i++) {
-		obj = objArrMemreasGallery[i];
-		console.log("selected_media_id-->" + selected_media_id);
-		console.log("obj['title']-->" + obj['title']);
-		if (selected_media_id == obj['title']) {
-		    break;
-		}
-	    }
-	    return blueimp.Gallery([ obj ], {
-		container : '#blueimp-video-carousel-gallery-memreas',
-		carousel : true
-	    });
-	});
+$(document).on('click', '[data-gallery]', function(event) {
+    var id = $(this).data('gallery');
+    var widget = $(id);
+    var selected_media_id;
+    var media_id;
+    var obj;
+    selected_media_id = widget.selector;
+    for (i = 0; i < objArrMemreasGallery.length; i++) {
+	obj = objArrMemreasGallery[i];
+	if (selected_media_id == obj['title']) {
+	    break;
+	}
+    }
+    // alert ('obj--->' + JSON.stringify(obj));
+    // Deep Copy due to blueimp internal error
+    var newObject = jQuery.extend(true, {}, obj);
+    return blueimp.Gallery([ newObject ], {
+	container : '#blueimp-video-carousel-gallery-memreas',
+	carousel : true
+    });
+});
 
 function popupVideoPlayer(video_id) {
     var media_video_url = $("#" + video_id).attr('media-url');
@@ -1230,20 +1255,24 @@ function submitOffensiveContent() {
     var reason_types = "";
     var reason_type_start = "<reason_type>";
     var reason_type_end = "</reason_type>";
-    
+
     if ($("#esc_content").is(':checked')) {
-	reason_types += reason_type_start + $("#lbl_esc_content").text() + reason_type_end;
+	reason_types += reason_type_start + $("#lbl_esc_content").text()
+		+ reason_type_end;
     }
     if ($("#evc_content").is(':checked')) {
-	reason_types += reason_type_start + $("#lbl_evc_content").text() + reason_type_end;
+	reason_types += reason_type_start + $("#lbl_evc_content").text()
+		+ reason_type_end;
     }
     if ($("#ehs_content").is(':checked')) {
-	reason_types += reason_type_start + $("#lbl_ehs_content").text() + reason_type_end;
+	reason_types += reason_type_start + $("#lbl_ehs_content").text()
+		+ reason_type_end;
     }
     if ($("#ioc_content").is(':checked')) {
-	reason_types += reason_type_start + $("#lbl_ioc_content").text() + reason_type_end;
+	reason_types += reason_type_start + $("#lbl_ioc_content").text()
+		+ reason_type_end;
     }
-    
+
     if (reason_types != "") {
 
 	var params = [ {

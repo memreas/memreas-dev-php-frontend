@@ -45,7 +45,7 @@
   z-index: auto;
   margin: 1em auto;
   /* Set the carousel width/height ratio to 16/9: */
-/*  padding-bottom: 56.25%;*/
+  padding-bottom:46.25%;
   box-shadow: 0 0 10px #000;
   -ms-touch-action: pan-y;
   touch-action: pan-y;
@@ -75,11 +75,11 @@
 }
 .blueimp-gallery,
 .blueimp-gallery > .slides > .slide > .slide-content {
-  -webkit-transition: opacity 0.5s linear;
-     -moz-transition: opacity 0.5s linear;
-      -ms-transition: opacity 0.5s linear;
-       -o-transition: opacity 0.5s linear;
-          transition: opacity 0.5s linear;
+  -webkit-transition: opacity 0.2s linear;
+     -moz-transition: opacity 0.2s linear;
+      -ms-transition: opacity 0.2s linear;
+       -o-transition: opacity 0.2s linear;
+          transition: opacity 0.2s linear;
 }
 .blueimp-gallery > .slides > .slide-loading {
   background: url(../img/loading.gif) center no-repeat;
@@ -224,26 +224,3 @@ body:last-child .blueimp-gallery-playing > .play-pause {
 *+html .blueimp-gallery > .slides > .slide > .slide-content {
   position: relative;
 }
-
-
-/* Small screen max-width 640px */
-    @media only screen and (max-width:40em){ .blueimp-gallery-carousel{height: 410px;}}
-    /* Medium screen min-width 641px */ 
-    @media only screen and (min-width:40.063em){ .blueimp-gallery-carousel{height: 410px;}}
-    /* Medium screen min-width 641px and max-width 1024px */
-    @media only screen and (min-width:40.063em) and (max-width:64em){ .blueimp-gallery-carousel{height: 410px;}}     
-    /* Large screen min-width 1025px */ 
-    @media only screen and (min-width: 64.063em){ .blueimp-gallery-carousel{height: 410px;}} 
-     /* Large screen min-width 1025px and max-width 1440px */    
-    @media only screen and (min-width: 64.063em) and (max-width: 90em){
-        .blueimp-gallery-carousel{height: 410px;}
-    }
-    /* Extra large screens  min-width 1441px */
-    @media only screen and (min-width: 90.063em){}
-     /* Extra large screens  min-width 1441px and max-width 1920px */   
-    @media only screen and (min-width: 90.063em) and (max-width: 120em){ .blueimp-gallery-carousel{height: 780px;}}
-    /* Extra Extra large screens min-width 1921px */  
-    @media only screen and (min-width: 120.063em){ .blueimp-gallery-carousel{height: 1200px;}}
-    
-    
-    .blueimp-gallery-controls > .title{display:none;}

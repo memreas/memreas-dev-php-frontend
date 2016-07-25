@@ -42,7 +42,7 @@ and open the template in the editor.
 		min-height: 540px;
                 max-height: 729px;
 	}
-        .linksDatacnt{max-height: 740px !important; }
+/*        .linksDatacnt{max-height: 740px !important; }*/
 }
 
 @media only screen and (min-device-width : 1200px) and (max-device-width
@@ -251,7 +251,7 @@ and open the template in the editor.
 		height: auto;
 	}
         
-        .linksDatacnt{max-height: 590px;}
+/*        .linksDatacnt{max-height: 590px;}*/
 	.event_gallery_pro {
 		width: 35px;
 		height: 35px;
@@ -711,7 +711,7 @@ and open the template in the editor.
 		margin-bottom: 0px;
                
 	}
-      .linksDatacnt{ max-height: 400px !important;}
+/*      .linksDatacnt{ max-height: 400px !important;}*/
         
         
         
@@ -733,7 +733,7 @@ and open the template in the editor.
 		margin-bottom: 12px;
 	}
 	
-        .linksDatacnt{max-height: 378px !important;}
+/*        .linksDatacnt{max-height: 378px !important;}*/
         .myMemreas {max-height: 420px ; }
         
 	#tab-content, #tab-content-queue, #tab-content-share,
@@ -858,7 +858,7 @@ html.noads #tab-content, html.noads #tab-content-queue, html.noads #tab-content-
                 }
                 .noads #tab-content{margin-bottom: 10px;}
                 
-                .linksDatacnt{max-height: 690px;}
+/*                .linksDatacnt{max-height: 690px;}*/
 
                 .myMemreas, .friendMemreas, .publicMemreas{
                     max-height: 650px;
@@ -869,3 +869,5 @@ html.noads #tab-content, html.noads #tab-content-queue, html.noads #tab-content-
 
 
 //Landscape Mode CSS
+
+

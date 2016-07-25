@@ -80,7 +80,8 @@ jQuery.fetchPublic = function() {
 			    eventObj.event_name = $(event).filter('event_name')
 				    .html();
 
-			    //console.log("eventObj.profile_img--->" + eventObj.profile_img);
+			    // console.log("eventObj.profile_img--->" +
+			    // eventObj.profile_img);
 			    //
 			    // Check price to see if we need overlay
 			    //
@@ -101,8 +102,10 @@ jQuery.fetchPublic = function() {
 			    // HTML for profile section
 			    // start adding to html
 			    var buyOverlay = '';
+			    var preventclickcss = '';
 			    if (event_price > 0) {
-				buyOverlay = '<div class="overlaypopUp" ><a href="#" class="btnpublicbuynow">register to purchase access</a></div>';
+				buyOverlay = '<div class="overlaypopUp" ><a href="/" class="btnpublicbuynow">register to purchase access</a></div>';
+				preventclickcss = 'pointer-events:none; cursor:default';
 			    }
 			    var listItem = '';
 			    var links = '#links' + i;
@@ -132,11 +135,13 @@ jQuery.fetchPublic = function() {
 			    listItem += '			</ul>';
 			    listItem += '			<div style="clear: both;"></div>';
 			    listItem += '			</div>';
-			    
-			    
+
 			    // for loop here for images
-			    listItem += '			<div class=" customscrollarnew floatcompare"><div id="links' + i
-				    + '" class="links' + i + '"></div></div>';
+			    listItem += '			<div class=" customscrollarnew floatcompare"><div id="links'
+				    + i
+				    + '" class="links'
+				    + i
+				    + '"></div></div>';
 			    listItem += '			<div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" data-start-slideshow="false">';
 			    listItem += '				<div class="slides"></div>';
 			    listItem += '				<h3 class="title"></h3>';
@@ -177,6 +182,8 @@ jQuery.fetchPublic = function() {
 					event_media, 'event_media_url'));
 				event_media_entry.event_media_url_hls = removeCdataCorrectLink(getValueFromXMLTag(
 					event_media, 'event_media_url_hls'));
+				event_media_entry.event_media_url_webm = removeCdataCorrectLink(getValueFromXMLTag(
+					event_media, 'event_media_url_webm'));
 				event_media_entry.event_media_url_web = removeCdataCorrectLink(getValueFromXMLTag(
 					event_media, 'event_media_url_web'));
 				event_media_array[j] = event_media_entry;
@@ -208,9 +215,15 @@ jQuery.fetchPublic = function() {
 						type : "application/x-mpegurl"
 					    },
 					    {
-						href : event_media_entry.event_media_url_web,
-						type : "video/mp4"
-					    } ];
+						href : event_media_entry.event_media_url_webm,
+						type : "video/webm"
+					    }
+				    // {
+				    // href :
+				    // event_media_entry.event_media_url_web,
+				    // type : "video/mp4"
+				    // }
+				    ];
 
 				    linksContainerData += '<a href="'
 					    + event_media_entry.event_media_url_web
@@ -223,7 +236,11 @@ jQuery.fetchPublic = function() {
 					    + '" class="blueimp-gallery-thumb-anchor "';
 				    linksContainerData += ' style="background:url('
 					    + event_media_entry.event_media_image
-					    + ')"><span class="video-content-play-icon"></span></a>';
+					    + ');'
+					    + preventclickcss
+					    + ' "><span class="video-content-play-icon"  style="position: relative;z-index:999; left:24px;"></span><img src="'
+				    + event_media_entry.event_media_image
+				    + '" alt="" style="margin-left:-99px;" /></a>';
 
 				} else {
 
@@ -233,7 +250,7 @@ jQuery.fetchPublic = function() {
 				    event_media_entry.event_media_image = removeCdataCorrectLink(getValueFromXMLTag(
 					    event_media, 'event_media_448x306'));
 
-				    //disable the url for paid events
+				    // disable the url for paid events
 				    if (event_price > 0) {
 					event_media_entry.event_media_url = '#';
 				    }
@@ -255,7 +272,8 @@ jQuery.fetchPublic = function() {
 					    + '" class="blueimp-gallery-thumb-anchor"';
 				    linksContainerData += ' style="background:url('
 					    + event_media_entry.event_media_image
-					    + ')"><span></span></a>';
+					    + ')"><img src="'
+				    + event_media_entry.event_media_image + '" alt="" /></a>';
 
 				}
 				objArr.push(item);
@@ -274,26 +292,31 @@ jQuery.fetchPublic = function() {
 			    var event_friend_array = [];
 			    // events loop
 			    if (event_friend_count > 0) {
-				
-			    for (var k = 1; k <= event_friend_count; k++) {
-				var event_friend_entry = {};
-				var event_friend_list = event_friend[k];
-				event_friend_entry.event_friend_id = getValueFromXMLTag(
-					event_friend_list, 'event_friend_id');
-				event_friend_entry.event_friend_social_username = getValueFromXMLTag(
-					event_friend_list,
-					'event_friend_social_username');
-				event_friend_entry.event_friend_url_image = getValueFromXMLTag(
-					event_friend_list,
-					'event_friend_url_image');
-				event_friend_entry.event_friend_url_image = removeCdataCorrectLink(event_friend_entry.event_friend_url_image);
-				console.log("event_friend_entry.event_friend_url_image--->" + event_friend_entry.event_friend_url_image);
-				event_friend_array[k] = event_friend_entry;
-				var pic = '<figure class="pro-pics2"><img class="public-profile-img" src="' + event_friend_entry.event_friend_url_image + '" alt=""></figure>';
-				$("#friendsPics").append(pic);
-			    } // end for friends
+
+				for (var k = 1; k <= event_friend_count; k++) {
+				    var event_friend_entry = {};
+				    var event_friend_list = event_friend[k];
+				    event_friend_entry.event_friend_id = getValueFromXMLTag(
+					    event_friend_list,
+					    'event_friend_id');
+				    event_friend_entry.event_friend_social_username = getValueFromXMLTag(
+					    event_friend_list,
+					    'event_friend_social_username');
+				    event_friend_entry.event_friend_url_image = getValueFromXMLTag(
+					    event_friend_list,
+					    'event_friend_url_image');
+				    event_friend_entry.event_friend_url_image = removeCdataCorrectLink(event_friend_entry.event_friend_url_image);
+				    console
+					    .log("event_friend_entry.event_friend_url_image--->"
+						    + event_friend_entry.event_friend_url_image);
+				    event_friend_array[k] = event_friend_entry;
+				    var pic = '<figure class="pro-pics2"><img class="public-profile-img" src="'
+					    + event_friend_entry.event_friend_url_image
+					    + '" alt=""></figure>';
+				    $("#friendsPics").append(pic);
+				} // end for friends
 			    } else {
-				//remove the list
+				// remove the list
 				$("#friendsPics").remove();
 			    }
 
@@ -320,7 +343,9 @@ $(document).on('click', '[data-gallery]', function(event) {
 	    break;
 	}
     }
-    return blueimp.Gallery([ obj ], {
+    // Deep Copy due to blueimp internal error
+    var newObject = jQuery.extend(true, {}, obj);
+    return blueimp.Gallery([ newObject ], {
 	container : '#blueimp-gallery',
 	carousel : true
     });

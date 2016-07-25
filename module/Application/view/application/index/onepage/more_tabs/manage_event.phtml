@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Copyright (C) 2015 memreas llc. - All Rights Reserved
  * Unauthorized copying of this file, via any medium is strictly prohibited
@@ -6,114 +6,167 @@
  */
 ?>
 <div class="akordeon-item expanded">
-    <div class="akordeon-item-head">
-        <div class="akordeon-item-head-container">
-            <div class="akordeon-heading">
-                memreas detail
-            </div>
-        </div>
-    </div>
-    <div class="akordeon-item-body"  style="padding-bottom: 10px;">
-        <div class="akordeon-item-content">
-            <ul id="content_1" class="share_memreas_details  ">
-                <li>
-                    <label class="textfield_names">name :</label>
-                    <div class="styled-select" style="margin: 0; float: left;">
-                        <select id="cmd_MorepageEvents" class="memreas_form_field" ></select>
-                    </div>
-                </li>
-                <li>
-                    <label class="textfield_names">date :</label>
-                    <input name="input" type="text" id="morepage_eventDate" class="memreas_form_field share-txtfield date-picker" readonly value="from" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'from')this.value = '';"/>
-                </li>
-                <li>
-                    <label class="textfield_names">location :</label>
-                    <input name="input3" type="text" id="morepage_eventLocation" class="memreas_form_field share-txtfield" value="address or current location" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'address or current location')this.value = '';" onClick="more_showGoogleMap('more_div_locationmap_maparea');"/>
-                </li>
-                <li>
-                    <input id="morepage_eventFriendsCanPost" class="css-checkbox" type="checkbox" name="morepage_eventFriendsCanPost"/>
-                    <label for="morepage_eventFriendsCanPost" name="demo_lbl_1" class="css-label margin-none" >friends can post pics/videos</label>
-                </li>
-                <li>
-                    <input id="morepage_friendsCanAdd" class="css-checkbox" type="checkbox" name="morepage_friendsCanAdd"/>
-                    <label for="morepage_friendsCanAdd" name="demo_lbl_2" class="css-label margin-none" >friends can add Friends</label>
-                </li>
-                <!-- <li>
+	<div class="akordeon-item-head">
+		<div class="akordeon-item-head-container">
+			<div class="akordeon-heading">memreas detail</div>
+		</div>
+	</div>
+	<div class="akordeon-item-body" style="padding-bottom: 10px;">
+		<div class="akordeon-item-content">
+			<ul id="content_1" class="share_memreas_details  ">
+				<li>
+					<label class="textfield_names">name :</label>
+					<div class="styled-select" style="margin: 0; float: left;">
+						<select id="cmd_MorepageEvents" class="memreas_form_field"></select>
+					</div>
+				</li>
+				<li>
+					<label class="textfield_names">date :</label>
+					<input name="input" type="text" id="morepage_eventDate"
+						class="memreas_form_field share-txtfield date-picker" readonly
+						value="from"
+						onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue"
+						onFocus="if(this.value == 'from')this.value = '';"
+					/>
+				</li>
+				<li>
+					<label class="textfield_names">location :</label>
+					<input name="input3" type="text" id="morepage_eventLocation"
+						class="memreas_form_field share-txtfield"
+						value="address or current location"
+						onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue"
+						onFocus="if(this.value == 'address or current location')this.value = '';"
+						onClick="more_showGoogleMap('more_div_locationmap_maparea');"
+					/>
+				</li>
+				<li>
+					<input id="morepage_eventFriendsCanPost" class="css-checkbox"
+						type="checkbox" name="morepage_eventFriendsCanPost"
+					/>
+					<label for="morepage_eventFriendsCanPost" name="demo_lbl_1"
+						class="css-label margin-none"
+					>friends can post pics/videos</label>
+				</li>
+				<li>
+					<input id="morepage_friendsCanAdd" class="css-checkbox"
+						type="checkbox" name="morepage_friendsCanAdd"
+					/>
+					<label for="morepage_friendsCanAdd" name="demo_lbl_2"
+						class="css-label margin-none"
+					>friends can add Friends</label>
+				</li>
+				<!-- <li>
                     <input id="morepage_public" class="css-checkbox" type="checkbox" name="morepage_public"/>
                     <label for="morepage_public" name="demo_lbl_2" class="css-label margin-none" >public (anyone can add or post)</label>
                 </li>-->
-                <li>
-                    <input id="morepage_isviewable" class="css-checkbox" type="checkbox" />
-                    <label for="morepage_isviewable" name="demo_lbl_4" class="css-label margin-none" >viewable :</label>
-                    <input name="input" type="text" id="moredate_eventDateFrom" class="date-picker" readonly value="from" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'from')this.value = '';"/>
-                    <input name="input" type="text" id="moredate_eventDateTo" class="date-picker" readonly value="to" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'to')this.value = '';" style="width: 34.4%;"/>
-                </li>
-                <li>
-                    <input id="morepage_isselfdestruct" class="css-checkbox" type="checkbox" />
-                    <label for="morepage_isselfdestruct" name="demo_lbl_5" class="css-label margin-none" >ghost :</label>
-                    <input name="input" type="text" id="morepage_eventSelfDestruct" class="share-txtfield-2 date-picker" readonly value="" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == '')this.value = '';"/>
-                </li>
-                <li id="morepage_event_sellmedia">
-                    <input id="morepage_ckb_sellmedia" class="css-checkbox" type="checkbox" />
-                    <label id="lbl-sellmedia" for="morepage_ckb_sellmedia" name="demo_lbl_6" class="css-label margin-none">Sell media</label>
-                </li>
-            </ul>
-            <div style="clear: both; margin-top: 10px; margin-bottom: 10px; padding-top: 10px;"></div>
-            <div class="btn">
-
-            <a class="black_btn_skin" href="javascript:;" onclick="morepage_saveEvent(false);">ok</a>
-            <a class="black_btn_skin" href="javascript:;">cancel</a>
-            </div>
-        </div>
-    </div>
+				<li>
+					<input id="morepage_isviewable" class="css-checkbox"
+						type="checkbox"
+					/>
+					<label for="morepage_isviewable" name="demo_lbl_4"
+						class="css-label margin-none"
+					>viewable :</label>
+					<input name="input" type="text" id="moredate_eventDateFrom"
+						class="date-picker" readonly value="from"
+						onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue"
+						onFocus="if(this.value == 'from')this.value = '';"
+					/>
+					<input name="input" type="text" id="moredate_eventDateTo"
+						class="date-picker" readonly value="to"
+						onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue"
+						onFocus="if(this.value == 'to')this.value = '';"
+						style="width: 34.4%;"
+					/>
+				</li>
+				<li>
+					<input id="morepage_isselfdestruct" class="css-checkbox"
+						type="checkbox"
+					/>
+					<label for="morepage_isselfdestruct" name="demo_lbl_5"
+						class="css-label margin-none"
+					>ghost :</label>
+					<input name="input" type="text" id="morepage_eventSelfDestruct"
+						class="share-txtfield-2 date-picker" readonly value=""
+						onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue"
+						onFocus="if(this.value == '')this.value = '';"
+					/>
+				</li>
+				<li id="morepage_event_sellmedia">
+					<input id="morepage_ckb_sellmedia" class="css-checkbox"
+						type="checkbox"
+					/>
+					<label id="lbl-sellmedia" for="morepage_ckb_sellmedia"
+						name="demo_lbl_6" class="css-label margin-none"
+					>Sell media</label>
+				</li>
+			</ul>
+			<div
+				style="clear: both; margin-top: 10px; margin-bottom: 10px; padding-top: 10px;"
+			></div>
+			<div class="btn">
+				<a class="black_btn_skin" href="javascript:;" onclick="morepage_saveEvent(false, false);">update</a>
+				<a class="black_btn_skin" href="javascript:;" onclick="jconfirm('Delete this event. Are you sure?',
+				    'morepage_saveEvent(false, true)');">delete</a>
+				<a class="black_btn_skin" href="javascript:;">cancel</a>
+			</div>
+		</div>
+	</div>
 </div>
 <div class="akordeon-item memreas-media">
-    <div class="akordeon-item-head">
-        <div class="akordeon-item-head-container memreas-media-header">
-            <div class="akordeon-heading">
-                media
-            </div>
-        </div>
-    </div>
-    <div class="akordeon-item-body" style="height: 300px;">
-        <div class="akordeon-item-content">
-            <ul class="memreasEventMedia">
-                <!--images here-->
-            </ul>
-            <div style="clear: both;"></div>
-            <div class="btn" style="margin-top: 20px;">
-                <a class="black_btn_skin" href="javascript:;" onclick="morepage_removeMedias();" style="margin-top: 20px; display: inline-block;">Remove media</a>
-                <a class="black_btn_skin" href="javascript:;">cancel</a>
-            </div>
-        </div>
-    </div>
+	<div class="akordeon-item-head">
+		<div class="akordeon-item-head-container memreas-media-header">
+			<div class="akordeon-heading">media</div>
+		</div>
+	</div>
+	<div class="akordeon-item-body" style="height: 300px;">
+		<div class="akordeon-item-content">
+			<ul class="memreasEventMedia">
+				<!--images here-->
+			</ul>
+			<div style="clear: both;"></div>
+			<div class="btn" style="margin-top: 20px;">
+				<a class="black_btn_skin" href="javascript:;"
+					onclick="morepage_removeMedias();"
+					style="margin-top: 20px; display: inline-block;"
+				>Remove media</a>
+				<a class="black_btn_skin" href="javascript:;">cancel</a>
+			</div>
+		</div>
+	</div>
 </div>
 <div class="akordeon-item memreas-friends">
-    <div class="akordeon-item-head">
-        <div class="akordeon-item-head-container memreas-friend-header">
-            <div class="akordeon-heading">
-                Friends
-            </div>
-        </div>
-    </div>
-    <div class="akordeon-item-body" style="height: 300px;">
-        <div class="akordeon-item-content">
-            <ul class="memreasMorepageFriends"></ul>
-            <div style="clear: both;"></div>
-            <div class="btn" style="margin-top: 20px;">
-                <a class="black_btn_skin" href="javascript:;" onclick="morepage_removeFriends();" style="margin-top: 20px; display: inline-block;">Remove friend</a>
-                <a class="black_btn_skin" href="javascript:;">cancel</a>
-            </div>
-        </div>
-    </div>
+	<div class="akordeon-item-head">
+		<div class="akordeon-item-head-container memreas-friend-header">
+			<div class="akordeon-heading">Friends</div>
+		</div>
+	</div>
+	<div class="akordeon-item-body" style="height: 300px;">
+		<div class="akordeon-item-content">
+			<ul class="memreasMorepageFriends"></ul>
+			<div style="clear: both;"></div>
+			<div class="btn" style="margin-top: 20px;">
+				<a class="black_btn_skin" href="javascript:;"
+					onclick="morepage_removeFriends();"
+					style="margin-top: 20px; display: inline-block;"
+				>Remove friend</a>
+				<a class="black_btn_skin" href="javascript:;">cancel</a>
+			</div>
+		</div>
+	</div>
 </div>
-
 <div id="more_dlg_locationmap" class="popups2">
-    <a id="more_btn_locationmap_close" onClick="javascript:more_closeGoogleMap(false);" class='popupClose'>x</a>
-    <h2>location</h2>
-    <a id="more_btn_locationmap_ok" class="black_btn_skin btn_locationmap_ok" href="javascript:more_closeGoogleMap(true);">OK</a>
-    <input id="more_txt_locationmap_address" class="txt_locationmap_address" name="input" type="text" />
-    <div class="clear"></div>
-    <div id="more_div_locationmap_maparea" class="map_box"></div>
+	<a id="more_btn_locationmap_close"
+		onClick="javascript:more_closeGoogleMap(false);" class='popupClose'
+	>x</a>
+	<h2>location</h2>
+	<a id="more_btn_locationmap_ok"
+		class="black_btn_skin btn_locationmap_ok"
+		href="javascript:more_closeGoogleMap(true);"
+	>OK</a>
+	<input id="more_txt_locationmap_address"
+		class="txt_locationmap_address" name="input" type="text"
+	/>
+	<div class="clear"></div>
+	<div id="more_div_locationmap_maparea" class="map_box"></div>
 </div>
 <div id="more_div_locationmap_back" class="backgroundPopup"></div>

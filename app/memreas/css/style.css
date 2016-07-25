@@ -844,8 +844,8 @@ ul.right textarea {
 
 footer {
 	position: fixed;
-/*	z-index: -1;*/
-        z-index: 2;
+	/*	z-index: -1;*/
+    z-index: 2;
 	left: 0;
 	bottom: 0;
 	right: 0;
@@ -1210,7 +1210,7 @@ input[type=checkbox].css-checkbox:checked+label.css-label {
 }
 
 .pro-names2 {
-	min-width: 200px;
+/*	min-width: 200px;*/
 	font-family: "Century Gothic";
 	font-size: 15px;
 	color: #FFF;
@@ -3551,7 +3551,7 @@ input.disabled {
 }
 .hidden-memreas{display:none !important;}
 ul.event-pics li {
-	width: 170px;
+	width: 168px;
 	border: 2px #d6d6d6 solid;
 	float: left;
 	margin: 10px;
@@ -3564,7 +3564,7 @@ ul.event-pics li {
 
 ul.event-pics li img, .aviary-thumbs img, .galleries-location img {
 	height: auto;
-	width: 170px;
+	width: 168px;
 	cursor: pointer;
 	max-width: 100%;
 	max-height: 100%;
@@ -3581,8 +3581,8 @@ ul.event-pics li a {
 	height: 100%;
 }
 
-.blueimp-gallery-thumb-anchor{width:110px; height: 110px; margin-right: 12px; border:2px solid #fff; margin-bottom: 12px; float: left;}
-.blueimp-gallery-thumb-anchor img{ width:110px; height: 110px; border:2px solid #fff; margin-bottom: 12px;}
+.blueimp-gallery-thumb-anchor{width:168px; height: 98px; margin-right: 12px; border:2px solid #fff; margin-bottom: 12px; float: left;}
+.blueimp-gallery-thumb-anchor img{ width:168px; height: 98px; position: absolute;  margin-bottom: 12px;}
 
 .video-content-play-icon{
 background-image: url(../img/video-play.svg);
@@ -3598,6 +3598,7 @@ background-image: url(../img/video-play.svg);
     cursor: pointer;
     
 }
+
 
 .mobile-form{background: none !important; }
 .mobile-form input {width: 100% !important; }
@@ -3672,7 +3673,7 @@ background-image: url(../img/video-play.svg);
      .dmca-table-data tbody tr td { text-align: center; vertical-align: middle;}
      .counter-claim-btn{color:#fff; border:1px solid #fff; background: #3A9ACA; border-radius: 7px; font-size: 15px; padding: 7px;}
      .fileupload-dmca{float: left!important; margin: 0px !important;}
-     .linksDatacnt{max-height: 400px; overflow: auto;}
+     .linksDatacnt{ overflow: auto;}
      
      .share_memreas_detaill_dcma li{width: 47%; float: left; margin-right: 10px;}
      .share_memreas_detaill_dcma li .textfield_names{font-family: "Century Gothic";font-size: 18px; color: #FFF;}
@@ -3681,6 +3682,11 @@ background-image: url(../img/video-play.svg);
      .add_card_buy_credit li{width: 47%; float: left; margin-right: 10px;}
      .add_card_buy_credit li .textfield_names{font-family: "Century Gothic";font-size: 18px; color: #FFF;}
      .add_card_buy_credit li .field-txtfield{width: 90% !important;   font-family: "Century Gothic";}
+     
+     
+     .view_card_buy_credit li{width: 47%; float: left; margin-right: 10px;}
+     .view_card_buy_credit li .textfield_names{font-family: "Century Gothic";font-size: 18px; color: #FFF;}
+     .view_card_buy_credit li .field-txtfield{width: 90% !important;   font-family: "Century Gothic";}
      .not-active-anchor {
    pointer-events: none !important;
    cursor: default !important;
@@ -3711,7 +3717,7 @@ background-image: url(../img/video-play.svg);
     overflow-y:hidden;
     height:130px;
     width:95%;
-    padding: 0 15px;
+    padding: 10px 15px;
 }
 
 .DocumentItem
@@ -3813,16 +3819,56 @@ background-image: url(../img/video-play.svg);
 .floatcompare a{float: left !important;}
 
 
+.video-content-play-icon-2{
+    background-image: url(../img/video-play.svg);
 
+    right: 0;
+    left: 35px;
+     width: 99px;
+    height: 99px;
+    display: inline-block;
+    background: url(../img/video-play.png) center no-repeat;
+    opacity: 0.8;
+    cursor: pointer;
+    position: absolute;
+    z-index: 999;
+    
+    
+}
 
-.Accform2 li {width: 24% !important; float: left; margin-right: 1%; clear: none !important}
-.Accform2-field{width: 90% !important;}
-.Accform .black_btn_skin{padding: 8px 28px !important;}
+.customer-active-format{background: #327AC9;
+    padding-left: 10px;
+    padding-top: 10px;
+    font-size:  19px;
+    border-radius: 5px;}
+.action-plan-heading{margin-right: 10px;}
+.my-customer-active-format{background: #327AC9;
+    padding-left: 10px;
+    padding-top: 10px;
+    font-size:  19px;
+    border-radius: 5px;}
+.action-plan-heading{margin-right: 10px;}
 
-.Accform2 li {width: 24% !important; float: left; margin-right: 1%; clear: none !important}
-.Accform2-field{width: 90% !important;}
-.Accform .black_btn_skin{padding: 8px 28px !important;}
+.myscrollcontent{
+    width: 300px;height:210px  !important; overflow-x: scroll !important;overflow-y: hidden !important;white-space: nowrap  !important;
+}
+.event-listing-memreas{
+    height:130px  !important; overflow-x: scroll !important;overflow-y: hidden !important;white-space: nowrap  !important;
+}
 
-.Accform3 li {width: 24% !important; float: left; margin-right: 1%; clear: none !important}
-.Accform3-field{width: 90% !important;}
-.Accform45 .black_btn_skin{padding: 8px 28px !important;}
+.event-listing-public-memreas{
+    height:130px  !important; overflow-x: scroll !important;overflow-y: hidden !important;white-space: nowrap  !important;
+}
+
+.documentscls{width: 99%;}
+#tab-content-share{margin-bottom: 40px !important;}
+.add-a-card-message{
+    background: #327AC9;
+    padding-left: 10px;
+    padding-top: 10px;
+    font-size: 19px;
+    border-radius: 5px;
+}
+#share_medialist{}
+.sellmediafinacial{width: 90% !important; margin-top: 7px;}
+.sellmediatxtname{float:none;}

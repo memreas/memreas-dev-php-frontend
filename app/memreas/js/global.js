@@ -167,11 +167,18 @@ function removeCdata(media_link) {
 }
 
 function removeCdataCorrectLink(media_link) {
-    media_link = media_link.replace('<!--[CDATA[["', "").replace('"]]]-->', "")
-	    .replace("<!--[CDATA[", "").replace("]]-->", "").replace('["', "")
-	    .replace('"]', "");
-    if (media_link.indexOf("\\/") >= 0)
-	media_link = media_link.split("\\/").join('/');
+
+    // if (typeof media_link === "undefined") {
+    // return "";
+    // }
+    if (media_link != null) {
+	media_link = media_link.replace('<!--[CDATA[["', "").replace('"]]]-->',
+		"").replace("<!--[CDATA[", "").replace("]]-->", "").replace(
+		'["', "").replace('"]', "");
+	if (media_link.indexOf("\\/") >= 0) {
+	    media_link = media_link.split("\\/").join('/');
+	}
+    }
 
     return media_link;
 }
@@ -574,6 +581,7 @@ clearCheckBox = function(elements) {
     } else if (typeof elements.length != "undefined") {
 	for (i = 0; i < elements.length; i++) {
 	    id = '#' + elements[i];
+	    alert('checkbox id is-->' + id); 
 	    $(id)[0].checked = true;
 	}
     }
@@ -937,13 +945,54 @@ var md5 = (function() {
     return d
 })();
 
-function resizeWindowBluepanel(){
-    var queueHeight=$(window).height();
-    if(queueHeight >205){
-        queueHeight=queueHeight-205
+function resizeWindowBluepanel() {
+    var queueHeight = $(window).height();
+    if (queueHeight > 205) {
+	queueHeight = queueHeight - 205
     }
-    
-    $("#tab-content, #tab-content-queue, #tab-content-share, #tab-content-memreas, #tab-content-memreas-detail, #tab-content-more").attr('style', 'height: auto !important; min-height: '+queueHeight+'px !important');
-    console.log(queueHeight);
+
+    $(
+	    "#tab-content, #tab-content-queue, #tab-content-share, #tab-content-memreas, #tab-content-memreas-detail, #tab-content-more")
+	    .attr(
+		    'style',
+		    'height: auto !important; min-height: ' + queueHeight
+			    + 'px !important');
+    //console.log(queueHeight);
 }
+
+function resizeBlueIMpGallerypanel() {
+    var queueHeight = $(window).height();
+    if (queueHeight > 205) {
+	queueHeight = queueHeight - 205
+    }
+
+    $(
+	    ".linksDatacnt")
+	    .attr(
+		    'style',
+		    'height: '+queueHeight+'px; min-height: ' + queueHeight
+			    + 'px !important');
+    //console.log(queueHeight);
+}
+
+
+
+
+
+
+
+ $("a[title=share]").hover (function(){
+        $('footer').attr('style','z-index:2');
+    });
+$("a[title=more]").hover (function(){
+        $('footer').attr('style','z-index:2');
+    });
+
+$("a[title=queue]").hover (function(){
+        $('footer').attr('style','z-index:2');
+    });
+ $("a[title=memreas]").hover (function(){
+        $('footer').attr('style','z-index:2');
+    });   
+  
 
