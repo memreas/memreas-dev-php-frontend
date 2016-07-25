@@ -459,7 +459,8 @@ function checkSellMediaDuration() {
 	}
 
 	var current_date = new Date();
-	if (date_from < current_date) {
+	//if (date_from < current_date) {
+        if (date_from > current_date) {
 	    jerror("Duration from date must be current or a later date");
 	    return false;
 	}

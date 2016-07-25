@@ -548,7 +548,7 @@ function showEventDetail(eventId, userId) {
 					+ '" class="blueimp-gallery-thumb-anchor "';
 				linksContainerDataMemreasGallery += ' style="background:url('
 					+ _media_thumbnail_large
-					+ ')"><span class="video-content-play-icon"></span></a>';
+					+ ')"><span class="video-content-play-icon"  style="position: relative;z-index:999; left:24px;"></span><img src="'+_media_thumbnail_large+'" alt="" style="margin-left:-99px;" /></a>';
 
 				$('#carousellocationMemreasDetail')
 					.append(
@@ -588,7 +588,7 @@ function showEventDetail(eventId, userId) {
 					+ '" class="blueimp-gallery-thumb-anchor"';
 				linksContainerDataMemreasGallery += ' style="background:url('
 					+ media_thummb_448
-					+ ')"><span></span></a>';
+					+ ')"><img src="'+media_thummb_448+'" alt="" /></a>';
 
 				$('#carousellocationMemreasDetail')
 					.append(
