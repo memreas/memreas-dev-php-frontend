@@ -188,6 +188,8 @@ jQuery.fetchPublic = function() {
 					event_media, 'event_media_url_hls'));
 				event_media_entry.event_media_url_web = removeCdataCorrectLink(getValueFromXMLTag(
 					event_media, 'event_media_url_web'));
+				event_media_entry.event_media_url_webm = removeCdataCorrectLink(getValueFromXMLTag(
+					event_media, 'event_media_url_webm'));
 				event_media_array[j] = event_media_entry;
 
 				//
@@ -215,6 +217,10 @@ jQuery.fetchPublic = function() {
 					    {
 						href : event_media_entry.event_media_url_hls,
 						type : "application/x-mpegurl"
+					    },
+					    {
+						href : event_media_entry.event_media_url_webm,
+						type : "video/webm"
 					    },
 					    {
 						href : event_media_entry.event_media_url_web,
@@ -329,7 +335,9 @@ $(document).on('click', '[data-gallery]', function(event) {
 	    break;
 	}
     }
-    return blueimp.Gallery([ obj ], {
+    //Deep Copy due to blueimp internal error
+    var newObject = jQuery.extend(true, {}, obj);
+    return blueimp.Gallery([ newObject ], {
 	container : '#blueimp-gallery',
 	carousel : true
     });

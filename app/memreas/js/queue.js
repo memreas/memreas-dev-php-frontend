@@ -9,7 +9,7 @@ function resizeWindow(){
         queueHeight=queueHeight-205
     }
     
-    $('#tab-content-queue').attr('style', 'height: '+queueHeight+'px !important; min-height: '+queueHeight+'px !important');
+    $('#tab-content-queue').attr('style', 'height: auto !important; min-height: '+queueHeight+'px !important');
     console.log(queueHeight);
 }
 

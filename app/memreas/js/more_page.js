@@ -538,7 +538,7 @@ function saveUserDetail() {
 	var alternate_email = $("input[name=account_alternate_email]").val();
 	var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 	if (!regex.test(alternate_email)) {
-	    jerror('your email address does not correct format.');
+	    jerror('please enter valid email');
 	    return false;
 	} else {
 	    if ($.trim(orginal_email) == $.trim(alternate_email)) {
@@ -1317,7 +1317,8 @@ function getMemreasEventMedia() {
 	    });
 }
 
-function morepage_saveEvent(confirmed) {
+function morepage_saveEvent(confirmed, delete_event) {
+    
     var viewable_from = (($("#moredate_eventDateFrom").val() != '' && $(
 	    "#moredate_eventDateFrom").val() != 'from') ? $(
 	    "#moredate_eventDateFrom").val() : '');
@@ -1359,6 +1360,7 @@ function morepage_saveEvent(confirmed) {
 	var friend_can_add = 0;
 
     // Check if event has selling event and check box, confirm
+    var sell_media = 0;
     if ($("#morepage_event_sellmedia").is(":visible")) {
 	if (!$("input#morepage_ckb_sellmedia").is(":checked") && !confirmed) {
 	    jconfirm("Your event will become free. Are you sure?",
@@ -1366,39 +1368,41 @@ function morepage_saveEvent(confirmed) {
 	    return false;
 	}
 
-	if ($("input#morepage_ckb_sellmedia").is(":checked"))
-	    var sell_media = 1;
-	else
-	    var sell_media = 0;
-    } else
-	var sell_media = 0;
+	if ($("input#morepage_ckb_sellmedia").is(":checked")) {
+	    sell_media = 1;
+	}
+    }
+    
+    //
+    // Check if delete - jconfirm onclick
+    //
+    if (delete_event) {
+	delete_event = '1';
+    } else {
+	delete_event = '0';
+    }
 
     var params = [
 	    {
 		tag : 'event_id',
 		value : $("#cmd_MorepageEvents").val()
-	    },
-	    {
+	    }, {
 		tag : 'event_name',
 		value : $(
 			"#cmd_MorepageEvents option[value='"
 				+ $("#cmd_MorepageEvents").val() + "']").html()
-	    },
-	    {
+	    }, {
 		tag : 'event_location',
 		value : (($("#morepage_eventLocation").val() != '' && $(
 			"#morepage_eventLocation").val() != 'address or current location') ? $(
 			"#morepage_eventLocation").val()
 			: '')
-	    },
-	    {
+	    }, {
 		tag : 'event_date',
 		value : (($("#morepage_eventDate").val() != '' && $(
 			"#morepage_eventDate").val() != 'from') ? $(
 			"#morepage_eventDate").val() : '')
-	    },
-	    // {tag: 'viewable'}
-	    {
+	    }, {
 		tag : 'event_from',
 		value : viewable_from
 	    }, {
@@ -1416,23 +1420,23 @@ function morepage_saveEvent(confirmed) {
 	    }, {
 		tag : 'sell_media',
 		value : sell_media.toString()
+	    }, {
+		tag : 'delete_event',
+		value : delete_event
 	    } ];
     ajaxRequest('editevent', params, function(response) {
-	if (getValueFromXMLTag(response, 'status')) {
-	    var ssMsg = getValueFromXMLTag(response, 'message');
-
-	    if ($.trim(ssMsg).toLowerCase() == 'record not updated') {
-		ssMsg = "No record to update";
-	    }
-	    jsuccess(ssMsg);
-	    if (ssMsg.toLowerCase() == "no record to update") {
-		$("#jSuccess").css("background-image", "none");
-		$("#jSuccess").css("padding-left", "10px");
-	    }
+	var status = getValueFromXMLTag(response, 'status');
+	if (status == 'Failure') {
+	    ssMsg = "failed to update";
+	    jerror(ssMsg);
+	    //$("#jSuccess").css("background-image", "none");
+	    //$("#jSuccess").css("padding-left", "10px");
+	} else {
+	    var event_name = getValueFromXMLTag(response, 'event_name');
+	    jsuccess(getValueFromXMLTag(response, 'message'));
+	    var remove_event = "#cmd_MorepageEvents option[value='" + remove_event + "']";  
+	    $(remove_event).remove();
 	}
-
-	else
-	    jerror(getValueFromXMLTag(response, 'message'));
     });
 }
 
@@ -1964,6 +1968,12 @@ $(function() {
 
 					    var counter_status = $(media_detail)
 						    .filter('status').html();
+                                            var counter_claim_status='onclick="reportCounterclaim(this);"';
+                                            var counter_claim_text='report counter claim';
+                                            if(counter_status =='claim reported'){
+                                                counter_claim_status ='style="cursor:default; background:#828080;"  onclick=""';
+                                                counter_claim_text='claim Submitted';
+                                            }
 
 					    var media_url = $(media_detail)
 						    .filter('media_url').html();
@@ -1987,11 +1997,11 @@ $(function() {
 						    ' <td><img src="'
 						    + media_url
 						    + '" width="80" /></td>'
-						    + '<td> <a href="javascript:;"  onclick="reportCounterclaim(this);" class="counter-claim-btn reportCounterclaim" id="'
+						    + '<td > <a href="javascript:;" '+counter_claim_status+'   class="counter-claim-btn reportCounterclaim" id="'
 						    + media_id
 						    + '" rel="'
 						    + violation_id
-						    + '">report counter claim</a>'
+						    + '">'+counter_claim_text+'</a>'
 						    + '</td>'
 						    + '<td width="7%">'
 						    + dmca_violation_report_date

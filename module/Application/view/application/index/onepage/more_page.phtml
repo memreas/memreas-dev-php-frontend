@@ -21,15 +21,13 @@ use Application\Model\MemreasConstants;
 				<!--<li><a href="#" title="tab4-more" class="notification-tab">notification</a></li>-->
 				<li><a href="#" title="tab6-more" class="event-tab">memreas</a></li>
 				<li><a href="#" title="tab-friends" class="friends-tab">friends</a></li>
-                <?php if ($PaymentTabs['Subscription']): ?>
                 <li><a href="#" title="tab7-more"
 					class="subscription-tab">Subscriptions</a></li>
-                <?php endif ?>
-                <?php if ($PaymentTabs['BuyCredit']): ?>
+                <?php if (MemreasConstants::MEMREAS_SELL_MEDIA): ?>
                 <li><a href="#" title="tab8-more" class="buy-credit-tab">Buy
 						credit</a></li>
                 <?php endif ?>
-                <?php if ($PaymentTabs['SellMedia']): ?>
+                <?php if (MemreasConstants::MEMREAS_SELL_MEDIA): ?>
                 <li><a href="#" title="tab9-more" class="sell-media-tab">Sell
 						media</a></li>
                 <?php endif ?>

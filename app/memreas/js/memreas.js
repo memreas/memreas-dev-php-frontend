@@ -306,17 +306,17 @@ $(function() {
     $("a.memreas").click(function() {
 	ajaxScrollbarElement('.myMemreas');
 	if (checkReloadItem('view_my_events')) {
-	    fetchMyMemreas();
+	   fetchMyMemreas();
 	}
     });
     $("#tabs-memreas li:eq(1) a").click(function() {
 	if (checkReloadItem('view_friend_events')) {
-	    fetchFriendsMemreas('private');
+	 fetchFriendsMemreas('private');
 	}
     });
     $("#tabs-memreas li:eq(2) a").click(function() {
 	if (checkReloadItem('view_public_events')) {
-	    fetchpubsMemreas();
+	 fetchpubsMemreas();
 	}
     });
 });
@@ -329,6 +329,7 @@ function fetchMyMemreas() {
 	var jTarget_object = $(".myMemreas");
     jTarget_object.empty();
 
+    $('#loadingpopup').fadeIn(200);
     ajaxRequest(
 	    'viewevents',
 	    [ {
@@ -351,19 +352,23 @@ function fetchMyMemreas() {
 		value : '20'
 	    } ],
 	    function(response) {
+		$('#loadingpopup').fadeOut(200);
 		if (getValueFromXMLTag(response, 'status') == "Success") {
-		    // console.log("response " + response);
+		    //console.log("response Memreas " + response);
+		    //alert("memreas me response " + response);
 		    var events = getSubXMLFromTag(response, 'event');
 
 		    var event_count = events.length;
-
+		    var scrollbarwidth = $('#memreas').width();
+		    scrollbarwidth = scrollbarwidth - 40;
 		    for (var i = 0; i < event_count; i++) {
 			var event_media = getSubXMLFromTag(events[i],
 				'event_media');
 			var event_media_count = event_media.length;
 			var event = events[i].innerHTML;
 
-			var StrMedia = '<div class="DocumentList3"><ul class="event-pics list-inline">';
+			var StrMedia = '<div class="documentscls"><ul class="event-pics event-listing-memreas" style="width:'
+				+ scrollbarwidth + 'px;">';
 			var eventId = $(event).filter('event_id').html();
 			for (var j = 0; j < event_media_count; j++) {
 			    var event_medi = event_media[j];
@@ -372,7 +377,7 @@ function fetchMyMemreas() {
 			    var _event_media_type_ = getValueFromXMLTag(
 				    event_medi, 'event_media_type');
 			    if (_event_media_type_ == 'image') {
-				StrMedia += '<li class="image DocumentItem1"><a href="javascript:;" onclick="showEventDetail(\''
+				StrMedia += '<li class="image " style="float:none; display:inline-block;"><a href="javascript:;" onclick="showEventDetail(\''
 					+ eventId
 					+ '\', \''
 					+ user_id
@@ -380,13 +385,17 @@ function fetchMyMemreas() {
 					+ removeCdataCorrectLink(event_media_image)
 					+ '"  style=""/></a></li>';
 			    } else if (_event_media_type_ == 'video') {
-				StrMedia += '<li class="video DocumentItem1"><a href="javascript:;" onclick="showEventDetail(\''
+				StrMedia += '<li class="video" style="float:none; display:inline-block;"><a href="javascript:;" onclick="showEventDetail(\''
 					+ eventId
 					+ '\', \''
 					+ user_id
 					+ '\');" style="cursor: pointer;"><img src="'
 					+ removeCdataCorrectLink(event_media_image)
-					+ '"  style=""/></a><span class="video-content-play-icon"></span></li>';
+					+ '"  style=""/></a><span class="video-content-play-icon-2" onclick="showEventDetail(\''
+					+ eventId
+					+ '\', \''
+					+ user_id
+					+ '\');" ></span></li>';
 			    }
 			}
 			StrMedia += '</ul></div><div style="clear:both;"></div>';
@@ -475,6 +484,7 @@ function fetchFriendsMemreas(friendMemreasType) {
 
     + '"json": ' + params_json + '}';
 
+    $('#loadingpopup').fadeIn(200);
     var stripeActionUrl = $("input[name=stripe_url]").val()
 	    + 'stripe_checkOwnEvent';
     $
@@ -484,6 +494,7 @@ function fetchFriendsMemreas(friendMemreasType) {
 		dataType : 'jsonp',
 		data : 'json=' + data,
 		success : function(response) {
+		    $('#loadingpopup').fadeOut(200);
 		    response = JSON.parse(response.data);
 		    if (response.status == 'Success') {
 			Account.eventPurchases = response.events;
@@ -496,7 +507,7 @@ function fetchFriendsMemreas(friendMemreasType) {
 			var sell_class = 'private-';
 		    } else {
 			var showPublic = '1';
-			var showAccepted = '1';
+			var showAccepted = '0';
 			var sell_class = 'public-';
 		    }
 		    ajaxRequest(
@@ -772,6 +783,7 @@ function fetchpubsMemreas() {
 
     var stripeActionUrl = $("input[name=stripe_url]").val()
 	    + 'stripe_checkOwnEvent';
+    $('#loadingpopup').fadeIn(200);
     $
 	    .ajax({
 		url : stripeActionUrl,
@@ -779,6 +791,7 @@ function fetchpubsMemreas() {
 		dataType : 'jsonp',
 		data : 'json=' + data,
 		success : function(response) {
+		    $('#loadingpopup').fadeOut(200);
 		    response = JSON.parse(response.data);
 		    if (response.status == 'Success') {
 			Account.eventPurchases = response.events;
@@ -857,8 +870,8 @@ function fetchpubsMemreas() {
 					    var event_media = getSubXMLFromTag(
 						    friends[i], 'event_media');
 					    var event_media_count = event_media.length;
-					    var StrMedia = '<div style="clear:both;"></div><div class="DocumentList"><ul class="event-pics">';
-                                            var overlaydiv='';
+					    var StrMedia = '<div style="clear:both;"></div><div class="documentscls"><ul class="event-pics event-listing-public-memreas">';
+					    var overlaydiv = '';
 
 					    var event_metadata = getValueFromXMLTag(
 						    friends[i],
@@ -887,7 +900,7 @@ function fetchpubsMemreas() {
 							|| Account
 								.checkOwnEvent(event_id)) {
 						    if (_event_media_type_ == 'image') {
-							StrMedia += '<li class="image DocumentItem"><a href="javascript:;" onclick="showEventDetail(\''
+							StrMedia += '<li class="image" style="float:none; display:inline-block;"><a href="javascript:;" onclick="showEventDetail(\''
 								+ event_id
 								+ '\', \''
 								+ user_id
@@ -895,13 +908,13 @@ function fetchpubsMemreas() {
 								+ removeCdataCorrectLink(event_media_image)
 								+ '"  style=""/></a></li>';
 						    } else if (_event_media_type_ == 'video') {
-							StrMedia += '<li class="video DocumentItem"><a href="javascript:;" onclick="showEventDetail(\''
+							StrMedia += '<li class="video" float:none; display:inline-block;><a href="javascript:;" onclick="showEventDetail(\''
 								+ event_id
 								+ '\', \''
 								+ user_id
 								+ '\');" style="cursor: pointer;"><img src="'
 								+ removeCdataCorrectLink(event_media_image)
-								+ '"  style=""/></a></li>';
+								+ '"  style=""/></a><span class="video-content-play-icon-2"></span></li>';
 						    }
 						} else {
 						    if (_event_media_type_ == 'image') {
@@ -923,15 +936,17 @@ function fetchpubsMemreas() {
 								+ event_name
 								+ '\');" style="cursor: pointer;"><div class="sell-event-overlay"></div><span class="sell-event-buyme"><i>Buy</i></span><img src="'
 								+ removeCdataCorrectLink(event_media_image)
-								+ '"  style=""/></a></li>';
+								+ '"  style=""/></a><span class="video-content-play-icon-2"></span></li>';
 						    }
-                                                    overlaydiv='<div class="overlaypopUp2" onclick="popupBuyMedia(\''
-								+ event_id
-								+ '\', \''
-								+ event_price
-								+ '\', \''
-								+ event_name
-								+ '\');"><a href="#" class="btnpublicbuynow">purchase access $'+event_price+'</a></div>';
+						    overlaydiv = '<div class="overlaypopUp2" onclick="popupBuyMedia(\''
+							    + event_id
+							    + '\', \''
+							    + event_price
+							    + '\', \''
+							    + event_name
+							    + '\');"><a href="#" class="btnpublicbuynow">purchase access $'
+							    + event_price
+							    + '</a></div>';
 						}
 					    }
 
@@ -967,8 +982,8 @@ function fetchpubsMemreas() {
 					    $(target_object)
 						    .append(
 							    '<div class="event_section addstyling">'
-                                                                    +overlaydiv
-                                                                    +'<section class="row-fluid clearfix">'
+								    + overlaydiv
+								    + '<section class="row-fluid clearfix">'
 								    + '<figure class="pro-pics2"><img class="public-profile-img" src="'
 								    + profile_img
 								    + '" alt=""></figure>'

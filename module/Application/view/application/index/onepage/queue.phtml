@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Copyright (C) 2015 memreas llc. - All Rights Reserved
  * Unauthorized copying of this file, via any medium is strictly prohibited
@@ -6,11 +6,11 @@
  */
 ?>
 <?php
+
 use Application\Model\MemreasConstants;
 ?>
 <div class="span11 tabcontent-detail" id="queue" style="display: none;">
-	<div
-		class="span11">
+	<div class="span11">
 		<div class="row-fluid">
 			<ul id="tabs-queue" class="medium_tabs">
 				<li><a href="#" title="upload-queue" class="tabs2">uploads</a></li>
@@ -22,25 +22,30 @@ use Application\Model\MemreasConstants;
 						<li class="first-upload"></li>
 					</ul>
 					<!-- Direct Upload to S3 -->
-                    <form action="https://<?php echo MemreasConstants::S3BUCKET; ?>.s3.amazonaws.com/" method="POST" enctype="multipart/form-data" class="media-upload" id="media-upload-form" form-type="media-upload">
-	                    <input type="hidden" name="key" value="">
-    	        				<input type="hidden" name="Content-Type" value="">
-	                    <input type="hidden" name="acl" value="">
-        		    			<input type="hidden" name="success_action_status" value="">
-            				<input type="hidden" name="policy" value="">
-            				<input type="hidden" name="x-amz-algorithm" value="">
-	            			<input type="hidden" name="x-amz-credential" value="">
-    	    	    				<input type="hidden" name="x-amz-date" value="">
-        		    			<input type="hidden" name="x-amz-expires" value="">
-    		        			<input type="hidden" name="x-amz-signature" value="">
-    		        			<input type="hidden" name="x-amz-server-side-encryption" value="AES256">
-
-                        <div id="upload-dropzone" class="upload-dropzone upload-from-event" style="position: relative;">
-							<input type="file" name="file" multiple style="opacity: 0; -moz-opacity:0; -webkit-opacity: 0; filter: alpha(opacity = 0); width: 100%; height: 100%;"/>
+					<form
+						action="https://<?php echo MemreasConstants::S3BUCKET; ?>.s3.amazonaws.com/"
+						method="POST" enctype="multipart/form-data" class="media-upload"
+						id="media-upload-form" form-type="media-upload">
+						<input type="hidden" name="key" value=""> <input type="hidden"
+							name="Content-Type" value=""> <input type="hidden" name="acl"
+							value=""> <input type="hidden" name="success_action_status"
+							value=""> <input type="hidden" name="policy" value=""> <input
+							type="hidden" name="x-amz-algorithm" value=""> <input
+							type="hidden" name="x-amz-credential" value=""> <input
+							type="hidden" name="x-amz-date" value=""> <input type="hidden"
+							name="x-amz-expires" value=""> <input type="hidden"
+							name="x-amz-signature" value=""> <input type="hidden"
+							name="x-amz-server-side-encryption"
+							value="<?php echo MemreasConstants::S3_ENCRYPTION; ?>">
+						<div id="upload-dropzone"
+							class="upload-dropzone upload-from-event"
+							style="position: relative;">
+							<input type="file" name="file" multiple
+								style="opacity: 0; -moz-opacity: 0; -webkit-opacity: 0; filter: alpha(opacity = 0); width: 100%; height: 100%;" />
 						</div>
-                    </form>
+					</form>
 
-					</div>
+				</div>
 				<div id="complete" class="hideCls">
 					<ul id="content_1" class="pics completed-upload scroll-area">
 						<div class="first-element"></div>
