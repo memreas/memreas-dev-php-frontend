@@ -178,7 +178,7 @@ jQuery.fetch_server_media = function() {
 				    + '" class="blueimp-gallery-thumb-anchor "';
 			    linksContainerData += ' style="background:url('
 				    + _media_thumbnail_large
-				    + ')"><span class="video-content-play-icon"  style="position: relative;z-index:999; left:24px;"></span><img src="'
+				    + ')"><span class="video-content-play-icon"  style="position: relative;z-index:999; left:37px; top:-9px"></span><img src="'
 				    + _media_thumbnail_large
 				    + '" alt="" style="margin-left:-99px;" /></a>';
 

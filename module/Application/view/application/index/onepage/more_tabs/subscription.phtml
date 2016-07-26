@@ -202,40 +202,40 @@
             <input name="input" type="text" id="order-summary-address2" class="share-txtfield" value="address line 2" onBlur="if(!/\S/.test(this.value))this.value=''" onFocus="if(this.value == 'address line 2')this.value = '';"/>
         </li>
         <li>
-            <label class="textfield_names" style="width: 135px;">Card type :</label>
-            <label class="textfield_names" style="margin-left: 10px; width: 200px;" id="order-card-type">Visa</label>
+            <label class="textfield_names" style="min-width: 20px;">Card type :</label>
+            <label class="textfield_names" style="margin-left: 10px; min-width: 20px; color:#F5FF00;" id="order-card-type">Visa</label>
         </li>
         <li>
             <label class="textfield_names" style="width: 135px;">Card number</label>
-            <input name="input" type="text" id="order-summary-ccnum" class="" value="card number" onBlur="if(!/\S/.test(this.value))this.value=''" onFocus="if(this.value == 'card number')this.value = '';" readonly />
+            <input name="input" type="text" id="order-summary-ccnum" class="share-txtfield" value="card number" onBlur="if(!/\S/.test(this.value))this.value=''" onFocus="if(this.value == 'card number')this.value = '';" readonly />
         </li>
         <li>
             <label class="textfield_names" style="width: 135px;">Exp date:</label>
-            <input name="input" type="text" id="order-summary-expdate" class="" value="exp date" onBlur="if(!/\S/.test(this.value))this.value=''" onFocus="if(this.value == 'exp date')this.value = '';" readonly />
+            <input name="input" type="text" id="order-summary-expdate" class="share-txtfield" value="exp date" onBlur="if(!/\S/.test(this.value))this.value=''" onFocus="if(this.value == 'exp date')this.value = '';" readonly />
         </li>
         <li>
             <label class="textfield_names" style="width: 135px;">Exp year:</label>
-            <input name="input" type="text" id="order-summary-expyear" class="" value="exp year" onBlur="if(!/\S/.test(this.value))this.value=''" onFocus="if(this.value == 'exp year')this.value = '';" readonly />
+            <input name="input" type="text" id="order-summary-expyear" class="share-txtfield" value="exp year" onBlur="if(!/\S/.test(this.value))this.value=''" onFocus="if(this.value == 'exp year')this.value = '';" readonly />
         </li>
         <li>
             <label class="textfield_names" style="width: 135px;">City:</label>
-            <input name="input" type="text" id="order-summary-city" class="" value="city" onBlur="if(!/\S/.test(this.value))this.value=''" onFocus="if(this.value == 'city')this.value = '';"/>
+            <input name="input" type="text" id="order-summary-city" class="share-txtfield" value="city" onBlur="if(!/\S/.test(this.value))this.value=''" onFocus="if(this.value == 'city')this.value = '';"/>
         </li>
         <li>
             <label class="textfield_names" style="width: 135px;">State:</label>
-            <input name="input" type="text" id="order-summary-state" class="" value="state" onBlur="if(!/\S/.test(this.value))this.value=''" onFocus="if(this.value == 'state')this.value = '';"/>
+            <input name="input" type="text" id="order-summary-state" class="share-txtfield" value="state" onBlur="if(!/\S/.test(this.value))this.value=''" onFocus="if(this.value == 'state')this.value = '';"/>
         </li>
         <li>
             <label class="textfield_names" style="width: 135px;">Zip:</label>
-            <input name="input" type="text" id="order-summary-zip" class="" value="zip" onBlur="if(!/\S/.test(this.value))this.value=''" onFocus="if(this.value == 'zip')this.value = '';"/>
+            <input name="input" type="text" id="order-summary-zip" class="share-txtfield" value="zip" onBlur="if(!/\S/.test(this.value))this.value=''" onFocus="if(this.value == 'zip')this.value = '';"/>
         </li>
         <li>
-            <label class="textfield_names" style="width: 135px;">Plan name:</label>
-            <label class="textfield_names" style="margin-left: 10px; width: 300px;" id="choose-plan-name">Plan A</label>
+            <label class="textfield_names" style=" min-width: 80px;">Plan name:</label>
+            <label class="textfield_names" style="margin-left: 10px; width: 300px;min-width: 80px; color:#F5FF00" id="choose-plan-name">Plan A</label>
         </li>
         <li>
-            <label class="textfield_names" style="width: 135px;">Cost:</label>
-            <label class="textfield_names" style="margin-left: 10px;" id="choose-plan-cost">$12</label>
+            <label class="textfield_names" style=" min-width: 20px;">Cost:</label>
+            <label class="textfield_names" style="margin-left: 10px; min-width: 20px; color:#F5FF00;" id="choose-plan-cost">$12</label>
         </li>
         <li>
             <input id="subscription-order-agree" class="css-checkbox css-label" type="checkbox" name="subscription_order_agree"/>
@@ -259,8 +259,8 @@
             <label class="textfield_names" style="margin-left: 10px; width: 200px;" id="order-recept-address2">Address line 2</label>
         </li>
         <li>
-            <label class="textfield_names" style="width: 150px;">Card type :</label>
-            <label class="textfield_names" style="margin-left: 10px; width: 200px;" id="order-recept-cardtype">Visa</label>
+            <label class="textfield_names" style="width: 150px; min-width: 80px;">Card type :  <label class="textfield_names" style="margin-left: 10px; width: 200px; min-width: 80px;" id="order-recept-cardtype">Visa</label></label>
+            
         </li>
         <li>
             <label class="textfield_names" style="width: 150px;">Card number</label>
@@ -287,12 +287,12 @@
             <label class="textfield_names" style="margin-left: 10px; width: 200px;" id="order-recept-zip">25525</label>
         </li>
         <li>
-            <label class="textfield_names" style="width: 150px;">Plan name:</label>
-            <label class="textfield_names" style="margin-left: 10px; width: 200px;" id="choose-planrecept-name">Plan A</label>
+            <label class="textfield_names" style="width: 150px; min-width: 80px;">Plan name:</label>
+            <label class="textfield_names" style="margin-left: 10px; width: 200px; min-width: 80px;" id="choose-planrecept-name">Plan A</label>
         </li>
         <li>
-            <label class="textfield_names" style="width: 150px;">Cost:</label>
-            <label class="textfield_names" style="margin-left: 10px; width: 200px;" id="choose-planrecept-cost">$12</label>
+            <label class="textfield_names" style="width: 150px;min-width: 40px;">Cost:</label>
+            <label class="textfield_names" style="margin-left: 10px; width: 200px; min-width: 80px;" id="choose-planrecept-cost">$12</label>
         </li>
         <li>
             <div style="text-align: center;" class="message-order">Thank you! You will receive an email confirmation shortly</div>
