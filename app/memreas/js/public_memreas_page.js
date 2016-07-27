@@ -238,7 +238,9 @@ jQuery.fetchPublic = function() {
 					    + '" class="blueimp-gallery-thumb-anchor "';
 				    linksContainerData += ' style="background:url('
 					    + event_media_entry.event_media_image
-					    + ')"><span class="video-content-play-icon"></span></a>';
+					    + ')"><span class="video-content-play-icon"  style="position: relative;z-index:999; left:37px; top:-9px"></span><img src="'
+				    + event_media_entry.event_media_image
+				    + '" alt="" style="margin-left:-99px;" /></a>';
 
 				} else {
 
@@ -270,7 +272,8 @@ jQuery.fetchPublic = function() {
 					    + '" class="blueimp-gallery-thumb-anchor"';
 				    linksContainerData += ' style="background:url('
 					    + event_media_entry.event_media_image
-					    + ')"><span></span></a>';
+					    + ')"><img src="'
+				    + event_media_entry.event_media_image + '" alt="" /></a>';
 
 				}
 				objArr.push(item);
