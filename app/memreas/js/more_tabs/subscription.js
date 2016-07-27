@@ -260,7 +260,7 @@ function subscription_step4() {
 				data : 'json=' + data,
 				timeout: 10000,
 				success : function(response) {
-				    	console.log(response);
+				    	console.log('Subscription' +response);
 				  	response = jQuery.parseJSON( response.data );
 					if (response.status == 'Success') {
 						jOrderRecept.html("<li classs='my-customer-active-format' style='background: #327AC9;padding-left: 10px;adding-top: 10px; font-size: 19px;border-radius: 5px;'>Your plan is activated successfully</li>");

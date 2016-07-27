@@ -972,8 +972,17 @@ function resizeBlueIMpGallerypanel() {
 		    'style',
 		    'height: '+queueHeight+'px; min-height: ' + queueHeight
 			    + 'px !important');
+                    
+      $(
+	    "ul.edit-area-scroll")
+	    .attr(
+		    'style',
+		    'height: '+queueHeight+'px; min-height: ' + queueHeight
+			    + 'px !important');              
     //console.log(queueHeight);
 }
+
+
 
 
 
