@@ -790,6 +790,7 @@ function getAccountPlans() {
 				// jAccountPlans
 				// .append(html_element);
 				// console.log('HTMLCONTENT'+html_element);
+                                $('.my-list-plans').html('');
 				$('.my-list-plans').append(html_element);
 				$("input#plan-" + plan_id).attr("checked",
 					"checked");
