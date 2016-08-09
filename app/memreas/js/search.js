@@ -523,7 +523,7 @@ function personalSearchLi(target, item) {
 		+ '" alt=""></figure><div class="user-names">' + name
 		+ '</div>';
 	if (typeof item.friend_request_sent === 'undefined') {
-	    op += '<a href="javascript:;" class="btn-friends black_btn_skin" id="'
+	    op += '<a href="javascript:;" class="btn-friends black_btn_skin btnAddafrined" id="'
 		    + name
 		    + '" title="user-'
 		    + name.replace('@', '')

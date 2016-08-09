@@ -2665,16 +2665,19 @@ ul.personresults {
 }
 
 ul.personresults li {
-	background: none repeat scroll 0 0 #fff;
-	border: 2px solid #88a0c0;
+	background: none repeat scroll 0 0 #327AC9;
+/*	border: 2px solid #88a0c0;*/
+        border: 2px solid #f9f9f9
 	border-radius: 0;
 	float: left;
 	height: auto;
 	margin: 5px 0;
-	padding: 20px 0;
+	padding: 10px 0;
 	width: 100%;
 	max-height: 80px;
 }
+.ul.personresults li .user-names{font-size:17px !important; margin: 0 0 0 2% !important; line-height: 21px !important;}
+.btnAddafrined{color:#fff;}
 
 a.black_btn_skin.btn-friends {
 	display: block;
