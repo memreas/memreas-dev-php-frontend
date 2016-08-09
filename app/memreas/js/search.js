@@ -520,14 +520,14 @@ function personalSearchLi(target, item) {
 	var name = $.trim(item.username);
 	var op = '<li id="search-' + name.replace('@', '')
 		+ '"><figure class="pro-pics"><img src="' + photo
-		+ '" alt=""></figure><div class="user-names">' + name
+		+ '" alt=""></figure><div class="user-names searchusername" style="color:#fff;">' + name
 		+ '</div>';
 	if (typeof item.friend_request_sent === 'undefined') {
-	    op += '<a href="javascript:;" class="btn-friends black_btn_skin btnAddafrined" id="'
+	    op += '<a href="javascript:;" class="btn-friends black_btn_skin btnAddafrined" style="color:#fff;" id="'
 		    + name
 		    + '" title="user-'
 		    + name.replace('@', '')
-		    + '">add friend</a></li>';
+		    + '" onclick="{alert("Hello");}">add friend</a></li>';
 	}
 
 	$(target).append(op);
