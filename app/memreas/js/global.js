@@ -986,7 +986,7 @@ function resizeBlueIMpGallerypanel() {
 		    'height: '+queueHeight+'px; min-height: ' + queueHeight
 			    + 'px !important');                 
                     
-                    personresults
+                    
     //console.log(queueHeight);
 }
 
