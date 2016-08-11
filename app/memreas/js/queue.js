@@ -10,7 +10,7 @@ function resizeWindow(){
     }
     
     $('#tab-content-queue').attr('style', 'height: auto !important; min-height: '+queueHeight+'px !important');
-    console.log(queueHeight);
+    //console.log(queueHeight);
 }
 
 $(function() {
