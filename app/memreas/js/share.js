@@ -575,7 +575,7 @@ share_addEvent = function() {
 // may not be necessary
 //
 doneAction = function(medianext) {
-	console.log(arguments.callee.toString());
+	//console.log(arguments.callee.toString());
 
 	/*
 	 * if media details ! filled out then goto media details and show error if
@@ -604,18 +604,23 @@ doneAction = function(medianext) {
 	//
 	// Goto media page
 	//
-	if (medianext == 'next') {
+	if (medianext == 'medianext') {
 		setTimeout(function() {
-			//if (SHAREPAGE_TAB_MEDIA) {
-			//	share_gotoPage(SHAREPAGE_TAB_FRIENDS);
-			//}
+//			if (SHAREPAGE_TAB_MEDIA) {
+//				share_gotoPage(SHAREPAGE_TAB_FRIENDS);
+//			}
+ console.log('Media click Event--->');
 			$('.mmediaclick').trigger('click');
-			medianext = 'friendnext';
+			
 		}, 2000);
-	} else if (medianext == 'friendnext') {
+	} 
+        
+    if (medianext == 'friendnext') {
 		//
 		// Goto friends page
-		//
+		// 
+console.log('Friend click Event--->');
+                
 		setTimeout(function() {
 			$('.mfriendsclick').trigger('click');
 		}, 2000);
@@ -961,10 +966,12 @@ ajaxAddExistingMediaToEvent = function() {
 // clear all fields on Media page when click "cancel" button.
 share_clearMedia = function() {
 	console.log('share_clearMedia CHECK HERE>>>>>>>>');
-	var mediaList = $("#share_medialist .mCSB_container li a img");
-
+	//var mediaList = $("#share_medialist .mCSB_container li a img");
+        var mediaList = $("#share_medialist  li ");
+        var selectedImg=$('.selected-gallery');
 	for (var i = 0; i < mediaList.length; i++) {
 		$(mediaList[i]).removeClass('setchoosed');
+                $(selectedImg).attr('style','display:none;');
 	}
 };
 
