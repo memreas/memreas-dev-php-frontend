@@ -11,10 +11,10 @@
 		<div class="row-fluid">
 			<ul id="tabs-share" class="medium_tabs">
 				<li>
-					<a href="#" title="tab1-share">memreas details</a>
+					<a href="#" title="tab1-share" class="mdetailsclick" id="">memreas details</a>
 				</li>
 				<li>
-					<a href="#" title="tab2-share" class="">media</a>
+					<a href="#" title="tab2-share" class="mmediaclick">media</a>
 				</li>
 				<li>
 					<a href="#" title="tab3-share" class="mfriendsclick">friends</a>
@@ -91,51 +91,20 @@
 					       //
 					        
 					     ?>
-						<a class="black_btn_skin" href="javascript:;" onclick="doneAction('next');">next</a>
+						<a class="black_btn_skin" href="javascript:;" onclick="doneAction('medianext');">next</a>
 						<a class="black_btn_skin" href="javascript:;" onclick="doneAction('done');">done</a>
-						<a class="black_btn_skin" href="javascript:share_clearMemreas(false);">cancel</a>
+                                                <a class="black_btn_skin" href="javascript:;" onclick="share_clearMemreas(false);">cancel</a>
 					</div>
 				</div>
 				<div id="tab2-share" class="hideCls">
-                        <?php 
-                           //
-                           // change so only done calls share add event and then share media
-                           //
-                            
-                         ?>
 					<ul id="share_medialist" class="pics scroll-area scrollClass">
 						<!--<li><a href="/memreas/img/large-pic-1.jpg" class="swipebox" title="photo-1"><img src="/memreas/img/small-pic-1.jpg" alt=""></a></li>-->
 					</ul>
-					<!--
-					<div class="event-upload-area" style="display: none;">
-					<ul class="event-upload-image">
-					<li class="first-upload"></li>
-					</ul>
-					<div class="upload-dropzone-removed upload-from-event"></div>
-					</div>
-					<div class="comment">
-					<ul>
-					<li>
-					<div class="comment-txt clearfix">add a comment</div>
-					</li>
-					<li style="position: relative;">
-					<input name="input2" accept="audio/*;capture=microphone" type="text" id="txt_comment" class="comment_txtfield" value="your comments here" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'your comments here')this.value = '';"/>
-					<a href="javascript:voiceComment();" class="voice-icon"></a>
-
-					<a class="button" id="download-audio" href="javascript:ar_saveAudio();" style="display: none;">Download Audio</a>
-
-					</li>
-					</ul>
-					<div class="clearfix"></div>
-
-					</div>
-					-->
-
 					<div class="clearfix"></div>
 					<div class="add-comment-buttons" style="text-align: center; margin-top: 10px;">
-						<a class="black_btn_skin" href="javascript:doneAction('friendnext');">next</a>
-						<a class="black_btn_skin" href="javascript:doneAction('done');">done</a>
-						<a class="black_btn_skin" href="javascript:share_clearMemreas(false);">cancel</a>
+                                            <a class="black_btn_skin" href="javascript:;" onclick="doneAction('friendnext');">next</a>
+                                            <a class="black_btn_skin" href="javascript:;" onclick="doneAction('done');">done</a>
+                                            <a class="black_btn_skin" href="javascript:;" onclick="share_clearMemreas(false);">cancel</a>
 					</div>
 					<div class="clearfix"></div>
 					<div class="upload-event-buttons" style="display: none;">
@@ -144,14 +113,6 @@
 					<div class="clearfix"></div>
 				</div>
 				<div id="tab3-share" class="hideCls">
-				    
-                        <?php 
-                           //
-                           // change so only done calls share add event and then add media and then add friends
-                           //
-                            
-                         ?>
-				    
 					<div class="styled-select hidden-memreas">
 						<select id="cmb_socialtype" style="display:none;" >
 							<option value="">-Choose-</option>
@@ -198,8 +159,9 @@
 						</li>
 					</ul>
 					<div class="clear"></div>
-					<a class="black_btn_skin f-center" href="javascript:;" onclick="return doneAction('done');">done</a>
-					<a class="black_btn_skin f-middle" href="javascript:backToMedia();">cancel</a>
+					<a class="black_btn_skin f-center" href="javascript:;" onclick="doneAction('done');">done</a>
+					<!--<a class="black_btn_skin f-middle" href="javascript:backToMedia();">cancel</a>-->
+                                        <a class="black_btn_skin f-middle" href="javascript:;" onclick="share_clearMemreas(false);">cancel</a>
 				</div>
 			</div>
 		</div>
