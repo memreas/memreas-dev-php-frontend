@@ -184,6 +184,7 @@ function subscription_step3() {
 	jOrderSummary.find('#choose-plan-cost')
 			.html('$' + (orderPlan.amount / 100));
 	updateAkordeonContent($('.subscription-order-summary-tab'));
+        console.log('User Card Name==>'+card_name);
 }
 
 function subscription_step4() {
@@ -249,6 +250,18 @@ function subscription_step4() {
 	order_summary.amount = orderPlan.amount / 100;
 
 	order_summary = JSON.stringify(order_summary, null, '\t');
+        var orsummery=JSON.parse(order_summary)
+        //console.log('Order Summery' +orsummery['plan']);
+        var orderCard = new Object();
+	for (var i in Account.subscriptionTab_cards) {
+		if (Account.subscriptionTab_cards[i].selected == 1) {
+			orderCard = Account.subscriptionTab_cards[i].data;
+			break;
+		}
+	}
+
+	var card_name = orderCard.first_name + ' ' + orderCard.last_name;
+        
 	var data = '{"action": "subscription", ' + '"type":"jsonp", ' + '"json": '
 			+ order_summary + '}';
 	$('.stripe-payment').fadeIn(1000);
@@ -260,10 +273,12 @@ function subscription_step4() {
 				data : 'json=' + data,
 				timeout: 10000,
 				success : function(response) {
-				    	console.log('Subscription' +response);
+				    	
 				  	response = jQuery.parseJSON( response.data );
+                                        console.log('Subscription' + JSON.stringify(response));
 					if (response.status == 'Success') {
-						jOrderRecept.html("<li classs='my-customer-active-format subscription-message' >Your plan is "+order_summary.plan+" activated successfully</li>");
+                                           
+						jOrderRecept.html("<li classs='my-customer-active-format subscription-message' >Dear "+card_name+" <br />Your plan is "+orsummery['plan']+" activated successfully.<br /><br /><strong>Best Regards</strong><br />memreas team</li>");
 
 						updateAkordeonContent($('.subscription-order-receipt-tab'));
 						check_user_subscription = 1;

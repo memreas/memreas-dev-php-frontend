@@ -3877,3 +3877,9 @@ background-image: url(../img/video-play.svg);
 .sellmediatxtname{float:none;}
 
 .subscription-message{background: #327AC9;padding-left: 10px;adding-top: 10px; font-size: 19px;border-radius: 5px;}
+.order-recept li{background: #327AC9;
+    padding-left: 10px;
+    padding-top: 10px;
+    font-size: 19px;
+    border-radius: 5px;}
+.order-recept li .error-description{color:#fff !important;}
