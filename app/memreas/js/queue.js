@@ -23,8 +23,6 @@ $(function() {
            resizeWindow(); 
         });
         
-        //alert(queueHeight);
-
 	$('#tabs-queue a').click(
 			function(e) {
 				e.preventDefault();
