@@ -755,6 +755,9 @@ var S3UploadInstance = function() {
 					    'addmediaevent',
 					    params,
 					    function(xml_response) {
+						if (getValueFromXMLTag( xml_response,'status') == 'Failure') {
+						    jerror(getValueFromXMLTag( xml_response,'message'));
+						} //end 
 						removeItem(uploadFilesInstance,
 							base_filename);
 						currentUploadFileCount = uploadFilesInstance.length;
@@ -776,6 +779,8 @@ var S3UploadInstance = function() {
 							    .mCustomScrollbar(
 								    "update");
 						}
+
+						
 						// console.log(xml_response);
 					    }, 'undefined', true);
 
