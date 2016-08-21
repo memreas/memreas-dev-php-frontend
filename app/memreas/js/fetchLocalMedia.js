@@ -4,7 +4,7 @@
  */
 
 function readFilesAndDisplayPreview(files) {
-	// alert('readFilesAndDisplayPreview fired...');
+	// console.log('readFilesAndDisplayPreview fired...');
 	// Loop through the FileList and render image files as thumbnails.
 	for (var i = 0, f; f = files[i]; i++) {
 		// Only process image files.

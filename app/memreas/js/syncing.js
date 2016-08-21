@@ -63,8 +63,9 @@ function success_addmedia(response) {
 			}
 		});
 		$.fetch_server_media($("input[name=user_id]").val());
-	} else
-		alert("error while adding media");
+	} else {
+	    console.log("error while adding media");
+	}
 }
 function error_addmedia() {
 }

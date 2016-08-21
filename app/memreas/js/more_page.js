@@ -179,7 +179,7 @@ $(function() {
 				target = 'media';
 
 			    if (profile_filename.indexOf(" ") >= 0) {
-				alert("Please remove spaces from filename.");
+				jerror("Please remove spaces from filename.");
 				return;
 			    }
 
@@ -202,10 +202,10 @@ $(function() {
 					async : false,
 					error : function(jqXHR, status,
 						thrownError) {
-					    alert(jqXHR.status);
-					    alert(jqXHR.responseText);
-					    alert(status);
-					    alert(thrownError);
+					    console.log(jqXHR.status);
+					    console.log(jqXHR.responseText);
+					    console.log(status);
+					    console.log(thrownError);
 					},
 					success : function(data, status,
 						response) {
@@ -2122,7 +2122,6 @@ function fetchS3PreSignedURLDMCACounterClaim() {
 }
 
 function reportCounterclaim(elm) {
-    // alert($(elm).attr('id'));
     $('#media_id').val($(elm).attr('id'));
     $('#violation_id').val($(elm).attr('rel'));
     $('#VIDNO').html($(elm).attr('rel'));
@@ -2203,7 +2202,6 @@ function reportCounterClaimForm() {
 
 	if (status == 'success') {
              $('#copyright_owner_name').val('');
-            alert( $('#copyright_owner_name').val(''));
             $('#copyright_owner_address').val('');
             $('#copyright_owner_email_address').val('');
             $('#media_id').val('');
