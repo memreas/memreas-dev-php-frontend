@@ -98,10 +98,12 @@ $(document)
 							    .hide();
 						    $("#search-result").show();
 						    $(target).empty();
-
+                                                    console.log('Data2-->' +JSON.stringify(data));
 						    var objs = jQuery
 							    .parseJSON(data);
                                                     console.log('!!!' +objs);
+                                                    console.log('!!!' + objs.count);
+                                                    var profile_photo = objs.profile_photo;
 						    $('#search-count').text(
 							    objs.count);
 						    totalPage = objs.totalPage;
@@ -123,7 +125,9 @@ $(document)
 											'id');
 									mid = '@'
 										+ mid;
-									var photo = map[mid].profile_photo[0];
+                                                                        console.log('Map IF-->'+map[mid]);
+									//var photo = map[mid].profile_photo[0];
+                                                                        var photo = profile_photo;
 									photo = removeCdataCorrectLink(photo);
 									$(
 										".modal-backdrop")
@@ -446,14 +450,14 @@ $(document)
 					    return item;
 					},
 					highlighter : function(item) {
-					    return h(item);
+					    return switchSearchTerm(item);
 					},
 					minLength : SEARCH_MIN_LENGTH
 				    });
 		});
 
-var h = function(item) {
-
+//var h = function(item) {
+var switchSearchTerm = function(item) {
     switch (item.charAt(0)) {
     case '@':
 	var photo = map[item].profile_photo[0];
@@ -527,7 +531,7 @@ function personalSearchLi(target, item) {
 		    + name
 		    + '" title="user-'
 		    + name.replace('@', '')
-		    + '" onclick="{alert("Hello");}">add friend</a></li>';
+		    + '" >add friend</a></li>';
 	}
 
 	$(target).append(op);
@@ -567,9 +571,17 @@ function closeModals(modalid) {
 function addFriend(name) {
     var user_id = $("input[name=user_id]").val();
     var personalMsg = $("#msg-" + name.replace("@", "")).val();
+console.log('Profile Photo' + JSON.stringify(map));
 
-    var photo = map[name].profile_photo;
-    var friend_id = map[name].user_id;
+    //var objs2 = jQuery.parseJSON(map);
+    //console.log('LIVE proifle'+objs2.profile_photo);
+   // var photo =objs2.profile_photo[0];
+   // 
+    //var photo = map[name].profile_photo;
+    //var photo = '';
+    //var friend_id = map[name].user_id;
+    console.log('Map XML-->'+map[name]);
+    var friend_id=user_id;
     var selFriends = [];
     selFriends[0] = {
 	tag : 'friend',
@@ -592,10 +604,11 @@ function addFriend(name) {
 	value : friend_id
     }, ], function(ret_xml) {
 	// parse the returned xml.
+        console.log('Success Message Add Frined' +ret_xml);
 	var status = getValueFromXMLTag(ret_xml, 'status');
 	var message = getValueFromXMLTag(ret_xml, 'message');
 	if (status.toLowerCase() == 'success') {
-	    if ($.trim(personalMsg) != "") {
+	    if ($.trim(wa) != "") {
 
 	    }
 	    closeModals(name.replace("@", ""));
