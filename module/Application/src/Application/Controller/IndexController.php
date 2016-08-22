@@ -337,6 +337,7 @@ class IndexController extends AbstractActionController {
 		if (empty ( $_SESSION )) {
 			MLog::addone ( __CLASS__ . __METHOD__ . __LINE__, 'empty($_SESSION)' );
 			$this->logoutAction ();
+			return;
 		}
 		
 		// MLog::addone ( __CLASS__.__METHOD__.__LINE__, '$this->memreas_session ()' );
@@ -444,8 +445,8 @@ class IndexController extends AbstractActionController {
 		}
 	}
 	public function logoutAction() {
-		// MLog::addone ( __CLASS__ . __METHOD__ . __LINE__, '::enter' );
-		$this->memreas_session ();
+		MLog::addone ( __CLASS__ . __METHOD__ . __LINE__, '::enter' );
+		//$this->memreas_session ();
 		/**
 		 * Logout FE Server
 		 */
