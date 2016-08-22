@@ -337,6 +337,7 @@ class IndexController extends AbstractActionController {
 		if (empty ( $_SESSION )) {
 			MLog::addone ( __CLASS__ . __METHOD__ . __LINE__, 'empty($_SESSION)' );
 			$this->logoutAction ();
+			return;
 		}
 		
 		// MLog::addone ( __CLASS__.__METHOD__.__LINE__, '$this->memreas_session ()' );
