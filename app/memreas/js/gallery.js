@@ -302,7 +302,6 @@ jQuery.fetch_server_media = function() {
 
 $(document).on('click', '[data-gallery]', function(event) {
     $('footer').attr('style', 'z-index:-1');
-    // alert('Hello');
     var id = $(this).data('gallery');
     var widget = $(id);
     var selected_media_id;
@@ -335,7 +334,6 @@ function getUserNotificationsHeader() {
     // Check if user has new notification
     // if (document.hasFocus()) {
     // var item = new Date();
-    // alert("has focus @" + item.toTimeString());
 
     ajaxRequest(
 	    'listnotification',

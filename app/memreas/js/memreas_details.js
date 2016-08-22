@@ -215,13 +215,11 @@ function getMediaComment() {
 function updateMemreasMediaDetailsScript() {
     if (!$("#carousel").parent(".elastislide-carousel").length > 0) {
 
-	// alert($(this).attr('class'));
 	$preview = $('#preview');
 	$carouselEl = $('#carousel');
 	$carouselItems = $carouselEl.children();
 	$("#carousel > li").click(function() {
 	    if ($(this).attr('class') == 'videoArea') {
-		alert('video');
 		$('image-preview').hide();
 		$preview.hide();
 		$('.video-preview').show();
@@ -231,7 +229,6 @@ function updateMemreasMediaDetailsScript() {
 		$('.video-preview > video >source').attr('src', rel2);
 		// eventdetail_media_id = el.attr("media-id");
 	    } else {
-		alert('image');
 		$('.video-preview').hide();
 		$('image-preview').show();
 		$preview.show();
@@ -657,7 +654,6 @@ $(document).on('click', '[data-gallery]', function(event) {
 	    break;
 	}
     }
-    // alert ('obj--->' + JSON.stringify(obj));
     // Deep Copy due to blueimp internal error
     var newObject = jQuery.extend(true, {}, obj);
     return blueimp.Gallery([ newObject ], {

@@ -63,7 +63,6 @@ var S3UploadInstance = function() {
                                     if(iOS){
                                         filename=n +'_'+filename;
                                     }
-                                    alert(filename);
                                     if(filename)
 				    filename = correctUploadFilename(filename);
 				    var filetype = data.files[0].type;
@@ -516,7 +515,6 @@ var S3UploadInstance = function() {
 							    params,
 							    function(
 								    xml_response) {
-                                                                alert('XML RESPONSE EXIT' +xml_response);
 								var filename = data.files[0].name;
 								filename = correctUploadFilename(filename);
 								if (getValueFromXMLTag(
@@ -757,6 +755,9 @@ var S3UploadInstance = function() {
 					    'addmediaevent',
 					    params,
 					    function(xml_response) {
+						if (getValueFromXMLTag( xml_response,'status') == 'Failure') {
+						    jerror(getValueFromXMLTag( xml_response,'message'));
+						} //end 
 						removeItem(uploadFilesInstance,
 							base_filename);
 						currentUploadFileCount = uploadFilesInstance.length;
@@ -778,6 +779,8 @@ var S3UploadInstance = function() {
 							    .mCustomScrollbar(
 								    "update");
 						}
+
+						
 						// console.log(xml_response);
 					    }, 'undefined', true);
 
