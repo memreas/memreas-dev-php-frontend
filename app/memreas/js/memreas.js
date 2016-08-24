@@ -822,6 +822,7 @@ function fetchpubsMemreas() {
 				value : '20'
 			    } ],
 			    function(response) {
+                                console.log('Public Response event-->'+response);
 				if ($(".event_images_public").hasClass(
 					"mCustomScrollbar"))
 				    var target_object = ".event_images_public .mCSB_container";
@@ -978,7 +979,8 @@ function fetchpubsMemreas() {
 							+ event_friend_social_username
 							+ '</aside>';
 					    }
-					    $(target_object)
+                                            console.log('STR MEDIA-->'+StrMedia);
+					    $('.event_images_public')
 						    .append(
 							    '<div class="event_section addstyling">'
 								    + overlaydiv
