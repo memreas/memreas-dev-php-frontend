@@ -19,6 +19,7 @@ class CheckGitPull {
 		 * Exec op and error log results...
 		 */
 		$output = shell_exec ( $op . ' 2>&1' ) . PHP_EOL;
+		Mlog::addone(__CLASS__.__METHOD__.__LINE__.'$output-->', $output);
 		return $output;
 	}
 	public function exec($pull = false) {
