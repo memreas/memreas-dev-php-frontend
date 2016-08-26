@@ -27,5 +27,5 @@ cp module/Application/src/Application/Model/MemreasConstants.localhost.php modul
 
 #eb events -f
 
-curl http://54.160.204.224:55151/?action=clearlog
-curl http://54.160.204.224:55151/?action=gitpull
+curl http://54.160.204.224:55151/index?action=clearlog
+curl http://54.160.204.224:55151/index?action=gitpull
