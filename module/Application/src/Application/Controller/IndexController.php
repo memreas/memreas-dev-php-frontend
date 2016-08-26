@@ -20,6 +20,7 @@ class IndexController extends AbstractActionController {
 	protected $session;
 	protected $sid;
 	protected $ipAddress;
+	protected $checkGitPull;
 	public function is_json($string, $return_data = false) {
 		$data = json_decode ( $string );
 		$result = (json_last_error () == JSON_ERROR_NONE) ? ($return_data ? $data : TRUE) : FALSE;
