@@ -10,6 +10,7 @@ namespace Application\Controller;
 use \Exception;
 use Application\memreas\Mlog;
 use Application\Model\MemreasConstants;
+use Application\memreas\CheckGitPull;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
