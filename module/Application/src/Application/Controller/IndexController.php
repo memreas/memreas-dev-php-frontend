@@ -26,9 +26,9 @@ class IndexController extends AbstractActionController {
 		$data = json_decode ( $string );
 		$result = (json_last_error () == JSON_ERROR_NONE) ? ($return_data ? $data : TRUE) : FALSE;
 		if ($result) {
-			MLog::addone ( __CLASS__ . __METHOD__ . __LINE . 'isJSON result', 'true' );
+		//	MLog::addone ( __CLASS__ . __METHOD__ . __LINE . 'isJSON result', 'true' );
 		} else {
-			MLog::addone ( __CLASS__ . __METHOD__ . __LINE . 'isJSON result', 'false' );
+		//	MLog::addone ( __CLASS__ . __METHOD__ . __LINE . 'isJSON result', 'false' );
 		}
 		return $result;
 	}
