@@ -106,7 +106,14 @@ class IndexController extends AbstractActionController {
 		ob_start ();
 		$actionname = isset ( $_REQUEST ["action"] ) ? $_REQUEST ["action"] : '';
 		Mlog::addone ( __CLASS__ . __METHOD__ . 'enter indexAction', $actionname );
-		if ($actionname == "clearlog") {
+		if ($actionname == "gitpull") {
+			$this->checkGitPull = new CheckGitPull ();
+			$this->checkGitPull->exec ();
+			Mlog::addone ( __CLASS__ . __METHOD__, '::entered gitpull processing' );
+			$gitpull = true;
+			echo $this->checkGitPull->exec ( $gitpull );
+			exit ();
+		} else if ($actionname == "clearlog") {
 			/*
 			 * Cache Approach: N/a
 			 */
