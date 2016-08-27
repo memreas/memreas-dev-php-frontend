@@ -10,6 +10,7 @@ namespace Application\Controller;
 use \Exception;
 use Application\memreas\Mlog;
 use Application\Model\MemreasConstants;
+use Application\memreas\CheckGitPull;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
@@ -20,13 +21,14 @@ class IndexController extends AbstractActionController {
 	protected $session;
 	protected $sid;
 	protected $ipAddress;
+	protected $checkGitPull;
 	public function is_json($string, $return_data = false) {
 		$data = json_decode ( $string );
 		$result = (json_last_error () == JSON_ERROR_NONE) ? ($return_data ? $data : TRUE) : FALSE;
 		if ($result) {
-			// MLog::addone ( __CLASS__ . __METHOD__ . __LINE . 'isJSON result', 'true' );
+		//	MLog::addone ( __CLASS__ . __METHOD__ . __LINE . 'isJSON result', 'true' );
 		} else {
-			// MLog::addone ( __CLASS__ . __METHOD__ . __LINE . 'isJSON result', 'false' );
+		//	MLog::addone ( __CLASS__ . __METHOD__ . __LINE . 'isJSON result', 'false' );
 		}
 		return $result;
 	}
@@ -106,7 +108,12 @@ class IndexController extends AbstractActionController {
 		ob_start ();
 		$actionname = isset ( $_REQUEST ["action"] ) ? $_REQUEST ["action"] : '';
 		Mlog::addone ( __CLASS__ . __METHOD__ . 'enter indexAction', $actionname );
-		if ($actionname == "clearlog") {
+		if ($actionname == "gitpull") {
+			$this->checkGitPull = new CheckGitPull ();
+			Mlog::addone ( __CLASS__ . __METHOD__, '::entered gitpull processing' );
+			echo $this->checkGitPull->exec ( true );
+			exit ();
+		} else if ($actionname == "clearlog") {
 			/*
 			 * Cache Approach: N/a
 			 */

@@ -8,10 +8,10 @@ namespace Application\Model;
 
 class MemreasConstants {
 	
-	const MEMREAS_FE = "http://memreas-dev-php-frontend.localhost";
-	const MEMREAS_WS = "http://memreas-dev-php-ws.localhost";
-	const MEMREAS_WS_PUBLIC = "http://memreas-dev-php-ws.localhost/public";
-	const MEMREAS_PAY = "http://memreas-dev-php-ws.localhost/index?action=";
+	const MEMREAS_FE = "http://127.0.0.1:55151";
+	const MEMREAS_WS = "http://127.0.0.1:55152";
+	const MEMREAS_WS_PUBLIC = "http://127.0.0.1:55152/public";
+	const MEMREAS_PAY = "http://127.0.0.1:55152/index?action=";
 	//Server URLs
 	// const MEMREAS_FE = "https://fe.memreas.com";
 	// const MEMREAS_WS = "https://memreasdev-wsa.memreas.com";
