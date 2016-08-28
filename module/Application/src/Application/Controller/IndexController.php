@@ -117,6 +117,7 @@ class IndexController extends AbstractActionController {
 			/*
 			 * Cache Approach: N/a
 			 */
+			//`cat /dev/null > getcwd () . '/php_errors.log'`
 			unlink ( getcwd () . '/php_errors.log' );
 			error_log ( "Log has been cleared!" );
 			echo '<pre>' . file_get_contents ( getcwd () . '/php_errors.log' );
