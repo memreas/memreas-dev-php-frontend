@@ -27,5 +27,5 @@ cp module/Application/src/Application/Model/MemreasConstants.localhost.php modul
 
 #eb events -f
 
-curl http://54.160.204.224:55151/index?action=clearlog
-curl http://54.160.204.224:55151/index?action=gitpull
+#curl https://memreasdev.memreas.com:9001/index?action=clearlog
+curl https://memreasdev.memreas.com:9001/index?action=gitpull
