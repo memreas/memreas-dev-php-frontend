@@ -20,5 +20,7 @@ git push
 
 #cp module/Application/src/Application/Model/MemreasConstants.localhost.php module/Application/src/Application/Model/MemreasConstants.php
 
-curl https://memreas-dev-deploy.memreas.com/prod_pull_n_aws_push.php?repo=frontend
+#curl https://memreas-dev-deploy.memreas.com/prod_pull_n_aws_push.php?repo=frontend
 
+curl https://memreasprod.memreas.com:9001/?action=clearlog
+curl https://memreasprod.memreas.com:9001/?action=gitpull
