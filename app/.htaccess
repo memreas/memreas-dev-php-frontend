@@ -1,4 +1,9 @@
 RewriteEngine On
+# The following rule redirects traffic to https
+RewriteEngine On
+RewriteCond %{HTTP:X-Forwarded-Proto} =http
+RewriteRule . https://%{HTTP:Host}%{REQUEST_URI} [L,R=permanent]
+
 # The following rule tells Apache that if the requested filename
 # exists, simply serve it.
 RewriteCond %{REQUEST_URI} ^/favicon.ico$ [OR]
