@@ -1431,7 +1431,7 @@ function morepage_saveEvent(confirmed, delete_event) {
 		tag : 'is_friend_can_add_friend',
 		value : friend_can_add.toString()
 	    }, {
-		tag : 'public',
+		tag : 'is_public',
 		value : public_can_add.toString()
 	    },{
 		tag : 'event_self_destruct',
