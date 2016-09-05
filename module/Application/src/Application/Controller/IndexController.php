@@ -188,7 +188,7 @@ class IndexController extends AbstractActionController {
 			
 			// Guzzle the Web Service
 			$result = $this->fetchXML ( $ws_action, $xml, $wsurl );
-			// Mlog::addone ( $cm . __LINE__. '::$result--->', $result );
+			Mlog::addone ( $cm . __LINE__. '::$result--->', $result );
 			$json = json_encode ( $result );
 			
 			// Handle session
