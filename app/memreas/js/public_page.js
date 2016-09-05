@@ -203,6 +203,7 @@ jQuery.fetchPublic = function() {
 					    .parse(removeCdata(event_media_entry.event_media_image));
 				    event_media_entry.event_media_image = event_media_entry.event_media_image[0];
 
+				    
 				    //
 				    // Setup item
 				    //
@@ -245,7 +246,7 @@ jQuery.fetchPublic = function() {
 				} else {
 
 				    //
-				    // Fetch thumbnail for video
+				    // Fetch thumbnail for image
 				    //
 				    event_media_entry.event_media_image = removeCdataCorrectLink(getValueFromXMLTag(
 					    event_media, 'event_media_448x306'));
@@ -323,6 +324,7 @@ jQuery.fetchPublic = function() {
 			}// end for events.length
 		    }
 		} // end if
+		this.removePageLoading;
 		return true;
 	    });
     // add list items here for now...
