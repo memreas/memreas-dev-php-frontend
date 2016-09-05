@@ -1147,7 +1147,7 @@ function fillmorepage_eventDetail(morepage_event_id) {
     var jMorepageEventLocation = $("#morepage_eventLocation");
     var jMorepageEventFriendsCanPost = $("#morepage_eventFriendsCanPost");
     var jMorepageEventFreindsCanAdd = $("#morepage_friendsCanAdd");
-    // var jMorepage_EventPublic = $("#morepage_public");
+     var jMorepage_EventPublic = $("#morepage_public");
     var jMorepage_isviewable = $("#morepage_isviewable");
     var jMoredate_eventDateFrom = $("#moredate_eventDateFrom");
     var jMoredate_eventDateTo = $("#moredate_eventDateTo");
@@ -1161,6 +1161,7 @@ function fillmorepage_eventDetail(morepage_event_id) {
 	tag : 'event_id',
 	value : morepage_event_id
     } ], function(response) {
+    console.log('More Page Evnet-->'+response);
 	if (getValueFromXMLTag(response, 'status') == "Success") {
 
 	    if (getValueFromXMLTag(response, 'date') != '') {
@@ -1180,6 +1181,13 @@ function fillmorepage_eventDetail(morepage_event_id) {
 
 	    var friendsCanPost = getValueFromXMLTag(response,
 		    'friends_can_post');
+            var publicCanPost=getValueFromXMLTag(response,
+		    'public');;
+            if(publicCanPost == 1)
+                jMorepage_EventPublic.attr('checked', true);
+            else
+                jMorepage_EventPublic.removeAttr('checked', false);
+                    
 	    if (friendsCanPost == 1)
 		jMorepageEventFriendsCanPost.attr('checked', true);
 	    else
@@ -1207,13 +1215,13 @@ function fillmorepage_eventDetail(morepage_event_id) {
 		jMorepage_isviewable.removeAttr('checked');
 	    }
 
-	    /*
-	     * if (getValueFromXMLTag(response, 'public') != '0'){
-	     * jMorepage_EventPublic.val(getValueFromXMLTag(response,
-	     * 'self_destruct')); jMorepage_EventPublic.attr('checked', true); }
-	     * else{ jMorepage_EventPublic.val(0);
-	     * jMorepage_IsSelfDestruct.removeAttr('checked'); }
-	     */
+	    
+	      if (getValueFromXMLTag(response, 'public') != '0'){
+	      jMorepage_EventPublic.val(getValueFromXMLTag(response,
+	      'public')); jMorepage_EventPublic.attr('checked', true); }
+	      else{ jMorepage_EventPublic.val(0);
+	      jMorepage_IsSelfDestruct.removeAttr('checked'); }
+	     
 
 	    if (getValueFromXMLTag(response, 'viewable_to') != '') {
 		var viewable_to = getValueFromXMLTag(response, 'viewable_to');
@@ -1358,6 +1366,14 @@ function morepage_saveEvent(confirmed, delete_event) {
 	var friend_can_add = 1;
     else
 	var friend_can_add = 0;
+    
+    var public_can_add = 0;
+    if ($("#morepage_public").is(":checked"))
+	var public_can_add = 1;
+    else
+	var public_can_add = 0;
+    
+    
 
     // Check if event has selling event and check box, confirm
     var sell_media = 0;
@@ -1415,6 +1431,9 @@ function morepage_saveEvent(confirmed, delete_event) {
 		tag : 'is_friend_can_add_friend',
 		value : friend_can_add.toString()
 	    }, {
+		tag : 'is_public',
+		value : public_can_add.toString()
+	    },{
 		tag : 'event_self_destruct',
 		value : self_destruct
 	    }, {
@@ -1425,6 +1444,7 @@ function morepage_saveEvent(confirmed, delete_event) {
 		value : delete_event
 	    } ];
     ajaxRequest('editevent', params, function(response) {
+        console.log('EditResponse-->'+response);
 	var status = getValueFromXMLTag(response, 'status');
 	if (status == 'Failure') {
 	    ssMsg = "failed to update";
