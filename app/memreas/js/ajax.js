@@ -52,8 +52,7 @@ ajaxRequest = function(action, params, success_func, error_func,
 			var x_memreas_chameleon = getValueFromXMLTag(ret_xml,
 				'x_memreas_chameleon').trim();
 			if (x_memreas_chameleon != '') {
-			    //console.log('setting new x_memreas_chameleon--> '
-				    + x_memreas_chameleon);
+			    //console.log('setting new x_memreas_chameleon--> ' + x_memreas_chameleon);
 			    setCookie("x_memreas_chameleon",
 				    x_memreas_chameleon)
 			}
