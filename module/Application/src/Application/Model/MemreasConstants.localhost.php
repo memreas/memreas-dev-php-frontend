@@ -8,15 +8,12 @@ namespace Application\Model;
 
 class MemreasConstants {
 	
+	//Server URLs
 	const MEMREAS_FE = "http://127.0.0.1:55151";
 	const MEMREAS_WS = "http://127.0.0.1:55152";
 	const MEMREAS_WS_PUBLIC = "http://127.0.0.1:55152/public";
 	const MEMREAS_PAY = "http://127.0.0.1:55152/index?action=";
-	//Server URLs
-	// const MEMREAS_FE = "https://fe.memreas.com";
-	// const MEMREAS_WS = "https://memreasdev-wsa.memreas.com";
-	// const MEMREAS_WS_PUBLIC = "https://memreasdev-wsa.memreas.com/public";
-	// const MEMREAS_PAY = "https://memreasdev-pay.memreas.com";
+
 	const MEMREAS_ADS = false;
 	const MEMREAS_SELL_MEDIA = 1; // Enable or Disable selling media
 	const S3_APPKEY = 'AKIAJZE2O2WDMXLGR27A';
