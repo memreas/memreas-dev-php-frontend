@@ -22,7 +22,7 @@ ajaxRequest = function(action, params, success_func, error_func,
     data.callback = '';
 
     var json_data = JSON.stringify(data);
-    //console.log("json_data--->" + json_data);
+    console.log("json_data--->" + json_data);
     var cookies = document.cookie.split(";");
     if (!disableLoadingScreen) {
 	$('#loadingpopup').fadeIn(500);
