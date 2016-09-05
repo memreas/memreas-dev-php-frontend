@@ -22,7 +22,7 @@ ajaxRequest = function(action, params, success_func, error_func,
     data.callback = '';
 
     var json_data = JSON.stringify(data);
-    console.log("json_data--->" + json_data);
+    //console.log("json_data--->" + json_data);
     var cookies = document.cookie.split(";");
     if (!disableLoadingScreen) {
 	$('#loadingpopup').fadeIn(500);
@@ -37,7 +37,7 @@ ajaxRequest = function(action, params, success_func, error_func,
 		beforeSend : function(xhr) {
 		    // console.log("before send cookies---> " +
 		    // document.cookie);
-		    console.log("xml_input--->" + xml_input);
+		    //console.log("xml_input--->" + xml_input);
 		},
 		crossDomain : true,
 		type : 'post',
@@ -52,7 +52,7 @@ ajaxRequest = function(action, params, success_func, error_func,
 			var x_memreas_chameleon = getValueFromXMLTag(ret_xml,
 				'x_memreas_chameleon').trim();
 			if (x_memreas_chameleon != '') {
-			    console.log('setting new x_memreas_chameleon--> '
+			    //console.log('setting new x_memreas_chameleon--> '
 				    + x_memreas_chameleon);
 			    setCookie("x_memreas_chameleon",
 				    x_memreas_chameleon)
