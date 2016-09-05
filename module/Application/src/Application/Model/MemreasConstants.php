@@ -11,7 +11,7 @@ class MemreasConstants {
 	//Server URLs
 	const MEMREAS_FE = "https://memreasdev.memreas.com";
 	const MEMREAS_WS = "http://127.0.0.1:55152";
-	const MEMREAS_WS_PUBLIC = "https://memreasdev.memreas.com/public";
+	const MEMREAS_WS_PUBLIC = "https://memreasdev.memreas.com/index/public";
 	const MEMREAS_PAY = "https://memreasdev.memreas.com:9002/index?action=";
 
 	const MEMREAS_ADS = false;
