@@ -725,7 +725,7 @@ class IndexController extends AbstractActionController {
 		
 		if (! empty ( $type ) && ($type [0] == '@')) {
 			//
-			// url ex. https://fe.memreas.com/index/public?type=@jmeah1
+			// url ex. http://127.0.0.1:55151/index/public?type=@jmeah1
 			//
 			$name = substr ( $type, 1 );
 			$tag = $type [0];
