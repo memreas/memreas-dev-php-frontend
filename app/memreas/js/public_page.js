@@ -199,6 +199,9 @@ jQuery.fetchPublic = function() {
 				    //
 				    event_media_entry.event_media_image = getValueFromXMLTag(
 					    event_media, 'event_media_448x306');
+				    //
+				    // TODO: Need to check for blank thumbnail  here
+				    //
 				    event_media_entry.event_media_image = JSON
 					    .parse(removeCdata(event_media_entry.event_media_image));
 				    event_media_entry.event_media_image = event_media_entry.event_media_image[0];
@@ -250,6 +253,9 @@ jQuery.fetchPublic = function() {
 				    //
 				    event_media_entry.event_media_image = removeCdataCorrectLink(getValueFromXMLTag(
 					    event_media, 'event_media_448x306'));
+				    //
+				    // TODO: Need to check for blank thumbnail  here
+				    //
 
 				    // disable the url for paid events
 				    if (event_price > 0) {
