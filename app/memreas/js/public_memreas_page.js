@@ -197,7 +197,7 @@ jQuery.fetchPublic = function() {
 				//
 				var item = new Object();
 				if (event_media_entry._event_media_type_ == 'video') {
-
+                                    
 				    //
 				    // Fetch thumbnail for video
 				    //
@@ -206,6 +206,14 @@ jQuery.fetchPublic = function() {
 				    //
 				    // TODO: Need to check for blank thumbnail  here
 				    //
+                                    try {
+					event_media_entry.event_media_image = JSON
+						.parse(removeCdata(event_media_entry.event_media_image));
+				    } catch (err) {
+					console.log("missing thumbnail for  Video"
+						+ event_media_entry.event_media_id);
+				    }
+                                    if(event_media_entry.event_media_id !=''){
 				    
 				    event_media_entry.event_media_image = JSON
 					    .parse(removeCdata(event_media_entry.event_media_image));
@@ -245,7 +253,7 @@ jQuery.fetchPublic = function() {
 					    + ')"><span class="video-content-play-icon"  style="position: relative;z-index:999; left:37px; top:-9px"></span><img src="'
 				    + event_media_entry.event_media_image
 				    + '" alt="" style="margin-left:-99px;" /></a>';
-
+                        }
 				} else {
 
 				    //
@@ -265,6 +273,15 @@ jQuery.fetchPublic = function() {
 				    //
 				    // Setup item
 				    //
+                                    
+                                    try {
+					event_media_entry.event_media_image = JSON
+						.parse(removeCdata(event_media_entry.event_media_image));
+				    } catch (err) {
+					console.log("missing thumbnail for  Video"
+						+ event_media_entry.event_media_id);
+				    }
+                                    if(event_media_entry.event_media_id !=''){
 				    item['title'] = event_media_entry.event_media_id;
 				    item['type'] = "image/jpeg";
 				    item['href'] = event_media_entry.event_media_url;
@@ -281,7 +298,7 @@ jQuery.fetchPublic = function() {
 					    + event_media_entry.event_media_image
 					    + ')"><img src="'
 				    + event_media_entry.event_media_image + '" alt="" /></a>';
-
+                        }
 				}
 				objArr.push(item);
 			    }// end event for loop

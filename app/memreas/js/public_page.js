@@ -207,9 +207,10 @@ jQuery.fetchPublic = function() {
 					event_media_entry.event_media_image = JSON
 						.parse(removeCdata(event_media_entry.event_media_image));
 				    } catch (err) {
-					console.log("missing thumbnail for "
-						+ event_media_id);
+					console.log("missing thumbnail for  Video"
+						+ event_media_entry.event_media_id);
 				    }
+                                    if(event_media_entry.event_media_id !=''){
 				    event_media_entry.event_media_image = event_media_entry.event_media_image[0];
 
 				    //
@@ -250,12 +251,20 @@ jQuery.fetchPublic = function() {
 					    + ' "><span class="video-content-play-icon"  style="position: relative;z-index:999; left:24px;"></span><img src="'
 					    + event_media_entry.event_media_image
 					    + '" alt="" style="margin-left:-99px;" /></a>';
-
+                                }
 				} else {
 
 				    //
 				    // Fetch thumbnail for image
 				    //
+                                     try {
+					event_media_entry.event_media_image = JSON
+						.parse(removeCdata(event_media_entry.event_media_image));
+				    } catch (err) {
+					console.log("missing thumbnail for Image"
+						+ event_media_entry.event_media_id);
+				    }
+                                    if(event_media_entry.event_media_id !=''){
 				    event_media_entry.event_media_image = removeCdataCorrectLink(getValueFromXMLTag(
 					    event_media, 'event_media_448x306'));
 				    //
@@ -267,6 +276,8 @@ jQuery.fetchPublic = function() {
 				    if (event_price > 0) {
 					event_media_entry.event_media_url = '#';
 				    }
+                                    
+                                    
 
 				    //
 				    // Setup item
@@ -288,7 +299,7 @@ jQuery.fetchPublic = function() {
 					    + ')"><img src="'
 					    + event_media_entry.event_media_image
 					    + '" alt="" /></a>';
-
+                                }
 				}
 				objArr.push(item);
 			    }// end event for loop
