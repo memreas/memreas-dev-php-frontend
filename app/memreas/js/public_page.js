@@ -47,7 +47,7 @@ jQuery.fetchPublic = function() {
 	    } ],
 	    function(response) {
 		if (getValueFromXMLTag(response, 'status') == "Success") {
-		    //console.log("response--->" + response);
+		    // console.log("response--->" + response);
 		    var events = getSubXMLFromTag(response, 'event');
 		    if (events.length > 0) {
 
@@ -200,13 +200,18 @@ jQuery.fetchPublic = function() {
 				    event_media_entry.event_media_image = getValueFromXMLTag(
 					    event_media, 'event_media_448x306');
 				    //
-				    // TODO: Need to check for blank thumbnail  here
+				    // TODO: Need to check for blank thumbnail
+				    // here
 				    //
-				    event_media_entry.event_media_image = JSON
-					    .parse(removeCdata(event_media_entry.event_media_image));
+				    try {
+					event_media_entry.event_media_image = JSON
+						.parse(removeCdata(event_media_entry.event_media_image));
+				    } catch (err) {
+					console.log("missing thumbnail for "
+						+ event_media_id);
+				    }
 				    event_media_entry.event_media_image = event_media_entry.event_media_image[0];
 
-				    
 				    //
 				    // Setup item
 				    //
@@ -243,8 +248,8 @@ jQuery.fetchPublic = function() {
 					    + ');'
 					    + preventclickcss
 					    + ' "><span class="video-content-play-icon"  style="position: relative;z-index:999; left:24px;"></span><img src="'
-				    + event_media_entry.event_media_image
-				    + '" alt="" style="margin-left:-99px;" /></a>';
+					    + event_media_entry.event_media_image
+					    + '" alt="" style="margin-left:-99px;" /></a>';
 
 				} else {
 
@@ -254,7 +259,8 @@ jQuery.fetchPublic = function() {
 				    event_media_entry.event_media_image = removeCdataCorrectLink(getValueFromXMLTag(
 					    event_media, 'event_media_448x306'));
 				    //
-				    // TODO: Need to check for blank thumbnail  here
+				    // TODO: Need to check for blank thumbnail
+				    // here
 				    //
 
 				    // disable the url for paid events
@@ -280,7 +286,8 @@ jQuery.fetchPublic = function() {
 				    linksContainerData += ' style="background:url('
 					    + event_media_entry.event_media_image
 					    + ')"><img src="'
-				    + event_media_entry.event_media_image + '" alt="" /></a>';
+					    + event_media_entry.event_media_image
+					    + '" alt="" /></a>';
 
 				}
 				objArr.push(item);
