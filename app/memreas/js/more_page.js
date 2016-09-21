@@ -1332,7 +1332,7 @@ function morepage_saveEvent(confirmed, delete_event) {
 	    "#moredate_eventDateFrom").val() : '');
     if (viewable_from != '') {
 	var split_date = viewable_from.split('/');
-	viewable_from = split_date[1] + '-' + split_date[0] + '-'
+	viewable_from = split_date[1] + '/' + split_date[0] + '/'
 		+ split_date[2]; // Correct date format to d-m-Y
     }
 
@@ -1343,18 +1343,20 @@ function morepage_saveEvent(confirmed, delete_event) {
 
     if (viewable_to != '') {
 	var split_date = viewable_to.split('/');
-	viewable_to = split_date[1] + '-' + split_date[0] + '-' + split_date[2]; // Correct
+	viewable_to = split_date[1] + '/' + split_date[0] + '/' + split_date[2]; // Correct
 	// date
 	// format
 	// to
 	// d-m-Y
     }
+    
+    console.log('Date-->'+viewable_from +'to-->'+viewable_to);
 
     var self_destruct = (($("#morepage_eventSelfDestruct").val() != '') ? $(
 	    "#morepage_eventSelfDestruct").val() : '');
     if (self_destruct != '') {
 	var split_date = self_destruct.split('/');
-	self_destruct = split_date[1] + '-' + split_date[0] + '-'
+	self_destruct = split_date[1] + '/' + split_date[0] + '/'
 		+ split_date[2]; // Correct date format to d-m-Y
     }
     var friend_can_post = 0;

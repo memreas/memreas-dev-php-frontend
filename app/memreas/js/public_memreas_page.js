@@ -197,12 +197,24 @@ jQuery.fetchPublic = function() {
 				//
 				var item = new Object();
 				if (event_media_entry._event_media_type_ == 'video') {
-
+                                    
 				    //
 				    // Fetch thumbnail for video
 				    //
 				    event_media_entry.event_media_image = getValueFromXMLTag(
 					    event_media, 'event_media_448x306');
+				    //
+				    // TODO: Need to check for blank thumbnail  here
+				    //
+                                    try {
+					event_media_entry.event_media_image = JSON
+						.parse(removeCdata(event_media_entry.event_media_image));
+				    } catch (err) {
+					console.log("missing thumbnail for  Video"
+						+ event_media_entry.event_media_id);
+				    }
+                                    if(event_media_entry.event_media_id !=''){
+				    
 				    event_media_entry.event_media_image = JSON
 					    .parse(removeCdata(event_media_entry.event_media_image));
 				    event_media_entry.event_media_image = event_media_entry.event_media_image[0];
@@ -241,7 +253,7 @@ jQuery.fetchPublic = function() {
 					    + ')"><span class="video-content-play-icon"  style="position: relative;z-index:999; left:37px; top:-9px"></span><img src="'
 				    + event_media_entry.event_media_image
 				    + '" alt="" style="margin-left:-99px;" /></a>';
-
+                        }
 				} else {
 
 				    //
@@ -249,6 +261,9 @@ jQuery.fetchPublic = function() {
 				    //
 				    event_media_entry.event_media_image = removeCdataCorrectLink(getValueFromXMLTag(
 					    event_media, 'event_media_448x306'));
+				    //
+				    // TODO: Need to check for blank thumbnail  here
+				    //
 
 				    //disable the url for paid events
 				    if (event_price > 0) {
@@ -258,6 +273,15 @@ jQuery.fetchPublic = function() {
 				    //
 				    // Setup item
 				    //
+                                    
+                                    try {
+					event_media_entry.event_media_image = JSON
+						.parse(removeCdata(event_media_entry.event_media_image));
+				    } catch (err) {
+					console.log("missing thumbnail for  Video"
+						+ event_media_entry.event_media_id);
+				    }
+                                    if(event_media_entry.event_media_id !=''){
 				    item['title'] = event_media_entry.event_media_id;
 				    item['type'] = "image/jpeg";
 				    item['href'] = event_media_entry.event_media_url;
@@ -274,7 +298,7 @@ jQuery.fetchPublic = function() {
 					    + event_media_entry.event_media_image
 					    + ')"><img src="'
 				    + event_media_entry.event_media_image + '" alt="" /></a>';
-
+                        }
 				}
 				objArr.push(item);
 			    }// end event for loop
