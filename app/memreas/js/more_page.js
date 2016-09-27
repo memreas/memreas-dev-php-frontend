@@ -114,7 +114,7 @@ $(function() {
              //$('.susername').html('Username:' + userObject.username);
             // $('.semail').html('Email:' + userObject.email);
          }else{
-            $('.selleerdata').hide();
+             $('.selleerdata').hide();
              $('#fromSellInfo1').show();
             // $('.sellmedia-btn-group').show();
             
@@ -1091,7 +1091,7 @@ $(function() {
     });
 });
 function getAccountMemreas() {
-    $("#morepage_event_sellmedia").hide();
+    //$("#morepage_event_sellmedia").hide();
     var jSelectEventName = $("#cmd_MorepageEvents");
 
     if (jSelectEventName.html() == '') {
@@ -1141,6 +1141,11 @@ function getAccountMemreas() {
 
     }
 }
+//Sell Media Popup
+$('#morepage_event_sellmedia').click(function(){
+    if($(this).attr("checked",true))
+    popup('popupSellMediaedit'); 
+});
 
 function fillmorepage_eventDetail(morepage_event_id) {
     var jMorepageEventDate = $("#morepage_eventDate");
@@ -1154,7 +1159,7 @@ function fillmorepage_eventDetail(morepage_event_id) {
     var jMorepage_IsSelfDestruct = $("#morepage_isselfdestruct");
     var jmorepage_eventSelfDestruct = $("#morepage_eventSelfDestruct");
 
-    $("#morepage_event_sellmedia").hide();
+    //$("#morepage_event_sellmedia").hide();
     $("input#morepage_ckb_sellmedia").removeAttr("checked");
 
     ajaxRequest('geteventdetails', [ {
@@ -1256,6 +1261,29 @@ function fillmorepage_eventDetail(morepage_event_id) {
 	    jerror(getValueFromXMLTag(response, 'message'));
     });
 }
+
+edit_eventmorepage_public = function() {
+	console.log(arguments.callee.toString());
+
+	$(this).toggleClass('public_ck_attr');
+	if (!getCheckBoxValue('edit_eventmorepage_public')) {
+		setCheckBoxValue('morepage_eventFriendsCanPost', true);
+		setCheckBoxValue('morepage_friendsCanAdd', true);
+	}
+	if ($('#edit_eventmorepage_public').is(":checked")) {
+
+		$('#morepage_eventFriendsCanPost').removeAttr('disabled');
+		$('#morepage_friendsCanAdd').removeAttr('disabled');
+
+	} else {
+
+		$('#morepage_eventFriendsCanPost').removeAttr('checked');
+		$('#morepage_friendsCanAdd').removeAttr('checked');
+		$('#morepage_eventFriendsCanPost').attr('disabled', 'disabled');
+		$('#morepage_friendsCanAdd').attr('disabled', 'disabled');
+
+	}
+};
 
 function getMemreasEventMedia() {
     var jMemreasEventMedia = $(".memreasEventMedia");
