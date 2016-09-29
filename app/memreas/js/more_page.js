@@ -4,6 +4,7 @@
  */
 var networkfriendsInfo = [];
 var group_mode = 'update';
+var event_share_object_update = {};
 $(function() {
     $("#morepage_eventDate").datepicker();
     $("#moredate_eventDateFrom").datepicker();
@@ -1142,10 +1143,19 @@ function getAccountMemreas() {
     }
 }
 //Sell Media Popup
-$('#morepage_event_sellmedia').click(function(){
-    if($(this).attr("checked",true))
-    popup('popupSellMediaedit'); 
-});
+
+
+$("#morepage_event_sellmedia").change(function() {
+   
+		if ($(this).attr('checked', true)) {
+			$("#morepage_eventFriendsCanPost").attr('checked', false);
+			$("#morepage_friendsCanAdd").attr('checked', false);
+			$("#morepage_public").attr("checked", true);
+			$("#morepage_isviewable").attr("checked", true);
+			popup("popupSellMediaedit");
+			return false;
+		}
+	});
 
 function fillmorepage_eventDetail(morepage_event_id) {
     var jMorepageEventDate = $("#morepage_eventDate");
@@ -1353,7 +1363,254 @@ function getMemreasEventMedia() {
 	    });
 }
 
+function checkSellMediaDurationEdit() {
+	event_share_object_update.sellmedia_duration_from = $("#sellmedia_duration_from_edit").val();
+	event_share_object_update.sellmedia_duration_to = $("#sellmedia_duration_to_edit").val();
+
+	// Reset default values
+	if (event_share_object_update.sellmedia_duration_from == 'available from') {
+		event_share_object_update.sellmedia_duration_from = '';
+	}
+	if (event_share_object_update.sellmedia_duration_to == 'available to') {
+		event_share_object_update.sellmedia_duration_to = '';
+	}
+
+	if (event_share_object_update.sellmedia_duration_from != '' || event_share_object_update.sellmedia_duration_to != '') {
+		if (event_share_object_update.sellmedia_duration_from == '') {
+			jerror("please set available from");
+			return false;
+		}
+		if (event_share_object_update.sellmedia_duration_to == '') {
+			jerror('please set available to');
+			return false;
+		}
+
+		var date_from = new Date(event_share_object_update.sellmedia_duration_from);
+		var date_to = new Date(event_share_object_update.sellmedia_duration_to);
+
+		var date1 = new Date(date_from);
+		var date2 = new Date(date_to);
+		var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+		var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+		if (date_to <= date_from) {
+			jerror("Duration to date must be greater than date from");
+			return false;
+		}
+
+		var current_date = new Date();
+		//if (date_from < current_date) {
+		if (date_from > current_date) {
+			jerror("Duration from date must be current or a later date");
+			return false;
+		}
+
+		if (date_to < current_date) {
+			jerror("Duration to date must be greater than start date");
+			return false;
+		}
+		// if (diffDays > 30) {
+		// jerror('Date should be selected only for 30 days ');
+		// return false;
+		// }
+
+		//
+		// Set viewable checkbox and dates
+		//
+		$("#morepage_isselfdestruct").prop('checked', false);
+		$("#morepage_isviewable").prop('checked', true);
+		$("#moredate_eventDateFrom").val(event_share_object_update.sellmedia_duration_from);
+		$("#moredate_eventDateTo").val(event_share_object_update.sellmedia_duration_to);
+
+		// Sell media public as default
+		if (event_share_object_update.sell_media_price > 0) {
+			event_share_object_update.ckb_public = 1;
+			event_share_object_update.ckb_canpost = 0;
+			event_share_object_update.ckb_canadd = 0;
+			event_share_object_update.date_from = event_share_object_update.sellmedia_duration_from;
+			event_share_object_update.date_to = event_share_object_update.sellmedia_duration_to;
+		}
+
+		event_share_object_update.ckb_viewable = getCheckBoxValue('morepage_isviewable');
+		event_share_object_update.ckb_selfdestruct = getCheckBoxValue('morepage_isselfdestruct');
+
+		return true;
+	} else {
+		jerror("Please specify dates for viewing");
+		return false;
+	}
+}
+
+
+function checkValidDateFromToEdit(isSubmit) {
+	var date_viewable_from = $("#moredate_eventDateFrom").val();
+	var date_viewable_to = $("#moredate_eventDateTo").val();
+
+	// dates are set so check
+	if (date_viewable_from != 'from' && date_viewable_to != 'to') {
+		var date_from = new Date(date_viewable_from);
+		var date_to = new Date(date_viewable_to);
+
+		var current_date = new Date();
+		if (date_from > date_to) {
+			jerror('Viewable date must valid. From date must less than to date.');
+			$("#moredate_eventDateTo").val('').focus();
+			return false;
+		}
+		if (date_to < current_date) {
+			jerror('Date to can not less than today.');
+			$("#moredate_eventDateTo").val('').focus();
+			return false;
+		}
+	}
+	if (isSubmit) {
+		if (date_viewable_from != 'from' && (date_viewable_to == 'to' || date_viewable_to == '')) {
+			jerror('Please specify date to');
+			$("#moredate_eventDateTo").focus();
+			return false;
+		} else if (date_viewable_to != 'to' && (date_viewable_from == 'from' || date_viewable_from == '')) {
+			jerror('Please specify date from.');
+			$("#moredate_eventDateFrom").focus();
+			return false;
+		} else {
+			// Check if date created and viewable
+			var event_create_date = $("#morepage_eventDate").val();
+			if (event_create_date != '' || event_create_date != 'from') {
+				if (date_viewable_from != '' || date_viewable_from != 'from') {
+					var date_from = new Date(date_viewable_from);
+					var date_create = new Date(event_create_date);
+					if (date_from < date_create) {
+						jerror('Viewable date must greater than event date create.');
+						return false;
+					}
+				}
+			}
+		}
+
+		// Check destruct date
+		var seftdestruct_date = $("#morepage_eventSelfDestruct").val();
+		var jDestructElement = $("#morepage_eventSelfDestruct");
+		if (seftdestruct_date != '') {
+			destruct_date = new Date(seftdestruct_date);
+			var event_create_date = $("#morepage_eventDate").val();
+			if (event_create_date != '' || event_create_date != 'from') {
+
+				// Check if destruct date less than creating date
+				var event_create_date = $("#morepage_eventDate").val();
+				if (event_create_date != '' || event_create_date != 'from') {
+					var date_from = new Date(event_create_date);
+					if (destruct_date < date_from) {
+						jerror('Ghost date must be larger or equal to the event date.');
+						jDestructElement.focus();
+						return false;
+					}
+				}
+
+				// Check if destruct date less than viewable from and to
+				var date_viewable_from = $("#moredate_eventDateFrom").val();
+				var date_viewable_to = $("#moredate_eventDateTo").val();
+
+				if (date_viewable_from != 'from' || date_viewable_from != '') {
+					var date_from = new Date(date_viewable_from);
+					if (destruct_date < date_from) {
+						jerror('Destruct date must larger than viewable date from');
+						jDestructElement.focus();
+						return false;
+					}
+				}
+
+				if (date_viewable_to != 'to' || date_viewable_to != '') {
+					var date_to = new Date(date_viewable_to);
+					if (destruct_date < date_to) {
+						jerror('Destruct date must larger than viewable date to');
+						jDestructElement.focus();
+						return false;
+					}
+				}
+			}
+		}
+		return true;
+	}
+}
+
+
 function morepage_saveEvent(confirmed, delete_event) {
+    
+    // Precheck for selling media is popup or not and check for correction
+	if (!$('#morepage_ckb_sellmedia').is(":checked")) {
+		event_share_object_update.sellmedia_duration_from = '';
+		event_share_object_update.sellmedia_duration_to = '';
+		event_share_object_update.sell_media_price = 0;
+	} else if ($("#popupSellMediaedit").is(":visible")) {
+		event_share_object_update.sellmedia_price_select = $("#sellmedia_price_edit").val();
+		if (event_share_object_update.sellmedia_price_select == '') {
+			$('#loadingpopup').fadeOut(200);
+			jerror("please select the price");
+			return false;
+		}
+
+		event_share_object_update.passDuration = checkSellMediaDurationEdit();
+		if (!event_share_object_update.passDuration) {
+			$('#loadingpopup').fadeOut(200);
+			return false;
+		}
+
+		event_share_object_update.sellmedia_duration_from = $("#sellmedia_duration_from").val();
+		event_share_object_update.sellmedia_duration_to = $("#sellmedia_duration_to").val();
+
+		if (!$("#ckb_sellmedia_agree").is(":checked")) {
+			jerror("You must agree with our terms and conditions");
+			return false;
+		}
+		event_share_object_update.sell_media_price = event_share_object_update.sellmedia_price_select;
+	}
+
+	disablePopup('popupSellMediaedit');
+        
+        
+        event_share_object_update.name = getElementValue('cmd_MorepageEvents');
+	if (event_share_object_update.name == "") {
+		$('#loadingpopup').fadeOut(200);
+		jerror("name is required.");
+		return false;
+	}
+	if (checkValidDateFromToEdit(true)) {
+		event_share_object_update.date = getElementValue('morepage_eventDate');
+		event_share_object_update.location = getElementValue('morepage_eventLocation');
+		event_share_object_update.date_from = getElementValue('moredate_eventDateFrom');
+		event_share_object_update.date_to = getElementValue('moredate_eventDateTo');
+		event_share_object_update.date_selfdestruct = getElementValue('morepage_isselfdestruct');
+
+		event_share_object_update.ckb_canpost = getCheckBoxValue('morepage_eventFriendsCanPost');
+		event_share_object_update.ckb_canadd = getCheckBoxValue('morepage_friendsCanAdd');
+		event_share_object_update.ckb_public = getCheckBoxValue('morepage_public');
+
+		// Sell media public as default
+		if (event_share_object_update.sell_media_price > 0) {
+			event_share_object_update.ckb_public = 1;
+			event_share_object_update.ckb_canpost = 0;
+			event_share_object_update.ckb_canadd = 0;
+			event_share_object_update.date_from = event_share_object_update.sellmedia_duration_from;
+			event_share_object_update.date_to = event_share_object_update.sellmedia_duration_to;
+		}
+
+		event_share_object_update.ckb_viewable = getCheckBoxValue('morepage_isviewable');
+		event_share_object_update.ckb_selfdestruct = getCheckBoxValue('morepage_eventSelfDestruct');
+
+		//
+		// Share Page Changes: Move to ajaxAddEvent
+		//
+		//shareDisableFields();
+
+		//
+		// call ajaxAddEvent only if done
+		//
+		//$('#loadingpopup').fadeOut(200);
+		//return true;
+	}
+    
+    
+    
     
     var viewable_from = (($("#moredate_eventDateFrom").val() != '' && $(
 	    "#moredate_eventDateFrom").val() != 'from') ? $(

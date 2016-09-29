@@ -189,7 +189,7 @@
 				<label class="textfield_names" style="width: 100%;; float: none;">Note: your price may change based on the media you select and their associated file size(s)./</label>
 			<li>
 				<label class="textfield_names">Price :</label>
-				<select name="sellmedia_price" id="sellmedia_price">
+				<select name="sellmedia_price_edit" id="sellmedia_price_edit">
 					<option value="">-Choose-</option>
 					<option value="0.25">$0.05</option>
 					<option value="0.25">$0.10</option>
@@ -205,16 +205,16 @@
 			</li>
 			<li>
 				<label class="textfield_names">duration :</label>
-				<input name="input3" type="text" id="sellmedia_duration_from" class="share-txtfield date-picker" value="available from" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'available from')this.value = '';" />
+				<input name="input3" type="text" id="sellmedia_duration_from_edit" class="share-txtfield date-picker" value="available from" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'available from')this.value = '';" />
 			</li>
 			<li class="clear">
 				<label class="textfield_names">&nbsp;</label>
-				<input name="input4" type="text" id="sellmedia_duration_to" class="share-txtfield date-picker" value="available to" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'available to')this.value = '';" />
+				<input name="input4" type="text" id="sellmedia_duration_to__edit" class="share-txtfield date-picker" value="available to" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'available to')this.value = '';" />
 			</li>
 			<li>
-				<input id="ckb_sellmedia_agree" class="css-checkbox" type="checkbox" />
+				<input id="ckb_sellmedia_agree_edit" class="css-checkbox" type="checkbox" />
 				<label id="" for="ckb_sellmedia_agree" name="demo_lbl_6" class="css-label margin-none" style="height: 100px;" > By checking this box I certify that I own the appropriate copyrights for any media within this memeas share.  Full terms are available <a href="javascript:;" onclick="sharePopupMarketTerm();">here</a>. </label>
 			</li>
 		</ul>
-		<a class="black_btn_skin f-left" href="javascript:;" id="accept-notification" onclick="share_addEvent('next');">OK</a><a class="black_btn_skin f-right" href="javascript:disablePopup('popupSellMedia');">close</a>
+		<a class="black_btn_skin f-left" href="javascript:;" id="accept-notification_edit" onclick="share_addEvent('next');">OK</a><a class="black_btn_skin f-right" href="javascript:disablePopup('popupSellMedia');">close</a>
 	</div>
