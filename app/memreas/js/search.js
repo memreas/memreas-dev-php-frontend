@@ -599,7 +599,7 @@ function addFriend(name) {
     // var photo = '';
     // var friend_id = map[name].user_id;
     console.log('Map XML-->' + map[name]);
-    var friend_id = user_id;
+    //var friend_id = user_id;
     var selFriends = [];
     selFriends[0] = {
 	tag : 'friend',
@@ -614,12 +614,12 @@ function addFriend(name) {
 	    value : ''
 	} ]
     };
-    console.log('user_id::' + USERID);
+    console.log('user_id::' + user_id);
     console.log('friend_id::' + friend_id);
 
     ajaxRequest('addfriend', [ {
 	tag : 'user_id',
-	value : USERID
+	value : user_id
     }, {
 	tag : 'friend_id',
 	value : friend_id
