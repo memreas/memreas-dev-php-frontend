@@ -587,7 +587,7 @@ function closeModals(modalid) {
     $("#pop-" + modalid).remove();
 }
 function addFriend(name) {
-    var friend_id = $("input[name=user_id]").val();
+    var user_id = $("input[name=user_id]").val();
     var personalMsg = $("#msg-" + name.replace("@", "")).val();
     console.log('Profile Photo' + JSON.stringify(map));
 
@@ -597,7 +597,7 @@ function addFriend(name) {
     // 
     // var photo = map[name].profile_photo;
     // var photo = '';
-    // var friend_id = map[name].user_id;
+    var friend_id = map[name].user_id;
     console.log('Map XML-->' + map[name]);
     //var friend_id = user_id;
     var selFriends = [];
