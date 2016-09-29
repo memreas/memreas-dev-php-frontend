@@ -22,7 +22,7 @@ $(document)
 			    tag : 'user_id',
 			    value : user_id
 			} ], function(data) {
-                        console.log('DATA TAG-->'+data);
+			    console.log('DATA TAG-->' + data);
 			    var q = $('#search').val();
 			    users = [];
 			    map = {};
@@ -44,8 +44,9 @@ $(document)
 				break;
 			    case '#':
 				$.each(objs.search, function(i, obj) {
-				    //console.log('obj' + obj);
-				    //console.log('obj json--->' + JSON.stringify(obj));
+				    // console.log('obj' + obj);
+				    // console.log('obj json--->' +
+				    // JSON.stringify(obj));
 				    map[obj.tag_name] = obj;
 				    users.push(obj.tag_name);
 				});
@@ -53,7 +54,8 @@ $(document)
 
 			    }
 			    removeLoading('.top-search');
-			    console.log("process(users)---->" + JSON.stringify(process(users)));
+			    console.log("process(users)---->"
+				    + JSON.stringify(process(users)));
 			    return process(users);
 			}, null, true);
 		    }, 3000);
@@ -93,17 +95,23 @@ $(document)
 						var page = 1;
 						var totalPage = 1;
 						var reqhandler = function(data) {
-                                                    console.log('@ data'+data);
+						    console
+							    .log('@ data'
+								    + data);
 						    $(".tabcontent-detail")
 							    .hide();
 						    $("#search-result").show();
 						    $(target).empty();
-                                                    console.log('Data2-->' +JSON.stringify(data));
+						    console
+							    .log('Data2-->'
+								    + JSON
+									    .stringify(data));
 						    var objs = jQuery
 							    .parseJSON(data);
-                                                    console.log('!!!' +objs);
-                                                    console.log('!!!' + objs.count);
-                                                    var profile_photo = objs.profile_photo;
+						    console.log('!!!' + objs);
+						    console.log('!!!'
+							    + objs.count);
+						    var profile_photo = objs.profile_photo;
 						    $('#search-count').text(
 							    objs.count);
 						    totalPage = objs.totalPage;
@@ -125,9 +133,14 @@ $(document)
 											'id');
 									mid = '@'
 										+ mid;
-                                                                        console.log('Map IF-->'+map[mid]);
-									//var photo = map[mid].profile_photo[0];
-                                                                        var photo = profile_photo;
+									console
+										.log('Map IF-->'
+											+ map[mid]);
+									// var
+									// photo
+									// =
+									// map[mid].profile_photo[0];
+									var photo = profile_photo;
 									photo = removeCdataCorrectLink(photo);
 									$(
 										".modal-backdrop")
@@ -336,7 +349,9 @@ $(document)
 						var page = 1;
 						var totalPage = 1;
 						var reqhandler = function(data) {
-						    //console.log("search obj---> " + JSON.stringify(obj));
+						    // console.log("search
+						    // obj---> " +
+						    // JSON.stringify(obj));
 						    console.log("#data---> 1");
 
 						    $(".tabcontent-detail")
@@ -399,7 +414,8 @@ $(document)
 										    action,
 										    param,
 										    reqhandler);
-									    console.log("called reqhandler");
+									    console
+										    .log("called reqhandler");
 									}
 								    });
 						    // paginationlink();
@@ -456,7 +472,7 @@ $(document)
 				    });
 		});
 
-//var h = function(item) {
+// var h = function(item) {
 var switchSearchTerm = function(item) {
     switch (item.charAt(0)) {
     case '@':
@@ -476,8 +492,8 @@ var switchSearchTerm = function(item) {
     case '#':
 	var photo = map[item].event_media_url[0];
 	var name = map[item].event_name;
-	//var photo = map[item].commenter_photo;
-	//var name = map[item].commenter_name;
+	// var photo = map[item].commenter_photo;
+	// var name = map[item].commenter_name;
 	var comment = map[item].comment;
 	// html = '<div class="bond"><img src="' + photo + '"><strong>' + name +
 	// '</strong><strong>' + map[item].event_name + '</strong></div>';
@@ -485,7 +501,7 @@ var switchSearchTerm = function(item) {
 	    comment = comment.substring(0, 24) + "...";
 	}
 	console.log(photo);
-	//photo = removeCdataCorrectLink(photo);
+	// photo = removeCdataCorrectLink(photo);
 	var html = '<div class="swipebox_comment" style="float: left;"><div class="event_pro"><img src="'
 		+ photo
 		+ '"></div>'
@@ -522,10 +538,12 @@ function personalSearchLi(target, item) {
 	var photo = item.profile_photo[0];
 	photo = removeCdataCorrectLink(photo);
 	var name = $.trim(item.username);
-	var op = '<li id="search-' + name.replace('@', '')
-		+ '"><figure class="pro-pics"><img src="' + photo
-		+ '" alt=""></figure><div class="user-names searchusername" style="color:#fff;">' + name
-		+ '</div>';
+	var op = '<li id="search-'
+		+ name.replace('@', '')
+		+ '"><figure class="pro-pics"><img src="'
+		+ photo
+		+ '" alt=""></figure><div class="user-names searchusername" style="color:#fff;">'
+		+ name + '</div>';
 	if (typeof item.friend_request_sent === 'undefined') {
 	    op += '<a href="javascript:;" class="btn-friends black_btn_skin btnAddafrined" style="color:#fff;" id="'
 		    + name
@@ -571,17 +589,17 @@ function closeModals(modalid) {
 function addFriend(name) {
     var user_id = $("input[name=user_id]").val();
     var personalMsg = $("#msg-" + name.replace("@", "")).val();
-console.log('Profile Photo' + JSON.stringify(map));
+    console.log('Profile Photo' + JSON.stringify(map));
 
-    //var objs2 = jQuery.parseJSON(map);
-    //console.log('LIVE proifle'+objs2.profile_photo);
-   // var photo =objs2.profile_photo[0];
-   // 
-    //var photo = map[name].profile_photo;
-    //var photo = '';
-    //var friend_id = map[name].user_id;
-    console.log('Map XML-->'+map[name]);
-    var friend_id=user_id;
+    // var objs2 = jQuery.parseJSON(map);
+    // console.log('LIVE proifle'+objs2.profile_photo);
+    // var photo =objs2.profile_photo[0];
+    // 
+    // var photo = map[name].profile_photo;
+    // var photo = '';
+    // var friend_id = map[name].user_id;
+    console.log('Map XML-->' + map[name]);
+    var friend_id = user_id;
     var selFriends = [];
     selFriends[0] = {
 	tag : 'friend',
@@ -596,6 +614,9 @@ console.log('Profile Photo' + JSON.stringify(map));
 	    value : ''
 	} ]
     };
+    console.log('user_id::' + user_id);
+    console.log('friend_id::' + friend_id);
+
     ajaxRequest('addfriend', [ {
 	tag : 'user_id',
 	value : user_id
@@ -604,7 +625,7 @@ console.log('Profile Photo' + JSON.stringify(map));
 	value : friend_id
     }, ], function(ret_xml) {
 	// parse the returned xml.
-        console.log('Success Message Add Frined' +ret_xml);
+	console.log('Success Message Add Frined' + ret_xml);
 	var status = getValueFromXMLTag(ret_xml, 'status');
 	var message = getValueFromXMLTag(ret_xml, 'message');
 	if (status.toLowerCase() == 'success') {
