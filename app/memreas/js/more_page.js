@@ -1534,6 +1534,9 @@ function checkValidDateFromToEdit(isSubmit) {
 }
 
 
+
+
+
 function morepage_saveEvent(confirmed, delete_event) {
     
     // Precheck for selling media is popup or not and check for correction
@@ -1605,65 +1608,65 @@ function morepage_saveEvent(confirmed, delete_event) {
 		//
 		// call ajaxAddEvent only if done
 		//
-		//$('#loadingpopup').fadeOut(200);
-		//return true;
+		$('#loadingpopup').fadeOut(200);
+		return true;
 	}
     
     
     
     
-    var viewable_from = (($("#moredate_eventDateFrom").val() != '' && $(
+    event_share_object_update.viewable_from = (($("#moredate_eventDateFrom").val() != '' && $(
 	    "#moredate_eventDateFrom").val() != 'from') ? $(
 	    "#moredate_eventDateFrom").val() : '');
-    if (viewable_from != '') {
-	var split_date = viewable_from.split('/');
-	viewable_from = split_date[1] + '/' + split_date[0] + '/'
+    if (event_share_object_update.viewable_from != '') {
+	event_share_object_update.split_date = event_share_object_update.viewable_from.split('/');
+	event_share_object_update.viewable_from = split_date[1] + '/' + split_date[0] + '/'
 		+ split_date[2]; // Correct date format to d-m-Y
     }
 
-    var viewable_to = (($("#moredate_eventDateTo").val() != '' && $(
+    event_share_object_update.viewable_to = (($("#moredate_eventDateTo").val() != '' && $(
 	    "#moredate_eventDateTo").val() != 'to') ? $("#moredate_eventDateTo")
 	    .val()
 	    : '');
 
-    if (viewable_to != '') {
-	var split_date = viewable_to.split('/');
-	viewable_to = split_date[1] + '/' + split_date[0] + '/' + split_date[2]; // Correct
+    if (event_share_object_update.viewable_to != '') {
+	event_share_object_update.split_date = viewable_to.split('/');
+	event_share_object_update.viewable_to = split_date[1] + '/' + split_date[0] + '/' + split_date[2]; // Correct
 	// date
 	// format
 	// to
 	// d-m-Y
     }
     
-    console.log('Date-->'+viewable_from +'to-->'+viewable_to);
+    //console.log('Date-->'+viewable_from +'to-->'+viewable_to);
 
-    var self_destruct = (($("#morepage_eventSelfDestruct").val() != '') ? $(
+    event_share_object_update.self_destruct = (($("#morepage_eventSelfDestruct").val() != '') ? $(
 	    "#morepage_eventSelfDestruct").val() : '');
-    if (self_destruct != '') {
-	var split_date = self_destruct.split('/');
+    if (event_share_object_update.self_destruct != '') {
+	event_share_object_update.split_date = event_share_object_update.self_destruct.split('/');
 	self_destruct = split_date[1] + '/' + split_date[0] + '/'
 		+ split_date[2]; // Correct date format to d-m-Y
     }
-    var friend_can_post = 0;
+    event_share_object_update.friend_can_post = 0;
     if ($("#morepage_eventFriendsCanPost").is(":checked"))
-	friend_can_post = 1;
+	event_share_object_update.friend_can_post = 1;
     else
-	friend_can_post = 0;
+	event_share_object_update.friend_can_post = 0;
     if ($("#morepage_friendsCanAdd").is(":checked"))
-	var friend_can_add = 1;
+	event_share_object_update.friend_can_add = 1;
     else
-	var friend_can_add = 0;
+	event_share_object_update.friend_can_add = 0;
     
-    var public_can_add = 0;
+    event_share_object_update.public_can_add = 0;
     if ($("#morepage_public").is(":checked"))
-	var public_can_add = 1;
+	event_share_object_update.public_can_add = 1;
     else
-	var public_can_add = 0;
+	event_share_object_update.public_can_add = 0;
     
     
 
     // Check if event has selling event and check box, confirm
-    var sell_media = 0;
+   event_share_object_update.sell_media = 0;
     if ($("#morepage_event_sellmedia").is(":visible")) {
 	if (!$("input#morepage_ckb_sellmedia").is(":checked") && !confirmed) {
 	    jconfirm("Your event will become free. Are you sure?",
@@ -1707,29 +1710,39 @@ function morepage_saveEvent(confirmed, delete_event) {
 			"#morepage_eventDate").val() : '')
 	    }, {
 		tag : 'event_from',
-		value : viewable_from
+		value : event_share_object_update.viewable_from
 	    }, {
 		tag : 'event_to',
-		value : viewable_to
+		value : event_share_object_update.viewable_to
 	    }, {
 		tag : 'is_friend_can_post_media',
-		value : friend_can_post.toString()
+		value : event_share_object_update.friend_can_post.toString()
 	    }, {
 		tag : 'is_friend_can_add_friend',
-		value : friend_can_add.toString()
+		value :event_share_object_update.friend_can_add.toString()
 	    }, {
 		tag : 'is_public',
-		value : public_can_add.toString()
+		value : event_share_object_update.public_can_add.toString()
 	    },{
 		tag : 'event_self_destruct',
-		value : self_destruct
+		value : event_share_object_update.self_destruct
 	    }, {
 		tag : 'sell_media',
-		value : sell_media.toString()
+		value : event_share_object_update.sell_media.toString()
 	    }, {
 		tag : 'delete_event',
 		value : delete_event
-	    } ];
+	    },{
+		tag : 'price',
+		value : event_share_object_update.sell_media_price.toString()
+	}, {
+		tag : 'duration_from',
+		value : event_share_object_update.sellmedia_duration_from
+	}, {
+		tag : 'duration_to',
+		value : event_share_object_update.sellmedia_duration_to
+	} ];
+    console.log ('Event Obj -->' +JSON.stringify(event_share_object_update));
     ajaxRequest('editevent', params, function(response) {
         console.log('EditResponse-->'+response);
 	var status = getValueFromXMLTag(response, 'status');
