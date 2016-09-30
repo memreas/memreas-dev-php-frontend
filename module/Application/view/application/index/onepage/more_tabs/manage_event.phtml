@@ -56,7 +56,7 @@
 					>friends can add Friends</label>
 				</li>
 				 <li>
-                    <input id="morepage_public" class="css-checkbox" type="checkbox" name="morepage_public"/>
+                    <input id="morepage_public" class="css-checkbox" type="checkbox" name="morepage_public" onClick="javascript:edit_eventmorepage_public();"/>
                     <label for="morepage_public" name="demo_lbl_2" class="css-label margin-none" >public</label>
                 </li>
 				<li>
@@ -91,6 +91,10 @@
 						onFocus="if(this.value == '')this.value = '';"
 					/>
 				</li>
+                                
+                   
+                                
+                                  <?php if ($this->enableSellMedia) { ?>
 				<li id="morepage_event_sellmedia">
 					<input id="morepage_ckb_sellmedia" class="css-checkbox"
 						type="checkbox"
@@ -99,6 +103,7 @@
 						name="demo_lbl_6" class="css-label margin-none"
 					>Sell media</label>
 				</li>
+                                  <?php  } ?>
 			</ul>
 			<div
 				style="clear: both; margin-top: 10px; margin-bottom: 10px; padding-top: 10px;"
@@ -170,3 +175,42 @@
 	<div id="more_div_locationmap_maparea" class="map_box"></div>
 </div>
 <div id="more_div_locationmap_back" class="backgroundPopup"></div>
+
+
+<div id="popupSellMediaedit" class="popups">
+		<a id="popupSellMediaClose" onClick="disablePopup('popupSellMediaedit');" class='popupClose'>x</a>
+		<h2>Sell media</h2>
+		<ul id="content_1" class="scrollpopup give-message-form">
+			<li style="margin-bottom: 10px;">
+				<label class="textfield_names" style="width: 100%;; float: none;">Note: your price may change based on the media you select and their associated file size(s)./</label>
+			<li>
+				<label class="textfield_names">Price :</label>
+				<select name="sellmedia_price_edit" id="sellmedia_price_edit">
+					<option value="">-Choose-</option>
+					<option value="0.25">$0.05</option>
+					<option value="0.25">$0.10</option>
+					<option value="0.25">$0.15</option>
+					<option value="0.25">$0.20</option>
+					<option value="0.25">$0.25</option>
+					<option value="0.5">$0.5</option>
+					<option value="0.5">$0.75</option>
+					<option value="1">$1</option>
+					<option value="2">$2</option>
+					<option value="5">$5</option>
+				</select>
+			</li>
+			<li>
+				<label class="textfield_names">duration :</label>
+				<input name="input3" type="text" id="sellmedia_duration_from_edit" class="share-txtfield date-picker" value="available from" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'available from')this.value = '';" />
+			</li>
+			<li class="clear">
+<!--				<label class="textfield_names">&nbsp;</label>-->
+				<input name="input4" type="text" id="sellmedia_duration_to_edit" class="share-txtfield date-picker" value="available to" onBlur="if(!/\S/.test(this.value))this.value=this.defaultValue" onFocus="if(this.value == 'available to')this.value = '';" />
+			</li>
+			<li>
+				<input id="ckb_sellmedia_agree_edit" class="css-checkbox" type="checkbox" />
+				<label id="" for="ckb_sellmedia_agree_edit" name="demo_lbl_6" class="css-label margin-none" style="height: 100px;" > By checking this box I certify that I own the appropriate copyrights for any media within this memeas share.  Full terms are available <a href="javascript:;" onclick="sharePopupMarketTerm();">here</a>. </label>
+			</li>
+		</ul>
+		<a class="black_btn_skin f-left" href="javascript:;" id="accept-notification_edit" onclick="morepage_saveEvent(false , false);">OK</a><a class="black_btn_skin f-right" href="javascript:disablePopup('popupSellMediaedit');">close</a>
+	</div>
