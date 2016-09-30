@@ -10,7 +10,8 @@ $(function() {
     $("#moredate_eventDateFrom").datepicker();
     $("#moredate_eventDateTo").datepicker();
     $("#morepage_eventSelfDestruct").datepicker();
-
+    $('#sellmedia_duration_from_edit').datepicker();
+    $('#sellmedia_duration_to_edit').datepicker();
     $("#tab-content-more div.hideCls").hide(); // Initially hide all content
     $("#tabs-more li:first").attr("id", "current"); // Activate first tab
     $("#tab-content-more div:first").fadeIn(); // Show first tab content*/
