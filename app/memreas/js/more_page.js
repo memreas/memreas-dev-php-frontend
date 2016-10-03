@@ -1194,6 +1194,9 @@ function fillmorepage_eventDetail(morepage_event_id) {
 	    if (getValueFromXMLTag(response, 'location') != '')
 		jMorepageEventLocation.val(getValueFromXMLTag(response,
 			'location'));
+                  
+             
+            
 
 	    var friendsCanPost = getValueFromXMLTag(response,
 		    'friends_can_post');
@@ -1266,6 +1269,19 @@ function fillmorepage_eventDetail(morepage_event_id) {
 	    if (price > 0) {
 		$("input#morepage_ckb_sellmedia").attr("checked", true);
 		$("#morepage_event_sellmedia").show();
+                
+                 if (metadata.price > 0) {
+                $('#sellmedia_price_edit option[value="'+metadata.price+'"]').attr('selected','selected');
+//                if ($('#sellmedia_price_edit').val() == obj.price) {
+//                    $('#sellmedia_price_edit').attr('selected', 'selected');
+//                }
+            }
+            if (metadata.duration_from != '') {
+                $('#sellmedia_duration_from_edit').val(metadata.duration_from);
+            }
+            if (metadata.duration_to != '') {
+                $('#sellmedia_duration_to_edit').val(metadata.duration_to);
+            } 
 	    }
 
 	} else
@@ -1562,7 +1578,7 @@ function morepage_saveEvent(confirmed, delete_event) {
 		event_share_object_update.sellmedia_duration_from = $("#sellmedia_duration_from").val();
 		event_share_object_update.sellmedia_duration_to = $("#sellmedia_duration_to").val();
 
-		if (!$("#ckb_sellmedia_agree").is(":checked")) {
+		if (!$("#ckb_sellmedia_agree_edit").is(":checked")) {
 			jerror("You must agree with our terms and conditions");
 			return false;
 		}
@@ -1667,6 +1683,7 @@ function morepage_saveEvent(confirmed, delete_event) {
     
 
     // Check if event has selling event and check box, confirm
+     console.log('Here After checking Codee selling ->');
    event_share_object_update.sell_media = 0;
     if ($("#morepage_event_sellmedia").is(":visible")) {
 	if (!$("input#morepage_ckb_sellmedia").is(":checked") && !confirmed) {
@@ -1676,7 +1693,7 @@ function morepage_saveEvent(confirmed, delete_event) {
 	}
 
 	if ($("input#morepage_ckb_sellmedia").is(":checked")) {
-	    sell_media = 1;
+	    event_share_object_update.sell_media = 1;
 	}
     }
     
@@ -1688,6 +1705,8 @@ function morepage_saveEvent(confirmed, delete_event) {
     } else {
 	delete_event = '0';
     }
+    
+    console.log('Here After checking Codee  ->');
 
     var params = [
 	    {
