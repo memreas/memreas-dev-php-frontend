@@ -583,6 +583,7 @@ function eventSearchLi(target, item) {
     $(target).append(op);
 }
 function closeModals(modalid) {
+    //alert(modalid);
     $(".modal-backdrop").removeClass("in").addClass("out").fadeOut();
     $("#pop-" + modalid).remove();
 }
@@ -632,7 +633,8 @@ function addFriend(name) {
 	    if ($.trim(wa) != "") {
 
 	    }
-	    closeModals(name.replace("@", ""));
+	   // closeModals(name.replace("@", ""));
+            $('#pop-'+name.replace("@", "")+'').attr('style','display:none !important');
 	    // jsuccess('your friends added successfully.');
 	    jsuccess(message);
 	    var link_object = "a[title='user-" + name.replace('@', '') + "']";
@@ -644,7 +646,8 @@ function addFriend(name) {
 	    // $(".popupContact li").each (function(){ $(this).removeClass
 	    // ('setchoosed');});
 	} else {
-	    closeModals(name.replace("@", ""));
+	    //closeModals(name.replace("@", ""));
+            $('#pop-'+name.replace("@", "")+'').attr('style','display:none !important');
 	    jerror(message);
 	}
 
