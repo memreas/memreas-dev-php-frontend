@@ -598,7 +598,7 @@ function addFriend(name) {
     // 
    //  var photo = map[name].profile_photo;
     // var photo = '';
-    alert(name);
+   // alert(name);
     console.log('Map XML-->' + map.name);
     var friend_id = map[name].user_id;
     console.log('Map XML-->' + map[name]);
