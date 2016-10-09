@@ -636,7 +636,7 @@ function addFriend(name) {
 //	    if ($.trim(wa) != "") {
 //
 //	    }
-	   // closeModals(name.replace("@", ""));
+	    closeModals(name.replace("@", ""));
             $('#pop-'+name.replace("@", "")+'').attr('style','display:none !important');
 	    // jsuccess('your friends added successfully.');
 	    jsuccess(message);
@@ -649,7 +649,7 @@ function addFriend(name) {
 	    // $(".popupContact li").each (function(){ $(this).removeClass
 	    // ('setchoosed');});
 	} else {
-	    //closeModals(name.replace("@", ""));
+	    closeModals(name.replace("@", ""));
             $('#pop-'+name.replace("@", "")+'').attr('style','display:none !important');
 	    jerror(message);
 	}
