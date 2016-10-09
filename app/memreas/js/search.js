@@ -592,12 +592,14 @@ function addFriend(name) {
     var personalMsg = $("#msg-" + name.replace("@", "")).val();
     console.log('Profile Photo' + JSON.stringify(map));
 
-    // var objs2 = jQuery.parseJSON(map);
-    // console.log('LIVE proifle'+objs2.profile_photo);
-    // var photo =objs2.profile_photo[0];
+   //var objs2 = JSON.parse(map);
+   //  console.log('LIVE proifle'+objs2.name.profile_photo);
+   //  var photo =objs2.profile_photo[0];
     // 
-    // var photo = map[name].profile_photo;
+   //  var photo = map[name].profile_photo;
     // var photo = '';
+    alert(name);
+    console.log('Map XML-->' + map.name);
     var friend_id = map[name].user_id;
     console.log('Map XML-->' + map[name]);
     //var friend_id = user_id;
@@ -629,10 +631,11 @@ function addFriend(name) {
 	console.log('Success Message Add Frined' + ret_xml);
 	var status = getValueFromXMLTag(ret_xml, 'status');
 	var message = getValueFromXMLTag(ret_xml, 'message');
+        
 	if (status.toLowerCase() == 'success') {
-	    if ($.trim(wa) != "") {
-
-	    }
+//	    if ($.trim(wa) != "") {
+//
+//	    }
 	   // closeModals(name.replace("@", ""));
             $('#pop-'+name.replace("@", "")+'').attr('style','display:none !important');
 	    // jsuccess('your friends added successfully.');
