@@ -1026,7 +1026,7 @@ share_getAllMedia = function() {
 						if ((!metadata.S3_files.copyright) || (metadata.S3_files.copyright == 'null')) {
 							continue;
 						}
-						copyright_count_++;
+						copyright_count++;
 					}
 					
 					//
