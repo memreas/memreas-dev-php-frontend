@@ -1021,10 +1021,21 @@ share_getAllMedia = function() {
 					// Checking for sale event with media copyright
 					//
 					metadata = JSON.parse(metadata);
+					var copyright_count = 0;
 					if ($("#ckb_sellmedia").is(":checked")) {
 						if ((!metadata.S3_files.copyright) || (metadata.S3_files.copyright == 'null')) {
 							continue;
 						}
+						copyright_count_++;
+					}
+					
+					//
+					// If copyright_count > 0 then proceed 
+					// else undo checkbox, send user back to details tab
+					//     and show jerror("you must have media with copyright to sell")
+					//
+					if (copyright_count == 0) {
+					    // see comment above 
 					}
 
 					//
