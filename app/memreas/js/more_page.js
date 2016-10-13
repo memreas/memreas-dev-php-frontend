@@ -1595,6 +1595,7 @@ function morepage_saveEvent(confirmed, delete_event) {
 		return false;
 	}
 	if (checkValidDateFromToEdit(true)) {
+            //alert('hello');
 		event_share_object_update.date = getElementValue('morepage_eventDate');
 		event_share_object_update.location = getElementValue('morepage_eventLocation');
 		event_share_object_update.date_from = getElementValue('moredate_eventDateFrom');
@@ -1625,20 +1626,21 @@ function morepage_saveEvent(confirmed, delete_event) {
 		//
 		// call ajaxAddEvent only if done
 		//
-		$('#loadingpopup').fadeOut(200);
-		return true;
+               
+		//$('#loadingpopup').fadeOut(200);
+		//return true;
 	}
     
     
-    
+    console.log('Update ALl Data-->'+JSON.stringify(event_share_object_update));
     
     event_share_object_update.viewable_from = (($("#moredate_eventDateFrom").val() != '' && $(
 	    "#moredate_eventDateFrom").val() != 'from') ? $(
 	    "#moredate_eventDateFrom").val() : '');
     if (event_share_object_update.viewable_from != '') {
 	event_share_object_update.split_date = event_share_object_update.viewable_from.split('/');
-	event_share_object_update.viewable_from = split_date[1] + '/' + split_date[0] + '/'
-		+ split_date[2]; // Correct date format to d-m-Y
+	event_share_object_update.viewable_from = event_share_object_update.split_date[1] + '/' + event_share_object_update.split_date[0] + '/'
+		+ event_share_object_update.split_date[2]; // Correct date format to d-m-Y
     }
 
     event_share_object_update.viewable_to = (($("#moredate_eventDateTo").val() != '' && $(
@@ -1647,14 +1649,14 @@ function morepage_saveEvent(confirmed, delete_event) {
 	    : '');
 
     if (event_share_object_update.viewable_to != '') {
-	event_share_object_update.split_date = viewable_to.split('/');
-	event_share_object_update.viewable_to = split_date[1] + '/' + split_date[0] + '/' + split_date[2]; // Correct
+	event_share_object_update.split_date = event_share_object_update.viewable_to.split('/');
+	event_share_object_update.viewable_to = event_share_object_update.split_date[1] + '/' + event_share_object_update.split_date[0] + '/' + event_share_object_update.split_date[2]; // Correct
 	// date
 	// format
 	// to
 	// d-m-Y
     }
-    
+     
     //console.log('Date-->'+viewable_from +'to-->'+viewable_to);
 
     event_share_object_update.self_destruct = (($("#morepage_eventSelfDestruct").val() != '') ? $(
@@ -1679,7 +1681,7 @@ function morepage_saveEvent(confirmed, delete_event) {
 	event_share_object_update.public_can_add = 1;
     else
 	event_share_object_update.public_can_add = 0;
-    
+     console.log('Update ALl Data2-->'+JSON.stringify(event_share_object_update));
     
 
     // Check if event has selling event and check box, confirm
@@ -1754,7 +1756,7 @@ function morepage_saveEvent(confirmed, delete_event) {
 		value : delete_event
 	    },{
 		tag : 'price',
-		value : event_share_object_update.sell_media_price.toString()
+		value : event_share_object_update.sell_media_price
 	}, {
 		tag : 'duration_from',
 		value : event_share_object_update.sellmedia_duration_from
