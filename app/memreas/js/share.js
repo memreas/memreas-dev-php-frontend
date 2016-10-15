@@ -447,7 +447,7 @@ function checkSellMediaDuration() {
 
 		var current_date = new Date();
 		//if (date_from < current_date) {
-		if (date_from > current_date) {
+		if (date_from < current_date) {
 			jerror("Duration from date must be current or a later date");
 			return false;
 		}
@@ -1021,14 +1021,30 @@ share_getAllMedia = function() {
 					// Checking for sale event with media copyright
 					//
 					metadata = JSON.parse(metadata);
+					var copyright_count = 0;
 					if ($("#ckb_sellmedia").is(":checked")) {
 						if ((!metadata.S3_files.copyright) || (metadata.S3_files.copyright == 'null')) {
-							continue;
+                                                    console.log('copyright-->' +metadata.S3_files.copyright);
+							//continue;
 						}
+						copyright_count++;
 					}
-
+					console.log('copyright_count-->'+copyright_count);
 					//
-					// Video section
+					// If copyright_count > 0 then proceed 
+					// else undo checkbox, send user back to details tab
+					//     and show jerror("you must have media with copyright to sell")
+					//
+					if (copyright_count == 0) {
+					    // see comment above 
+                                            console.log('hello');
+                                            $("#ckb_sellmedia").attr('checked', false);
+                                            jerror("you must have media with copyright to sell");
+                                            $('.memrsclick').trigger('click');
+                                            
+					}else{
+                                           
+                                           // Video section
 					//
 					if (_media_type == 'video') {
 						//
@@ -1045,6 +1061,11 @@ share_getAllMedia = function() {
 						//
 						jtarget_element.append('<li id="share-' + _media_id + '-parent"><a href="javascript:;" id="share-' + _media_id + '" class="image-sync" onclick="return imageChoosed(this.id);"><img src="' + _media_url + '" alt=""></a></li>');
 					}
+                                        
+                                        }
+
+					//
+					
 
 					ajaxScrollbarElement('#share_medialist');
 				}
