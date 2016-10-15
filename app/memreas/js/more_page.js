@@ -1560,255 +1560,301 @@ function checkValidDateFromToEdit(isSubmit) {
 
 function morepage_saveEvent(confirmed, delete_event) {
 
-    // Precheck for selling media is popup or not and check for correction
-    if (!$('#morepage_ckb_sellmedia').is(":checked")) {
-	event_share_object_update.sellmedia_duration_from = '';
-	event_share_object_update.sellmedia_duration_to = '';
-	event_share_object_update.sell_media_price = 0;
-    } else if ($("#popupSellMediaedit").is(":visible")) {
-	event_share_object_update.sellmedia_price_select = $(
-		"#sellmedia_price_edit").val();
-	if (event_share_object_update.sellmedia_price_select == '') {
-	    $('#loadingpopup').fadeOut(200);
-	    jerror("please select the price");
-	    return false;
-	}
-
-	event_share_object_update.passDuration = checkSellMediaDurationEdit();
-	if (!event_share_object_update.passDuration) {
-	    $('#loadingpopup').fadeOut(200);
-	    return false;
-	}
-
-	event_share_object_update.sellmedia_duration_from = $(
-		"#sellmedia_duration_from").val();
-	event_share_object_update.sellmedia_duration_to = $(
-		"#sellmedia_duration_to").val();
-
-	if (!$("#ckb_sellmedia_agree_edit").is(":checked")) {
-	    jerror("You must agree with our terms and conditions");
-	    return false;
-	}
-	event_share_object_update.sell_media_price = event_share_object_update.sellmedia_price_select;
-    }
-
-    disablePopup('popupSellMediaedit');
-
-    event_share_object_update.name = getElementValue('cmd_MorepageEvents');
-    if (event_share_object_update.name == "") {
-	$('#loadingpopup').fadeOut(200);
-	jerror("name is required.");
-	return false;
-    }
-    if (checkValidDateFromToEdit(true)) {
-	// alert('hello');
-	event_share_object_update.date = getElementValue('morepage_eventDate');
-	event_share_object_update.location = getElementValue('morepage_eventLocation');
-	event_share_object_update.date_from = getElementValue('moredate_eventDateFrom');
-	event_share_object_update.date_to = getElementValue('moredate_eventDateTo');
-	event_share_object_update.date_selfdestruct = getElementValue('morepage_isselfdestruct');
-
-	event_share_object_update.ckb_canpost = getCheckBoxValue('morepage_eventFriendsCanPost');
-	event_share_object_update.ckb_canadd = getCheckBoxValue('morepage_friendsCanAdd');
-	event_share_object_update.ckb_public = getCheckBoxValue('morepage_public');
-
-	// Sell media public as default
-	if (event_share_object_update.sell_media_price > 0) {
-	    event_share_object_update.ckb_public = 1;
-	    event_share_object_update.ckb_canpost = 0;
-	    event_share_object_update.ckb_canadd = 0;
-	    event_share_object_update.date_from = event_share_object_update.sellmedia_duration_from;
-	    event_share_object_update.date_to = event_share_object_update.sellmedia_duration_to;
-	}
-
-	event_share_object_update.ckb_viewable = getCheckBoxValue('morepage_isviewable');
-	event_share_object_update.ckb_selfdestruct = getCheckBoxValue('morepage_eventSelfDestruct');
-
-	//
-	// Share Page Changes: Move to ajaxAddEvent
-	//
-	// shareDisableFields();
-
-	//
-	// call ajaxAddEvent only if done
-	//
-
-	// $('#loadingpopup').fadeOut(200);
-	// return true;
-    }
-
-    console.log('Update ALl Data-->'
-	    + JSON.stringify(event_share_object_update));
-
-    event_share_object_update.viewable_from = (($("#moredate_eventDateFrom")
-	    .val() != '' && $("#moredate_eventDateFrom").val() != 'from') ? $(
-	    "#moredate_eventDateFrom").val() : '');
-    if (event_share_object_update.viewable_from != '') {
-	event_share_object_update.split_date = event_share_object_update.viewable_from
-		.split('/');
-	event_share_object_update.viewable_from = event_share_object_update.split_date[1]
-		+ '/'
-		+ event_share_object_update.split_date[0]
-		+ '/'
-		+ event_share_object_update.split_date[2]; // Correct date
-							    // format to d-m-Y
-    }
-
-    event_share_object_update.viewable_to = (($("#moredate_eventDateTo").val() != '' && $(
-	    "#moredate_eventDateTo").val() != 'to') ? $("#moredate_eventDateTo")
-	    .val()
-	    : '');
-
-    if (event_share_object_update.viewable_to != '') {
-	event_share_object_update.split_date = event_share_object_update.viewable_to
-		.split('/');
-	event_share_object_update.viewable_to = event_share_object_update.split_date[1]
-		+ '/'
-		+ event_share_object_update.split_date[0]
-		+ '/'
-		+ event_share_object_update.split_date[2]; // Correct
-	// date
-	// format
-	// to
-	// d-m-Y
-    }
-
-    // console.log('Date-->'+viewable_from +'to-->'+viewable_to);
-
-    event_share_object_update.self_destruct = (($("#morepage_eventSelfDestruct")
-	    .val() != '') ? $("#morepage_eventSelfDestruct").val() : '');
-    if (event_share_object_update.self_destruct != '') {
-	event_share_object_update.split_date = event_share_object_update.self_destruct
-		.split('/');
-	self_destruct = split_date[1] + '/' + split_date[0] + '/'
-		+ split_date[2]; // Correct date format to d-m-Y
-    }
-    event_share_object_update.friend_can_post = 0;
-    if ($("#morepage_eventFriendsCanPost").is(":checked")) {
-	event_share_object_update.friend_can_post = 1;
-    } else {
-	event_share_object_update.friend_can_post = 0;
-    }
-
-    if ($("#morepage_friendsCanAdd").is(":checked")) {
-	event_share_object_update.friend_can_add = 1;
-    } else {
-	event_share_object_update.friend_can_add = 0;
-    }
-
-    event_share_object_update.public_can_add = 0;
-    if ($("#morepage_public").is(":checked")) {
-	event_share_object_update.public_can_add = 1;
-    } else {
-	event_share_object_update.public_can_add = 0;
-    }
-    console.log('event_share_object_update 2-->'
-	    + JSON.stringify(event_share_object_update));
-
-    // Check if event has selling event and check box, confirm
-    console.log('Here After checking Codee selling ->');
-    event_share_object_update.sell_media = 0;
-    if ($("#morepage_event_sellmedia").prop("visible") && $("#morepage_ckb_sellmedia").prop("checked")) {
-	console.log('#morepage_event_sellmedia").is(":visible")...');
-	console.log(!$("#morepage_ckb_sellmedia").prop("checked"));
-	console.log(!confirmed);
-	
-	if (!confirmed) {
-	    console.log('!confirmed...');
-	    jconfirm("please confirm - setting event to free",
-		    "morepage_saveEvent(true)");
-	    return false;
-	}
-
-	if ($("input#morepage_ckb_sellmedia").is(":checked")) {
-	    event_share_object_update.sell_media = 1;
-	}
-    }
-
     //
     // Check if delete - jconfirm onclick
     //
     console.log('Checking delete event ->');
     if (delete_event) {
 	delete_event = '1';
+
+	var params = [
+		{
+		    tag : 'event_id',
+		    value : $("#cmd_MorepageEvents").val()
+		},
+		{
+		    tag : 'event_name',
+		    value : $(
+			    "#cmd_MorepageEvents option[value='"
+				    + $("#cmd_MorepageEvents").val() + "']")
+			    .html()
+
+		}, {
+		    tag : 'delete_event',
+		    value : delete_event
+		} ];
+	ajaxRequest('editevent', params, function(response) {
+	    console.log('EditResponse-->' + response);
+	    var status = getValueFromXMLTag(response, 'status');
+	    if (status == 'Failure') {
+		ssMsg = "failed to update";
+		jerror(ssMsg);
+	    } else {
+		var event_name = getValueFromXMLTag(response, 'event_name');
+		jsuccess(getValueFromXMLTag(response, 'message'));
+		// remove the option - doesn't work well
+		//$("#cmd_MorepageEvents option:selected").remove();
+		//var event_deleted = $("#cmd_MorepageEvents option:selected").val() + " - deleted";
+		//$("#cmd_MorepageEvents option:selected").val(event_deleted);
+	    }
+	});
+
     } else {
 	delete_event = '0';
-    }
-    
-    var params = [
-	    {
-		tag : 'event_id',
-		value : $("#cmd_MorepageEvents").val()
-	    },
-	    {
-		tag : 'event_name',
-		value : $(
-			"#cmd_MorepageEvents option[value='"
-				+ $("#cmd_MorepageEvents").val() + "']").html()
-	    },
-	    {
-		tag : 'event_location',
-		value : (($("#morepage_eventLocation").val() != '' && $(
-			"#morepage_eventLocation").val() != 'address or current location') ? $(
-			"#morepage_eventLocation").val()
-			: '')
-	    },
-	    {
-		tag : 'event_date',
-		value : (($("#morepage_eventDate").val() != '' && $(
-			"#morepage_eventDate").val() != 'from') ? $(
-			"#morepage_eventDate").val() : '')
-	    }, {
-		tag : 'event_from',
-		value : event_share_object_update.viewable_from
-	    }, {
-		tag : 'event_to',
-		value : event_share_object_update.viewable_to
-	    }, {
-		tag : 'is_friend_can_post_media',
-		value : event_share_object_update.friend_can_post.toString()
-	    }, {
-		tag : 'is_friend_can_add_friend',
-		value : event_share_object_update.friend_can_add.toString()
-	    }, {
-		tag : 'is_public',
-		value : event_share_object_update.public_can_add.toString()
-	    }, {
-		tag : 'event_self_destruct',
-		value : event_share_object_update.self_destruct
-	    }, {
-		tag : 'sell_media',
-		value : event_share_object_update.sell_media.toString()
-	    }, {
-		tag : 'delete_event',
-		value : delete_event
-	    }, {
-		tag : 'price',
-		value : event_share_object_update.sell_media_price
-	    }, {
-		tag : 'duration_from',
-		value : event_share_object_update.sellmedia_duration_from
-	    }, {
-		tag : 'duration_to',
-		value : event_share_object_update.sellmedia_duration_to
-	    } ];
-    console.log('Event Obj -->' + JSON.stringify(event_share_object_update));
-    ajaxRequest('editevent', params, function(response) {
-	console.log('EditResponse-->' + response);
-	var status = getValueFromXMLTag(response, 'status');
-	if (status == 'Failure') {
-	    ssMsg = "failed to update";
-	    jerror(ssMsg);
-	    // $("#jSuccess").css("background-image", "none");
-	    // $("#jSuccess").css("padding-left", "10px");
-	} else {
-	    var event_name = getValueFromXMLTag(response, 'event_name');
-	    jsuccess(getValueFromXMLTag(response, 'message'));
-	    var remove_event = "#cmd_MorepageEvents option[value='"
-		    + remove_event + "']";
-	    $(remove_event).remove();
+	// Precheck for selling media is popup or not and check for correction
+	if (!$('#morepage_ckb_sellmedia').is(":checked")) {
+	    event_share_object_update.sellmedia_duration_from = '';
+	    event_share_object_update.sellmedia_duration_to = '';
+	    event_share_object_update.sell_media_price = 0;
+	} else if ($("#popupSellMediaedit").is(":visible")) {
+	    event_share_object_update.sellmedia_price_select = $(
+		    "#sellmedia_price_edit").val();
+	    if (event_share_object_update.sellmedia_price_select == '') {
+		$('#loadingpopup').fadeOut(200);
+		jerror("please select the price");
+		return false;
+	    }
+
+	    event_share_object_update.passDuration = checkSellMediaDurationEdit();
+	    if (!event_share_object_update.passDuration) {
+		$('#loadingpopup').fadeOut(200);
+		return false;
+	    }
+
+	    event_share_object_update.sellmedia_duration_from = $(
+		    "#sellmedia_duration_from").val();
+	    event_share_object_update.sellmedia_duration_to = $(
+		    "#sellmedia_duration_to").val();
+
+	    if (!$("#ckb_sellmedia_agree_edit").is(":checked")) {
+		jerror("You must agree with our terms and conditions");
+		return false;
+	    }
+	    event_share_object_update.sell_media_price = event_share_object_update.sellmedia_price_select;
 	}
-    });
+
+	disablePopup('popupSellMediaedit');
+
+	event_share_object_update.name = getElementValue('cmd_MorepageEvents');
+	if (event_share_object_update.name == "") {
+	    $('#loadingpopup').fadeOut(200);
+	    jerror("name is required.");
+	    return false;
+	}
+	if (checkValidDateFromToEdit(true)) {
+	    // alert('hello');
+	    event_share_object_update.date = getElementValue('morepage_eventDate');
+	    event_share_object_update.location = getElementValue('morepage_eventLocation');
+	    event_share_object_update.date_from = getElementValue('moredate_eventDateFrom');
+	    event_share_object_update.date_to = getElementValue('moredate_eventDateTo');
+	    event_share_object_update.date_selfdestruct = getElementValue('morepage_isselfdestruct');
+
+	    event_share_object_update.ckb_canpost = getCheckBoxValue('morepage_eventFriendsCanPost');
+	    event_share_object_update.ckb_canadd = getCheckBoxValue('morepage_friendsCanAdd');
+	    event_share_object_update.ckb_public = getCheckBoxValue('morepage_public');
+
+	    // Sell media public as default
+	    if (event_share_object_update.sell_media_price > 0) {
+		event_share_object_update.ckb_public = 1;
+		event_share_object_update.ckb_canpost = 0;
+		event_share_object_update.ckb_canadd = 0;
+		event_share_object_update.date_from = event_share_object_update.sellmedia_duration_from;
+		event_share_object_update.date_to = event_share_object_update.sellmedia_duration_to;
+	    }
+
+	    event_share_object_update.ckb_viewable = getCheckBoxValue('morepage_isviewable');
+	    event_share_object_update.ckb_selfdestruct = getCheckBoxValue('morepage_eventSelfDestruct');
+
+	    //
+	    // Share Page Changes: Move to ajaxAddEvent
+	    //
+	    // shareDisableFields();
+
+	    //
+	    // call ajaxAddEvent only if done
+	    //
+
+	    // $('#loadingpopup').fadeOut(200);
+	    // return true;
+	}
+
+	console.log('Update ALl Data-->'
+		+ JSON.stringify(event_share_object_update));
+
+	event_share_object_update.viewable_from = (($("#moredate_eventDateFrom")
+		.val() != '' && $("#moredate_eventDateFrom").val() != 'from') ? $(
+		"#moredate_eventDateFrom").val()
+		: '');
+	if (event_share_object_update.viewable_from != '') {
+	    event_share_object_update.split_date = event_share_object_update.viewable_from
+		    .split('/');
+	    event_share_object_update.viewable_from = event_share_object_update.split_date[1]
+		    + '/'
+		    + event_share_object_update.split_date[0]
+		    + '/'
+		    + event_share_object_update.split_date[2]; // Correct date
+	    // format to d-m-Y
+	}
+
+	event_share_object_update.viewable_to = (($("#moredate_eventDateTo")
+		.val() != '' && $("#moredate_eventDateTo").val() != 'to') ? $(
+		"#moredate_eventDateTo").val() : '');
+
+	if (event_share_object_update.viewable_to != '') {
+	    event_share_object_update.split_date = event_share_object_update.viewable_to
+		    .split('/');
+	    event_share_object_update.viewable_to = event_share_object_update.split_date[1]
+		    + '/'
+		    + event_share_object_update.split_date[0]
+		    + '/'
+		    + event_share_object_update.split_date[2]; // Correct
+	    // date
+	    // format
+	    // to
+	    // d-m-Y
+	}
+
+	// console.log('Date-->'+viewable_from +'to-->'+viewable_to);
+
+	event_share_object_update.self_destruct = (($(
+		"#morepage_eventSelfDestruct").val() != '') ? $(
+		"#morepage_eventSelfDestruct").val() : '');
+	if (event_share_object_update.self_destruct != '') {
+	    event_share_object_update.split_date = event_share_object_update.self_destruct
+		    .split('/');
+	    self_destruct = split_date[1] + '/' + split_date[0] + '/'
+		    + split_date[2]; // Correct date format to d-m-Y
+	}
+	event_share_object_update.friend_can_post = 0;
+	if ($("#morepage_eventFriendsCanPost").is(":checked")) {
+	    event_share_object_update.friend_can_post = 1;
+	} else {
+	    event_share_object_update.friend_can_post = 0;
+	}
+
+	if ($("#morepage_friendsCanAdd").is(":checked")) {
+	    event_share_object_update.friend_can_add = 1;
+	} else {
+	    event_share_object_update.friend_can_add = 0;
+	}
+
+	event_share_object_update.public_can_add = 0;
+	if ($("#morepage_public").is(":checked")) {
+	    event_share_object_update.public_can_add = 1;
+	} else {
+	    event_share_object_update.public_can_add = 0;
+	}
+	console.log('event_share_object_update 2-->'
+		+ JSON.stringify(event_share_object_update));
+
+	// Check if event has selling event and check box, confirm
+	console.log('Here After checking Codee selling ->');
+	event_share_object_update.sell_media = 0;
+	if ($("#morepage_event_sellmedia").prop("visible")
+		&& $("#morepage_ckb_sellmedia").prop("checked")) {
+	    console.log('#morepage_event_sellmedia").is(":visible")...');
+	    console.log(!$("#morepage_ckb_sellmedia").prop("checked"));
+	    console.log(!confirmed);
+
+	    if (!confirmed) {
+		console.log('!confirmed...');
+		jconfirm("please confirm - setting event to free",
+			"morepage_saveEvent(true)");
+		return false;
+	    }
+
+	    if ($("input#morepage_ckb_sellmedia").is(":checked")) {
+		event_share_object_update.sell_media = 1;
+	    }
+	}
+
+	//
+	// call ws
+	//
+	var params = [
+		{
+		    tag : 'event_id',
+		    value : $("#cmd_MorepageEvents").val()
+		},
+		{
+		    tag : 'event_name',
+		    value : $(
+			    "#cmd_MorepageEvents option[value='"
+				    + $("#cmd_MorepageEvents").val() + "']")
+			    .html()
+		},
+		{
+		    tag : 'event_location',
+		    value : (($("#morepage_eventLocation").val() != '' && $(
+			    "#morepage_eventLocation").val() != 'address or current location') ? $(
+			    "#morepage_eventLocation").val()
+			    : '')
+		},
+		{
+		    tag : 'event_date',
+		    value : (($("#morepage_eventDate").val() != '' && $(
+			    "#morepage_eventDate").val() != 'from') ? $(
+			    "#morepage_eventDate").val() : '')
+		},
+		{
+		    tag : 'event_from',
+		    value : event_share_object_update.viewable_from
+		},
+		{
+		    tag : 'event_to',
+		    value : event_share_object_update.viewable_to
+		},
+		{
+		    tag : 'is_friend_can_post_media',
+		    value : event_share_object_update.friend_can_post
+			    .toString()
+		}, {
+		    tag : 'is_friend_can_add_friend',
+		    value : event_share_object_update.friend_can_add.toString()
+		}, {
+		    tag : 'is_public',
+		    value : event_share_object_update.public_can_add.toString()
+		}, {
+		    tag : 'event_self_destruct',
+		    value : event_share_object_update.self_destruct
+		}, {
+		    tag : 'sell_media',
+		    value : event_share_object_update.sell_media.toString()
+		}, {
+		    tag : 'delete_event',
+		    value : delete_event
+		}, {
+		    tag : 'price',
+		    value : event_share_object_update.sell_media_price
+		}, {
+		    tag : 'duration_from',
+		    value : event_share_object_update.sellmedia_duration_from
+		}, {
+		    tag : 'duration_to',
+		    value : event_share_object_update.sellmedia_duration_to
+		} ];
+	console
+		.log('Event Obj -->'
+			+ JSON.stringify(event_share_object_update));
+	ajaxRequest('editevent', params, function(response) {
+	    console.log('EditResponse-->' + response);
+	    var status = getValueFromXMLTag(response, 'status');
+	    if (status == 'Failure') {
+		ssMsg = "failed to update";
+		jerror(ssMsg);
+		// $("#jSuccess").css("background-image", "none");
+		// $("#jSuccess").css("padding-left", "10px");
+	    } else {
+		var event_name = getValueFromXMLTag(response, 'event_name');
+		jsuccess(getValueFromXMLTag(response, 'message'));
+		var remove_event = "#cmd_MorepageEvents option[value='"
+			+ remove_event + "']";
+		$(remove_event).remove();
+	    }
+	});
+
+    } // end else if !delete_event
+
 }
 
 function getMorepageEventFriends() {
