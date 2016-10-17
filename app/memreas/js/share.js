@@ -446,6 +446,7 @@ function checkSellMediaDuration() {
 		}
 
 		var current_date = new Date();
+                console.log('datefrom-->'+date_from +'Cr Date'+ current_date);
 		//if (date_from < current_date) {
 		if (date_from < current_date) {
 			jerror("Duration from date must be current or a later date");
@@ -709,10 +710,15 @@ ajaxAddEvent = function() {
 			//
 			// clear variable ans redirect to memreas page
 			//
+                        console.log('FrinedObg'+ event_share_object.hasFriends);
+                        console.log('mediaObg'+ event_share_object.hasFriends);
 			if ((!event_share_object.hasMedia && !event_share_object.hasFriends)) {
 				share_clearMemreas();
 				$('.memrsclick').trigger('click');
-			}
+			}else{
+                            share_clearMemreas();
+                            $('.memrsclick').trigger('click');
+                        }
 
 		} else {
 			jerror(message);
