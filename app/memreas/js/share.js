@@ -1009,7 +1009,9 @@ share_getAllMedia = function() {
 					}
 				});
 				jtarget_element.empty();
+                                  console.log("media "+count_media);
 				for (var json_key = 0; json_key < count_media; json_key++) {
+                                        console.log("json key "+json_key);
 					var media = medias[json_key];
 					var _media_type = getValueFromXMLTag(media, 'type');
 					var _media_url = getMediaThumbnail(media, '/memreas/img/small-pic-3.jpg');
@@ -1028,6 +1030,7 @@ share_getAllMedia = function() {
 							//continue;
 						}
 						copyright_count++;
+                                                console.log("json key--2    "+json_key);
 					}
 					console.log('copyright_count-->'+copyright_count);
 					//
