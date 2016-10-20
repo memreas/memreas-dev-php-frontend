@@ -596,10 +596,24 @@ function addFriend(name) {
     // 
     // var photo = map[name].profile_photo;
     // var photo = '';
-    // alert(name);
-    console.log('Map XML-->' + map.name);
-    var friend_id = map[name].user_id;
-    console.log('Map XML-->' + map[name]);
+    var uname=name.replace("@", "");
+     alert(uname);
+    var uid='';
+    for(var key in map){
+        var obj = map[key];
+        if($.trim(obj.username)==$.trim(uname)){
+         console.log('Map onclick block' + obj.username);  
+         uid=obj.username;
+        }
+        //console.log('Map XML-->' + obj.username);
+        
+    }
+    
+    
+    //console.log('Map XML-->' + map.name);
+    //var friend_id = map[name].user_id;
+    var friend_id =uid;
+    console.log('Map XML-->' + uid);
     // var friend_id = user_id;
     var selFriends = [];
     selFriends[0] = {
