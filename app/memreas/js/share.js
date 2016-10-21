@@ -451,9 +451,11 @@ function checkSellMediaDuration() {
 //        var y = current_date.getYear();
 //
 //        var datefr = new Date(y, m, d);
-
+ 
                 
-                console.log('datefrom-->'+date_from +'Cr Date '+current_date );
+                current_date =  current_date.setHours(00,00,00,00);
+                
+                console.log('datefrom-->'+date_from +'Current Date '+current_date );
 		//if (date_from < current_date) {
 		if (date_from < current_date) {
 			jerror("Duration from date must be current or a later date");
