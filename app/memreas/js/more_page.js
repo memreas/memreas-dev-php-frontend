@@ -15,7 +15,6 @@ $(function() {
     $("#tab-content-more div.hideCls").hide(); // Initially hide all content
     $("#tabs-more li:first").attr("id", "current"); // Activate first tab
     $("#tab-content-more div:first").fadeIn(); // Show first tab content*/
-
     $('#tabs-more a').click(function(e) {
 
 	e.preventDefault();
@@ -145,7 +144,7 @@ $(function() {
 	    });
 
     /* Change profile picture */
-    var userId = $("input[name=user_id]").val();
+    var userId = LOGGED_USER_ID;
     $(".change-profile-btn").click(function() {
 	$("#frm-profile-pic").find('input[type=file]').click();
     });
@@ -1143,17 +1142,49 @@ function getAccountMemreas() {
 
     }
 }
-// Sell Media Popup
 
-$("#morepage_event_sellmedia").change(function() {
+// Manage viewable checkbox and dates
+$("#morepage_isviewable").change(function() {
+    if ($(this).is(":checked")) {
+	$("#moredate_eventDateFrom").removeAttr('disabled');
+	$("#moredate_eventDateTo").removeAttr('disabled');
 
-    if ($(this).attr('checked', true)) {
+	if ($("#morepage_isselfdestruct").is(":checked")) {
+	    $("#morepage_isselfdestruct").removeAttr("checked").change();
+	}
+    } else {
+	$("#moredate_eventDateFrom").val('').attr('disabled', true);
+	$("#moredate_eventDateTo").val('').attr('disabled', true);
+    }
+});
+
+// Manage ghost checkbox and dates
+$("#morepage_isselfdestruct").change(function() {
+    if ($(this).is(":checked")) {
+	$("#morepage_eventSelfDestruct").removeAttr('disabled');
+	if ($("#morepage_isviewable").is(":checked")) {
+	    $("#morepage_isviewable").removeAttr("checked").change();
+	}
+    } else
+	$("#morepage_eventSelfDestruct").val('').attr('disabled', true);
+});
+
+// Manage Sell Media checkbox and popup
+$("#morepage_ckb_sellmedia").change(function() {
+    if ($(this).is(":checked")) {
 	$("#morepage_eventFriendsCanPost").attr('checked', false);
 	$("#morepage_friendsCanAdd").attr('checked', false);
 	$("#morepage_public").attr("checked", true);
+	$("#morepage_isselfdestruct").attr("checked", false);
+	$("#morepage_eventSelfDestruct").val('').attr('disabled', true);
 	$("#morepage_isviewable").attr("checked", true);
 	popup("popupSellMediaedit");
-	return false;
+    } else {
+	$(this).attr('checked', false);
+	sell_media_price = 0;
+	event_share_object_update.sell_media_price = 0;
+	event_share_object_update.sellmedia_duration_from = '';
+	event_share_object_update.sellmedia_duration_to = '';
     }
 });
 
@@ -1181,11 +1212,6 @@ function fillmorepage_eventDetail(morepage_event_id) {
 
 	    if (getValueFromXMLTag(response, 'date') != '') {
 		var event_date = getValueFromXMLTag(response, 'date');
-
-		// Convert date format to mm/dd/yyyy
-		event_date = event_date.split("/");
-		event_date = event_date[1] + "/" + event_date[0] + "/"
-			+ event_date[2];
 		jMorepageEventDate.val(event_date);
 	    } else
 		jMorepageEventDate.val('from');
@@ -1218,11 +1244,6 @@ function fillmorepage_eventDetail(morepage_event_id) {
 	    if (getValueFromXMLTag(response, 'viewable_from') != '') {
 		var viewable_from = getValueFromXMLTag(response,
 			'viewable_from');
-
-		// Convert date format to mm/dd/yyyy
-		viewable_from = viewable_from.split("/");
-		viewable_from = viewable_from[1] + "/" + viewable_from[0] + "/"
-			+ viewable_from[2];
 		jMoredate_eventDateFrom.val(viewable_from);
 		jMorepage_isviewable.attr('checked', true)
 	    } else {
@@ -1241,11 +1262,6 @@ function fillmorepage_eventDetail(morepage_event_id) {
 
 	    if (getValueFromXMLTag(response, 'viewable_to') != '') {
 		var viewable_to = getValueFromXMLTag(response, 'viewable_to');
-
-		// Convert date format to mm/dd/yyyy
-		viewable_to = viewable_to.split("/");
-		viewable_to = viewable_to[1] + "/" + viewable_to[0] + "/"
-			+ viewable_to[2];
 		jMoredate_eventDateTo.val(viewable_to);
 	    } else
 		jMoredate_eventDateTo.val('to');
@@ -1381,6 +1397,52 @@ function getMemreasEventMedia() {
 	    });
 }
 
+function undoSellMediaEdit() {
+    $('#morepage_ckb_sellmedia').attr('checked', false);
+    event_share_object_update.sellmedia_duration_from = '';
+    event_share_object_update.sellmedia_duration_to = '';
+    event_share_object_update.sell_media_price = 0;
+    sell_media_price = 0;
+    if ($("#popupSellMediaedit").is(":visible")) {
+	disablePopup('popupSellMediaedit');
+    }
+}
+
+
+function checkSellMediaEdit(submitAction=false) {
+    if (!$('#morepage_ckb_sellmedia').is(":checked")) {
+	undoSellMediaEdit();
+    } else if ($("#popupSellMediaedit").is(":visible") && submitAction) {
+	event_share_object_update.sellmedia_price_select = $(
+		"#sellmedia_price_edit").val();
+	if (event_share_object_update.sellmedia_price_select == '') {
+	    $('#loadingpopup').fadeOut(200);
+	    jerror("please select the price");
+	    return false;
+	}
+
+	event_share_object_update.passDuration = checkSellMediaDurationEdit();
+	if (!event_share_object_update.passDuration) {
+	    $('#loadingpopup').fadeOut(200);
+	    return false;
+	}
+
+	event_share_object_update.sellmedia_duration_from = $(
+		"#sellmedia_duration_from_edit").val();
+	event_share_object_update.sellmedia_duration_to = $(
+		"#sellmedia_duration_to_edit").val();
+
+	if (!$("#ckb_sellmedia_agree_edit").is(":checked")) {
+	    jerror("You must agree with our terms and conditions");
+	    return false;
+	}
+	event_share_object_update.sell_media_price = sell_media_price = event_share_object_update.sellmedia_price_select;
+	event_share_object_update.sell_media = 1;
+    }
+    disablePopup('popupSellMediaedit');
+    return true;
+}
+
 function checkSellMediaDurationEdit() {
     event_share_object_update.sellmedia_duration_from = $(
 	    "#sellmedia_duration_from_edit").val();
@@ -1421,8 +1483,8 @@ function checkSellMediaDurationEdit() {
 	}
 
 	var current_date = new Date();
-	// if (date_from < current_date) {
-	if (date_from > current_date) {
+	current_date = current_date.setHours(00, 00, 00, 00);
+	if (date_from < current_date) {
 	    jerror("Duration from date must be current or a later date");
 	    return false;
 	}
@@ -1431,10 +1493,6 @@ function checkSellMediaDurationEdit() {
 	    jerror("Duration to date must be greater than start date");
 	    return false;
 	}
-	// if (diffDays > 30) {
-	// jerror('Date should be selected only for 30 days ');
-	// return false;
-	// }
 
 	//
 	// Set viewable checkbox and dates
@@ -1593,47 +1651,19 @@ function morepage_saveEvent(confirmed, delete_event) {
 		var event_name = getValueFromXMLTag(response, 'event_name');
 		jsuccess(getValueFromXMLTag(response, 'message'));
 		// remove the option - doesn't work well
-		//$("#cmd_MorepageEvents option:selected").remove();
-		//var event_deleted = $("#cmd_MorepageEvents option:selected").val() + " - deleted";
-		//$("#cmd_MorepageEvents option:selected").val(event_deleted);
+		// $("#cmd_MorepageEvents option:selected").remove();
+		// var event_deleted = $("#cmd_MorepageEvents
+		// option:selected").val() + " - deleted";
+		// $("#cmd_MorepageEvents option:selected").val(event_deleted);
 	    }
 	});
 
     } else {
 	delete_event = '0';
 	// Precheck for selling media is popup or not and check for correction
-	if (!$('#morepage_ckb_sellmedia').is(":checked")) {
-	    event_share_object_update.sellmedia_duration_from = '';
-	    event_share_object_update.sellmedia_duration_to = '';
-	    event_share_object_update.sell_media_price = 0;
-	} else if ($("#popupSellMediaedit").is(":visible")) {
-	    event_share_object_update.sellmedia_price_select = $(
-		    "#sellmedia_price_edit").val();
-	    if (event_share_object_update.sellmedia_price_select == '') {
-		$('#loadingpopup').fadeOut(200);
-		jerror("please select the price");
-		return false;
-	    }
-
-	    event_share_object_update.passDuration = checkSellMediaDurationEdit();
-	    if (!event_share_object_update.passDuration) {
-		$('#loadingpopup').fadeOut(200);
-		return false;
-	    }
-
-	    event_share_object_update.sellmedia_duration_from = $(
-		    "#sellmedia_duration_from").val();
-	    event_share_object_update.sellmedia_duration_to = $(
-		    "#sellmedia_duration_to").val();
-
-	    if (!$("#ckb_sellmedia_agree_edit").is(":checked")) {
-		jerror("You must agree with our terms and conditions");
-		return false;
-	    }
-	    event_share_object_update.sell_media_price = event_share_object_update.sellmedia_price_select;
+	if (!checkSellMediaEdit()) {
+	    return false;
 	}
-
-	disablePopup('popupSellMediaedit');
 
 	event_share_object_update.name = getElementValue('cmd_MorepageEvents');
 	if (event_share_object_update.name == "") {
@@ -1685,46 +1715,15 @@ function morepage_saveEvent(confirmed, delete_event) {
 		.val() != '' && $("#moredate_eventDateFrom").val() != 'from') ? $(
 		"#moredate_eventDateFrom").val()
 		: '');
-	if (event_share_object_update.viewable_from != '') {
-	    event_share_object_update.split_date = event_share_object_update.viewable_from
-		    .split('/');
-	    event_share_object_update.viewable_from = event_share_object_update.split_date[1]
-		    + '/'
-		    + event_share_object_update.split_date[0]
-		    + '/'
-		    + event_share_object_update.split_date[2]; // Correct date
-	    // format to d-m-Y
-	}
 
 	event_share_object_update.viewable_to = (($("#moredate_eventDateTo")
 		.val() != '' && $("#moredate_eventDateTo").val() != 'to') ? $(
 		"#moredate_eventDateTo").val() : '');
 
-	if (event_share_object_update.viewable_to != '') {
-	    event_share_object_update.split_date = event_share_object_update.viewable_to
-		    .split('/');
-	    event_share_object_update.viewable_to = event_share_object_update.split_date[1]
-		    + '/'
-		    + event_share_object_update.split_date[0]
-		    + '/'
-		    + event_share_object_update.split_date[2]; // Correct
-	    // date
-	    // format
-	    // to
-	    // d-m-Y
-	}
-
-	// console.log('Date-->'+viewable_from +'to-->'+viewable_to);
-
 	event_share_object_update.self_destruct = (($(
 		"#morepage_eventSelfDestruct").val() != '') ? $(
 		"#morepage_eventSelfDestruct").val() : '');
-	if (event_share_object_update.self_destruct != '') {
-	    event_share_object_update.split_date = event_share_object_update.self_destruct
-		    .split('/');
-	    self_destruct = split_date[1] + '/' + split_date[0] + '/'
-		    + split_date[2]; // Correct date format to d-m-Y
-	}
+
 	event_share_object_update.friend_can_post = 0;
 	if ($("#morepage_eventFriendsCanPost").is(":checked")) {
 	    event_share_object_update.friend_can_post = 1;
@@ -1752,9 +1751,6 @@ function morepage_saveEvent(confirmed, delete_event) {
 	event_share_object_update.sell_media = 0;
 	if ($("#morepage_event_sellmedia").prop("visible")
 		&& $("#morepage_ckb_sellmedia").prop("checked")) {
-	    console.log('#morepage_event_sellmedia").is(":visible")...');
-	    console.log(!$("#morepage_ckb_sellmedia").prop("checked"));
-	    console.log(!confirmed);
 
 	    if (!confirmed) {
 		console.log('!confirmed...');
