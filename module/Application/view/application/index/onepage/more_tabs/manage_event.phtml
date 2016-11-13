@@ -178,7 +178,7 @@
 
 
 <div id="popupSellMediaedit" class="popups">
-		<a id="popupSellMediaClose" onClick="disablePopup('popupSellMediaedit');" class='popupClose'>x</a>
+		<a id="popupSellMediaCloseEdit" onClick="disablePopup('popupSellMediaedit');" class='popupClose'>x</a>
 		<h2>Sell media</h2>
 		<ul id="content_1" class="scrollpopup give-message-form">
 			<li style="margin-bottom: 10px;">
@@ -212,5 +212,6 @@
 				<label id="" for="ckb_sellmedia_agree_edit" name="demo_lbl_6" class="css-label margin-none" style="height: 100px;" > By checking this box I certify that I own the appropriate copyrights for any media within this memeas share.  Full terms are available <a href="javascript:;" onclick="sharePopupMarketTerm();">here</a>. </label>
 			</li>
 		</ul>
-		<a class="black_btn_skin f-left" href="javascript:;" id="accept-notification_edit" onclick="morepage_saveEvent(false , false);">OK</a><a class="black_btn_skin f-right" href="javascript:disablePopup('popupSellMediaedit');">close</a>
+		<a class="black_btn_skin f-left" href="javascript:checkSellMediaEdit('true');;" id="accept-notification_edit">ok</a>
+		<a class="black_btn_skin f-right" href="javascript:undoSellMediaEdit();">close</a>
 	</div>
