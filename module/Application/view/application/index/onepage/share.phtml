@@ -205,7 +205,8 @@
 				<label id="" for="ckb_sellmedia_agree" name="demo_lbl_6" class="css-label margin-none" style="height: 100px;" > By checking this box I certify that I own the appropriate copyrights for any media within this memeas share.  Full terms are available <a href="javascript:;" onclick="sharePopupMarketTerm();">here</a>. </label>
 			</li>
 		</ul>
-		<a class="black_btn_skin f-left" href="javascript:;" id="accept-notification" onclick="share_addEvent('next');">OK</a><a class="black_btn_skin f-right" href="javascript:disablePopup('popupSellMedia');">close</a>
+		<a class="black_btn_skin f-left" href="javascript:checkSellMedia(true);" id="popupSellMediaOK">ok</a>
+		<a class="black_btn_skin f-right" href="javascript:undoSellMedia();" id="popupSellMediaClose">close</a>
 	</div>
 	<div id="bgpopupSellMedia" class="backgroundPopup"></div>
 	<!-- Ads Section -->

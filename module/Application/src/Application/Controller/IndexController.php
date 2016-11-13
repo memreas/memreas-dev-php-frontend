@@ -188,7 +188,7 @@ class IndexController extends AbstractActionController {
 			
 			// Guzzle the Web Service
 			$result = $this->fetchXML ( $ws_action, $xml, $wsurl );
-			Mlog::addone ( $cm . __LINE__. '::$result--->', $result );
+			//Mlog::addone ( $cm . __LINE__. '::$result--->', $result->getBody() );
 			$json = json_encode ( $result );
 			
 			// Handle session
@@ -199,7 +199,7 @@ class IndexController extends AbstractActionController {
 			$callback_json = $callback . "(" . $json . ")";
 			$output = ob_get_clean ();
 			header ( "Content-type: plain/text" );
-			// Mlog::addone ( '$callback_json--->', $callback_json);
+			Mlog::addone ( '$callback_json--->', $callback_json);
 			
 			echo $callback_json;
 			
@@ -267,7 +267,7 @@ class IndexController extends AbstractActionController {
 		$action = 'memreas_tvm';
 		// $xml = '<xml><username>' . $_SESSION ['username'] . '</username><memreas_tvm>1</memreas_tvm></xml>';
 		$s3Authenticate = $this->fetchXML ( $action, $xml );
-		Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__.'$s3Authenticate--->', $s3Authenticate);
+		//Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__.'$s3Authenticate--->', $s3Authenticate);
 
 		//
 		// Check for dead session
