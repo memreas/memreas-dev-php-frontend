@@ -2334,7 +2334,7 @@ $(function() {
     $('.dmca-tab')
 	    .click(
 		    function() {
-
+                        $('.dmca-table-data > tbody').html('');
 			var userId = $("input[name=user_id]").val();
 
 			/**
