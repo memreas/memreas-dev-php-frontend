@@ -202,10 +202,10 @@ jQuery.fetch_server_media = function() {
 			objArr.push(item);
 
 			// Delete and Location Tab Data
-			console.log("media_transcode_status--->"
-				+ media_transcode_status);
-			if (media_transcode_status == "success") {
-			} // if (media_transcode_status == "success")
+			//console.log("media_transcode_status--->"
+			//	+ media_transcode_status);
+			//if (media_transcode_status == "success") {
+			//} // if (media_transcode_status == "success")
 
 			if (_media_type == 'video') {
 			    $(".edit-area-scroll")
