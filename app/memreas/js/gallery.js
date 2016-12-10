@@ -116,6 +116,7 @@ jQuery.fetch_server_media = function() {
 			var media_thummb_448 = "";
 			var media_transcode_status = getValueFromXMLTag(media,
 				'media_transcode_status');
+			
 			if (_media_type == 'image') {
 			    _media_url = getMediaUrl(media, _media_type);
 			    content_type = 'image/jpeg';
@@ -200,7 +201,10 @@ jQuery.fetch_server_media = function() {
 			// console.log("item" + JSON.stringify(item));
 			objArr.push(item);
 
+			
 			// Delete and Location Tab Data
+			console.log("media_transcode_status--->" + media_transcode_status);
+			if (media_transcode_status == "success") {
 			if (_media_type == 'video') {
 			    $(".edit-area-scroll")
 				    .append(
@@ -248,19 +252,9 @@ jQuery.fetch_server_media = function() {
 						    + '" alt="image04" /></a></li>');
 
 			}
-
-			/*
-			 * 
-			 * $(".preload-files .pics").append( '<li><img src="' +
-			 * _media_url + '"/></li>'); $(".aviary-thumbs")
-			 * .append( '<li><img id="edit' + media_id + '" src="' +
-			 * _media_thumbnail_large + '"
-			 * onclick="openEditMedia(this.id, \'' +
-			 * _media_thumbnail_large + '\');"/></li>');
-			 */
 			checkHasImage = true;
-
 			// End Delete Tab
+			} //if (media_transcode_status == "success")
 
 		    } // end for
 
