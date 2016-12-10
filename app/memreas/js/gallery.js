@@ -201,6 +201,7 @@ jQuery.fetch_server_media = function() {
 			objArr.push(item);
 
 			// Delete and Location Tab Data
+			console.log("media_transcode_status--->" + media_transcode_status);
 			if (_media_type == 'video') {
 			    $(".edit-area-scroll")
 				    .append(
