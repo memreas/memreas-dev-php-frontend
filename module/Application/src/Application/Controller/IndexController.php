@@ -73,6 +73,7 @@ class IndexController extends AbstractActionController {
 		}
 		
 		MLog::addone ( __CLASS__ . __METHOD__ . '::clientIPAddress', $this->fetchUserIPAddress () );
+		MLog::addone ( __CLASS__ . __METHOD__ . '::$xml', $xml );
 		
 		
 		/*
