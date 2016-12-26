@@ -63,9 +63,13 @@ class IndexController extends AbstractActionController {
 			if (isset ( $_COOKIE ['x_memreas_chameleon'] )) {
 				$data->x_memreas_chameleon = $_COOKIE ['x_memreas_chameleon'];
 			}
+			$xml = $data->asXML ();
+		}
+
+		//add ip for login...
+		if($action='login') {
 			$data->addChild ( 'clientIPAddress', $this->fetchUserIPAddress () );
 			$xml = $data->asXML ();
-			// error_log ( '$xml-->' . $xml );
 		}
 		
 		MLog::addone ( __CLASS__ . __METHOD__ . '::clientIPAddress', $this->fetchUserIPAddress () );
@@ -202,7 +206,7 @@ class IndexController extends AbstractActionController {
 			$callback_json = $callback . "(" . $json . ")";
 			$output = ob_get_clean ();
 			header ( "Content-type: plain/text" );
-			Mlog::addone ( '$callback_json--->', $callback_json);
+			//Mlog::addone ( '$callback_json--->', $callback_json);
 			
 			echo $callback_json;
 			
