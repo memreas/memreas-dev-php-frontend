@@ -63,12 +63,12 @@ class IndexController extends AbstractActionController {
 			if (isset ( $_COOKIE ['x_memreas_chameleon'] )) {
 				$data->x_memreas_chameleon = $_COOKIE ['x_memreas_chameleon'];
 			}
+			$data->clientIPAddress = $this->fetchUserIPAddress();
 			$xml = $data->asXML ();
 		}
 
 		//add ip for login...
 		if($action='login') {
-			$data->addChild ( 'clientIPAddress', $this->fetchUserIPAddress () );
 			$xml = $data->asXML ();
 		}
 		
