@@ -66,12 +66,6 @@ class IndexController extends AbstractActionController {
 			$data->clientIPAddress = $this->fetchUserIPAddress();
 			$xml = $data->asXML ();
 		}
-
-		//add ip for login...
-		if($action='login') {
-			$xml = $data->asXML ();
-		}
-		
 		MLog::addone ( __CLASS__ . __METHOD__ . '::clientIPAddress', $this->fetchUserIPAddress () );
 		MLog::addone ( __CLASS__ . __METHOD__ . '::$xml', $xml );
 		
