@@ -56,7 +56,7 @@ class IndexController extends AbstractActionController {
 		 * If memreascookie is available and missing inject it...
 		 */
 		$data = simplexml_load_string ( $xml );
-		// MLog::addone ( __CLASS__ . __METHOD__ . '::$data', $data );
+		//MLog::addone ( __CLASS__ . __METHOD__ . '::$data', $data );
 		if (empty ( $data->memreascookie )) {
 			$data->memreascookie = $_COOKIE ['memreascookie'];
 			// x_memreas_chameleon is pass through ...
@@ -67,6 +67,9 @@ class IndexController extends AbstractActionController {
 			$xml = $data->asXML ();
 			// error_log ( '$xml-->' . $xml );
 		}
+		
+		MLog::addone ( __CLASS__ . __METHOD__ . '::clientIPAddress', $this->fetchUserIPAddress () );
+		
 		
 		/*
 		 * Fetch guzzle and post...
