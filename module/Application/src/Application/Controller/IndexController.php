@@ -26,9 +26,9 @@ class IndexController extends AbstractActionController {
 		$data = json_decode ( $string );
 		$result = (json_last_error () == JSON_ERROR_NONE) ? ($return_data ? $data : TRUE) : FALSE;
 		if ($result) {
-		//	MLog::addone ( __CLASS__ . __METHOD__ . __LINE . 'isJSON result', 'true' );
+			// MLog::addone ( __CLASS__ . __METHOD__ . __LINE . 'isJSON result', 'true' );
 		} else {
-		//	MLog::addone ( __CLASS__ . __METHOD__ . __LINE . 'isJSON result', 'false' );
+			// MLog::addone ( __CLASS__ . __METHOD__ . __LINE . 'isJSON result', 'false' );
 		}
 		return $result;
 	}
@@ -63,10 +63,13 @@ class IndexController extends AbstractActionController {
 			if (isset ( $_COOKIE ['x_memreas_chameleon'] )) {
 				$data->x_memreas_chameleon = $_COOKIE ['x_memreas_chameleon'];
 			}
-			$data->addChild ( 'clientIPAddress', $this->fetchUserIPAddress () );
-			$xml = $data->asXML ();
-			// error_log ( '$xml-->' . $xml );
 		}
+		if (empty ( $data->clientIPAddres )) {
+			$data->clientIPAddress = $this->fetchUserIPAddress ();
+		}
+		$xml = $data->asXML ();
+		MLog::addone ( __CLASS__ . __METHOD__ . '::clientIPAddress', $this->fetchUserIPAddress () );
+		MLog::addone ( __CLASS__ . __METHOD__ . '::$xml', $xml );
 		
 		/*
 		 * Fetch guzzle and post...
@@ -96,7 +99,7 @@ class IndexController extends AbstractActionController {
 		}
 		
 		return $response->getBody ();
-		//return $response->getBody()->getContents();
+		// return $response->getBody()->getContents();
 	}
 	public function indexAction() {
 		Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__, '::enter' );
@@ -117,7 +120,7 @@ class IndexController extends AbstractActionController {
 			/*
 			 * Cache Approach: N/a
 			 */
-			//`cat /dev/null > getcwd () . '/php_errors.log'`
+			// `cat /dev/null > getcwd () . '/php_errors.log'`
 			unlink ( getcwd () . '/php_errors.log' );
 			error_log ( "Log has been cleared!" );
 			echo '<pre>' . file_get_contents ( getcwd () . '/php_errors.log' );
@@ -188,7 +191,7 @@ class IndexController extends AbstractActionController {
 			
 			// Guzzle the Web Service
 			$result = $this->fetchXML ( $ws_action, $xml, $wsurl );
-			//Mlog::addone ( $cm . __LINE__. '::$result--->', $result->getBody() );
+			// Mlog::addone ( $cm . __LINE__. '::$result--->', $result->getBody() );
 			$json = json_encode ( $result );
 			
 			// Handle session
@@ -199,7 +202,7 @@ class IndexController extends AbstractActionController {
 			$callback_json = $callback . "(" . $json . ")";
 			$output = ob_get_clean ();
 			header ( "Content-type: plain/text" );
-			Mlog::addone ( '$callback_json--->', $callback_json);
+			// Mlog::addone ( '$callback_json--->', $callback_json);
 			
 			echo $callback_json;
 			
@@ -234,14 +237,13 @@ class IndexController extends AbstractActionController {
 			$_SESSION ['email'] = ( string ) $data->loginresponse->email;
 			
 			// set secure cookies to retrieve this info and avoid
-		} else if (($action == 'logout') || (!empty($data->loginresponse))) {
+		} else if (($action == 'logout') || (! empty ( $data->loginresponse ))) {
 			// $this->memreas_session ();
 			/**
 			 * Handle logout
 			 */
 			$this->logoutAction ();
 		}
-		
 	}
 	private function setSignedCookie($name, $val, $domain) {
 		// MLog::addone ( __CLASS__ . __METHOD__ . __LINE__, '::enter' );
@@ -267,16 +269,16 @@ class IndexController extends AbstractActionController {
 		$action = 'memreas_tvm';
 		// $xml = '<xml><username>' . $_SESSION ['username'] . '</username><memreas_tvm>1</memreas_tvm></xml>';
 		$s3Authenticate = $this->fetchXML ( $action, $xml );
-		//Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__.'$s3Authenticate--->', $s3Authenticate);
-
+		// Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__.'$s3Authenticate--->', $s3Authenticate);
+		
 		//
 		// Check for dead session
 		//
-		$checkXML = substr($s3Authenticate, 0, 1);
+		$checkXML = substr ( $s3Authenticate, 0, 1 );
 		if ($checkXML == '<') {
 			$data = simplexml_load_string ( $s3Authenticate );
-			//. __LINE__.'$data--->', $data);
-			//Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__.'$data->loginresponse->logout--->', $data->loginresponse->logout);
+			// . __LINE__.'$data--->', $data);
+			// Mlog::addone ( __CLASS__ . __METHOD__ . __LINE__.'$data->loginresponse->logout--->', $data->loginresponse->logout);
 			if ($data->logoutresponse) {
 				return $this->logoutAction ();
 			}
@@ -454,7 +456,7 @@ class IndexController extends AbstractActionController {
 	}
 	public function logoutAction() {
 		MLog::addone ( __CLASS__ . __METHOD__ . __LINE__, '::enter' );
-		//$this->memreas_session ();
+		// $this->memreas_session ();
 		/**
 		 * Logout FE Server
 		 */
