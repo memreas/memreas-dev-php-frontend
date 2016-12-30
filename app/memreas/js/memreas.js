@@ -493,6 +493,7 @@ function fetchFriendsMemreas(friendMemreasType) {
 		dataType : 'jsonp',
 		data : 'json=' + data,
 		success : function(response) {
+			console.log('stripeActionUrl response ---> '+response.data);
 		    $('#loadingpopup').fadeOut(200);
 		    response = JSON.parse(response.data);
 		    if (response.status == 'Success') {
