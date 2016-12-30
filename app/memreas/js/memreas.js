@@ -354,7 +354,7 @@ function fetchMyMemreas() {
 	    function(response) {
 		$('#loadingpopup').fadeOut(200);
 		if (getValueFromXMLTag(response, 'status') == "Success") {
-		    console.log("response Memreas " + response);
+		    //console.log("response Memreas " + response);
 		    var events = getSubXMLFromTag(response, 'event');
 
 		    var event_count = events.length;
@@ -493,7 +493,6 @@ function fetchFriendsMemreas(friendMemreasType) {
 		dataType : 'jsonp',
 		data : 'json=' + data,
 		success : function(response) {
-			console.log('stripeActionUrl response ---> '+response.data);
 		    $('#loadingpopup').fadeOut(200);
 		    response = JSON.parse(response.data);
 		    if (response.status == 'Success') {
