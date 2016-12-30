@@ -310,11 +310,13 @@ $(function() {
 		}
 	});
 	$("#tabs-memreas li:eq(1) a").click(function() {
+		console.log("calling fetchFriendsMemreas('private');");
 		if (checkReloadItem('view_friend_events')) {
 			fetchFriendsMemreas('private');
 		}
 	});
 	$("#tabs-memreas li:eq(2) a").click(function() {
+		console.log("calling fetchpubsMemreas();");
 		if (checkReloadItem('view_public_events')) {
 			fetchpubsMemreas();
 		}
