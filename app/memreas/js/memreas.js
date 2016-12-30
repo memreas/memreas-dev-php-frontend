@@ -354,7 +354,7 @@ function fetchMyMemreas() {
 	    function(response) {
 		$('#loadingpopup').fadeOut(200);
 		if (getValueFromXMLTag(response, 'status') == "Success") {
-		    //console.log("response Memreas " + response);
+		    console.log("response Memreas " + response);
 		    var events = getSubXMLFromTag(response, 'event');
 
 		    var event_count = events.length;
