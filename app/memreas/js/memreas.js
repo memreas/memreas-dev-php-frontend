@@ -249,7 +249,7 @@ var ConsoleLog = function() {
 	// Set log into window console panel
 	this.setLog = function(variable) {
 		if (self.enableSystemLog) {
-			console.log("self.enableSystemLog variable ==>" + variable);
+			//console.log("self.enableSystemLog variable ==>" + variable);
 		}
 	}
 }
@@ -310,13 +310,11 @@ $(function() {
 		}
 	});
 	$("#tabs-memreas li:eq(1) a").click(function() {
-		console.log("calling fetchFriendsMemreas('private');");
 		if (checkReloadItem('view_friend_events')) {
 			fetchFriendsMemreas('private');
 		}
 	});
 	$("#tabs-memreas li:eq(2) a").click(function() {
-		console.log("calling fetchpubsMemreas();");
 		if (checkReloadItem('view_public_events')) {
 			fetchpubsMemreas();
 		}
@@ -444,6 +442,7 @@ function fetchMyMemreas() {
 					jerror('no memreas found - use the share tab to create');
 				}
 				$('#loadingpopup').fadeOut(200);
+
 			});
 	$(".myMemreas").mCustomScrollbar('update');
 }
@@ -477,7 +476,6 @@ function popupDetailMedia(eventdetail_media_id, html_str, comment_count) {
 }
 function fetchFriendsMemreas(friendMemreasType) {
 
-	console.log("fetchFriendsMemreas----->" + friendMemreasType);
 	var params = new Object;
 	params.user_id = Account.id;
 	params.memreascookie = getCookie("memreascookie");
@@ -486,7 +484,6 @@ function fetchFriendsMemreas(friendMemreasType) {
 	var data = '{"action": "check_own_event", ' + '"type":"jsonp", '
 			+ '"json": ' + params_json + '}';
 
-    console.log("fetchFriendsMemreas data----->" + data);
 	$('#loadingpopup').fadeIn(200);
 	var stripeActionUrl = $("input[name=stripe_url]").val()
 			+ 'stripe_checkOwnEvent';
@@ -498,14 +495,11 @@ function fetchFriendsMemreas(friendMemreasType) {
 				data : 'json=' + data,
 				success : function(response) {
 					$('#loadingpopup').fadeOut(200);
-				    console.log("fetchFriendsMemreas response.data----->" + response.data);
 					response = JSON.parse(response.data);
-				    console.log("fetchFriendsMemreas response----->" + response);
 					if (response.status == 'Success') {
 						Account.eventPurchases = response.events;
 					}
 
-				    console.log("fetchFriendsMemreas var user_id = $(input[name=user_id]).val();....");
 					var user_id = $("input[name=user_id]").val();
 					if (friendMemreasType == 'private') {
 						var showPublic = '0';
@@ -516,7 +510,6 @@ function fetchFriendsMemreas(friendMemreasType) {
 						var showAccepted = '0';
 						var sell_class = 'public-';
 					}
-				    console.log("fetchFriendsMemreas viewevents() calling...");
 					ajaxRequest(
 							'viewevents',
 							[ {
@@ -539,7 +532,6 @@ function fetchFriendsMemreas(friendMemreasType) {
 								value : '20'
 							} ],
 							function(response) {
-							    console.log("fetchFriendsMemreas viewevents() response..." + response);
 								if (friendMemreasType == 'private') {
 									var target_object = ".event_images";
 									ajaxScrollbarElement('.event_images');
@@ -775,7 +767,6 @@ function fetchpubsMemreas() {
 
 	var stripeActionUrl = $("input[name=stripe_url]").val()
 			+ 'stripe_checkOwnEvent';
-	console.log("stripeActionUrl----->" + stripeActionUrl);
 	
 	$('#loadingpopup').fadeIn(200);
 	$
@@ -817,8 +808,6 @@ function fetchpubsMemreas() {
 								value : '20'
 							} ],
 							function(response) {
-								console.log('Public Response event-->'
-										+ response);
 								if ($(".event_images_public").hasClass(
 										"mCustomScrollbar"))
 									var target_object = ".event_images_public .mCSB_container";
@@ -975,8 +964,6 @@ function fetchpubsMemreas() {
 														+ event_friend_social_username
 														+ '</aside>';
 											}
-											console.log('STR MEDIA-->'
-													+ StrMedia);
 											$('.event_images_public')
 													.append(
 															'<div class="event_section addstyling">'
