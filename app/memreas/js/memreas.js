@@ -614,10 +614,6 @@ function fetchFriendsMemreas(friendMemreasType) {
 											var event_resources_count = event_resources.length;
 											var total_event_row_width = 120 * event_resources_count;
 
-											console
-													.log('event_resources_count-->'
-															+ event_resources_count);
-
 											if (event_resources_count > 0) {
 												for (var key = 0; key < event_resources_count; key++) {
 													var event_resource = event_resources[key].innerHTML;
@@ -700,18 +696,6 @@ function fetchFriendsMemreas(friendMemreasType) {
 																				+ event_name
 																				+ '</a></span></div>');
 													} else {
-														console
-																.log('sell eventId-->'
-																		+ eventId);
-														console
-																.log('sell creator_id-->'
-																		+ creator_id);
-														console
-																.log('sell sell_price-->'
-																		+ sell_price);
-														console
-																.log('sell event_name-->'
-																		+ event_name);
 														var link = '';
 														link += '<div class="event_img" ';
 														link += ' id="'
@@ -790,6 +774,8 @@ function fetchpubsMemreas() {
 
 	var stripeActionUrl = $("input[name=stripe_url]").val()
 			+ 'stripe_checkOwnEvent';
+	console.log("stripeActionUrl----->" + stripeActionUrl);
+	
 	$('#loadingpopup').fadeIn(200);
 	$
 			.ajax({
