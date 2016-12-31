@@ -371,7 +371,7 @@ function fetchMyMemreas() {
 						for (var j = 0; j < event_media_count; j++) {
 							var event_medi = event_media[j];
 							var event_media_image = getValueFromXMLTag(
-									event_medi, 'event_media_448x306');
+									event_medi, 'event_media_79x80');
 							var _event_media_type_ = getValueFromXMLTag(
 									event_medi, 'event_media_type');
 							if (_event_media_type_ == 'image') {
@@ -876,7 +876,7 @@ function fetchpubsMemreas() {
 												var event_medi = event_media[j];
 												var event_media_image = getValueFromXMLTag(
 														event_medi,
-														'event_media_448x306');
+														'event_media_79x80');
 												var _event_media_type_ = getValueFromXMLTag(
 														event_medi,
 														'event_media_type');
