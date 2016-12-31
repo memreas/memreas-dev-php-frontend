@@ -11,7 +11,7 @@ class MemreasConstants {
 	const MEMREAS_FE = "http://127.0.0.1:55151";
 	const MEMREAS_WS = "http://127.0.0.1:55152";
 	const MEMREAS_WS_PUBLIC = "http://127.0.0.1:55152/public";
-	const MEMREAS_PAY = "http://127.0.0.1:55153/index?action=";
+	const MEMREAS_PAY = "http://127.0.0.1:55152/index?action=";
 
 	const MEMREAS_ADS = true;
 	const MEMREAS_SELL_MEDIA = 1; // Enable or Disable selling media
