@@ -354,7 +354,6 @@ function fetchMyMemreas() {
 				value : '20'
 			} ],
 			function(response) {
-				$('#loadingpopup').fadeOut(200);
 				if (getValueFromXMLTag(response, 'status') == "Success") {
 					// console.log("response Memreas " + response);
 					var events = getSubXMLFromTag(response, 'event');
@@ -441,8 +440,10 @@ function fetchMyMemreas() {
 						jTarget_object.append(element);
 
 					}
-				} else
+				} else {
 					jerror('no memreas found - use the share tab to create');
+				}
+				$('#loadingpopup').fadeOut(200);
 			});
 	$(".myMemreas").mCustomScrollbar('update');
 }
