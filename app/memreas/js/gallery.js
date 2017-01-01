@@ -113,7 +113,7 @@ jQuery.fetch_server_media = function() {
 			var main_media_url = '';
 			var main_media_url_m3u8 = '';
 			var source = "";
-			var media_thummb_448 = "";
+			var media_thumb = "";
 			var media_transcode_status = getValueFromXMLTag(media,
 				'media_transcode_status');
 
@@ -124,9 +124,9 @@ jQuery.fetch_server_media = function() {
 				    'main_media_url');
 			    // main_media_url=getValueFromXMLTag(media,'media_url_448x306');
 			    _media_thumbnail_large = main_media_url = removeCdataCorrectLink(main_media_url);
-			    media_thummb_448 = getValueFromXMLTag(media,
-				    'media_url_448x306');
-			    media_thummb_448 = removeCdataCorrectLink(media_thummb_448);
+			    media_thumb = getValueFromXMLTag(media,
+				    'media_url_79x80');
+			    media_thumb = removeCdataCorrectLink(media_thumb);
 			} else if (_media_type == 'video') {
 			    // hls
 			    _media_url_hls = getValueFromXMLTag(media,
@@ -194,8 +194,8 @@ jQuery.fetch_server_media = function() {
 				    + '" data-gallery="' + media_id
 				    + '" class="blueimp-gallery-thumb-anchor"';
 			    linksContainerData += ' style="background:url('
-				    + media_thummb_448 + ')"> <img src="'
-				    + media_thummb_448 + '" alt="" /></a>';
+				    + media_thumb + ')"> <img src="'
+				    + media_thumb + '" alt="" /></a>';
 
 			}
 			// console.log("item" + JSON.stringify(item));
