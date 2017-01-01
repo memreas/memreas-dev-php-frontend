@@ -306,13 +306,8 @@ var DetailImage = '';
 function showEventDetail(eventId, userId) {
 	eventdetail_id = eventId;
 	eventdetail_user = userId;
-	console.log('*****************************************************');
-	console.log('eventId -> ' + eventId);
-	console.log('userId -> ' + userId);
-	console.log('*****************************************************');
 
 	$("#add_buttons").show();
-
 	ajaxRequest('geteventdetails', [ {
 		tag : 'event_id',
 		value : eventId
