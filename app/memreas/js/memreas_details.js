@@ -640,19 +640,15 @@ function showEventDetail(eventId, userId) {
 }
 
 $(document).on('click', '[data-gallery]', function(event) {
-	var id = $(this).data('gallery');
-	var widget = $(id);
-	var selected_media_id;
-	var media_id;
+	var selected_media_id = $(this).data('gallery');
 	var obj;
-	selected_media_id = widget.selector;
 	for (i = 0; i < objArrMemreasGallery.length; i++) {
 		obj = objArrMemreasGallery[i];
 		if (selected_media_id == obj['title']) {
 			break;
 		}
 	}
-	console.log('[data-gallery] obj stringify--->' + JSON.stringify(obj));
+	//console.log('[data-gallery] obj stringify--->' + JSON.stringify(obj));
 	// Deep Copy due to blueimp internal error
 	var newObject = jQuery.extend(true, {}, obj);
 	return blueimp.Gallery([ newObject ], {
