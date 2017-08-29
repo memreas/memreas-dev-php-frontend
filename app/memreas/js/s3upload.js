@@ -179,6 +179,26 @@ var S3UploadInstance = function() {
 									    + response.media_id
 									    + '/'
 									    + filename);
+						    FileKeyInstances[filename] = userid
+							    + '/'
+							    + response.media_id
+							    + '/' + filename;
+
+						    form
+							    .find(
+								    'input[name=policy]')
+							    .val(
+								    response.base64Policy);
+						    form
+							    .find(
+								    'input[name=x-amz-signature]')
+							    .val(
+								    response.signature)
+						    form
+							    .find(
+								    'input[name=success_action_status]')
+							    .val(
+								    response.successStatus);
 						    form
 							    .find(
 								    'input[name=key]')
@@ -188,30 +208,15 @@ var S3UploadInstance = function() {
 									    + response.media_id
 									    + '/'
 									    + filename);
-						    FileKeyInstances[filename] = userid
-							    + '/'
-							    + response.media_id
-							    + '/' + filename;
-
-						    form
-							    .find(
-								    'input[name=acl]')
-							    .val(response.acl);
-						    form
-							    .find(
-								    'input[name=success_action_status]')
-							    .val(
-								    response.successStatus);
-						    form
-							    .find(
-								    'input[name=policy]')
-							    .val(
-								    response.base64Policy);
 						    form
 							    .find(
 								    'input[name=x-amz-algorithm]')
 							    .val(
 								    response.algorithm)
+						    form
+							    .find(
+								    'input[name=acl]')
+							    .val(response.acl);
 						    form
 							    .find(
 								    'input[name=x-amz-credential]')
@@ -226,11 +231,6 @@ var S3UploadInstance = function() {
 								    'input[name=x-amz-expires]')
 							    .val(
 								    response.expires)
-						    form
-							    .find(
-								    'input[name=x-amz-signature]')
-							    .val(
-								    response.signature)
 
 						    /*-
 						     * Check here isfile is valid
@@ -811,8 +811,9 @@ var S3UploadInstance = function() {
 				multiple : true,
 				type : 'POST',
 				autoUpload : true,
-				// 50MB max
-				maxFileSize : 50000,
+				// 5GB max
+				maxChunkSize: 0, 
+				maxFileSize : 5000000000,
 				add : function(event, data) {
 				    var filename = data.files[0].name;
 				    filename = correctUploadFilename(filename);
