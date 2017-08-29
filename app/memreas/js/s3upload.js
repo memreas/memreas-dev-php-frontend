@@ -812,7 +812,7 @@ var S3UploadInstance = function() {
 				type : 'POST',
 				autoUpload : true,
 				// 5GB max
-				maxChunkSize: 0, 
+				maxChunkSize: 10000000, 
 				maxFileSize : 5000000000,
 				add : function(event, data) {
 				    var filename = data.files[0].name;
@@ -1009,10 +1009,11 @@ var S3UploadInstance = function() {
 				    }
 				},
 				error : function(jqXHR, status, thrownError) {
-				    // console.log(jqXHR.status);
-				    // console.log(jqXHR.responseText);
+				    console.log(jqXHR.status);
+				    console.log(jqXHR.responseText);
 				    // console.log(status);
 				    // console.log(thrownError);
+				    window.onbeforeunload = null;
 				    return false;
 				},
 				fail : function(e, data) {
@@ -1025,6 +1026,8 @@ var S3UploadInstance = function() {
 				    $("#counter_claim_url").val(s3_media_url);
 				},
 				done : function(event, data) {
+				    window.onbeforeunload = null;
+				    return false;
 				}
 			    });
 		});
