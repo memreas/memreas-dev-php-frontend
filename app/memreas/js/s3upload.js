@@ -194,6 +194,11 @@ var S3UploadInstance = function() {
 								    'input[name=x-amz-signature]')
 							    .val(
 								    response.signature)
+						    form
+							    .find(
+								    'input[name=success_action_status]')
+							    .val(
+								    response.successStatus);
 						    //form
 							//    .find(
 							//	    'input[name=key]')
@@ -212,11 +217,6 @@ var S3UploadInstance = function() {
 							//    .find(
 							//	    'input[name=acl]')
 							//    .val(response.acl);
-						    //form
-							//    .find(
-							//	    'input[name=success_action_status]')
-							//    .val(
-							//	    response.successStatus);
 						    //form
 							//    .find(
 							//	    'input[name=x-amz-credential]')
