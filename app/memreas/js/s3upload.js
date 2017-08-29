@@ -811,9 +811,9 @@ var S3UploadInstance = function() {
 				multiple : true,
 				type : 'POST',
 				autoUpload : true,
-				// 50MB max
-				//maxChunkSize: 10000000 
-				//maxFileSize : 50000,
+				// 5GB max
+				maxChunkSize: 10000000, 
+				maxFileSize : 5000000000,
 				add : function(event, data) {
 				    var filename = data.files[0].name;
 				    filename = correctUploadFilename(filename);
