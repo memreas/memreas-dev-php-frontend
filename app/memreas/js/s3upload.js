@@ -199,38 +199,38 @@ var S3UploadInstance = function() {
 								    'input[name=success_action_status]')
 							    .val(
 								    response.successStatus);
-						    //form
-							//    .find(
-							//	    'input[name=key]')
-							//    .val(
-							//	    userid
-							//		    + '/'
-							//		    + response.media_id
-							//		    + '/'
-							//		    + filename);
-						    //form
-							//    .find(
-							//	    'input[name=x-amz-algorithm]')
-							//    .val(
-							//	    response.algorithm)
-						    //form
-							//    .find(
-							//	    'input[name=acl]')
-							//    .val(response.acl);
-						    //form
-							//    .find(
-							//	    'input[name=x-amz-credential]')
-							//    .val(
-							//	    response.credentials)
-						    //form
-							//    .find(
-							//	    'input[name=x-amz-date]')
-							//    .val(response.date)
-						    //form
-							//    .find(
-							//	    'input[name=x-amz-expires]')
-							//    .val(
-							//	    response.expires)
+						    form
+							    .find(
+								    'input[name=key]')
+							    .val(
+								    userid
+									    + '/'
+									    + response.media_id
+									    + '/'
+									    + filename);
+						    form
+							    .find(
+								    'input[name=x-amz-algorithm]')
+							    .val(
+								    response.algorithm)
+						    form
+							    .find(
+								    'input[name=acl]')
+							    .val(response.acl);
+						    form
+							    .find(
+								    'input[name=x-amz-credential]')
+							    .val(
+								    response.credentials)
+						    form
+							    .find(
+								    'input[name=x-amz-date]')
+							    .val(response.date)
+						    form
+							    .find(
+								    'input[name=x-amz-expires]')
+							    .val(
+								    response.expires)
 
 						    /*-
 						     * Check here isfile is valid
